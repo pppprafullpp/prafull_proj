@@ -9,12 +9,9 @@
   </head>
 
   <body>
-		<%= render :partial=>"/layouts/header" %>
-			<%#= render :partial=>"/layouts/applications/tabs" if user_signed_in? %>
 			<% if notice.present? %><p class="notice"><%= notice %></p><% end %>
 			<% if alert.present? %><p class="alert"><%= alert %></p><% end %>
 			<%= yield %>
-		<%= render :partial=>"/layouts/footer"  %>
   </body>
 </html>
 

@@ -12,4 +12,41 @@
  *
  *= require_tree .
  *= require_self
+ *= require foundation_and_overrides
+
  */
+
+ .center{
+  margin: auto;
+  width: 480px;
+ }
+
+ .login{
+ 		background: #F5F5F5;
+  	border: 20px #B0C4DE solid;
+  	margin: 18px auto 6px auto;
+  	padding: 20px;
+  	width: 450px;
+  	input[type="email"], input[type="password"]{	
+    	font-size: 16px;
+    	padding: 2px;
+    	width: 355px;
+  	}
+  	input[type="submit"]{	
+    	font-size: 14px;
+  	}
+ 	}
+
+ 	.title{
+		border-bottom: 1px gray solid;
+  	color: #342d7e;
+  	font-size: 17px;
+    font-weight: bold;
+  	padding-bottom: 2px;
+ 	}
+
+ 	.title_tools{	
+  font-size: 12px;
+  float: right;
+  margin: 4px 0px 0px 0px;
+ 	}

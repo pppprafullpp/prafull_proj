@@ -1,0 +1,23 @@
+<nav class="top-bar">
+  <ul class="title-area">
+    <li class="name">
+      <h1><i><%= link_to "Service Deals", root_path, class: "text-header" %></i></a></h1>
+    </li>
+  </ul>
+  <section class="top-bar-section">
+    <ul class="right">
+      <% if user_signed_in? && current_user.is_at_admin_level? %>
+        <li class="divider"></li>
+        <li><%= link_to "Services", services_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "Users", users_path %></li>
+        <li class="divider"></li>
+      <% end %>
+      <% if user_signed_in? %>
+        <li>
+          <span class="user-detail">User:</span><span><%= current_user.name %></span><span>(<%= current_user.role.humanize%>)</span><span class="logout"><%= link_to 'Logout', destroy_user_session_path, :method=>:delete%></span>
+        </li>
+      <% end %>  
+    </ul>
+  </section>
+</nav>  

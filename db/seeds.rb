@@ -9,3 +9,9 @@
 user = User.create(:email=>'pratibha.praveen@spa-systems.com',:password=>'111111',:password_confirmation=>'111111',:name=>'Pratibha Praveen')
 user.role = 'super_admin'
 user.save
+user = User.create(:email=>'admin@example.com',:password=>'111111',:password_confirmation=>'111111',:name=>'Admin User')
+user.role = 'admin'
+user.save
+user = User.create(:email=>'service@example.com',:password=>'111111',:password_confirmation=>'111111',:name=>'Service Provider')
+user.role = 'service_provider'
+user.save

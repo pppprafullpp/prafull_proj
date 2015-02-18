@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:reset_password, :set_reset_password]
+  #before_action :user_params, :only => [:create]
   load_and_authorize_resource
 
   def index
@@ -11,9 +12,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    #params[:user][:audit_comment] = "User with email #{params[:user][:email]} has been created."
-    @user = User.new(params[:user])
-    @user.password_updated_at = Date.today 
+    @user = User.new(user_params)
     
     respond_to do |format|
       if @user.save
@@ -26,30 +25,23 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    redirect_to edit_user_path
-  end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
-  def edit_password
-    @user = User.find(params[:id])
-  end
-  
-
-
-  def destroy
-    @user = User.find(params[:id])
-    
+  def update
     respond_to do |format|
-      if @user.destroy
-        format.html { redirect_to users_path, :notice => 'You have successfully removed a user' }
+      if @user.update(user_params)
+        format.html { redirect_to users_path, notice: 'You have successfully updated a user.' }
         format.xml  { render :xml => @user, :status => :created, :user => @user }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-    
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name,:email,:password,:password_confirmation,:role,:password_updated_at,:enabled)
   end
   
 end

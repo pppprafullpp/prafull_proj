@@ -1,0 +1,36 @@
+<table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%'>
+  <tr> 
+    <td class='main' id='main' valign='top'>
+      <div class='title_tools'>
+				<% if current_user.is_super_admin? %>
+					<%= link_to "Create New Service", service_category_new_path %>
+				<% end %>
+      </div>
+
+      <div class='title'>
+        <span id='title'><%= image_tag("services.png")%> Services</span>
+      </div>
+
+      <div id="service_category" class="list">
+				<table id="service_category_list" class="datatable" cellpadding='0' cellspacing='0' border='1'>
+					<thead>
+				  	<tr>
+				    	<th><strong>Name</strong></th>
+				    	<th><strong>Edit</strong></th>
+				  	</tr>
+					</thead>
+				  <tbody>
+						<% @service_categories.each do |service_category| %>
+							<% if can? :read, service_category %>
+						  	<tr>
+						    	<td><%= service_category.name %></td>
+						    	<td><%= (link_to 'Edit', root_path) if can? :manage, service_category %></td>
+						  	</tr>
+							<% end %>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+    </td>
+	</tr>
+</table>

@@ -1,0 +1,73 @@
+.text-header{
+	color:#6CDA30 !important;
+	font-size: 22px;
+}
+.top-bar-section ul li{
+	background: none repeat scroll 0 0 #1E4262;
+	color: #F7F7F7;
+	font-size: 14px;
+}
+.logout{
+	font-size: 12px;
+}
+.user-detail{
+  padding-left: 5px;
+}
+
+.top-bar-section ul li > a {
+  display: block;
+  width: 100%;
+  color: #FFFFFF;
+  padding: 12px 0 12px 0;
+  padding-left: 0.9375rem;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 1.0000rem;
+  font-weight: normal;
+  text-transform: none;
+}
+
+.top-bar-section li.hover > a:not(.button) {
+  background-color: #555555;
+  background: #333333;
+  color: #FFFFFF;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+  padding: 0 0.9375rem;
+  line-height: 2.8125rem;
+  background: #1E4262;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button):hover {
+  background-color: #555555;
+  background: #1E4262;
+}
+
+.top-bar-section li.active:not(.has-form) a:not(.button) {
+  padding: 0 0.9375rem;
+  line-height: 2.8125rem;
+  color: #FFFFFF;
+  background: #008CBA;
+}
+
+.top-bar-section li.active:not(.has-form) a:not(.button):hover {
+  background: #0078a0;
+  color: #FFFFFF;
+}
+
+.row {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 62.5rem;
+}
+
+#tabs {
+  background: #1E4262;
+  height: 26px;
+  padding: 0px;
+  text-align: center;
+  width: 100%;
+}

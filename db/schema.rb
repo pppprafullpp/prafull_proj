@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150205063924) do
+ActiveRecord::Schema.define(version: 20150218130321) do
+
+  create_table "roles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "service_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "service_deals", force: :cascade do |t|
+    t.string   "category",   limit: 255
+    t.string   "company",    limit: 255
+    t.string   "state",      limit: 255
+    t.integer  "zip",        limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.text     "deal",       limit: 65535
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -28,6 +49,9 @@ ActiveRecord::Schema.define(version: 20150205063924) do
     t.datetime "updated_at"
     t.string   "name",                   limit: 255
     t.string   "role",                   limit: 255
+    t.boolean  "enabled",                limit: 1
+    t.integer  "failed_count",           limit: 4
+    t.date     "password_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-    <title>Service Deals Rails - <%= current_controller %></title>
-		<%= stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track' => true %>
-		<%= javascript_include_tag "application", 'data-turbolinks-track' => true  %>
-		<%= csrf_meta_tags %>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Service Deals" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= stylesheet_link_tag    "foundation-overrides.scss" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
   </head>
 
   <body>
-			<% if notice.present? %><p class="notice"><%= notice %></p><% end %>
-			<% if alert.present? %><p class="alert"><%= alert %></p><% end %>
-			<%= yield %>
+    <%= render :partial =>"/layouts/header" %>
+    <%= render :partial=>"/layouts/tabs" if user_signed_in? %>
+    <%= yield %>
+    <%= render :partial =>"/layouts/footer" %>
   </body>
 </html>
-

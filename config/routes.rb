@@ -13,12 +13,14 @@ Rails.application.routes.draw do
       get :unlock
       put :update_password
     end
+    collection do
+      get :reset_password
+      post :set_reset_password
+    end
   end  
 
   resources :service_deals
-  resources :service_categories, :only => [:new, :create]
-  get '/service_category' => 'service_categories#index'
-  get '/service_category/new' => 'service_categories#new'
+  resources :service_categories
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

@@ -3,8 +3,7 @@
     <td class='main' id='main' valign='top'>
 
       <div class='title_tools'>
-				<% if current_user.is_at_admin_level? %><%= link_to "View All Users", users_path%> | <% end %>
-				<%= link_to "Edit Password", root_path %> <%# edit_password_user_path(@user) %>
+				<% if current_user.is_at_admin_level? %><%= link_to "View All Users", users_path%><% end %>
       </div>
       <div class='title'>
         <span id='title'>Update User Information</span>
@@ -32,7 +31,8 @@
 				  <%= f.check_box :enabled %></div><br/><br/>
 				  
 				  <div><%= f.submit "Update" %></div>
-				<% end %>
+				<% end %> <br />
+				<%= link_to "Edit Password", edit_password_user_path(@user) %> <%# edit_password_user_path(@user) %>
 			</div>
     </td>
 	</tr>

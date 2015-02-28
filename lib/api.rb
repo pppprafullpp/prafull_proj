@@ -14,7 +14,7 @@ module ServiceDeal
 						 :enabled => params[:enabled ],
 				)
 				if user.save
-					{:success=>'ok'}.to_json
+					{:success=>'true'}.to_json
 				else
 					user.errors.to_json
 				end	
@@ -32,7 +32,7 @@ module ServiceDeal
 						:zip 			=> params[:zip],
 				)
 				if @app_user.save
-					{   :success 		=> 'ok',
+					{   :success 		=> 'true',
 						:first_name 	=> @app_user.first_name, 
 					    :last_name 		=> @app_user.last_name,
 					    :email 			=> @app_user.email,

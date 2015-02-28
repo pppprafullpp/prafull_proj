@@ -1,0 +1,39 @@
+<table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%' >
+	<tr>
+		<td class='main' id='main' valign='top'>
+			<div class='title_tools'>
+				<%= link_to "View All App Users", app_users_path%>
+			</div>
+			<div class='title'>
+				<span id='title'>Create New App User</span>
+			</div>
+			<div class="small-6 large-centered columns">
+				<%= form_for(@app_user) do |f| %>
+					<h3>Login Information : </h3><br/>
+					<div>First Name<br />
+						<%= f.text_field :first_name %>
+					</div>
+					<div>Last Name<br />
+						<%= f.text_field :last_name %>
+					</div>
+					<div>Email<br />
+						<%= f.email_field :email %>
+					</div>
+					<div>Password<br />
+						<%= f.text_field :password %>
+					</div>
+					<div>State<br />
+						<%= f.text_field :state %>
+					</div>
+					<div>City<br />
+						<%= f.text_field :city %>
+					</div>
+					<div>Zip<br />
+						<%= f.text_field :zip %>
+					</div>
+					<div><%= f.submit "Update" %></div>
+				<% end %>
+			</div>
+		</td>
+	</tr>
+</table>

@@ -11,11 +11,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
   root to: "home#index"
 
   devise_for :users
@@ -33,6 +28,7 @@ Rails.application.routes.draw do
 
   resources :service_deals
   resources :service_categories
+  resources :app_users
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

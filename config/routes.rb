@@ -1,4 +1,16 @@
+require 'api'
 Rails.application.routes.draw do
+  mount ServiceDeal::API => "/"
+
+  devise_for :app_users, skip: [:sessions, :passwords, :registrations]
+
+  namespace :api do
+    namespace :v1 do
+      devise_scope :app_user do
+        post 'sessions' => 'sessions#create', :as => 'login'
+      end
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       devise_scope :app_user do
         post 'sessions' => 'sessions#create', :as => 'login'
       end
+      resources :service_preferences do
+        post 'service_preferences' => 'service_preferences#create'
+        put  'service_preferences' => 'service_preferences#update'
+      end  
     end
   end
   root to: "home#index"
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
   resources :service_deals
   resources :service_categories
   resources :app_users
+  resources :service_preferences
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

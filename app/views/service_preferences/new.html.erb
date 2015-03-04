@@ -1,0 +1,31 @@
+<table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%' >
+  <tr> 
+    <td class='main' id='main' valign='top'>
+      <div class='title_tools'>
+		<%= link_to "View All Service Preferences", service_preferences_path %>
+      </div>
+      <div class='title'>
+        <span id='title'>Add a New Deal</span>
+      </div>
+
+			<div class="small-6 large-centered columns">
+				<%= form_for(@service_preference) do |f| %>
+					<br/>
+
+				  <div><strong>App User Id : </strong><br />
+				  <%= f.text_field :app_user_id %></div>
+				  <div><strong>Service Name : </strong><br />
+				  <%= f.text_field :service_name %></div>
+				  <div><strong>Service Provider:</strong><br />
+				  <%= f.text_field :service_provider %></div>
+				  <div><strong>Contract Date:</strong><br />
+				  <%= f.text_field :contract_date %></div>
+				  <div><%= f.check_box :is_contract %><strong>Is Contract ? </strong></div>
+				  <div><strong>Contract Fee</strong><br />
+				  <%= f.text_field :contract_fee %></div>
+				  <div><%= f.submit "Create" %></div>
+				<% end %>
+			</div>
+    </td>
+	</tr>
+</table>

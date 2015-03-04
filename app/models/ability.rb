@@ -7,7 +7,7 @@ class Ability
     if user.role? 'super_admin'
       can :manage, :all
     elsif user.role? 'admin'
-      can :read, [User, ServiceCategory, ServiceDeal]  
+      can :read, [User, ServiceCategory, ServiceDeal, ServicePreference]  
     end  
 
   end

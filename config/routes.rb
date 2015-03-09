@@ -11,7 +11,6 @@ Rails.application.routes.draw do
       end
       resources :service_preferences do
         post 'service_preferences' => 'service_preferences#create'
-        put  'service_preferences' => 'service_preferences#update'
       end  
     end
   end

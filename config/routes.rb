@@ -11,7 +11,13 @@ Rails.application.routes.draw do
       end
       resources :service_preferences do
         post 'service_preferences' => 'service_preferences#create'
-      end  
+      end 
+      resources :notifications do 
+        post 'notifications' => 'notifications#create'
+      end 
+      resources :app_users do
+        post 'app_users' => 'app_users#create'
+      end 
     end
   end
   root to: "home#index"
@@ -33,6 +39,7 @@ Rails.application.routes.draw do
   resources :service_categories
   resources :app_users
   resources :service_preferences
+  resources :notifications
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

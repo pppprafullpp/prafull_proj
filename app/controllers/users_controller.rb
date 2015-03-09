@@ -108,7 +108,6 @@ class UsersController < ApplicationController
         format.xml  { render :xml => @user, :status => :created, :user => @user }
       end
     end
-    
   end
 
 

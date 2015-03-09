@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309110415) do
+ActiveRecord::Schema.define(version: 20150309142054) do
 
   create_table "app_users", force: :cascade do |t|
     t.string   "name",                   limit: 255, default: "", null: false
@@ -38,12 +38,23 @@ ActiveRecord::Schema.define(version: 20150309110415) do
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "deals", force: :cascade do |t|
-    t.string   "category",   limit: 255
-    t.string   "url",        limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.text     "deal",       limit: 65535
-    t.string   "title",      limit: 255
+    t.string   "category",          limit: 255
+    t.string   "url",               limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.text     "deal",              limit: 65535
+    t.string   "title",             limit: 255
+    t.string   "service_provider",  limit: 255
+    t.text     "short_description", limit: 65535
+    t.integer  "price",             limit: 4
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "app_user_id",          limit: 4
+    t.string   "service_notification", limit: 255
+    t.integer  "day",                  limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "roles", force: :cascade do |t|

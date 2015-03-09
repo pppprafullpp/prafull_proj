@@ -16,8 +16,11 @@
             <tr>
               <th><strong>Category</strong></th>
               <th><strong>Title</strong></th>
+              <th><strong>Service Provider</strong></th>
+              <th><strong>Price</strong></th>
               <th><strong>URL</strong></th>
-              <th><strong>Deal</strong></th>
+              <th><strong>Short Description</strong></th>
+              <th><strong>Detail Description</strong></th>
               <th><strong>Edit</strong></th>
             </tr>
           </thead>
@@ -27,7 +30,10 @@
                 <tr>
                   <td><%= s_deal.category %></td>
                   <td><%= s_deal.title %></td>
+                  <td><%= s_deal.service_provider %></td>
+                  <td><%= s_deal.price %></td>
                   <td><%= s_deal.url %></td>
+                  <td><%= s_deal.short_description %></td>
                   <td><%= s_deal.deal %></td>
                   <td><%= (link_to 'Edit', edit_deal_path(s_deal)) if can? :manage, s_deal %></td>
                 </tr>

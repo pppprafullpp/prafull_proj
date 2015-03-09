@@ -56,6 +56,21 @@ module ServiceDeal
 			end	
 			get do
 				@app_user = AppUser.find_by_id(params[:id])
+				if @app_user.present?
+					{
+						  :success 												=> 		'true',
+							:first_name 										=> 		@app_user.first_name, 
+					    :last_name 											=> 		@app_user.last_name,
+					    :email 													=> 		@app_user.email,
+					    :state 													=> 		@app_user.state,
+					    :city 													=> 		@app_user.city,
+					    :zip  													=> 		@app_user.zip,
+					}
+				else
+					{
+							:success 												=>  	'false',
+					}
+				end
 			end	
 		end
 
@@ -116,9 +131,12 @@ module ServiceDeal
 					{
 						:success    											=> 		'true',
 						:category  												=> 		sdeal.category,
+						:service_provider   							=>    sdeal.service_provider,
+						:price     												=>    sdeal.price,
 						:title  													=>  	sdeal.title,
 						:url  														=> 		sdeal.url,
 						:deal 														=>  	sdeal.deal,
+						:short_description   							=>   	sdeal.short_description,
 
 					}
 				  end
@@ -128,6 +146,25 @@ module ServiceDeal
 					}
 				end
 			end	
+		end
+
+		resource :notifications do	
+			get do
+				@notification = Notification.find_by_app_user_id(params[:app_user_id])
+						if @notification.present?
+							{ 
+						  	:success 																=> 		'true',
+						    :app_user_id														=> 		@notification.app_user_id,
+						    :service_notification 							    => 		@notification.service_notification,
+					  	  :day          													=> 		@notification.day,
+							}
+						else
+							{
+								:success 												=>		'false',
+							}
+						end
+			end				
 		end	
+
 	end
 end	

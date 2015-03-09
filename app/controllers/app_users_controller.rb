@@ -22,16 +22,27 @@ class AppUsersController < ApplicationController
 
 	def update
 		@app_user = AppUser.find(params[:id])
+    	respond_to do |format|
+      		if @app_user.update_attributes(app_user_params)
+        		format.html { redirect_to app_users_path, notice: 'You have successfully updated a user.' }
+        		format.xml  { render :xml => @app_user, :status => :created, :user => @app_user }
+      		else
+        		format.html { render :edit }
+        		format.json { render json: @app_user.errors, status: :unprocessable_entity }
+      		end
+    	end
+  	end
+  	def destroy
+    @app_user = AppUser.find(params[:id])
+    
     respond_to do |format|
-      if @app_user.update_attributes(app_user_params)
-        format.html { redirect_to app_users_path, notice: 'You have successfully updated a user.' }
-        format.xml  { render :xml => @app_user, :status => :created, :user => @app_user }
-      else
-        format.html { render :edit }
-        format.json { render json: @app_user.errors, status: :unprocessable_entity }
+      if @app_user.destroy
+        format.html { redirect_to app_users_path, :notice => 'You have successfully removed a user' }
+        format.xml  { render :xml => @app_user, :status => :created, :app_user => @app_user }
       end
     end
-  end
+   end
+
 	private
 	def app_user_params
 		params.require(:app_user).permit(:first_name, :last_name, :email, :state, :city, :zip, :password)

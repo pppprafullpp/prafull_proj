@@ -26,7 +26,6 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		@service_preference = ServicePreference.find_by_app_user_id(params[:app_user_id])
 	end
 	def update
-		byebug
 		@service_preference = ServicePreference.find_by_app_user_id(params[:app_user_id])
 		respond_to do |format|
       		if @service_preference.update(service_preference_params)

@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
   end  
 
-  resources :service_deals
+  resources :deals
   resources :service_categories
   resources :app_users
   resources :service_preferences

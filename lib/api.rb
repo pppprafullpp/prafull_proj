@@ -80,8 +80,7 @@ module ServiceDeal
 					end
 				end	
 				get do
-					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_name = ?",params[:service_name])
-					byebug
+					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_name = ?",params[:service_name]).take
 					if @service_preference.present?
 						{ 
 					  	:success 												=> 		'true',
@@ -100,7 +99,6 @@ module ServiceDeal
 				put do
 					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_name = ?", params[:service_name])
 					if @service_preference.present? 
-						byebug 
     				@service_preference.update_attributes(params.permit(:service_provider, :contract_date, :is_contract, :contract_fee))
   				else
     				{

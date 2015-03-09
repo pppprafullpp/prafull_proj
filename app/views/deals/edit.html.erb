@@ -14,6 +14,8 @@
 
 				  <div><strong>Select a Service Category : </strong><br />
 				  <%= f.select :category, {'Internet' => 'internet','Cable' => 'cable','Telephone' => 'telephone', 'Gas' => 'gas', 'Electricity' => 'electricity'} %></div>
+				  <div><strong>Title:</strong><br />
+				  <%= f.text_field :title %></div>
 				  <div><strong>URL:</strong><br />
 				  <%= f.text_field :url %></div>
 				  <div><strong>Enter a deal</strong><br />

@@ -116,6 +116,7 @@ module ServiceDeal
 					{
 						:success    											=> 		'true',
 						:category  												=> 		sdeal.category,
+						:title  													=>  	sdeal.title,
 						:url  														=> 		sdeal.url,
 						:deal 														=>  	sdeal.deal,
 

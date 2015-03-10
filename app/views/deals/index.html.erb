@@ -35,7 +35,7 @@
                   <td><%= s_deal.url %></td>
                   <td><%= s_deal.short_description %></td>
                   <td><%= s_deal.deal %></td>
-                  <td><%= (link_to 'Edit', edit_deal_path(s_deal)) if can? :manage, s_deal %></td>
+                  <td><%= (link_to 'Edit', edit_deal_path(s_deal)) if can? :manage, s_deal %> | <%= (link_to "Delete", s_deal, method: :delete, data: { confirm: "You sure?" }) if can? :manage, s_deal %></td>
                 </tr>
               <% end %>
             <% end %>

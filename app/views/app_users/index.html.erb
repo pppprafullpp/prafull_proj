@@ -3,7 +3,7 @@
 		<td class='main' id='main' valign='top'>
 			<div class='title_tools'>
 				<% if current_user.is_super_admin? %>
-					<%= link_to "Create New App User", new_app_user_path%>
+					<%#= link_to "Create New App User", new_app_user_path%>
 				<% end %>
 			</div>
 			<div class='title'>
@@ -18,10 +18,11 @@
 							<th><strong>Last Name</strong></th>
 							<th><strong>Email</strong></th>
 							<th><strong>Password</strong></th>
+							<th><strong>Address</strong></th>
 							<th><strong>State</strong></th>
 							<th><strong>City</strong></th>
 							<th><strong>Zip</strong></th>
-							<th><strong>Edit</strong></th>
+							<th><strong>Actions</strong></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,6 +34,7 @@
 									<td><%= app_user.last_name %></td>
 									<td><%= app_user.email %></td>
 									<td><%= app_user.password %></td>
+									<td><%= app_user.address %></td>
 									<td><%= app_user.state %></td>
 									<td><%= app_user.city %></td>
 									<td><%= app_user.zip %></td>

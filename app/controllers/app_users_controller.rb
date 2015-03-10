@@ -33,18 +33,17 @@ class AppUsersController < ApplicationController
     	end
   	end
   	def destroy
-    @app_user = AppUser.find(params[:id])
-    
-    respond_to do |format|
-      if @app_user.destroy
-        format.html { redirect_to app_users_path, :notice => 'You have successfully removed a user' }
-        format.xml  { render :xml => @app_user, :status => :created, :app_user => @app_user }
-      end
-    end
+    	@app_user = AppUser.find(params[:id])
+    	respond_to do |format|
+      		if @app_user.destroy
+        		format.html { redirect_to app_users_path, :notice => 'You have successfully removed a user' }
+        		format.xml  { render :xml => @app_user, :status => :created, :app_user => @app_user }
+      		end
+    	end
    end
 
 	private
 	def app_user_params
-		params.require(:app_user).permit(:first_name, :last_name, :email, :state, :city, :zip, :password)
+		params.require(:app_user).permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :address)
 	end
 end

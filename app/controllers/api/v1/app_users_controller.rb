@@ -7,16 +7,17 @@ class Api::V1::AppUsersController < ApplicationController
 	end
 
 	def create
-		@app_user = AppUser.find_by_id(params[:id])
+		@app_user = AppUser.find_by_email(params[:email])
 		if @app_user.present?
-			if @app_user.update(app_user_params)
+			if params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? 
+        @app_user.update(app_user_params)
         		#format.json { success: :true }
         		render :status => 200,
            			:json => { :success => true }
-      		else
+      else
         		render :status => 401,
            		:json => { :success => false }	
-        	end
+      end
 		else
 			@app_user = AppUser.new(app_user_params) 
 			#raise service_preference_params.inspect   
@@ -25,7 +26,7 @@ class Api::V1::AppUsersController < ApplicationController
       			#format.json { render json: @service_preference, status: :created }
         		#format.xml { render xml: @service_preference, status: :created }
         		render :status => 200,
-           		:json => { :success => true }
+           		:json => { :success => true, :app_user_id => @app_user.id }
       		else
         		#format.json { render json: @user.errors}
         		render :status => 401,
@@ -37,7 +38,7 @@ class Api::V1::AppUsersController < ApplicationController
 
 	private
 	def app_user_params
-		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password)
+		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :address)
 	end
 
 end	

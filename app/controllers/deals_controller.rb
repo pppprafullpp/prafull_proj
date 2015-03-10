@@ -33,6 +33,15 @@ class DealsController < ApplicationController
       end
     end
   end
+  def destroy
+    @deal = Deal.find(params[:id])
+    respond_to do |format|
+          if @deal.destroy
+            format.html { redirect_to deals_path, :notice => 'You have successfully removed a deal' }
+            format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
+          end
+    end
+  end
   
 	private
 

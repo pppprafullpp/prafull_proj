@@ -34,6 +34,7 @@ module ServiceDeal
 							:last_name 											=> 		params[:last_name],
 							:email 													=> 		params[:email],
 							:password 											=> 		params[:password],
+							:address                        =>    params[:address],
 							:state 													=> 		params[:state],
 							:city 													=> 		params[:city],
 							:zip 														=> 		params[:zip],
@@ -41,9 +42,11 @@ module ServiceDeal
 				if @app_user.save
 					{ 
 					  	:success 												=> 		'true',
+					  	:app_user_id   									=> 		@app_user.id,
 							:first_name 										=> 		@app_user.first_name, 
 					    :last_name 											=> 		@app_user.last_name,
 					    :email 													=> 		@app_user.email,
+					    :address   										  =>    @app_user.address,
 					    :state 													=> 		@app_user.state,
 					    :city 													=> 		@app_user.city,
 					    :zip  													=> 		@app_user.zip,
@@ -62,6 +65,7 @@ module ServiceDeal
 							:first_name 										=> 		@app_user.first_name, 
 					    :last_name 											=> 		@app_user.last_name,
 					    :email 													=> 		@app_user.email,
+					    :address     										=>    @app_user.address,
 					    :state 													=> 		@app_user.state,
 					    :city 													=> 		@app_user.city,
 					    :zip  													=> 		@app_user.zip,
@@ -160,10 +164,34 @@ module ServiceDeal
 							}
 						else
 							{
-								:success 												=>		'false',
+								:success 												        =>		'false',
 							}
 						end
 			end				
+		end
+
+		resource :get_app_user_info do
+			get do
+				@app_user = AppUser.find_by_email(params[:email])
+				if @app_user.present?
+					{
+						    :success      													=>    'true',
+						    :app_user_id    												=>    @app_user.id,
+							  :first_name 										        => 		@app_user.first_name, 
+					      :last_name 											        => 		@app_user.last_name,
+					      :email 													        => 		@app_user.email,
+					      :address    														=>    @app_user.address,
+					      :state 													        => 		@app_user.state,
+					      :city 													        => 		@app_user.city,
+					      :zip  													        => 		@app_user.zip,
+
+					}
+				else
+					{
+						:success    																=>    'false',
+					}
+				end
+			end	
 		end	
 
 	end

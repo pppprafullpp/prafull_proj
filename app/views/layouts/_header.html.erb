@@ -8,11 +8,13 @@
     <ul class="right">
       <% if user_signed_in? && current_user.is_at_admin_level? %>
         <li class="divider"></li>
-        <li><%= link_to "Services", service_categories_path %></li>
+        <li><%= link_to "Service Category", service_categories_path %></li>
         <li class="divider"></li>
         <li><%= link_to "Deals", deals_path %></li>
         <li class="divider"></li>
         <li><%= link_to "Service Preferences", service_preferences_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "Service Providers", service_providers_path %></li>
         <li class="divider"></li>
         <li><%= link_to "Notification", notifications_path %></li>
         <li class="divider"></li>

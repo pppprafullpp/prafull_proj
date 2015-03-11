@@ -5,15 +5,17 @@
 		<%= link_to "View All Services", service_categories_path %>
       </div>
       <div class='title'>
-        <span id='title'>Create a New Service</span>
+        <span id='title'>Create a New Service Category</span>
       </div>
 
 			<div class="small-6 large-centered columns">
 				<%= form_for(@service_category, :url => @service_categories) do |f| %>
 					<br/>
 
-				  <div>Name of service : <br />
+				  <div>Service Category Name : <br />
 				  <%= f.text_field :name %></div>
+				  <div>Description : <br />
+				  <%= f.text_field :description %></div>
 				  <div><%= f.submit "Create" %></div>
 				<% end %>
 			</div>

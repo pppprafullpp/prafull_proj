@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   resources :app_users
   resources :service_preferences
   resources :notifications
+  resources :service_providers
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310121640) do
+ActiveRecord::Schema.define(version: 20150311111851) do
 
   create_table "app_users", force: :cascade do |t|
     t.string   "name",                   limit: 255, default: "", null: false
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20150310121640) do
     t.string   "city",                   limit: 255
     t.integer  "zip",                    limit: 4
     t.string   "address",                limit: 255
+    t.string   "password_hash",          limit: 255
+    t.string   "password_salt",          limit: 255
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -64,9 +66,10 @@ ActiveRecord::Schema.define(version: 20150310121640) do
   end
 
   create_table "service_categories", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",        limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.text     "description", limit: 65535
   end
 
   create_table "service_preferences", force: :cascade do |t|
@@ -79,6 +82,20 @@ ActiveRecord::Schema.define(version: 20150310121640) do
     t.datetime "updated_at",                   null: false
     t.integer  "app_user_id",      limit: 4
   end
+
+  create_table "service_providers", force: :cascade do |t|
+    t.string   "name",                  limit: 255
+    t.integer  "service_category_id",   limit: 4
+    t.string   "state",                 limit: 255
+    t.string   "city",                  limit: 255
+    t.string   "zip",                   limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "service_category_name", limit: 255
+    t.string   "address",               limit: 255
+  end
+
+  add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false

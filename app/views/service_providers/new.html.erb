@@ -1,0 +1,34 @@
+<table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%' >
+  <tr> 
+    <td class='main' id='main' valign='top'>
+      <div class='title_tools'>
+				<%= link_to "View All Service Providers", service_providers_path %>
+      </div>
+      <div class='title'>
+        <span id='title'>Add a New Service Provider</span>
+      </div>
+
+			<div class="small-6 large-centered columns">
+				<%= form_for(@service_provider, :url => @service_providers) do |f| %>
+					<br/>
+
+				  <div><strong>Select a Service Category : </strong><br />
+				  <%= f.select :service_category_name, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"}%>
+				  </div>
+				  <div><strong>Service Provider Name:</strong><br />
+				  <%= f.text_field :name %></div>
+				  <div><strong>Address:</strong><br />
+				  <%= f.text_field :address %></div>
+				  <div><strong>State:</strong><br />
+				  <%= f.text_field :state %></div>
+				  <div><strong>City:</strong><br />
+				  <%= f.text_field :city %></div>
+				  <div><strong>Zip:</strong><br />
+				  <%= f.text_field :zip %></div>
+				  <div><%= f.submit "Create" %></div>
+				<% end %>
+			</div>
+    </td>
+	</tr>
+</table>
+

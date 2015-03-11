@@ -1,0 +1,44 @@
+<table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%'>
+	<tr>
+		<td class='main' id='main' valign='top'>
+			<div class='title_tools'>
+				<% if current_user.is_super_admin? %>
+					<%= link_to "Create New Service Provider", new_service_provider_path %>
+				<% end %>
+			</div>
+
+			<div id="users" class="list">
+				<table id="users_list" class="datatable" cellpadding='0' cellspacing='0' border='1'>
+					<thead>
+						<tr>
+							<th><strong>ID</strong></th>
+							<th><strong>Service Category Name</strong></th>
+							<th><strong>Service Provider Name</strong></th>
+							<th><strong>Address</strong></th>
+							<th><strong>State</strong></th>
+							<th><strong>City</strong></th>
+							<th><strong>Zip</strong></th>
+							<th><strong>Action</strong></th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @service_providers.each do |service_provider| %>
+							<% if can? :read, service_provider %>
+								<tr>
+									<td><%= service_provider.id %></td>
+									<td><%= service_provider.service_category_name %></td>
+									<td><%= service_provider.name %></td>
+									<td><%= service_provider.address %></td>
+									<td><%= service_provider.state %></td>
+									<td><%= service_provider.city %></td>
+									<td><%= service_provider.zip %></td>
+									<td><%= (link_to 'Edit', edit_service_provider_path(service_provider)) if can? :manage, service_provider %> | <%= (link_to "Delete", service_provider, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_provider %></td>
+								</tr>
+							<% end %>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>

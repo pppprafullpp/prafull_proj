@@ -20,6 +20,7 @@ class Api::V1::AppUsersController < ApplicationController
       end
 		else
 			@app_user = AppUser.new(app_user_params) 
+      #byebug
 			#raise service_preference_params.inspect   
     		#respond_to do |format|
       		if @app_user.save

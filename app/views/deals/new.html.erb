@@ -13,7 +13,9 @@
 					<br/>
 
 				  <div><strong>Select a Service Category : </strong><br />
-				  <%= f.select :category, {'Internet' => 'internet','Cable' => 'cable','Telephone' => 'telephone', 'Gas' => 'gas', 'Electricity' => 'electricity'} %></div>
+				  <%#= f.select :category, {'Internet' => 'internet','Cable' => 'cable','Telephone' => 'telephone', 'Gas' => 'gas', 'Electricity' => 'electricity'} %>
+				  <%= f.select :category, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"}%>
+				  </div>
 				  <div><strong>Title:</strong><br />
 				  <%= f.text_field :title %></div>
 				  <div><strong>Service Provider : </strong><br />

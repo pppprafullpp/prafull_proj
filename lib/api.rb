@@ -26,7 +26,27 @@ module ServiceDeal
 					}
 				end	
 			end	
+		end
+
+		resource :service_providers do
+			get do
+				#@service_provider = ServiceProvider.find_by_service_category_name(params[:service_category_name])
+				@service_provider = ServiceProvider.where("service_category_name = ?", params[:service_category_name])
+				if @service_provider.present?
+					@service_provider.each do |service_provider|
+						{
+							:success  											=>    'true',
+							:service_provider_name   				=>    service_provider.name,
+						}
+					end	
+				else
+					{
+						:success                          => 		'false',
+					}
+				end	
+			end	
 		end	
+
 		resource :app_users do
 			post do
 				@app_user = AppUser.create(

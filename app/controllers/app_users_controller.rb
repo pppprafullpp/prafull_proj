@@ -1,6 +1,6 @@
 class AppUsersController < ApplicationController
 	def index
-		@app_users = AppUser.all
+		@app_users = AppUser.all.order("id DESC")
 	end
 	def new
 		@app_user = AppUser.new

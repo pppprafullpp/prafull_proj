@@ -41,6 +41,16 @@ class ServiceCategoriesController < ApplicationController
     end
   end
 
+  def destroy
+    @service_category = ServiceCategory.find(params[:id])
+    respond_to do |format|
+      if @service_category.destroy
+        format.html { redirect_to service_categories_path, :notice => 'You have successfully removed a service category' }
+        format.xml  { render :xml => @service_category, :status => :created, :service_category=> @service_category }
+      end
+    end
+  end
+
   private
   def service_category_params
   	params.require(:service_category).permit(:name,:description)

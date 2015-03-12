@@ -17,6 +17,15 @@ class ServicePreferencesController < ApplicationController
       end
     end
 	end
+	def destroy
+    	@service_preference = ServicePreference.find(params[:id])
+    	respond_to do |format|
+          if @service_preference.destroy
+            format.html { redirect_to service_preferences_path, :notice => 'You have successfully removed a service preference' }
+            format.xml  { render :xml => @service_preference, :status => :created, :service_preference => @service_preference }
+          end
+    	end
+  	end
 
 	private
 	def service_preference_params

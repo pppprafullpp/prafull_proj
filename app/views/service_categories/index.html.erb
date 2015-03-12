@@ -26,7 +26,7 @@
 			    <tr>
 				  <td><%= service_category.name %></td>
 				  <td><%= service_category.description %></td>
-				  <td><%= (link_to 'Edit', edit_service_category_path(service_category)) if can? :manage, service_category %></td>
+				  <td><%= (link_to 'Edit', edit_service_category_path(service_category)) if can? :manage, service_category %> | <%= (link_to "Delete", service_category, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_category %></td>
 				</tr>
 			  <% end %>
 			<% end %>

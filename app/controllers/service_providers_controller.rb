@@ -36,7 +36,13 @@ class ServiceProvidersController < ApplicationController
     	end
 	end
 	def destroy
-		
+		@service_provider = ServiceProvider.find(params[:id])
+    	respond_to do |format|
+          if @service_provider.destroy
+            format.html { redirect_to service_providers_path, :notice => 'You have successfully removed a service provider' }
+            format.xml  { render :xml => @service_provider, :status => :created, :service_provider => @service_provider }
+          end
+    	end	
 	end
 
 	private

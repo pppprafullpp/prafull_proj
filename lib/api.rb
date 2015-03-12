@@ -172,6 +172,23 @@ module ServiceDeal
 			end	
 		end
 
+		resource :service_preference_info do
+			get do
+				@service_preference = ServicePreference.where(app_user_id: params[:app_user_id])
+				if @service_preference.present?
+					@service_preference.each do |service_preference|
+					 	{
+							:success                           =>   'true',
+						}
+				  end
+				else
+					{
+						:success                           =>    'false',
+					}
+				end
+			end	
+		end	
+
 		resource :notifications do	
 			get do
 				@notification = Notification.find_by_app_user_id(params[:app_user_id])

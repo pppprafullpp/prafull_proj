@@ -5,11 +5,11 @@
 		<%= link_to "View All Service Preferences", service_preferences_path %>
       </div>
       <div class='title'>
-        <span id='title'>Add a New Deal</span>
+        <span id='title'>Add a New Service Preference</span>
       </div>
 
 			<div class="small-6 large-centered columns">
-				<%= form_for(@service_preference) do |f| %>
+				<%= form_for(@service_preference, :url => @service_preferences) do |f| %>
 					<br/>
 
 				  <div><strong>App User Id : </strong><br />

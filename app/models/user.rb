@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   validates :email, :presence => true, :uniqueness => true
   validates :password, :presence => true, :confirmation => true, :on => :create
 
+  def as_json(opts={})
+    json = super(opts)
+    Hash[*json.map{|k, v| [k, v || ""]}.flatten]
+  end
+
   ROLES = %w[super_admin admin serviceprovider]
 
 	def is_super_admin?

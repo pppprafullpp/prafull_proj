@@ -15,8 +15,8 @@
           <thead>
             <tr>
               <th><strong>Category</strong></th>
-              <th><strong>Title</strong></th>
               <th><strong>Service Provider</strong></th>
+              <th><strong>Title</strong></th>
               <th><strong>Price</strong></th>
               <th><strong>URL</strong></th>
               <th><strong>Short Description</strong></th>
@@ -29,8 +29,8 @@
               <% if can? :read, s_deal %>
                 <tr>
                   <td><%= s_deal.category %></td>
-                  <td><%= s_deal.title %></td>
                   <td><%= s_deal.service_provider %></td>
+                  <td><%= s_deal.title %></td>
                   <td><%= s_deal.price %></td>
                   <td><%= s_deal.url %></td>
                   <td><%= s_deal.short_description %></td>

@@ -5,6 +5,11 @@ class AppUser < ActiveRecord::Base
   devise :database_authenticatable,:recoverable, :rememberable, :trackable
   has_many :service_preferences
 
+  def as_json(opts={})
+    json = super(opts)
+    Hash[*json.map{|k, v| [k, v || ""]}.flatten]
+  end
+
   #def encrypt_password
   #	byebug
   #  if password.present?

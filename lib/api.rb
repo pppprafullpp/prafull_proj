@@ -37,7 +37,6 @@ module ServiceDeal
 					@service_provider.each do |service_provider|
 						{
 							:success  											=>    'true',
-							:service_provider_name   				=>    service_provider.name,
 						}
 					end	
 				else
@@ -82,8 +81,8 @@ module ServiceDeal
 				@app_user = AppUser.find_by_id(params[:id])
 				if @app_user.present?
 					{
-						  :success 												=> 		'true',
-							:first_name 										=> 		@app_user.first_name, 
+						:success 												=> 		'true',
+						:first_name 										=> 		@app_user.first_name, 
 					    :last_name 											=> 		@app_user.last_name,
 					    :email 													=> 		@app_user.email,
 					    :address     										=>    @app_user.address,
@@ -150,7 +149,7 @@ module ServiceDeal
 
 		resource :deals do
 			get do
-				@deals = Deal.where(category: params[:service_name])
+				@deals = Deal.where(category: params[:service_name]).order("price ASC")
 				if @deals.present?
 					@deals.each do |sdeal|
 					{
@@ -162,7 +161,6 @@ module ServiceDeal
 						:url  														=> 		sdeal.url,
 						:deal 														=>  	sdeal.deal,
 						:short_description   							=>   	sdeal.short_description,
-
 					}
 				  end
 				else

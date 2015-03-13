@@ -6,7 +6,6 @@ class DealsController < ApplicationController
 		@deal = Deal.new
     
 	end
-
   def get_service_providers
     @ServiceProviders=ServiceProvider.select("name").where(service_category_name: params[:category])
     render :json => @ServiceProviders.map{|c| c.name }

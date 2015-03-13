@@ -14,12 +14,21 @@
 
 				  <div><strong>Select a Service Category : </strong><br />
 				  <%#= f.select :category, {'Internet' => 'internet','Cable' => 'cable','Telephone' => 'telephone', 'Gas' => 'gas', 'Electricity' => 'electricity'} %>
-				  <%= f.select :category, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"}%>
+				  <%#= f.select :category, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"}, {:onchange => "#{remote_function(:url  => {:action => "fetch_service_provider "}, :with => "'category='+value")}"} %>
+
+				  <%= f.select :category,
+				  				ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"},
+      							:'data-remote' => 'true',
+      							:'data-url' => deals_fetch_service_provider_path,
+      							:'data-type' => 'json' 
+				  %>
+
+
 				  </div>
+				  <div><strong>Service Provider : </strong><br />
+				  <%= f.select :service_provider,{:include_blank => "Select a service provider"} %></div>
 				  <div><strong>Title:</strong><br />
 				  <%= f.text_field :title %></div>
-				  <div><strong>Service Provider : </strong><br />
-				  <%= f.text_field :service_provider %></div>
 				  <div><strong>Price : </strong><br />
 				  <%= f.text_field :price %></div>
 				  <div><strong>URL:</strong><br />

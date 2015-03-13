@@ -5,6 +5,9 @@ class DealsController < ApplicationController
 	def new
 		@deal = Deal.new
 	end
+  def show
+    
+  end
 	def create
 		@deal = Deal.new(deal_params)    
     respond_to do |format|

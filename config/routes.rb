@@ -35,12 +35,15 @@ Rails.application.routes.draw do
     end
   end  
 
-  resources :deals
+  resources :deals, :only => [:index,:edit,:create,:new,:update,:destroy]
   resources :service_categories
   resources :app_users
   resources :service_preferences
   resources :notifications
   resources :service_providers
+
+  get 'deals/fetch_service_provider' => 'deals#fetch_service_provider'
+
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

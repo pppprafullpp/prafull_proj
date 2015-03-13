@@ -35,12 +35,16 @@ Rails.application.routes.draw do
     end
   end  
 
+  get 'deals/get_service_providers'=>'deals#get_service_providers'
+  
+  
   resources :deals
   resources :service_categories
   resources :app_users
   resources :service_preferences
   resources :notifications
   resources :service_providers
+
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

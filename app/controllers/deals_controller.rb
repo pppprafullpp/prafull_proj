@@ -4,7 +4,14 @@ class DealsController < ApplicationController
 	end
 	def new
 		@deal = Deal.new
+    
 	end
+
+  def get_service_providers
+    @ServiceProviders=ServiceProvider.select("name").where(service_category_name: params[:category])
+    render :json => @ServiceProviders.map{|c| c.name }
+  end
+
 	def create
 		@deal = Deal.new(deal_params)    
     respond_to do |format|
@@ -49,5 +56,6 @@ class DealsController < ApplicationController
   	params.require(:deal).permit(:category, :title, :url, :deal, :service_provider, :short_description, :price)
   end
 
+  
 
 end

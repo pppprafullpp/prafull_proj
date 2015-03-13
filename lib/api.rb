@@ -1,5 +1,6 @@
 # encoding: utf-8
 # lib/api.rb
+require 'grape-entity'
 module ServiceDeal
 	class API < Grape::API
 		prefix 'api'

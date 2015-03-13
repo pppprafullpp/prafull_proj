@@ -81,13 +81,13 @@ module ServiceDeal
 				@app_user = AppUser.find_by_id(params[:id])
 				if @app_user.present?
 					{
-						:success 												=> 		'true',
-						:first_name 										=> 		@app_user.first_name, 
-					    :last_name 											=> 		@app_user.last_name,
-					    :email 													=> 		@app_user.email,
-					    :address     										=>    @app_user.address,
-					    :state 													=> 		@app_user.state,
-					    :city 													=> 		@app_user.city,
+						  :success 												=> 		'true',
+						  :first_name 										=> 		@app_user.first_name.to_s, 
+					    :last_name 											=> 		@app_user.last_name.to_s,
+					    :email 													=> 		@app_user.email.to_s,
+					    :address     										=>    @app_user.address.to_s,
+					    :state 													=> 		@app_user.state.to_s,
+					    :city 													=> 		@app_user.city.to_s,
 					    :zip  													=> 		@app_user.zip,
 					}
 				else

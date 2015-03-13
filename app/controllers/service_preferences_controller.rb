@@ -8,6 +8,10 @@ class ServicePreferencesController < ApplicationController
 		@service_preference = ServicePreference.new
 	end
 
+  def edit
+    @service_preference = ServicePreference.find(params[:id])
+  end
+
 	def create
 		@service_preference = ServicePreference.new(service_preference_params)    
     	respond_to do |format|
@@ -20,6 +24,19 @@ class ServicePreferencesController < ApplicationController
       		end
     	end
 	end
+
+  def update
+    @service_preference = ServicePreference.find(params[:id])
+      respond_to do |format|
+          if @service_preference.update(service_preference_params)
+            format.html { redirect_to service_preferences_path, notice: 'You have successfully updated a Service Preference.' }
+            format.xml  { render :xml => @service_preference, :status => :created, :service_preference => @service_preference }
+          else
+            format.html { render :edit }
+            format.json { render json: @service_preference.errors, status: :unprocessable_entity }
+          end
+      end
+  end
 
 	def destroy
     	@service_preference = ServicePreference.find(params[:id])

@@ -123,11 +123,11 @@ module ServiceDeal
 					if @service_preference.present?
 						{ 
 					  	:success 												=> 		'true',
-					    :service_name										=> 		@service_preference.service_name,
-					    :service_provider 							=> 		@service_preference.service_provider,
-					    :contract_date 									=> 		@service_preference.contract_date,
-					    :is_contract										=> 		@service_preference.is_contract,
-					    :contract_fee  									=> 		@service_preference.contract_fee,
+					    :service_name										=> 		@service_preference.service_name.to_s,
+					    :service_provider 							=> 		@service_preference.service_provider.to_s,
+					    :contract_date 									=> 		@service_preference.contract_date.to_s,
+					    :is_contract										=> 		@service_preference.is_contract.to_s,
+					    :contract_fee  									=> 		@service_preference.contract_fee.to_s,
 						}
 					else
 						{

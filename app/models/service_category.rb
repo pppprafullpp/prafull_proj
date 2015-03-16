@@ -1,5 +1,5 @@
 class ServiceCategory < ActiveRecord::Base
-	has_many :service_deals
+	has_many :deals
 	has_many :service_providers
 
 	def as_json(opts={})

@@ -27,7 +27,7 @@ function populate_service_provider(obj)
 		var handleResponse = function (status, response) {
 		   	var data=JSON.parse(response);
 		   	
-		   	var selectList = document.getElementById("deal_service_provider");
+		   	var selectList = document.getElementById("deal_service_provider_name");
 		   	selectList.options.length = 0;
 		   	for(var i=0;i<data.length;i++){
 				var option = document.createElement("option");

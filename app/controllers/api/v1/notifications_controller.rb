@@ -6,6 +6,10 @@ class Api::V1::NotificationsController < ApplicationController
 		@notification = Notification.new
 	end
 
+  def fetch_notification
+    
+  end
+
 	def create
 		@notification = Notification.find_by_app_user_id(params[:app_user_id])
 		if @notification.present?
@@ -39,7 +43,7 @@ class Api::V1::NotificationsController < ApplicationController
 
 	private
 	def notification_params
-		params.permit(:app_user_id, :service_notification, :day)
+		params.permit(:app_user_id, :recieve_notification, :day)
 	end
 
 end	

@@ -3,6 +3,7 @@ class CreateServiceProviders < ActiveRecord::Migration
     create_table :service_providers do |t|
       t.string  :name
       t.belongs_to :service_category, index:true
+      t.string  :service_category_name
       t.string  :address
       t.string  :state
       t.string  :city

@@ -18,6 +18,8 @@
 							<th><strong>State</strong></th>
 							<th><strong>City</strong></th>
 							<th><strong>Zip</strong></th>
+							<th><strong>Email</strong></th>
+							<th><strong>Telephone</strong></th>
 							<th><strong>Action</strong></th>
 						</tr>
 					</thead>
@@ -32,6 +34,8 @@
 									<td><%= service_provider.state %></td>
 									<td><%= service_provider.city %></td>
 									<td><%= service_provider.zip %></td>
+									<td><%= service_provider.email %></td>
+									<td><%= service_provider.telephone %></td>
 									<td><%= (link_to 'Edit', edit_service_provider_path(service_provider)) if can? :manage, service_provider %> | <%= (link_to "Delete", service_provider, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_provider %></td>
 								</tr>
 							<% end %>

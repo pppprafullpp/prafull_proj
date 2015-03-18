@@ -38,21 +38,23 @@ ActiveRecord::Schema.define(version: 20150311064940) do
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "deals", force: :cascade do |t|
-    t.integer  "service_category_id", limit: 4
-    t.integer  "service_provider_id", limit: 4
-    t.string   "title",               limit: 255
-    t.string   "state",               limit: 255
-    t.string   "city",                limit: 255
-    t.string   "zip",                 limit: 255
-    t.text     "short_description",   limit: 65535
-    t.text     "detail_description",  limit: 65535
-    t.float    "price",               limit: 24
-    t.string   "url",                 limit: 255
-    t.text     "you_save_text",       limit: 65535
+    t.integer  "service_category_id",   limit: 4
+    t.integer  "service_provider_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "service_provider_name", limit: 255
+    t.string   "title",                 limit: 255
+    t.string   "state",                 limit: 255
+    t.string   "city",                  limit: 255
+    t.string   "zip",                   limit: 255
+    t.text     "short_description",     limit: 65535
+    t.text     "detail_description",    limit: 65535
+    t.float    "price",                 limit: 24
+    t.string   "url",                   limit: 255
+    t.text     "you_save_text",         limit: 65535
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -81,14 +83,16 @@ ActiveRecord::Schema.define(version: 20150311064940) do
   end
 
   create_table "service_preferences", force: :cascade do |t|
-    t.integer  "app_user_id",         limit: 4
-    t.integer  "service_category_id", limit: 4
-    t.integer  "service_provider_id", limit: 4
+    t.integer  "app_user_id",           limit: 4
+    t.integer  "service_category_id",   limit: 4
+    t.integer  "service_provider_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "service_provider_name", limit: 255
     t.datetime "contract_date"
-    t.boolean  "is_contract",         limit: 1
-    t.integer  "contract_fee",        limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.boolean  "is_contract",           limit: 1
+    t.float    "contract_fee",          limit: 24
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "service_preferences", ["app_user_id"], name: "index_service_preferences_on_app_user_id", using: :btree
@@ -96,16 +100,17 @@ ActiveRecord::Schema.define(version: 20150311064940) do
   add_index "service_preferences", ["service_provider_id"], name: "index_service_preferences_on_service_provider_id", using: :btree
 
   create_table "service_providers", force: :cascade do |t|
-    t.string   "name",                limit: 255
-    t.integer  "service_category_id", limit: 4
-    t.string   "address",             limit: 255
-    t.string   "state",               limit: 255
-    t.string   "city",                limit: 255
-    t.string   "zip",                 limit: 255
-    t.string   "email",               limit: 255
-    t.string   "telephone",           limit: 255
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.string   "name",                  limit: 255
+    t.integer  "service_category_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "address",               limit: 255
+    t.string   "state",                 limit: 255
+    t.string   "city",                  limit: 255
+    t.string   "zip",                   limit: 255
+    t.string   "email",                 limit: 255
+    t.string   "telephone",             limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree

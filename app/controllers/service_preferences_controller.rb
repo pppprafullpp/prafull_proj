@@ -13,7 +13,8 @@ class ServicePreferencesController < ApplicationController
   end
 
 	def create
-		@service_preference = ServicePreference.new(service_preference_params)    
+		@service_preference = ServicePreference.new(service_preference_params)   
+    #raise @service_preference.inspect 
     	respond_to do |format|
       		if @service_preference.save
         		format.html { redirect_to service_preferences_path, :notice => 'You have successfully created a service preference' }
@@ -50,6 +51,6 @@ class ServicePreferencesController < ApplicationController
 
 	private
 	def service_preference_params
-		params.require(:service_preference).permit(:app_user_id, :service_name, :service_provider, :contract_date, :is_contract, :contract_fee)
+		params.require(:service_preference).permit(:app_user_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee)
 	end
 end	

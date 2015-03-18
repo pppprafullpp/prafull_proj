@@ -32,7 +32,7 @@ module ServiceDeal
 		resource :service_providers do
 			get do
 				#@service_provider = ServiceProvider.find_by_service_category_name(params[:service_category_name])
-				@service_provider = ServiceProvider.where("service_category_name = ?", params[:category])
+				@service_provider = ServiceProvider.where("service_category_name = ?", params[:service_category_name])
 				if @service_provider.present?
 					@service_provider.each do |service_provider|
 						{
@@ -88,7 +88,7 @@ module ServiceDeal
 					    :address     										=>    @app_user.address.to_s,
 					    :state 													=> 		@app_user.state.to_s,
 					    :city 													=> 		@app_user.city.to_s,
-					    :zip  													=> 		@app_user.zip,
+					    :zip  													=> 		@app_user.zip.to_s,
 					}
 				else
 					{
@@ -119,12 +119,12 @@ module ServiceDeal
 					end
 				end	
 				get do
-					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_name = ?",params[:service_name]).take
+					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_name = ?",params[:service_name]).take
 					if @service_preference.present?
 						{ 
 					  	:success 												=> 		'true',
-					    :service_name										=> 		@service_preference.service_name.to_s,
-					    :service_provider 							=> 		@service_preference.service_provider.to_s,
+					    :service_name										=> 		@service_preference.service_category_name.to_s,
+					    :service_provider 							=> 		@service_preference.service_provider_name.to_s,
 					    :contract_date 									=> 		@service_preference.contract_date.to_s,
 					    :is_contract										=> 		@service_preference.is_contract.to_s,
 					    :contract_fee  									=> 		@service_preference.contract_fee.to_s,
@@ -154,13 +154,13 @@ module ServiceDeal
 					@deals.each do |sdeal|
 					{
 						:success    											=> 		'true',
-						:category  												=> 		sdeal.category,
-						:service_provider   							=>    sdeal.service_provider,
-						:price     												=>    sdeal.price,
-						:title  													=>  	sdeal.title,
-						:url  														=> 		sdeal.url,
-						:deal 														=>  	sdeal.deal,
-						:short_description   							=>   	sdeal.short_description,
+						:category  												=> 		sdeal.category.to_s,
+						:service_provider   							=>    sdeal.service_provider.to_s,
+						:price     												=>    sdeal.price.to_s,
+						:title  													=>  	sdeal.title.to_s,
+						:url  														=> 		sdeal.url.to_s,
+						:deal 														=>  	sdeal.deal.to_s,
+						:short_description   							=>   	sdeal.short_description.to_s,
 					}
 				  end
 				else
@@ -194,9 +194,9 @@ module ServiceDeal
 						if @notification.present?
 							{ 
 						  	:success 																=> 		'true',
-						    :app_user_id														=> 		@notification.app_user_id,
-						    :service_notification 							    => 		@notification.service_notification,
-					  	  :day          													=> 		@notification.day,
+						    :app_user_id														=> 		@notification.app_user_id.to_s,
+						    :recieve_notification 							    => 		@notification.recieve_notification.to_s,
+					  	  :day          													=> 		@notification.day.to_s,
 							}
 						else
 							{
@@ -212,14 +212,14 @@ module ServiceDeal
 				if @app_user.present?
 					{
 						    :success      													=>    'true',
-						    :app_user_id    												=>    @app_user.id,
-							  :first_name 										        => 		@app_user.first_name, 
-					      :last_name 											        => 		@app_user.last_name,
-					      :email 													        => 		@app_user.email,
-					      :address    														=>    @app_user.address,
-					      :state 													        => 		@app_user.state,
-					      :city 													        => 		@app_user.city,
-					      :zip  													        => 		@app_user.zip,
+						    :app_user_id    												=>    @app_user.id.to_s,
+							  :first_name 										        => 		@app_user.first_name.to_s, 
+					      :last_name 											        => 		@app_user.last_name.to_s,
+					      :email 													        => 		@app_user.email.to_s,
+					      :address    														=>    @app_user.address.to_s,
+					      :state 													        => 		@app_user.state.to_s,
+					      :city 													        => 		@app_user.city.to_s,
+					      :zip  													        => 		@app_user.zip.to_s,
 
 					}
 				else

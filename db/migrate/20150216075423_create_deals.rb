@@ -3,6 +3,8 @@ class CreateDeals < ActiveRecord::Migration
     create_table :deals do |t|
       t.belongs_to :service_category, index: true
       t.belongs_to :service_provider, index: true
+      t.string :service_category_name
+      t.string :service_provider_name
       t.string :title
       t.string :state
       t.string :city

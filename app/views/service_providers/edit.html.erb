@@ -16,6 +16,8 @@
 				  <%= f.select :service_category_name,ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"} %></div>
 				  <div><strong>Service Provider Name:</strong><br />
 				  <%= f.text_field :name %></div>
+				  <div><strong>Service Provider Logo:</strong><br/>
+				  <%= f.file_field :logo %></div>
 				  <div><strong>Address:</strong><br />
 				  <%= f.text_field :address %></div>
 				  <div><strong>State:</strong><br />
@@ -24,6 +26,14 @@
 				  <%= f.text_field :city %></div>
 				  <div><strong>Zip:</strong><br />
 				  <%= f.text_field :zip %></div>
+				  <div><strong>Email:</strong><br />
+				  <%= f.text_field :email %></div>
+				  <div><strong>Telephone:</strong><br />
+				  <%= f.text_field :telephone %></div>
+				  <div><strong>Is a preferred service provider : </strong>
+				  <%= f.check_box :is_preferred %></div>
+				  <div><strong>Is Active : </strong>
+				  <%= f.check_box :is_active %></div>
 				  <div><%= f.submit "Update" %></div>
 				<% end %>
 			</div>

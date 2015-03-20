@@ -3,6 +3,9 @@ class Deal < ActiveRecord::Base
 	belongs_to :service_provider
 	belongs_to :service_preference
 
+	has_attached_file :deal_image, :styles => { :medium => "300x300>", :thumb => "100x100>" }  #, :default_url => "/images/:style/missing.png"
+    validates_attachment_content_type :deal_image, :content_type => /\Aimage\/.*\Z/
+
 	def as_json(opts={})
     	json = super(opts)
     	Hash[*json.map{|k, v| [k, v || ""]}.flatten]

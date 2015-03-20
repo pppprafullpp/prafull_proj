@@ -17,6 +17,8 @@
 				  </div>
 				  <div><strong>Service Provider Name:</strong><br />
 				  <%= f.text_field :name %></div>
+				  <div><strong>Service Provider Logo:</strong><br/>
+				  <%= f.file_field :logo %></div>
 				  <div><strong>Address:</strong><br />
 				  <%= f.text_field :address %></div>
 				  <div><strong>State:</strong><br />
@@ -29,6 +31,10 @@
 				  <%= f.text_field :email %></div>
 				  <div><strong>Telephone:</strong><br />
 				  <%= f.text_field :telephone %></div>
+				  <div><strong>Is a preferred service provider : </strong>
+				  <%= f.check_box :is_preferred %></div>
+				  <div><strong>Is Active : </strong>
+				  <%= f.check_box :is_active %></div>
 				  <div><%= f.submit "Create" %></div>
 				<% end %>
 			</div>

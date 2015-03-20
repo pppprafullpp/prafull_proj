@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311064940) do
+ActiveRecord::Schema.define(version: 20150319093507) do
 
   create_table "app_users", force: :cascade do |t|
-    t.string   "first_name",             limit: 255, default: "", null: false
-    t.string   "last_name",              limit: 255, default: "", null: false
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "first_name",             limit: 255, default: "",   null: false
+    t.string   "last_name",              limit: 255, default: "",   null: false
+    t.string   "email",                  limit: 255, default: "",   null: false
+    t.string   "encrypted_password",     limit: 255, default: "",   null: false
     t.string   "address",                limit: 255
     t.string   "state",                  limit: 255
     t.string   "city",                   limit: 255
@@ -25,36 +25,46 @@ ActiveRecord::Schema.define(version: 20150311064940) do
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,    null: false
+    t.boolean  "active",                 limit: 1,   default: true
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "deals", force: :cascade do |t|
-    t.integer  "service_category_id",   limit: 4
-    t.integer  "service_provider_id",   limit: 4
-    t.string   "service_category_name", limit: 255
-    t.string   "service_provider_name", limit: 255
-    t.string   "title",                 limit: 255
-    t.string   "state",                 limit: 255
-    t.string   "city",                  limit: 255
-    t.string   "zip",                   limit: 255
-    t.text     "short_description",     limit: 65535
-    t.text     "detail_description",    limit: 65535
-    t.float    "price",                 limit: 24
-    t.string   "url",                   limit: 255
-    t.text     "you_save_text",         limit: 65535
+    t.integer  "service_category_id",     limit: 4
+    t.integer  "service_provider_id",     limit: 4
+    t.string   "service_category_name",   limit: 255
+    t.string   "service_provider_name",   limit: 255
+    t.string   "title",                   limit: 255
+    t.string   "state",                   limit: 255
+    t.string   "city",                    limit: 255
+    t.string   "zip",                     limit: 255
+    t.text     "short_description",       limit: 65535
+    t.text     "detail_description",      limit: 65535
+    t.float    "price",                   limit: 24
+    t.string   "url",                     limit: 255
+    t.text     "you_save_text",           limit: 65535
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.boolean  "is_active",               limit: 1,     default: true
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "deal_image_file_name",    limit: 255
+    t.string   "deal_image_content_type", limit: 255
+    t.integer  "deal_image_file_size",    limit: 4
+    t.datetime "deal_image_updated_at"
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -109,8 +119,14 @@ ActiveRecord::Schema.define(version: 20150311064940) do
     t.string   "zip",                   limit: 255
     t.string   "email",                 limit: 255
     t.string   "telephone",             limit: 255
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.boolean  "is_preferred",          limit: 1,   default: false
+    t.boolean  "is_active",             limit: 1,   default: true
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "logo_file_name",        limit: 255
+    t.string   "logo_content_type",     limit: 255
+    t.integer  "logo_file_size",        limit: 4
+    t.datetime "logo_updated_at"
   end
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree

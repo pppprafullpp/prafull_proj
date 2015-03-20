@@ -20,6 +20,8 @@
 				  </div>
 				  <div><strong>Title:</strong><br />
 				  <%= f.text_field :title %></div>
+				  <div><strong>Deal Image: </strong><br/>
+				  <%= f.file_field :deal_image %></div>
 				  <div><strong>State:</strong><br />
 				  <%= f.text_field :state %></div>
 				  <div><strong>City:</strong><br />
@@ -40,6 +42,8 @@
 				  <%= f.text_field :start_date %></div>
 				  <div><strong>End Date:</strong><br />
 				  <%= f.text_field :end_date %></div>
+				  <div><%= f.check_box :is_active %> 
+				  <strong>Is Active ? </strong></div>
 				  <div><%= f.submit "Update" %></div>
 				<% end %>
 			</div>

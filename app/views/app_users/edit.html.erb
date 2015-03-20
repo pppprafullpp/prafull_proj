@@ -8,13 +8,16 @@
 				<span id='title'>Create New App User</span>
 			</div>
 			<div class="small-6 large-centered columns">
-				<%= form_for(@app_user) do |f| %>
+				<%= form_for @app_user, :html => { :multipart => true } do |f| %>
 					<h3>Login Information : </h3><br/>
 					<div>First Name<br />
 						<%= f.text_field :first_name %>
 					</div>
 					<div>Last Name<br />
 						<%= f.text_field :last_name %>
+					</div>
+					<div>Image<br/>
+						<%= f.file_field :avatar %>
 					</div>
 					<div>Email<br />
 						<%= f.email_field :email %>
@@ -34,6 +37,7 @@
 					<div>Zip<br />
 						<%= f.text_field :zip %>
 					</div>
+					<div><%= f.check_box :active %><strong>Is Active ? :</strong></div>
 					<div><%= f.submit "Update" %></div>
 				<% end %>
 			</div>

@@ -16,6 +16,7 @@ class CreateDeals < ActiveRecord::Migration
       t.text :you_save_text
       t.datetime :start_date
       t.datetime :end_date
+      t.boolean :is_active, default: true
       
       t.timestamps null: false
     end

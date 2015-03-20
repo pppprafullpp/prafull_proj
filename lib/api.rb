@@ -32,7 +32,7 @@ module ServiceDeal
 		resource :service_providers do
 			get do
 				#@service_provider = ServiceProvider.find_by_service_category_name(params[:service_category_name])
-				@service_provider = ServiceProvider.where("service_category_name = ?", params[:service_category_name])
+				@service_provider = ServiceProvider.where("is_active = ?", true).where("service_category_name = ?", params[:category])
 				if @service_provider.present?
 					@service_provider.each do |service_provider|
 						{
@@ -58,6 +58,8 @@ module ServiceDeal
 							:state 													=> 		params[:state],
 							:city 													=> 		params[:city],
 							:zip 														=> 		params[:zip],
+							:active                         =>    params[:active],
+							:avatar                         =>    params[:avatar],
 				)
 				if @app_user.save
 					{ 
@@ -70,6 +72,8 @@ module ServiceDeal
 					    :state 													=> 		@app_user.state,
 					    :city 													=> 		@app_user.city,
 					    :zip  													=> 		@app_user.zip,
+					    :active                         =>    @app_user.active,
+					    :avatar                         =>    @app_user.avatar,
 					}
 				else
 					{
@@ -89,6 +93,8 @@ module ServiceDeal
 					    :state 													=> 		@app_user.state.to_s,
 					    :city 													=> 		@app_user.city.to_s,
 					    :zip  													=> 		@app_user.zip.to_s,
+					    :active                         =>    @app_user.active.to_s,
+					    :avatar                         =>    @app_user.avatar.to_s,
 					}
 				else
 					{
@@ -149,18 +155,31 @@ module ServiceDeal
 
 		resource :deals do
 			get do
-				@deals = Deal.where(category: params[:service_name]).order("price ASC")
+				if params[:zip_code].present? && params[:category].blank?
+					@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).order("price ASC")
+				elsif params[:category].present? && params[:zip_code].blank?
+					@deals = Deal.where("is_active = ?", true).where(service_category_name: params[:category]).order("price ASC")
+				elsif params[:zip_code].present? && params[:category].present?  
+				  @deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_name: params[:category]).order("price ASC")
+				end
 				if @deals.present?
 					@deals.each do |sdeal|
 					{
-						:success    											=> 		'true',
-						:category  												=> 		sdeal.category.to_s,
-						:service_provider   							=>    sdeal.service_provider.to_s,
-						:price     												=>    sdeal.price.to_s,
-						:title  													=>  	sdeal.title.to_s,
-						:url  														=> 		sdeal.url.to_s,
-						:deal 														=>  	sdeal.deal.to_s,
-						:short_description   							=>   	sdeal.short_description.to_s,
+						:success    					            => 	  'true',
+						:service_category  				        => 	  sdeal.service_category_name.to_s,
+						:service_provider   			        =>    sdeal.service_provider_name.to_s,
+						:title  						              =>  	sdeal.title.to_s,
+						:url  							              => 	  sdeal.url.to_s,
+						:price     						            =>    sdeal.price.to_s,
+						:state                            =>    sdeal.state.to_s,
+						:city                             =>    sdeal.city.to_s,
+						:zip                              =>    sdeal.zip.to_s,
+						:short_description   			        =>   	sdeal.short_description.to_s,
+						:detail_description 			        =>  	sdeal.detail_description.to_s,
+						:you_save_text                    =>    sdeal.you_save_text.to_s,
+						:start_date                       =>    sdeal.start_date.to_s,
+						:end_date                         =>    sdeal.end_date.to_s,
+						:active                           =>    sdeal.is_active.to_s,
 					}
 				  end
 				else
@@ -220,6 +239,8 @@ module ServiceDeal
 					      :state 													        => 		@app_user.state.to_s,
 					      :city 													        => 		@app_user.city.to_s,
 					      :zip  													        => 		@app_user.zip.to_s,
+					      :active                                 =>    @app_user.active.to_s,
+					      :avatar                                 =>    @app_user.avatar.to_s,
 
 					}
 				else

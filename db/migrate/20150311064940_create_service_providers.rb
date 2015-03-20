@@ -10,6 +10,8 @@ class CreateServiceProviders < ActiveRecord::Migration
       t.string  :zip
       t.string  :email
       t.string  :telephone
+      t.boolean :is_preferred, default: false
+      t.boolean :is_active, default: true
       t.timestamps null: false
     end
   end

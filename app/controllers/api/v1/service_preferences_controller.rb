@@ -11,7 +11,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	def create
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
-		@service_preference = ServicePreference.find_by_app_user_id_and_service_category_name(params[:app_user_id], params[:service_name])
+		@service_preference = ServicePreference.find_by_app_user_id_and_service_category_name(params[:app_user_id], params[:service_category])
 		if @service_preference.present?
 			#respond_to do |format|
       		if @service_preference.update(service_preference_params)

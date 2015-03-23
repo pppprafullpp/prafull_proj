@@ -125,11 +125,11 @@ module ServiceDeal
 					end
 				end	
 				get do
-					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_name = ?",params[:service_name]).take
+					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_name = ?",params[:category]).take
 					if @service_preference.present?
 						{ 
 					  	:success 												=> 		'true',
-					    :service_name										=> 		@service_preference.service_category_name.to_s,
+					    :service_category								=> 		@service_preference.service_category_name.to_s,
 					    :service_provider 							=> 		@service_preference.service_provider_name.to_s,
 					    :contract_date 									=> 		@service_preference.contract_date.to_s,
 					    :is_contract										=> 		@service_preference.is_contract.to_s,

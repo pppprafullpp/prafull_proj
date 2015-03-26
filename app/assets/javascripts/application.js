@@ -21,18 +21,16 @@ $(function(){ $(document).foundation(); });
 
 function populate_service_provider(obj)
 {
-    alert(obj);
-	if (obj.value != '')
+    if (obj.value != '')
 	{
 		var handleResponse = function (status, response) {
 		   	var data=JSON.parse(response);
-		   	
 		   	var selectList = document.getElementById("deal_service_provider_name");
 		   	selectList.options.length = 0;
 		   	for(var i=0;i<data.length;i++){
 				var option = document.createElement("option");
-   				option.value = data[i];
-    			option.text = data[i];
+   				option.value = data[i].id;
+    			option.text = data[i].name;
     			selectList.appendChild(option);
 			}
 		   	

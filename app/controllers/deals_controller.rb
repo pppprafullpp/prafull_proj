@@ -9,7 +9,7 @@ class DealsController < ApplicationController
   def get_service_providers
     #@ServiceProviders=ServiceProvider.select("id, name").where(service_category_name: params[:category])
     @ServiceProviders=ServiceProvider.select("id, name").where(service_category_id: params[:category])
-    render :json => @ServiceProviders.map{|c| [c.name, c.id] }
+    render :json => @ServiceProviders
   end
 
 	def create

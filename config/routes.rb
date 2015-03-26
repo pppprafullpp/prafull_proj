@@ -26,6 +26,9 @@ Rails.application.routes.draw do
         post 'ratings' => 'ratings#create'
         get 'ratings'  => 'ratings#index'
       end
+      resources :dashboards do
+        post 'dashboards' => 'dashboards#index'
+      end 
     end
   end
   root to: "home#index"

@@ -36,8 +36,8 @@
             <% @deals.each do |s_deal| %>
               <% if can? :read, s_deal %>
                 <tr>
-                  <td><%= s_deal.service_category_name %></td>
-                  <td><%= s_deal.service_provider_name %></td>
+                  <td><%= s_deal.service_category_id %></td>
+                  <td><%= s_deal.service_provider_id %></td>
                   <td><%= s_deal.title %></td>
                   <td><%= s_deal.deal_image %></td>
                   <td><%= s_deal.state %></td>

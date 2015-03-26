@@ -10,7 +10,7 @@ module ServiceDeal
 		resource :service_providers do
 			get do
 				#@service_provider = ServiceProvider.find_by_service_category_name(params[:service_category_name])
-				@service_provider = ServiceProvider.where("is_active = ?", true).where("service_category_name = ?", params[:category])
+				@service_provider = ServiceProvider.where("is_active = ?", true).where("service_category_id = ?", params[:category])
 				if @service_provider.present?
 					@service_provider.each do |service_provider|
 						{
@@ -20,6 +20,19 @@ module ServiceDeal
 				else
 					{
 						:success                          => 		'false',
+					}
+				end	
+			end	
+		end	
+
+		resource :fetch_service_category do
+			get do
+				@service_category = ServiceCategory.all
+				@service_category.each do |sc|
+					{
+						:success => 'true',
+						:service_id => sc.id,
+						:service_name => sc.name,
 					}
 				end	
 			end	
@@ -103,12 +116,12 @@ module ServiceDeal
 					end
 				end	
 				get do
-					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_name = ?",params[:category]).take
+					@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_id = ?",params[:category]).take
 					if @service_preference.present?
 						{ 
 					  	:success 												=> 		'true',
-					    :service_category								=> 		@service_preference.service_category_name.to_s,
-					    :service_provider 							=> 		@service_preference.service_provider_name.to_s,
+					    :service_category								=> 		@service_preference.service_category_id.to_s,
+					    :service_provider 							=> 		@service_preference.service_provider_id.to_s,
 					    :contract_date 									=> 		@service_preference.contract_date.to_s,
 					    :is_contract										=> 		@service_preference.is_contract.to_s,
 					    :contract_fee  									=> 		@service_preference.contract_fee.to_s,
@@ -136,9 +149,9 @@ module ServiceDeal
 				if params[:zip_code].present? && params[:category].blank?
 					@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).order("price ASC")
 				elsif params[:category].present? && params[:zip_code].blank?
-					@deals = Deal.where("is_active = ?", true).where(service_category_name: params[:category]).order("price ASC")
+					@deals = Deal.where("is_active = ?", true).where(service_category_id: params[:category]).order("price ASC")
 				elsif params[:zip_code].present? && params[:category].present?  
-				  @deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_name: params[:category]).order("price ASC")
+				  @deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_id: params[:category]).order("price ASC")
 				end
 				if @deals.present?
 					@deals.each do |sdeal|

@@ -11,11 +11,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	def create
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
-		@service_preference = ServicePreference.find_by_app_user_id_and_service_category_name(params[:app_user_id], params[:service_category])
+		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
+		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
-			#respond_to do |format|
       		if @service_preference.update(service_preference_params)
-        		#format.json { success: :true }
         		render :status => 200,
            		:json => { :success => true }
       		else
@@ -24,15 +23,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
         	end
 		else
 			@service_preference = ServicePreference.new(service_preference_params) 
-			#raise service_preference_params.inspect   
-    		#respond_to do |format|
       		if @service_preference.save
-      			#format.json { render json: @service_preference, status: :created }
-        		#format.xml { render xml: @service_preference, status: :created }
         		render :status => 200,
            		:json => { :success => true }
       		else
-        		#format.json { render json: @user.errors}
         		render :status => 401,
            		:json => { :success => false }
       		end
@@ -56,7 +50,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	private
 	def service_preference_params
-		params.permit(:app_user_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee)
+		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee)
 	end
 
 end	

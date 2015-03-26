@@ -7,28 +7,6 @@ module ServiceDeal
 		format :json
   	default_format :json
 
-		resource :users do
-			post do
-				user = User.create(
-						 	:name 													=> 		params[:name ],
-						 	:email 													=> 		params[:email ],
-						 	:password 											=> 		params[:password ],
-						 	:password_confirmation 					=> 		params[:password_confirmation ],
-						 	:role 													=> 		params[:role ],
-						 	:enabled 												=> 		params[:enabled ],
-				)
-				if user.save
-					{
-						:success													=>		'true',
-					}
-				else
-					{
-						:success 													=> 		'false',
-					}
-				end	
-			end	
-		end
-
 		resource :service_providers do
 			get do
 				#@service_provider = ServiceProvider.find_by_service_category_name(params[:service_category_name])
@@ -250,6 +228,5 @@ module ServiceDeal
 				end
 			end	
 		end	
-
 	end
 end	

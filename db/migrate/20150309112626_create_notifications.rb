@@ -6,5 +6,6 @@ class CreateNotifications < ActiveRecord::Migration
       t.integer :day
       t.timestamps null: false
     end
+    add_foreign_key :notifications, :app_users
   end
 end

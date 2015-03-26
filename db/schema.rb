@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319093507) do
+ActiveRecord::Schema.define(version: 20150325071852) do
+
+  create_table "advertisements", force: :cascade do |t|
+    t.integer  "service_category_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "name",                  limit: 255
+    t.string   "url",                   limit: 255
+    t.boolean  "status",                limit: 1,   default: true
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree
 
   create_table "app_users", force: :cascade do |t|
     t.string   "first_name",             limit: 255, default: "",   null: false
@@ -41,6 +55,18 @@ ActiveRecord::Schema.define(version: 20150319093507) do
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "app_user_id",  limit: 4
+    t.integer  "deal_id",      limit: 4
+    t.boolean  "status",       limit: 1,     default: true
+    t.text     "comment_text", limit: 65535
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "comments", ["app_user_id"], name: "index_comments_on_app_user_id", using: :btree
+  add_index "comments", ["deal_id"], name: "index_comments_on_deal_id", using: :btree
 
   create_table "deals", force: :cascade do |t|
     t.integer  "service_category_id",     limit: 4
@@ -79,6 +105,17 @@ ActiveRecord::Schema.define(version: 20150319093507) do
   end
 
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "app_user_id",  limit: 4
+    t.integer  "deal_id",      limit: 4
+    t.float    "rating_point", limit: 24
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "ratings", ["app_user_id"], name: "index_ratings_on_app_user_id", using: :btree
+  add_index "ratings", ["deal_id"], name: "index_ratings_on_deal_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -154,4 +191,14 @@ ActiveRecord::Schema.define(version: 20150319093507) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "advertisements", "service_categories"
+  add_foreign_key "comments", "app_users"
+  add_foreign_key "comments", "deals"
+  add_foreign_key "deals", "service_categories"
+  add_foreign_key "notifications", "app_users"
+  add_foreign_key "ratings", "app_users"
+  add_foreign_key "ratings", "deals"
+  add_foreign_key "service_preferences", "app_users"
+  add_foreign_key "service_preferences", "service_categories"
+  add_foreign_key "service_providers", "service_categories"
 end

@@ -12,5 +12,7 @@ class CreateServicePreferences < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_foreign_key :service_preferences, :app_users
+    add_foreign_key :service_preferences, :service_categories
   end
 end

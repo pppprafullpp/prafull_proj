@@ -7,8 +7,9 @@ class DealsController < ApplicationController
     
 	end
   def get_service_providers
-    @ServiceProviders=ServiceProvider.select("name").where(service_category_name: params[:category])
-    render :json => @ServiceProviders.map{|c| c.name }
+    #@ServiceProviders=ServiceProvider.select("id, name").where(service_category_name: params[:category])
+    @ServiceProviders=ServiceProvider.select("id, name").where(service_category_id: params[:category])
+    render :json => @ServiceProviders.map{|c| [c.name, c.id] }
   end
 
 	def create
@@ -25,7 +26,6 @@ class DealsController < ApplicationController
 	end
 	def edit
   	@deal = Deal.find(params[:id])
-  	#raise @service_deal.inspect
   end
 	def update
 		@deal = Deal.find(params[:id])

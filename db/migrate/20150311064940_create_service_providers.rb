@@ -14,5 +14,6 @@ class CreateServiceProviders < ActiveRecord::Migration
       t.boolean :is_active, default: true
       t.timestamps null: false
     end
+    add_foreign_key :service_providers, :service_categories
   end
 end

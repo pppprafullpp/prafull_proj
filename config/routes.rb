@@ -18,6 +18,14 @@ Rails.application.routes.draw do
       resources :app_users do
         post 'app_users' => 'app_users#create'
       end 
+      resources :comments do
+        post 'comments' => 'comments#create'
+        get 'comments'  => 'comments#index'
+      end
+      resources :ratings do
+        post 'ratings' => 'ratings#create'
+        get 'ratings'  => 'ratings#index'
+      end
     end
   end
   root to: "home#index"
@@ -44,6 +52,9 @@ Rails.application.routes.draw do
   resources :service_preferences
   resources :notifications
   resources :service_providers
+  resources :advertisements
+  resources :comments
+  resources :ratings
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

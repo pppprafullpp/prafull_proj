@@ -20,5 +20,6 @@ class CreateDeals < ActiveRecord::Migration
       
       t.timestamps null: false
     end
+      add_foreign_key :deals, :service_categories
   end
 end

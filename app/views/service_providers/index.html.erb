@@ -14,7 +14,7 @@
 					<thead>
 						<tr>
 							<th><strong>ID</strong></th>
-							<th><strong>Service Category Name</strong></th>
+							<th><strong>Service Category Id</strong></th>
 							<th><strong>Service Provider Name</strong></th>
 							<th><strong>Service Provider Logo</strong></th>
 							<th><strong>Address</strong></th>
@@ -33,7 +33,7 @@
 							<% if can? :read, service_provider %>
 								<tr>
 									<td><%= service_provider.id %></td>
-									<td><%= service_provider.service_category_name %></td>
+									<td><%= service_provider.service_category_id %></td>
 									<td><%= service_provider.name %></td>
 									<td><%= service_provider.logo %></td>
 									<td><%= service_provider.address %></td>

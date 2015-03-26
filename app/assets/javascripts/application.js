@@ -21,7 +21,7 @@ $(function(){ $(document).foundation(); });
 
 function populate_service_provider(obj)
 {
-
+    alert(obj);
 	if (obj.value != '')
 	{
 		var handleResponse = function (status, response) {

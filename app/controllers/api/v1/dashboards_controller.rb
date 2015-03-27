@@ -3,12 +3,29 @@ class Api::V1::DashboardsController < ApplicationController
 	respond_to :json
 
 	def index
+		byebug
+		@app_user = AppUser.find_by_id(params[:app_user_id])
+		@service_preferences = @app_user.service_preferences
+		render :json => @app_user, :include => { :service_preferences => { :include => { :service_category => { :include => { :deals => { :only => [:id, :title]}}, :only => [:id, :name]}}, :only => [:service_category_id, :service_provider_id]}}
+		#render :json => @app_user, :include => { :service_preferences => { :include => { :service_category  => { :only => [:id, :name] }}, :only => :service_category_id }}
+		#render :json => @app_user, :include => { :service_preferences => {
+		#																																		:include => { :service_category => { :only => [:id, :name] } },
+		#																																		:only => [:service_category_id, :service_provider_id, :contract_date, :is_contract, :contract_fee]
+		#																																	} 
+		#																				}
+
+		#render :json => @app_user, :include => { :service_preferences => { :include => { :service_category => { :include => {:deals => { :only => :title }}, { :only => [:id, :name] } }, :only => [:service_category_id, :service_provider_id]} }}
+
+
+
+
+
+
 		#@app_user = AppUser.find_by_id(params[:app_user_id]) 
 		#@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id])
-		@app_user = AppUser.joins(:service_preferences).where("app_user_id = ?", params[:app_user_id])
-		@service_preference = @app_user.map{|c| c.service_preferences}
-		render :json => { :service_preference => @service_preference
-		}
+		#@app_user = AppUser.joins(:service_preferences).where("app_user_id = ?", params[:app_user_id])
+		#@service_preference = @app_user.map{|c| c.service_preferences}
+		#render :json => { :service_preference => @service_preferences }
 		#@service_preference.each do |variable|
 		#	if variable.service_category_name == "Internet"
 		#		@internet_deals = Deal.where("is_active = ?", true).where("service_category_name = ?", 'Internet').order("price DESC")

@@ -16,6 +16,7 @@
 		  <thead>
 		    <tr>
 		      <th><strong>App User ID</strong></th>
+		      <th><strong>App User Name</strong></th>
 			  	<th><strong>Deal ID </strong></th>
 			  	<th><strong>Show on page ? </strong></th>
 			  	<th><strong>Comment</strong></th>
@@ -27,6 +28,7 @@
 			  	<% if can? :read, comment %>
 			    	<tr>
 			      	<td><%= comment.app_user_id %></td>
+			      	<td><%= comment.app_user_name %></td>
 				  		<td><%= comment.deal_id %></td>
 				  		<td><%= comment.status %></td>
 				  		<td><%= comment.comment_text %></td>

@@ -14,7 +14,8 @@
 					<thead>
 						<tr>
 							<th><strong>ID</strong></th>
-							<th><strong>Service Category Id</strong></th>
+							<th><strong>ServiceCategory Id</strong></th>
+							<th><strong>Service Category</strong></th>
 							<th><strong>Service Provider Name</strong></th>
 							<th><strong>Service Provider Logo</strong></th>
 							<th><strong>Address</strong></th>
@@ -34,6 +35,7 @@
 								<tr>
 									<td><%= service_provider.id %></td>
 									<td><%= service_provider.service_category_id %></td>
+									<td><%= service_provider.service_category.name %></td>
 									<td><%= service_provider.name %></td>
 									<td><%= service_provider.logo %></td>
 									<td><%= service_provider.address %></td>

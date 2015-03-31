@@ -155,8 +155,11 @@ module ServiceDeal
 				end
 				if @deals.present?
 					@deals.each do |sdeal|
+						@ratings = Rating.where("deal_id = ?", sdeal.id)
+						@average_rating = @ratings.average(:rating_point)
 					{
 						:success    					            => 	  'true',
+						:avg_rating                       =>    @average_rating.to_s,
 						:service_category  				        => 	  sdeal.service_category_name.to_s,
 						:service_provider   			        =>    sdeal.service_provider_name.to_s,
 						:title  						              =>  	sdeal.title.to_s,

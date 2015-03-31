@@ -1,6 +1,11 @@
 class DealsController < ApplicationController
 	def index
 		@deals = Deal.all
+    #byebug
+    #@preferred_deals = []
+    #@deals.each do |sp|
+    #  byebug
+    #end  
 	end
 	def new
 		@deal = Deal.new

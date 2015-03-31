@@ -11,7 +11,7 @@
 <%= form_for(@advertisement, :url => @advertisements) do |f| %>
 <br/>
 <div><strong>Service Category : </strong><br />
-<%= f.select :service_category_name, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select a service category"}%>
+<%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "Select Category"} %>
 </div>
 <div><strong>Name:</strong><br />
 <%= f.text_field :name %></div>

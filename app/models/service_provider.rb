@@ -10,4 +10,8 @@ class ServiceProvider < ActiveRecord::Base
   		Hash[*json.map{|k, v| [k, v || ""]}.flatten]
 	end
 
+	def logo_url
+		logo.url(:medium)
+	end
+
 end

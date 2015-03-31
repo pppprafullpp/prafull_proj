@@ -7,7 +7,7 @@ class Api::V1::CommentsController < ApplicationController
 		if @comments.present?
 			render :status => 200,
 						 :json => { :success => true,
-												:comment => @comments
+												:comment => @comments,
 											}
 		else
 			render :status => 401,
@@ -28,6 +28,6 @@ class Api::V1::CommentsController < ApplicationController
 
 	private
 	def comment_params
-		params.permit(:app_user_id, :deal_id, :status, :comment_text)
+		params.permit(:app_user_id, :app_user_name, :deal_id, :status, :comment_text)
 	end
 end	

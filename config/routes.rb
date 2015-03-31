@@ -29,6 +29,9 @@ Rails.application.routes.draw do
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end 
+      resources :deals do
+        get 'deals' => 'deals#index'
+      end  
     end
   end
   root to: "home#index"

@@ -30,6 +30,7 @@ gem 'foundation-rails'
 gem 'cancan'
 gem 'bcrypt'
 gem 'paperclip'
+gem 'jquery-datetimepicker-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

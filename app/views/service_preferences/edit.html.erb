@@ -11,11 +11,11 @@
 			<div class="small-6 large-centered columns">
 				<%= form_for(@service_preference) do |f| %><br/>
 				  <div><strong>App User Id : </strong><br />
-				  <%= f.text_field :app_user_id %></div>
-				  <div><strong>Service Name : </strong><br />
-				  <%= f.select :service_category_name, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this);" %></div>
+				  <%= f.text_field :app_user_id, :readonly => true %></div>
+				  <div><strong>Service Category : </strong><br />
+				  <%= f.text_field :service_category_id, :readonly => true %></div>
 				  <div><strong>Service Provider:</strong><br />
-				  <%= f.text_field :service_provider_name %></div>
+				  <%= f.text_field :service_provider_id, :readonly => true %></div>
 				  <div><strong>Contract Date:</strong><br />
 				  <%= f.text_field :contract_date %></div>
 				  <div><%= f.check_box :is_contract %><strong>Is Contract ? </strong></div>

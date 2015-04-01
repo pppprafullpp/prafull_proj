@@ -13,10 +13,10 @@
 					<br/>
 
 				  <div><strong>Service Category: </strong><br />
-				  <%= f.select :service_category_id, ServiceCategory.uniq.pluck(:name).reject { |f| f.nil? || f.empty? },{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this);" %>
+				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this);" %>
 				  </div>
 				  <div><strong>Service Provider: </strong><br />
-				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"}%>
+				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"} %>
 				  </div>
 				  <div><strong>Title:</strong><br />
 				  <%= f.text_field :title %></div>

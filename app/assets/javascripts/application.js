@@ -16,7 +16,12 @@
 //= require turbolinks
 //= require_tree .
 
-$(function(){ $(document).foundation(); });
+$(document).on("page:load ready", function(){
+    $("#deal_start_date").datepicker();
+    $("#deal_end_date").datepicker();
+    $("#advertisement_start_date").datepicker();
+    $("#advertisement_end_date").datepicker();
+});
 
 
 function populate_service_provider(obj)

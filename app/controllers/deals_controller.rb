@@ -1,16 +1,14 @@
 class DealsController < ApplicationController
+
 	def index
 		@deals = Deal.all
-    #byebug
-    #@preferred_deals = []
-    #@deals.each do |sp|
-    #  byebug
-    #end  
 	end
+
 	def new
 		@deal = Deal.new
     
 	end
+  
   def get_service_providers
     #@ServiceProviders=ServiceProvider.select("id, name").where(service_category_name: params[:category])
     @ServiceProviders=ServiceProvider.select("id, name").where(service_category_id: params[:category])

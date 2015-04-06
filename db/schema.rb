@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331062736) do
+ActiveRecord::Schema.define(version: 20150401131348) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(version: 20150331062736) do
     t.datetime "end_date"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
+    t.string   "ad_image_file_name",    limit: 255
+    t.string   "ad_image_content_type", limit: 255
+    t.integer  "ad_image_file_size",    limit: 4
+    t.datetime "ad_image_updated_at"
   end
 
   add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree

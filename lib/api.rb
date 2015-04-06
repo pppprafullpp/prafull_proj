@@ -142,46 +142,6 @@ module ServiceDeal
     				}
   				end
 				end	
-		end	
-
-		resource :deals do
-			get do
-				if params[:zip_code].present? && params[:category].blank?
-					@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).order("price ASC")
-				elsif params[:category].present? && params[:zip_code].blank?
-					@deals = Deal.where("is_active = ?", true).where(service_category_id: params[:category]).order("price ASC")
-				elsif params[:zip_code].present? && params[:category].present?  
-				  @deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_id: params[:category]).order("price ASC")
-				end
-				if @deals.present?
-					@deals.each do |sdeal|
-						@ratings = Rating.where("deal_id = ?", sdeal.id)
-						@average_rating = @ratings.average(:rating_point)
-					{
-						:success    					            => 	  'true',
-						:avg_rating                       =>    @average_rating.to_s,
-						:service_category  				        => 	  sdeal.service_category_name.to_s,
-						:service_provider   			        =>    sdeal.service_provider_name.to_s,
-						:title  						              =>  	sdeal.title.to_s,
-						:url  							              => 	  sdeal.url.to_s,
-						:price     						            =>    sdeal.price.to_s,
-						:state                            =>    sdeal.state.to_s,
-						:city                             =>    sdeal.city.to_s,
-						:zip                              =>    sdeal.zip.to_s,
-						:short_description   			        =>   	sdeal.short_description.to_s,
-						:detail_description 			        =>  	sdeal.detail_description.to_s,
-						:you_save_text                    =>    sdeal.you_save_text.to_s,
-						:start_date                       =>    sdeal.start_date.to_s,
-						:end_date                         =>    sdeal.end_date.to_s,
-						:active                           =>    sdeal.is_active.to_s,
-					}
-				  end
-				else
-					{
-						:success  												=> 		'false',
-					}
-				end
-			end	
 		end
 
 		resource :service_preference_info do

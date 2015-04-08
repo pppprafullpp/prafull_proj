@@ -55,7 +55,7 @@ class AdvertisementsController < ApplicationController
 	private
 	
 	def advertisement_params
-		params.require(:advertisement).permit(:service_category_id, :service_category_name, :name, :url, :status, :start_date, :end_date)
+		params.require(:advertisement).permit(:service_category_id, :service_category_name, :name, :url, :status, :start_date, :end_date, :image)
 	end
 
 end	

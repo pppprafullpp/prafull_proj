@@ -37,7 +37,7 @@
 									<td><%= service_provider.service_category_id %></td>
 									<td><%= service_provider.service_category.name %></td>
 									<td><%= service_provider.name %></td>
-									<td><%= service_provider.logo %></td>
+									<td><%= service_provider.logo_url if service_provider.logo? %></td>
 									<td><%= service_provider.address %></td>
 									<td><%= service_provider.state %></td>
 									<td><%= service_provider.city %></td>

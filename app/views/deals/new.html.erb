@@ -20,7 +20,8 @@
 				  <div><strong>Title:</strong><br />
 				  <%= f.text_field :title %></div>
 				  <div><strong>Deal Image:</strong><br/>
-				  <%= f.file_field :deal_image %></div>
+				  <%= f.file_field :image %></div>
+				  <%= f.hidden_field :image_cache %>
 				  <div><strong>State:</strong><br />
 				  <%= f.text_field :state %></div>
 				  <div><strong>City:</strong><br />

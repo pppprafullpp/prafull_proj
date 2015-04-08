@@ -55,7 +55,7 @@ class DealsController < ApplicationController
 	private
 
   def deal_params
-  	params.require(:deal).permit(:service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :title, :state, :city, :zip, :short_description, :detail_description, :price, :url, :you_save_text, :start_date, :end_date, :deal_image, :is_active)
+  	params.require(:deal).permit(:service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :title, :state, :city, :zip, :short_description, :detail_description, :price, :url, :you_save_text, :start_date, :end_date, :image, :is_active)
   end
 
   

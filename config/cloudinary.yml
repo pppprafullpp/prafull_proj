@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: softwareassurance
+  api_key: '416666974996131'
+  api_secret: ur6GBwBpFC0UJYgpiVH8EStlne8
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: softwareassurance
+  api_key: '416666974996131'
+  api_secret: ur6GBwBpFC0UJYgpiVH8EStlne8
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: softwareassurance
+  api_key: '416666974996131'
+  api_secret: ur6GBwBpFC0UJYgpiVH8EStlne8
+  enhance_image_tag: true
+  static_image_support: false

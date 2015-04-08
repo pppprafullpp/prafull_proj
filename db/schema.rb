@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401131348) do
+ActiveRecord::Schema.define(version: 20150408080252) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150401131348) do
     t.string   "ad_image_content_type", limit: 255
     t.integer  "ad_image_file_size",    limit: 4
     t.datetime "ad_image_updated_at"
+    t.string   "image",                 limit: 255
   end
 
   add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150401131348) do
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+    t.string   "avatar",                 limit: 255
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -96,7 +98,7 @@ ActiveRecord::Schema.define(version: 20150401131348) do
     t.string   "deal_image_content_type", limit: 255
     t.integer  "deal_image_file_size",    limit: 4
     t.datetime "deal_image_updated_at"
-    t.string   "image_url",               limit: 255
+    t.string   "image",                   limit: 255
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -170,6 +172,7 @@ ActiveRecord::Schema.define(version: 20150401131348) do
     t.string   "logo_content_type",     limit: 255
     t.integer  "logo_file_size",        limit: 4
     t.datetime "logo_updated_at"
+    t.string   "logo",                  limit: 255
   end
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree

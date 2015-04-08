@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-#gem 'mysql2'
+gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -29,8 +29,10 @@ gem 'grape-entity'
 gem 'foundation-rails'
 gem 'cancan'
 gem 'bcrypt'
-gem 'paperclip'
 gem 'jquery-datetimepicker-rails'
+gem "rmagick"
+gem "carrierwave"
+gem 'cloudinary'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

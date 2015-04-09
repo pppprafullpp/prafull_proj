@@ -28,7 +28,7 @@
 			  	<% if can? :read, comment %>
 			    	<tr>
 			      	<td><%= comment.app_user_id %></td>
-			      	<td><%= comment.app_user_name %></td>
+			      	<td><%= comment.app_user.first_name %></td>
 				  		<td><%= comment.deal_id %></td>
 				  		<td><%= comment.status %></td>
 				  		<td><%= comment.comment_text %></td>

@@ -6,8 +6,8 @@ class Api::V1::CommentsController < ApplicationController
 		@comments = Comment.where("status = ? AND deal_id = ?", true, params[:deal_id])
 		if @comments.present?
 			render :status => 200,
-						 :json => { :success => true,
-												:comment => @comments,
+						 :json => { 
+												:comment => @comments.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name])
 											}
 		else
 			render :status => 401,
@@ -28,6 +28,6 @@ class Api::V1::CommentsController < ApplicationController
 
 	private
 	def comment_params
-		params.permit(:app_user_id, :app_user_name, :deal_id, :status, :comment_text)
+		params.permit(:app_user_id, :deal_id, :status, :comment_text)
 	end
 end	

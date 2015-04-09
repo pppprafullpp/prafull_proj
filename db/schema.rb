@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408080252) do
+ActiveRecord::Schema.define(version: 20150409085135) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -63,13 +63,12 @@ ActiveRecord::Schema.define(version: 20150408080252) do
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "app_user_id",   limit: 4
-    t.integer  "deal_id",       limit: 4
-    t.string   "app_user_name", limit: 255
-    t.boolean  "status",        limit: 1,     default: true
-    t.text     "comment_text",  limit: 65535
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.integer  "app_user_id",  limit: 4
+    t.integer  "deal_id",      limit: 4
+    t.boolean  "status",       limit: 1,     default: true
+    t.text     "comment_text", limit: 65535
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_index "comments", ["app_user_id"], name: "index_comments_on_app_user_id", using: :btree

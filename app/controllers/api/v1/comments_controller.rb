@@ -7,6 +7,7 @@ class Api::V1::CommentsController < ApplicationController
 		if @comments.present?
 			render :status => 200,
 						 :json => { 
+						 						:success => true,
 												:comment => @comments.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name])
 											}
 		else

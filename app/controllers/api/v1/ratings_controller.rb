@@ -19,9 +19,8 @@ class Api::V1::RatingsController < ApplicationController
 	def create
 		@rating = Rating.where("app_user_id = ? AND deal_id = ?", params[:app_user_id],params[:deal_id]).take
 		if @rating.present?
-      @rating.update(rating_params)
-      render :status => 200,
-           		 :json => { :success => true }
+      #@rating.update(rating_params)
+      render :json => { :success => false }
 		else
 			@rating = Rating.new(rating_params) 
       if @rating.save

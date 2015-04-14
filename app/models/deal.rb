@@ -32,6 +32,10 @@ class Deal < ActiveRecord::Base
 		self.ratings.count
 	end
 
+	def deal_price
+		sprintf '%.2f', self.price
+	end
+
 	private
 	def create_category_name
 		self.service_category_name = self.service_category.name
@@ -39,4 +43,5 @@ class Deal < ActiveRecord::Base
 	def create_provider_name
 		self.service_provider_name = self.service_provider.name
 	end
+	
 end

@@ -23,10 +23,6 @@ ActiveRecord::Schema.define(version: 20150409085135) do
     t.datetime "end_date"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.string   "ad_image_file_name",    limit: 255
-    t.string   "ad_image_content_type", limit: 255
-    t.integer  "ad_image_file_size",    limit: 4
-    t.datetime "ad_image_updated_at"
     t.string   "image",                 limit: 255
   end
 
@@ -52,10 +48,6 @@ ActiveRecord::Schema.define(version: 20150409085135) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar_file_name",       limit: 255
-    t.string   "avatar_content_type",    limit: 255
-    t.integer  "avatar_file_size",       limit: 4
-    t.datetime "avatar_updated_at"
     t.string   "avatar",                 limit: 255
   end
 
@@ -75,29 +67,25 @@ ActiveRecord::Schema.define(version: 20150409085135) do
   add_index "comments", ["deal_id"], name: "index_comments_on_deal_id", using: :btree
 
   create_table "deals", force: :cascade do |t|
-    t.integer  "service_category_id",     limit: 4
-    t.integer  "service_provider_id",     limit: 4
-    t.string   "service_category_name",   limit: 255
-    t.string   "service_provider_name",   limit: 255
-    t.string   "title",                   limit: 255
-    t.string   "state",                   limit: 255
-    t.string   "city",                    limit: 255
-    t.string   "zip",                     limit: 255
-    t.text     "short_description",       limit: 65535
-    t.text     "detail_description",      limit: 65535
-    t.float    "price",                   limit: 24
-    t.string   "url",                     limit: 255
-    t.text     "you_save_text",           limit: 65535
+    t.integer  "service_category_id",   limit: 4
+    t.integer  "service_provider_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "service_provider_name", limit: 255
+    t.string   "title",                 limit: 255
+    t.string   "state",                 limit: 255
+    t.string   "city",                  limit: 255
+    t.string   "zip",                   limit: 255
+    t.text     "short_description",     limit: 65535
+    t.text     "detail_description",    limit: 65535
+    t.float    "price",                 limit: 24
+    t.string   "url",                   limit: 255
+    t.text     "you_save_text",         limit: 65535
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_active",               limit: 1,     default: true
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.string   "deal_image_file_name",    limit: 255
-    t.string   "deal_image_content_type", limit: 255
-    t.integer  "deal_image_file_size",    limit: 4
-    t.datetime "deal_image_updated_at"
-    t.string   "image",                   limit: 255
+    t.boolean  "is_active",             limit: 1,     default: true
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.string   "image",                 limit: 255
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -167,10 +155,6 @@ ActiveRecord::Schema.define(version: 20150409085135) do
     t.boolean  "is_active",             limit: 1,   default: true
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
-    t.string   "logo_file_name",        limit: 255
-    t.string   "logo_content_type",     limit: 255
-    t.integer  "logo_file_size",        limit: 4
-    t.datetime "logo_updated_at"
     t.string   "logo",                  limit: 255
   end
 

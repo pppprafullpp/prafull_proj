@@ -29,8 +29,8 @@ class Api::V1::DashboardsController < ApplicationController
 												#:service_preference => @service_preferences.as_json(:include => { :service_category => { :include => :deals, :include => :advertisement }})
 												#********** Working **************
 												:service_preference => @service_preferences.as_json(:include => { :service_category => {:only => [:id, :name]}}, :only => [:id, :contract_fee] ),
-												:deal => @deals.as_json(:methods => [:deal_image_url]),
-												:preferred_deal => @preferred_deals.as_json(:methods => [:deal_image_url]),
+												:deal => @deals.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :deal_price]),
+												:preferred_deal => @preferred_deals.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :deal_price]),
 		                		:advertisement => @advertisements.as_json(:methods => [:ad_image_url])
 		                	}
 		elsif params[:zip_code].present? && params[:category].blank? 

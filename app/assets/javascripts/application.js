@@ -17,10 +17,10 @@
 //= require_tree .
 
 $(document).on("page:load ready", function(){
-    $("#deal_start_date").datepicker();
-    $("#deal_end_date").datepicker();
-    $("#advertisement_start_date").datepicker();
-    $("#advertisement_end_date").datepicker();
+    $("#deal_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#deal_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#advertisement_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#advertisement_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
 });
 
 

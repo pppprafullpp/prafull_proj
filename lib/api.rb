@@ -146,7 +146,7 @@ module ServiceDeal
 
 		resource :service_preference_info do
 			get do
-				@service_preference = ServicePreference.where(app_user_id: params[:app_user_id])
+				@service_preference = ServicePreference.where(app_user_id: params[:app_user_id]).order("created_at DESC")
 				if @service_preference.present?
 					@service_preference.each do |service_preference|
 					 	{

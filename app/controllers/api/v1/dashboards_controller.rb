@@ -8,7 +8,7 @@ class Api::V1::DashboardsController < ApplicationController
 		@advertisements = []
 		if params[:app_user_id].present?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
-		  @service_preferences = @app_user.service_preferences if @app_user.present?
+		  @service_preferences = @app_user.service_preferences.order("created_at DESC") if @app_user.present?
 			@service_preferences.each do |sp|
 				@sc_id = sp.service_category_id
 				@advertisement = Advertisement.where("service_category_id = ?", @sc_id).first

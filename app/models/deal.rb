@@ -33,7 +33,7 @@ class Deal < ActiveRecord::Base
 	end
 
 	def deal_price
-		sprintf '%.2f', self.price
+		sprintf '%.2f', self.price if self.price.present?
 	end
 
 	private

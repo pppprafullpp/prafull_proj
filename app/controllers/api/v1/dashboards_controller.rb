@@ -35,7 +35,7 @@ class Api::V1::DashboardsController < ApplicationController
 				sc.service_providers.map do |pp|
 					if pp.is_preferred == false
 						@best_deal = []
-						@b_deal = pp.deals.order("price ASC").first
+						@b_deal = pp.deals.where("zip = ?", params[:zip_code]).order("price ASC").first
 						@best_deal << @b_deal if @b_deal.present?
 					end	
 					if pp.is_preferred == true

@@ -53,13 +53,13 @@ class Api::V1::DashboardsController < ApplicationController
 		elsif params[:category].present? && params[:zip_code].blank?
 			@deals = Deal.where("is_active = ?", true).where(service_category_id: params[:category]).order("price ASC")	              
 			render :json => {
-												:deal => @deals.as_json(:methods => [:deal_image_url, :average_rating, :rating_count])
+												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 											}
 
 		elsif params[:zip_code].present? && params[:category].present? 
 			@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_id: params[:category]).order("price ASC")
 			render :json => {
-												:deal => @deals.as_json(:methods => [:deal_image_url, :average_rating, :rating_count])
+												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 											}
 		end                
 	end

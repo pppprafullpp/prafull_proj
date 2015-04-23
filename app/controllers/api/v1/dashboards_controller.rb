@@ -27,6 +27,7 @@ class Api::V1::DashboardsController < ApplicationController
 			render :json => { :dashboard_data => @servicelist }
 													                	
 		elsif params[:zip_code].present? #&& params[:category].blank? 
+			byebug
 			@service_categories = ServiceCategory.all
 			@servicelist = @service_categories.map do |sc|
 				@advertisement = []

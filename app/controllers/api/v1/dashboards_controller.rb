@@ -26,9 +26,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  end	
 			render :json => { :dashboard_data => @servicelist }
 													                	
-		elsif params[:zip_code].present? && params[:category].blank? 
-			#@service_categories = ServiceCategory.all
-			@servicelist = ServiceCategory.all.map do |sc|
+		elsif params[:zip_code].present? #&& params[:category].blank? 
+			@service_categories = ServiceCategory.all
+			@servicelist = @service_categories.map do |sc|
 				@advertisement = []
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
@@ -61,7 +61,7 @@ class Api::V1::DashboardsController < ApplicationController
 			end	
 			render :json => { :dashboard_data => @servicelist	}
 
-		elsif params[:category].present? && params[:zip_code].blank?
+		elsif params[:category].present? 
 			@deals = Deal.where("is_active = ?", true).where(service_category_id: params[:category]).order("price ASC")	              
 			render :json => {
 												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])

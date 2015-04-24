@@ -35,12 +35,10 @@ class Api::V1::DashboardsController < ApplicationController
 				@advertisement << @adv if @adv.present?
 				@service_providers = sc.service_providers
 				@service_providers.map do |pp|
-					@p_id = pp.id
-					@preferred_deal = []
 					if pp.is_preferred == false
 						@best_deal = []
 						#@b_deal = "best deal"
-						@b_deal = @p_id #Deal.where("is_active = ? AND zip = ? AND service_provider_id = ?", true, params[:zip_code], pp.id).order("price ASC").first
+						@b_deal = pp.deals.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], sc.id).order("price ASC").first
 						if @b_deal.present?
 							@best_deal << @b_deal
 						else	
@@ -48,8 +46,12 @@ class Api::V1::DashboardsController < ApplicationController
 						end	
 					elsif pp.is_preferred == true
 						@preferred_deal = []
-						@p_deal = "preferred deal"
-						@preferred_deal << @p_deal
+						@p_deal = pp.deals.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], sc.id).order("price ASC").first
+						if @p_deal.present?
+							@preferred_deal << @p_deal
+						else
+							@preferred_deal = []
+						end	
 					else	
 						@best_deal = []
 						@preferred_deal = []

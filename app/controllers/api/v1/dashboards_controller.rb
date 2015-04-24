@@ -35,7 +35,7 @@ class Api::V1::DashboardsController < ApplicationController
 					if pp.is_preferred == false
 						@best_deal = []
 						#@b_deal = pp.deals.where("zip = ?", params[:zip_code]).order("price ASC").first
-						@b_deal = Deal.where("is_active = ?", true).where("zip = ?", params[:zip_code]).where("service_category_id = ?", sc.id ).where("service_provider_id = ?", pp.id ).order("price ASC").first
+						@b_deal = Deal.where("is_active = ?", true).where("zip = ?", params[:zip_code]).where("service_category_id = ?", sc.id ).where("service_provider_id = ?", pp.id ).order("price ASC")
 						if @b_deal.present?
 							@best_deal << @b_deal 
 						else
@@ -43,7 +43,7 @@ class Api::V1::DashboardsController < ApplicationController
 						end	
 					elsif pp.is_preferred == true
 						@preferred_deal = []
-						@p_deal = Deal.where("is_active = ?", true).where("zip = ?", params[:zip_code]).where("service_category_id = ? AND service_provider_id = ?", pp.service_category_id, pp.id).order("price ASC").first
+						@p_deal = Deal.where("is_active = ?", true).where("zip = ?", params[:zip_code]).where("service_category_id = ? AND service_provider_id = ?", pp.service_category_id, pp.id).order("price ASC")
 						if @p_deal.present?
 							@preferred_deal << @p_deal 
 					  else 

@@ -32,10 +32,10 @@ class Api::V1::DashboardsController < ApplicationController
 				@advertisement = []
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
-				sc.service_providers.map do |pp|
+				#sc.service_providers.map do |pp|
 					@best_deal = []
 					@preferred_deal = []
-					@b_deal = pp.deals.where("zip = ?", params[:zip_code]).order("price ASC").first
+					@b_deal = Deal.where("zip = ?", params[:zip_code]).order("price ASC").first
 					@best_deal << @b_deal if @b_deal.present?
 				#	if pp.is_preferred == false
 				#		@best_deal = []
@@ -63,7 +63,7 @@ class Api::V1::DashboardsController < ApplicationController
 				#		@preferred_deal = []
 				#		@best_deal = []
 				#	end			
-				end	
+				#end	
 				{ :service_category_name => sc.name, :contract_fee => '0', :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 	
 			end	
 			render :json => { :dashboard_data => @servicelist	}

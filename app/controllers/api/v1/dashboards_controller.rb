@@ -42,10 +42,6 @@ class Api::V1::DashboardsController < ApplicationController
 							@best_deal = []
 						end	
 					elsif pp.is_preferred == true
-						if @b_deal.present? && @b_deal.service_category_id != pp.service_category_id
-							@b_deal = nil
-							@best_deal = []
-						end	
 						@preferred_deal = []
 						@p_deal = Deal.where("is_active = ?", true).where("zip = ?", params[:zip_code]).where("service_category_id = ? AND service_provider_id = ?", pp.service_category_id, pp.id).order("price ASC").first
 						if @p_deal.present?
@@ -53,6 +49,10 @@ class Api::V1::DashboardsController < ApplicationController
 					  else 
 						  @preferred_deal = []
 						end 
+						if @b_deal.present? && @b_deal.service_category_id != pp.service_category_id
+							@b_deal = nil
+							@best_deal = []
+						end	
 					else
 						 @advertisement = []
 						 @best_deal = []

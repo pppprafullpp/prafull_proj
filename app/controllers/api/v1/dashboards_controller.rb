@@ -43,6 +43,13 @@ class Api::V1::DashboardsController < ApplicationController
 						#@best_deal = []	
 						#@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ?", true, params[:zip_code], sc.id, pp.id).order("price ASC").first
 						#@best_deal << @b_deal if @b_deal.present?
+					elsif pp.is_preferred == true
+						@preferred_deal = []
+						@p_deal = "preferred deal"
+						@preferred_deal << @p_deal
+					else	
+						@best_deal = []
+						@preferred_deal = []
 					end	
 				end	
 				#	if pp.is_preferred == false

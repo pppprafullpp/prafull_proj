@@ -32,11 +32,15 @@ class Api::V1::DashboardsController < ApplicationController
 				@advertisement = []
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
-				#sc.service_providers.map do |pp|
-					@best_deal = []
+				@service_providers = sc.service_providers
+				@service_providers.map do |pp|
 					@preferred_deal = []
-					@b_deal = Deal.where("zip = ?", params[:zip_code]).order("price ASC").first
-					@best_deal << @b_deal if @b_deal.present?
+					if pp.is_preferred == false
+						@best_deal = []	
+						@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ?", true, params[:zip_code], sc.id, pp.id).order("price ASC").first
+						@best_deal << @b_deal if @b_deal.present?
+					end	
+				end	
 				#	if pp.is_preferred == false
 				#		@best_deal = []
 				#		#@b_deal = pp.deals.where("zip = ?", params[:zip_code]).order("price ASC").first

@@ -33,30 +33,49 @@ class Api::V1::DashboardsController < ApplicationController
 				@advertisement = []
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
-				@service_providers = sc.service_providers
-				@service_providers.map do |pp|
-					if pp.is_preferred == false
-						@best_deal = []
-						#@b_deal = "best deal"
-						@b_deal = pp.deals.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], sc.id).order("price ASC").first
-						if @b_deal.present?
-							@best_deal << @b_deal
-						else	
-							@best_deal = []	
-						end	
-					elsif pp.is_preferred == true
-						@preferred_deal = []
-						@p_deal = pp.deals.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], sc.id).order("price ASC").first
-						if @p_deal.present?
-							@preferred_deal << @p_deal
-						else
-							@preferred_deal = []
-						end	
-					else	
-						@best_deal = []
-						@preferred_deal = []
-					end	
-				end	
+        sc.service_providers.where("is_preferred = ?", false).map do |bp|
+        	@best_deal = []
+        	@b_deal = Deal.where("is_active = ? AND zip = ? AND service_provider_id = ?", true, params[:zip_code], bp.id).order("price ASC").first
+       		if @b_deal.present?
+       			@best_deal << @b_deal
+       		else
+       			@best_deal = []
+       		end		
+        end	
+        sc.service_providers.where("is_preferred = ?", true).map do |pp|
+        	@preferred_deal = []
+        	@p_deal = Deal.where("is_active = ? AND zip = ? AND service_provider_id = ?", true, params[:zip_code], pp.id).order("price ASC").first
+        	if @p_deal.present?
+        		@preferred_deal << @p_deal
+        	else
+        		@preferred_deal = []
+        	end
+        end	
+
+				#@service_providers = sc.service_providers
+				#@service_providers.map do |pp|
+				#	if pp.is_preferred == false
+				#		@best_deal = []
+				#		#@b_deal = "best deal"
+				#		@b_deal = pp.deals.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], sc.id).order("price ASC").first
+				#		if @b_deal.present?
+				#			@best_deal << @b_deal
+				#		else	
+				#			@best_deal = []	
+				#		end	
+				#	elsif pp.is_preferred == true
+				#		@preferred_deal = []
+				#		@p_deal = pp.deals.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], sc.id).order("price ASC").first
+				#		if @p_deal.present?
+				#			@preferred_deal << @p_deal
+				#		else
+				#			@preferred_deal = []
+				#		end	
+				#	else	
+				#		@best_deal = []
+				#		@preferred_deal = []
+				#	end	
+				#end	
 				#	if pp.is_preferred == false
 				#		@best_deal = []
 				#		#@b_deal = pp.deals.where("zip = ?", params[:zip_code]).order("price ASC").first

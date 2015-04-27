@@ -5,7 +5,7 @@ class Api::V1::DashboardsController < ApplicationController
 	def index
 		if params[:app_user_id].present? && params[:zip_code].blank? && params[:category].blank?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
-		  @service_preferences = @app_user.service_preferences if @app_user.present?
+		  @service_preferences = @app_user.service_preferences.order("created_at DESC") if @app_user.present?
 		  @servicelist = @service_preferences.map do |sp|
 		  	@advertisement = []
 		  	@best_deal = []

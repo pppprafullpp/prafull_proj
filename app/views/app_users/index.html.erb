@@ -24,6 +24,7 @@
 							<th><strong>State</strong></th>
 							<th><strong>City</strong></th>
 							<th><strong>Zip</strong></th>
+							<th><strong>GCM Id</strong></th>
 							<th><strong>Actions</strong></th>
 						</tr>
 					</thead>
@@ -42,6 +43,7 @@
 									<td><%= app_user.state %></td>
 									<td><%= app_user.city %></td>
 									<td><%= app_user.zip %></td>
+									<td><%= app_user.gcm_registration_id %></td>
 									<td><%= (link_to 'Edit', edit_app_user_path(app_user)) if can? :manage, app_user %> | <%= (link_to "Delete", app_user, method: :delete, data: { confirm: "You sure?" }) if can? :manage, app_user %>
 								    </td>
 								</tr>

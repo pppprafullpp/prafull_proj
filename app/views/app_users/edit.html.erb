@@ -37,6 +37,9 @@
 					<div>Zip<br />
 						<%= f.text_field :zip %>
 					</div>
+					<div>GCM Registration ID <br />
+						<%= f.text_field :gcm_registration_id, :readonly => true %>
+					</div>
 					<div><%= f.check_box :active %><strong>Is Active ? :</strong></div>
 					<div><%= f.submit "Update" %></div>
 				<% end %>

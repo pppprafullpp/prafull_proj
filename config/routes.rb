@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   resources :advertisements
   resources :comments
   resources :ratings
+  resources :push_notifications
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

@@ -44,6 +44,6 @@ class AppUsersController < ApplicationController
 
 	private
 	def app_user_params
-		params.require(:app_user).permit(:first_name, :last_name, :avatar, :email, :state, :city, :zip, :password, :address, :active, :gcm_registration_id)
+		params.require(:app_user).permit(:first_name, :last_name, :avatar, :email, :state, :city, :zip, :password, :address, :active, :gcm_id)
 	end
 end

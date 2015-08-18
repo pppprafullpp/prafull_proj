@@ -10,11 +10,11 @@ class DeviseCreateAppUsers < ActiveRecord::Migration
       t.string :state
       t.string :city
       t.string :zip
+      t.string :gcm_id
 
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
-      t.string :gcm_registration_id
 
       ## Rememberable
       t.datetime :remember_created_at

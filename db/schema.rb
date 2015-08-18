@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20150818072403) do
     t.string   "state"
     t.string   "city"
     t.string   "zip"
+    t.string   "gcm_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.string   "gcm_registration_id"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",          default: 0,    null: false
     t.boolean  "active",                 default: true

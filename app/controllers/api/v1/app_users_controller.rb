@@ -39,7 +39,7 @@ class Api::V1::AppUsersController < ApplicationController
 
 	private
 	def app_user_params
-		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :address, :active, :avatar, :gcm_registration_id)
+		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :address, :active, :avatar, :gcm_id)
 	end
 
 end	

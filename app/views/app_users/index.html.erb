@@ -30,6 +30,7 @@
 					</thead>
 					<tbody>
 						<% @app_users.each do |app_user| %>
+							<% if app_user.present? %>
 							<% if can? :read, app_user %>
 								<tr>
 									<td><%= app_user.id %></td>
@@ -47,6 +48,7 @@
 									<td><%= (link_to 'Edit', edit_app_user_path(app_user)) if can? :manage, app_user %> | <%= (link_to "Delete", app_user, method: :delete, data: { confirm: "You sure?" }) if can? :manage, app_user %>
 								    </td>
 								</tr>
+							<% end %>
 							<% end %>
 						<% end %>
 					</tbody>

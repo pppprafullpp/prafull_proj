@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807103939) do
+ActiveRecord::Schema.define(version: 20150818072403) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 20150807103939) do
 
   add_index "comments", ["app_user_id"], name: "index_comments_on_app_user_id"
   add_index "comments", ["deal_id"], name: "index_comments_on_deal_id"
+
+  create_table "configurables", force: :cascade do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "configurables", ["name"], name: "index_configurables_on_name"
 
   create_table "deals", force: :cascade do |t|
     t.integer  "service_category_id"

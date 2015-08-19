@@ -10,10 +10,15 @@ class PushNotificationsController < ApplicationController
 	end
 	def create
 		@push_notification = PushNotification.new(push_notification_params)   
-    #raise @push_notification.inspect 
+    gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
+    #byebug
+    #registration_id= ["APA91bHAZB4vPEh8cvuVvMQEefI0y5eue42HldyKHJHvPEY7qP1mkY1yVNzufkz6Qw9PjHzlHvDhya-Iol2IvC28f_oHn4Oq-2xWA5-SDKxk7WR-dUgD0dX1GYM4Mb-5mNpU-huCTiVy"]
+    #registration_id = @push_notification.app_user.gcm_id if @push_notification.app_user.gcm_id.present? #@app_users.map{|notice| notice.gcm_registration_id}
+    registration_id = ["#{@push_notification.app_user.gcm_id}"]
+    gcm.send(registration_id, {data: {message: "#{@push_notification.message}"}})
     	respond_to do |format|
       		if @push_notification.save
-        		format.html { redirect_to push_notifications_path, :notice => 'You have successfully sent a notification' }
+            format.html { redirect_to push_notifications_path, :notice => 'You have successfully sent a notification' }
         		format.xml  { render :xml => @push_notification, :status => :created, :push_notification => @push_notification }
       		else
         		format.html { render :action => "new" }

@@ -22,8 +22,9 @@ class DealsController < ApplicationController
         format.html { redirect_to deals_path, :notice => 'You have successfully created a deal' }
         format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
       else
+        #raise @deal.errors.inspect
         format.html { render :action => "new" }
-        format.xml  { render :xml => @deal.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @deal.errors, :status => :unprocessable_entity }
       end
     end
 	end

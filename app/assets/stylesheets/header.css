@@ -71,3 +71,15 @@
   text-align: center;
   width: 100%;
 }
+
+#error_explanation {
+  color: red;
+}
+
+#error_explanation ul {
+  color: red;
+}
+
+#mandat{
+  color: red;
+}

@@ -11,8 +11,21 @@
 			<div class="small-6 large-centered columns">
 				<%= form_for(@service_category, :url => @service_categories) do |f| %>
 					<br/>
-
-				  <div>Service Category Name : <br />
+					<% if @service_category.errors.any? %>
+  					<div id="error_explanation">
+    					<div class="alert alert-danger">
+      					The form contains <%= pluralize(@service_category.errors.count, "error") %>.
+    					</div>
+    					<ul>
+    						<% @service_category.errors.full_messages.each do |msg| %>
+      						<li><%= msg %></li>
+    						<% end %>
+    					</ul>
+  					</div>
+					<% end %>
+					<br/>
+					<div><span style="color:#4285F4"><strong><i>Fields marked * are mandatory</i></strong></span></div><br/>
+				  <div>Service Category Name :<span id="mandat">*</span>  <br />
 				  <%= f.text_field :name %></div>
 				  <div>Description : <br />
 				  <%= f.text_field :description %></div>

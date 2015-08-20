@@ -3,6 +3,8 @@ class ServiceCategory < ActiveRecord::Base
 	has_many :service_providers, :dependent => :destroy
 	has_many :advertisements, :dependent => :destroy
 
+	validates_presence_of :name
+	
 	def as_json(opts={})
     	json = super(opts)
     	Hash[*json.map{|k, v| [k, v || ""]}.flatten]

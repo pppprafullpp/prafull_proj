@@ -20,26 +20,31 @@ class Api::V1::AppUsersController < ApplicationController
       end
 		else
 			@app_user = AppUser.new(app_user_params) 
-      #byebug
-			#raise service_preference_params.inspect   
-    		#respond_to do |format|
-      		if @app_user.save
-      			#format.json { render json: @service_preference, status: :created }
-        		#format.xml { render xml: @service_preference, status: :created }
+      @app_user.unhashed_password = params[:password]
+      	if @app_user.save
         		render :status => 200,
            		:json => { :success => true, :app_user_id => @app_user.id }
-      		else
-        		#format.json { render json: @user.errors}
+      	else
         		render :status => 401,
            		:json => { :success => false }
-      		end
-    		#end
+      	end
 		end	
 	end
 
+  def recover_password
+    @app_user = AppUser.find_by_email(params[:email])
+    @email = @app_user.email
+    if @app_user.present?
+      AppUserMailer.recover_password_email(@app_user).deliver_now
+      render  :json => { :success => true }
+    else
+      render  :json => { :success => false }
+    end
+  end
+
 	private
 	def app_user_params
-		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :address, :active, :avatar, :gcm_id)
+		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id)
 	end
 
 end	

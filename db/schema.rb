@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818072403) do
+ActiveRecord::Schema.define(version: 20150821065725) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150818072403) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar"
+    t.string   "unhashed_password"
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :deals do
         get 'deals' => 'deals#index'
       end  
+      match 'forget_password' => 'app_users#recover_password', :via => :post
     end
   end
   root to: "home#index"

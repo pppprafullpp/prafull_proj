@@ -33,24 +33,24 @@ class Api::V1::DashboardsController < ApplicationController
 				@advertisement = []
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
-        sc.service_providers.where("is_preferred = ?", false).map do |bp|
+        #sc.service_providers.where("is_preferred = ?", false).map do |bp|
         	@best_deal = []
-        	@b_deal = Deal.where("is_active = ? AND zip = ? AND service_provider_id = ?", true, params[:zip_code], bp.id).order("price ASC").first
+        	@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], @sc_id).order("price ASC").first
        		if @b_deal.present?
        			@best_deal << @b_deal
        		else
        			@best_deal = []
        		end		
-        end	
-        sc.service_providers.where("is_preferred = ?", true).map do |pp|
-        	@preferred_deal = []
-        	@p_deal = Deal.where("is_active = ? AND zip = ? AND service_provider_id = ?", true, params[:zip_code], pp.id).order("price ASC").first
-        	if @p_deal.present?
-        		@preferred_deal << @p_deal
-        	else
-        		@preferred_deal = []
-        	end
-        end	
+        #end	
+        #sc.service_providers.where("is_preferred = ?", true).map do |pp|
+        @preferred_deal = []
+        #	@p_deal = Deal.where("is_active = ? AND zip = ? AND service_provider_id = ?", true, params[:zip_code], pp.id).order("price ASC").first
+        #	if @p_deal.present?
+        #		@preferred_deal << @p_deal
+        #	else
+        #		@preferred_deal = []
+        #	end
+        #end	
 
 				#@service_providers = sc.service_providers
 				#@service_providers.map do |pp|

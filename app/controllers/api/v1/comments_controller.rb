@@ -3,6 +3,7 @@ class Api::V1::CommentsController < ApplicationController
 	respond_to :json
 
 	def index
+		get_ratings
 		@comments = Comment.where("status = ? AND deal_id = ?", true, params[:deal_id])
 		if @comments.present?
 			render :status => 200,
@@ -28,7 +29,12 @@ class Api::V1::CommentsController < ApplicationController
 	end
 
 	private
+
 	def comment_params
 		params.permit(:app_user_id, :deal_id, :status, :comment_text)
+	end
+
+	def get_ratings
+		
 	end
 end	

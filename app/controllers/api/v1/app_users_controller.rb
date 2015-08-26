@@ -44,7 +44,21 @@ class Api::V1::AppUsersController < ApplicationController
 
 	private
 	def app_user_params
+    params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
 		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id)
 	end
+
+  def decode_picture_data(picture_data)
+    # decode the base64
+    data = StringIO.new(Base64.decode64(picture_data))
+
+    # assign some attributes for carrierwave processing
+    data.class.class_eval { attr_accessor :original_filename, :content_type }
+    data.original_filename = "upload.png"
+    data.content_type = "image/png"
+
+    # return decoded data
+    data
+  end
 
 end	

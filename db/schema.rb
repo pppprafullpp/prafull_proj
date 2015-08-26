@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821065725) do
+ActiveRecord::Schema.define(version: 20150825103620) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -55,6 +55,19 @@ ActiveRecord::Schema.define(version: 20150821065725) do
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true
+
+  create_table "comment_ratings", force: :cascade do |t|
+    t.integer  "app_user_id"
+    t.integer  "deal_id"
+    t.float    "rating_point"
+    t.boolean  "status",       default: true
+    t.text     "comment_text"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "comment_ratings", ["app_user_id"], name: "index_comment_ratings_on_app_user_id"
+  add_index "comment_ratings", ["deal_id"], name: "index_comment_ratings_on_deal_id"
 
   create_table "comments", force: :cascade do |t|
     t.integer  "app_user_id"

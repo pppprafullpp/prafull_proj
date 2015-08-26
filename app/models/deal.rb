@@ -1,8 +1,9 @@
 class Deal < ActiveRecord::Base
 	belongs_to :service_category
 	belongs_to :service_provider
-	has_many :comments, dependent: :destroy
-	has_many :ratings, dependent: :destroy
+	has_many :comment_ratings, dependent: :destroy
+	#has_many :comments, dependent: :destroy
+	#has_many :ratings, dependent: :destroy
 
 	before_save :create_category_name
 	before_save :create_provider_name
@@ -27,11 +28,11 @@ class Deal < ActiveRecord::Base
   	#end
 
 	def average_rating
-		self.ratings.average(:rating_point)
+		self.comment_ratings.average(:rating_point)
 	end
 
 	def rating_count
-		self.ratings.count
+		self.comment_ratings.count
 	end
 
 	def deal_price

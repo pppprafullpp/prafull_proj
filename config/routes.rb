@@ -18,14 +18,16 @@ Rails.application.routes.draw do
       resources :app_users do
         post 'app_users' => 'app_users#create'
       end 
-      resources :comments do
-        post 'comments' => 'comments#create'
-        get 'comments'  => 'comments#index'
-      end
-      resources :ratings do
-        post 'ratings' => 'ratings#create'
-        get 'ratings'  => 'ratings#index'
-      end
+      #resources :comments do
+      #  post 'comments' => 'comments#create'
+      #  get 'comments'  => 'comments#index'
+      #end
+      #resources :ratings do
+      #  post 'ratings' => 'ratings#create'
+      #  get 'ratings'  => 'ratings#index'
+      #end
+      #resources :comment_ratings do
+      #end  
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end 
@@ -33,6 +35,10 @@ Rails.application.routes.draw do
         get 'deals' => 'deals#index'
       end  
       match 'forget_password' => 'app_users#recover_password', :via => :post
+      match 'comment_ratings' => 'comment_ratings#create', :via => :post
+      match 'comment_ratings' => 'comment_ratings#index', :via => :get
+      #match 'ratings' => 'comment_ratings#create', :via => :post
+      #match 'ratings' => 'comment_ratings#index', :via => :get
     end
   end
   root to: "home#index"
@@ -60,9 +66,10 @@ Rails.application.routes.draw do
   resources :notifications
   resources :service_providers
   resources :advertisements
-  resources :comments
-  resources :ratings
+  #resources :comments
+  #resources :ratings
   resources :push_notifications
+  resources :comment_ratings
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

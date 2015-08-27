@@ -19,6 +19,7 @@
 			  	<th><strong>Deal ID </strong></th>
 			  	<th><strong>Show on page ? </strong></th>
 			  	<th><strong>Rating</strong></th>
+			  	<th><strong>Title</strong></th>
 			  	<th><strong>Comment</strong></th>
 			  	<th><strong>Edit </strong></th>
 				</tr>
@@ -31,6 +32,7 @@
 				  		<td><%= cg.deal_id %></td>
 				  		<td><%= cg.status %></td>
 				  		<td><%= cg.rating_point %></td>
+				  		<td><%= cg.comment_title %></td>
 				  		<td><%= cg.comment_text %></td>
 				  		<td><%= (link_to 'Edit', edit_comment_rating_path(cg)) if can? :manage, cg %> | <%= (link_to "Delete", cg, method: :delete, data: { confirm: "You sure?" }) if can? :manage, cg %></td>
 						</tr>

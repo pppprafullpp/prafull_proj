@@ -27,7 +27,8 @@ class Api::V1::SessionsController < Devise::SessionsController
     render :status => 200,
            :json => { :success => true,
                       :info => "Logged out",
-                      :data => {} }
+                      :data => {} 
+                    }
   end
 
   def failure

@@ -15,7 +15,7 @@ class Api::V1::AppUsersController < ApplicationController
         		render :status => 200,
            			:json => { :success => true }
       else
-        		render :status => 401,
+        		render :status => 400,
            		:json => { :success => false }	
       end
 		else
@@ -25,11 +25,42 @@ class Api::V1::AppUsersController < ApplicationController
         		render :status => 200,
            		:json => { :success => true, :app_user_id => @app_user.id }
       	else
-        		render :status => 401,
+        		render :status => 400,
            		:json => { :success => false }
       	end
 		end	
 	end
+
+  def get_app_user
+    if params[:id].present? && params[:email].blank?
+      @app_user = AppUser.find_by_id(params[:id])
+      if @app_user.present?
+        render :status => 200,
+             :json => {
+                        :success => true,
+                        :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url])
+                      }
+      else
+        render :status => 404,
+               :json => { :success => false }
+      end
+    elsif params[:email].present? && params[:id].blank?
+      @app_user = AppUser.find_by_email(params[:email])
+      if @app_user.present?
+        render :status => 200,
+             :json => {
+                        :success => true,
+                        :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url])
+                      }
+      else  
+        render :status => 404,
+               :json => { :success => false }
+      end
+    else  
+      render :status => 404,
+             :json => { :success => false }
+    end
+  end
 
   def recover_password
     @app_user = AppUser.find_by_email(params[:email])
@@ -38,7 +69,8 @@ class Api::V1::AppUsersController < ApplicationController
       AppUserMailer.recover_password_email(@app_user).deliver_now
       render  :json => { :success => true }
     else
-      render  :json => { :success => false }
+      render  :status => 404,
+              :json => { :success => false }
     end
   end
 

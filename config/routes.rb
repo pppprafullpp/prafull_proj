@@ -1,6 +1,6 @@
 require 'api'
 Rails.application.routes.draw do
-  mount ServiceDeal::API => "/"
+  #mount ServiceDeal::API => "/"
 
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
 
@@ -9,15 +9,20 @@ Rails.application.routes.draw do
       devise_scope :app_user do
         post 'sessions' => 'sessions#create', :as => 'login'
       end
-      resources :service_preferences do
-        post 'service_preferences' => 'service_preferences#create'
-      end 
-      resources :notifications do 
-        post 'notifications' => 'notifications#create'
-      end 
-      resources :app_users do
-        post 'app_users' => 'app_users#create'
-      end 
+      #resources :service_preferences do
+        match 'service_preferences' => 'service_preferences#create', :via => :post
+      #end 
+      #resources :notifications do 
+        match 'notifications' => 'notifications#create', :via => :post
+        match 'get_notification' => 'notifications#fetch_notification', :via => :get
+      #end 
+      #resources :app_users do
+        match 'app_users' => 'app_users#create', :via => :post
+
+        match 'service_providers' => 'service_providers#get_service_providers', :via => :get
+
+        match 'get_preferences' => 'service_preferences#fetch_service_preferences', :via => :get
+      #end 
       #resources :comments do
       #  post 'comments' => 'comments#create'
       #  get 'comments'  => 'comments#index'
@@ -34,6 +39,8 @@ Rails.application.routes.draw do
       resources :deals do
         get 'deals' => 'deals#index'
       end  
+      match 'app_user' => 'app_users#get_app_user', :via => :get
+      match 'service_preferences' => 'service_preferences#get_service_preferences', :via => :get
       match 'forget_password' => 'app_users#recover_password', :via => :post
       match 'comment_ratings' => 'comment_ratings#create', :via => :post
       match 'comment_ratings' => 'comment_ratings#index', :via => :get

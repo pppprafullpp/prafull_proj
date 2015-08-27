@@ -7,7 +7,16 @@ class Api::V1::NotificationsController < ApplicationController
 	end
 
   def fetch_notification
-    
+    @notification = Notification.find_by_app_user_id(params[:app_user_id])
+    if @notification.present?
+      render :status => 200,
+             :json => {
+                        :success => true,
+                        :notification => @notification.as_json(:except => [:created_at, :updated_at])
+                      }
+    else
+      render :json => { :success => false }
+    end  
   end
 
 	def create

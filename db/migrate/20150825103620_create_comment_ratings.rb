@@ -5,6 +5,7 @@ class CreateCommentRatings < ActiveRecord::Migration
       t.belongs_to :deal, index: true
       t.float :rating_point
       t.boolean :status, default: true
+      t.text :comment_title
       t.text :comment_text
       t.timestamps null: false
     end

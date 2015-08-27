@@ -10,6 +10,10 @@ class CommentRating < ActiveRecord::Base
 		self.app_user.avatar.url
 	end
 
+	def comment_date
+		self.created_at.strftime("%d/%m/%Y")
+	end
+
 	def as_json(opts={})
   		json = super(opts)
   		Hash[*json.map{|k, v| [k, v || ""]}.flatten]

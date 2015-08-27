@@ -7,12 +7,12 @@ class Api::V1::CommentRatingsController < ApplicationController
 			@user_comment = CommentRating.where("status = ? AND deal_id = ? AND app_user_id = ?", true, params[:deal_id], params[:app_user_id]).first
 			@comment_ratings = CommentRating.where("status = ? AND deal_id = ? AND app_user_id != ?", true, params[:deal_id], params[:app_user_id])		
 			@average_rating = @comment_ratings.average(:rating_point)
-			if @comment_ratings.present?
+			if @comment_ratings.present? || @user_comment.present?
 				render :status => 200,
 							 :json => { 
 						 							:success => true,
-						 							:user_comment => @user_comment.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name, :app_user_image_url]),
-													:comment => @comment_ratings.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name, :app_user_image_url]),
+						 							:user_comment => @user_comment.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name, :app_user_image_url, :comment_date]),
+													:comment => @comment_ratings.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name, :app_user_image_url, :comment_date]),
 													:average_rating => @average_rating
 												}
 			else
@@ -63,6 +63,6 @@ class Api::V1::CommentRatingsController < ApplicationController
 
 	private
 	def comment_rating_params
-		params.permit(:app_user_id, :deal_id, :rating_point, :status, :comment_text)
+		params.permit(:app_user_id, :deal_id, :rating_point, :status, :comment_title, :comment_text)
 	end
 end	

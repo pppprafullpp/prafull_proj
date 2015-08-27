@@ -30,6 +30,6 @@ class CommentRatingsController < ApplicationController
 
 	private
 	def comment_rating_params
-		params.require(:comment_rating).permit(:app_user_id, :deal_id, :rating_point, :status, :comment_text)
+		params.require(:comment_rating).permit(:app_user_id, :deal_id, :rating_point, :status, :comment_title, :comment_text)
 	end
 end	

@@ -60,10 +60,11 @@ ActiveRecord::Schema.define(version: 20150825103620) do
     t.integer  "app_user_id"
     t.integer  "deal_id"
     t.float    "rating_point"
-    t.boolean  "status",       default: true
+    t.boolean  "status",        default: true
+    t.text     "comment_title"
     t.text     "comment_text"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "comment_ratings", ["app_user_id"], name: "index_comment_ratings_on_app_user_id"

@@ -18,3 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+every :hour do
+	rake "reminder_notification:test_task"
+end	

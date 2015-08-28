@@ -9,14 +9,14 @@ set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
 set :deploy_to, '/home/dev/service_deals'
 
 set :linked_files, %w{config/database.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :rvm_ruby_version, '2.2.2'
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ruby-#{fetch(:rvm_ruby_version)} do bundle exec rake"
 
 set :bundle_binstubs, nil
-#set :whenever_command, 'bundle exec whenever'
+set :whenever_command, 'bundle exec whenever'
 
 namespace :deploy do
   desc "Update crontab with whenever"

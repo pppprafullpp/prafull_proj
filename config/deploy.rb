@@ -1,4 +1,3 @@
-require "bundler/capistrano"
 # config valid only for Capistrano 3.1
 set :application, 'service_deals'
 set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'

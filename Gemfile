@@ -37,6 +37,7 @@ gem 'cloudinary'
 gem 'rails_12factor', group: :production
 gem 'gcm'
 gem 'configurable_engine'
+gem 'whenever', :require => false
 
 group :development do
 	gem 'capistrano', '~> 3.1.0'

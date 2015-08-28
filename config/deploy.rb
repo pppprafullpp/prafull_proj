@@ -16,6 +16,21 @@ set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ruby-#{fetch(:rvm_ruby_version)} do bundle exec rake"
 
 set :bundle_binstubs, nil
+#set :whenever_command, 'bundle exec whenever'
+
+namespace :deploy do
+  desc "Update crontab with whenever"
+  task :update_cron do
+    on roles(:app) do
+      within current_path do
+        execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
+      end
+    end
+  end
+
+  after :finishing, 'deploy:update_cron'
+end
+
 
 namespace :deploy do
 

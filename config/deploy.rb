@@ -1,6 +1,7 @@
+require "bundler/capistrano"
 # config valid only for Capistrano 3.1
 set :application, 'service_deals'
-set :repo_url, 'https://ramgarg:@github.com/ramgarg/Service-Deals-Rails'
+set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }

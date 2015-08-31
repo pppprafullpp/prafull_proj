@@ -17,8 +17,8 @@ SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ru
 
 set :bundle_binstubs, nil
 
-set :whenever_command, "bundle exec whenever"
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+#set :whenever_command, "bundle exec whenever"
+#set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
 

@@ -70,18 +70,6 @@ ActiveRecord::Schema.define(version: 20150825103620) do
   add_index "comment_ratings", ["app_user_id"], name: "index_comment_ratings_on_app_user_id"
   add_index "comment_ratings", ["deal_id"], name: "index_comment_ratings_on_deal_id"
 
-  create_table "comments", force: :cascade do |t|
-    t.integer  "app_user_id"
-    t.integer  "deal_id"
-    t.boolean  "status",       default: true
-    t.text     "comment_text"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "comments", ["app_user_id"], name: "index_comments_on_app_user_id"
-  add_index "comments", ["deal_id"], name: "index_comments_on_deal_id"
-
   create_table "configurables", force: :cascade do |t|
     t.string   "name"
     t.string   "value"
@@ -134,17 +122,6 @@ ActiveRecord::Schema.define(version: 20150825103620) do
   end
 
   add_index "push_notifications", ["app_user_id"], name: "index_push_notifications_on_app_user_id"
-
-  create_table "ratings", force: :cascade do |t|
-    t.integer  "app_user_id"
-    t.integer  "deal_id"
-    t.float    "rating_point"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "ratings", ["app_user_id"], name: "index_ratings_on_app_user_id"
-  add_index "ratings", ["deal_id"], name: "index_ratings_on_deal_id"
 
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false

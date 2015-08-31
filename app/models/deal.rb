@@ -2,8 +2,6 @@ class Deal < ActiveRecord::Base
 	belongs_to :service_category
 	belongs_to :service_provider
 	has_many :comment_ratings, dependent: :destroy
-	#has_many :comments, dependent: :destroy
-	#has_many :ratings, dependent: :destroy
 
 	before_save :create_category_name
 	before_save :create_provider_name

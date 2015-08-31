@@ -1,6 +1,6 @@
 # config valid only for Capistrano 3.1
 set :application, 'service_deals'
-set :repo_url, 'https://ramgarg:@github.com/ramgarg/Service-Deals-Rails'
+set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
@@ -17,6 +17,9 @@ SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ru
 
 set :bundle_binstubs, nil
 
+set :whenever_command, "bundle exec whenever"
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 namespace :deploy do
 
   desc 'Restart application'
@@ -30,15 +33,15 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
 end
 
-namespace :deploy do
-  desc "Update crontab with whenever"
-  task :update_cron do
-    on roles(:app) do
-      within current_path do
-        execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
-      end
-    end
-  end
+#namespace :deploy do
+#  desc "Update crontab with whenever"
+#  task :update_cron do
+#    on roles(:app) do
+#      within current_path do
+#        execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
+#      end
+#    end
+#  end
 
-  after :finishing, 'deploy:update_cron'
-end
+#  after :finishing, 'deploy:update_cron'
+#end

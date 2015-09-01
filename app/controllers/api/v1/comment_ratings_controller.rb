@@ -6,8 +6,9 @@ class Api::V1::CommentRatingsController < ApplicationController
 		if params[:deal_id].present? && params[:app_user_id].present?
 			@user_comment = CommentRating.where("status = ? AND deal_id = ? AND app_user_id = ?", true, params[:deal_id], params[:app_user_id]).first
 			@comment_ratings = CommentRating.where("status = ? AND deal_id = ? AND app_user_id != ?", true, params[:deal_id], params[:app_user_id])		
-			@average_rating = @comment_ratings.average(:rating_point)
-			@comment_count = CommentRating.count
+			@total_ratings = CommentRating.where("status = ? AND deal_id = ?", true, params[:deal_id])
+			@average_rating = @total_ratings.average(:rating_point)
+			@comment_count = CommentRating.where("status = ? AND deal_id = ?", true, params[:deal_id]).count
 			if @comment_ratings.present? || @user_comment.present?
 				render :status => 200,
 							 :json => { 
@@ -25,7 +26,7 @@ class Api::V1::CommentRatingsController < ApplicationController
 		elsif params[:deal_id].present? && params[:app_user_id].blank?	
 			@comment_ratings = CommentRating.where("status = ? AND deal_id = ?", true, params[:deal_id])		
 			@average_rating = @comment_ratings.average(:rating_point)
-			@comment_count = CommentRating.count
+			@comment_count = CommentRating.where("status = ? AND deal_id = ?", true, params[:deal_id]).count
 			if @comment_ratings.present?
 				render :status => 200,
 							 :json => { 

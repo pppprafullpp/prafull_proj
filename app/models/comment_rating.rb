@@ -11,7 +11,7 @@ class CommentRating < ActiveRecord::Base
 	end
 
 	def comment_date
-		self.created_at.strftime("%d/%m/%Y")
+		self.created_at.strftime("%m/%d/%Y")
 	end
 
 	def as_json(opts={})

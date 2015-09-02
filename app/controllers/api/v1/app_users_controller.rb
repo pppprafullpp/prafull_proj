@@ -9,15 +9,15 @@ class Api::V1::AppUsersController < ApplicationController
 	def create
 		@app_user = AppUser.find_by_email(params[:email])
 		if @app_user.present?
-			if params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? 
-        @app_user.update(app_user_params)
+		  #	if params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? 
+      @app_user.update(app_user_params)
+      render :status => 200,
+             :json => { :success => true }
         		#format.json { success: :true }
-        		render :status => 200,
-           			:json => { :success => true }
-      else
-        		render :status => 400,
-           		:json => { :success => false }	
-      end
+            #  else
+            #    		render :status => 400,
+            #       		:json => { :success => false }	
+            #  end
 		else
 			@app_user = AppUser.new(app_user_params) 
       @app_user.unhashed_password = params[:password]

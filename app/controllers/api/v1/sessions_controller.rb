@@ -5,6 +5,10 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def create
     @app_user = AppUser.find_by_email(params[:app_user][:email])
+    if params[:app_user][:gcm_id].present?
+      @app_user.gcm_id = params[:app_user][:gcm_id]
+      @app_user.save
+    end
     if @app_user.active == true
       warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
       render :status => 200,
@@ -36,6 +40,11 @@ class Api::V1::SessionsController < Devise::SessionsController
            :json => { :success => false,
                       :info => "Login Failed",
                       :data => {} }
+  end
+
+  private
+  def app_user_params
+    params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id)
   end
 
   #def create

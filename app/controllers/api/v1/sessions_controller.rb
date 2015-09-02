@@ -10,7 +10,7 @@ class Api::V1::SessionsController < Devise::SessionsController
       render :status => 200,
            :json => { :success => true,
                       :info => "Logged in",
-                      :data => {} 
+                      :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]) 
                     }
     else  
       render :status => 401,

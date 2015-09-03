@@ -5,24 +5,29 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def create
     @app_user = AppUser.find_by_email(params[:app_user][:email])
-    if params[:app_user][:gcm_id].present?
-      @app_user.gcm_id = params[:app_user][:gcm_id]
-      @app_user.save
-    end
-    if @app_user.active == true
-      warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
-      render :status => 200,
-           :json => { :success => true,
-                      :info => "Logged in",
-                      :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]) 
-                    }
-    else  
+    if @app_user.present?
+      if params[:app_user][:gcm_id].present?
+        @app_user.gcm_id = params[:app_user][:gcm_id]
+        @app_user.save
+      end
+      if @app_user.active == true
+        warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
+        render :status => 200,
+               :json => { :success => true,
+                          :info => "Logged in",
+                          :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]) 
+                        }
+      else  
+        render :status => 401,
+               :json => { :success => false,
+                          :info => "Sorry, this account has been deactivated.",
+                          :data => {} 
+                        }
+      end  
+    else
       render :status => 401,
-           :json => { :success => false,
-                      :info => "Sorry, this account has been deactivated.",
-                      :data => {} 
-                    }
-    end              
+             :json => { :success => false }
+    end            
   end
 
   def destroy

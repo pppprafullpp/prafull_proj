@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       #end 
       #resources :app_users do
         match 'app_users' => 'app_users#create', :via => :post
+        match 'update_user' => 'app_users#update_app_user', :via => :post
 
         match 'service_providers' => 'service_providers#get_service_providers', :via => :get
 

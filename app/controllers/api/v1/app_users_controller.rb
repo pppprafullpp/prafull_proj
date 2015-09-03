@@ -74,8 +74,8 @@ class Api::V1::AppUsersController < ApplicationController
 
   def recover_password
     @app_user = AppUser.find_by_email(params[:email])
-    @email = @app_user.email
     if @app_user.present?
+      @email = @app_user.email
       AppUserMailer.recover_password_email(@app_user).deliver_now
       render  :json => { :success => true }
     else

@@ -10,7 +10,7 @@ namespace :reminder_notification do
       @set_preferences.each do |sp|
         @service_category = sp.service_category.name
         @app_user_contract_date = sp.contract_date
-        if @app_user_contract_date.present?  
+        if @app_user_contract_date.present? && @app_user_notification_day.present?
           @remaining_days = (@app_user_contract_date.to_datetime - DateTime.now).to_i
           if @remaining_days < @app_user_notification_day
             gcm.send(registration_id, {data: {message: "#{@service_category} : Reminder notification"}})

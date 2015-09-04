@@ -14,7 +14,7 @@ namespace :reminder_notification do
           @remaining_days = (@app_user_contract_date.to_datetime - DateTime.now).to_i
           if @remaining_days < @app_user_notification_day
             gcm.send(registration_id, {data: {message: "#{@service_category} : Reminder notification"}})
-            puts "Notification sent"
+            puts "#{app_user.id} Notification sent"
           end
         end
       end  

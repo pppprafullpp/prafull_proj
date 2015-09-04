@@ -22,5 +22,5 @@ set :output, "#{path}/log/cron.log"
 # Learn more: http://github.com/javan/whenever
 
 every :hour do
-	rake "reminder_notification:test_task"
+	rake "reminder_notification:send_notification"
 end	

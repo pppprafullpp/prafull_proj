@@ -11,10 +11,10 @@ namespace :reminder_notification do
         @service_category = sp.service_category.name
         @app_user_contract_date = sp.contract_date
         if @app_user_contract_date.present? && @app_user_notification_day.present?
-          puts "#{@app_user_contract_date}"
+          #puts "#{@app_user_contract_date}"
           @remaining_days = (@app_user_contract_date.to_datetime - DateTime.now).to_i
           if @remaining_days < @app_user_notification_day
-            gcm.send(registration_id, {data: {message: "#{@service_category} : Reminder notification"}})
+            gcm.send(registration_id, {data: {message: "Notification from Service Deals. #{@service_category} plan is going to expire soon. Please renew it on time"}})
             puts "#{app_user.id} Notification sent"
           end
         end

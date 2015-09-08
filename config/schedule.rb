@@ -21,6 +21,6 @@ set :output, "#{path}/log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-every :hour do
+every :day, :at => '3pm' do
 	rake "reminder_notification:send_notification"
 end	

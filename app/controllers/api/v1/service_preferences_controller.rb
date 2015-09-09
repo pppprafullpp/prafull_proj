@@ -59,6 +59,18 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		end	
 	end
 
+	def deselect_service_preference
+		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).first
+		if @service_preference.present?
+			@service_preference.destroy
+			render :status => 200,
+						 :json => { :success => true }
+		else
+			render :status => 401,
+						 :json => { :success => false }
+		end	
+	end
+
 	def edit
 		@service_preference = ServicePreference.find_by_app_user_id(params[:app_user_id])
 	end

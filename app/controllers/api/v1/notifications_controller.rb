@@ -22,33 +22,28 @@ class Api::V1::NotificationsController < ApplicationController
 	def create
 		@notification = Notification.find_by_app_user_id(params[:app_user_id])
 		if @notification.present?
-			#respond_to do |format|
-      		if @notification.update(notification_params)
-        		#format.json { success: :true }
-        		render :status => 200,
-           			:json => { :success => true }
-      		else
-        		render :status => 401,
-           		:json => { :success => false }	
-        	end
-    		#end
+      if @notification.update(notification_params)
+        render :status => 200,
+           		 :json => { :success => true }
+      else
+        render :status => 401,
+           		 :json => { :success => false }	
+      end
 		else
 			@notification = Notification.new(notification_params) 
-			#raise service_preference_params.inspect   
-    		#respond_to do |format|
-      		if @notification.save
-      			#format.json { render json: @service_preference, status: :created }
-        		#format.xml { render xml: @service_preference, status: :created }
-        		render :status => 200,
-           		:json => { :success => true }
-      		else
-        		#format.json { render json: @user.errors}
-        		render :status => 401,
-           		:json => { :success => false }
-      		end
-    		#end
+      if @notification.save
+        render :status => 200,
+           		 :json => { :success => true }
+      else
+        render :status => 401,
+            	 :json => { :success => false }
+      end
 		end
 	end
+
+  def update_notification
+    #@notification = 
+  end
 
 	private
 	def notification_params

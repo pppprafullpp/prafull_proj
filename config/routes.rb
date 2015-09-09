@@ -1,7 +1,5 @@
 require 'api'
 Rails.application.routes.draw do
-  #mount ServiceDeal::API => "/"
-
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
 
   namespace :api do
@@ -9,31 +7,14 @@ Rails.application.routes.draw do
       devise_scope :app_user do
         post 'sessions' => 'sessions#create', :as => 'login'
       end
-      #resources :service_preferences do
-        match 'service_preferences' => 'service_preferences#create', :via => :post
-      #end 
-      #resources :notifications do 
-        match 'notifications' => 'notifications#create', :via => :post
-        match 'get_notification' => 'notifications#fetch_notification', :via => :get
-      #end 
-      #resources :app_users do
-        match 'app_users' => 'app_users#create', :via => :post
-        match 'update_user' => 'app_users#update_app_user', :via => :post
-
-        match 'service_providers' => 'service_providers#get_service_providers', :via => :get
-
-        match 'get_preferences' => 'service_preferences#fetch_service_preferences', :via => :get
-      #end 
-      #resources :comments do
-      #  post 'comments' => 'comments#create'
-      #  get 'comments'  => 'comments#index'
-      #end
-      #resources :ratings do
-      #  post 'ratings' => 'ratings#create'
-      #  get 'ratings'  => 'ratings#index'
-      #end
-      #resources :comment_ratings do
-      #end  
+      match 'service_preferences' => 'service_preferences#create', :via => :post
+      match 'notifications' => 'notifications#create', :via => :post
+      match 'get_notification' => 'notifications#fetch_notification', :via => :get
+      match 'app_users' => 'app_users#create', :via => :post
+      match 'update_user' => 'app_users#update_app_user', :via => :post
+      match 'service_providers' => 'service_providers#get_service_providers', :via => :get
+      match 'get_preferences' => 'service_preferences#fetch_service_preferences', :via => :get
+      match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => :delete
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end 
@@ -45,8 +26,6 @@ Rails.application.routes.draw do
       match 'forget_password' => 'app_users#recover_password', :via => :post
       match 'comment_ratings' => 'comment_ratings#create', :via => :post
       match 'comment_ratings' => 'comment_ratings#index', :via => :get
-      #match 'ratings' => 'comment_ratings#create', :via => :post
-      #match 'ratings' => 'comment_ratings#index', :via => :get
     end
   end
   root to: "home#index"

@@ -12,35 +12,35 @@
 				<%= form_for(@deal) do |f| %>
 					<br/>
 
-				  <div><strong>Service Category: </strong><br />
+				  <div><strong>Service Category:<span id="mandat">*</span> </strong><br />
 				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this);" %>
 				  </div>
-				  <div><strong>Service Provider: </strong><br />
+				  <div><strong>Service Provider:<span id="mandat">*</span> </strong><br />
 				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"} %>
 				  </div>
-				  <div><strong>Title:</strong><br />
+				  <div><strong>Title:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :title %></div>
-				  <div><strong>Deal Image: </strong><br/>
+				  <div><strong>Deal Image:<span id="mandat">*</span> </strong><br/>
 				  <%= f.file_field :image %></div>
-				  <div><strong>State:</strong><br />
+				  <div><strong>State:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :state %></div>
-				  <div><strong>City:</strong><br />
+				  <div><strong>City:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :city %></div>
-				  <div><strong>Zip:</strong><br />
+				  <div><strong>Zip:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :zip %></div>
-				  <div><strong>Price: </strong><br />
+				  <div><strong>Price:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :price %></div>
-				  <div><strong>URL:</strong><br />
+				  <div><strong>URL:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :url %></div>
-				  <div><strong>Enter a Short Description: </strong><br />
+				  <div><strong>Enter a Short Description:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_area :short_description %></div>
-				  <div><strong>Enter Detail Description: </strong><br />
+				  <div><strong>Enter Detail Description:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_area :detail_description %></div>
-				  <div><strong>You Save Text:</strong><br />
+				  <div><strong>You Save Text:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :you_save_text %></div>
-				  <div><strong>Start Date:</strong><br />
+				  <div><strong>Start Date:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :start_date %></div>
-				  <div><strong>End Date:</strong><br />
+				  <div><strong>End Date:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :end_date %></div>
 				  <div><%= f.check_box :is_active %> 
 				  <strong>Is Active ? </strong></div>

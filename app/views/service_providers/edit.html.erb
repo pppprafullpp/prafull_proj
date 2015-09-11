@@ -12,12 +12,12 @@
 				<%= form_for(@service_provider) do |f| %>
 					<br/>
 
-				  <div><strong>Select a Service Category : </strong><br />
+				  <div><strong>Select a Service Category :<span id="mandat">*</span> </strong><br />
 				  	<%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]}, {:include_blank => "Select a service category"}%>
 				  </div>
-				  <div><strong>Service Provider Name:</strong><br />
+				  <div><strong>Service Provider Name:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :name %></div>
-				  <div><strong>Service Provider Logo:</strong><br/>
+				  <div><strong>Service Provider Logo:<span id="mandat">*</span></strong><br/>
 				  <%= f.file_field :logo %></div>
 				  <div><strong>Address:</strong><br />
 				  <%= f.text_field :address %></div>

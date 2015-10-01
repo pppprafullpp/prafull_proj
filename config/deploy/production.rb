@@ -4,9 +4,9 @@
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
-role :app, %w{dev@125.99.186.38}
-role :web, %w{dev@125.99.186.38}
-role :db,  %w{dev@125.99.186.38} 
+role :app, %w{servicedeal@125.99.186.38}
+role :web, %w{servicedeal@125.99.186.38}
+role :db,  %w{servicedeal@125.99.186.38} 
 
 # Extended Server Syntax
 # ======================
@@ -18,7 +18,7 @@ role :db,  %w{dev@125.99.186.38}
 set :stage, :production
 
 # Replace 127.0.0.1 with your server's IP address!
-server '125.99.186.38', user: 'dev', roles: %w{web app}
+server '125.99.186.38', user: 'servicedeal', roles: %w{web app}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options

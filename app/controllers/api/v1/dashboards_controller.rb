@@ -9,14 +9,14 @@ class Api::V1::DashboardsController < ApplicationController
 		  @servicelist = @service_preferences.map do |sp|
 		  	@advertisement = []
 		  	@best_deal = []
-		  	@b_deal = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC").first
+		  	@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  	@best_deal << @b_deal if @b_deal.present?
 		  	@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  	@advertisement << @adv if @adv.present?
 		  	sp.service_category.service_providers.map do |pp|
 		  		if pp.is_preferred == true
 		  			@preferred_deal = []
-		  			@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ?", true, pp.service_category_id, pp.id).order("price ASC").first
+		  			@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, pp.service_category_id, pp.id, Date.today).order("price ASC").first
 						@preferred_deal << @p_deal
 					else
 						@preferred_deal = []
@@ -34,7 +34,7 @@ class Api::V1::DashboardsController < ApplicationController
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
         	@best_deal = []
-        	@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ?", true, params[:zip_code], @sc_id).order("price ASC").first
+        	@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], @sc_id, Date.today).order("price ASC").first
        		if @b_deal.present?
        			@best_deal << @b_deal
        		else
@@ -46,13 +46,13 @@ class Api::V1::DashboardsController < ApplicationController
 			render :json => { :dashboard_data => @servicelist	}
 
 		elsif params[:category].present? && params[:app_user_id].blank? && params[:zip_code].blank? && params[:state].blank?
-			@deals = Deal.where("is_active = ?", true).where(service_category_id: params[:category]).order("price ASC")	              
+			@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("created_at DESC")	              
 			render :json => {
 												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 											}
 
 		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].blank? && params[:state].blank?
-			@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_id: params[:category]).order("price ASC")
+			@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
 			render :json => {
 												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 											}
@@ -64,7 +64,7 @@ class Api::V1::DashboardsController < ApplicationController
 				@adv = sc.advertisements.order("created_at DESC").first
 				@advertisement << @adv if @adv.present?
         	@best_deal = []
-        	@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, params[:state], @sc_id).order("price ASC").first
+        	@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, params[:state], @sc_id, Date.today).order("price ASC").first
        		if @b_deal.present?
        			@best_deal << @b_deal
        		else

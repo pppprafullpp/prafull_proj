@@ -1,22 +1,30 @@
 class Api::V1::SessionsController < Devise::SessionsController
-  skip_before_filter :verify_authenticity_token,
-                     :if => Proc.new { |c| c.request.format == 'application/json' }
+  skip_before_filter :verify_authenticity_token, :except => [:create]
+                     #:if => Proc.new { |c| c.request.format == 'application/json' }
   respond_to :json
 
   def create
-    @app_user = AppUser.find_by_email(params[:app_user][:email])
+    @app_user = AppUser.find_by_email(params[:email])
     if @app_user.present?
-      if params[:app_user][:gcm_id].present?
-        @app_user.gcm_id = params[:app_user][:gcm_id]
+      if params[:gcm_id].present?
+        @app_user.gcm_id = params[:gcm_id]
         @app_user.save
       end
       if @app_user.active == true
-        warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
-        render :status => 200,
+        #warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
+        if @app_user.unhashed_password == params[:password]
+          render :status => 200,
                :json => { :success => true,
                           :info => "Logged in",
                           :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]) 
                         }
+        else
+          render :status => 401,
+               :json => { :success => false,
+                          :info => "Sorry, this account has been deactivated.",
+                          :data => {} 
+                        }
+        end            
       else  
         render :status => 401,
                :json => { :success => false,

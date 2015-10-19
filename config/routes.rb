@@ -47,7 +47,11 @@ Rails.application.routes.draw do
   
   
   resources :deals
-  resources :service_categories
+  resources :service_categories do
+    #collection do 
+    post 'import', on: :collection
+    #end  
+  end
   resources :app_users
   resources :service_preferences
   resources :notifications

@@ -1,6 +1,6 @@
 class ServiceCategoriesController < ApplicationController
 	def index
-		@service_categories = ServiceCategory.all
+		@service_categories = ServiceCategory.all.order("id DESC")
 	end
 
 	def new
@@ -49,6 +49,11 @@ class ServiceCategoriesController < ApplicationController
         format.xml  { render :xml => @service_category, :status => :created, :service_category=> @service_category }
       end
     end
+  end
+
+  def import
+    ServiceCategory.import(params[:file])
+    redirect_to service_categories_path, notice: "Service Categories imported."
   end
 
   private

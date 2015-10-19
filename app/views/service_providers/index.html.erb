@@ -15,7 +15,7 @@
 						<tr>
 							<th><strong>ID</strong></th>
 							<th><strong>ServiceCategory Id</strong></th>
-							<!--<th><strong>Service Category</strong></th>-->
+							<th><strong>Service Category</strong></th>
 							<th><strong>Service Provider Name</strong></th>
 							<th><strong>Service Provider Logo</strong></th>
 							<th><strong>Address</strong></th>
@@ -32,10 +32,11 @@
 					<tbody>
 						<% @service_providers.each do |service_provider| %>
 							<% if can? :read, service_provider %>
+							<% if service_provider.service_category_id.present? %>
 								<tr>
 									<td><%= service_provider.id %></td>
 									<td><%= service_provider.service_category_id %></td>
-									<!--<td><%#= service_provider.service_category.name if service_provider.service_category.name.present? %></td>-->
+									<td><%= service_provider.service_category.name %></td>
 									<td><%= service_provider.name %></td>
 									<td><%= service_provider.logo_url if service_provider.logo? %></td>
 									<td><%= service_provider.address %></td>
@@ -48,6 +49,7 @@
 									<td><%= service_provider.is_active %></td>
 									<td><%= (link_to 'Edit', edit_service_provider_path(service_provider)) if can? :manage, service_provider %> | <%= (link_to "Delete", service_provider, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_provider %></td>
 								</tr>
+							<% end %>	
 							<% end %>
 						<% end %>
 					</tbody>

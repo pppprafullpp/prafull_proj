@@ -3,7 +3,7 @@ class ServiceProvider < ActiveRecord::Base
 	has_many :deals, dependent: :destroy
 
 	mount_uploader :logo, ImageUploader
-	validates_presence_of :name, :logo
+	validates_presence_of :service_category_id, :name, :logo
 
 	def as_json(opts={})
   		json = super(opts)

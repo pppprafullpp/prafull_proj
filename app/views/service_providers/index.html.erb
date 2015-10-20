@@ -32,6 +32,7 @@
 					<tbody>
 						<% @service_providers.each do |service_provider| %>
 							<% if can? :read, service_provider %>
+							<% if service_provider.service_category_id.present? %>
 								<tr>
 									<td><%= service_provider.id %></td>
 									<td><%= service_provider.service_category_id %></td>
@@ -48,6 +49,7 @@
 									<td><%= service_provider.is_active %></td>
 									<td><%= (link_to 'Edit', edit_service_provider_path(service_provider)) if can? :manage, service_provider %> | <%= (link_to "Delete", service_provider, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_provider %></td>
 								</tr>
+							<% end %>	
 							<% end %>
 						<% end %>
 					</tbody>

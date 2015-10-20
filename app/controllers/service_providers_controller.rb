@@ -47,6 +47,6 @@ class ServiceProvidersController < ApplicationController
 
 	private
   	def service_provider_params
-  		params.require(:service_provider).permit(:name, :service_category_id, :service_category_name, :address, :state, :city, :zip, :email, :telephone, :logo, :is_preferred, :is_active)
+  		params.require(:service_provider).permit(:name, :service_category_id, :address, :state, :city, :zip, :email, :telephone, :logo, :is_preferred, :is_active)
   	end
 end	

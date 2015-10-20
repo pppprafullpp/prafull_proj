@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825103620) do
+ActiveRecord::Schema.define(version: 20151020062546) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -155,17 +155,16 @@ ActiveRecord::Schema.define(version: 20150825103620) do
   create_table "service_providers", force: :cascade do |t|
     t.string   "name"
     t.integer  "service_category_id"
-    t.string   "service_category_name"
     t.string   "address"
     t.string   "state"
     t.string   "city"
     t.string   "zip"
     t.string   "email"
     t.string   "telephone"
-    t.boolean  "is_preferred",          default: false
-    t.boolean  "is_active",             default: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.boolean  "is_preferred",        default: false
+    t.boolean  "is_active",           default: true
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "logo"
   end
 

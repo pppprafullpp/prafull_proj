@@ -44,6 +44,10 @@ class ServiceProvidersController < ApplicationController
           end
     	end	
 	end
+  def import
+    ServiceProvider.import(params[:file])
+    redirect_to service_providers_path, notice: "Service Providers imported."
+  end
 
 	private
   	def service_provider_params

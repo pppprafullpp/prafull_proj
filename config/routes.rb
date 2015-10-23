@@ -55,7 +55,9 @@ Rails.application.routes.draw do
   resources :app_users
   resources :service_preferences
   resources :notifications
-  resources :service_providers
+  resources :service_providers do
+    post 'import', on: :collection
+  end  
   resources :advertisements
   #resources :comments
   #resources :ratings

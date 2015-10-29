@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       match 'forget_password' => 'app_users#recover_password', :via => :post
       match 'comment_ratings' => 'comment_ratings#create', :via => :post
       match 'comment_ratings' => 'comment_ratings#index', :via => :get
+      match 'referral_tracking' => 'referral_infos#create', :via => :post
     end
   end
   root to: "home#index"
@@ -57,6 +58,7 @@ Rails.application.routes.draw do
   #resources :ratings
   resources :push_notifications
   resources :comment_ratings
+  resources :referral_infos
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

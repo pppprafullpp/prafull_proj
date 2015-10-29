@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020062546) do
+ActiveRecord::Schema.define(version: 20151026074133) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -82,8 +82,6 @@ ActiveRecord::Schema.define(version: 20151020062546) do
   create_table "deals", force: :cascade do |t|
     t.integer  "service_category_id"
     t.integer  "service_provider_id"
-    t.string   "service_category_name"
-    t.string   "service_provider_name"
     t.string   "title"
     t.string   "state"
     t.string   "city"
@@ -99,6 +97,8 @@ ActiveRecord::Schema.define(version: 20151020062546) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "image"
+    t.string   "service_provider_name"
+    t.string   "service_category_name"
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id"
@@ -122,6 +122,16 @@ ActiveRecord::Schema.define(version: 20151020062546) do
   end
 
   add_index "push_notifications", ["app_user_id"], name: "index_push_notifications_on_app_user_id"
+
+  create_table "referral_infos", force: :cascade do |t|
+    t.string   "first_referring_identity"
+    t.string   "referred_user"
+    t.string   "event"
+    t.integer  "referring_user_coins"
+    t.integer  "referred_user_coins"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false

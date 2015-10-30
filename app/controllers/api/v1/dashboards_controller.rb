@@ -19,16 +19,15 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@best_deal << @b_deal if @b_deal.present?
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?
-		  		#sp.service_category.service_providers.map do |pp|
-		  		#	if pp.is_preferred == true
-		  		#		@preferred_deal = []
-		  		#		@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND zip = ? AND end_date > ?", true, pp.service_category_id, pp.id, @zip_code, Date.today).order("price ASC").first
-					#		@preferred_deal << @p_deal
-					#	else
-					#		@preferred_deal = []
-		  		#	end
-		  		#end	
-		  		@preferred_deal = []
+		  		sp.service_category.service_providers.map do |pp|
+		  			if pp.is_preferred == true
+		  				@preferred_deal = []
+		  				@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND zip = ? AND end_date > ?", true, pp.service_category_id, pp.id, @zip_code, Date.today).order("price ASC").first
+							@preferred_deal << @p_deal
+						else
+							@preferred_deal = []
+		  			end
+		  		end	
 					{ :contract_fee => sp.contract_fee, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
 		  	end	
 		  elsif @app_user.present? && @zip_code.blank?
@@ -40,16 +39,15 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@best_deal << @b_deal if @b_deal.present?
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?
-		  		#sp.service_category.service_providers.map do |pp|
-		  		#	if pp.is_preferred == true
-		  		#		@preferred_deal = []
-		  		#		@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, pp.service_category_id, pp.id, Date.today).order("price ASC").first
-					#		@preferred_deal << @p_deal
-					#	else
-					#		@preferred_deal = []
-		  		#	end
-		  		#end	
-		  		@preferred_deal = []
+		  		sp.service_category.service_providers.map do |pp|
+		  			if pp.is_preferred == true
+		  				@preferred_deal = []
+		  				@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, pp.service_category_id, pp.id, Date.today).order("price ASC").first
+							@preferred_deal << @p_deal
+						else
+							@preferred_deal = []
+		  			end
+		  		end	
 					{ :contract_fee => sp.contract_fee, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
 		  	end	
 		  end
@@ -59,46 +57,25 @@ class Api::V1::DashboardsController < ApplicationController
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@zip_code = @app_user.zip
 			if @app_user.present? && @zip_code.present?
-				@service_preferences = @app_user.service_preferences.order("created_at DESC")
-				if @service_preferences.present?
-					@servicelist = @service_preferences.map do |sp|
-		  			@advertisement = []
-		  			@best_deal = []
-		  			@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
-		  			@best_deal << @b_deal if @b_deal.present?
-		  			@adv = sp.service_category.advertisements.order("created_at DESC").first
-		  			@advertisement << @adv if @adv.present?
-		  			#sp.service_category.service_providers.map do |pp|
-		  			#	if pp.is_preferred == true
-		  			#		@preferred_deal = []
-		  			#		@p_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, @zip_code, pp.service_category_id, pp.id, Date.today).order("price ASC").first
-						#		@preferred_deal << @p_deal
-						#	else
-						#		@preferred_deal = []
-		  			#	end
-		  			#end	
-		  			@preferred_deal = []
-						{ :contract_fee => sp.contract_fee, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
+				@service_preferences = @app_user.service_preferences.order("created_at DESC") 
+		  	@servicelist = @service_preferences.map do |sp|
+		  		@advertisement = []
+		  		@best_deal = []
+		  		@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
+		  		@best_deal << @b_deal if @b_deal.present?
+		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
+		  		@advertisement << @adv if @adv.present?
+		  		sp.service_category.service_providers.map do |pp|
+		  			if pp.is_preferred == true
+		  				@preferred_deal = []
+		  				@p_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, @zip_code, pp.service_category_id, pp.id, Date.today).order("price ASC").first
+							@preferred_deal << @p_deal
+						else
+							@preferred_deal = []
+		  			end
 		  		end	
-				else
-					@service_categories = ServiceCategory.all
-					@servicelist = @service_categories.map do |sc|
-						@sc_id = sc.id
-						@advertisement = []
-						@adv = sc.advertisements.order("created_at DESC").first
-						@advertisement << @adv if @adv.present?
-        		@best_deal = []
-        		@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, @sc_id, Date.today).order("price ASC").first
-       			if @b_deal.present?
-       				@best_deal << @b_deal
-       			else
-       				@best_deal = []
-       			end		
-        		@preferred_deal = []
-						{ :service_category_name => sc.name, :contract_fee => '0', :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 	
-					end	
-					render :json => { :dashboard_data => @servicelist	}
-				end 
+					{ :contract_fee => sp.contract_fee, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
+		  	end	
 			elsif	@app_user.present? && @zip_code.blank?
 				@service_preferences = @app_user.service_preferences.order("created_at DESC") 
 		  	@servicelist = @service_preferences.map do |sp|
@@ -108,16 +85,15 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@best_deal << @b_deal if @b_deal.present?
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?
-		  		#sp.service_category.service_providers.map do |pp|
-		  		#	if pp.is_preferred == true
-		  		#		@preferred_deal = []
-		  		#		@p_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, params[:zip_code], pp.service_category_id, pp.id, Date.today).order("price ASC").first
-					#		@preferred_deal << @p_deal
-					#	else
-					#		@preferred_deal = []
-		  		#	end
-		  		#end	
-		  		@preferred_deal = []
+		  		sp.service_category.service_providers.map do |pp|
+		  			if pp.is_preferred == true
+		  				@preferred_deal = []
+		  				@p_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, params[:zip_code], pp.service_category_id, pp.id, Date.today).order("price ASC").first
+							@preferred_deal << @p_deal
+						else
+							@preferred_deal = []
+		  			end
+		  		end	
 					{ :contract_fee => sp.contract_fee, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
 		  	end	
 			end	
@@ -168,7 +144,7 @@ class Api::V1::DashboardsController < ApplicationController
        		else
        			@best_deal = []
        		end		
-        	@preferred_deal = []
+        @preferred_deal = []
 				{ :service_category_name => sc.name, :contract_fee => '0', :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 	
 			end	
 			render :json => { :dashboard_data => @servicelist	}

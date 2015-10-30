@@ -31,7 +31,7 @@ class Api::V1::CommentRatingsController < ApplicationController
 				render :status => 200,
 							 :json => { 
 						 							:success => true,
-													:comment => @comment_ratings.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name, :app_user_image_url]),
+													:comment => @comment_ratings.as_json(:except => [:created_at, :updated_at], :methods => [:app_user_name, :app_user_image_url, :comment_date]),
 													:average_rating => @average_rating,
 													:comment_count => @comment_count
 												}

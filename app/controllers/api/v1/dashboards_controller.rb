@@ -5,7 +5,6 @@ class Api::V1::DashboardsController < ApplicationController
 	respond_to :json
 
 	def index
-		byebug
 		###############   When User is Logged In but zip code is not present   ###############
 		if params[:app_user_id].present? && params[:zip_code].blank? && params[:category].blank? && params[:state].blank?
 			@app_user = AppUser.find_by_id(params[:app_user_id])

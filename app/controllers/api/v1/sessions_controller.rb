@@ -13,10 +13,16 @@ class Api::V1::SessionsController < Devise::SessionsController
       if @app_user.active == true
         #warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
         if @app_user.unhashed_password == params[:password]
+          if @app_user.service_preferences.present?
+            @user_preference = true
+          else
+            @user_preference = false
+          end
           render :status => 200,
                :json => { :success => true,
                           :info => "Logged in",
-                          :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]) 
+                          :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                          :user_preference => @user_preference
                         }
         else
           render :status => 401,

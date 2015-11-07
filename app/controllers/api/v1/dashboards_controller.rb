@@ -67,7 +67,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@advertisement = []
 		  		@best_deal = []
 		  		@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
-		  		@you_save = @b_deal.price - @app_user_current_plan
+		  		@you_save = @app_user_current_plan - @b_deal.price 
 		  		@best_deal << @b_deal if @b_deal.present?
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?

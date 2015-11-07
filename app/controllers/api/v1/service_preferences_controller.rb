@@ -88,7 +88,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	private
 	def service_preference_params
-		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee)
+		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee,:start_date, :end_date, :upload_speed, :download_speed, :price)
 	end
 
 end	

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026074133) do
+ActiveRecord::Schema.define(version: 20151107115715) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 20151026074133) do
   create_table "deals", force: :cascade do |t|
     t.integer  "service_category_id"
     t.integer  "service_provider_id"
+    t.string   "service_category_name"
+    t.string   "service_provider_name"
     t.string   "title"
     t.string   "state"
     t.string   "city"
@@ -90,19 +92,33 @@ ActiveRecord::Schema.define(version: 20151026074133) do
     t.text     "detail_description"
     t.float    "price"
     t.string   "url"
-    t.text     "you_save_text"
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_active",             default: true
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "image"
-    t.string   "service_provider_name"
-    t.string   "service_category_name"
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id"
   add_index "deals", ["service_provider_id"], name: "index_deals_on_service_provider_id"
+
+  create_table "internet_preferences", force: :cascade do |t|
+    t.integer  "app_user_id"
+    t.integer  "service_category_id"
+    t.integer  "service_provider_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "upload_speed"
+    t.string   "download_speed"
+    t.float    "price"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "internet_preferences", ["app_user_id"], name: "index_internet_preferences_on_app_user_id"
+  add_index "internet_preferences", ["service_category_id"], name: "index_internet_preferences_on_service_category_id"
+  add_index "internet_preferences", ["service_provider_id"], name: "index_internet_preferences_on_service_provider_id"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "app_user_id"
@@ -156,6 +172,11 @@ ActiveRecord::Schema.define(version: 20151026074133) do
     t.float    "contract_fee"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "upload_speed"
+    t.string   "download_speed"
+    t.float    "price"
   end
 
   add_index "service_preferences", ["app_user_id"], name: "index_service_preferences_on_app_user_id"

@@ -7,30 +7,41 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 	def new
 		@service_preference = ServicePreference.new
+		#@service_preference.build_internet_service_preference
 	end
 
 	def create
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
 		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
+
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
-      		if @service_preference.update(service_preference_params)
-        		render :status => 200,
-           		:json => { :success => true }
-      		else
-        		render :status => 401,
+			if params[:service_category_id] == '1'
+				@service_preference.internet_service_preference.update(internet_service_preference_params)
+			end	
+      if @service_preference.update(service_preference_params)
+        	render :status => 200,
+              	 :json => { :success => true }
+      else
+        	render :status => 401,
            		:json => { :success => false }	
-        	end
+      end
 		else
 			@service_preference = ServicePreference.new(service_preference_params) 
-      		if @service_preference.save
-        		render :status => 200,
+			@service_preference.save!
+			if params[:service_category_id] == '1'
+				@internet_service_preference = InternetServicePreference.new(internet_service_preference_params)
+				@internet_service_preference.service_preference_id = @service_preference.id
+				@internet_service_preference.save!
+			end
+      if @service_preference.save && @internet_service_preference.save
+        	render :status => 200,
            		:json => { :success => true }
-      		else
-        		render :status => 401,
+      else
+        	render :status => 401,
            		:json => { :success => false }
-      		end
-    	end
+      end
+    end
 	end
 
 	def get_service_preferences
@@ -48,11 +59,20 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	def fetch_service_preferences
 		@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_id = ?",params[:category]).take
-		if @service_preference.present?
+		if @service_preference.present?	
+			if params[:category] == '1'
+				@internet_preference = InternetServicePreference.where("service_preference_id = ?", @service_preference.id ).take
+			end
+		end
+		if @service_preference.present? && @internet_preference.present?
+			json_1 = @service_preference.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
+			json_2 = @internet_preference.as_json(:except => [:service_preference_id, :created_at, :updated_at])
+			@user_preference = json_1.reverse_merge!(json_2)
 			render :status => 200,
 						 :json => {
 						 						:success => true,
-						 						:service_preference => @service_preference.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
+						 						#:service_preference => @service_preference.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
+						 						:service_preference => @user_preference
 						 					}
 		else
 			render :json => { :success => false }
@@ -88,7 +108,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	private
 	def service_preference_params
-		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee,:start_date, :end_date, :upload_speed, :download_speed, :price)
+		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :is_contract, :start_date, :end_date, :price, :plan_name)
+	end
+	def internet_service_preference_params
+		params.permit(:service_preference_id, :upload_speed, :download_speed, :data, :email, :online_storage, :wifi_hotspot)
 	end
 
 end	

@@ -2,6 +2,8 @@ class ServicePreference < ActiveRecord::Base
 	belongs_to :app_user
 	belongs_to :service_category
 	belongs_to :service_provider
+	has_one :internet_service_preference, :dependent => :destroy
+  	#accepts_nested_attributes_for :internet_service_preference
 
 	def as_json(opts={})
     	json = super(opts)

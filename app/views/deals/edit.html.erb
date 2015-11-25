@@ -13,7 +13,7 @@
 					<br/>
 
 				  <div><strong>Service Category:<span id="mandat">*</span> </strong><br />
-				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this);" %>
+				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this); yesnoCheck(this);" %>
 				  </div>
 				  <div><strong>Service Provider:<span id="mandat">*</span> </strong><br />
 				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"} %>
@@ -30,6 +30,10 @@
 				  <%= f.text_field :zip %></div>
 				  <div><strong>Price:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :price %></div>
+				  <div id = "u_speed" style="display: none;"><strong>Upload Speed:<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :upload_speed %></div>
+				  <div id="d_speed" style="display: none;"><strong>Download Speed:<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :download_speed %></div>
 				  <div><strong>URL:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :url %></div>
 				  <div><strong>Enter a Short Description:<span id="mandat">*</span> </strong><br />
@@ -48,4 +52,17 @@
     </td>
 	</tr>
 </table>
+<script>
+    function yesnoCheck(that) {
+        alert("ok");
+        if (that.value == "1") {
+            alert("check");
+            document.getElementById("u_speed").style.display = "block";
+            document.getElementById("d_speed").style.display = "block";
+        } else {
+            document.getElementById("u_speed").style.display = "none";
+            document.getElementById("d_speed").style.display = "none";
+        } 
+    }
+</script>
 

@@ -15,10 +15,11 @@
 							<th><strong>App User Id</strong></th>
 							<th><strong>Service Category Id</strong></th>
 							<th><strong>Service Provider Id</strong></th>
-							<th><strong>Contract Date</strong></th>
+							<th><strong>Start Date</strong></th>
+							<th><strong>End Date</strong></th>
 							<th><strong>Is Contract?</strong></th>
-							<th><strong>Contract Fee</strong></th>
-							<th><strong>Upload Speed</strong></th>
+							<th><strong>Price</strong></th>
+							<th><strong>Plan Name</strong></th>
 							<th><strong>Action</strong></th>
 						</tr>
 					</thead>
@@ -30,10 +31,11 @@
 									<td><%= service_preference.app_user_id %></td>
 									<td><%= service_preference.service_category_id %></td>
 									<td><%= service_preference.service_provider_id %></td>
-									<td><%= service_preference.contract_date %></td>
+									<td><%= service_preference.start_date %></td>
+									<td><%= service_preference.end_date %></td>
 									<td><%= service_preference.is_contract %></td>
-									<td><%= service_preference.contract_fee %></td>
-									<td><%= service_preference.upload_speed %></td>
+									<td><%= service_preference.price %></td>
+									<td><%= service_preference.plan_name %></td>
 									<td><%= (link_to 'Edit', edit_service_preference_path(service_preference)) if can? :manage, service_preference %> | <%= (link_to "Delete", service_preference, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_preference %></td>
 								</tr>
 							<% end %>

@@ -43,6 +43,8 @@
 				  <%= f.text_field :call_minutes %></div>
 				  <div id="t_msgs" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :text_messages %></div>
+				  <div id = "talk_unlimit" style="display: none;"><%= f.check_box :talk_unlimited %> <strong>Unlimited Talk </strong></div>
+				  <div id = "text_unlimit" style="display: none;"><%= f.check_box :text_unlimited %> <strong>Unlimited Text </strong></div>
 				  <!--<div id = "talk_unlimit" style="display: none;"><strong>Call Minutes(Integer):<span id="mandat">*</span> </strong><br />
 				  <%#= f.text_field :call_minutes %></div>
 				  <div id="text_unlimit" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />
@@ -82,6 +84,7 @@
     </td>
 	</tr>
 </table>
+
 <script>
     function yesnoCheck(that) {
         if (that.value == "1") {
@@ -93,9 +96,13 @@
             document.getElementById("premium_c").style.display = "none";
             document.getElementById("data_plan").style.display = "none";
             document.getElementById("data_speed").style.display = "none";
+            document.getElementById("talk_unlimit").style.display = "none";
+            document.getElementById("text_unlimit").style.display = "none";
         } else if (that.value == "2"){
         		document.getElementById("c_minutes").style.display = "block";
             document.getElementById("t_msgs").style.display = "block";
+            document.getElementById("talk_unlimit").style.display = "block";
+            document.getElementById("text_unlimit").style.display = "block";
             document.getElementById("u_speed").style.display = "none";
             document.getElementById("d_speed").style.display = "none";
             document.getElementById("free_c").style.display = "none";
@@ -111,11 +118,15 @@
             document.getElementById("d_speed").style.display = "none";
             document.getElementById("data_plan").style.display = "none";
             document.getElementById("data_speed").style.display = "none";
+            document.getElementById("talk_unlimit").style.display = "none";
+            document.getElementById("text_unlimit").style.display = "none";
         } else if (that.value == "4"){
         		document.getElementById("c_minutes").style.display = "block";
             document.getElementById("t_msgs").style.display = "block";
             document.getElementById("data_plan").style.display = "block";
             document.getElementById("data_speed").style.display = "block";
+            document.getElementById("talk_unlimit").style.display = "block";
+            document.getElementById("text_unlimit").style.display = "block";
         		document.getElementById("free_c").style.display = "none";
             document.getElementById("premium_c").style.display = "none";
             document.getElementById("u_speed").style.display = "none";
@@ -123,6 +134,8 @@
         } else if (that.value == "5"){
         		document.getElementById("c_minutes").style.display = "block";
             document.getElementById("t_msgs").style.display = "block";
+            document.getElementById("talk_unlimit").style.display = "block";
+            document.getElementById("text_unlimit").style.display = "block";
             document.getElementById("data_plan").style.display = "none";
             document.getElementById("data_speed").style.display = "none";
         		document.getElementById("free_c").style.display = "block";
@@ -139,8 +152,9 @@
             document.getElementById("premium_c").style.display = "none";
             document.getElementById("data_plan").style.display = "none";
             document.getElementById("data_speed").style.display = "none";
+            document.getElementById("talk_unlimit").style.display = "none";
+            document.getElementById("text_unlimit").style.display = "none";
         } 
     }
 </script>
-
 

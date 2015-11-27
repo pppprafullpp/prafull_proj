@@ -30,10 +30,40 @@
 				  <%= f.text_field :zip %></div>
 				  <div><strong>Price:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :price %></div>
-				  <div id = "u_speed" style="display: none;"><strong>Upload Speed:<span id="mandat">*</span> </strong><br />
+				  
+				  <!-- For Internet Deals-->
+				  <div id = "u_speed" style="display: none;"><strong>Upload Speed(In Mbps):<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :upload_speed %></div>
-				  <div id="d_speed" style="display: none;"><strong>Download Speed:<span id="mandat">*</span> </strong><br />
+				  <div id="d_speed" style="display: none;"><strong>Download Speed(In Mbps):<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :download_speed %></div>
+				  <!-- *******Ends Here********-->
+
+				  <!-- For Telephone Deals-->
+				  <div id = "c_minutes" style="display: none;"><strong>Call Minutes(Integer):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :call_minutes %></div>
+				  <div id="t_msgs" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :text_messages %></div>
+				  <!--<div id = "talk_unlimit" style="display: none;"><strong>Call Minutes(Integer):<span id="mandat">*</span> </strong><br />
+				  <%#= f.text_field :call_minutes %></div>
+				  <div id="text_unlimit" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />
+				  <%#= f.text_field :text_messages %></div>-->
+				  <!-- *******Ends Here********-->
+
+				  <!-- For Cable Deals-->
+				  <div id = "free_c" style="display: none;"><strong>Free Channels(Integer):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :free_channels %></div>
+				  <div id="premium_c" style="display: none;"><strong>Premium Channels(Integer):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :premium_channels %></div>
+				  <!-- *******Ends Here********-->
+
+				  <!-- For CellPhone Deals-->
+				  <div id = "data_plan" style="display: none;"><strong>Data Plan(In GB):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :data_plan %></div>
+				  <div id="data_speed" style="display: none;"><strong>Data Speed(In Mbps):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :data_speed %></div>
+				  <!-- *******Ends Here********-->
+
+				  
 				  <div><strong>URL:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :url %></div>
 				  <div><strong>Enter a Short Description:<span id="mandat">*</span> </strong><br />
@@ -54,15 +84,63 @@
 </table>
 <script>
     function yesnoCheck(that) {
-        alert("ok");
         if (that.value == "1") {
-            alert("check");
             document.getElementById("u_speed").style.display = "block";
             document.getElementById("d_speed").style.display = "block";
-        } else {
+            document.getElementById("c_minutes").style.display = "none";
+            document.getElementById("t_msgs").style.display = "none";
+            document.getElementById("free_c").style.display = "none";
+            document.getElementById("premium_c").style.display = "none";
+            document.getElementById("data_plan").style.display = "none";
+            document.getElementById("data_speed").style.display = "none";
+        } else if (that.value == "2"){
+        		document.getElementById("c_minutes").style.display = "block";
+            document.getElementById("t_msgs").style.display = "block";
             document.getElementById("u_speed").style.display = "none";
             document.getElementById("d_speed").style.display = "none";
+            document.getElementById("free_c").style.display = "none";
+            document.getElementById("premium_c").style.display = "none";
+            document.getElementById("data_plan").style.display = "none";
+            document.getElementById("data_speed").style.display = "none";
+        } else if (that.value == "3"){
+        		document.getElementById("free_c").style.display = "block";
+            document.getElementById("premium_c").style.display = "block";
+        		document.getElementById("c_minutes").style.display = "none";
+            document.getElementById("t_msgs").style.display = "none";
+            document.getElementById("u_speed").style.display = "none";
+            document.getElementById("d_speed").style.display = "none";
+            document.getElementById("data_plan").style.display = "none";
+            document.getElementById("data_speed").style.display = "none";
+        } else if (that.value == "4"){
+        		document.getElementById("c_minutes").style.display = "block";
+            document.getElementById("t_msgs").style.display = "block";
+            document.getElementById("data_plan").style.display = "block";
+            document.getElementById("data_speed").style.display = "block";
+        		document.getElementById("free_c").style.display = "none";
+            document.getElementById("premium_c").style.display = "none";
+            document.getElementById("u_speed").style.display = "none";
+            document.getElementById("d_speed").style.display = "none";
+        } else if (that.value == "5"){
+        		document.getElementById("c_minutes").style.display = "block";
+            document.getElementById("t_msgs").style.display = "block";
+            document.getElementById("data_plan").style.display = "none";
+            document.getElementById("data_speed").style.display = "none";
+        		document.getElementById("free_c").style.display = "block";
+            document.getElementById("premium_c").style.display = "block";
+            document.getElementById("u_speed").style.display = "block";
+            document.getElementById("d_speed").style.display = "block";
+        }
+        else {
+            document.getElementById("u_speed").style.display = "none";
+            document.getElementById("d_speed").style.display = "none";
+            document.getElementById("c_minutes").style.display = "none";
+            document.getElementById("t_msgs").style.display = "none";
+            document.getElementById("free_c").style.display = "none";
+            document.getElementById("premium_c").style.display = "none";
+            document.getElementById("data_plan").style.display = "none";
+            document.getElementById("data_speed").style.display = "none";
         } 
     }
 </script>
+
 

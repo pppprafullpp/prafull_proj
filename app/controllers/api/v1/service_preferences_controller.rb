@@ -13,11 +13,21 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	def create
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
 		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
-
+		#byebug
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
 			if params[:service_category_id] == '1'
 				@service_preference.internet_service_preference.update(internet_service_preference_params)
+			elsif params[:service_category_id] == '2'
+				@service_preference.telephone_service_preference.update(telephone_service_preference_params)
+			elsif params[:service_category_id] == '3'
+				@service_preference.cable_service_preference.update(cable_service_preference_params)
+			elsif params[:service_category_id] == '4'
+				@service_preference.cellphone_service_preference.update(cellphone_service_preference_params)	
+			elsif params[:service_category_id] == '5'
+				@service_preference.bundle_service_preference.update(bundle_service_preference_params)
+			elsif params[:service_category_id] == '8'
+				@service_preference.update(service_preference_params)	
 			end	
       if @service_preference.update(service_preference_params)
         	render :status => 200,
@@ -33,8 +43,30 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@internet_service_preference = InternetServicePreference.new(internet_service_preference_params)
 				@internet_service_preference.service_preference_id = @service_preference.id
 				@internet_service_preference.save!
+			elsif params[:service_category_id] == '2'	
+				@internet_service_preference = TelephoneServicePreference.new(telephone_service_preference_params)
+				@internet_service_preference.service_preference_id = @service_preference.id
+				@internet_service_preference.save!	
+			elsif params[:service_category_id] == '3'	
+				@internet_service_preference = CableServicePreference.new(cable_service_preference_params)
+				@internet_service_preference.service_preference_id = @service_preference.id
+				@internet_service_preference.save!
+			elsif params[:service_category_id] == '4'	
+				@internet_service_preference = CellphoneServicePreference.new(cellphone_service_preference_params)
+				@internet_service_preference.service_preference_id = @service_preference.id
+				@internet_service_preference.save!	
+			elsif params[:service_category_id] == '5'	
+				@internet_service_preference = BundleServicePreference.new(bundle_service_preference_params)
+				@internet_service_preference.service_preference_id = @service_preference.id
+				@internet_service_preference.save!	
+			elsif params[:service_category_id] == '8'	
+				@internet_service_preference = @service_preference
+				@internet_service_preference.save!	
+				#@internet_service_preference = BundleServicePreference.new(bundle_service_preference_params)
+				#@internet_service_preference.service_preference_id = @service_preference.id
+				#@internet_service_preference.save!	
 			end
-      if @service_preference.save && @internet_service_preference.save
+      if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
         	render :status => 200,
            		:json => { :success => true }
       else
@@ -62,6 +94,16 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		if @service_preference.present?	
 			if params[:category] == '1'
 				@internet_preference = InternetServicePreference.where("service_preference_id = ?", @service_preference.id ).take
+			elsif params[:category] == '2'
+				@internet_preference = TelephoneServicePreference.where("service_preference_id = ?", @service_preference.id ).take				
+			elsif params[:category] == '3'
+				@internet_preference = CableServicePreference.where("service_preference_id = ?", @service_preference.id ).take
+			elsif params[:category] == '4'
+				@internet_preference = CellphoneServicePreference.where("service_preference_id = ?", @service_preference.id ).take
+			elsif params[:category] == '5'
+				@internet_preference = BundleServicePreference.where("service_preference_id = ?", @service_preference.id ).take
+			elsif params[:category] == '8'
+				@internet_preference = @service_preference #ServicePreference.where("service_preference_id = ?", @service_preference.id ).take
 			end
 		end
 		if @service_preference.present? && @internet_preference.present?
@@ -113,5 +155,17 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	def internet_service_preference_params
 		params.permit(:service_preference_id, :upload_speed, :download_speed, :data, :email, :online_storage, :wifi_hotspot)
 	end
+	def cable_service_preference_params
+		params.permit(:service_preference_id, :free_channels, :premium_channels)
+	end
+	def telephone_service_preference_params
+    params.permit(:service_preference_id, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited)
+  end
+  def cellphone_service_preference_params
+    params.permit(:service_preference_id, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited, :data_plan, :data_speed)
+  end
+  def bundle_service_preference_params
+    params.permit(:service_preference_id, :upload_speed, :download_speed, :data, :free_channels, :premium_channels, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited, :data_plan, :data_speed)
+  end
 
 end	

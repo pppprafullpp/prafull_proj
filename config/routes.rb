@@ -60,6 +60,12 @@ Rails.application.routes.draw do
   resources :comment_ratings
   resources :referral_infos
   resources :internet_service_preferences
+  resources :cable_service_preferences
+  resources :telephone_service_preferences
+  resources :cellphone_service_preferences
+  resources :bundle_service_preferences
+
+
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

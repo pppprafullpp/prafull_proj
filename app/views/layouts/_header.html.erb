@@ -28,13 +28,21 @@
         <li class="divider"></li>
         <li><%= link_to "Users", users_path %></li>
         <li class="divider"></li>
-        <li><%= link_to "Push Notification", push_notifications_path %></li>
+        <li><%= link_to "PushNotification", push_notifications_path %></li>
         <li class="divider"></li>
-        <li><%= link_to "Comment & Rating", comment_ratings_path %></li>
+        <li><%= link_to "Comment&Rating", comment_ratings_path %></li>
         <li class="divider"></li>
-        <li><%= link_to "Referral Info", referral_infos_path %></li>
+        <li><%= link_to "ReferralInfo", referral_infos_path %></li>
         <li class="divider"></li>
-        <li><%= link_to "Internet Preference", internet_service_preferences_path %></li>
+        <li><%= link_to "InternetPreference", internet_service_preferences_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "CablePreference", cable_service_preferences_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "TelephonePreference", telephone_service_preferences_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "CellphonePreference", cellphone_service_preferences_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "BundlePreference", bundle_service_preferences_path %></li>
         <li class="divider"></li>
       <% end %>
       <% if user_signed_in? %>

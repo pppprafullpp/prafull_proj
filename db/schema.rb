@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125121111) do
+ActiveRecord::Schema.define(version: 20151126125429) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id"
@@ -55,6 +55,49 @@ ActiveRecord::Schema.define(version: 20151125121111) do
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true
+
+  create_table "bundle_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id"
+    t.string   "upload_speed"
+    t.string   "download_speed"
+    t.string   "data"
+    t.integer  "free_channels"
+    t.integer  "premium_channels"
+    t.integer  "call_minutes"
+    t.integer  "text_messages"
+    t.integer  "data_plan"
+    t.integer  "data_speed"
+    t.boolean  "talk_unlimited",        default: false
+    t.boolean  "text_unlimited",        default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id"
+
+  create_table "cable_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id"
+    t.integer  "free_channels"
+    t.integer  "premium_channels"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "cable_service_preferences", ["service_preference_id"], name: "index_cable_service_preferences_on_service_preference_id"
+
+  create_table "cellphone_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id"
+    t.integer  "call_minutes"
+    t.integer  "text_messages"
+    t.integer  "data_plan"
+    t.integer  "data_speed"
+    t.boolean  "talk_unlimited",        default: false
+    t.boolean  "text_unlimited",        default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id"
 
   create_table "comment_ratings", force: :cascade do |t|
     t.integer  "app_user_id"
@@ -100,6 +143,14 @@ ActiveRecord::Schema.define(version: 20151125121111) do
     t.string   "image"
     t.string   "upload_speed"
     t.string   "download_speed"
+    t.integer  "free_channels"
+    t.integer  "premium_channels"
+    t.integer  "call_minutes"
+    t.integer  "text_messages"
+    t.boolean  "talk_unlimited"
+    t.boolean  "text_unlimited"
+    t.integer  "data_plan"
+    t.integer  "data_speed"
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id"
@@ -196,6 +247,18 @@ ActiveRecord::Schema.define(version: 20151125121111) do
   end
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id"
+
+  create_table "telephone_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id"
+    t.integer  "call_minutes"
+    t.integer  "text_messages"
+    t.boolean  "talk_unlimited",        default: false
+    t.boolean  "text_unlimited",        default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "telephone_service_preferences", ["service_preference_id"], name: "index_telephone_service_preferences_on_service_preference_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   default: "", null: false

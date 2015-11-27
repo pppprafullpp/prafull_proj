@@ -53,7 +53,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  end
 			render :json => { :dashboard_data => @servicelist }
 		###############   When User is Logged In and zip code is present   ###############	
-		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:state].blank?											                	
+		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[ :sort_by_d_speed].blank? && params[:state].blank?											                	
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@zip_code = @app_user.zip
 			if @app_user.present? && @zip_code.present?
@@ -139,17 +139,21 @@ class Api::V1::DashboardsController < ApplicationController
 		
 
 		###############   When ServiceCategory and ZipCode both are present   ###############
-
-
-		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].blank? && params[:state].blank?
-			#@app_user = AppUser.find_by_id(params[:app_user_id])
-			@service_preference = ServicePreference.joins(:app_user).where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).take
+		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[ :sort_by_d_speed].present? && params[:state].blank?
+			@app_user = AppUser.find_by_id(params[:app_user_id])
+			@state = @app_user.state
+			#@service_preference = ServicePreference.joins(:app_user).where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).take
 			#if params[:category] == '1'
 		  #	@app_user_current_plan = @service_preference.price
 		  #else
 		  #	@app_user_current_plan = @service_preference.contract_fee
 		  #end	
-			@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
+			#@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
+			if params[ :sort_by_d_speed] == 'true'
+				@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("download_speed ASC")
+			else
+				@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
+			end
 			#byebug
 			#@you_save = @b_deal.price - @app_user_current_plan
 			render :json => {

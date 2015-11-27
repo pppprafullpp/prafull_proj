@@ -55,7 +55,8 @@ class Api::V1::DashboardsController < ApplicationController
 		###############   When User is Logged In and zip code is present   ###############	
 		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[ :sort_by_d_speed].blank? && params[:state].blank?											                	
 			@app_user = AppUser.find_by_id(params[:app_user_id])
-			@zip_code = @app_user.zip
+			#@zip_code = @app_user.zip
+			@state = @app_user.state
 			if @app_user.present? && @zip_code.present?
 				@service_preferences = @app_user.service_preferences.order("created_at DESC") 
 		  	@servicelist = @service_preferences.map do |sp|
@@ -66,7 +67,8 @@ class Api::V1::DashboardsController < ApplicationController
 		  		#end	
 		  		@advertisement = []
 		  		@best_deal = []
-		  		@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
+		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
+		  		@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
 		  		if @b_deal.present?
 		  			@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  			@best_deal << @b_deal 
@@ -150,9 +152,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  #end	
 			#@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
 			if params[ :sort_by_d_speed] == 'true'
-				@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("download_speed ASC")
+				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("download_speed ASC")
 			else
-				@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
+				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
 			end
 			#byebug
 			#@you_save = @b_deal.price - @app_user_current_plan

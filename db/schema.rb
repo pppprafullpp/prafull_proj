@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130130032) do
+ActiveRecord::Schema.define(version: 20151130135053) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -141,8 +141,8 @@ ActiveRecord::Schema.define(version: 20151130130032) do
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
     t.string   "image",                 limit: 255
-    t.string   "upload_speed",          limit: 255
-    t.string   "download_speed",        limit: 255
+    t.integer  "upload_speed",          limit: 4,     default: 0
+    t.integer  "download_speed",        limit: 4,     default: 0
     t.integer  "free_channels",         limit: 4
     t.integer  "premium_channels",      limit: 4
     t.integer  "call_minutes",          limit: 4

@@ -49,21 +49,33 @@ class Api::V1::DashboardsController < ApplicationController
 
 			###############   When User is Logged In and ServiceCategory and ZipCode both are present   ###############
 		
-		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[ :sort_by_d_speed].present? && params[:state].blank?
+		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[ :sorting_flag].present? && params[:state].blank?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@state = @app_user.state
-			@service_preference = ServicePreference.joins(:app_user).where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).take
-			@app_user_current_plan = @service_preference.price
+			#@service_preference = ServicePreference.joins(:app_user).where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).take
+			#@app_user_current_plan = @service_preference.price
 			#if params[:category] == '1'
 		  #	@app_user_current_plan = @service_preference.price
 		  #else
 		  #	@app_user_current_plan = @service_preference.contract_fee
 		  #end	
 			#@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
-			if params[ :sort_by_d_speed] == 'true'
+			if params[ :sorting_flag] == 'download_speed' #For Internet
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("download_speed DESC")
-			else
+			elsif params[ :sorting_flag] == 'price' #For all on the basis of Price
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
+			elsif params[ :sorting_flag] == 'free_channels' #For Cable
+				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
+			elsif params[ :sorting_flag] == 'call_minutes' #For CellPhone & Telephone
+				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("call_minutes DESC")
+			#elsif params[ :sorting_flag] == 'price'
+			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
+			#elsif params[ :sorting_flag] == 'price'
+			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
+			#elsif params[ :sorting_flag] == 'price'	
+			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
+			else
+				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order(price: :asc, download_speed: :desc)
 			end
 			#byebug
 			#@you_save = @b_deal.price - @app_user_current_plan

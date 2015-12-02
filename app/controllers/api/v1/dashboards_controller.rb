@@ -75,7 +75,7 @@ class Api::V1::DashboardsController < ApplicationController
 			#elsif params[ :sorting_flag] == 'price'	
 			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
 			else
-				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order(price: :asc, download_speed: :desc)
+				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
 			end
 			#byebug
 			#@you_save = @b_deal.price - @app_user_current_plan

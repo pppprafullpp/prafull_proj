@@ -8,7 +8,7 @@ class Deal < ActiveRecord::Base
 
 	mount_uploader :image, ImageUploader
 
-	validates_presence_of :title, :image, :zip, :state, :short_description, :detail_description, :price, :url, :start_date, :end_date
+	validates_presence_of :title, :zip, :state, :short_description, :detail_description, :price, :url, :start_date, :end_date #:image
 
 	def as_json(opts={})
     	json = super(opts)

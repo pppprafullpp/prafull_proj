@@ -20,7 +20,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
 		  		if sp.service_category_id == 1
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
-		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed >= ? AND price <= ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed, @app_user_current_plan).order("price ASC").first
+		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed = ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed).order("price ASC").first
 		  			if @b_deal.present?
 		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  				@best_deal << @b_deal 

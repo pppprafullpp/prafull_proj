@@ -58,7 +58,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  					end
 		  				end		
 		  			else
-		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND talk_unlimited = ? AND price <= ?", true, @state, sp.service_category_id, Date.today, true, @app_user_current_plan).order("price ASC").first
+		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND talk_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
 		  				if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  					@best_deal << @b_deal 

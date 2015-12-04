@@ -110,6 +110,12 @@ class Api::V1::DashboardsController < ApplicationController
 		  					end
 		  				end	
 		  			end
+		  		else
+		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
+		  			if @b_deal.present?
+		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
+		  					@best_deal << @b_deal
+		  			end		
 		  		end
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?
@@ -137,7 +143,7 @@ class Api::V1::DashboardsController < ApplicationController
 
 			###############   When User is Logged In and ServiceCategory and ZipCode both are present   ###############
 		
-		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[ :sorting_flag].present? && params[:state].blank?
+		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[:sorting_flag].present? && params[:state].blank?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@state = @app_user.state
 			#@service_preference = ServicePreference.joins(:app_user).where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).take

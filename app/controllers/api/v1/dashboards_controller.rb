@@ -66,6 +66,12 @@ class Api::V1::DashboardsController < ApplicationController
 		  						if @b_deal.present?
 		  							@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  							@best_deal << @b_deal
+		  						else
+		  							@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
+		  							if @b_deal.present?
+		  								@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
+		  								@best_deal << @b_deal
+		  							end
 		  						end
 		  					end
 		  				end			
@@ -90,7 +96,19 @@ class Api::V1::DashboardsController < ApplicationController
 		  				end
 		  			end	
 		  		elsif sp.service_category_id == 4	
-		  			if sp.cellphone_service_preference.talk_unlimited == false
+		  			if sp.cellphone_service_preference.talk_unlimited == true
+		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND talk_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
+		  				if @b_deal.present?
+		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
+		  					@best_deal << @b_deal 
+		  				else
+		  					@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
+		  					if @b_deal.present?
+		  						@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
+		  						@best_deal << @b_deal
+		  					end
+		  				end	
+		  			else
 		  				@app_user_c_minutes = sp.cellphone_service_preference.call_minutes
 		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND call_minutes = ?", true, @state, sp.service_category_id, Date.today, @app_user_c_minutes).order("price ASC").first
 		  				if @b_deal.present?
@@ -106,27 +124,15 @@ class Api::V1::DashboardsController < ApplicationController
 		  						if @b_deal.present?
 		  							@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  							@best_deal << @b_deal
+		  						else
+		  							@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND talk_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
+		  							if @b_deal.present?
+		  								@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
+		  								@best_deal << @b_deal
+		  							end
 		  						end	
 		  					end
 		  				end		
-		  			else
-		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND talk_unlimited = ? AND price <= ?", true, @state, sp.service_category_id, Date.today, true, @app_user_current_plan).order("price ASC").first
-		  				if @b_deal.present?
-		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
-		  					@best_deal << @b_deal 
-		  				else
-		  					@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND talk_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
-		  					if @b_deal.present?
-		  						@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
-		  						@best_deal << @b_deal
-		  					else
-		  						@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first	
-		  						if @b_deal.present?
-		  							@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
-		  							@best_deal << @b_deal
-		  						end
-		  					end
-		  				end	
 		  			end
 		  		else
 		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first

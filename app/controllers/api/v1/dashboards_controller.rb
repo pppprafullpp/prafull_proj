@@ -20,12 +20,13 @@ class Api::V1::DashboardsController < ApplicationController
 		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
 		  		if sp.service_category_id == 1
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
-		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed = ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed).order("price ASC").first
+		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed = ? AND price <= ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed, @app_user_current_plan).order("price ASC").first
 		  			if @b_deal.present?
 		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  				@best_deal << @b_deal 
 		  			else
-		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed > ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed).order("price ASC").first
+		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed > ? AND price <= ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed, @app_user_current_plan).order("price ASC").first
+		  				#@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND download_speed > ?", true, @state, sp.service_category_id, Date.today, @app_user_d_speed).order("price ASC").first
 		  				if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  					@best_deal << @b_deal 
@@ -145,20 +146,6 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@advertisement << @adv if @adv.present?
 		  		@preferred_deal = []
 					{ :you_save_text => @you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
-		  		
-		  		#sp.service_category.service_providers.map do |pp|
-		  		#	if pp.is_preferred == true
-		  		#		@preferred_deal = []
-		  		#		@p_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, @zip_code, pp.service_category_id, pp.id, Date.today).order("price ASC").first
-					#		@preferred_deal << @p_deal
-					#	else
-					#		@preferred_deal = []
-		  		#	end
-		  		#end	
-		  		#if sp.service_category_id == 1
-		  		#	{ :you_save_text => @you_save, :contract_fee => sp.price, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
-		  		#else	
-		  		#end
 		  	end	
 				render :json => { :dashboard_data => @servicelist }
 			else
@@ -170,14 +157,6 @@ class Api::V1::DashboardsController < ApplicationController
 		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[:sorting_flag].present? && params[:state].blank?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@state = @app_user.state
-			#@service_preference = ServicePreference.joins(:app_user).where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).take
-			#@app_user_current_plan = @service_preference.price
-			#if params[:category] == '1'
-		  #	@app_user_current_plan = @service_preference.price
-		  #else
-		  #	@app_user_current_plan = @service_preference.contract_fee
-		  #end	
-			#@deals = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], params[:category], Date.today).order("price ASC")
 			if params[ :sorting_flag] == 'download_speed' #For Internet
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("download_speed DESC")
 			elsif params[ :sorting_flag] == 'price' #For all on the basis of Price
@@ -186,23 +165,92 @@ class Api::V1::DashboardsController < ApplicationController
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
 			elsif params[ :sorting_flag] == 'call_minutes' #For CellPhone & Telephone
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("call_minutes DESC")
-			#elsif params[ :sorting_flag] == 'price'
-			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
-			#elsif params[ :sorting_flag] == 'price'
-			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
-			#elsif params[ :sorting_flag] == 'price'	
-			#	@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
-			else
+		  else
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
 			end
-			#byebug
-			#@you_save = @b_deal.price - @app_user_current_plan
 			render :json => {
 												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 											}
 		end
 	end	
-end
+
+	def dashboard_deals
+		@app_user = AppUser.find_by_id(params[:app_user_id])
+		@state = @app_user.state
+		if @app_user.present? && @state.present? #@zip_code.present?
+			@user_preference = @app_user.service_preferences.where("service_category_id = ?", params[:service_category_id]).first
+			@matched_deal = []
+			if params[:service_category_id] == '1'
+				@current_d_speed = @user_preference.internet_service_preference.download_speed 
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed = ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed > ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC").limit(2)
+				@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed < ?", true, @state, params[:service_category_id], @current_d_speed).order("price DESC").limit(2)
+			elsif params[:service_category_id] == '2'
+				@current_plan_price = @user_preference.price
+				@current_t_plan = @user_preference.telephone_service_preference.talk_unlimited
+				if @current_t_plan == true
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+					@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price < ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price DESC").limit(2)
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+				else
+					@current_c_minutes = @user_preference.telephone_service_preference.call_minutes
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+					@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes <= ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+				end
+			elsif params[:service_category_id] == '3'
+				@current_plan_price = @user_preference.price
+				@current_f_channels = @user_preference.cable_service_preference.free_channels
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels = ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC")
+				@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels < ?", true, @state, params[:service_category_id], @current_f_channels).order("price DESC")
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels > ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC")
+			elsif params[:service_category_id] == '4'
+				@current_plan_price = @user_preference.price
+				@current_t_plan = @user_preference.cellphone_service_preference.talk_unlimited
+				if @current_t_plan == true
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+					@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price < ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price DESC").limit(2)
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+				else
+					@current_c_minutes = @user_preference.cellphone_service_preference.call_minutes
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+					@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes <= ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price DESC").limit(2)
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+				end	
+			elsif params[:service_category_id] == '5'
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, @state, params[:service_category_id]).order("price ASC").limit(5)
+			end
+			if @equal_deals.present?
+				json_1 = @equal_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+			end
+			if @greater_deals.present?
+				json_2 = @greater_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+			end
+			if @smaller_deals.present?
+				json_3 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+			end
+			if json_1.present? && json_2.present? && json_3.present?
+				@matched_deal = json_1 + json_2 + json_3
+			elsif json_1.blank? && json_2.present? && json_3.present?
+				@matched_deal = json_2 + json_3
+			elsif json_1.present? && json_2.present? && json_3.blank?
+				@matched_deal = json_1 + json_2	
+			elsif json_1.present? && json_2.blank? && json_3.present?
+				@matched_deal = json_1 + json_3		
+			elsif json_1.blank? && json_2.present? && json_3.blank?
+				@matched_deal = json_2	
+			elsif json_1.present? && json_2.blank? && json_3.blank?
+				@matched_deal = json_1
+			elsif json_1.blank? && json_2.blank? && json_3.present?
+				@matched_deal = json_3			
+			end
+		end	
+		render :json => {
+												:deal => @matched_deal #.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+											}
+	end
+
+end	
 		###############   WHen State is present   ###############
 		#elsif params[:state].present? && params[:category].blank? && params[:app_user_id].blank? && params[:zip_code].blank?
 		#	@service_categories = ServiceCategory.all

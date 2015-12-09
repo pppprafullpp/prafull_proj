@@ -220,29 +220,22 @@ class Api::V1::DashboardsController < ApplicationController
 			elsif params[:service_category_id] == '5'
 				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, @state, params[:service_category_id]).order("price ASC").limit(5)
 			end
-			if @equal_deals.present?
-				json_1 = @equal_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+			@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+			if @merged_deals.present?
+				json_1 = @merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 			end
-			if @greater_deals.present?
-				json_2 = @greater_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
-			end
+			#if @greater_deals.present?
+			#	json_2 = @greater_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+			#end
 			if @smaller_deals.present?
-				json_3 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+				json_2 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 			end
-			if json_1.present? && json_2.present? && json_3.present?
-				@matched_deal = json_1 + json_2 + json_3
-			elsif json_1.blank? && json_2.present? && json_3.present?
-				@matched_deal = json_2 + json_3
-			elsif json_1.present? && json_2.present? && json_3.blank?
-				@matched_deal = json_1 + json_2	
-			elsif json_1.present? && json_2.blank? && json_3.present?
-				@matched_deal = json_1 + json_3		
-			elsif json_1.blank? && json_2.present? && json_3.blank?
-				@matched_deal = json_2	
-			elsif json_1.present? && json_2.blank? && json_3.blank?
-				@matched_deal = json_1
-			elsif json_1.blank? && json_2.blank? && json_3.present?
-				@matched_deal = json_3			
+			if json_1.present? && json_2.present?
+				@matched_deal = json_1 + json_2
+			elsif json_1.blank? && json_2.present?
+				@matched_deal = json_2
+			elsif json_1.present? && json_2.blank?
+				@matched_deal = json_1		
 			end
 		end	
 		render :json => {

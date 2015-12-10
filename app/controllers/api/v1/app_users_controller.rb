@@ -56,12 +56,12 @@ class Api::V1::AppUsersController < ApplicationController
       end
     elsif params[:email].present? && params[:id].blank?
       @app_user = AppUser.find_by_email(params[:email])
-      if @app_user.service_preferences.present?
-        @user_preference = true
-      else
-        @user_preference = false
-      end
       if @app_user.present?
+        if @app_user.service_preferences.present?
+          @user_preference = true
+        else
+          @user_preference = false
+        end
         render :status => 200,
              :json => {
                         :success => true,

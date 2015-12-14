@@ -189,7 +189,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		@b_deal = @merged_deals.first
     gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     registration_id = ["#{@app_user.gcm_id}"]
-    gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + " " + "Short Description : "+"#{@b_deal.short_description}"}})
+    gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
 	end
 	def service_preference_params
 		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :is_contract, :start_date, :end_date, :price, :plan_name)

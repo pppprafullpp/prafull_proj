@@ -67,6 +67,9 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				#@internet_service_preference.save!	
 			end
       if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
+        	if params[:is_contract] == "true"
+        		send_notification_to_user
+					end
         	render :status => 200,
            		:json => { :success => true }
       else
@@ -149,6 +152,45 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	#end
 
 	private
+	def send_notification_to_user
+		@app_user = AppUser.find_by_id(params[:app_user_id])
+		@state = @app_user.state
+		@current_plan_price = params[:price]
+		if params[:service_category_id] == "1"
+			@current_d_speed = params[:download_speed]
+			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed = ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC")
+			@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed > ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC").limit(2)
+		elsif params[:service_category_id] == "2"	
+			if params[:text_unlimited] == "true"
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+			else
+				@current_c_minutes = params[:call_minutes]
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+			end
+		elsif params[:service_category_id] == "3"
+			@current_f_channels = params[:free_channels]
+			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels = ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC")
+			@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels > ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC").limit(2)
+		elsif params[:service_category_id] == "4"	
+			if params[:talk_unlimited] == "true"
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+			else
+				@current_c_minutes = params[:call_minutes]
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+			end	
+		elsif params[:service_category_id] == "5"
+			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, @state, params[:service_category_id]).order("price ASC").limit(5)	
+		end	
+		@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+		@b_deal = @merged_deals.first
+    gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
+    registration_id = ["#{@app_user.gcm_id}"]
+    gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + " " + "Short Description : "+"#{@b_deal.short_description}"}})
+	end
 	def service_preference_params
 		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :is_contract, :start_date, :end_date, :price, :plan_name)
 	end

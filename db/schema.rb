@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201065816) do
+ActiveRecord::Schema.define(version: 20151215095104) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -62,15 +62,15 @@ ActiveRecord::Schema.define(version: 20151201065816) do
     t.integer  "premium_channels",      limit: 4
     t.integer  "call_minutes",          limit: 4
     t.integer  "text_messages",         limit: 4
-    t.integer  "data_plan",             limit: 4
-    t.integer  "data_speed",            limit: 4
-    t.boolean  "talk_unlimited",        limit: 1, default: false
-    t.boolean  "text_unlimited",        limit: 1, default: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "upload_speed",          limit: 4
-    t.integer  "download_speed",        limit: 4
-    t.integer  "data",                  limit: 4
+    t.float    "data_plan",             limit: 24
+    t.float    "data_speed",            limit: 24
+    t.boolean  "talk_unlimited",        limit: 1,  default: false
+    t.boolean  "text_unlimited",        limit: 1,  default: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.float    "upload_speed",          limit: 24
+    t.float    "download_speed",        limit: 24
+    t.float    "data",                  limit: 24
   end
 
   add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
@@ -89,12 +89,12 @@ ActiveRecord::Schema.define(version: 20151201065816) do
     t.integer  "service_preference_id", limit: 4
     t.integer  "call_minutes",          limit: 4
     t.integer  "text_messages",         limit: 4
-    t.integer  "data_plan",             limit: 4
-    t.integer  "data_speed",            limit: 4
-    t.boolean  "talk_unlimited",        limit: 1, default: false
-    t.boolean  "text_unlimited",        limit: 1, default: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.float    "data_plan",             limit: 24
+    t.float    "data_speed",            limit: 24
+    t.boolean  "talk_unlimited",        limit: 1,  default: false
+    t.boolean  "text_unlimited",        limit: 1,  default: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
@@ -147,10 +147,10 @@ ActiveRecord::Schema.define(version: 20151201065816) do
     t.integer  "text_messages",         limit: 4
     t.boolean  "talk_unlimited",        limit: 1
     t.boolean  "text_unlimited",        limit: 1
-    t.integer  "data_plan",             limit: 4
-    t.integer  "data_speed",            limit: 4
-    t.integer  "upload_speed",          limit: 4
-    t.integer  "download_speed",        limit: 4
+    t.float    "data_plan",             limit: 24
+    t.float    "data_speed",            limit: 24
+    t.float    "upload_speed",          limit: 24
+    t.float    "download_speed",        limit: 24
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -164,8 +164,8 @@ ActiveRecord::Schema.define(version: 20151201065816) do
     t.string   "wifi_hotspot",          limit: 255
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.integer  "upload_speed",          limit: 4
-    t.integer  "download_speed",        limit: 4
+    t.float    "upload_speed",          limit: 24
+    t.float    "download_speed",        limit: 24
   end
 
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree

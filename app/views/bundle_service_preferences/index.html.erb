@@ -18,12 +18,12 @@
 							<th><strong>Data</strong></th>
 							<th><strong>Free Channels</strong></th>
 							<th><strong>Premium Channels</strong></th>
-							<th><strong>Call Minutes</strong></th>
-							<th><strong>Text Messages</strong></th>
+							<th><strong>Domestic Call Minutes</strong></th>
+							<th><strong>International Call Minutes</strong></th>
 							<th><strong>Data Plan</strong></th>
 							<th><strong>Data Speed</strong></th>
-							<th><strong>Unlimited Talk</strong></th>
-							<th><strong>Unlimited Text</strong></th>
+							<th><strong>Domestic Call Unlimited</strong></th>
+							<th><strong>International Call Unlimited</strong></th>
 							<th><strong>Action</strong></th>
 						</tr>
 					</thead>
@@ -38,12 +38,12 @@
 									<td><%= bsp.data %></td>
 									<td><%= bsp.free_channels %></td>
 									<td><%= bsp.premium_channels %></td>
-									<td><%= bsp.call_minutes %></td>
-									<td><%= bsp.text_messages %></td>
+									<td><%= bsp.domestic_call_minutes %></td>
+									<td><%= bsp.international_call_minutes %></td>
 									<td><%= bsp.data_plan %></td>
 									<td><%= bsp.data_speed %></td>
-									<td><%= bsp.talk_unlimited %></td>
-									<td><%= bsp.text_unlimited %></td>
+									<td><%= bsp.domestic_call_unlimited %></td>
+									<td><%= bsp.international_call_unlimited %></td>
 									<td><%= (link_to 'Edit', edit_bundle_service_preference_path(bsp)) if can? :manage, bsp %> | <%= (link_to "Delete", bsp, method: :delete, data: { confirm: "You sure?" }) if can? :manage, bsp %></td>
 								</tr>
 							<% end %>

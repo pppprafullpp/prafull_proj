@@ -13,10 +13,10 @@
 						<tr>
 							<th><strong>ID</strong></th>
 							<th><strong>Service Preference Id</strong></th>
-							<th><strong>Call Minutes</strong></th>
-							<th><strong>Text Messages</strong></th>
-							<th><strong>Unlimited Talk</strong></th>
-							<th><strong>Unlimited Text</strong></th>
+							<th><strong>DomesticCallMins</strong></th>
+							<th><strong>InternationalCallMins</strong></th>
+							<th><strong>Domestic Call Unlimited</strong></th>
+							<th><strong>International Call Unlimited</strong></th>
 							<th><strong>Action</strong></th>
 						</tr>
 					</thead>
@@ -26,10 +26,10 @@
 								<tr>
 									<td><%= tsp.id %></td>
 									<td><%= tsp.service_preference_id %></td>
-									<td><%= tsp.call_minutes %></td>
-									<td><%= tsp.text_messages %></td>
-									<td><%= tsp.talk_unlimited %></td>
-									<td><%= tsp.text_unlimited %></td>
+									<td><%= tsp.domestic_call_minutes %></td>
+									<td><%= tsp.international_call_minutes %></td>
+									<td><%= tsp.domestic_call_unlimited %></td>
+									<td><%= tsp.international_call_unlimited %></td>
 									<td><%= (link_to 'Edit', edit_telephone_service_preference_path(tsp)) if can? :manage, tsp %> | <%= (link_to "Delete", tsp, method: :delete, data: { confirm: "You sure?" }) if can? :manage, tsp %></td>
 								</tr>
 							<% end %>

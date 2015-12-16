@@ -13,12 +13,12 @@
 						<tr>
 							<th><strong>ID</strong></th>
 							<th><strong>Service Preference Id</strong></th>
-							<th><strong>Call Minutes</strong></th>
-							<th><strong>Text Messages</strong></th>
+							<th><strong>DomesticCallMinutes</strong></th>
+							<th><strong>InternationalCallMinutes</strong></th>
 							<th><strong>Data Plan</strong></th>
 							<th><strong>Data Speed</strong></th>
-							<th><strong>Unlimited Talk</strong></th>
-							<th><strong>Unlimited Text</strong></th>
+							<th><strong>DomesticCallUnlimited</strong></th>
+							<th><strong>InternationalCallUnlimited</strong></th>
 							<th><strong>Action</strong></th>
 						</tr>
 					</thead>
@@ -28,12 +28,12 @@
 								<tr>
 									<td><%= csp.id %></td>
 									<td><%= csp.service_preference_id %></td>
-									<td><%= csp.call_minutes %></td>
-									<td><%= csp.text_messages %></td>
+									<td><%= csp.domestic_call_minutes %></td>
+									<td><%= csp.international_call_minutes %></td>
 									<td><%= csp.data_plan %></td>
 									<td><%= csp.data_speed %></td>
-									<td><%= csp.talk_unlimited %></td>
-									<td><%= csp.text_unlimited %></td>
+									<td><%= csp.domestic_call_unlimited %></td>
+									<td><%= csp.international_call_unlimited %></td>
 									<td><%= (link_to 'Edit', edit_cellphone_service_preference_path(csp)) if can? :manage, csp %> | <%= (link_to "Delete", csp, method: :delete, data: { confirm: "You sure?" }) if can? :manage, csp %></td>
 								</tr>
 							<% end %>

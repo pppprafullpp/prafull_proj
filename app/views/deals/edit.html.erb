@@ -39,12 +39,12 @@
 				  <!-- *******Ends Here********-->
 
 				  <!-- For Telephone Deals-->
-				  <div id = "c_minutes" style="display: none;"><strong>Call Minutes(Integer):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :call_minutes %></div>
-				  <div id="t_msgs" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :text_messages %></div>
-				  <div id = "talk_unlimit" style="display: none;"><%= f.check_box :talk_unlimited %> <strong>Unlimited Talk </strong></div>
-				  <div id = "text_unlimit" style="display: none;"><%= f.check_box :text_unlimited %> <strong>Unlimited Text </strong></div>
+				  <div id = "c_minutes" style="display: none;"><strong>Domestic Call Minutes(Float):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :domestic_call_minutes %></div>
+				  <div id="t_msgs" style="display: none;"><strong>International Call Minutes(Float):<span id="mandat">*</span> </strong><br />
+				  <%= f.text_field :international_call_minutes %></div>
+				  <div id = "talk_unlimit" style="display: none;"><%= f.check_box :domestic_call_unlimited %> <strong>Domestic Call Unlimited </strong></div>
+				  <div id = "text_unlimit" style="display: none;"><%= f.check_box :international_call_unlimited %> <strong>International Call Unlimited</strong></div>
 				  <!--<div id = "talk_unlimit" style="display: none;"><strong>Call Minutes(Integer):<span id="mandat">*</span> </strong><br />
 				  <%#= f.text_field :call_minutes %></div>
 				  <div id="text_unlimit" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />

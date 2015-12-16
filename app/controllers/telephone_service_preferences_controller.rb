@@ -16,6 +16,6 @@ class TelephoneServicePreferencesController < ApplicationController
 
   private
   def telephone_service_preference_params
-    params.require(:telephone_service_preference).permit(:service_preference_id, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited)
+    params.require(:telephone_service_preference).permit(:service_preference_id, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited)
   end
 end 

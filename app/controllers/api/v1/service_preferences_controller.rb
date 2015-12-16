@@ -173,26 +173,26 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed = ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC")
 				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed > ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC").limit(2)
 			elsif params[:service_category_id] == "2"	
-				if params[:text_unlimited] == "true"
-					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
-					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+				if params[:domestic_call_unlimited] == "true"
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
 				else
-					@current_c_minutes = params[:call_minutes]
-					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
-					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+					@current_c_minutes = params[:domestic_call_minutes]
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
 				end
 			elsif params[:service_category_id] == "3"
 				@current_f_channels = params[:free_channels]
 				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels = ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC")
 				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels > ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC").limit(2)
 			elsif params[:service_category_id] == "4"	
-				if params[:talk_unlimited] == "true"
-					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
-					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+				if params[:domestic_call_unlimited] == "true"
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
 				else
-					@current_c_minutes = params[:call_minutes]
-					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
-					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+					@current_c_minutes = params[:domestic_call_minutes]
+					@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
 				end	
 			elsif params[:service_category_id] == "5"
 				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, @state, params[:service_category_id]).order("price ASC").limit(5)	
@@ -233,26 +233,26 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed = ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC")
 			@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed > ?", true, @state, params[:service_category_id], @current_d_speed).order("price ASC").limit(2)
 		elsif params[:service_category_id] == "2"	
-			if params[:text_unlimited] == "true"
-				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+			if params[:domestic_call_unlimited] == "true"
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
 			else
-				@current_c_minutes = params[:call_minutes]
-				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+				@current_c_minutes = params[:domestic_call_minutes]
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
 			end
 		elsif params[:service_category_id] == "3"
 			@current_f_channels = params[:free_channels]
 			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels = ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC")
 			@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels > ?", true, @state, params[:service_category_id], @current_f_channels).order("price ASC").limit(2)
 		elsif params[:service_category_id] == "4"	
-			if params[:talk_unlimited] == "true"
-				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
+			if params[:domestic_call_unlimited] == "true"
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ?", true, @state, params[:service_category_id], true).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price > ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price ASC").limit(2)
 			else
-				@current_c_minutes = params[:call_minutes]
-				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND talk_unlimited = ? AND call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
+				@current_c_minutes = params[:domestic_call_minutes]
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price <= ?", true, @state, params[:service_category_id], true, @current_c_minutes).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
 			end	
 		elsif params[:service_category_id] == "5"
 			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, @state, params[:service_category_id]).order("price ASC").limit(5)	
@@ -287,13 +287,13 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		params.permit(:service_preference_id, :free_channels, :premium_channels)
 	end
 	def telephone_service_preference_params
-    params.permit(:service_preference_id, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited)
+    params.permit(:service_preference_id, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited)
   end
   def cellphone_service_preference_params
-    params.permit(:service_preference_id, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited, :data_plan, :data_speed)
+    params.permit(:service_preference_id, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited, :data_plan, :data_speed)
   end
   def bundle_service_preference_params
-    params.permit(:service_preference_id, :upload_speed, :download_speed, :data, :free_channels, :premium_channels, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited, :data_plan, :data_speed)
+    params.permit(:service_preference_id, :upload_speed, :download_speed, :data, :free_channels, :premium_channels, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited, :data_plan, :data_speed)
   end
 
 end	

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215095104) do
+ActiveRecord::Schema.define(version: 20151216065642) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -57,20 +57,20 @@ ActiveRecord::Schema.define(version: 20151215095104) do
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "bundle_service_preferences", force: :cascade do |t|
-    t.integer  "service_preference_id", limit: 4
-    t.integer  "free_channels",         limit: 4
-    t.integer  "premium_channels",      limit: 4
-    t.integer  "call_minutes",          limit: 4
-    t.integer  "text_messages",         limit: 4
-    t.float    "data_plan",             limit: 24
-    t.float    "data_speed",            limit: 24
-    t.boolean  "talk_unlimited",        limit: 1,  default: false
-    t.boolean  "text_unlimited",        limit: 1,  default: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.float    "upload_speed",          limit: 24
-    t.float    "download_speed",        limit: 24
-    t.float    "data",                  limit: 24
+    t.integer  "service_preference_id",        limit: 4
+    t.integer  "free_channels",                limit: 4
+    t.integer  "premium_channels",             limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.float    "data_plan",                    limit: 24
+    t.float    "data_speed",                   limit: 24
+    t.boolean  "domestic_call_unlimited",      limit: 1,  default: false
+    t.boolean  "international_call_unlimited", limit: 1,  default: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.float    "upload_speed",                 limit: 24
+    t.float    "download_speed",               limit: 24
+    t.float    "data",                         limit: 24
   end
 
   add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
@@ -86,15 +86,15 @@ ActiveRecord::Schema.define(version: 20151215095104) do
   add_index "cable_service_preferences", ["service_preference_id"], name: "index_cable_service_preferences_on_service_preference_id", using: :btree
 
   create_table "cellphone_service_preferences", force: :cascade do |t|
-    t.integer  "service_preference_id", limit: 4
-    t.integer  "call_minutes",          limit: 4
-    t.integer  "text_messages",         limit: 4
-    t.float    "data_plan",             limit: 24
-    t.float    "data_speed",            limit: 24
-    t.boolean  "talk_unlimited",        limit: 1,  default: false
-    t.boolean  "text_unlimited",        limit: 1,  default: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.integer  "service_preference_id",        limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.float    "data_plan",                    limit: 24
+    t.float    "data_speed",                   limit: 24
+    t.boolean  "domestic_call_unlimited",      limit: 1,  default: false
+    t.boolean  "international_call_unlimited", limit: 1,  default: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
@@ -123,34 +123,34 @@ ActiveRecord::Schema.define(version: 20151215095104) do
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
   create_table "deals", force: :cascade do |t|
-    t.integer  "service_category_id",   limit: 4
-    t.integer  "service_provider_id",   limit: 4
-    t.string   "service_category_name", limit: 255
-    t.string   "service_provider_name", limit: 255
-    t.string   "title",                 limit: 255
-    t.string   "state",                 limit: 255
-    t.string   "city",                  limit: 255
-    t.string   "zip",                   limit: 255
-    t.text     "short_description",     limit: 65535
-    t.text     "detail_description",    limit: 65535
-    t.float    "price",                 limit: 24
-    t.string   "url",                   limit: 255
+    t.integer  "service_category_id",          limit: 4
+    t.integer  "service_provider_id",          limit: 4
+    t.string   "service_category_name",        limit: 255
+    t.string   "service_provider_name",        limit: 255
+    t.string   "title",                        limit: 255
+    t.string   "state",                        limit: 255
+    t.string   "city",                         limit: 255
+    t.string   "zip",                          limit: 255
+    t.text     "short_description",            limit: 65535
+    t.text     "detail_description",           limit: 65535
+    t.float    "price",                        limit: 24
+    t.string   "url",                          limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_active",             limit: 1,     default: true
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.string   "image",                 limit: 255
-    t.integer  "free_channels",         limit: 4
-    t.integer  "premium_channels",      limit: 4
-    t.integer  "call_minutes",          limit: 4
-    t.integer  "text_messages",         limit: 4
-    t.boolean  "talk_unlimited",        limit: 1
-    t.boolean  "text_unlimited",        limit: 1
-    t.float    "data_plan",             limit: 24
-    t.float    "data_speed",            limit: 24
-    t.float    "upload_speed",          limit: 24
-    t.float    "download_speed",        limit: 24
+    t.boolean  "is_active",                    limit: 1,     default: true
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "image",                        limit: 255
+    t.integer  "free_channels",                limit: 4
+    t.integer  "premium_channels",             limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.boolean  "domestic_call_unlimited",      limit: 1
+    t.boolean  "international_call_unlimited", limit: 1
+    t.float    "data_plan",                    limit: 24
+    t.float    "data_speed",                   limit: 24
+    t.float    "upload_speed",                 limit: 24
+    t.float    "download_speed",               limit: 24
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -249,13 +249,13 @@ ActiveRecord::Schema.define(version: 20151215095104) do
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree
 
   create_table "telephone_service_preferences", force: :cascade do |t|
-    t.integer  "service_preference_id", limit: 4
-    t.integer  "call_minutes",          limit: 4
-    t.integer  "text_messages",         limit: 4
-    t.boolean  "talk_unlimited",        limit: 1, default: false
-    t.boolean  "text_unlimited",        limit: 1, default: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.integer  "service_preference_id",        limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.boolean  "domestic_call_unlimited",      limit: 1, default: false
+    t.boolean  "international_call_unlimited", limit: 1, default: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
   add_index "telephone_service_preferences", ["service_preference_id"], name: "index_telephone_service_preferences_on_service_preference_id", using: :btree

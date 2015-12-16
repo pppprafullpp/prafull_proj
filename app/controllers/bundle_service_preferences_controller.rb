@@ -16,6 +16,6 @@ class BundleServicePreferencesController < ApplicationController
 
   private
   def bundle_service_preference_params
-    params.require(:cable_service_preference).permit(:service_preference_id, :upload_speed, :download_speed, :data, :free_channels, :premium_channels, :call_minutes, :text_messages, :talk_unlimited, :text_unlimited, :data_plan, :data_speed)
+    params.require(:cable_service_preference).permit(:service_preference_id, :upload_speed, :download_speed, :data, :free_channels, :premium_channels, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited, :data_plan, :data_speed)
   end
 end 

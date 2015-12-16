@@ -77,8 +77,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
         	elsif params[:is_contract] == "false"	
         		send_notification_is_contract
 					end
-        	render :status => 200,
-           		:json => { :success => true }
+					render :status => 200,
+              	 :json => { :success => true }
       else
         	render :status => 401,
            		:json => { :success => false }
@@ -203,24 +203,16 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@merged_deals = (@equal_deals).sort_by(&:price)
 			elsif @equal_deals.blank? && @greater_deals.present?
 				@merged_deals = (@greater_deals).sort_by(&:price)
-			else
-				render :status => 200,
-           		:json => { :success => true }
 			end
-			@b_deal = @merged_deals.first
+			if @merged_deals.present?
+				@b_deal = @merged_deals.first
+			end
+			
 			if @b_deal.present?	
       	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
       	if @remaining_days < @user_notification_day
-        	gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
-        	render :status => 200,
-           		:json => { :success => true }
-      	else
-      		render :status => 200,
-           		:json => { :success => true }     		
+        	gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})    		
 				end
-			else	
-				render :status => 200,
-           		:json => { :success => true }
       end
     end
 	end
@@ -263,18 +255,15 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			@merged_deals = (@equal_deals).sort_by(&:price)
 		elsif @equal_deals.blank? && @greater_deals.present?
 			@merged_deals = (@greater_deals).sort_by(&:price)
-		else
-			render :status => 200,
-           		:json => { :success => true }
 		end
-		@b_deal = @merged_deals.first
+		if @merged_deals.present?
+			@b_deal = @merged_deals.first
+		end
+		
 		if @b_deal.present?
 			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     	registration_id = ["#{@app_user.gcm_id}"]
     	gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
-		else
-			render :status => 200,
-           		:json => { :success => true }
 		end
   end
 	def service_preference_params

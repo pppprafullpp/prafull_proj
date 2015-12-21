@@ -6,7 +6,8 @@ class Api::V1::SessionsController < Devise::SessionsController
   def create
     @app_user = AppUser.find_by_email(params[:email])
     if @app_user.present?
-      if params[:gcm_id].present?
+      if params[:gcm_id].present? && params[:device_flag].present?
+        @app_user.device_flag = params[:device_flag]
         @app_user.gcm_id = params[:gcm_id]
         @app_user.save
       end
@@ -63,7 +64,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   private
   def app_user_params
-    params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id)
+    params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
   end
 
   #def create

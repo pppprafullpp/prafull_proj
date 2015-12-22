@@ -15,7 +15,7 @@ class PushNotificationsController < ApplicationController
       pusher = Grocer.pusher(
         certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      # required
         passphrase:  "1234",                       # optional
-        gateway:     "gateway.push.apple.com",                      # optional; See note below.
+        gateway:     "gateway.sandbox.push.apple.com",                      # optional; See note below.
         port:        2195,                       # optional
         retries:     3                           # optional
       )
@@ -29,21 +29,21 @@ class PushNotificationsController < ApplicationController
         #identifier:        1234,                 # optional; must be an integer
         #content_available: true                  # optional; any truthy value will set 'content-available' to 1
       )
-      #byebug
-      pusher.push(notification)
+      if pusher.push(notification)
+        respond_to do |format|
+          if @push_notification.save
+            format.html { redirect_to push_notifications_path, :notice => 'You have successfully sent a notification' }
+            format.xml  { render :xml => @push_notification, :status => :created, :push_notification => @push_notification }
+          else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @push_notification.errors, :status => :unprocessable_entity }
+          end
+        end
+      end  
     elsif @app_user_device == "android"
       gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
       registration_id = ["#{@push_notification.app_user.gcm_id}"]
       gcm.send(registration_id, {data: {message: "#{@push_notification.message}"}})
-    end
-    respond_to do |format|
-        if @push_notification.save
-            format.html { redirect_to push_notifications_path, :notice => 'You have successfully sent a notification' }
-           format.xml  { render :xml => @push_notification, :status => :created, :push_notification => @push_notification }
-        else
-           format.html { render :action => "new" }
-           format.xml  { render :xml => @push_notification.errors, :status => :unprocessable_entity }
-        end
     end
   end
 	#def create

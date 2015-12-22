@@ -43,7 +43,17 @@ class PushNotificationsController < ApplicationController
     elsif @app_user_device == "android"
       gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
       registration_id = ["#{@push_notification.app_user.gcm_id}"]
-      gcm.send(registration_id, {data: {message: "#{@push_notification.message}"}})
+      if gcm.send(registration_id, {data: {message: "#{@push_notification.message}"}})
+        respond_to do |format|
+          if @push_notification.save
+            format.html { redirect_to push_notifications_path, :notice => 'You have successfully sent a notification' }
+            format.xml  { render :xml => @push_notification, :status => :created, :push_notification => @push_notification }
+          else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @push_notification.errors, :status => :unprocessable_entity }
+          end
+        end
+      end  
     end
   end
 	#def create

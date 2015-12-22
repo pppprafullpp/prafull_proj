@@ -161,12 +161,11 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	private
 	def send_notification_is_contract
 		@app_user = AppUser.find_by_id(params[:app_user_id])
+		@app_user_device = @app_user.device_flag
 		@state = @app_user.state
 		@current_plan_price = params[:price]
 		@user_notification_day = @app_user.notification.day
 		@user_contract_end_date = params[:end_date]
-		gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
-		registration_id = ["#{@app_user.gcm_id}"]
 		if @user_contract_end_date.present? && @user_notification_day.present?
 			if params[:service_category_id] == "1"
 				@current_d_speed = params[:download_speed]
@@ -211,13 +210,37 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			if @b_deal.present?	
       	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
       	if @remaining_days < @user_notification_day
-        	gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})    		
+      		if @app_user_device == "android"
+      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
+						registration_id = ["#{@app_user.gcm_id}"]
+      			gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
+      		elsif @app_user_device == "iphone"
+      			pusher = Grocer.pusher(
+        			certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
+        			passphrase:  "1234",                       																	# optional
+        			gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
+        			port:        2195,                       																		# optional
+        			retries:     3                           																		# optional
+      			)
+      			notification = Grocer::Notification.new(
+        			device_token:      "#{@app_user.gcm_id}",
+        			alert:             "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}",
+        			badge:             42
+        			#category:          "a category",         																	# optional; used for custom notification actions
+        			#sound:             "siren.aiff",         																	# optional
+        			#expiry:            Time.now + 60*60,     																	# optional; 0 is default, meaning the message is not stored
+        			#identifier:        1234,                 																	# optional; must be an integer
+        			#content_available: true                  																	# optional; any truthy value will set 'content-available' to 1
+      			)
+      			pusher.push(notification)
+      		end    		
 				end
       end
     end
 	end
 	def send_notification_no_contract
 		@app_user = AppUser.find_by_id(params[:app_user_id])
+		@app_user_device = @app_user.device_flag
 		@state = @app_user.state
 		@current_plan_price = params[:price]
 		if params[:service_category_id] == "1"
@@ -261,9 +284,30 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		end
 		
 		if @b_deal.present?
-			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
-    	registration_id = ["#{@app_user.gcm_id}"]
-    	gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
+			if @app_user_device == "android"
+				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
+    		registration_id = ["#{@app_user.gcm_id}"]
+    		gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
+			elsif @app_user_device == "iphone"
+				pusher = Grocer.pusher(
+        	certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
+        	passphrase:  "1234",                       																	# optional
+        	gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
+        	port:        2195,                       																		# optional
+        	retries:     3                           																		# optional
+      	)
+      	notification = Grocer::Notification.new(
+        	device_token:      "#{@app_user.gcm_id}",
+        	alert:             "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}",
+        	badge:             42
+        	#category:          "a category",         																	# optional; used for custom notification actions
+        	#sound:             "siren.aiff",         																	# optional
+        	#expiry:            Time.now + 60*60,     																	# optional; 0 is default, meaning the message is not stored
+        	#identifier:        1234,                 																	# optional; must be an integer
+        	#content_available: true                  																	# optional; any truthy value will set 'content-available' to 1
+      	)
+      	pusher.push(notification)
+			end	
 		end
   end
 	def service_preference_params

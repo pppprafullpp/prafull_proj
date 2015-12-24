@@ -44,6 +44,10 @@
         <li class="divider"></li>
         <li><%= link_to "BundlePreference", bundle_service_preferences_path %></li>
         <li class="divider"></li>
+        <li><%= link_to "DealSubscription", subscribe_deals_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "TrendingDeals", trending_deals_path %></li>
+        <li class="divider"></li>
       <% end %>
       <% if user_signed_in? %>
         <li>

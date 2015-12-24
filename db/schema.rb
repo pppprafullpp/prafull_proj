@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221120209) do
+ActiveRecord::Schema.define(version: 20151224104620) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -249,6 +249,18 @@ ActiveRecord::Schema.define(version: 20151221120209) do
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree
 
+  create_table "subscribe_deals", force: :cascade do |t|
+    t.integer  "app_user_id",   limit: 4
+    t.integer  "deal_id",       limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "active_status", limit: 1, default: false
+    t.integer  "category_id",   limit: 4
+  end
+
+  add_index "subscribe_deals", ["app_user_id"], name: "index_subscribe_deals_on_app_user_id", using: :btree
+  add_index "subscribe_deals", ["deal_id"], name: "index_subscribe_deals_on_deal_id", using: :btree
+
   create_table "telephone_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4
     t.integer  "domestic_call_minutes",        limit: 4
@@ -260,6 +272,16 @@ ActiveRecord::Schema.define(version: 20151221120209) do
   end
 
   add_index "telephone_service_preferences", ["service_preference_id"], name: "index_telephone_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "trending_deals", force: :cascade do |t|
+    t.integer  "deal_id",            limit: 4
+    t.integer  "subscription_count", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "category_id",        limit: 4
+  end
+
+  add_index "trending_deals", ["deal_id"], name: "index_trending_deals_on_deal_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   limit: 255, default: "", null: false
@@ -297,5 +319,8 @@ ActiveRecord::Schema.define(version: 20151221120209) do
   add_foreign_key "service_preferences", "app_users"
   add_foreign_key "service_preferences", "service_categories"
   add_foreign_key "service_providers", "service_categories"
+  add_foreign_key "subscribe_deals", "app_users"
+  add_foreign_key "subscribe_deals", "deals"
   add_foreign_key "telephone_service_preferences", "service_preferences"
+  add_foreign_key "trending_deals", "deals"
 end

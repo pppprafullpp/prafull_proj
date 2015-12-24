@@ -17,6 +17,12 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@app_user_current_plan = sp.price
 		  		@advertisement = []
 		  		@best_deal = []
+		  		@trending_deal = []
+		  		@t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
+		  		if @t_deal.present?
+		  			@trending = Deal.find_by_id(@t_deal.deal_id)
+		  			@trending_deal << @trending
+		  		end
 		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
 		  		if sp.service_category_id == 1
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
@@ -117,7 +123,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?
 		  		@preferred_deal = []
-					{ :you_save_text => @you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
+					{ :you_save_text => @you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => @trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
 		  	end	
 				render :json => { :dashboard_data => @servicelist }
 			else

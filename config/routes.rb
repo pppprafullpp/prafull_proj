@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   resources :advertisements
   #resources :comments
   #resources :ratings
-  resources :push_notifications
+  resources :bulk_notifications 
   resources :comment_ratings
   resources :referral_infos
   resources :internet_service_preferences

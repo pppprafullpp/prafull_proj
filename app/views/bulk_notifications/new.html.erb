@@ -1,0 +1,31 @@
+<table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%' >
+  <tr> 
+    <td class='main' id='main' valign='top'>
+      <div class='title_tools'>
+		<%= link_to "View Notifications", bulk_notifications_path %>
+      </div>
+      <div class='title'>
+        <span id='title'>Send a new notification</span>
+      </div>
+
+			<div class="small-6 large-centered columns">
+				<%= form_for(@bulk_notification, :url => @bulk_notifications) do |f| %><br/>
+				  <div>Select State : <br />
+				  <%#= f.text_field :app_user_id %>
+				    <%#= f.select :app_user_id, [ 'Country','State','Zip' ], :prompt => 'Select One', :onclick => "new Ajax.Request('/push_notifications/populate_next_field');" %>
+				    <%= f.select :state, AppUser.all.map { |r| [r.state]},{:include_blank => "Select State"} %>
+				  </div>
+				  <div>Select City : <br />
+				  	<%= f.select :city, AppUser.all.map { |r| [r.city]},{:include_blank => "Select City"} %>
+				  </div>
+				  <div>Select Zip : <br />
+				  	<%= f.select :zip, AppUser.all.map { |r| [r.zip]},{:include_blank => "Select Category"} %>
+				  </div>
+				  <div>Message : <br />
+				  <%= f.text_field :message %></div>
+				  <div><%= f.submit "Create" %></div>
+				<% end %>
+			</div>
+    </td>
+	</tr>
+</table>

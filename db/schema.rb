@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151224104620) do
+ActiveRecord::Schema.define(version: 20151229095825) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 20151224104620) do
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "bulk_notifications", force: :cascade do |t|
+    t.string   "state",      limit: 255
+    t.string   "city",       limit: 255
+    t.string   "zip",        limit: 255
+    t.text     "message",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "bundle_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4
@@ -159,12 +168,12 @@ ActiveRecord::Schema.define(version: 20151224104620) do
 
   create_table "internet_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id", limit: 4
+    t.float    "upload_speed",          limit: 24
+    t.float    "download_speed",        limit: 24
     t.string   "online_storage",        limit: 255
     t.string   "wifi_hotspot",          limit: 255
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.float    "upload_speed",          limit: 24
-    t.float    "download_speed",        limit: 24
     t.integer  "email",                 limit: 4
     t.float    "data",                  limit: 24
   end
@@ -186,6 +195,9 @@ ActiveRecord::Schema.define(version: 20151224104620) do
     t.text     "message",     limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "state",       limit: 255
+    t.string   "city",        limit: 255
+    t.string   "zip",         limit: 255
   end
 
   add_index "push_notifications", ["app_user_id"], name: "index_push_notifications_on_app_user_id", using: :btree
@@ -252,10 +264,10 @@ ActiveRecord::Schema.define(version: 20151224104620) do
   create_table "subscribe_deals", force: :cascade do |t|
     t.integer  "app_user_id",   limit: 4
     t.integer  "deal_id",       limit: 4
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
     t.boolean  "active_status", limit: 1, default: false
     t.integer  "category_id",   limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "subscribe_deals", ["app_user_id"], name: "index_subscribe_deals_on_app_user_id", using: :btree
@@ -276,9 +288,9 @@ ActiveRecord::Schema.define(version: 20151224104620) do
   create_table "trending_deals", force: :cascade do |t|
     t.integer  "deal_id",            limit: 4
     t.integer  "subscription_count", limit: 4
+    t.integer  "category_id",        limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.integer  "category_id",        limit: 4
   end
 
   add_index "trending_deals", ["deal_id"], name: "index_trending_deals_on_deal_id", using: :btree

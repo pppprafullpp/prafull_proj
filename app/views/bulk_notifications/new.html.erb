@@ -13,13 +13,13 @@
 				  <div>Select State : <br />
 				  <%#= f.text_field :app_user_id %>
 				    <%#= f.select :app_user_id, [ 'Country','State','Zip' ], :prompt => 'Select One', :onclick => "new Ajax.Request('/push_notifications/populate_next_field');" %>
-				    <%= f.select :state, AppUser.all.map { |r| [r.state]},{:include_blank => "Select State"} %>
+				    <%= f.select :state, AppUser.where("state is NOT NULL and state != ''").map { |r| [r.state]},{:include_blank => "Select State"} %>
 				  </div>
 				  <div>Select City : <br />
-				  	<%= f.select :city, AppUser.all.map { |r| [r.city]},{:include_blank => "Select City"} %>
+				  	<%= f.select :city, AppUser.where("city is NOT NULL and city != ''").map { |r| [r.city]},{:include_blank => "Select City"} %>
 				  </div>
 				  <div>Select Zip : <br />
-				  	<%= f.select :zip, AppUser.all.map { |r| [r.zip]},{:include_blank => "Select Category"} %>
+				  	<%= f.select :zip, AppUser.where("zip is NOT NULL and zip != ''").map { |r| [r.zip]},{:include_blank => "Select Zip"} %>
 				  </div>
 				  <div>Message : <br />
 				  <%= f.text_field :message %></div>

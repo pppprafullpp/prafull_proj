@@ -80,6 +80,6 @@ class BulkNotificationsController < ApplicationController
   end
 
 	def bulk_notification_params
-		params.require(:bulk_notification).permit(:state, :city, :zip, :message)
+		params.require(:bulk_notification).permit(:state, :city, :zip, :message, :category)
 	end
 end	

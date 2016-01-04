@@ -1,27 +1,23 @@
 <table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%' >
   <tr> 
     <td class='main' id='main' valign='top'>
-      <div class='title_tools'>
-		<%= link_to "View Notifications", bulk_notifications_path %>
-      </div>
-      <div class='title'>
-        <span id='title'>Send a new notification</span>
-      </div>
-
+      <div class='title_tools'><%= link_to "View Notifications", bulk_notifications_path %></div>
+      <div class='title'><span id='title'>Send a new notification</span></div>
 			<div class="small-6 large-centered columns">
 				<%= form_for(@bulk_notification, :url => @bulk_notifications) do |f| %><br/>
-				  <div>Select State : <br />
-				  <%#= f.text_field :app_user_id %>
-				    <%#= f.select :app_user_id, [ 'Country','State','Zip' ], :prompt => 'Select One', :onclick => "new Ajax.Request('/push_notifications/populate_next_field');" %>
+					<div id = "category">Select a category : <br />
+				  	<%= f.select :category, [ 'State','City','Zip' ],{:include_blank => "Select category"}, :onchange=>"populate(this);" %>
+				  </div>
+				  <div id = "state" style="display: none;">Select State : <br />
 				    <%= f.select :state, AppUser.distinct.pluck(:state), {:include_blank => "Select State"} %>
 				  </div>
-				  <div>Select City : <br />
+				  <div id = "city" style="display: none;">Select City : <br />
 				  	<%= f.select :city, AppUser.distinct.pluck(:city),{:include_blank => "Select City"} %>
 				  </div>
-				  <div>Select Zip : <br />
+				  <div id = "zip" style="display: none;">Select Zip : <br />
 				  	<%= f.select :zip, AppUser.distinct.pluck(:zip),{:include_blank => "Select Zip"} %>
 				  </div>
-				  <div>Message : <br />
+				  <div id = "message">Message : <br />
 				  <%= f.text_field :message %></div>
 				  <div><%= f.submit "Create" %></div>
 				<% end %>
@@ -29,3 +25,20 @@
     </td>
 	</tr>
 </table>
+<script>
+    function populate(that) {
+    	if (that.value == "State") {
+    		document.getElementById("state").style.display = "block";
+        document.getElementById("city").style.display = "none";
+        document.getElementById("zip").style.display = "none";
+    	}if (that.value == "City") {
+    		document.getElementById("state").style.display = "none";
+        document.getElementById("city").style.display = "block";
+        document.getElementById("zip").style.display = "none";
+    	}if (that.value == "Zip") {
+    		document.getElementById("state").style.display = "none";
+        document.getElementById("city").style.display = "none";
+        document.getElementById("zip").style.display = "block";
+    	}
+    }
+</script>        

@@ -16,9 +16,10 @@
 		  		<thead>
 		    		<tr>
 		      		<th><strong>ID</strong></th>
-			  			<th><strong>State </strong></th>
+		      		<th><strong>Category</strong></th>
+			  			<!--<th><strong>State </strong></th>
 			  			<th><strong>City </strong></th>
-			  			<th><strong>Zip </strong></th>
+			  			<th><strong>Zip </strong></th>-->
 			  			<th><strong>Message </strong></th>
 			  			<th><strong>Edit </strong></th>
 						</tr>
@@ -28,11 +29,13 @@
 			  			<% if can? :read, b_notification %>
 			    			<tr>
 			      			<td><%= b_notification.id %></td>
-				  				<td><%= b_notification.state %></td>
-				  				<td><%= b_notification.city %></td>
-				  				<td><%= b_notification.zip %></td>
+			      			<td><%= b_notification.category %></td>
+				  				<!--<td><%#= b_notification.state %></td>
+				  				<td><%#= b_notification.city %></td>
+				  				<td><%#= b_notification.zip %></td>-->
 				  				<td><%= b_notification.message %></td>
-				  				<td><%= (link_to 'Edit', edit_bulk_notification_path(b_notification)) if can? :manage, b_notification %> | <%= (link_to "Delete", b_notification, method: :delete, data: { confirm: "You sure?" }) if can? :manage, b_notification %></td>
+				  				<td><%= (link_to "Delete", b_notification, method: :delete, data: { confirm: "You sure?" }) if can? :manage, b_notification %></td>
+				  				<!--<td><%#= (link_to 'Edit', edit_bulk_notification_path(b_notification)) if can? :manage, b_notification %> | <%#= (link_to "Delete", b_notification, method: :delete, data: { confirm: "You sure?" }) if can? :manage, b_notification %></td>-->
 								</tr>
 			  			<% end %>
 						<% end %>

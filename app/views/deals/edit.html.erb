@@ -18,6 +18,9 @@
 				  <div><strong>Service Provider:<span id="mandat">*</span> </strong><br />
 				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"} %>
 				  </div>
+                  <div id ="bundle_combo" style="display: none;"><strong>Select a Bundle Combo:<span id="mandat">*</span></strong><br />
+                        <%= f.select :bundle_combo, [ 'Internet and Telephone','Internet and Cable','Telephone and Cable','Internet,Telephone and Cable' ],{:include_blank => "Select category"}, :onchange=>"bundle_combo(this);" %>
+                  </div>      
 				  <div><strong>Title:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :title %></div>
 				  <div><strong>Deal Image:<span id="mandat">*</span> </strong><br/>
@@ -84,7 +87,6 @@
     </td>
 	</tr>
 </table>
-
 <script>
     function yesnoCheck(that) {
         if (that.value == "1") {
@@ -98,8 +100,9 @@
             document.getElementById("data_speed").style.display = "none";
             document.getElementById("talk_unlimit").style.display = "none";
             document.getElementById("text_unlimit").style.display = "none";
+            document.getElementById("bundle_combo").style.display = "none";
         } else if (that.value == "2"){
-        		document.getElementById("c_minutes").style.display = "block";
+            document.getElementById("c_minutes").style.display = "block";
             document.getElementById("t_msgs").style.display = "block";
             document.getElementById("talk_unlimit").style.display = "block";
             document.getElementById("text_unlimit").style.display = "block";
@@ -109,10 +112,11 @@
             document.getElementById("premium_c").style.display = "none";
             document.getElementById("data_plan").style.display = "none";
             document.getElementById("data_speed").style.display = "none";
+            document.getElementById("bundle_combo").style.display = "none";
         } else if (that.value == "3"){
-        		document.getElementById("free_c").style.display = "block";
+            document.getElementById("free_c").style.display = "block";
             document.getElementById("premium_c").style.display = "block";
-        		document.getElementById("c_minutes").style.display = "none";
+            document.getElementById("c_minutes").style.display = "none";
             document.getElementById("t_msgs").style.display = "none";
             document.getElementById("u_speed").style.display = "none";
             document.getElementById("d_speed").style.display = "none";
@@ -120,28 +124,31 @@
             document.getElementById("data_speed").style.display = "none";
             document.getElementById("talk_unlimit").style.display = "none";
             document.getElementById("text_unlimit").style.display = "none";
+            document.getElementById("bundle_combo").style.display = "none";
         } else if (that.value == "4"){
-        		document.getElementById("c_minutes").style.display = "block";
+            document.getElementById("c_minutes").style.display = "block";
             document.getElementById("t_msgs").style.display = "block";
             document.getElementById("data_plan").style.display = "block";
             document.getElementById("data_speed").style.display = "block";
             document.getElementById("talk_unlimit").style.display = "block";
             document.getElementById("text_unlimit").style.display = "block";
-        		document.getElementById("free_c").style.display = "none";
+            document.getElementById("free_c").style.display = "none";
             document.getElementById("premium_c").style.display = "none";
             document.getElementById("u_speed").style.display = "none";
             document.getElementById("d_speed").style.display = "none";
+            document.getElementById("bundle_combo").style.display = "none";
         } else if (that.value == "5"){
-        		document.getElementById("c_minutes").style.display = "block";
-            document.getElementById("t_msgs").style.display = "block";
-            document.getElementById("talk_unlimit").style.display = "block";
-            document.getElementById("text_unlimit").style.display = "block";
+            document.getElementById("c_minutes").style.display = "none";
+            document.getElementById("t_msgs").style.display = "none";
+            document.getElementById("talk_unlimit").style.display = "none";
+            document.getElementById("text_unlimit").style.display = "none";
             document.getElementById("data_plan").style.display = "none";
             document.getElementById("data_speed").style.display = "none";
-        		document.getElementById("free_c").style.display = "block";
-            document.getElementById("premium_c").style.display = "block";
-            document.getElementById("u_speed").style.display = "block";
-            document.getElementById("d_speed").style.display = "block";
+            document.getElementById("free_c").style.display = "none";
+            document.getElementById("premium_c").style.display = "none";
+            document.getElementById("u_speed").style.display = "none";
+            document.getElementById("d_speed").style.display = "none";
+            document.getElementById("bundle_combo").style.display = "block";
         }
         else {
             document.getElementById("u_speed").style.display = "none";
@@ -154,7 +161,60 @@
             document.getElementById("data_speed").style.display = "none";
             document.getElementById("talk_unlimit").style.display = "none";
             document.getElementById("text_unlimit").style.display = "none";
+            document.getElementById("bundle_combo").style.display = "none";
         } 
     }
+  function bundle_combo(that){
+    if (that.value == "Internet and Telephone") {
+      document.getElementById("c_minutes").style.display = "block";
+      document.getElementById("t_msgs").style.display = "block";
+      document.getElementById("talk_unlimit").style.display = "block";
+      document.getElementById("text_unlimit").style.display = "block";
+      document.getElementById("u_speed").style.display = "block";
+      document.getElementById("d_speed").style.display = "block";
+      document.getElementById("free_c").style.display = "none";
+      document.getElementById("premium_c").style.display = "none";
+      document.getElementById("data_plan").style.display = "none";
+      document.getElementById("data_speed").style.display = "none";
+      document.getElementById("bundle_combo").style.display = "block";
+    }else if (that.value == "Internet and Cable"){
+      document.getElementById("c_minutes").style.display = "none";
+      document.getElementById("t_msgs").style.display = "none";
+      document.getElementById("talk_unlimit").style.display = "none";
+      document.getElementById("text_unlimit").style.display = "none";
+      document.getElementById("u_speed").style.display = "block";
+      document.getElementById("d_speed").style.display = "block";
+      document.getElementById("free_c").style.display = "block";
+      document.getElementById("premium_c").style.display = "block";
+      document.getElementById("data_plan").style.display = "none";
+      document.getElementById("data_speed").style.display = "none";
+      document.getElementById("bundle_combo").style.display = "block";
+    }else if (that.value == "Telephone and Cable"){
+      document.getElementById("c_minutes").style.display = "block";
+      document.getElementById("t_msgs").style.display = "block";
+      document.getElementById("talk_unlimit").style.display = "block";
+      document.getElementById("text_unlimit").style.display = "block";
+      document.getElementById("u_speed").style.display = "none";
+      document.getElementById("d_speed").style.display = "none";
+      document.getElementById("free_c").style.display = "block";
+      document.getElementById("premium_c").style.display = "block";
+      document.getElementById("data_plan").style.display = "none";
+      document.getElementById("data_speed").style.display = "none";
+      document.getElementById("bundle_combo").style.display = "block";
+    }else if (that.value == "Internet,Telephone and Cable"){
+      document.getElementById("c_minutes").style.display = "block";
+      document.getElementById("t_msgs").style.display = "block";
+      document.getElementById("talk_unlimit").style.display = "block";
+      document.getElementById("text_unlimit").style.display = "block";
+      document.getElementById("u_speed").style.display = "block";
+      document.getElementById("d_speed").style.display = "block";
+      document.getElementById("free_c").style.display = "block";
+      document.getElementById("premium_c").style.display = "block";
+      document.getElementById("data_plan").style.display = "none";
+      document.getElementById("data_speed").style.display = "none";
+      document.getElementById("bundle_combo").style.display = "block";
+    }
+  } 
 </script>
+
 

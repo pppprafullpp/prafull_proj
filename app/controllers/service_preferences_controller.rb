@@ -51,6 +51,6 @@ class ServicePreferencesController < ApplicationController
 
 	private
 	def service_preference_params
-		params.require(:service_preference).permit(:app_user_id, :service_category_name, :service_provider_name, :contract_date, :is_contract, :contract_fee)
+		params.require(:service_preference).permit(:app_user_id, :service_category_name, :service_provider_name, :start_date, :end_date, :is_contract, :price, :plan_name)
 	end
 end	

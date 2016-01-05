@@ -113,6 +113,13 @@ class Api::V1::DashboardsController < ApplicationController
 		  					end
 		  				end		
 		  			end
+		  		elsif sp.service_category_id == 5
+		  			@app_user_bundle_combo = sp.bundle_service_preference.bundle_combo
+		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND bundle_combo = ?", true, @state, sp.service_category_id, Date.today, @app_user_bundle_combo).order("price ASC").first
+		  			if @b_deal.present?
+		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
+		  				@best_deal << @b_deal
+		  			end				
 		  		else
 		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
 		  			if @b_deal.present?

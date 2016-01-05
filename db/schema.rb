@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104073802) do
+ActiveRecord::Schema.define(version: 20160105055952) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -75,13 +75,14 @@ ActiveRecord::Schema.define(version: 20160104073802) do
     t.integer  "international_call_minutes",   limit: 4
     t.float    "data_plan",                    limit: 24
     t.float    "data_speed",                   limit: 24
-    t.boolean  "domestic_call_unlimited",      limit: 1,  default: false
-    t.boolean  "international_call_unlimited", limit: 1,  default: false
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.boolean  "domestic_call_unlimited",      limit: 1,   default: false
+    t.boolean  "international_call_unlimited", limit: 1,   default: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.float    "upload_speed",                 limit: 24
     t.float    "download_speed",               limit: 24
     t.float    "data",                         limit: 24
+    t.string   "bundle_combo",                 limit: 255
   end
 
   add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
@@ -162,6 +163,7 @@ ActiveRecord::Schema.define(version: 20160104073802) do
     t.float    "data_speed",                   limit: 24
     t.float    "upload_speed",                 limit: 24
     t.float    "download_speed",               limit: 24
+    t.string   "bundle_combo",                 limit: 255
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree

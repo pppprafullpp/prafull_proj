@@ -16,6 +16,7 @@
             <tr>
               <th><strong>App User Id</strong></th>
               <th><strong>Recieve Notification</strong></th>
+              <th><strong>Recieve Trending Deals</strong></th>
               <th><strong>Day</strong></th>
               <th><strong>Action</strong></th>
             </tr>
@@ -26,6 +27,7 @@
                 <tr>
                   <td><%= nt.app_user_id %></td>
                   <td><%= nt.recieve_notification %></td>
+                  <td><%= nt.recieve_trending_deals %></td>
                   <td><%= nt.day %></td>
                   <td><%= (link_to 'Edit', edit_notification_path(nt)) if can? :manage, nt %></td>
                 </tr>

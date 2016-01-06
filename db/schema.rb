@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105055952) do
+ActiveRecord::Schema.define(version: 20160106113818) do
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -184,11 +184,12 @@ ActiveRecord::Schema.define(version: 20160105055952) do
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
-    t.integer  "app_user_id",          limit: 4
-    t.boolean  "recieve_notification", limit: 1
-    t.integer  "day",                  limit: 4
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "app_user_id",            limit: 4
+    t.boolean  "recieve_notification",   limit: 1
+    t.integer  "day",                    limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.boolean  "recieve_trending_deals", limit: 1, default: true
   end
 
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree

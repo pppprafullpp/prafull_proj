@@ -38,6 +38,6 @@ class NotificationsController < ApplicationController
 
 	private
 	def notification_params
-		params.require(:notification).permit(:app_user_id, :service_notification, :day)
+		params.require(:notification).permit(:app_user_id, :service_notification, :day, :recieve_trending_deals)
 	end
 end	

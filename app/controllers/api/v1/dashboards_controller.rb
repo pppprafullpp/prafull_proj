@@ -203,7 +203,8 @@ class Api::V1::DashboardsController < ApplicationController
 					@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes > ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
 				end	
 			elsif params[:service_category_id] == '5'
-				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, @state, params[:service_category_id]).order("price ASC").limit(5)
+				@app_user_bundle_combo = sp.bundle_service_preference.bundle_combo
+				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND bundle_combo = ?", true, @state, params[:service_category_id], @app_user_bundle_combo).order("price ASC").limit(5)
 			end
 			if @equal_deals.present? && @greater_deals.present?	
 				@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)

@@ -57,10 +57,16 @@ class Api::V1::AppUsersController < ApplicationController
     elsif params[:email].present? && params[:id].blank?
       @app_user = AppUser.find_by_email(params[:email])
       if @app_user.present?
+        if @app_user.service_preferences.present?
+          @user_preference = true
+        else
+          @user_preference = false
+        end
         render :status => 200,
              :json => {
                         :success => true,
-                        :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url])
+                        :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                        :user_preference => @user_preference
                       }
       else  
         render :status => 404,
@@ -87,7 +93,7 @@ class Api::V1::AppUsersController < ApplicationController
 	private
 	def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id)
+		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
 	end
 
   def decode_picture_data(picture_data)

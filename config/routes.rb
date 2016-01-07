@@ -26,6 +26,9 @@ Rails.application.routes.draw do
       match 'forget_password' => 'app_users#recover_password', :via => :post
       match 'comment_ratings' => 'comment_ratings#create', :via => :post
       match 'comment_ratings' => 'comment_ratings#index', :via => :get
+      match 'referral_tracking' => 'referral_infos#create', :via => :post
+      match 'get_category_deals' => 'dashboards#dashboard_deals', :via => :get
+      match 'subscribed_deals' => 'subscribe_deals#subscription_info', :via => :post
     end
   end
   root to: "home#index"
@@ -61,8 +64,18 @@ Rails.application.routes.draw do
   resources :advertisements
   #resources :comments
   #resources :ratings
-  resources :push_notifications
+  resources :bulk_notifications 
   resources :comment_ratings
+  resources :referral_infos
+  resources :internet_service_preferences
+  resources :cable_service_preferences
+  resources :telephone_service_preferences
+  resources :cellphone_service_preferences
+  resources :bundle_service_preferences
+  resources :subscribe_deals
+  resources :trending_deals
+
+
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

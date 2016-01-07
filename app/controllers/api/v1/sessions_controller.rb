@@ -6,17 +6,24 @@ class Api::V1::SessionsController < Devise::SessionsController
   def create
     @app_user = AppUser.find_by_email(params[:email])
     if @app_user.present?
-      if params[:gcm_id].present?
+      if params[:gcm_id].present? && params[:device_flag].present?
+        @app_user.device_flag = params[:device_flag]
         @app_user.gcm_id = params[:gcm_id]
         @app_user.save
       end
       if @app_user.active == true
         #warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
         if @app_user.unhashed_password == params[:password]
+          if @app_user.service_preferences.present?
+            @user_preference = true
+          else
+            @user_preference = false
+          end
           render :status => 200,
                :json => { :success => true,
                           :info => "Logged in",
-                          :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]) 
+                          :data => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                          :user_preference => @user_preference
                         }
         else
           render :status => 401,
@@ -57,7 +64,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   private
   def app_user_params
-    params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id)
+    params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
   end
 
   #def create

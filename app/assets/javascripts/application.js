@@ -21,6 +21,8 @@ $(document).on("page:load ready", function(){
     $("#deal_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#advertisement_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#advertisement_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#service_preference_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#service_preference_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
 });
 
 

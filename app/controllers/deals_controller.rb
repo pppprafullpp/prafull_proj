@@ -6,7 +6,6 @@ class DealsController < ApplicationController
 
 	def new
 		@deal = Deal.new
-    
 	end
   
   def get_service_providers
@@ -19,6 +18,7 @@ class DealsController < ApplicationController
 		@deal = Deal.new(deal_params)    
     respond_to do |format|
       if @deal.save
+        #send_notification
         format.html { redirect_to deals_path, :notice => 'You have successfully created a deal' }
         format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
       else
@@ -55,8 +55,18 @@ class DealsController < ApplicationController
   
 	private
 
+  #def send_notification
+  #  @app_user = AppUser.where("zip = ?",params[:deal][:zip])
+  #  gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
+  #  @app_user.map do |a_user|
+  #    registration_id = ["#{a_user.gcm_id}"]
+      #message = "New deal for zip #{params[:deal][:zip]}.Visit Url : #{params[:deal][:url]}"
+  #    gcm.send(registration_id, {data: {message: "New deal for zip #{params[:deal][:zip]}.Visit Url : #{params[:deal][:url]}"}})
+  #  end  
+  #end
+
   def deal_params
-  	params.require(:deal).permit(:service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :title, :state, :city, :zip, :short_description, :detail_description, :price, :url, :you_save_text, :start_date, :end_date, :image, :is_active)
+  	params.require(:deal).permit(:service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :title, :state, :city, :zip, :short_description, :detail_description, :price, :url, :start_date, :end_date, :image, :is_active, :upload_speed, :download_speed, :free_channels, :premium_channels, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited, :data_plan, :data_speed, :bundle_combo)
   end
 
   

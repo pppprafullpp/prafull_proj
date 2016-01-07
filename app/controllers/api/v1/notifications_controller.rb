@@ -47,7 +47,7 @@ class Api::V1::NotificationsController < ApplicationController
 
 	private
 	def notification_params
-		params.permit(:app_user_id, :recieve_notification, :day)
+		params.permit(:app_user_id, :recieve_notification, :day, :recieve_trending_deals)
 	end
 
 end	

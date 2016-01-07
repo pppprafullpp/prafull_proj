@@ -1,14 +1,14 @@
 class Deal < ActiveRecord::Base
 	belongs_to :service_category
 	belongs_to :service_provider
-	has_many :comment_ratings, dependent: :destroy
+	has_many :comment_ratings, :dependent => :destroy
 
 	before_save :create_category_name
 	before_save :create_provider_name
 
 	mount_uploader :image, ImageUploader
 
-	validates_presence_of :title, :image, :zip, :state, :short_description, :detail_description, :price, :url, :you_save_text, :start_date, :end_date
+	validates_presence_of :title, :zip, :state, :short_description, :detail_description, :price, :url, :start_date, :end_date #:image
 
 	def as_json(opts={})
     	json = super(opts)

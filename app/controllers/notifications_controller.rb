@@ -35,9 +35,18 @@ class NotificationsController < ApplicationController
       		end
     	end
 	end
+	def destroy
+    @notification = Notification.find(params[:id])
+    respond_to do |format|
+          if @notification.destroy
+            format.html { redirect_to notifications_path, :notice => 'Successfully removed.' }
+            format.xml  { render :xml => @notification, :status => :created, :notification => @notification }
+          end
+    end
+  end
 
 	private
 	def notification_params
-		params.require(:notification).permit(:app_user_id, :service_notification, :day)
+		params.require(:notification).permit(:app_user_id, :service_notification, :day, :recieve_trending_deals)
 	end
 end	

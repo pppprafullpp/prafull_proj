@@ -11,117 +11,210 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020062546) do
+ActiveRecord::Schema.define(version: 20160106113818) do
 
   create_table "advertisements", force: :cascade do |t|
-    t.integer  "service_category_id"
-    t.string   "service_category_name"
-    t.string   "name"
-    t.string   "url"
-    t.boolean  "status",                default: true
+    t.integer  "service_category_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "name",                  limit: 255
+    t.string   "url",                   limit: 255
+    t.boolean  "status",                limit: 1,   default: true
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "image"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.string   "image",                 limit: 255
   end
 
-  add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id"
+  add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree
 
   create_table "app_users", force: :cascade do |t|
-    t.string   "first_name",             default: "",   null: false
-    t.string   "last_name",              default: "",   null: false
-    t.string   "email",                  default: "",   null: false
-    t.string   "encrypted_password",     default: "",   null: false
-    t.string   "address"
-    t.string   "state"
-    t.string   "city"
-    t.string   "zip"
-    t.string   "gcm_id"
-    t.string   "reset_password_token"
+    t.string   "first_name",             limit: 255, default: "",   null: false
+    t.string   "last_name",              limit: 255, default: "",   null: false
+    t.string   "email",                  limit: 255, default: "",   null: false
+    t.string   "encrypted_password",     limit: 255, default: "",   null: false
+    t.string   "address",                limit: 255
+    t.string   "state",                  limit: 255
+    t.string   "city",                   limit: 255
+    t.string   "zip",                    limit: 255
+    t.string   "gcm_id",                 limit: 255
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,    null: false
-    t.boolean  "active",                 default: true
+    t.integer  "sign_in_count",          limit: 4,   default: 0,    null: false
+    t.boolean  "active",                 limit: 1,   default: true
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar"
-    t.string   "unhashed_password"
+    t.string   "avatar",                 limit: 255
+    t.string   "unhashed_password",      limit: 255
+    t.string   "device_flag",            limit: 255
   end
 
-  add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true
-  add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true
+  add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
+  add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "bulk_notifications", force: :cascade do |t|
+    t.string   "state",      limit: 255
+    t.string   "city",       limit: 255
+    t.string   "zip",        limit: 255
+    t.text     "message",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "category",   limit: 255
+  end
+
+  create_table "bundle_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id",        limit: 4
+    t.integer  "free_channels",                limit: 4
+    t.integer  "premium_channels",             limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.float    "data_plan",                    limit: 24
+    t.float    "data_speed",                   limit: 24
+    t.boolean  "domestic_call_unlimited",      limit: 1,   default: false
+    t.boolean  "international_call_unlimited", limit: 1,   default: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.float    "upload_speed",                 limit: 24
+    t.float    "download_speed",               limit: 24
+    t.float    "data",                         limit: 24
+    t.string   "bundle_combo",                 limit: 255
+  end
+
+  add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "cable_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id", limit: 4
+    t.integer  "free_channels",         limit: 4
+    t.integer  "premium_channels",      limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "cable_service_preferences", ["service_preference_id"], name: "index_cable_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "cellphone_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id",        limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.float    "data_plan",                    limit: 24
+    t.float    "data_speed",                   limit: 24
+    t.boolean  "domestic_call_unlimited",      limit: 1,  default: false
+    t.boolean  "international_call_unlimited", limit: 1,  default: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+  end
+
+  add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
 
   create_table "comment_ratings", force: :cascade do |t|
-    t.integer  "app_user_id"
-    t.integer  "deal_id"
-    t.float    "rating_point"
-    t.boolean  "status",        default: true
-    t.text     "comment_title"
-    t.text     "comment_text"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "app_user_id",   limit: 4
+    t.integer  "deal_id",       limit: 4
+    t.float    "rating_point",  limit: 24
+    t.boolean  "status",        limit: 1,     default: true
+    t.text     "comment_title", limit: 65535
+    t.text     "comment_text",  limit: 65535
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
-  add_index "comment_ratings", ["app_user_id"], name: "index_comment_ratings_on_app_user_id"
-  add_index "comment_ratings", ["deal_id"], name: "index_comment_ratings_on_deal_id"
+  add_index "comment_ratings", ["app_user_id"], name: "index_comment_ratings_on_app_user_id", using: :btree
+  add_index "comment_ratings", ["deal_id"], name: "index_comment_ratings_on_deal_id", using: :btree
 
   create_table "configurables", force: :cascade do |t|
-    t.string   "name"
-    t.string   "value"
+    t.string   "name",       limit: 255
+    t.string   "value",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "configurables", ["name"], name: "index_configurables_on_name"
+  add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
   create_table "deals", force: :cascade do |t|
-    t.integer  "service_category_id"
-    t.integer  "service_provider_id"
-    t.string   "service_category_name"
-    t.string   "service_provider_name"
-    t.string   "title"
-    t.string   "state"
-    t.string   "city"
-    t.string   "zip"
-    t.text     "short_description"
-    t.text     "detail_description"
-    t.float    "price"
-    t.string   "url"
-    t.text     "you_save_text"
+    t.integer  "service_category_id",          limit: 4
+    t.integer  "service_provider_id",          limit: 4
+    t.string   "service_category_name",        limit: 255
+    t.string   "service_provider_name",        limit: 255
+    t.string   "title",                        limit: 255
+    t.string   "state",                        limit: 255
+    t.string   "city",                         limit: 255
+    t.string   "zip",                          limit: 255
+    t.text     "short_description",            limit: 65535
+    t.text     "detail_description",           limit: 65535
+    t.float    "price",                        limit: 24
+    t.string   "url",                          limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_active",             default: true
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "image"
+    t.boolean  "is_active",                    limit: 1,     default: true
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "image",                        limit: 255
+    t.integer  "free_channels",                limit: 4
+    t.integer  "premium_channels",             limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.boolean  "domestic_call_unlimited",      limit: 1
+    t.boolean  "international_call_unlimited", limit: 1
+    t.float    "data_plan",                    limit: 24
+    t.float    "data_speed",                   limit: 24
+    t.float    "upload_speed",                 limit: 24
+    t.float    "download_speed",               limit: 24
+    t.string   "bundle_combo",                 limit: 255
   end
 
-  add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id"
-  add_index "deals", ["service_provider_id"], name: "index_deals_on_service_provider_id"
+  add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
+  add_index "deals", ["service_provider_id"], name: "index_deals_on_service_provider_id", using: :btree
+
+  create_table "internet_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id", limit: 4
+    t.float    "upload_speed",          limit: 24
+    t.float    "download_speed",        limit: 24
+    t.string   "online_storage",        limit: 255
+    t.string   "wifi_hotspot",          limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "email",                 limit: 4
+    t.float    "data",                  limit: 24
+  end
+
+  add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
-    t.integer  "app_user_id"
-    t.boolean  "recieve_notification"
-    t.integer  "day"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "app_user_id",            limit: 4
+    t.boolean  "recieve_notification",   limit: 1
+    t.integer  "day",                    limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.boolean  "recieve_trending_deals", limit: 1, default: true
   end
 
-  add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id"
+  add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
 
   create_table "push_notifications", force: :cascade do |t|
-    t.integer  "app_user_id"
-    t.text     "message"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "app_user_id", limit: 4
+    t.text     "message",     limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "state",       limit: 255
+    t.string   "city",        limit: 255
+    t.string   "zip",         limit: 255
   end
 
-  add_index "push_notifications", ["app_user_id"], name: "index_push_notifications_on_app_user_id"
+  add_index "push_notifications", ["app_user_id"], name: "index_push_notifications_on_app_user_id", using: :btree
+
+  create_table "referral_infos", force: :cascade do |t|
+    t.string   "first_referring_identity", limit: 255
+    t.string   "referred_user",            limit: 255
+    t.string   "event",                    limit: 255
+    t.integer  "referring_user_coins",     limit: 4
+    t.integer  "referred_user_coins",      limit: 4
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -129,68 +222,121 @@ ActiveRecord::Schema.define(version: 20151020062546) do
   end
 
   create_table "service_categories", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "service_preferences", force: :cascade do |t|
-    t.integer  "app_user_id"
-    t.integer  "service_category_id"
-    t.integer  "service_provider_id"
-    t.string   "service_category_name"
-    t.string   "service_provider_name"
-    t.datetime "contract_date"
-    t.boolean  "is_contract"
-    t.float    "contract_fee"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "app_user_id",           limit: 4
+    t.integer  "service_category_id",   limit: 4
+    t.integer  "service_provider_id",   limit: 4
+    t.string   "service_category_name", limit: 255
+    t.string   "service_provider_name", limit: 255
+    t.boolean  "is_contract",           limit: 1
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.float    "price",                 limit: 24
+    t.string   "plan_name",             limit: 255
   end
 
-  add_index "service_preferences", ["app_user_id"], name: "index_service_preferences_on_app_user_id"
-  add_index "service_preferences", ["service_category_id"], name: "index_service_preferences_on_service_category_id"
-  add_index "service_preferences", ["service_provider_id"], name: "index_service_preferences_on_service_provider_id"
+  add_index "service_preferences", ["app_user_id"], name: "index_service_preferences_on_app_user_id", using: :btree
+  add_index "service_preferences", ["service_category_id"], name: "index_service_preferences_on_service_category_id", using: :btree
+  add_index "service_preferences", ["service_provider_id"], name: "index_service_preferences_on_service_provider_id", using: :btree
 
   create_table "service_providers", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "service_category_id"
-    t.string   "address"
-    t.string   "state"
-    t.string   "city"
-    t.string   "zip"
-    t.string   "email"
-    t.string   "telephone"
-    t.boolean  "is_preferred",        default: false
-    t.boolean  "is_active",           default: true
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "logo"
+    t.string   "name",                limit: 255
+    t.integer  "service_category_id", limit: 4
+    t.string   "address",             limit: 255
+    t.string   "state",               limit: 255
+    t.string   "city",                limit: 255
+    t.string   "zip",                 limit: 255
+    t.string   "email",               limit: 255
+    t.string   "telephone",           limit: 255
+    t.boolean  "is_preferred",        limit: 1,   default: false
+    t.boolean  "is_active",           limit: 1,   default: true
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "logo",                limit: 255
   end
 
-  add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id"
+  add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree
+
+  create_table "subscribe_deals", force: :cascade do |t|
+    t.integer  "app_user_id",   limit: 4
+    t.integer  "deal_id",       limit: 4
+    t.boolean  "active_status", limit: 1, default: false
+    t.integer  "category_id",   limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "subscribe_deals", ["app_user_id"], name: "index_subscribe_deals_on_app_user_id", using: :btree
+  add_index "subscribe_deals", ["deal_id"], name: "index_subscribe_deals_on_deal_id", using: :btree
+
+  create_table "telephone_service_preferences", force: :cascade do |t|
+    t.integer  "service_preference_id",        limit: 4
+    t.integer  "domestic_call_minutes",        limit: 4
+    t.integer  "international_call_minutes",   limit: 4
+    t.boolean  "domestic_call_unlimited",      limit: 1, default: false
+    t.boolean  "international_call_unlimited", limit: 1, default: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "telephone_service_preferences", ["service_preference_id"], name: "index_telephone_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "trending_deals", force: :cascade do |t|
+    t.integer  "deal_id",            limit: 4
+    t.integer  "subscription_count", limit: 4
+    t.integer  "category_id",        limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "trending_deals", ["deal_id"], name: "index_trending_deals_on_deal_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   default: "", null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "role"
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "name",                   limit: 255, default: "", null: false
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "role",                   limit: 255
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.boolean  "enabled"
-    t.integer  "failed_count"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.boolean  "enabled",                limit: 1
+    t.integer  "failed_count",           limit: 4
     t.datetime "password_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "advertisements", "service_categories"
+  add_foreign_key "bundle_service_preferences", "service_preferences"
+  add_foreign_key "cable_service_preferences", "service_preferences"
+  add_foreign_key "cellphone_service_preferences", "service_preferences"
+  add_foreign_key "comment_ratings", "app_users"
+  add_foreign_key "comment_ratings", "deals"
+  add_foreign_key "deals", "service_categories"
+  add_foreign_key "internet_service_preferences", "service_preferences"
+  add_foreign_key "notifications", "app_users"
+  add_foreign_key "push_notifications", "app_users"
+  add_foreign_key "service_preferences", "app_users"
+  add_foreign_key "service_preferences", "service_categories"
+  add_foreign_key "service_providers", "service_categories"
+  add_foreign_key "subscribe_deals", "app_users"
+  add_foreign_key "subscribe_deals", "deals"
+  add_foreign_key "telephone_service_preferences", "service_preferences"
+  add_foreign_key "trending_deals", "deals"
 end

@@ -20,18 +20,26 @@
               <th><strong>Provider ID</strong></th>
               <th><strong>Provider</strong></th>
               <th><strong>Title</strong></th>
-              <th><strong>DealImage URL</strong></th>
+              <!--<th><strong>DealImage URL</strong></th>-->
               <th><strong>State</strong></th>
               <th><strong>City</strong></th>
               <th><strong>Zip</strong></th>
               <th><strong>Price</strong></th>
-              <th><strong>URL</strong></th>
-              <th><strong>Short Description</strong></th>
-              <th><strong>Detail Description</strong></th>
-              <th><strong>You Save Text</strong></th>
+              <!--<th><strong>URL</strong></th>-->
+              <th><strong>Upload Speed</strong></th>
+              <th><strong>Download Speed</strong></th>
+              <th><strong>Free Channels</strong></th>
+              <th><strong>Premium Channels</strong></th>
+              <th><strong>DCallMins</strong></th>
+              <th><strong>ICallMins</strong></th>
+              <th><strong>DCallUnlimit</strong></th>
+              <th><strong>ICallUnlimit</strong></th>
+              <!--<th><strong>Short Description</strong></th>-->
+              <!--<th><strong>Detail Description</strong></th>-->
               <th><strong>Start Date</strong></th>
               <th><strong>End Date</strong></th>
-              <th><strong>Is Active ?</strong></th>
+              <th><strong>Bundle Combo</strong></th>
+              <!--<th><strong>Is Active ?</strong></th>-->
               <th><strong>Edit</strong></th>
             </tr>
           </thead>
@@ -45,18 +53,26 @@
                   <td><%= s_deal.service_provider_id %></td>
                   <td><%= s_deal.service_provider.name %></td>
                   <td><%= s_deal.title %></td>
-                  <td><%= s_deal.image.url %></td>
+                  <!--<td><%#= s_deal.image.url %></td>-->
                   <td><%= s_deal.state %></td>
                   <td><%= s_deal.city %></td>
                   <td><%= s_deal.zip %></td>
                   <td><%= s_deal.price %></td>
-                  <td><%= s_deal.url %></td>
-                  <td><%= s_deal.short_description %></td>
-                  <td><%= s_deal.detail_description %></td>
-                  <td><%= s_deal.you_save_text %></td>
+                  <td><%= s_deal.upload_speed %></td>
+                  <td><%= s_deal.download_speed %></td>
+                  <td><%= s_deal.free_channels %></td>
+                  <td><%= s_deal.premium_channels %></td>
+                  <td><%= s_deal.domestic_call_minutes %></td>
+                  <td><%= s_deal.international_call_minutes %></td>
+                  <td><%= s_deal.domestic_call_unlimited %></td>
+                  <td><%= s_deal.international_call_unlimited %></td>
+                  <!--<td><%#= s_deal.url %></td>-->
+                  <!--<td><%#= s_deal.short_description %></td>-->
+                  <!--<td><%#= s_deal.detail_description %></td>-->
                   <td><%= s_deal.start_date %></td>
                   <td><%= s_deal.end_date %></td>
-                  <td><%= s_deal.is_active %></td>
+                  <td><%= s_deal.bundle_combo %></td>
+                  <!--<td><%#= s_deal.is_active %></td>-->
                   <td><%= (link_to 'Edit', edit_deal_path(s_deal)) if can? :manage, s_deal %> | <%= (link_to "Delete", s_deal, method: :delete, data: { confirm: "You sure?" }) if can? :manage, s_deal %></td>
                 </tr>
               <% end %>

@@ -2,6 +2,52 @@ class ServicePreferencesController < ApplicationController
 	
 	def index
 		@service_preferences = ServicePreference.all
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << ["ID",   
+          "App User ID",           
+          "ServiceCategory ID",
+          "ServiceProvider ID",
+          "ServiceCategory Name",
+          "ServiceProvider Name",
+          "Is Contract",
+          "Start Date",
+          "End Date",
+          "Price",
+          "Plan Name",
+          "Created At",
+          "Updated At",         
+          ]  
+
+          # data rows
+          ServicePreference.all.order("id ASC").each do |sp|
+            csv << 
+            [ sp.id, 
+              sp.app_user_id,                 
+              sp.service_category_id,
+              sp.service_provider_id,
+              sp.service_category.name,
+              sp.service_provider.name,
+              sp.is_contract,
+              sp.start_date,
+              sp.end_date,
+              sp.price,
+              sp.plan_name,
+              sp.created_at,
+              sp.updated_at
+            ]
+          end               
+        end 
+        # send it to the browsah
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=service_preferences.csv" 
+      }
+    end
 	end
 
 	def new

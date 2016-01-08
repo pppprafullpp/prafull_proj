@@ -2,6 +2,78 @@ class DealsController < ApplicationController
 
 	def index
 		@deals = Deal.all.order("created_at DESC")
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << ["ID",              
+          "Service Category ID",
+          "Service Provider ID",
+          "Title",
+          "State",
+          "City",
+          "Zip",
+          "Price",
+          "Upload Speed",
+          "Download Speed",
+          "Free Channels",
+          "Premium Channels",
+          "Data Plan",
+          "Data Speed",
+          "Domestic Call Minutes",
+          "International Call Minutes",
+          "Domestic Call unlimited",
+          "International Call unlimited",
+          "Bundle Combo",
+          "Is Active",
+          "URL",
+          "Start Date",
+          "End Date",
+          "Short Description",
+          "Detail Description",  
+          "Image",           
+          ]  
+
+          # data rows
+          Deal.all.order("id ASC").each do |deal|
+            csv << 
+            [ deal.id,              
+              deal.service_category_id,
+              deal.service_provider_id,
+              deal.title,
+              deal.state,
+              deal.city,
+              deal.zip,
+              deal.price,
+              deal.upload_speed,
+              deal.download_speed,
+              deal.free_channels,
+              deal.premium_channels,
+              deal.data_plan,
+              deal.data_speed,
+              deal.domestic_call_minutes,
+              deal.international_call_minutes,
+              deal.domestic_call_unlimited,
+              deal.international_call_unlimited,
+              deal.bundle_combo,
+              deal.is_active,
+              deal.url,
+              deal.start_date,
+              deal.end_date,
+              deal.short_description,
+              deal.detail_description,
+              deal.image.url
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=deals.csv" 
+      }
+    end
 	end
 
 	def new

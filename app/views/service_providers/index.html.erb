@@ -10,11 +10,6 @@
 				<span id='title'><%= image_tag("service_provider.png")%> Service Provider</span>
 			</div>
 			<div id="users" class="list">
-				<h6>Import Service Providers</h6>
-				<%= form_tag import_service_providers_path, multipart: true do %>
-  				<%= file_field_tag :file %>
-  				<%= submit_tag "Import" %>
-				<% end %> <br/>
 				<table id="users_list" class="datatable" cellpadding='0' cellspacing='0' border='1'>
 					<thead>
 						<tr>
@@ -59,6 +54,11 @@
 						<% end %>
 					</tbody>
 				</table>
+				<p>
+          Download:
+          <%= link_to "CSV", service_providers_path(format: "csv") %>
+          <%#= link_to "Excel", service_categories_path(format: "xls") %>
+        </p>
 			</div>
 		</td>
 	</tr>

@@ -2,6 +2,47 @@ class InternetServicePreferencesController < ApplicationController
 	
 	def index
 		@internet_service_preferences = InternetServicePreference.all
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [ "ID",   
+            "ServicePreference ID",          
+            "Upload Speed",
+            "Download Speed",
+            "Online Storage",
+            "Wifi Hotspot",
+            "Email",
+            "Data",
+            "Created At",
+            "Updated At",         
+          ]  
+
+          # data rows
+          InternetServicePreference.all.order("id ASC").each do |isp|
+            csv << 
+            [ isp.id, 
+              isp.service_preference_id,                 
+              isp.upload_speed,
+              isp.download_speed,
+              isp.online_storage,
+              isp.wifi_hotspot,
+              isp.email,
+              isp.data,
+              isp.created_at,
+              isp.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=internet_service_preferences.csv" 
+      }
+    end
 	end
 
   def destroy

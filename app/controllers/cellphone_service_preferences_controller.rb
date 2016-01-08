@@ -2,6 +2,47 @@ class CellphoneServicePreferencesController < ApplicationController
 	
 	def index
 		@cellphone_service_preferences = CellphoneServicePreference.all
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [ "ID",   
+            "ServicePreference ID", 
+            "DomesticCall Minutes",
+            "InternationalCall Minutes",
+            "DomesticCall Unlimited",
+            "InternationalCall Unlimited",
+            "Data Speed",
+            "Data Plan",
+            "Created At",
+            "Updated At",         
+          ]  
+
+          # data rows
+          CellphoneServicePreference.all.order("id ASC").each do |csp|
+            csv << 
+            [ csp.id, 
+              csp.service_preference_id,                 
+              csp.domestic_call_minutes,
+              csp.international_call_minutes,
+              csp.domestic_call_unlimited,
+              csp.international_call_unlimited,
+              csp.data_speed,
+              csp.data_plan,
+              csp.created_at,
+              csp.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=cellphone_service_preferences.csv" 
+      }
+    end
 	end
 
   def destroy

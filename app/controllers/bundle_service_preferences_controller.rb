@@ -2,6 +2,59 @@ class BundleServicePreferencesController < ApplicationController
 	
 	def index
 		@bundle_service_preferences = BundleServicePreference.all
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [ "ID",   
+            "ServicePreference ID", 
+            "Bundle Combo",          
+            "Upload Speed",
+            "Download Speed",
+            "Free Channels",
+            "Premium Channels",
+            "DomesticCall Minutes",
+            "InternationalCall Minutes",
+            "DomesticCall Unlimited",
+            "InternationalCall Unlimited",
+            "Data",
+            "Data Speed",
+            "Data Plan",
+            "Created At",
+            "Updated At",         
+          ]  
+
+          # data rows
+          BundleServicePreference.all.order("id ASC").each do |bsp|
+            csv << 
+            [ bsp.id, 
+              bsp.service_preference_id,                 
+              bsp.bundle_combo,
+              bsp.upload_speed,
+              bsp.download_speed,
+              bsp.free_channels,
+              bsp.premium_channels,
+              bsp.domestic_call_minutes,
+              bsp.international_call_minutes,
+              bsp.domestic_call_unlimited,
+              bsp.international_call_unlimited,
+              bsp.data,
+              bsp.data_speed,
+              bsp.data_plan,
+              bsp.created_at,
+              bsp.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=bundle_service_preferences.csv" 
+      }
+    end
 	end
 
   def edit

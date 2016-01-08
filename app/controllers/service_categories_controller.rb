@@ -1,6 +1,37 @@
 class ServiceCategoriesController < ApplicationController
 	def index
-		@service_categories = ServiceCategory.all.order("id DESC")
+		@service_categories = ServiceCategory.all.order("id ASC")
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [ "ID",              
+            "Name",             
+            "Description",  
+            "Created At",
+            "Updated At",           
+          ]  
+
+          # data rows
+          @service_categories.each do |sc|
+            csv << 
+            [ sc.id,              
+              sc.name,
+              sc.description,
+              sc.created_at,
+              sc.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=service_categories.csv" 
+      }
+    end
 	end
 
 	def new

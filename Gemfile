@@ -41,6 +41,7 @@ gem 'configurable_engine'
 gem 'whenever', :require => false
 gem 'newrelic_rpm'
 gem 'roo'
+gem 'fastercsv'
 
 group :development do
 	gem 'capistrano', '~> 3.1.0'

@@ -1,6 +1,55 @@
 class ServiceProvidersController < ApplicationController
 	def index
 		@service_providers = ServiceProvider.all
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [ "ID", 
+            "ServiceCategory ID",              
+            "Name", 
+            "Address",
+            "State",
+            "City",
+            "Zip",
+            "Email",
+            "Telephone",
+            "Logo",
+            "Is Preferred",
+            "Is Active",
+            "Created At",
+            "Updated At",           
+          ]  
+
+          # data rows
+          ServiceProvider.all.order("id ASC").each do |sp|
+            csv << 
+            [ sp.id,  
+              sp.service_category_id,
+              sp.name,            
+              sp.address,
+              sp.state,
+              sp.city,
+              sp.zip,
+              sp.email,
+              sp.telephone,
+              sp.logo.url,
+              sp.is_preferred,
+              sp.is_active,
+              sp.created_at,
+              sp.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=service_providers.csv" 
+      }
+    end
 	end
 	def new
 		@service_provider = ServiceProvider.new

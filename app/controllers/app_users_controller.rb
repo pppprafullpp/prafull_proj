@@ -1,6 +1,73 @@
 class AppUsersController < ApplicationController
 	def index
 		@app_users = AppUser.all.order("id DESC")
+		respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [	"ID",              
+          	"First Name",
+          	"Last Name",
+          	"Email",
+          	"Address",
+          	"State",
+          	"City",
+          	"Zip",
+          	"Avatar",
+          	"Device Flag",
+          	"Sign in Count",
+          	"Encrypted Password",
+          	"Password",
+          	"Device Id",
+          	"ResetPassword Token",
+          	"ResetPasswordSent At", 
+          	"RememberCreated At",
+          	"CurrentSignIn At",
+          	"LastSignIn At",
+          	"CurrentSignIn IP",
+          	"LastSignIn IP",
+          	"Created At",
+          	"Updated At",
+          ]  
+
+          # data rows
+          AppUser.all.order("id ASC").each do |app_user|
+            csv << 
+            [ app_user.id,              
+              app_user.first_name,
+              app_user.last_name,
+              app_user.email,
+              app_user.address,
+              app_user.state,
+              app_user.city,
+              app_user.zip,
+              app_user.avatar_url,
+              app_user.device_flag,
+              app_user.sign_in_count,
+              app_user.encrypted_password,
+              app_user.unhashed_password,
+              app_user.gcm_id,
+              app_user.reset_password_token,
+              app_user.reset_password_sent_at,
+              app_user.remember_created_at,
+              app_user.current_sign_in_at,
+              app_user.last_sign_in_at,
+              app_user.current_sign_in_ip,
+              app_user.last_sign_in_ip,
+              app_user.created_at,
+              app_user.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=app_users.csv" 
+      }
+    end
 	end
 	def new
 		@app_user = AppUser.new
@@ -12,8 +79,8 @@ class AppUsersController < ApplicationController
 		@app_user = AppUser.new(app_user_params)
 		respond_to do |format|
 			if @app_user.save
-				format.html { redirect_to app_users_path, :notice => 'You have successfully created a service deal' }
-				format.xml { render :xml => app_user, :status => :created, :deal => app_user }
+				format.html { redirect_to app_users_path, :notice => 'Successfully created.' }
+				format.xml { render :xml => app_user, :status => :created, :app_user => @app_user }
 				format.html { render :action => "new" }
 				format.xml { render :xml => app_user.errors, :status => :unprocessable_entity }
 			end

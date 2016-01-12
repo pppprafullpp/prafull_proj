@@ -22,7 +22,7 @@ class ServiceProvider < ActiveRecord::Base
       service_provider = ServiceProvider.where(id: service_provider_hash["id"])
 
       if service_provider.count == 1
-        service_provider.first.update_attributes(service_provider_hash)
+        service_provider.first.update_attributes(service_provider_hash.except("logo"))
       else
         ServiceProvider.create!(service_provider_hash)
       end # end if !service_category.nil?

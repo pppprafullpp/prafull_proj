@@ -52,7 +52,7 @@ class Deal < ActiveRecord::Base
       	deal = Deal.where(id: deal_hash["id"])
 
       	if deal.count == 1
-        	deal.first.update_attributes(deal_hash)
+        	deal.first.update_attributes(deal_hash.except("image"))
       	else
         	Deal.create!(deal_hash)
       	end # end if !service_category.nil?

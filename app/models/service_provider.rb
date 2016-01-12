@@ -19,8 +19,7 @@ class ServiceProvider < ActiveRecord::Base
       #service_provider_hash = row.to_hash # exclude the price field
       service_provider_hash = { :id => row['ID'], :service_category_id => row['ServiceCategory ID'], :name => row['Name'], :address => row['Address'], :state => row['State'], :city => row['City'], :zip => row['Zip'], :email => row['Email'], :telephone => row['Telephone'], :is_active => row['Is Active'], :is_preferred => row['Is Preferred'], 
                                 :created_at => row['Created At'], :updated_at => row['Updated At'], :logo => URI.parse(row['Logo']) }
-      service_provider = ServiceProvider.where(id: service_provider_hash["id"])
-
+      service_provider = ServiceProvider.where(id: service_provider_hash[:id])
       if service_provider.count == 1
         service_provider.first.update_attributes(service_provider_hash.except("logo"))
       else

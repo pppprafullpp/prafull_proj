@@ -49,7 +49,7 @@ class Deal < ActiveRecord::Base
                       :created_at => row['Created At'], 
                       :updated_at => row['Updated At'], 
                     }
-      	deal = Deal.where(id: deal_hash["id"])
+      	deal = Deal.where(id: deal_hash[:id])
 
       	if deal.count == 1
         	deal.first.update_attributes(deal_hash.except("image"))

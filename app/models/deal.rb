@@ -45,7 +45,7 @@ class Deal < ActiveRecord::Base
       								:end_date => row['End Date'],
       								:short_description => row['Short Description'],
       								:detail_description => row['Detail Description'],
-                      :image => URI.parse(row['Logo']), 
+                      :image => row['Image'], 
                       :created_at => row['Created At'], 
                       :updated_at => row['Updated At'], 
                     }

@@ -11,6 +11,13 @@
         <span id='title'><%= image_tag("deals.png")%> Deals</span>
       </div>
       <div id="service_deals" class="list">
+        <div>
+          <h6>Import from CSV</h6>
+          <%= form_tag import_deals_path, multipart: true do %>
+            <%= file_field_tag :file %>
+            <%= submit_tag "Import CSV" %>
+          <% end %></br>
+        </div>
         <table id="service_deals_list" class="datatable" cellpadding='0' cellspacing='0' border='1'>
           <thead>
             <tr>

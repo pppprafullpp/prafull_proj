@@ -31,6 +31,12 @@ Rails.application.routes.draw do
       match 'subscribed_deals' => 'subscribe_deals#subscription_info', :via => :post
     end
   end
+
+  #resources :service_categories do
+  #  collection { post :import }
+  #end
+
+
   root to: "home#index"
 
   devise_for :users
@@ -49,11 +55,11 @@ Rails.application.routes.draw do
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   
   
-  resources :deals
+  resources :deals do
+    post 'import', on: :collection  
+  end
   resources :service_categories do
-    #collection do 
-    post 'import', on: :collection
-    #end  
+    post 'import', on: :collection  
   end
   resources :app_users
   resources :service_preferences

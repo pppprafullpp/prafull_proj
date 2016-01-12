@@ -12,11 +12,18 @@
       </div>
 
       <div id="service_category" class="list">
-      	<h6>Import Service Categories</h6>
-				<%= form_tag import_service_categories_path, multipart: true do %>
-  				<%= file_field_tag :file %>
-  				<%= submit_tag "Import" %>
-				<% end %> <br/>
+      	<!--<h6>Import Service Categories</h6>
+				<%#= form_tag import_service_categories_path, multipart: true do %>
+  				<%#= file_field_tag :file %>
+  				<%#= submit_tag "Import" %>
+				<%# end %> <br/>-->
+				<div>
+					<h6>Import from CSV</h6>
+  				<%= form_tag import_service_categories_path, multipart: true do %>
+    				<%= file_field_tag :file %>
+    				<%= submit_tag "Import CSV" %>
+  				<% end %></br>
+				</div>
 	    	<table id="service_category_list" class="datatable" cellpadding='0' cellspacing='0' border='1'>
 		  		<thead>
 		    		<tr>
@@ -41,7 +48,7 @@
 				</table>
 				<p>
   				Download:
-  				<%= link_to "CSV", service_categories_path(format: "csv") %> |
+  				<%= link_to "CSV", service_categories_path(format: "csv") %>
   				<%#= link_to "Excel", service_categories_path(format: "xls") %>
 				</p>
 	  	</div>

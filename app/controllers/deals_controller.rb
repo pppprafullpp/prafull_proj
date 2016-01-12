@@ -8,32 +8,36 @@ class DealsController < ApplicationController
       format.csv {
         csv_string = CSV.generate do |csv|
           # header row
-          csv << ["ID",              
-          "Service Category ID",
-          "Service Provider ID",
-          "Title",
-          "State",
-          "City",
-          "Zip",
-          "Price",
-          "Upload Speed",
-          "Download Speed",
-          "Free Channels",
-          "Premium Channels",
-          "Data Plan",
-          "Data Speed",
-          "Domestic Call Minutes",
-          "International Call Minutes",
-          "Domestic Call unlimited",
-          "International Call unlimited",
-          "Bundle Combo",
-          "Is Active",
-          "URL",
-          "Start Date",
-          "End Date",
-          "Short Description",
-          "Detail Description",  
-          "Image",           
+
+          csv << 
+          [ "ID",              
+            "Service Category ID",
+            "Service Provider ID",
+            "Title",
+            "State",
+            "City",
+            "Zip",
+            "Price",
+            "Upload Speed",
+            "Download Speed",
+            "Free Channels",
+            "Premium Channels",
+            "Data Plan",
+            "Data Speed",
+            "Domestic Call Minutes",
+            "International Call Minutes",
+            "Domestic Call Unlimited",
+            "International Call Unlimited",
+            "Bundle Combo",
+            "Is Active",
+            "URL",
+            "Start Date",
+            "End Date",
+            "Short Description",
+            "Detail Description",  
+            "Image", 
+            "Created At",
+            "Updated At",          
           ]  
 
           # data rows
@@ -64,7 +68,9 @@ class DealsController < ApplicationController
               deal.end_date,
               deal.short_description,
               deal.detail_description,
-              deal.image.url
+              deal.image.url,
+              deal.created_at,
+              deal.updated_at
             ]
           end               
         end 
@@ -87,7 +93,7 @@ class DealsController < ApplicationController
   end
 
 	def create
-		@deal = Deal.new(deal_params)    
+		@deal = Deal.new(deal_params)  
     respond_to do |format|
       if @deal.save
         #send_notification
@@ -123,6 +129,10 @@ class DealsController < ApplicationController
             format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
           end
     end
+  end
+  def import
+    Deal.import(params[:file])
+    redirect_to deals_path, notice: "Successfully imported."
   end
   
 	private

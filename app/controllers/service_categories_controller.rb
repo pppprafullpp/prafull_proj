@@ -8,11 +8,11 @@ class ServiceCategoriesController < ApplicationController
         csv_string = CSV.generate do |csv|
           # header row
           csv << 
-          [ "ID",              
-            "Name",             
-            "Description",  
-            "Created At",
-            "Updated At",           
+          [ "id",              
+            "name",             
+            "description",  
+            "created_at",
+            "updated_at",           
           ]  
 
           # data rows
@@ -84,7 +84,7 @@ class ServiceCategoriesController < ApplicationController
 
   def import
     ServiceCategory.import(params[:file])
-    redirect_to service_categories_path, notice: "Service Categories imported."
+    redirect_to service_categories_path, notice: "Successfully imported."
   end
 
   private

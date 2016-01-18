@@ -24,3 +24,7 @@ set :output, "#{path}/log/cron.log"
 every :day, :at => '3pm' do
 	rake "reminder_notification:send_notification"
 end	
+
+every :day, :at => '5pm' do
+	rake "send_trending_deals:email_trending_deals"
+end	

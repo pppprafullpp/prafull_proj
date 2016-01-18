@@ -16,8 +16,9 @@
 				  <%= f.text_field :app_user_id, :readonly => true  %></div>
 				  <div><%= f.check_box :recieve_notification %><strong>Wants to recieve notification ? :</strong></div>
 				  <div><strong>Day:</strong><br />
-				  <%= f.text_field :day %></div>
-				  <div><%= f.submit "Create" %></div>
+				  <%= f.text_field :day %></div><br/>
+				  <div><%= f.check_box :recieve_trending_deals %><strong>Wants to recieve trending deals ? :</strong></div>
+				  <div><%= f.submit "Update" %></div>
 				<% end %>
 			</div>
     </td>

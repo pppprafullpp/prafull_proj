@@ -1,10 +1,11 @@
-namespace :reminder_notification do
+namespace :send_trending_deals do
   desc "TODO"
   task email_trending_deals: :environment do
     @app_users = AppUser.joins(:notification).where("recieve_trending_deals = ?", true).to_a
     @app_users.each do |app_user|
 
       DealNotifier.send_trending_deal(app_user).deliver
+      puts "#{app_user.id} Email sent"
       #@app_user_device = app_user.device_flag
       #@state = app_user.state
       #@service_preferences = app_user.service_preferences.to_a

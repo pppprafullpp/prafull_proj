@@ -7,7 +7,7 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
-set :output, "#{path}/log/cron.log"
+set :output, 'log/cron.log'
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -25,6 +25,6 @@ every :day, :at => '3pm' do
 	rake "reminder_notification:send_notification"
 end	
 
-every :day, :at => '6:40pm' do
+every :day, :at => '7:30pm' do
 	rake "send_trending_deals:email_trending_deals"
 end	

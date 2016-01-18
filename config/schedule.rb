@@ -25,6 +25,6 @@ every :day, :at => '3pm' do
 	rake "reminder_notification:send_notification"
 end	
 
-every :day, :at => '6pm' do
+every :day, :at => '6:40pm' do
 	rake "send_trending_deals:email_trending_deals"
 end	

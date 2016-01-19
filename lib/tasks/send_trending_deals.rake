@@ -20,4 +20,9 @@ namespace :send_trending_deals do
       #end  
     end  
   end
+
+  desc "Test Task"
+  task test_task: :environment do
+    puts "Task Executed Successfully !!"
+  end  
 end  

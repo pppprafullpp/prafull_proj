@@ -12,9 +12,13 @@ set :environment, "production"
 
 set :output, {:error => "#{path}/log/cron_error_log.log", :standard => "#{path}/log/cron_log.log"}
 
+
 every 5.minutes do
-	command 'echo "hello"'
+	rake "send_trending_deals:test_task"
 end	
+#every 5.minutes do
+#	command 'echo "hello"'
+#end	
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"

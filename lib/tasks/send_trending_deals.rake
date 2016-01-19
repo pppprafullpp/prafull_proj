@@ -5,7 +5,7 @@ namespace :send_trending_deals do
     @app_users.each do |app_user|
 
       DealNotifier.send_trending_deal(app_user).deliver
-      puts "#{app_user.id} Email sent"
+      puts "#{app_user.id} Email sent successfully"
       #@app_user_device = app_user.device_flag
       #@state = app_user.state
       #@service_preferences = app_user.service_preferences.to_a

@@ -12,7 +12,7 @@ set :environment, "production"
 
 set :output, {:error => "#{path}/log/cron_error_log.log", :standard => "#{path}/log/cron_log.log"}
 
-every 15.minutes do
+every :day, :at => '6pm' do
 	rake "send_trending_deals:email_trending_deals"
 end	
 

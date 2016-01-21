@@ -17,12 +17,12 @@
 //= require_tree .
 
 $(document).on("page:load ready", function(){
-    $("#deal_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
-    $("#deal_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
-    $("#advertisement_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
-    $("#advertisement_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
-    $("#service_preference_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
-    $("#service_preference_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#deal_start_date").datepicker({ dateFormat: 'mm-dd-yy' });
+    $("#deal_end_date").datepicker({ dateFormat: 'mm-dd-yy' });
+    $("#advertisement_start_date").datepicker({ dateFormat: 'mm-dd-yy' });
+    $("#advertisement_end_date").datepicker({ dateFormat: 'mm-dd-yy' });
+    $("#service_preference_start_date").datepicker({ dateFormat: 'mm-dd-yy' });
+    $("#service_preference_end_date").datepicker({ dateFormat: 'mm-dd-yy' });
 });
 
 

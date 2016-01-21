@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       devise_scope :app_user do
         post 'sessions' => 'sessions#create', :as => 'login'
       end
+      match 'service_categories' => 'service_categories#index', :via => :get
       match 'service_preferences' => 'service_preferences#create', :via => :post
       match 'notifications' => 'notifications#create', :via => :post
       match 'get_notification' => 'notifications#fetch_notification', :via => :get

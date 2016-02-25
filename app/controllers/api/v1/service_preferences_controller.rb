@@ -311,14 +311,14 @@ class Api::V1::ServicePreferencesController < ApplicationController
   end
 	def service_preference_params
 		if params[:start_date].present? && params[:end_date].present?
-			start_datetime = Date.strptime(params[:start_date], "%m/%d/%Y")
-			params[:start_date] = start_datetime.strftime("%d/%m/%Y")
-			end_datetime = Date.strptime(params[:end_date], "%m/%d/%Y")
-			params[:end_date] = end_datetime.strftime("%d/%m/%Y")
+			begin
+				params[:start_date] = Date.strptime(params[:start_date].to_s.strip, "%m/%d/%Y").strftime("%d/%m/%Y")
+				params[:end_date] = Date.strptime(params[:end_date].to_s.strip, "%m/%d/%Y").strftime("%d/%m/%Y")
+			rescue
+				params[:start_date] = Date.strptime(params[:start_date].to_s.strip, "%d/%m/%Y").strftime("%d/%m/%Y")
+				params[:end_date] = Date.strptime(params[:end_date].to_s.strip, "%d/%m/%Y").strftime("%d/%m/%Y")
+			end
 		end
-		#byebug
-		#params["start_date"] = Date.strptime(params["start_date"], "%m/%d/%Y").to_s
-		#params["end_date"] = Date.strptime(params["end_date"], "%m/%d/%Y").to_s
 		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :is_contract, :start_date, :end_date, :price, :plan_name)
 	end
 	def internet_service_preference_params

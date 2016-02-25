@@ -194,18 +194,6 @@ ActiveRecord::Schema.define(version: 20160106113818) do
 
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
 
-  create_table "push_notifications", force: :cascade do |t|
-    t.integer  "app_user_id", limit: 4
-    t.text     "message",     limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "state",       limit: 255
-    t.string   "city",        limit: 255
-    t.string   "zip",         limit: 255
-  end
-
-  add_index "push_notifications", ["app_user_id"], name: "index_push_notifications_on_app_user_id", using: :btree
-
   create_table "referral_infos", force: :cascade do |t|
     t.string   "first_referring_identity", limit: 255
     t.string   "referred_user",            limit: 255
@@ -331,7 +319,6 @@ ActiveRecord::Schema.define(version: 20160106113818) do
   add_foreign_key "deals", "service_categories"
   add_foreign_key "internet_service_preferences", "service_preferences"
   add_foreign_key "notifications", "app_users"
-  add_foreign_key "push_notifications", "app_users"
   add_foreign_key "service_preferences", "app_users"
   add_foreign_key "service_preferences", "service_categories"
   add_foreign_key "service_providers", "service_categories"

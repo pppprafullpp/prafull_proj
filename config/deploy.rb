@@ -6,7 +6,13 @@ set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/dev/servicedeals'
+set :deploy_to, '/home/deploy/servicedeals'
+
+set :ssh_options, {
+  keys: %w(~/Downloads/spa_service_deal.pem),
+  forward_agent: false,
+  user: 'ubuntu'
+} 
 
 set :linked_files, %w{config/database.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -23,14 +29,14 @@ set :bundle_binstubs, nil
 namespace :deploy do
 
   desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
+  #task :restart do
+  #  on roles(:app), in: :sequence, wait: 5 do
+  #    execute :touch, release_path.join('tmp/restart.txt')
+  #  end
+  #end
 
-  after :publishing, 'deploy:restart'
-  after :finishing, 'deploy:cleanup'
+  #after :publishing, 'deploy:restart'
+  #after :finishing, 'deploy:cleanup'
 end
 
 #namespace :deploy do

@@ -1,12 +1,12 @@
 # config valid only for Capistrano 3.1
-set :application, 'service_deals'
+set :application, 'servicedeals'
 set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/dev/service_deals'
+set :deploy_to, '/home/dev/servicedeals'
 
 set :linked_files, %w{config/database.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}

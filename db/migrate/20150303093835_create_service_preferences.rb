@@ -6,10 +6,12 @@ class CreateServicePreferences < ActiveRecord::Migration
       t.belongs_to :service_provider, index: true
       t.string :service_category_name
       t.string :service_provider_name
-      t.datetime :contract_date
       t.boolean :is_contract
-      t.float :contract_fee	
-
+      t.datetime :start_date
+      t.datetime :end_date
+      t.string :plan_name
+      
+      
       t.timestamps null: false
     end
     add_foreign_key :service_preferences, :app_users

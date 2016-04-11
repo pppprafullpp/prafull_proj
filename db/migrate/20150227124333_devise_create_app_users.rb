@@ -11,6 +11,9 @@ class DeviseCreateAppUsers < ActiveRecord::Migration
       t.string :city
       t.string :zip
       t.string :gcm_id
+      t.string :avatar
+      t.string :unhashed_password
+      t.string :device_flag
 
       ## Recoverable
       t.string   :reset_password_token

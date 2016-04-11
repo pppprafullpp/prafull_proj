@@ -5,6 +5,7 @@ class CreateAdvertisements < ActiveRecord::Migration
 			t.string :service_category_name
 			t.string :name
 			t.string :url
+			t.string :image
 			t.boolean :status, default: true
 			t.datetime :start_date
 			t.datetime :end_date

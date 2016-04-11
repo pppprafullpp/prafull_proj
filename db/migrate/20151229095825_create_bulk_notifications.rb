@@ -5,6 +5,7 @@ class CreateBulkNotifications < ActiveRecord::Migration
       t.string :city
       t.string :zip
       t.text :message
+      t.string :category
       t.timestamps null: false
     end
   end

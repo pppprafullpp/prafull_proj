@@ -11,19 +11,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106113818) do
+ActiveRecord::Schema.define(version: 20160407120958) do
+
+  create_table "additional_offer_zipcode_maps", force: :cascade do |t|
+    t.integer  "additional_offer_id", limit: 4
+    t.integer  "zipcode_id",          limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "additional_offer_zipcode_maps", ["additional_offer_id"], name: "index_additional_offer_zipcode_maps_on_additional_offer_id", using: :btree
+  add_index "additional_offer_zipcode_maps", ["zipcode_id"], name: "index_additional_offer_zipcode_maps_on_zipcode_id", using: :btree
+
+  create_table "additional_offers", force: :cascade do |t|
+    t.integer  "deal_id",     limit: 4
+    t.string   "title",       limit: 255
+    t.text     "description", limit: 65535
+    t.float    "price_value", limit: 24
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "is_active",   limit: 1,     default: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "additional_offers", ["deal_id"], name: "index_additional_offers_on_deal_id", using: :btree
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
     t.string   "service_category_name", limit: 255
     t.string   "name",                  limit: 255
     t.string   "url",                   limit: 255
+    t.string   "image",                 limit: 255
     t.boolean  "status",                limit: 1,   default: true
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.string   "image",                 limit: 255
   end
 
   add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree
@@ -38,6 +62,9 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.string   "city",                   limit: 255
     t.string   "zip",                    limit: 255
     t.string   "gcm_id",                 limit: 255
+    t.string   "avatar",                 limit: 255
+    t.string   "unhashed_password",      limit: 255
+    t.string   "device_flag",            limit: 255
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -49,9 +76,6 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar",                 limit: 255
-    t.string   "unhashed_password",      limit: 255
-    t.string   "device_flag",            limit: 255
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -62,13 +86,16 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.string   "city",       limit: 255
     t.string   "zip",        limit: 255
     t.text     "message",    limit: 65535
+    t.string   "category",   limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.string   "category",   limit: 255
   end
 
   create_table "bundle_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4
+    t.float    "upload_speed",                 limit: 24
+    t.float    "download_speed",               limit: 24
+    t.float    "data",                         limit: 24
     t.integer  "free_channels",                limit: 4
     t.integer  "premium_channels",             limit: 4
     t.integer  "domestic_call_minutes",        limit: 4
@@ -77,12 +104,9 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.float    "data_speed",                   limit: 24
     t.boolean  "domestic_call_unlimited",      limit: 1,   default: false
     t.boolean  "international_call_unlimited", limit: 1,   default: false
+    t.string   "bundle_combo",                 limit: 255
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.float    "upload_speed",                 limit: 24
-    t.float    "download_speed",               limit: 24
-    t.float    "data",                         limit: 24
-    t.string   "bundle_combo",                 limit: 255
   end
 
   add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
@@ -134,40 +158,54 @@ ActiveRecord::Schema.define(version: 20160106113818) do
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
+  create_table "deal_zipcode_maps", force: :cascade do |t|
+    t.integer  "deal_id",    limit: 4
+    t.integer  "zipcode_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "deal_zipcode_maps", ["deal_id"], name: "index_deal_zipcode_maps_on_deal_id", using: :btree
+  add_index "deal_zipcode_maps", ["zipcode_id"], name: "index_deal_zipcode_maps_on_zipcode_id", using: :btree
+
   create_table "deals", force: :cascade do |t|
-    t.integer  "service_category_id",          limit: 4
-    t.integer  "service_provider_id",          limit: 4
-    t.string   "service_category_name",        limit: 255
-    t.string   "service_provider_name",        limit: 255
-    t.string   "title",                        limit: 255
-    t.string   "state",                        limit: 255
-    t.string   "city",                         limit: 255
-    t.string   "zip",                          limit: 255
-    t.text     "short_description",            limit: 65535
-    t.text     "detail_description",           limit: 65535
-    t.float    "price",                        limit: 24
-    t.string   "url",                          limit: 255
+    t.integer  "service_category_id", limit: 4
+    t.integer  "service_provider_id", limit: 4
+    t.string   "title",               limit: 255
+    t.text     "short_description",   limit: 65535
+    t.text     "detail_description",  limit: 65535
+    t.float    "price",               limit: 24
+    t.string   "url",                 limit: 255
+    t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_active",                    limit: 1,     default: true
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "image",                        limit: 255
-    t.integer  "free_channels",                limit: 4
-    t.integer  "premium_channels",             limit: 4
-    t.integer  "domestic_call_minutes",        limit: 4
-    t.integer  "international_call_minutes",   limit: 4
-    t.boolean  "domestic_call_unlimited",      limit: 1
-    t.boolean  "international_call_unlimited", limit: 1
-    t.float    "data_plan",                    limit: 24
-    t.float    "data_speed",                   limit: 24
-    t.float    "upload_speed",                 limit: 24
-    t.float    "download_speed",               limit: 24
-    t.string   "bundle_combo",                 limit: 255
+    t.boolean  "is_nationwide",       limit: 1,     default: false
+    t.boolean  "is_business",         limit: 1,     default: false
+    t.boolean  "is_active",           limit: 1,     default: true
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
   add_index "deals", ["service_provider_id"], name: "index_deals_on_service_provider_id", using: :btree
+
+  create_table "internet_deal_attributes", force: :cascade do |t|
+    t.integer  "deal_id",               limit: 4
+    t.float    "download",              limit: 24
+    t.float    "upload",                limit: 24
+    t.float    "data",                  limit: 24
+    t.string   "email",                 limit: 255
+    t.string   "online_storage",        limit: 255
+    t.text     "wifi_hotspot_networks", limit: 65535
+    t.boolean  "static_ip",             limit: 1
+    t.text     "equipment",             limit: 65535
+    t.text     "installation",          limit: 65535
+    t.string   "activation",            limit: 255
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "internet_deal_attributes", ["deal_id"], name: "index_internet_deal_attributes_on_deal_id", using: :btree
 
   create_table "internet_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id", limit: 4
@@ -177,8 +215,6 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.string   "wifi_hotspot",          limit: 255
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.integer  "email",                 limit: 4
-    t.float    "data",                  limit: 24
   end
 
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
@@ -187,9 +223,9 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.integer  "app_user_id",            limit: 4
     t.boolean  "recieve_notification",   limit: 1
     t.integer  "day",                    limit: 4
+    t.boolean  "recieve_trending_deals", limit: 1, default: true
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.boolean  "recieve_trending_deals", limit: 1, default: true
   end
 
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
@@ -223,12 +259,11 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.string   "service_category_name", limit: 255
     t.string   "service_provider_name", limit: 255
     t.boolean  "is_contract",           limit: 1
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
     t.datetime "start_date"
     t.datetime "end_date"
-    t.float    "price",                 limit: 24
     t.string   "plan_name",             limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "service_preferences", ["app_user_id"], name: "index_service_preferences_on_app_user_id", using: :btree
@@ -244,11 +279,11 @@ ActiveRecord::Schema.define(version: 20160106113818) do
     t.string   "zip",                 limit: 255
     t.string   "email",               limit: 255
     t.string   "telephone",           limit: 255
+    t.string   "logo",                limit: 255
     t.boolean  "is_preferred",        limit: 1,   default: false
     t.boolean  "is_active",           limit: 1,   default: true
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "logo",                limit: 255
   end
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree
@@ -264,6 +299,25 @@ ActiveRecord::Schema.define(version: 20160106113818) do
 
   add_index "subscribe_deals", ["app_user_id"], name: "index_subscribe_deals_on_app_user_id", using: :btree
   add_index "subscribe_deals", ["deal_id"], name: "index_subscribe_deals_on_deal_id", using: :btree
+
+  create_table "telephone_deal_attributes", force: :cascade do |t|
+    t.integer  "deal_id",                          limit: 4
+    t.integer  "domestic_call_minutes",            limit: 4
+    t.integer  "domestic_receive_minutes",         limit: 4
+    t.integer  "domestic_additional_minutes",      limit: 4
+    t.integer  "international_landline_minutes",   limit: 4
+    t.integer  "international_mobile_minutes",     limit: 4
+    t.integer  "international_additional_minutes", limit: 4
+    t.text     "countries",                        limit: 65535
+    t.text     "features",                         limit: 65535
+    t.text     "equipment",                        limit: 65535
+    t.text     "installation",                     limit: 65535
+    t.string   "activation",                       limit: 255
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+  end
+
+  add_index "telephone_deal_attributes", ["deal_id"], name: "index_telephone_deal_attributes_on_deal_id", using: :btree
 
   create_table "telephone_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4
@@ -310,6 +364,17 @@ ActiveRecord::Schema.define(version: 20160106113818) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "zipcodes", force: :cascade do |t|
+    t.string   "code",       limit: 255
+    t.string   "area",       limit: 255
+    t.string   "city",       limit: 255
+    t.string   "state",      limit: 255
+    t.string   "country",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_foreign_key "additional_offers", "deals"
   add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
@@ -317,6 +382,7 @@ ActiveRecord::Schema.define(version: 20160106113818) do
   add_foreign_key "comment_ratings", "app_users"
   add_foreign_key "comment_ratings", "deals"
   add_foreign_key "deals", "service_categories"
+  add_foreign_key "internet_deal_attributes", "deals"
   add_foreign_key "internet_service_preferences", "service_preferences"
   add_foreign_key "notifications", "app_users"
   add_foreign_key "service_preferences", "app_users"
@@ -324,6 +390,7 @@ ActiveRecord::Schema.define(version: 20160106113818) do
   add_foreign_key "service_providers", "service_categories"
   add_foreign_key "subscribe_deals", "app_users"
   add_foreign_key "subscribe_deals", "deals"
+  add_foreign_key "telephone_deal_attributes", "deals"
   add_foreign_key "telephone_service_preferences", "service_preferences"
   add_foreign_key "trending_deals", "deals"
 end

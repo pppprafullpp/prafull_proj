@@ -48,7 +48,7 @@
 									<td><%= service_provider.telephone %></td>
 									<td><%= service_provider.is_preferred %></td>
 									<td><%= service_provider.is_active %></td>
-									<td><%= (link_to 'Edit', edit_service_provider_path(service_provider)) if can? :manage, service_provider %> | <%= (link_to "Delete", service_provider, method: :delete, data: { confirm: "You sure?" }) if can? :manage, service_provider %></td>
+									<td><%= (link_to 'Edit', edit_service_provider_path(service_provider)) if can? :manage, service_provider %> | <%= (link_to "Delete", service_provider, method: :delete, data: { confirm: "Are you sure?" }) if can? :manage, service_provider %></td>
 								</tr>
 							<% end %>	
 							<% end %>

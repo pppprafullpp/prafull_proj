@@ -1,3 +1,5 @@
+# run puma manually if server donsn't respont
+# puma -e production -b unix:/home/ubuntu/servicedeals/shared/tmp/sockets/puma.sock
 # config valid only for Capistrano 3.1
 set :application, 'servicedeals'
 set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
@@ -6,7 +8,7 @@ set :repo_url, 'https://github.com/ramgarg/Service-Deals-Rails.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/deploy/servicedeals'
+set :deploy_to, '/home/ubuntu/servicedeals'
 
 set :ssh_options, {
   keys: %w(~/Downloads/spa_service_deal.pem),
@@ -15,7 +17,7 @@ set :ssh_options, {
 } 
 
 set :linked_files, %w{config/database.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :rvm_ruby_version, '2.2.2'
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
@@ -29,11 +31,11 @@ set :bundle_binstubs, nil
 namespace :deploy do
 
   desc 'Restart application'
-  #task :restart do
-  #  on roles(:app), in: :sequence, wait: 5 do
-  #    execute :touch, release_path.join('tmp/restart.txt')
-  #  end
-  #end
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
 
   #after :publishing, 'deploy:restart'
   #after :finishing, 'deploy:cleanup'

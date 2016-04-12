@@ -33,8 +33,8 @@
               <td><%= zipcode.state %></td>
               <td><%= zipcode.country %></td>
               <td>
-                <%= link_to 'Show', zipcode %>&nbsp;&nbsp;
-                <%= link_to 'Edit', edit_zipcode_path(zipcode) %>&nbsp;&nbsp;
+                <%= link_to 'Show', zipcode %> | 
+                <%= link_to 'Edit', edit_zipcode_path(zipcode) %> | 
                 <%= link_to 'Delete', zipcode, method: :delete, data: { confirm: 'Are you sure?' } %>
               </td>
             </tr>

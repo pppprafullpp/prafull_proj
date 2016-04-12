@@ -12,6 +12,8 @@
 *
 *= require_tree .
 *= require_self
+//= require foundation_and_overrides
+
 *= require jquery-ui
 *= require foundation_and_overrides
 */
@@ -42,7 +44,6 @@ input[type="submit"]{
   padding-bottom: 2px;
 }
 .title_tools{
-	font-size: 12px;
 	float: right;
 	margin: 4px 0px 0px 0px;
 }

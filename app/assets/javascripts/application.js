@@ -63,3 +63,4 @@ function populate_service_provider(obj)
 	}
 
 }
+$(function(){ $(document).foundation(); });

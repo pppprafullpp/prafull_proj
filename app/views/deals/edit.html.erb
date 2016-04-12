@@ -8,7 +8,6 @@
       <div class='title'>
         <span id='title'>Update Deals</span>
       </div>
-			<div class="small-6 large-centered columns">
 				<%= form_for(@deal) do |f| %>
 					<br/>
 
@@ -18,56 +17,12 @@
 				  <div><strong>Service Provider:<span id="mandat">*</span> </strong><br />
 				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"} %>
 				  </div>
-                  <div id ="bundle_combo" style="display: none;"><strong>Select a Bundle Combo:<span id="mandat">*</span></strong><br />
-                        <%= f.select :bundle_combo, [ 'Internet and Telephone','Internet and Cable','Telephone and Cable','Internet,Telephone and Cable' ],{:include_blank => "Select category"}, :onchange=>"bundle_combo(this);" %>
-                  </div>      
-				  <div><strong>Title:<span id="mandat">*</span></strong><br />
+          <div><strong>Title:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :title %></div>
 				  <div><strong>Deal Image:<span id="mandat">*</span> </strong><br/>
 				  <%= f.file_field :image %></div>
-				  <div><strong>State:<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :state %></div>
-				  <div><strong>City: </strong><br />
-				  <%= f.text_field :city %></div>
-				  <div><strong>Zip:<span id="mandat">*</span></strong><br />
-				  <%= f.text_field :zip %></div>
 				  <div><strong>Price:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_field :price %></div>
-				  
-				  <!-- For Internet Deals-->
-				  <div id = "u_speed" style="display: none;"><strong>Upload Speed(In Mbps):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :upload_speed %></div>
-				  <div id="d_speed" style="display: none;"><strong>Download Speed(In Mbps):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :download_speed %></div>
-				  <!-- *******Ends Here********-->
-
-				  <!-- For Telephone Deals-->
-				  <div id = "c_minutes" style="display: none;"><strong>Domestic Call Minutes(Float):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :domestic_call_minutes %></div>
-				  <div id="t_msgs" style="display: none;"><strong>International Call Minutes(Float):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :international_call_minutes %></div>
-				  <div id = "talk_unlimit" style="display: none;"><%= f.check_box :domestic_call_unlimited %> <strong>Domestic Call Unlimited </strong></div>
-				  <div id = "text_unlimit" style="display: none;"><%= f.check_box :international_call_unlimited %> <strong>International Call Unlimited</strong></div>
-				  <!--<div id = "talk_unlimit" style="display: none;"><strong>Call Minutes(Integer):<span id="mandat">*</span> </strong><br />
-				  <%#= f.text_field :call_minutes %></div>
-				  <div id="text_unlimit" style="display: none;"><strong>Text Messages(Integer):<span id="mandat">*</span> </strong><br />
-				  <%#= f.text_field :text_messages %></div>-->
-				  <!-- *******Ends Here********-->
-
-				  <!-- For Cable Deals-->
-				  <div id = "free_c" style="display: none;"><strong>Free Channels(Integer):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :free_channels %></div>
-				  <div id="premium_c" style="display: none;"><strong>Premium Channels(Integer):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :premium_channels %></div>
-				  <!-- *******Ends Here********-->
-
-				  <!-- For CellPhone Deals-->
-				  <div id = "data_plan" style="display: none;"><strong>Data Plan(In GB):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :data_plan %></div>
-				  <div id="data_speed" style="display: none;"><strong>Data Speed(In Mbps):<span id="mandat">*</span> </strong><br />
-				  <%= f.text_field :data_speed %></div>
-				  <!-- *******Ends Here********-->
-
 				  
 				  <div><strong>URL:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :url %></div>
@@ -75,16 +30,17 @@
 				  <%= f.text_area :short_description %></div>
 				  <div><strong>Enter Detail Description:<span id="mandat">*</span> </strong><br />
 				  <%= f.text_area :detail_description %></div>
-				  <div><strong>Start Date:<span id="mandat">*</span></strong><br />
+          <div><%= f.check_box :is_nationwide %> <strong>Is Nationwide? </strong></div>
+          <div><%= f.check_box :is_business %> <strong>Is Business? </strong></div>
+          <div><strong>Start Date:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :start_date %></div>
 				  <div><strong>End Date:<span id="mandat">*</span></strong><br />
 				  <%= f.text_field :end_date %></div>
 				  <div><%= f.check_box :is_active %> 
-				  <strong>Is Active ? </strong></div>
+				  <strong>Is Active? </strong></div>
 				  <div><%= f.submit "Update" %></div>
 				<% end %>
-			</div>
-    </td>
+		</td>
 	</tr>
 </table>
 <script>

@@ -260,6 +260,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "service_provider_id",   limit: 4
     t.string   "service_category_name", limit: 255
     t.string   "service_provider_name", limit: 255
+    t.float    "price"
     t.boolean  "is_contract"
     t.datetime "start_date"
     t.datetime "end_date"

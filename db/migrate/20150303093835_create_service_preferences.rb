@@ -6,6 +6,7 @@ class CreateServicePreferences < ActiveRecord::Migration
       t.belongs_to :service_provider, index: true
       t.string :service_category_name
       t.string :service_provider_name
+      t.float  :price
       t.boolean :is_contract
       t.datetime :start_date
       t.datetime :end_date

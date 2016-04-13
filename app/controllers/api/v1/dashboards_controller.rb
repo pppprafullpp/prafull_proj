@@ -26,8 +26,8 @@ class Api::V1::DashboardsController < ApplicationController
 		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
 		  		if sp.service_category_id == 1
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
-		  			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed = ?", true, @state, sp.service_category_id, @app_user_d_speed).order("price ASC")
-						@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed > ?", true, @state, sp.service_category_id, @app_user_d_speed).order("price ASC").limit(2)
+		  			@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC")
+						@greater_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC").limit(2)
 						#@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed < ?", true, @state, sp.service_category_id, @app_user_d_speed).order("price DESC").limit(2)
 						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
 						@b_deal = @merged_deals.first
@@ -38,9 +38,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  			end
 		  		elsif sp.service_category_id == 2
 		  			if sp.telephone_service_preference.domestic_call_unlimited == true
-		  				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ?", true, @state, sp.service_category_id, true).order("price ASC")
+		  				@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC")
 							#@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price < ?", true, @state, params[:service_category_id], false, @current_plan_price).order("price DESC").limit(2)
-							@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND price > ?", true, @state, sp.service_category_id, false, @app_user_current_plan).order("price ASC").limit(2)
+							@greater_deals = Deal.where("is_active = ? AND service_category_id = ? AND price > ?", true, sp.service_category_id, @app_user_current_plan).order("price ASC").limit(2)
 							@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
 							@b_deal = @merged_deals.first
 		  				#@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND domestic_call_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
@@ -64,9 +64,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  			end
 		  		elsif sp.service_category_id == 3
 		  			@app_user_f_channel = sp.cable_service_preference.free_channels
-		  			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels = ?", true, @state, sp.service_category_id, @app_user_f_channel).order("price ASC")
+		  			@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC")
 						#@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels < ?", true, @state, params[:service_category_id], @current_f_channels).order("price DESC")
-						@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND free_channels > ?", true, @state, sp.service_category_id, @app_user_f_channel).order("price ASC").limit(2)
+						@greater_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC").limit(2)
 						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
 						@b_deal = @merged_deals.first
 		  			#@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND free_channels = ?", true, @state, sp.service_category_id, Date.today, @app_user_f_channel).order("price ASC").first
@@ -76,12 +76,12 @@ class Api::V1::DashboardsController < ApplicationController
 		  			end	
 		  		elsif sp.service_category_id == 4	
 		  			if sp.cellphone_service_preference.domestic_call_unlimited == true
-		  				@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND domestic_call_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
+		  				@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  				if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  					@best_deal << @b_deal 
 		  				else
-		  					@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
+		  					@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  					if @b_deal.present?
 		  						@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  						@best_deal << @b_deal
@@ -94,17 +94,17 @@ class Api::V1::DashboardsController < ApplicationController
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  					@best_deal << @b_deal 
 		  				else
-		  					@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND domestic_call_minutes > ?", true, @state, sp.service_category_id, Date.today, @app_user_c_minutes).order("price ASC").first
+		  					@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  					if @b_deal.present?
 		  						@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  						@best_deal << @b_deal
 		  					else
-		  						@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND domestic_call_minutes < ?", true, @state, sp.service_category_id, Date.today, @app_user_c_minutes).order("price DESC").first
+		  						@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price DESC").first
 		  						if @b_deal.present?
 		  							@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  							@best_deal << @b_deal
 		  						else
-		  							@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND domestic_call_unlimited = ?", true, @state, sp.service_category_id, Date.today, true).order("price ASC").first
+		  							@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  							if @b_deal.present?
 		  								@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  								@best_deal << @b_deal
@@ -115,13 +115,13 @@ class Api::V1::DashboardsController < ApplicationController
 		  			end
 		  		elsif sp.service_category_id == 5
 		  			@app_user_bundle_combo = sp.bundle_service_preference.bundle_combo
-		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ? AND bundle_combo = ?", true, @state, sp.service_category_id, Date.today, @app_user_bundle_combo).order("price ASC").first
+		  			@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  			if @b_deal.present?
 		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  				@best_deal << @b_deal
 		  			end				
 		  		else
-		  			@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, sp.service_category_id, Date.today).order("price ASC").first
+		  			@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
 		  			if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  					@best_deal << @b_deal

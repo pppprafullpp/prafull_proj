@@ -19,13 +19,11 @@
 							<th><strong>Email</strong></th>
 							<!--<th><strong>Password</strong></th>-->
 							<th><strong>Is active ? </strong></th>
-							<th><strong>Image</strong></th>
 							<th><strong>Address</strong></th>
 							<th><strong>State</strong></th>
 							<th><strong>City</strong></th>
 							<th><strong>Zip</strong></th>
 							<th><strong>DeviceFlag</strong></th>
-							<th><strong>GCM Id</strong></th>
 							<th><strong>Actions</strong></th>
 						</tr>
 					</thead>
@@ -37,15 +35,12 @@
 									<td><%= app_user.first_name %></td>
 									<td><%= app_user.last_name %></td>
 									<td><%= app_user.email %></td>
-									<!--<td><%#= app_user.unhashed_password %></td>-->
 									<td><%= app_user.active %></td>
-									<td><%= app_user.avatar_url %></td>
 									<td><%= app_user.address %></td>
 									<td><%= app_user.state %></td>
 									<td><%= app_user.city %></td>
 									<td><%= app_user.zip %></td>
 									<td><%= app_user.device_flag %></td>
-									<td><%= app_user.gcm_id %></td>
 									<td><%= (link_to 'Edit', edit_app_user_path(app_user)) if can? :manage, app_user %> | <%= (link_to "Delete", app_user, method: :delete, data: { confirm: "You sure?" }) if can? :manage, app_user %>
 								    </td>
 								</tr>

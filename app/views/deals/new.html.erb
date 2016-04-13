@@ -44,24 +44,28 @@
 				  <%= f.text_area :short_description %></div>
 				  <div>Enter Detail Description:<span id="mandat">*</span> <br />
 				  <%= f.text_area :detail_description %></div>
-          <div><%= f.check_box :is_nationwide, :checked=>'checked' %> Is Nationwide? </div>
-          <%= f.fields_for :deal_zipcode_maps do |builder| %>
-            <%= render 'zipcodes', f: builder %>
-          <% end %>
-          <div><%= f.check_box :is_business %> Is Business? </div>
-				  <div>Start Date:<span id="mandat">*</span><br />
-				  <%= f.text_field :start_date %></div>
-				  <div>End Date:<span id="mandat">*</span><br />
-				  <%= f.text_field :end_date %></div>
-				  <div><%= f.check_box :is_active %> Is Active? </div>
+		          <div><%= f.check_box :is_nationwide, :checked=>'checked' %> Is Nationwide? </div>
+		          <%= f.label 'Exclude Zipcodes:' %>
+		          <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
 
-          <%= f.fields_for :internet_deal_attributes do |builder| %>
-            <%= render 'internet_attribute', f: builder %>
-          <% end %>
+		          <div><%= f.check_box :is_business %> Is Business? </div>
+						  <div>Start Date:<span id="mandat">*</span><br />
+						  <%= f.text_field :start_date %></div>
+						  <div>End Date:<span id="mandat">*</span><br />
+						  <%= f.text_field :end_date %></div>
+						  <div><%= f.check_box :is_active %> Is Active? </div>
 
-          <%= f.fields_for :telephone_deal_attributes do |builder| %>
-            <%= render 'telephone_attribute', f: builder %>
-          <% end %>
+		          <%= f.fields_for :internet_deal_attributes do |builder| %>
+		            <%= render 'internet_attribute', f: builder %>
+		          <% end %>
+
+		          <%= f.fields_for :telephone_deal_attributes do |builder| %>
+		            <%= render 'telephone_attribute', f: builder %>
+		          <% end %>
+		            <%= f.fields_for :additional_offers do |builder| %>
+			           <%= render 'additional_offer', f: builder %>
+			        <% end %>
+			        
 
 				  <div><%= f.submit "Create" %></div>
 				<% end %>

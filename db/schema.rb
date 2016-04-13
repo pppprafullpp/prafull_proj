@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407120958) do
+ActiveRecord::Schema.define(version: 20160413172548) do
 
   create_table "additional_offer_zipcode_maps", force: :cascade do |t|
     t.integer  "additional_offer_id", limit: 4
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",     limit: 4
-    t.string   "deal_type",   limit: 255
     t.string   "title",       limit: 255
     t.text     "description", limit: 65535
     t.float    "price_value", limit: 24
@@ -37,6 +36,11 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   end
 
   add_index "additional_offers", ["deal_id"], name: "index_additional_offers_on_deal_id", using: :btree
+
+  create_table "additional_offers_zipcodes", id: false, force: :cascade do |t|
+    t.integer "additional_offer_id", limit: 4, null: false
+    t.integer "zipcode_id",          limit: 4, null: false
+  end
 
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
@@ -159,16 +163,6 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
-  create_table "deal_zipcode_maps", force: :cascade do |t|
-    t.integer  "deal_id",    limit: 4
-    t.integer  "zipcode_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "deal_zipcode_maps", ["deal_id"], name: "index_deal_zipcode_maps_on_deal_id", using: :btree
-  add_index "deal_zipcode_maps", ["zipcode_id"], name: "index_deal_zipcode_maps_on_zipcode_id", using: :btree
-
   create_table "deals", force: :cascade do |t|
     t.integer  "service_category_id", limit: 4
     t.integer  "service_provider_id", limit: 4
@@ -190,9 +184,13 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
   add_index "deals", ["service_provider_id"], name: "index_deals_on_service_provider_id", using: :btree
 
+  create_table "deals_zipcodes", id: false, force: :cascade do |t|
+    t.integer "deal_id",    limit: 4, null: false
+    t.integer "zipcode_id", limit: 4, null: false
+  end
+
   create_table "internet_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",               limit: 4
-    t.string   "deal_type",             limit: 255
     t.float    "download",              limit: 24
     t.float    "upload",                limit: 24
     t.float    "data",                  limit: 24
@@ -260,7 +258,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "service_provider_id",   limit: 4
     t.string   "service_category_name", limit: 255
     t.string   "service_provider_name", limit: 255
-    t.float    "price"
+    t.float    "price",                 limit: 24
     t.boolean  "is_contract"
     t.datetime "start_date"
     t.datetime "end_date"
@@ -305,7 +303,6 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   create_table "telephone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                          limit: 4
-    t.string   "deal_type",                        limit: 255
     t.integer  "domestic_call_minutes",            limit: 4
     t.integer  "domestic_receive_minutes",         limit: 4
     t.integer  "domestic_additional_minutes",      limit: 4
@@ -378,6 +375,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "additional_offers", "deals"
   add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
@@ -385,6 +383,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   add_foreign_key "comment_ratings", "app_users"
   add_foreign_key "comment_ratings", "deals"
   add_foreign_key "deals", "service_categories"
+  add_foreign_key "internet_deal_attributes", "deals"
   add_foreign_key "internet_service_preferences", "service_preferences"
   add_foreign_key "notifications", "app_users"
   add_foreign_key "service_preferences", "app_users"
@@ -392,6 +391,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   add_foreign_key "service_providers", "service_categories"
   add_foreign_key "subscribe_deals", "app_users"
   add_foreign_key "subscribe_deals", "deals"
+  add_foreign_key "telephone_deal_attributes", "deals"
   add_foreign_key "telephone_service_preferences", "service_preferences"
   add_foreign_key "trending_deals", "deals"
 end

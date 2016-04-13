@@ -86,8 +86,8 @@ class DealsController < ApplicationController
     @deal = Deal.new
     @deal.internet_deal_attributes.build
     @deal.telephone_deal_attributes.build
-    @deal.deal_zipcode_maps.build
-	end
+    @deal.additional_offers.build
+  end
   
   def get_service_providers
     #@ServiceProviders=ServiceProvider.select("id, name").where(service_category_name: params[:category])
@@ -96,7 +96,8 @@ class DealsController < ApplicationController
   end
 
 	def create
-		@deal = Deal.new(deal_params)  
+    @deal = Deal.new(deal_params)  
+
     respond_to do |format|
       if @deal.save
         #send_notification

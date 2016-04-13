@@ -7,19 +7,17 @@ class Deal < ActiveRecord::Base
   has_many  :internet_deal_attributes, dependent: :destroy
   has_many  :telephone_deal_attributes, dependent: :destroy
   has_many  :additional_offers, dependent: :destroy
-  has_many  :deal_zipcode_maps, dependent: :destroy
-
+  has_and_belongs_to_many  :zipcodes, dependent: :destroy
+  
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
   accepts_nested_attributes_for :telephone_deal_attributes,:reject_if => :reject_telephone, allow_destroy: true
-  accepts_nested_attributes_for :additional_offers
-  accepts_nested_attributes_for :deal_zipcode_maps,:reject_if => :reject_zipcode, allow_destroy: true
-    
-
+  accepts_nested_attributes_for :additional_offers,:reject_if => :reject_additional, allow_destroy: true
+  
 	mount_uploader :image, ImageUploader
 
 	validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
 
-	def as_json(opts={})
+  def as_json(opts={})
     	json = super(opts)
     	Hash[*json.map{|k, v| [k, v || ""]}.flatten]
   	end
@@ -115,8 +113,8 @@ class Deal < ActiveRecord::Base
     end
   end
 	
-  def reject_zipcode(attributes)
-    if attributes[:zipcode_id].blank?
+  def reject_additional(attributes)
+    if attributes[:title].blank?
       if attributes[:id].present?
         attributes.merge!({:_destroy => 1}) && false
       else

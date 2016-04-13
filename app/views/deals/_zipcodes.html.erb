@@ -1,0 +1,4 @@
+<fieldset>
+	<%= f.label 'Exclude Zipcodes:' %>
+	<%= f.select :zipcode_id, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id]},{},{multiple: true, size: 10}%>
+</fieldset>

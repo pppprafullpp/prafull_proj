@@ -1,7 +1,7 @@
 class CreateInternetDealAttributes < ActiveRecord::Migration
   def change
     create_table :internet_deal_attributes do |t|
-    	t.belongs_to :deal, index: true
+    	t.integer   :deal_id
         t.float	    :download
     	t.float 	:upload
     	t.float 	:data
@@ -14,6 +14,6 @@ class CreateInternetDealAttributes < ActiveRecord::Migration
     	t.string	:activation
       	t.timestamps null: false
     end
-    add_foreign_key :internet_deal_attributes, :deals
+    add_index :internet_deal_attributes, :deal_id
   end
 end

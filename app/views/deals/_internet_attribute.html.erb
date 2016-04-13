@@ -1,0 +1,31 @@
+<fieldset id="internt-attributes" style="display:none;">
+  <h4>Internet Deal Attributes</h4>
+
+  <div>Downloads (mbps)<span id="mandat">*</span><br />
+  <%= f.text_field :download, :id=>'internet-download' %>
+  
+  <%= f.label 'Upload (mbps)' %>
+  <%= f.text_field :upload %>
+
+  <%= f.label :data %>
+  <%= f.text_field :data %>
+
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+
+  <%= f.label :online_storage %>
+  <%= f.text_field :online_storage %>
+
+  <%= f.label :static_ip %>
+  <%= f.text_field :static_ip %>
+
+  <%= f.label :equipment %>
+  <%= f.text_field :equipment %>
+
+  <%= f.label :installation %>
+  <%= f.text_field :installation %>
+
+  <%= f.label :activation %>
+  <%= f.text_field :activation %>
+ 
+</fieldset>

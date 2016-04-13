@@ -7,7 +7,6 @@
       <div class='title'>
         <span id='title'>Add a New Deal</span>
       </div>
-
 				<%= form_for(@deal, :url => @deals) do |f| %>
 					<br/>
 					<% if @deal.errors.any? %>
@@ -23,168 +22,51 @@
   					</div>
 					<% end %>
 				  <br/>
-				  <div><span style="color:#4285F4"><strong><i>Fields marked * are mandatory</i></strong></span></div><br/>
-				  <div><strong>Service Category:<span id="mandat">*</span> </strong><br />
-				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "Select Category"},:onchange=>"populate_service_provider(this); yesnoCheck(this);" %>
+				  <div><span style="color:#4285F4"><i>Fields marked * are mandatory</i></span></div><br/>
+				  <div>Service Category:<span id="mandat">*</span> <br />
+				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "---Select---"},:onchange=>"populate_service_provider(this);" %>
 				  </div>
-				  <div><strong>Service Provider:<span id="mandat">*</span> </strong><br />
-				  <%= f.select :service_provider_id, [],{:include_blank => "Select Provider"} %>
+				  <div>Service Provider:<span id="mandat">*</span> <br />
+				  <%= f.select :service_provider_id, [],{:include_blank => "---Select---"} %>
 				  </div>
          
-				  <div><strong>Title:<span id="mandat">*</span></strong><br />
+				  <div>Title:<span id="mandat">*</span><br />
 				  <%= f.text_field :title %></div>
-				  <div><strong>Image:<span id="mandat">*</span></strong><br/>
+				  <div>Image:<span id="mandat">*</span><br/>
 				  <%= f.file_field :image %></div>
 				  <%= f.hidden_field :image_cache %>
-				  <div><strong>Price:<span id="mandat">*</span> </strong><br />
+				  <div>Price:<span id="mandat">*</span> <br />
 				  <%= f.text_field :price %></div>
 				  
-				  <div><strong>URL:<span id="mandat">*</span></strong><br />
+				  <div>URL:<span id="mandat">*</span><br />
 				  <%= f.text_field :url %></div>
-				  <div><strong>Enter a Short Description:<span id="mandat">*</span> </strong><br />
+				  <div>Enter a Short Description:<span id="mandat">*</span> <br />
 				  <%= f.text_area :short_description %></div>
-				  <div><strong>Enter Detail Description:<span id="mandat">*</span> </strong><br />
+				  <div>Enter Detail Description:<span id="mandat">*</span> <br />
 				  <%= f.text_area :detail_description %></div>
-          <div><%= f.check_box :is_nationwide %> <strong>Is Nationwide? </strong></div>
-          <div><%= f.check_box :is_business %> <strong>Is Business? </strong></div>
-				  <div><strong>Start Date:<span id="mandat">*</span></strong><br />
+          <div><%= f.check_box :is_nationwide, :checked=>'checked' %> Is Nationwide? </div>
+          <%= f.fields_for :deal_zipcode_maps do |builder| %>
+            <%= render 'zipcodes', f: builder %>
+          <% end %>
+          <div><%= f.check_box :is_business %> Is Business? </div>
+				  <div>Start Date:<span id="mandat">*</span><br />
 				  <%= f.text_field :start_date %></div>
-				  <div><strong>End Date:<span id="mandat">*</span></strong><br />
+				  <div>End Date:<span id="mandat">*</span><br />
 				  <%= f.text_field :end_date %></div>
-				  <div><%= f.check_box :is_active %> <strong>Is Active? </strong></div>
+				  <div><%= f.check_box :is_active %> Is Active? </div>
+
+          <%= f.fields_for :internet_deal_attributes do |builder| %>
+            <%= render 'internet_attribute', f: builder %>
+          <% end %>
+
+          <%= f.fields_for :telephone_deal_attributes do |builder| %>
+            <%= render 'telephone_attribute', f: builder %>
+          <% end %>
+
 				  <div><%= f.submit "Create" %></div>
 				<% end %>
 			
     </td>
 	</tr>
 </table>
-<script>
-    function yesnoCheck(that) {
-        if (that.value == "1") {
-            document.getElementById("u_speed").style.display = "block";
-            document.getElementById("d_speed").style.display = "block";
-            document.getElementById("c_minutes").style.display = "none";
-            document.getElementById("t_msgs").style.display = "none";
-            document.getElementById("free_c").style.display = "none";
-            document.getElementById("premium_c").style.display = "none";
-            document.getElementById("data_plan").style.display = "none";
-            document.getElementById("data_speed").style.display = "none";
-            document.getElementById("talk_unlimit").style.display = "none";
-            document.getElementById("text_unlimit").style.display = "none";
-            document.getElementById("bundle_combo").style.display = "none";
-        } else if (that.value == "2"){
-        		document.getElementById("c_minutes").style.display = "block";
-            document.getElementById("t_msgs").style.display = "block";
-            document.getElementById("talk_unlimit").style.display = "block";
-            document.getElementById("text_unlimit").style.display = "block";
-            document.getElementById("u_speed").style.display = "none";
-            document.getElementById("d_speed").style.display = "none";
-            document.getElementById("free_c").style.display = "none";
-            document.getElementById("premium_c").style.display = "none";
-            document.getElementById("data_plan").style.display = "none";
-            document.getElementById("data_speed").style.display = "none";
-            document.getElementById("bundle_combo").style.display = "none";
-        } else if (that.value == "3"){
-        		document.getElementById("free_c").style.display = "block";
-            document.getElementById("premium_c").style.display = "block";
-        		document.getElementById("c_minutes").style.display = "none";
-            document.getElementById("t_msgs").style.display = "none";
-            document.getElementById("u_speed").style.display = "none";
-            document.getElementById("d_speed").style.display = "none";
-            document.getElementById("data_plan").style.display = "none";
-            document.getElementById("data_speed").style.display = "none";
-            document.getElementById("talk_unlimit").style.display = "none";
-            document.getElementById("text_unlimit").style.display = "none";
-            document.getElementById("bundle_combo").style.display = "none";
-        } else if (that.value == "4"){
-        		document.getElementById("c_minutes").style.display = "block";
-            document.getElementById("t_msgs").style.display = "block";
-            document.getElementById("data_plan").style.display = "block";
-            document.getElementById("data_speed").style.display = "block";
-            document.getElementById("talk_unlimit").style.display = "block";
-            document.getElementById("text_unlimit").style.display = "block";
-        		document.getElementById("free_c").style.display = "none";
-            document.getElementById("premium_c").style.display = "none";
-            document.getElementById("u_speed").style.display = "none";
-            document.getElementById("d_speed").style.display = "none";
-            document.getElementById("bundle_combo").style.display = "none";
-        } else if (that.value == "5"){
-        		document.getElementById("c_minutes").style.display = "none";
-            document.getElementById("t_msgs").style.display = "none";
-            document.getElementById("talk_unlimit").style.display = "none";
-            document.getElementById("text_unlimit").style.display = "none";
-            document.getElementById("data_plan").style.display = "none";
-            document.getElementById("data_speed").style.display = "none";
-        		document.getElementById("free_c").style.display = "none";
-            document.getElementById("premium_c").style.display = "none";
-            document.getElementById("u_speed").style.display = "none";
-            document.getElementById("d_speed").style.display = "none";
-            document.getElementById("bundle_combo").style.display = "block";
-        }
-        else {
-            document.getElementById("u_speed").style.display = "none";
-            document.getElementById("d_speed").style.display = "none";
-            document.getElementById("c_minutes").style.display = "none";
-            document.getElementById("t_msgs").style.display = "none";
-            document.getElementById("free_c").style.display = "none";
-            document.getElementById("premium_c").style.display = "none";
-            document.getElementById("data_plan").style.display = "none";
-            document.getElementById("data_speed").style.display = "none";
-            document.getElementById("talk_unlimit").style.display = "none";
-            document.getElementById("text_unlimit").style.display = "none";
-            document.getElementById("bundle_combo").style.display = "none";
-        } 
-    }
-  function bundle_combo(that){
-    if (that.value == "Internet and Telephone") {
-      document.getElementById("c_minutes").style.display = "block";
-      document.getElementById("t_msgs").style.display = "block";
-      document.getElementById("talk_unlimit").style.display = "block";
-      document.getElementById("text_unlimit").style.display = "block";
-      document.getElementById("u_speed").style.display = "block";
-      document.getElementById("d_speed").style.display = "block";
-      document.getElementById("free_c").style.display = "none";
-      document.getElementById("premium_c").style.display = "none";
-      document.getElementById("data_plan").style.display = "none";
-      document.getElementById("data_speed").style.display = "none";
-      document.getElementById("bundle_combo").style.display = "block";
-    }else if (that.value == "Internet and Cable"){
-      document.getElementById("c_minutes").style.display = "none";
-      document.getElementById("t_msgs").style.display = "none";
-      document.getElementById("talk_unlimit").style.display = "none";
-      document.getElementById("text_unlimit").style.display = "none";
-      document.getElementById("u_speed").style.display = "block";
-      document.getElementById("d_speed").style.display = "block";
-      document.getElementById("free_c").style.display = "block";
-      document.getElementById("premium_c").style.display = "block";
-      document.getElementById("data_plan").style.display = "none";
-      document.getElementById("data_speed").style.display = "none";
-      document.getElementById("bundle_combo").style.display = "block";
-    }else if (that.value == "Telephone and Cable"){
-      document.getElementById("c_minutes").style.display = "block";
-      document.getElementById("t_msgs").style.display = "block";
-      document.getElementById("talk_unlimit").style.display = "block";
-      document.getElementById("text_unlimit").style.display = "block";
-      document.getElementById("u_speed").style.display = "none";
-      document.getElementById("d_speed").style.display = "none";
-      document.getElementById("free_c").style.display = "block";
-      document.getElementById("premium_c").style.display = "block";
-      document.getElementById("data_plan").style.display = "none";
-      document.getElementById("data_speed").style.display = "none";
-      document.getElementById("bundle_combo").style.display = "block";
-    }else if (that.value == "Internet,Telephone and Cable"){
-      document.getElementById("c_minutes").style.display = "block";
-      document.getElementById("t_msgs").style.display = "block";
-      document.getElementById("talk_unlimit").style.display = "block";
-      document.getElementById("text_unlimit").style.display = "block";
-      document.getElementById("u_speed").style.display = "block";
-      document.getElementById("d_speed").style.display = "block";
-      document.getElementById("free_c").style.display = "block";
-      document.getElementById("premium_c").style.display = "block";
-      document.getElementById("data_plan").style.display = "none";
-      document.getElementById("data_speed").style.display = "none";
-      document.getElementById("bundle_combo").style.display = "block";
-    }
-  } 
-</script>
 

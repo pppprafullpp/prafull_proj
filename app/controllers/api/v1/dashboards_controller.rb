@@ -7,7 +7,7 @@ class Api::V1::DashboardsController < ApplicationController
 	def index
 
 		###############   When User is Logged In and zip code is present   ###############	
-		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[ :sort_by_d_speed].blank? && params[:state].blank?											                	
+		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank? && params[:state].blank?											                	
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			#@zip_code = @app_user.zip
 			@state = @app_user.state
@@ -153,9 +153,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  else
 				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
 			end
-			render :json => {
-												:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
-											}
+			render :json => {:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])}
 		end
 	end	
 
@@ -230,105 +228,8 @@ class Api::V1::DashboardsController < ApplicationController
 				@matched_deal = json_1		
 			end
 		end	
-		render :json => {
-												:deal => @matched_deal #.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
-											}
+		render :json => {:deal => @matched_deal }
 	end
 
 end	
-		###############   WHen State is present   ###############
-		#elsif params[:state].present? && params[:category].blank? && params[:app_user_id].blank? && params[:zip_code].blank?
-		#	@service_categories = ServiceCategory.all
-		#	@servicelist = @service_categories.map do |sc|
-		#		@sc_id = sc.id
-		#		@advertisement = []
-		#		@adv = sc.advertisements.order("created_at DESC").first
-		#		@advertisement << @adv if @adv.present?
-    #    	@best_deal = []
-    #    	@b_deal = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, params[:state], @sc_id, Date.today).order("price ASC").first
-    #   		if @b_deal.present?
-    #   			@best_deal << @b_deal
-    #   		else
-    #   			@best_deal = []
-    #   		end		
-    #    @preferred_deal = []
-		#		{ :service_category_name => sc.name, :contract_fee => '0', :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 	
-		#	end	
-		#	render :json => { :dashboard_data => @servicelist	}
-		#end                
-
-				###############   When only Zip Code is present   ###############
-		#elsif params[:zip_code].present? && params[:category].blank? && params[:app_user_id].blank? && params[:state].blank?
-		#	@service_categories = ServiceCategory.all
-		#	@servicelist = @service_categories.map do |sc|
-		#		@sc_id = sc.id
-		#		@advertisement = []
-		#		@adv = sc.advertisements.order("created_at DESC").first
-		#		@advertisement << @adv if @adv.present?
-    #   	@best_deal = []
-    #  	@b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, params[:zip_code], @sc_id, Date.today).order("price ASC").first
-    #   		if @b_deal.present?
-    #   			@best_deal << @b_deal
-    #   		else
-    #   			@best_deal = []
-    #   		end		
-    #    @preferred_deal = []
-		#		{ :service_category_name => sc.name, :contract_fee => '0', :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 	
-		#	end	
-		#	render :json => { :dashboard_data => @servicelist	}
-
-		###############   When only Service Category is present   ###############
-		#elsif params[:category].present? && params[:app_user_id].blank? && params[:zip_code].blank? && params[:state].blank?
-		#	@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("created_at DESC")	              
-		#	render :json => {
-		#										:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
-		#									}
-
-				###############   When User is Logged In but zip code is not present   ###############
-		#if params[:app_user_id].present? && params[:zip_code].blank? && params[:category].blank? && params[:state].blank?
-		#	@app_user = AppUser.find_by_id(params[:app_user_id])
-		#	@zip_code = @app_user.zip
-		#  #@service_preferences = @app_user.service_preferences.order("created_at DESC") if @app_user.present?
-		#  if @app_user.present? && @zip_code.present?
-		#  	@service_preferences = @app_user.service_preferences.order("created_at DESC")
-		#  	@servicelist = @service_preferences.map do |sp|
-		#  		@advertisement = []
-		#  		@best_deal = []
-		#  		@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND zip = ? AND end_date > ?", true, sp.service_category_id, @zip_code, Date.today).order("price ASC").first
-		#  		@best_deal << @b_deal if @b_deal.present?
-		#  		@adv = sp.service_category.advertisements.order("created_at DESC").first
-		#  		@advertisement << @adv if @adv.present?
-		#  		sp.service_category.service_providers.map do |pp|
-		#  			if pp.is_preferred == true
-		#  				@preferred_deal = []
-		#  				@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND zip = ? AND end_date > ?", true, pp.service_category_id, pp.id, @zip_code, Date.today).order("price ASC").first
-		#					@preferred_deal << @p_deal
-		#				else
-		#					@preferred_deal = []
-		#  			end
-		#  		end	
-		#			{ :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
-		#  	end	
-		#  elsif @app_user.present? && @zip_code.blank?
-		#  	@service_preferences = @app_user.service_preferences.order("created_at DESC")
-		#  	@servicelist = @service_preferences.map do |sp|
-		#  		@advertisement = []
-		#  		@best_deal = []
-		#  		@b_deal = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, sp.service_category_id, Date.today).order("price ASC").first
-		#  		@best_deal << @b_deal if @b_deal.present?
-		#  		@adv = sp.service_category.advertisements.order("created_at DESC").first
-		#  		@advertisement << @adv if @adv.present?
-		#  		sp.service_category.service_providers.map do |pp|
-		#  			if pp.is_preferred == true
-		#  				@preferred_deal = []
-		#  				@p_deal = Deal.where("is_active = ? AND service_category_id = ? AND service_provider_id = ? AND end_date > ?", true, pp.service_category_id, pp.id, Date.today).order("price ASC").first
-		#					@preferred_deal << @p_deal
-		#				else
-		#					@preferred_deal = []
-		#  			end
-		#  		end	
-		#			{ :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
-		#  	end	
-		#  end
-		#	render :json => { :dashboard_data => @servicelist }
 		

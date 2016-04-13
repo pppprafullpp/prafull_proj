@@ -1,0 +1,34 @@
+
+<fieldset id="telephone-attributes" style="display:none;">
+  <h4>Telephone Deal Attributes</h4>
+  <div>Domestic Call Minutes<span id="mandat">*</span><br />
+  <%= f.text_field :domestic_call_minutes, :id=>'telephone-domestic-call-minutes' %>
+  
+  <%= f.label :domestic_receive_minutes %>
+  <%= f.text_field :domestic_receive_minutes %>
+
+  <%= f.label :domestic_additional_minutes %>
+  <%= f.text_field :domestic_additional_minutes %>
+
+  <%= f.label :international_landline_minutes %>
+  <%= f.text_field :international_landline_minutes %>
+
+  <%= f.label :international_mobile_minutes %>
+  <%= f.text_field :international_mobile_minutes %>
+
+  <%= f.label :countries %>
+  <%= f.text_field :countries %>
+
+  <%= f.label :features %>
+  <%= f.text_field :features %>
+
+  <%= f.label :equipment %>
+  <%= f.text_field :equipment %>
+
+  <%= f.label :installation %>
+  <%= f.text_field :installation %>
+
+  <%= f.label :activation %>
+  <%= f.text_field :activation %>
+  
+</fieldset>

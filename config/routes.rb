@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   resources :subscribe_deals
   resources :trending_deals
   resources :zipcodes
-
+  
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 
     #                  :registrations => 'registrations'

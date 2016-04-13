@@ -16,15 +16,38 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).on("page:load ready", function(){
-    $("#deal_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
+
+$(function() {
+  initPage();
+});
+$(window).bind('page:change', function() {
+  initPage();
+});
+function initPage() {
+  $("#deal_service_category_id").change(function(){
+    	if($("#deal_service_category_id option:selected").text()=="Internet"){
+			$("#telephone-attributes").css("display","none");
+			$("#telephone-domestic-call-minutes").prop("required",false);
+
+			$("#internt-attributes").css("display","block");
+			$("#internet-download").prop("required",true);
+		}else if($("#deal_service_category_id option:selected").text()=="Telephone"){
+			$("#internt-attributes").css("display","none");
+			$("#internet-download").prop("required",false);
+
+			$("#telephone-attributes").css("display","block");
+			$("#telephone-domestic-call-minutes").prop("required",true);
+		}
+	});
+
+	$("#deal_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#deal_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#advertisement_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#advertisement_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#service_preference_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#service_preference_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
-});
 
+}
 
 function populate_service_provider(obj)
 {
@@ -63,4 +86,4 @@ function populate_service_provider(obj)
 	}
 
 }
-$(function(){ $(document).foundation(); });
+//$(function(){ $(document).foundation(); });

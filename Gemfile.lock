@@ -69,9 +69,6 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capistrano3-puma (1.2.1)
-      capistrano (~> 3.0)
-      puma (>= 2.6)
     carrierwave (0.11.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -171,7 +168,6 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
-    puma (3.4.0)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -284,7 +280,6 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
-  capistrano3-puma
   carrierwave
   cloudinary
   coffee-rails (~> 4.1.0)
@@ -302,7 +297,6 @@ DEPENDENCIES
   jquery-rails
   mysql2
   newrelic_rpm
-  puma
   rails (= 4.2.6)
   rails_12factor
   rmagick

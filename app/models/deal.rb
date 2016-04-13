@@ -4,13 +4,20 @@ class Deal < ActiveRecord::Base
 	has_many :comment_ratings, dependent: :destroy
 	has_many :subscribe_deals, dependent: :destroy
 	has_many :trending_deals, dependent: :destroy
-  has_one  :internet_deal_attribute, dependent: :destroy
-  has_one  :telephone_deal_attribute, dependent: :destroy
-  has_one  :additional_offer, dependent: :destroy
+  has_many  :internet_deal_attributes, dependent: :destroy
+  has_many  :telephone_deal_attributes, dependent: :destroy
+  has_many  :additional_offers, dependent: :destroy
+  has_many  :deal_zipcode_maps, dependent: :destroy
+
+  accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
+  accepts_nested_attributes_for :telephone_deal_attributes,:reject_if => :reject_telephone, allow_destroy: true
+  accepts_nested_attributes_for :additional_offers
+  accepts_nested_attributes_for :deal_zipcode_maps,:reject_if => :reject_zipcode, allow_destroy: true
+    
 
 	mount_uploader :image, ImageUploader
 
-	validates_presence_of :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
+	validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
 
 	def as_json(opts={})
     	json = super(opts)
@@ -82,11 +89,40 @@ class Deal < ActiveRecord::Base
 	end
 
 	private
-	def create_category_name
-		self.service_category_name = self.service_category.name
-	end
-	def create_provider_name
-		self.service_provider_name = self.service_provider.name
-	end
+  	def create_category_name
+  		self.service_category_name = self.service_category.name
+  	end
+  	def create_provider_name
+  		self.service_provider_name = self.service_provider.name
+  	end
+
+  def reject_internet(attributes)
+    if attributes[:download].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
+  def reject_telephone(attributes)
+    if attributes[:domestic_call_minutes].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
 	
+  def reject_zipcode(attributes)
+    if attributes[:zipcode_id].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
+  
 end

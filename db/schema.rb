@@ -25,12 +25,13 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",     limit: 4
+    t.string   "deal_type",   limit: 255
     t.string   "title",       limit: 255
     t.text     "description", limit: 65535
     t.float    "price_value", limit: 24
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_active",   limit: 1,     default: true
+    t.boolean  "is_active",                 default: true
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
   end
@@ -43,7 +44,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.string   "name",                  limit: 255
     t.string   "url",                   limit: 255
     t.string   "image",                 limit: 255
-    t.boolean  "status",                limit: 1,   default: true
+    t.boolean  "status",                            default: true
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at",                                       null: false
@@ -69,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",          limit: 4,   default: 0,    null: false
-    t.boolean  "active",                 limit: 1,   default: true
+    t.boolean  "active",                             default: true
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
@@ -102,8 +103,8 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "international_call_minutes",   limit: 4
     t.float    "data_plan",                    limit: 24
     t.float    "data_speed",                   limit: 24
-    t.boolean  "domestic_call_unlimited",      limit: 1,   default: false
-    t.boolean  "international_call_unlimited", limit: 1,   default: false
+    t.boolean  "domestic_call_unlimited",                  default: false
+    t.boolean  "international_call_unlimited",             default: false
     t.string   "bundle_combo",                 limit: 255
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
@@ -127,8 +128,8 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "international_call_minutes",   limit: 4
     t.float    "data_plan",                    limit: 24
     t.float    "data_speed",                   limit: 24
-    t.boolean  "domestic_call_unlimited",      limit: 1,  default: false
-    t.boolean  "international_call_unlimited", limit: 1,  default: false
+    t.boolean  "domestic_call_unlimited",                 default: false
+    t.boolean  "international_call_unlimited",            default: false
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
   end
@@ -139,7 +140,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "app_user_id",   limit: 4
     t.integer  "deal_id",       limit: 4
     t.float    "rating_point",  limit: 24
-    t.boolean  "status",        limit: 1,     default: true
+    t.boolean  "status",                      default: true
     t.text     "comment_title", limit: 65535
     t.text     "comment_text",  limit: 65535
     t.datetime "created_at",                                 null: false
@@ -179,9 +180,9 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_nationwide",       limit: 1,     default: false
-    t.boolean  "is_business",         limit: 1,     default: false
-    t.boolean  "is_active",           limit: 1,     default: true
+    t.boolean  "is_nationwide",                     default: false
+    t.boolean  "is_business",                       default: false
+    t.boolean  "is_active",                         default: true
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end
@@ -191,13 +192,14 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   create_table "internet_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",               limit: 4
+    t.string   "deal_type",             limit: 255
     t.float    "download",              limit: 24
     t.float    "upload",                limit: 24
     t.float    "data",                  limit: 24
     t.string   "email",                 limit: 255
     t.string   "online_storage",        limit: 255
     t.text     "wifi_hotspot_networks", limit: 65535
-    t.boolean  "static_ip",             limit: 1
+    t.boolean  "static_ip"
     t.text     "equipment",             limit: 65535
     t.text     "installation",          limit: 65535
     t.string   "activation",            limit: 255
@@ -221,9 +223,9 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "app_user_id",            limit: 4
-    t.boolean  "recieve_notification",   limit: 1
+    t.boolean  "recieve_notification"
     t.integer  "day",                    limit: 4
-    t.boolean  "recieve_trending_deals", limit: 1, default: true
+    t.boolean  "recieve_trending_deals",           default: true
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
   end
@@ -258,7 +260,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "service_provider_id",   limit: 4
     t.string   "service_category_name", limit: 255
     t.string   "service_provider_name", limit: 255
-    t.boolean  "is_contract",           limit: 1
+    t.boolean  "is_contract"
     t.datetime "start_date"
     t.datetime "end_date"
     t.string   "plan_name",             limit: 255
@@ -280,8 +282,8 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.string   "email",               limit: 255
     t.string   "telephone",           limit: 255
     t.string   "logo",                limit: 255
-    t.boolean  "is_preferred",        limit: 1,   default: false
-    t.boolean  "is_active",           limit: 1,   default: true
+    t.boolean  "is_preferred",                    default: false
+    t.boolean  "is_active",                       default: true
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
   end
@@ -291,7 +293,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   create_table "subscribe_deals", force: :cascade do |t|
     t.integer  "app_user_id",   limit: 4
     t.integer  "deal_id",       limit: 4
-    t.boolean  "active_status", limit: 1, default: false
+    t.boolean  "active_status",           default: false
     t.integer  "category_id",   limit: 4
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
@@ -302,6 +304,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
 
   create_table "telephone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                          limit: 4
+    t.string   "deal_type",                        limit: 255
     t.integer  "domestic_call_minutes",            limit: 4
     t.integer  "domestic_receive_minutes",         limit: 4
     t.integer  "domestic_additional_minutes",      limit: 4
@@ -323,8 +326,8 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.integer  "service_preference_id",        limit: 4
     t.integer  "domestic_call_minutes",        limit: 4
     t.integer  "international_call_minutes",   limit: 4
-    t.boolean  "domestic_call_unlimited",      limit: 1, default: false
-    t.boolean  "international_call_unlimited", limit: 1, default: false
+    t.boolean  "domestic_call_unlimited",                default: false
+    t.boolean  "international_call_unlimited",           default: false
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
   end
@@ -354,7 +357,7 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
-    t.boolean  "enabled",                limit: 1
+    t.boolean  "enabled"
     t.integer  "failed_count",           limit: 4
     t.datetime "password_updated_at"
     t.datetime "created_at"
@@ -374,7 +377,6 @@ ActiveRecord::Schema.define(version: 20160407120958) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "additional_offers", "deals"
   add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
@@ -382,7 +384,6 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   add_foreign_key "comment_ratings", "app_users"
   add_foreign_key "comment_ratings", "deals"
   add_foreign_key "deals", "service_categories"
-  add_foreign_key "internet_deal_attributes", "deals"
   add_foreign_key "internet_service_preferences", "service_preferences"
   add_foreign_key "notifications", "app_users"
   add_foreign_key "service_preferences", "app_users"
@@ -390,7 +391,6 @@ ActiveRecord::Schema.define(version: 20160407120958) do
   add_foreign_key "service_providers", "service_categories"
   add_foreign_key "subscribe_deals", "app_users"
   add_foreign_key "subscribe_deals", "deals"
-  add_foreign_key "telephone_deal_attributes", "deals"
   add_foreign_key "telephone_service_preferences", "service_preferences"
   add_foreign_key "trending_deals", "deals"
 end

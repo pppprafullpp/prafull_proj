@@ -1,7 +1,7 @@
 class CreateTelephoneDealAttributes < ActiveRecord::Migration
   def change
     create_table :telephone_deal_attributes do |t|
-      t.belongs_to :deal, index: true
+      t.integer   :deal_id
       t.integer  :domestic_call_minutes
       t.integer	 :domestic_receive_minutes
       t.integer	 :domestic_additional_minutes
@@ -15,6 +15,6 @@ class CreateTelephoneDealAttributes < ActiveRecord::Migration
       t.string   :activation
       t.timestamps null:false
     end
-    add_foreign_key :telephone_deal_attributes, :deals
+    add_index :telephone_deal_attributes, :deal_id
   end
 end

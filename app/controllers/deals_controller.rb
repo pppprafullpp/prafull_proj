@@ -83,7 +83,10 @@ class DealsController < ApplicationController
 	end
 
 	def new
-		@deal = Deal.new
+    @deal = Deal.new
+    @deal.internet_deal_attributes.build
+    @deal.telephone_deal_attributes.build
+    @deal.deal_zipcode_maps.build
 	end
   
   def get_service_providers

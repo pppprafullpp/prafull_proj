@@ -1,7 +1,7 @@
 class CreateAdditionalOffers < ActiveRecord::Migration
   def change
     create_table :additional_offers do |t|
-      t.belongs_to :deal, index: true
+      t.integer :deal_id
       t.string :title
       t.text :description
       t.float :price_value
@@ -10,6 +10,6 @@ class CreateAdditionalOffers < ActiveRecord::Migration
       t.boolean :is_active, default: true
       t.timestamps null: false
     end
-    add_foreign_key :additional_offers, :deals
+    add_index :additional_offers, :deal_id
   end
 end

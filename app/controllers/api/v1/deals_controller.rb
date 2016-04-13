@@ -11,14 +11,11 @@ class Api::V1::DealsController < ApplicationController
 			@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).where(service_category_id: params[:category]).order("price ASC")
 		end
 	  if @deals.present?
-	  	#@deals.each do |deal|
-	  		render :json => { 
-													:deals   => @deals.as_json(:include => :ratings),
-												} 
+	  		#@deals.each do |deal|
+	  		render :json => { :deals   => @deals.as_json(:include => :ratings),} 
 			#end								
 		else
-			render :status => 401,
-							:json => { :success => false }									
+			render :status => 401,:json => { :success => false }									
 	  end	
 	end  
 

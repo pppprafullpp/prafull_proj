@@ -165,21 +165,21 @@ class Api::V1::DashboardsController < ApplicationController
 			@matched_deal = []
 			if params[:service_category_id] == '1'
 				@current_d_speed = @user_preference.internet_service_preference.download_speed 
-				@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC").limit(2)
-				@smaller_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price DESC").limit(2)
+				@equal_deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed").where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download = ?", true, params[:service_category_id],@user_preference.internet_service_preference.download_speed).order("price ASC")
+				@greater_deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed").where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download > ?", true, params[:service_category_id],@user_preference.internet_service_preference.download_speed).order("price ASC").limit(2)
+				@smaller_deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed").where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download < ?", true, params[:service_category_id],@user_preference.internet_service_preference.download_speed).order("price DESC").limit(2)
 			elsif params[:service_category_id] == '2'
 				@current_plan_price = @user_preference.price
 				@current_t_plan = @user_preference.telephone_service_preference.domestic_call_unlimited
 				if @current_t_plan == true
-					@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC")
-					@smaller_deals = Deal.where("is_active = ? AND service_category_id = ? AND price < ?", true, @state, params[:service_category_id], @current_plan_price).order("price DESC").limit(2)
-					@greater_deals = Deal.where("is_active = ? AND service_category_id = ? AND price > ?", true, @state, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
+					@equal_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ?", true, params[:service_category_id]).order("price ASC")
+					@smaller_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price < ?", true, params[:service_category_id], @current_plan_price).order("price DESC").limit(2)
+					@greater_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 				else
 					@current_c_minutes = @user_preference.telephone_service_preference.domestic_call_minutes
-					@equal_deals = Deal.where("is_active = ? AND service_category_id = ? AND price <= ?", true, params[:service_category_id], @current_plan_price).order("price ASC")
-					@smaller_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC").limit(2)
-					@greater_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC").limit(2)
+					@equal_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price <= ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id], @current_plan_price,@user_preference.telephone_service_preference.domestic_call_minutes).order("price ASC")
+					@smaller_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id],@user_preference.telephone_service_preference.domestic_call_minutes).order("price ASC").limit(2)
+					@greater_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id],@user_preference.telephone_service_preference.domestic_call_minutes).order("price ASC").limit(2)
 				end
 			elsif params[:service_category_id] == '3'
 				@current_plan_price = @user_preference.price
@@ -212,13 +212,13 @@ class Api::V1::DashboardsController < ApplicationController
 				@merged_deals = (@greater_deals).sort_by(&:price)
 			end
 			if @merged_deals.present?
-				json_1 = @merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+				json_1 = @merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name])
 			end
 			#if @greater_deals.present?
 			#	json_2 = @greater_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 			#end
 			if @smaller_deals.present?
-				json_2 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
+				json_2 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name])
 			end
 			if json_1.present? && json_2.present?
 				@matched_deal = json_1 + json_2

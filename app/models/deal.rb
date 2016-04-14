@@ -86,14 +86,14 @@ class Deal < ActiveRecord::Base
 		sprintf '%.2f', self.price if self.price.present?
 	end
 
-	private
-  	def create_category_name
-  		self.service_category_name = self.service_category.name
-  	end
-  	def create_provider_name
-  		self.service_provider_name = self.service_provider.name
-  	end
+  def service_category_name
+    self.service_category.name
+  end
+  def service_provider_name
+    self.service_provider.name
+  end
 
+	private
   def reject_internet(attributes)
     if attributes[:download].blank?
       if attributes[:id].present?

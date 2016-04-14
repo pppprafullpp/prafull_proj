@@ -28,8 +28,6 @@ set :bundle_binstubs, nil
 #set :whenever_command, "bundle exec whenever"
 #set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
-set :asset_roles, [:app]
-
 namespace :deploy do
 
   desc 'Restart application'

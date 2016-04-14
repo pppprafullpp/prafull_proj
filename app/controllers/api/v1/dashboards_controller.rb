@@ -26,8 +26,8 @@ class Api::V1::DashboardsController < ApplicationController
 		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
 		  		if sp.service_category_id == 1
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
-		  			@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC")
-						@greater_deals = Deal.where("is_active = ? AND service_category_id = ?", true, sp.service_category_id).order("price ASC").limit(2)
+		  			@equal_deals = Deal.joins(:internet_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download = ?", true, sp.service_category_id,@app_user_d_speed).order("price ASC")
+						@greater_deals = Deal.joins(:internet_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download > ?", true, sp.service_category_id,@app_user_d_speed).order("price ASC").limit(2)
 						#@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed < ?", true, @state, sp.service_category_id, @app_user_d_speed).order("price DESC").limit(2)
 						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
 						@b_deal = @merged_deals.first
@@ -50,9 +50,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  				end	
 		  			else
 		  				@app_user_c_minutes = sp.telephone_service_preference.domestic_call_minutes
-		  				@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes = ? AND price = ?", true, @state, sp.service_category_id, false, @app_user_c_minutes, @app_user_current_plan).order("price ASC")
+		  				@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ? AND price = ?", true, sp.service_category_id, @app_user_c_minutes, @app_user_current_plan).order("price ASC")
 							#@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes < ?", true, @state, params[:service_category_id], false, @current_c_minutes).order("price ASC").limit(2)
-							@greater_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND domestic_call_unlimited = ? AND domestic_call_minutes > ?", true, @state, sp.service_category_id, false, @app_user_c_minutes).order("price ASC").limit(2)
+							@greater_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes > ? AND price > ?", true, sp.service_category_id, @app_user_c_minutes, @app_user_current_plan).order("price ASC").limit(2)
 							
 							@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
 							@b_deal = @merged_deals.first
@@ -159,7 +159,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  	else
 				@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("price ASC")
 			end
-			render :json => {:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])}
+			render :json => {:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
 		end
 	end	
 
@@ -218,13 +218,13 @@ class Api::V1::DashboardsController < ApplicationController
 				@merged_deals = (@greater_deals).sort_by(&:price)
 			end
 			if @merged_deals.present?
-				json_1 = @merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name])
+				json_1 = @merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])
 			end
 			#if @greater_deals.present?
 			#	json_2 = @greater_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])
 			#end
 			if @smaller_deals.present?
-				json_2 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name])
+				json_2 = @smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])
 			end
 			if json_1.present? && json_2.present?
 				@matched_deal = json_1 + json_2

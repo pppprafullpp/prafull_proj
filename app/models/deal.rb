@@ -92,6 +92,15 @@ class Deal < ActiveRecord::Base
   def service_provider_name
     self.service_provider.name
   end
+  def additional_offer_title
+    self.additional_offers.pluck('title')
+  end
+  def additional_offer_detail
+    self.additional_offers.pluck('description')
+  end
+  def additional_offer_price_value
+    self.additional_offers.pluck('price_value')
+  end
 
 	private
   def reject_internet(attributes)

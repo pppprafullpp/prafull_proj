@@ -8,13 +8,12 @@
       <div class='title'>
         <span id='title'>Update Service</span>
       </div>
-			<div class="small-6 large-centered columns">
-				<%= form_for(@service_category) do |f| %><br/>
-					<div>Service Category Name :<span id="mandat">*</span> <br /><%= f.text_field :name %></div>
-					<div>Description : <br /><%= f.text_area :description %></div>
-				  <div><%= f.submit "Update" %></div>
-				<% end %>
-			</div>
+		<%= form_for(@service_category) do |f| %><br/>
+			<div>Service Category Name :<span id="mandat">*</span> <br /><%= f.text_field :name %></div>
+			<div>Description : <br /><%= f.text_area :description %></div>
+		  <div><%= f.submit "Update" %></div>
+		<% end %>
+			
     </td>
 	</tr>
 </table>

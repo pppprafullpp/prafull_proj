@@ -8,7 +8,6 @@
         <span id='title'>Create a New Service Category</span>
       </div>
 
-			<div class="small-6 large-centered columns">
 				<%= form_for(@service_category, :url => @service_categories) do |f| %>
 					<br/>
 					<% if @service_category.errors.any? %>
@@ -31,8 +30,7 @@
 				  <%= f.text_field :description %></div>
 				  <div><%= f.submit "Create" %></div>
 				<% end %>
-			</div>
-    </td>
+	  </td>
 	</tr>
 </table>
 

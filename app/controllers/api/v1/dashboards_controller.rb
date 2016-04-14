@@ -143,17 +143,23 @@ class Api::V1::DashboardsController < ApplicationController
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@state = @app_user.state
 			if params[ :sorting_flag] == 'download_speed' #For Internet
-				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("download_speed DESC")
+				@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("internet_deal_attributes.download DESC")
 			elsif params[ :sorting_flag] == 'price' #For all on the basis of Price
-				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
+				if params[:category] == '1'
+					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("deals.price ASC")
+				elsif params[:category]=='2'
+					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("deals.price ASC")
+		  		else
+		  			@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("price ASC")
+		  		end
 			elsif params[ :sorting_flag] == 'free_channels' #For Cable
-				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("free_channels DESC")
+				@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("free_channels DESC")
 			elsif params[ :sorting_flag] == 'domestic_call_minutes' #For CellPhone & Telephone
-				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("domestic_call_minutes DESC")
-		  else
-				@deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND end_date > ?", true, @state, params[:category], Date.today).order("price ASC")
+				@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_landline_minutes as international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("telephone_deal_attributes.domestic_call_minutes DESC")
+		  	else
+				@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("price ASC")
 			end
-			render :json => {:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])}
+			render :json => {:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])}
 		end
 	end	
 

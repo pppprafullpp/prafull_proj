@@ -5,14 +5,13 @@ class Api::V1::DashboardsController < ApplicationController
 	respond_to :json
 
 	def index
-
 		###############   When User is Logged In and zip code is present   ###############	
 		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank? && params[:state].blank?											                	
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@zip_code = @app_user.zip
 			if @app_user.present? && @zip_code.present?
 				@service_preferences = @app_user.service_preferences.order("created_at DESC") 
-		  	@servicelist = @service_preferences.map do |sp|
+		  		@servicelist = @service_preferences.map do |sp|
 		  		@app_user_current_plan = sp.price
 		  		@advertisement = []
 		  		@best_deal = []
@@ -152,7 +151,14 @@ class Api::V1::DashboardsController < ApplicationController
 		  	else
 				@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true, params[:category], Date.today).order("price ASC")
 			end
-			render :json => {:deal => @deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
+			@allowed_deals=[]
+			@deals.each do |deal|
+				@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],params[:zip_code])
+				if not @restricted_deal.present?
+					@allowed_deals.push(deal)
+			    end
+			end
+			render :json => {:deal => @allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
 		end
 	end	
 
@@ -171,9 +177,11 @@ class Api::V1::DashboardsController < ApplicationController
 				@current_plan_price = @user_preference.price
 				@current_t_plan = @user_preference.telephone_service_preference.domestic_call_unlimited
 				if @current_t_plan == true
-					@equal_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price = ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, params[:service_category_id],@current_plan_price).order("price ASC")
-					@smaller_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price < ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, params[:service_category_id], @current_plan_price).order("price DESC").limit(2)
-					@greater_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
+					if Deal.joins(:deals_zipcodes).where("deals_zipcodes.zipcode_id=")
+						@equal_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price = ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, params[:service_category_id],@current_plan_price).order("price ASC")
+						@smaller_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price < ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, params[:service_category_id], @current_plan_price).order("price DESC").limit(2)
+						@greater_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
+					end
 				else
 					@current_c_minutes = @user_preference.telephone_service_preference.domestic_call_minutes
 					@equal_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes").where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id],@user_preference.telephone_service_preference.domestic_call_minutes).order("price ASC")
@@ -227,7 +235,15 @@ class Api::V1::DashboardsController < ApplicationController
 				@matched_deal = json_1		
 			end
 		end	
-		render :json => {:deal => @matched_deal }
+
+		@allowed_deals=[]
+		@matched_deal.each do |deal|
+			@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
+			if not @restricted_deal.present?
+				@allowed_deals.push(deal)
+		    end
+		end
+		render :json => {:deal => @allowed_deals }
 	end
 
 end	

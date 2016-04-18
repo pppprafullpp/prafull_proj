@@ -123,7 +123,32 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@adv = sp.service_category.advertisements.order("created_at DESC").first
 		  		@advertisement << @adv if @adv.present?
 		  		@preferred_deal = []
-					{ :you_save_text => @you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => @trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :best_deal => @best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
+
+		  		@allowed_trending_deal=[]
+				@trending_deal.each do |deal|
+					@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
+					if not @restricted_deal.present?
+						@allowed_trending_deal.push(deal)
+				    end
+				end
+
+				@allowed_best_deal=[]
+				@best_deal.each do |deal|
+					@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
+					if not @restricted_deal.present?
+						@allowed_best_deal.push(deal)
+				    end
+				end
+
+				@allowed_preferred_deal=[]
+				@preferred_deal.each do |deal|
+					@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
+					if not @restricted_deal.present?
+						@allowed_preferred_deal.push(deal)
+				    end
+				end
+
+				{ :you_save_text => @you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => @allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :best_deal => @allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @allowed_preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
 		  	end	
 				render :json => { :dashboard_data => @servicelist }
 			else

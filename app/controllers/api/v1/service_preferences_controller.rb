@@ -33,7 +33,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
         	send_notification_no_contract
         elsif params[:is_contract] == "false"	
         		send_notification_is_contract	
-				end
+		end
         	render :status => 200,
               	 :json => { :success => true }
       else
@@ -88,11 +88,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	def get_service_preferences
 		@service_preferences = ServicePreference.where(app_user_id: params[:app_user_id]).order("created_at DESC")
 		if @service_preferences.present?
-			render :status => 200,
-						 :json => {
-						 						:success => true,
-						 						:service_preferences => @service_preferences.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
-						 					}
+			render :status => 200,:json => {
+				:success => true,
+				:service_preferences => @service_preferences.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
+			}
 		else
 			render :json => { :success => false }
 		end	
@@ -119,12 +118,11 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			json_1 = @service_preference.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
 			json_2 = @internet_preference.as_json(:except => [:service_preference_id, :created_at, :updated_at])
 			@user_preference = json_1.reverse_merge!(json_2)
-			render :status => 200,
-						 :json => {
-						 						:success => true,
-						 						#:service_preference => @service_preference.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
-						 						:service_preference => @user_preference
-						 					}
+			render :status => 200,:json => {
+				:success => true,
+				#:service_preference => @service_preference.as_json(:except => [:service_category_name, :service_provider_name, :created_at, :updated_at])
+				:service_preference => @user_preference
+			}
 		else
 			render :json => { :success => false }
 		end	
@@ -134,11 +132,9 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:category]).first
 		if @service_preference.present?
 			@service_preference.destroy
-			render :status => 200,
-						 :json => { :success => true }
+			render :status => 200, :json => { :success => true }
 		else
-			render :status => 401,
-						 :json => { :success => false }
+			render :status => 401, :json => { :success => false }
 		end	
 	end
 
@@ -149,12 +145,12 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	#def update
 	#	@service_preference = ServicePreference.find_by_app_user_id(params[:app_user_id])
 	#	respond_to do |format|
-  #    		if @service_preference.update(service_preference_params)
-  #      		format.json { head :no_content, status: :true }
-  #    		else
-  #      		format.json { render json: @service_preference.errors, status: :false }
-  #    		end
-  #  	end
+    #    		if @service_preference.update(service_preference_params)
+    #      		format.json { head :no_content, status: :true }
+    #    		else
+    #      		format.json { render json: @service_preference.errors, status: :false }
+    #    		end
+    #  	end
 	#end
 
 	private
@@ -207,35 +203,35 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			end
 			
 			if @b_deal.present?	
-      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
-      	if @remaining_days < @user_notification_day
-      		if @app_user_device == "android"
-      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
-						registration_id = ["#{@app_user.gcm_id}"]
-      			gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
-      		elsif @app_user_device == "iphone"
-      			pusher = Grocer.pusher(
-        			certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
-        			passphrase:  "1234",                       																	# optional
-        			gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
-        			port:        2195,                       																		# optional
-        			retries:     3                           																		# optional
-      			)
-      			notification = Grocer::Notification.new(
-        			device_token:      "#{@app_user.gcm_id}",
-        			alert:             "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}",
-        			badge:             42
-        			#category:          "a category",         																	# optional; used for custom notification actions
-        			#sound:             "siren.aiff",         																	# optional
-        			#expiry:            Time.now + 60*60,     																	# optional; 0 is default, meaning the message is not stored
-        			#identifier:        1234,                 																	# optional; must be an integer
-        			#content_available: true                  																	# optional; any truthy value will set 'content-available' to 1
-      			)
-      			pusher.push(notification)
-      		end    		
+		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
+		      	if @remaining_days < @user_notification_day
+		      		if @app_user_device == "android"
+		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
+								registration_id = ["#{@app_user.gcm_id}"]
+		      			gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
+		      		elsif @app_user_device == "iphone"
+		      			pusher = Grocer.pusher(
+		        			certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
+		        			passphrase:  "1234",                       																	# optional
+		        			gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
+		        			port:        2195,                       																		# optional
+		        			retries:     3                           																		# optional
+		      			)
+		      			notification = Grocer::Notification.new(
+		        			device_token:      "#{@app_user.gcm_id}",
+		        			alert:             "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}",
+		        			badge:             42
+		        			#category:          "a category",         																	# optional; used for custom notification actions
+		        			#sound:             "siren.aiff",         																	# optional
+		        			#expiry:            Time.now + 60*60,     																	# optional; 0 is default, meaning the message is not stored
+		        			#identifier:        1234,                 																	# optional; must be an integer
+		        			#content_available: true                  																	# optional; any truthy value will set 'content-available' to 1
+		      			)
+		      			pusher.push(notification)
+		      		end    		
 				end
-      end
-    end
+		    end
+    	end
 	end
 	def send_notification_no_contract
 		@app_user = AppUser.find_by_id(params[:app_user_id])
@@ -249,7 +245,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		elsif params[:service_category_id] == "2"	
 			if params[:domestic_call_unlimited] == "true"
 				@equal_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND AND service_category_id = ? AND price > ?", true, @state, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
+				@greater_deals = Deal.where("is_active = ? AND service_category_id = ? AND price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 			else
 				@current_c_minutes = params[:domestic_call_minutes]
 				@equal_deals = Deal.where("is_active = ? AND service_category_id = ? AND price <= ?", true, params[:service_category_id], @current_plan_price).order("price ASC")
@@ -265,8 +261,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@greater_deals = Deal.where("is_active = ? AND service_category_id = ? AND price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 			else
 				@current_c_minutes = params[:domestic_call_minutes]
-				@equal_deals = Deal.where("is_active = ? AND AND service_category_id = ? AND price <= ?", true, params[:service_category_id], @current_plan_price).order("price ASC")
-				@greater_deals = Deal.where("is_active = ? AND AND service_category_id = ?", true, params[:service_category_id]).order("price ASC").limit(2)
+				@equal_deals = Deal.where("is_active = ? AND service_category_id = ? AND price <= ?", true, params[:service_category_id], @current_plan_price).order("price ASC")
+				@greater_deals = Deal.where("is_active = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC").limit(2)
 			end	
 		elsif params[:service_category_id] == "5"
 			@equal_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ?", true, params[:service_category_id]).order("price ASC").limit(5)	
@@ -291,7 +287,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				pusher = Grocer.pusher(
         	certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
         	passphrase:  "1234",                       																	# optional
-        	gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
+        	gateway:     "gateway.sandbox.push.apple.com",                      		# optional; See note below.
         	port:        2195,                       																		# optional
         	retries:     3                           																		# optional
       	)
@@ -308,7 +304,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
       	pusher.push(notification)
 			end	
 		end
-  end
+  	end
 	def service_preference_params
 		if params[:start_date].present? && params[:end_date].present?
 			begin

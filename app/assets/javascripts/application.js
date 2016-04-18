@@ -24,7 +24,7 @@ $(window).bind('page:change', function() {
   initPage();
 });
 function initPage() {
-  $("#deal_service_category_id").change(function(){
+  	$("#deal_service_category_id").change(function(){
     	if($("#deal_service_category_id option:selected").text()=="Internet"){
 			$("#telephone-attributes").css("display","none");
 			$("#telephone-domestic-call-minutes").prop("required",false);
@@ -39,6 +39,27 @@ function initPage() {
 			$("#telephone-domestic-call-minutes").prop("required",true);
 		}
 	});
+
+	$("#domestic_unlimited").click(function(){
+		if($(this).is(':checked')){
+    		$("#telephone-domestic-call-minutes").val("Unlimited");
+    		$("#telephone-domestic-call-minutes").prop("readonly",true);
+    	}else{
+    		$("#telephone-domestic-call-minutes").val("");
+    		$("#telephone-domestic-call-minutes").prop("readonly",false);
+    	}
+	});
+
+	$("#international_unlimited").click(function(){
+		if($(this).is(':checked')){
+    		$("#telephone-international-call-minutes").val("Unlimited");
+    		$("#telephone-international-call-minutes").prop("readonly",true);
+    	}else{
+    		$("#telephone-international-call-minutes").val("");
+    		$("#telephone-international-call-minutes").prop("readonly",false);
+    	}
+	});
+
 
 	$("#deal_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#deal_end_date").datepicker({ dateFormat: 'dd-mm-yy' });

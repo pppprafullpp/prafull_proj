@@ -93,25 +93,13 @@ class Deal < ActiveRecord::Base
     self.service_provider.name
   end
   def additional_offer_title
-    if self.additional_offers.present?
-      self.additional_offers.pluck('title')
-    else 
-      ""
-    end
+    self.additional_offers.pluck('title') if self.additional_offers.present?
   end
   def additional_offer_detail
-    if self.additional_offers.present?
-      self.additional_offers.pluck('description')
-    else
-      ""
-    end
+    self.additional_offers.pluck('description') if self.additional_offers.present?
   end
   def additional_offer_price_value
-    if self.additional_offers.present?
-    self.additional_offers.pluck('price_value')
-    else
-      ""
-    end
+    self.additional_offers.pluck('price_value') if self.additional_offers.present?
   end
 
 	private

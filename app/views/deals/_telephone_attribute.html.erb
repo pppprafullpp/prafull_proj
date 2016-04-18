@@ -2,6 +2,7 @@
 <fieldset id="telephone-attributes" style="display:none;">
   <h4>Telephone Deal Attributes</h4>
   <div>Domestic Call Minutes<span id="mandat">*</span><br />
+  <div><input type='checkbox' id='domestic_unlimited'><span> Unlimited</span><br />
   <%= f.text_field :domestic_call_minutes, :id=>'telephone-domestic-call-minutes' %>
   
   <%= f.label :domestic_receive_minutes %>
@@ -10,11 +11,18 @@
   <%= f.label :domestic_additional_minutes %>
   <%= f.text_field :domestic_additional_minutes %>
 
+  <%= f.label :international_call_minutes %>
+  <div><input type='checkbox' id='international_unlimited'><span> Unlimited</span><br />
+  <%= f.text_field :international_call_minutes,:id=>'telephone-international-call-minutes' %>
+
   <%= f.label :international_landline_minutes %>
   <%= f.text_field :international_landline_minutes %>
 
   <%= f.label :international_mobile_minutes %>
   <%= f.text_field :international_mobile_minutes %>
+
+  <%= f.label :international_additional_minutes %>
+  <%= f.text_field :international_additional_minutes %>
 
   <%= f.label :countries %>
   <%= f.text_field :countries %>

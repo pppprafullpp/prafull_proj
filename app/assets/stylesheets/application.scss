@@ -59,3 +59,7 @@ p.alert {
   font-size: 12px;
   font-weight: bold;
 }
+
+table.form-data tr:nth-of-type(even) {
+    background-color: transparent !important;
+}

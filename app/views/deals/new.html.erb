@@ -2,7 +2,7 @@
   <tr> 
     <td class='main' id='main' valign='top'>
       <div class='title_tools'>
-				<%= link_to "View All Deals", deals_path %>
+			<%= link_to "View All Deals", deals_path %>
       </div>
       <div class='title'>
         <span id='title'>Add a New Deal</span>
@@ -22,53 +22,103 @@
   					</div>
 					<% end %>
 				  <br/>
-				  <div><span style="color:#4285F4"><i>Fields marked * are mandatory</i></span></div><br/>
-				  <div>Service Category:<span id="mandat">*</span> <br />
-				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "---Select---"},:onchange=>"populate_service_provider(this);" %>
-				  </div>
-				  <div>Service Provider:<span id="mandat">*</span> <br />
-				  <%= f.select :service_provider_id, [],{:include_blank => "---Select---"} %>
-				  </div>
-         
-				  <div>Title:<span id="mandat">*</span><br />
-				  <%= f.text_field :title %></div>
-				  <div>Image:<span id="mandat">*</span><br/>
-				  <%= f.file_field :image %></div>
-				  <%= f.hidden_field :image_cache %>
-				  <div>Price:<span id="mandat">*</span> <br />
-				  <%= f.text_field :price %></div>
-				  
-				  <div>URL:<span id="mandat">*</span><br />
-				  <%= f.text_field :url %></div>
-				  <div>Enter a Short Description:<span id="mandat">*</span> <br />
-				  <%= f.text_area :short_description %></div>
-				  <div>Enter Detail Description:<span id="mandat">*</span> <br />
-				  <%= f.text_area :detail_description %></div>
-		          <div><%= f.check_box :is_nationwide, :checked=>'checked' %> Is Nationwide? </div>
-		          <%= f.label 'Exclude Zipcodes:' %>
-		          <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
+				  <div><span style="color:#4285F4"><i>Fields marked * are mandatory</i></span></div>
+				  <table class='form-data'>
+					  <tr>
+					  	<td style="width:50%;">
+						  <div>Service Category:<span id="mandat">*</span> </div>
+						  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "---Select---"},:onchange=>"populate_service_provider(this);" %>
+						  </div>
+						</td>
+						<td>
+						  <div>Service Provider:<span id="mandat">*</span> </div>
+						  <%= f.select :service_provider_id, [],{:include_blank => "---Select---"} %>
+						  </div>
+					  	</td>
+					  </tr>
+         			  <tr>
+         			  	  <td>
+							  <div>Title:<span id="mandat">*</span></div>
+							  <%= f.text_field :title %></div>
+						   </td>
+						   <td>
+							  <div>Image:<span id="mandat">*</span></div>
+							  <%= f.file_field :image %></div>
+							  <%= f.hidden_field :image_cache %>
+						  </td>
+					  </tr>
+					  <tr>
+						  <td>
+							  <div>Price:<span id="mandat">*</span> </div>
+							  <%= f.text_field :price %></div>
+						  </td>
+						  <td>
+						  	  <div>URL:<span id="mandat">*</span></div>
+				  			  <%= f.text_field :url %></div>
+						  </td>
+				      </tr>
+				      <tr>
+				      		<td>
+				      			<div>Enter a Short Description:<span id="mandat">*</span> </div>
+			    				<%= f.text_area :short_description %></div>
+				      		</td>
+				      		<td>
+				      			<div>Enter Detail Description:<span id="mandat">*</span> </div>
+				  				<%= f.text_area :detail_description %></div>
+				      		</td>
+				      </tr>
+				      <tr>
+				      		<td valign="top">
+				      			<div><%= f.check_box :is_nationwide, :checked=>'checked' %> Is Nationwide? </div>
+				      		</td>
+				      		<td>
+				      			<%= f.label 'Exclude Zipcodes:' %>
+		          				<%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
+				      		</td>
+				      </tr>
+				      <tr>
+				      		<td>
+				      			<div>Start Date:<span id="mandat">*</span></div>
+						  		<%= f.text_field :start_date %>
+				      		</td>
+				      		<td>
+				      			<div>End Date:<span id="mandat">*</span></div>
+						  		<%= f.text_field :end_date %>
+				      		</td>
+				      </tr>
+				      <tr>
+				      		<td>
+				      			<div><%= f.check_box :is_business %> Is Business? </div>
+				      		</td>
+				      		<td>
+				      			<div><%= f.check_box :is_active %> Is Active? </div>
+				      		</td>
+				      </tr>
+				  		  
+				   </table>
+			        <%= f.fields_for :internet_deal_attributes do |builder| %>
+			          <%= render 'internet_attribute', f: builder %>
+			        <% end %>
 
-		          <div><%= f.check_box :is_business %> Is Business? </div>
-						  <div>Start Date:<span id="mandat">*</span><br />
-						  <%= f.text_field :start_date %></div>
-						  <div>End Date:<span id="mandat">*</span><br />
-						  <%= f.text_field :end_date %></div>
-						  <div><%= f.check_box :is_active %> Is Active? </div>
+			        <%= f.fields_for :telephone_deal_attributes do |builder| %>
+			          <%= render 'telephone_attribute', f: builder %>
+		            <% end %>
+        	        
+        	        <%= f.fields_for :cable_deal_attributes do |builder| %>
+			          <%= render 'cable_attribute', f: builder %>
+			        <% end %>
 
-		          <%= f.fields_for :internet_deal_attributes do |builder| %>
-		            <%= render 'internet_attribute', f: builder %>
-		          <% end %>
-
-		          <%= f.fields_for :telephone_deal_attributes do |builder| %>
-		            <%= render 'telephone_attribute', f: builder %>
-		          <% end %>
+			        <%= f.fields_for :bundle_deal_attributes do |builder| %>
+			          <%= render 'bundle_attribute', f: builder %>
+			        <% end %>
+		            
 		            <%= f.fields_for :additional_offers do |builder| %>
 			           <%= render 'additional_offer', f: builder %>
 			        <% end %>
 			        
 
 				  <div><%= f.submit "Create" %></div>
-				<% end %>
+			<% end %>
 			
     </td>
 	</tr>

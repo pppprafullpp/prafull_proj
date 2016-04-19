@@ -29,16 +29,86 @@ function initPage() {
 			$("#telephone-attributes").css("display","none");
 			$("#telephone-domestic-call-minutes").prop("required",false);
 
-			$("#internt-attributes").css("display","block");
+			$("#cable-attributes").css("display","none");
+			$("#cable-free-channels").prop("required",false);
+
+			$("#bundel-attributes").css("display","none");
+			$("#bundle-internet-download").prop("required",false);
+			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
+			$("#bundle-cable-free-channels").prop("required",false);
+
+			$("#internet-attributes").css("display","block");
 			$("#internet-download").prop("required",true);
 		}else if($("#deal_service_category_id option:selected").text()=="Telephone"){
-			$("#internt-attributes").css("display","none");
+			$("#internet-attributes").css("display","none");
 			$("#internet-download").prop("required",false);
+
+			$("#cable-attributes").css("display","none");
+			$("#cable-free-channels").prop("required",false);
+
+			$("#bundel-attributes").css("display","none");
+			$("#bundle-internet-download").prop("required",false);
+			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
+			$("#bundle-cable-free-channels").prop("required",false);
 
 			$("#telephone-attributes").css("display","block");
 			$("#telephone-domestic-call-minutes").prop("required",true);
+		}else if($("#deal_service_category_id option:selected").text()=="Cable"){
+			$("#internet-attributes").css("display","none");
+			$("#internet-download").prop("required",false);
+
+			$("#telephone-attributes").css("display","none");
+			$("#telephone-domestic-call-minutes").prop("required",false);
+
+			$("#bundel-attributes").css("display","none");
+			$("#bundle-internet-download").prop("required",false);
+			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
+			$("#bundle-cable-free-channels").prop("required",false);
+
+			$("#cable-attributes").css("display","block");
+			$("#cable-free-channels").prop("required",true);
+		}else if($("#deal_service_category_id option:selected").text()=="Bundle"){
+			$("#internet-attributes").css("display","none");
+			$("#internet-download").prop("required",false);
+
+			$("#telephone-attributes").css("display","none");
+			$("#telephone-domestic-call-minutes").prop("required",false);
+
+			$("#cable-attributes").css("display","none");
+			$("#cable-free-channels").prop("required",false);
+
+			$("#bundle-attributes").css("display","block");
+			$("#bundle-internet-download").prop("required",true);
+			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
+			$("#bundle-cable-free-channels").prop("required",true);
 		}
+
 	});
+
+	$("#deal_bundle_deal_attributes_attributes_0_bundle_combo").change(function(){
+		if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Internet and Telephone"){
+			$("#bundle-cable").css("display","none");
+			$("#bundle-cable-free-channels").prop("required",false);
+			
+			$("#bundle-telephone").css("display","block");
+			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
+			
+		}else if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Internet and Cable"){
+			$("#bundle-telephone").css("display","none");
+			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
+
+			$("#bundle-cable").css("display","block");	
+			$("#bundle-cable-free-channels").prop("required",true);	
+
+		}else if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Internet,Telephone and Cable"){
+			$("#bundle-telephone").css("display","block");
+			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
+			
+			$("#bundle-cable").css("display","block");	
+			$("#bundle-cable-free-channels").prop("required",true);	
+		}
+	});		
+		
 
 	$("#domestic_unlimited").click(function(){
 		if($(this).is(':checked')){
@@ -57,6 +127,26 @@ function initPage() {
     	}else{
     		$("#telephone-international-call-minutes").val("");
     		$("#telephone-international-call-minutes").prop("readonly",false);
+    	}
+	});
+
+	$("#bundle_domestic_unlimited").click(function(){
+		if($(this).is(':checked')){
+    		$("#bundle-telephone-domestic-call-minutes").val("Unlimited");
+    		$("#bundle-telephone-domestic-call-minutes").prop("readonly",true);
+    	}else{
+    		$("#bundle-telephone-domestic-call-minutes").val("");
+    		$("#bundle-telephone-domestic-call-minutes").prop("readonly",false);
+    	}
+	});
+
+	$("#bundle_international_unlimited").click(function(){
+		if($(this).is(':checked')){
+    		$("#bundle-telephone-international-call-minutes").val("Unlimited");
+    		$("#bundle-telephone-international-call-minutes").prop("readonly",true);
+    	}else{
+    		$("#bundle-telephone-international-call-minutes").val("");
+    		$("#bundle-telephone-international-call-minutes").prop("readonly",false);
     	}
 	});
 

@@ -1,0 +1,52 @@
+<fieldset id="cable-attributes" style="display:none;">
+  <h4>Cable/TV Deal Attributes</h4>
+  <table class="form-data">
+    <tr>
+      <td>
+      <div>Free channels<span class="mandat">*</span></div>
+      <%= f.text_field :free_channels, :id=>'cable-free-channels' %>
+      </td>
+      <td>
+      <%= f.label 'Free channels list (comma separated)' %>
+      <%= f.text_field :free_channels_list %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :premium_channels %>
+      <%= f.text_field :premium_channels %>
+      </td>
+      <td>
+      <%= f.label 'Premium channels list (comma separated)' %>
+      <%= f.text_field :premium_channels_list %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :hd_channels %>
+      <%= f.text_field :hd_channels %>
+      </td>
+      <td>
+      <%= f.label 'HD channels list (comma separated)' %>
+      <%= f.text_field :hd_channels_list %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :equipment %>
+      <%= f.text_field :equipment %>
+      </td>
+      <td>
+      <%= f.label :installation %>
+      <%= f.text_field :installation %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :activation %>
+      <%= f.text_field :activation %>
+      </td>
+      <td/>
+    </tr>
+  </table>
+</fieldset>

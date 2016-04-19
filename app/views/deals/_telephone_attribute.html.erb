@@ -1,42 +1,72 @@
-
 <fieldset id="telephone-attributes" style="display:none;">
   <h4>Telephone Deal Attributes</h4>
-  <div>Domestic Call Minutes<span id="mandat">*</span><br />
-  <div><input type='checkbox' id='domestic_unlimited'><span> Unlimited</span><br />
-  <%= f.text_field :domestic_call_minutes, :id=>'telephone-domestic-call-minutes' %>
-  
-  <%= f.label :domestic_receive_minutes %>
-  <%= f.text_field :domestic_receive_minutes %>
-
-  <%= f.label :domestic_additional_minutes %>
-  <%= f.text_field :domestic_additional_minutes %>
-
-  <%= f.label :international_call_minutes %>
-  <div><input type='checkbox' id='international_unlimited'><span> Unlimited</span><br />
-  <%= f.text_field :international_call_minutes,:id=>'telephone-international-call-minutes' %>
-
-  <%= f.label :international_landline_minutes %>
-  <%= f.text_field :international_landline_minutes %>
-
-  <%= f.label :international_mobile_minutes %>
-  <%= f.text_field :international_mobile_minutes %>
-
-  <%= f.label :international_additional_minutes %>
-  <%= f.text_field :international_additional_minutes %>
-
-  <%= f.label :countries %>
-  <%= f.text_field :countries %>
-
-  <%= f.label :features %>
-  <%= f.text_field :features %>
-
-  <%= f.label :equipment %>
-  <%= f.text_field :equipment %>
-
-  <%= f.label :installation %>
-  <%= f.text_field :installation %>
-
-  <%= f.label :activation %>
-  <%= f.text_field :activation %>
+  <table class="form-data">
+    <tr>
+      <td>
+      <div>Domestic Call Minutes<span class="mandat">*</span></div>
+      <div><input type='checkbox' id='domestic_unlimited'><span> Unlimited</span></div>
+      <%= f.text_field :domestic_call_minutes, :id=>'telephone-domestic-call-minutes' %>
+      </td>
+      <td valign="bottom">
+      <%= f.label :domestic_receive_minutes %>
+      <%= f.text_field :domestic_receive_minutes %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :domestic_additional_minutes %>
+      <%= f.text_field :domestic_additional_minutes %>
+      </td>
+      <td/>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :international_call_minutes %>
+      <div><input type='checkbox' id='international_unlimited'><span> Unlimited</span></div>
+      <%= f.text_field :international_call_minutes,:id=>'telephone-international-call-minutes' %>
+      </td>
+      <td valign="bottom">
+      <%= f.label :international_landline_minutes %>
+      <%= f.text_field :international_landline_minutes %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :international_mobile_minutes %>
+      <%= f.text_field :international_mobile_minutes %>
+      </td>
+      <td>
+      <%= f.label :international_additional_minutes %>
+      <%= f.text_field :international_additional_minutes %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :countries %>
+      <%= f.text_field :countries %>
+      </td>
+      <td>
+      <%= f.label :features %>
+      <%= f.text_field :features %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :equipment %>
+      <%= f.text_field :equipment %>
+      </td>
+      <td>
+      <%= f.label :installation %>
+      <%= f.text_field :installation %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <%= f.label :activation %>
+      <%= f.text_field :activation %>
+      </td>
+      <td/>
+    </tr>
+  </table>
   
 </fieldset>

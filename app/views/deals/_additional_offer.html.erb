@@ -1,24 +1,42 @@
 <fieldset id="additional-offer">
   <h4>Additional Offer for zip areas</h4>
-  <%= f.label :title %>
-  <%= f.text_field :title, :id=>'additional-offer-title' %>
-  
-  <%= f.label :description %>
-  <%= f.text_area :description %>
-
-  <%= f.label :price_value %>
-  <%= f.text_field :price_value %>
-
-  <%= f.label 'Select Allowed Zipcodes:' %>
-  <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
-  
-  <%= f.label :start_date %>
-  <%= f.text_field :start_date, :id=>'additional-offer-start-date' %>
-
-  <%= f.label :end_date %>
-  <%= f.text_field :end_date, :id=>'additional-offer-end-date' %>
-
-  <div><%= f.check_box :is_active %> Is Active? </div>
-
- 
+  <table class="form-data">
+  <tr>
+    <td valign="top">
+        <%= f.label :title %>
+        <%= f.text_field :title, :id=>'additional-offer-title' %>
+    </td>
+    <td>
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+    </td>
+  </tr>
+  <tr>
+      <td valign="top">
+        <%= f.label :price_value %>
+        <%= f.text_field :price_value %>
+      </td>
+      <td>
+        <%= f.label 'Select Allowed Zipcodes:' %>
+        <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
+      </td>
+  </tr>
+  <tr>
+      <td>
+        <%= f.label :start_date %>
+        <%= f.text_field :start_date, :id=>'additional-offer-start-date' %>
+      </td>
+      <td>
+        <%= f.label :end_date %>
+        <%= f.text_field :end_date, :id=>'additional-offer-end-date' %>
+      </td>
+  </tr>
+  <tr>
+      <td>
+        <div><%= f.check_box :is_active %> Is Active? </div>
+      </td>
+      <td>
+      </td>
+  </tr>
+  </table>
 </fieldset>

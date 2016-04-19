@@ -6,11 +6,15 @@ class Deal < ActiveRecord::Base
 	has_many :trending_deals, dependent: :destroy
   has_many  :internet_deal_attributes, dependent: :destroy
   has_many  :telephone_deal_attributes, dependent: :destroy
+  has_many  :cable_deal_attributes, dependent: :destroy
+  has_many  :bundle_deal_attributes, dependent: :destroy
   has_many  :additional_offers, dependent: :destroy
   has_and_belongs_to_many  :zipcodes, dependent: :destroy
   
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
   accepts_nested_attributes_for :telephone_deal_attributes,:reject_if => :reject_telephone, allow_destroy: true
+  accepts_nested_attributes_for :cable_deal_attributes,:reject_if => :reject_cable, allow_destroy: true
+  accepts_nested_attributes_for :bundle_deal_attributes,:reject_if => :reject_bundle, allow_destroy: true
   accepts_nested_attributes_for :additional_offers,:reject_if => :reject_additional, allow_destroy: true
   
 	mount_uploader :image, ImageUploader
@@ -114,6 +118,25 @@ class Deal < ActiveRecord::Base
   end
   def reject_telephone(attributes)
     if attributes[:domestic_call_minutes].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
+  def reject_cable(attributes)
+    if attributes[:free_channels].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
+
+  def reject_bundle(attributes)
+    if attributes[:download].blank? && attributes[:domestic_call_minutes].blank? && attributes[:free_channels].blank?
       if attributes[:id].present?
         attributes.merge!({:_destroy => 1}) && false
       else

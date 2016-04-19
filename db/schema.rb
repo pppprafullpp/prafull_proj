@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413172548) do
-
-  create_table "additional_offer_zipcode_maps", force: :cascade do |t|
-    t.integer  "additional_offer_id", limit: 4
-    t.integer  "zipcode_id",          limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "additional_offer_zipcode_maps", ["additional_offer_id"], name: "index_additional_offer_zipcode_maps_on_additional_offer_id", using: :btree
-  add_index "additional_offer_zipcode_maps", ["zipcode_id"], name: "index_additional_offer_zipcode_maps_on_zipcode_id", using: :btree
+ActiveRecord::Schema.define(version: 20160419125401) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",     limit: 4
@@ -96,6 +86,28 @@ ActiveRecord::Schema.define(version: 20160413172548) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "bundle_deal_attributes", force: :cascade do |t|
+    t.integer  "deal_id",                    limit: 4
+    t.string   "bundle_combo",               limit: 255
+    t.float    "download",                   limit: 24
+    t.float    "upload",                     limit: 24
+    t.float    "data",                       limit: 24
+    t.boolean  "static_ip"
+    t.string   "domestic_call_minutes",      limit: 255
+    t.string   "international_call_minutes", limit: 255
+    t.integer  "free_channels",              limit: 4
+    t.text     "free_channels_list",         limit: 65535
+    t.integer  "premium_channels",           limit: 4
+    t.text     "premium_channels_list",      limit: 65535
+    t.integer  "hd_channels",                limit: 4
+    t.text     "hd_channels_list",           limit: 65535
+    t.text     "equipment",                  limit: 65535
+    t.text     "installation",               limit: 65535
+    t.string   "activation",                 limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
   create_table "bundle_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4
     t.float    "upload_speed",                 limit: 24
@@ -115,6 +127,23 @@ ActiveRecord::Schema.define(version: 20160413172548) do
   end
 
   add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "cable_deal_attributes", force: :cascade do |t|
+    t.integer  "deal_id",               limit: 4
+    t.integer  "free_channels",         limit: 4
+    t.text     "free_channels_list",    limit: 65535
+    t.integer  "premium_channels",      limit: 4
+    t.text     "premium_channels_list", limit: 65535
+    t.integer  "hd_channels",           limit: 4
+    t.text     "hd_channels_list",      limit: 65535
+    t.text     "equipment",             limit: 65535
+    t.text     "installation",          limit: 65535
+    t.string   "activation",            limit: 255
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "cable_deal_attributes", ["deal_id"], name: "index_cable_deal_attributes_on_deal_id", using: :btree
 
   create_table "cable_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id", limit: 4
@@ -303,9 +332,10 @@ ActiveRecord::Schema.define(version: 20160413172548) do
 
   create_table "telephone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                          limit: 4
-    t.integer  "domestic_call_minutes",            limit: 4
+    t.string   "domestic_call_minutes",            limit: 25
     t.integer  "domestic_receive_minutes",         limit: 4
     t.integer  "domestic_additional_minutes",      limit: 4
+    t.string   "international_call_minutes",       limit: 25
     t.integer  "international_landline_minutes",   limit: 4
     t.integer  "international_mobile_minutes",     limit: 4
     t.integer  "international_additional_minutes", limit: 4

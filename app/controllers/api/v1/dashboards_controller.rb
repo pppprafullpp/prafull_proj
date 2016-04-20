@@ -57,7 +57,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  		elsif sp.service_category_id == 3
 		  			@app_user_f_channel = sp.cable_service_preference.free_channels
 		  			@equal_deals = Deal.joins(:cable_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cable_deal_attributes.free_channels = ?", true, sp.service_category_id,@app_user_f_channel).order("price ASC")
-					@greater_deals = Deal.joins(:cable_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cable_deal_attributes.free_channels > ?", true, sp.service_category_id),@app_user_f_channel.order("price ASC").limit(2)
+					@greater_deals = Deal.joins(:cable_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cable_deal_attributes.free_channels > ?", true, sp.service_category_id,@app_user_f_channel).order("price ASC").limit(2)
 					@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
 					@b_deal = @merged_deals.first
 		  			if @b_deal.present?
@@ -87,11 +87,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  			end
 		  		elsif sp.service_category_id == 5
 		  			@app_user_bundle_combo = sp.bundle_service_preference.bundle_combo
-		  			@app_user_d_speed = sp.internet_service_preference.download_speed
-		  			@equal_deals = Deal.joins(:bundle_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ? AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download = ?", true, sp.service_category_id, Date.today,@app_user_bundle_combo,@app_user_d_speed).order("price ASC").first
-		  			@greater_deals = Deal.joins(:bundle_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ? AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ?", true, sp.service_category_id, Date.today,@app_user_bundle_combo,@app_user_d_speed).order("price ASC").first
-		  			@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
-					@b_deal = @merged_deals.first
+		  			@app_user_d_speed = sp.bundle_service_preference.download_speed
+		  			@equal_deals = Deal.joins(:bundle_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ? AND bundle_deal_attributes.bundle_combo = ?", true, sp.service_category_id, Date.today,@app_user_bundle_combo).order("price ASC").first
+		  			@b_deal = @equal_deals
 		  			if @b_deal.present?
 		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  				@best_deal << @b_deal

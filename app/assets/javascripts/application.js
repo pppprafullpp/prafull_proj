@@ -32,7 +32,7 @@ function initPage() {
 			$("#cable-attributes").css("display","none");
 			$("#cable-free-channels").prop("required",false);
 
-			$("#bundel-attributes").css("display","none");
+			$("#bundle-attributes").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
 			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
 			$("#bundle-cable-free-channels").prop("required",false);
@@ -46,7 +46,7 @@ function initPage() {
 			$("#cable-attributes").css("display","none");
 			$("#cable-free-channels").prop("required",false);
 
-			$("#bundel-attributes").css("display","none");
+			$("#bundle-attributes").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
 			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
 			$("#bundle-cable-free-channels").prop("required",false);
@@ -60,7 +60,7 @@ function initPage() {
 			$("#telephone-attributes").css("display","none");
 			$("#telephone-domestic-call-minutes").prop("required",false);
 
-			$("#bundel-attributes").css("display","none");
+			$("#bundle-attributes").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
 			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
 			$("#bundle-cable-free-channels").prop("required",false);

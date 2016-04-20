@@ -7,5 +7,13 @@ class ApplicationController < ActionController::Base
   	resource = controller_name.singularize.to_sym
   	method = "#{resource}_params"
   	params[resource] &&= send(method) if respond_to?(method, true)
-	end
+  	:cors_set_access_control_headers
+  end
+
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+	headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+	headers['Access-Control-Request-Method'] = '*'
+	headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  end
 end

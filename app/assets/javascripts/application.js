@@ -32,6 +32,9 @@ function initPage() {
 			$("#cable-attributes").css("display","none");
 			$("#cable-free-channels").prop("required",false);
 
+			$("#cellphone-attributes").css("display","none");
+			$("#cellphone-telephone-domestic-call-minutes").prop("required",false);
+
 			$("#bundle-attributes").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
 			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
@@ -45,6 +48,9 @@ function initPage() {
 
 			$("#cable-attributes").css("display","none");
 			$("#cable-free-channels").prop("required",false);
+
+			$("#cellphone-attributes").css("display","none");
+			$("#cellphone-telephone-domestic-call-minutes").prop("required",false);
 
 			$("#bundle-attributes").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
@@ -60,6 +66,9 @@ function initPage() {
 			$("#telephone-attributes").css("display","none");
 			$("#telephone-domestic-call-minutes").prop("required",false);
 
+			$("#cellphone-attributes").css("display","none");
+			$("#cellphone-telephone-domestic-call-minutes").prop("required",false);
+
 			$("#bundle-attributes").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
 			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
@@ -67,6 +76,24 @@ function initPage() {
 
 			$("#cable-attributes").css("display","block");
 			$("#cable-free-channels").prop("required",true);
+		}else if($("#deal_service_category_id option:selected").text()=="Cellphone"){
+			$("#internet-attributes").css("display","none");
+			$("#internet-download").prop("required",false);
+
+			$("#telephone-attributes").css("display","none");
+			$("#telephone-domestic-call-minutes").prop("required",false);
+
+			$("#bundle-attributes").css("display","none");
+			$("#bundle-internet-download").prop("required",false);
+			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
+			$("#bundle-cable-free-channels").prop("required",false);
+
+			$("#cable-attributes").css("display","none");
+			$("#cable-free-channels").prop("required",false);
+
+			$("#cellphone-attributes").css("display","block");
+			$("#cellphone-telephone-domestic-call-minutes").prop("required",true);
+
 		}else if($("#deal_service_category_id option:selected").text()=="Bundle"){
 			$("#internet-attributes").css("display","none");
 			$("#internet-download").prop("required",false);
@@ -76,6 +103,9 @@ function initPage() {
 
 			$("#cable-attributes").css("display","none");
 			$("#cable-free-channels").prop("required",false);
+
+			$("#cellphone-attributes").css("display","none");
+			$("#cellphone-telephone-domestic-call-minutes").prop("required",false);
 
 			$("#bundle-attributes").css("display","block");
 			$("#bundle-internet-download").prop("required",true);
@@ -147,6 +177,26 @@ function initPage() {
     	}else{
     		$("#bundle-telephone-international-call-minutes").val("");
     		$("#bundle-telephone-international-call-minutes").prop("readonly",false);
+    	}
+	});
+
+	$("#cellphone_domestic_unlimited").click(function(){
+		if($(this).is(':checked')){
+    		$("#cellphone-domestic-call-minutes").val("Unlimited");
+    		$("#cellphone-domestic-call-minutes").prop("readonly",true);
+    	}else{
+    		$("#cellphone-domestic-call-minutes").val("");
+    		$("#cellphone-domestic-call-minutes").prop("readonly",false);
+    	}
+	});
+
+	$("#cellphone_international_unlimited").click(function(){
+		if($(this).is(':checked')){
+    		$("#cellphone-international-call-minutes").val("Unlimited");
+    		$("#cellphone-international-call-minutes").prop("readonly",true);
+    	}else{
+    		$("#cellphone-international-call-minutes").val("");
+    		$("#cellphone-international-call-minutes").prop("readonly",false);
     	}
 	});
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419125401) do
+ActiveRecord::Schema.define(version: 20160420073520) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",     limit: 4
@@ -154,6 +154,23 @@ ActiveRecord::Schema.define(version: 20160419125401) do
   end
 
   add_index "cable_service_preferences", ["service_preference_id"], name: "index_cable_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "cellphone_deal_attributes", force: :cascade do |t|
+    t.integer  "deal_id",                    limit: 4
+    t.string   "domestic_call_minutes",      limit: 255
+    t.string   "domestic_text",              limit: 255
+    t.string   "international_call_minutes", limit: 255
+    t.string   "international_text",         limit: 255
+    t.float    "data_plan",                  limit: 24
+    t.string   "data_speed",                 limit: 255
+    t.text     "equipment",                  limit: 65535
+    t.text     "installation",               limit: 65535
+    t.string   "activation",                 limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "cellphone_deal_attributes", ["deal_id"], name: "index_cellphone_deal_attributes_on_deal_id", using: :btree
 
   create_table "cellphone_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4

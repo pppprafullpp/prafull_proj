@@ -87,6 +87,7 @@ class DealsController < ApplicationController
     @deal.internet_deal_attributes.build
     @deal.telephone_deal_attributes.build
     @deal.cable_deal_attributes.build
+    @deal.cellphone_deal_attributes.build
     @deal.bundle_deal_attributes.build
     @deal.additional_offers.build
   end

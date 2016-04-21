@@ -75,7 +75,7 @@ class Api::V1::DashboardsController < ApplicationController
 	  					elsif @equal_deals.present?
 	  						@merged_deals=@equal_deals
 	  						@b_deal = @merged_deals
-	  					elsif greater_deals.present?
+	  					elsif @greater_deals.present?
 	  						@merged_deals=@greater_deals
 	  						@b_deal = @merged_deals
 	  					end
@@ -95,13 +95,12 @@ class Api::V1::DashboardsController < ApplicationController
 	  					elsif @equal_deals.present?
 	  						@merged_deals=@equal_deals
 	  						@b_deal = @merged_deals
-	  					elsif greater_deals.present?
+	  					elsif @greater_deals.present?
 	  						@merged_deals=@greater_deals
 	  						@b_deal = @merged_deals
 	  					end
 
-						@b_deal = @merged_deals.first
-		  				if @b_deal.present?
+						if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  					@best_deal << @b_deal 
 		  				end		

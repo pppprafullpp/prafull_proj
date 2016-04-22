@@ -9,7 +9,7 @@ class Api::V1::AppUsersController < ApplicationController
   def update_app_user
     @app_user = AppUser.find_by_email(params[:email])
     if @app_user.present?
-      if params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
+      if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
         @app_user.update(app_user_params)
         render :status => 200,
                :json => { :success => true }
@@ -93,7 +93,7 @@ class Api::V1::AppUsersController < ApplicationController
 	private
 	def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-		params.permit(:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
+		params.permit(:user_type,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
 	end
 
   def decode_picture_data(picture_data)

@@ -25,10 +25,10 @@ class Api::V1::DashboardsController < ApplicationController
 		  		if sp.service_category_id == 1
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
 		  			@equal_deals = Deal.joins(:internet_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download = ?", true, sp.service_category_id,@app_user_d_speed).order("price ASC")
-						@greater_deals = Deal.joins(:internet_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download > ?", true, sp.service_category_id,@app_user_d_speed).order("price ASC").limit(2)
-						#@smaller_deals = Deal.where("is_active = ? AND state = ? AND service_category_id = ? AND download_speed < ?", true, @state, sp.service_category_id, @app_user_d_speed).order("price DESC").limit(2)
-						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
-						@b_deal = @merged_deals.first
+					@greater_deals = Deal.joins(:internet_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download > ?", true, sp.service_category_id,@app_user_d_speed).order("price ASC").limit(2)
+					@smaller_deals = Deal.joins(:internet_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download < ?", true, sp.service_category_id,@app_user_d_speed).order("price ASC").limit(2)
+					@merged_deals = (@equal_deals + @greater_deals + @smaller_deals).sort_by(&:price)
+					@b_deal = @merged_deals.first
 		  			if @b_deal.present?
 		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
 		  				@best_deal << @b_deal 
@@ -37,7 +37,8 @@ class Api::V1::DashboardsController < ApplicationController
 		  			if sp.telephone_service_preference.domestic_call_unlimited == true
 		  					@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, sp.service_category_id).order("price ASC")
 							@greater_deals = Deal.joins(:telephone_deal_attributes).where("is_active = ? AND service_category_id = ? AND price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, sp.service_category_id, @app_user_current_plan).order("price ASC").limit(2)
-							@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+							@smaller_deals = Deal.joins(:telephone_deal_attributes).where("is_active = ? AND service_category_id = ? AND price < ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", true, sp.service_category_id, @app_user_current_plan).order("price ASC").limit(2)
+							@merged_deals = (@equal_deals + @greater_deals + @smaller_deals).sort_by(&:price)
 							@b_deal = @merged_deals.first
 		  				if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
@@ -47,7 +48,8 @@ class Api::V1::DashboardsController < ApplicationController
 		  				@app_user_c_minutes = sp.telephone_service_preference.domestic_call_minutes
 		  				@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, sp.service_category_id, @app_user_c_minutes).order("price ASC")
 						@greater_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes > ?", true, sp.service_category_id, @app_user_c_minutes).order("price ASC").limit(2)
-						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+						@smaller_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes < ?", true, sp.service_category_id, @app_user_c_minutes).order("price ASC").limit(2)
+						@merged_deals = (@equal_deals + @greater_deals + @smaller_deals).sort_by(&:price)
 						@b_deal = @merged_deals.first
 		  				if @b_deal.present?
 		  					@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
@@ -58,7 +60,8 @@ class Api::V1::DashboardsController < ApplicationController
 		  			@app_user_f_channel = sp.cable_service_preference.free_channels
 		  			@equal_deals = Deal.joins(:cable_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cable_deal_attributes.free_channels = ?", true, sp.service_category_id,@app_user_f_channel).order("price ASC")
 					@greater_deals = Deal.joins(:cable_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cable_deal_attributes.free_channels > ?", true, sp.service_category_id,@app_user_f_channel).order("price ASC").limit(2)
-					@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+					@smaller_deals = Deal.joins(:cable_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cable_deal_attributes.free_channels < ?", true, sp.service_category_id,@app_user_f_channel).order("price ASC").limit(2)
+					@merged_deals = (@equal_deals + @greater_deals + @smaller_deals).sort_by(&:price)
 					@b_deal = @merged_deals.first
 		  			if @b_deal.present?
 		  				@you_save = '%.2f' % (@app_user_current_plan - @b_deal.price)
@@ -68,9 +71,10 @@ class Api::V1::DashboardsController < ApplicationController
 		  			if sp.cellphone_service_preference.domestic_call_unlimited == true
 		  				@equal_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' ", true, sp.service_category_id).order("price ASC").first
 		  				@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price > ?", true, sp.service_category_id, @app_user_current_plan).order("price ASC").first
+		  				@smaller_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price > ?", true, sp.service_category_id, @app_user_current_plan).order("price ASC").first
 		  				
 	  					if @equal_deals.present? && @greater_deals.present?
-	  						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+	  						@merged_deals = (@equal_deals + @greater_deals + @smaller_deals).sort_by(&:price)
 	  						@b_deal = @merged_deals.first
 	  					elsif @equal_deals.present?
 	  						@merged_deals=@equal_deals
@@ -87,10 +91,10 @@ class Api::V1::DashboardsController < ApplicationController
 		  			else
 		  				@app_user_c_minutes = sp.cellphone_service_preference.domestic_call_minutes
 		  				@equal_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = ?", true, sp.service_category_id, @app_user_c_minutes).order("price ASC").first
-		  				@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = ? AND deals.price > ?", true, sp.service_category_id, @app_user_c_minutes,@app_user_current_plan).order("price ASC").first
-		  				
+		  				@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes >", true, sp.service_category_id, @app_user_c_minutes).order("price ASC").first
+		  				@smaller_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes <", true, sp.service_category_id, @app_user_c_minutes).order("price ASC").first
 		  				if @equal_deals.present? && @greater_deals.present?
-	  						@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
+	  						@merged_deals = (@equal_deals + @greater_deals + @smaller_deals).sort_by(&:price)
 	  						@b_deal = @merged_deals.first
 	  					elsif @equal_deals.present?
 	  						@merged_deals=@equal_deals

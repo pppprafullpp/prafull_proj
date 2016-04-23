@@ -4,7 +4,7 @@ class CreateAdditionalOffers < ActiveRecord::Migration
       t.integer :deal_id
       t.string :title
       t.text :description
-      t.float :price_value
+      t.float :price_value, null: false, default: "0"
       t.datetime :start_date
       t.datetime :end_date
       t.boolean :is_active, default: true

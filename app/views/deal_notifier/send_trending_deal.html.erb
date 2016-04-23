@@ -1,99 +1,131 @@
 <!DOCTYPE html>
 <html>
-  <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-    <table width="100%">
+  <body>
+    <table width="540" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666; margin:0 auto; padding:15px 30px;">
       <tr>
         <td>
-          <h2>Hi Sir/Ma'am,</h2>
+          <table width="100%" style="border-bottom:solid 1px #d3d3d3; padding-bottom:15px; margin-bottom:15px;">
+              <tr>
+                  <td><img src="http://52.24.62.7/assets/emailer/logo.png" width="228" height="79" alt="Service Deal"></td>
+                  <td/>
+                </tr>
+            </table>
         </td>
       </tr>
+      
       <tr>
         <td>
-          Based on your saved preferences with us, here are few deals you can't afford to miss !!
+          <table width="100%" style="border-bottom:solid 1px #d3d3d3; margin-bottom:25px;">
+              <tr>
+                  <td><img src="http://52.24.62.7/assets/emailer/banner.png" width="533" height="508" alt="Service Deal"></td>
+                </tr>
+            </table>
         </td>
       </tr>
-      <% if @internet_t_deal.present? %>
-        <tr>
-          <td>
-            <b><i>Internet Trending Deal</i></b> <br/>
-            &nbsp;Deal Title     : <%= @i_title %> <br/>
-            &nbsp;Vendor         : <%= @i_provider %> <br/>
-            &nbsp;Download Speed : <%= @d_speed %> <br/>
-            &nbsp;Price          : <%= @i_price %>
-          </td>
-        </tr>  
-      <% end %>
-      <% if @telephone_t_deal.present? %>
-        <tr>
-          <td>
-            <b><i>Telephone Trending Deal</i></b> <br/>
-            &nbsp;Deal Title                   : <%= @t_title %> <br/>
-            &nbsp;Vendor                       : <%= @t_provider %> <br/>
-            <% if @d_call_mins.present? %>
-              &nbsp;Domestic Call Minutes        : <%= @d_call_mins %> <br/> 
-            <% end %>
-            <% if @i_call_mins.present? %>
-              &nbsp;International Call Minutes   : <%= @i_call_mins %> <br/>
-            <% end %>  
-            <% if @d_call_unlimit.present? %>
-              &nbsp;Domestic Call Unlimited      : <%= @d_call_unlimit %> <br/>
-            <% end %>  
-            <% if @i_call_unlimit.present? %>
-              &nbsp;International Call Unlimited : <%= @i_call_unlimit %> <br/>
-            <% end %>  
-            &nbsp;Price                        : <%= @t_price %>
-          </td>
-        </tr>
-      <% end %>
-      <% if @cable_t_deal.present? %>
-        <tr>
-          <td>
-            <b><i>Cable Trending Deal</i></b> <br/>
-            &nbsp;Deal Title       : <%= @c_title %> <br/>
-            &nbsp;Vendor           : <%= @c_provider %> <br/>
-            <% if @f_channels.present? %>
-              &nbsp;Free Channels    : <%= @f_channels %> <br/>
-            <% end %>
-            <% if @p_channels.present? %>  
-              &nbsp;Premium Channels : <%= @p_channels %> <br/>
-            <% end %>  
-            &nbsp;Price            : <%= @c_price %>
-          </td>
-        </tr>
-      <% end %>
-      <% if @cell_t_deal.present? %>
-        <tr>
-          <td>
-            <b><i>Cell Phone Trending Deal</i></b> <br/>
-            &nbsp;Deal Title       : <%= @cell_title %> <br/>
-            &nbsp;Vendor           : <%= @cell_provider %> <br/>
-            <% if @d_call_mins.present? %>
-              &nbsp;Domestic Call Minutes        : <%= @d_call_mins %> <br/> 
-            <% end %>
-            <% if @i_call_mins.present? %>
-              &nbsp;International Call Minutes   : <%= @i_call_mins %> <br/>
-            <% end %>  
-            <% if @d_call_unlimit.present? %>
-              &nbsp;Domestic Call Unlimited      : <%= @d_call_unlimit %> <br/>
-            <% end %>  
-            <% if @i_call_unlimit.present? %>
-              &nbsp;International Call Unlimited : <%= @i_call_unlimit %> <br/>
-            <% end %>  
-            <% if @data_plan.present? %>
-              &nbsp;Data(In GB)    : <%= @data_plan %> <br/>
-            <% end %>
-            <% if @data_speed.present? %>  
-              &nbsp;Speed(In Mbps) : <%= @data_speed %> <br/>
-            <% end %>  
-            &nbsp;Price            : <%= @cell_price %>
-          </td>
-        </tr>
-      <% end %>
-      <tr><td>&nbsp;</td></tr>
+      
       <tr>
         <td>
-          All the best, <br/>
-          ServiceDeals team.
+          <table width="100%">
+              <tr>
+                  <td style="padding-bottom:35px; border-bottom:solid 1px #d3d3d3;">
+                      <p style="font-size:16px; color:#020202;">Dear User,</p>
+                        <p style="font-size:14px; color:#666666; line-height:22px;">Based on your saved preferences with us, here are few deals you can't afford to miss!</p>
+                        <p style="font-size:14px; color:#666666; line-height:22px;">
+                          <table>
+                            <% if @internet_t_deal.present? %>
+                              <tr>
+                                <td>
+                                  <b><i>Internet Trending Deal</i></b> <br/>
+                                  &nbsp;&nbsp;Deal Title     : <%= @i_title %> <br/>
+                                  &nbsp;&nbsp;Vendor         : <%= @i_provider %> <br/>
+                                  &nbsp;&nbsp;Download Speed : <%= @d_speed %> <br/>
+                                  &nbsp;&nbsp;Price          : <%= @i_price %>
+                                </td>
+                              </tr>  
+                            <% end %>
+                            <% if @telephone_t_deal.present? %>
+                              <tr>
+                                <td>
+                                  <b><i>Telephone Trending Deal</i></b> <br/>
+                                  &nbsp;&nbsp;Deal Title                   : <%= @t_title %> <br/>
+                                  &nbsp;&nbsp;Vendor                       : <%= @t_provider %> <br/>
+                                  <% if @d_call_mins.present? %>
+                                    &nbsp;&nbsp;Domestic Call Minutes        : <%= @d_call_mins %> <br/> 
+                                  <% end %>
+                                  <% if @i_call_mins.present? %>
+                                    &nbsp;&nbsp;International Call Minutes   : <%= @i_call_mins %> <br/>
+                                  <% end %>  
+                                  &nbsp;&nbsp;Price                        : <%= @t_price %>
+                                </td>
+                              </tr>
+                            <% end %>
+                            <% if @cable_t_deal.present? %>
+                              <tr>
+                                <td>
+                                  <b><i>Cable Trending Deal</i></b> <br/>
+                                  &nbsp;&nbsp;Deal Title       : <%= @c_title %> <br/>
+                                  &nbsp;&nbsp;Vendor           : <%= @c_provider %> <br/>
+                                  <% if @f_channels.present? %>
+                                    &nbsp;&nbsp;Free Channels    : <%= @f_channels %> <br/>
+                                  <% end %>
+                                  <% if @p_channels.present? %>  
+                                    &nbsp;&nbsp;Premium Channels : <%= @p_channels %> <br/>
+                                  <% end %>  
+                                  &nbsp;&nbsp;Price            : <%= @c_price %>
+                                </td>
+                              </tr>
+                            <% end %>
+                            <% if @cell_t_deal.present? %>
+                              <tr>
+                                <td>
+                                  <b><i>Cell Phone Trending Deal</i></b> <br/>
+                                  &nbsp;&nbsp;Deal Title       : <%= @cell_title %> <br/>
+                                  &nbsp;Vendor           : <%= @cell_provider %> <br/>
+                                  <% if @d_call_mins.present? %>
+                                    &nbsp;&nbsp;Domestic Call Minutes        : <%= @d_call_mins %> <br/> 
+                                  <% end %>
+                                  <% if @i_call_mins.present? %>
+                                    &nbsp;&nbsp;International Call Minutes   : <%= @i_call_mins %> <br/>
+                                  <% end %>  
+                                  <% if @data_plan.present? %>
+                                    &nbsp;&nbsp;Data(In GB)    : <%= @data_plan %> <br/>
+                                  <% end %>
+                                  <% if @data_speed.present? %>  
+                                    &nbsp;&nbsp;Speed(In Mbps) : <%= @data_speed %> <br/>
+                                  <% end %>  
+                                  &nbsp;&nbsp;Price            : <%= @cell_price %>
+                                </td>
+                              </tr>
+                            <% end %>
+                          </table> 
+                        </p>
+                        <p style="font-size:14px; color:#666666; line-height:22px;">ServiceDeals can help you find deals that can save you 20%-30% or more. Here are best match and trending deals:</p>
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td style="font-size:14px; color:#666666; padding-bottom:10px; line-height:22px; text-align:center; padding-top:15px;">
+                      Connect with us
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td align="center" style="padding-bottom:20px; border-bottom:solid 1px #d3d3d3;">
+                      <a href="#"><img src="http://52.24.62.7/assets/emailer/fb-icon.png" width="36" height="36" alt="facebook" title="Facebook" style="padding-right:5px;"></a>
+                        <a href="#"><img src="http://52.24.62.7/assets/emailer/linkedIn-icon.png" width="36" height="36" alt="Linkein" title="LinkedIn" style="padding-right:5px;"></a>
+                        <a href="#"><img src="http://52.24.62.7/assets/emailer/twitter-icon.png" width="36" height="36" alt="twitter" title="Twitter" style="padding-right:5px;"></a>
+                        <a href="#"><img src="http://52.24.62.7/assets/emailer/whatapp-icon.png" width="36" height="36" alt="whatsapp" title="Whatsapp"></a>
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td>
+                      <p style="font-size:12px; color:#8f8f8f; padding-top:15px; line-height:20px;">ServiceDeal has sent this e-mail to you because your subscription preferences <br>
+              indicate that you want to receive alerts on this email address. Click here to unsubscribe</p>
+                    </td>
+                </tr>
+                 
+            </table>
         </td>
       </tr>
     </table>

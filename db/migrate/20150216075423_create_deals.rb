@@ -6,7 +6,7 @@ class CreateDeals < ActiveRecord::Migration
       t.string :title
       t.text :short_description
       t.text :detail_description
-      t.float :price
+      t.float :price, null: false, default: "0"
       t.string :url
       t.string :image
       t.datetime :start_date

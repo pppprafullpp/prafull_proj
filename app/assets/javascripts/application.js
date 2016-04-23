@@ -136,7 +136,17 @@ function initPage() {
 			
 			$("#bundle-cable").css("display","block");	
 			$("#bundle-cable-free-channels").prop("required",true);	
+		}else if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Telephone and Cable"){
+			$("#bundle-internet").css("display","none");
+			$("#bundle-internet-download").prop("required",false);
+
+			$("#bundle-telephone").css("display","block");
+			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
+			
+			$("#bundle-cable").css("display","block");	
+			$("#bundle-cable-free-channels").prop("required",true);	
 		}
+
 	});		
 		
 

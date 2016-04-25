@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       end
       match 'service_categories' => 'service_categories#index', :via => :get
       match 'service_preferences' => 'service_preferences#create', :via => :post
+      match 'service_preferences/send_ios_notification' => 'service_preferences#send_ios_notification', :via => :get
       match 'notifications' => 'notifications#create', :via => :post
       match 'get_notification' => 'notifications#fetch_notification', :via => :get
       match 'app_users' => 'app_users#create', :via => :post

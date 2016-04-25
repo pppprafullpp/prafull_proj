@@ -93,7 +93,7 @@ class Api::V1::AppUsersController < ApplicationController
 	private
 	def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-		params.permit(:user_type,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
+		params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
 	end
 
   def decode_picture_data(picture_data)

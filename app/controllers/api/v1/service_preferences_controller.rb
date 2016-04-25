@@ -202,7 +202,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					@greater_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = 'Unlimited' AND deals.price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 				else
 					@current_c_minutes = params[:domestic_call_minutes]
-					@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ? AND deals.price <= ?", true, params[:service_category_id], @current_c_minutes,@current_plan_price).order("price ASC")
+					@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id], @current_c_minutes).order("price ASC")
 					@greater_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes > ?", true, params[:service_category_id], @current_c_minutes).order("price ASC").limit(2)
 				end
 			elsif params[:service_category_id] == "3"
@@ -215,7 +215,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = 'Unlimited' AND deals.price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 				else
 					@current_c_minutes = params[:domestic_call_minutes]
-					@equal_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = ? AND deals.price <= ?", true, params[:service_category_id], @current_c_minutes,@current_plan_price).order("price ASC")
+					@equal_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id], @current_c_minutes).order("price ASC")
 					@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes > ?", true, params[:service_category_id], @current_c_minutes).order("price ASC").limit(2)
 				end	
 			elsif params[:service_category_id] == "5"
@@ -235,6 +235,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			if @b_deal.present?	
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
+		      		DealNotifier.send_best_deal(@app_user,@b_deal).deliver_now
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]
@@ -278,7 +279,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@greater_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = 'Unlimited' AND deals.price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 			else
 				@current_c_minutes = params[:domestic_call_minutes]
-				@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ? AND deals.price <= ?", true, params[:service_category_id], @current_c_minutes,@current_plan_price).order("price ASC")
+				@equal_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id], @current_c_minutes).order("price ASC")
 				@greater_deals = Deal.joins(:telephone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes > ?", true, params[:service_category_id], @current_c_minutes).order("price ASC").limit(2)
 			end
 		elsif params[:service_category_id] == "3"
@@ -292,7 +293,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = 'Unlimited' AND deals.price > ?", true, params[:service_category_id], @current_plan_price).order("price ASC").limit(2)
 			else
 				@current_c_minutes = params[:domestic_call_minutes]
-				@equal_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = ? AND deals.price <= ?", true, params[:service_category_id], @current_c_minutes,@current_plan_price).order("price ASC")
+				@equal_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes = ?", true, params[:service_category_id], @current_c_minutes).order("price ASC")
 				@greater_deals = Deal.joins(:cellphone_deal_attributes).where("deals.is_active = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes > ?", true, params[:service_category_id], @current_c_minutes).order("price ASC").limit(2)
 			end	
 		elsif params[:service_category_id] == "5"
@@ -310,6 +311,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		end
 		
 		if @b_deal.present?
+			DealNotifier.send_best_deal(@app_user,@b_deal).deliver_now
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]

@@ -48,4 +48,11 @@ class DealNotifier < ApplicationMailer
     end 
     mail(to: recipient, subject: "Trending Deals for you.") rescue nil
 	end	
+
+  def send_best_deal(app_user,best_deal)
+    recipient = app_user.email
+    @app_user = app_user
+    @best_deal=best_deal
+    mail(to: recipient, subject: "Best Deals for you.") rescue nil
+  end
 end

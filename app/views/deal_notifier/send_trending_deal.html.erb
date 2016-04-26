@@ -1,145 +1,199 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <table width="540" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666; margin:0 auto; padding:15px 30px;">
-      <tr>
-        <td>
-          <table width="100%" style="border-bottom:solid 1px #d3d3d3; padding-bottom:15px; margin-bottom:15px;">
-              <tr>
-                  <td><img src="http://52.24.62.7/assets/emailer/logo.png" width="228" height="79" alt="Service Deal"></td>
-                  <td/>
-                </tr>
-            </table>
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <table width="100%" style="border-bottom:solid 1px #d3d3d3; margin-bottom:25px;">
-              <tr>
-                  <td><img src="http://52.24.62.7/assets/emailer/banner.png" width="533" height="508" alt="Service Deal"></td>
-                </tr>
-            </table>
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <table width="100%">
-              <tr>
-                  <td style="padding-bottom:35px; border-bottom:solid 1px #d3d3d3;">
-                      <p style="font-size:16px; color:#020202;">Dear User,</p>
-                        <p style="font-size:14px; color:#666666; line-height:22px;">Based on your saved preferences with us, here are few deals you can't afford to miss!</p>
-                        <p style="font-size:14px; color:#666666; line-height:22px;">
-                          <table>
-                            <% if @internet_t_deal.present? %>
-                              <tr>
-                                <td>
-                                  <b><i>Internet</i></b><br/>
-                                  <table>
-                                    <tr>Deal Title<td></td><td><%= @i_title %></td></tr>
-                                    <tr>Vendor<td></td><td><%= @i_provider %></td></tr>
-                                    <tr>Download Speed<td></td><td><%= @d_speed %></td></tr>
-                                    <tr>Price<td></td><td><%= @i_price %></td></tr>
-                                  </table>
-                                  
-                                 </td>
-                              </tr>  
-                            <% end %>
-                            <% if @telephone_t_deal.present? %>
-                              <tr>
-                                <td>
-                                  <b><i>Telephone</i></b> <br/>
-                                  <table>
-                                    <tr>Deal Title<td></td><td><%= @t_title %></td></tr>
-                                    <tr>Vendor<td></td><td><%= @t_provider %></td></tr>
-                                    <% if @d_call_mins.present? %>
-                                    <tr>Domestic Call Minutes<td></td><td><%= @d_call_mins %></td></tr>
-                                    <% end %>
-                                    <% if @i_call_mins.present? %>
-                                    <tr>International Call Minutes<td></td><td><%= @i_call_mins %></td></tr>
-                                    <% end %>
-                                    <tr>Price<td></td><td><%= @t_price %></td></tr>
-                                  </table>
-                                  
-                                </td>
-                              </tr>
-                            <% end %>
-                            <% if @cable_t_deal.present? %>
-                              <tr>
-                                <td>
-                                  <b><i>Cable</i></b> <br/>
-                                  <table>
-                                    <tr>Deal Title<td></td><td><%= @c_title %></td></tr>
-                                    <tr>Vendor<td></td><td><%= @c_provider %></td></tr>
-                                    <% if @f_channels.present? %>
-                                    <tr>Free Channels<td></td><td><%= @f_channels %></td></tr>
-                                    <% end %>
-                                    <% if @f_channels.present? %>
-                                    <tr>Premium Channels<td></td><td><%= @f_channels %></td></tr>
-                                    <% end %>
-                                    <tr>Price<td></td><td><%= @c_price %></td></tr>
-                                  </table>
-                                  
-                                </td>
-                              </tr>
-                            <% end %>
-                            <% if @cell_t_deal.present? %>
-                              <tr>
-                                <td>
-                                  <b><i>Cellphone</i></b><br/>
-                                  <table>
-                                    <tr>Deal Title<td></td><td><%= @cell_title %></td></tr>
-                                    <tr>Vendor<td></td><td><%= @cell_provider %></td></tr>
-                                    <% if @d_call_mins.present? %>
-                                    <tr>Domestic Call Minutes<td></td><td><%= @d_call_mins %></td></tr>
-                                    <% end %>
-                                    <% if @i_call_mins.present? %>
-                                    <tr>International Call Minutes<td></td><td><%= @i_call_mins %></td></tr>
-                                    <% end %>
-                                    <% if @data_plan.present? %>
-                                    <tr>Data(GB)<td></td><td><%= @data_plan %></td></tr>
-                                    <% end %>
-                                    <% if @data_speed.present? %>
-                                    <tr>Speed(mbps)<td></td><td><%= @data_speed %></td></tr>
-                                    <% end %>
-                                    <tr>Price<td></td><td><%= @cell_price %></td></tr>
-                                  </table>
-                                  
-                                </td>
-                              </tr>
-                            <% end %>
-                          </table> 
-                        </p>
-                        <p style="font-size:14px; color:#666666; line-height:22px;">ServiceDeals can help you find deals that can save you 20%-30% or more.</p>
-                    </td>
-                </tr>
-                
+<body style="background:#f5f5f5;">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666; margin:0 auto; padding:10px 5px; background:#fff">
+  <tr>
+    <td>
+      <table width="100%" style="border-bottom:solid 1px #d3d3d3; padding-bottom:15px;">
+        <tr>
+          <td style="padding-left:30px;"><img src="http://52.24.62.7/assets/emailer/logo.png" width="228" height="79" alt="Service Deal"></td>
+          <td align="right" style="font-size:12px; text-align:right; padding-top:15px; padding-right:20px;">Mailing Address:<br>
+            <a href="mailto:info@servicedeal.com" style="color:#e50005; text-decoration:none;">info@servicedeal.com</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%" style="background-color:#489fe3; padding:40px;">
+        <tr>
+          <td style="text-align:center; color:#fff; font-size:24px; padding-bottom:15px;">Hi <%=@app_user.first_name%>,</td>
+        </tr>
+        <tr>
+          <td  style="text-align:center; color:#fff; font-size:23px; font-weight:bold; line-height:26px;">Switch to the best deal before your bill goes up by 20% to 30%.</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%" style="margin-top:20px; ">
+        <tr>
+          <td style="background-color:#e9292a; padding:10px; color:#fff; text-align:center; font-size:16px;"> Everyone gets $10 for every service they switch with ServiceDeals. </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%" style="margin-top:20px;">
+        <tr>
+          <td align="center" valign="middle" style="font-size:25px; padding-top:8px; color:#000; text-align:center; background:url(http://52.24.62.7/assets/emailer/trending-dealbg.png) no-repeat">Trending deals</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table align="center" style="margin-top:30px;">
+        <tr>
+          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
+            <% if @internet_deal.present? %>
+              <table  width="100%" align="center">
                 <tr>
-                  <td style="font-size:14px; color:#666666; padding-bottom:10px; line-height:22px; text-align:center; padding-top:15px;">
-                      Connect with us
-                    </td>
+                  <td align="center" width="130" height="130px"><img src="http://52.24.62.7/assets/emailer/internet.png" alt="internet" /></td>
                 </tr>
-                
                 <tr>
-                  <td align="center" style="padding-bottom:20px; border-bottom:solid 1px #d3d3d3;">
-                      <a href="#"><img src="http://52.24.62.7/assets/emailer/fb-icon.png" width="36" height="36" alt="facebook" title="Facebook" style="padding-right:5px;"></a>
-                        <a href="#"><img src="http://52.24.62.7/assets/emailer/linkedIn-icon.png" width="36" height="36" alt="Linkein" title="LinkedIn" style="padding-right:5px;"></a>
-                        <a href="#"><img src="http://52.24.62.7/assets/emailer/twitter-icon.png" width="36" height="36" alt="twitter" title="Twitter" style="padding-right:5px;"></a>
-                        <a href="#"><img src="http://52.24.62.7/assets/emailer/whatapp-icon.png" width="36" height="36" alt="whatsapp" title="Whatsapp"></a>
-                    </td>
+                  <td align="center" style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Internet </td>
                 </tr>
-                
+                <tr height="10"></tr>
                 <tr>
-                  <td>
-                      <p style="font-size:12px; color:#8f8f8f; padding-top:15px; line-height:20px;">ServiceDeal has sent this e-mail to you because your subscription preferences <br>
-              indicate that you want to receive alerts on this email address. Click here to unsubscribe</p>
-                    </td>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Download <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @internet_deal.download %> Mbps</span></p>
+                  </td>
                 </tr>
-                 
-            </table>
-        </td>
-      </tr>
-    </table>
-  </body>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @internet_deal.price %>/mo.</span></p>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+          </td>
+          <td width="20"></td>
+          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
+            <% if @telephone_deal.present? %>
+              <table  width="100%" align="center">
+                <tr>
+                  <td align="center" width="130" height="130px"><img src="http://52.24.62.7/assets/emailer/telephone.png" alt="telephone" /></td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Telephone </td>
+                </tr>
+                <tr height="10"></tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Domestic call <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @telephone_deal.domestic_call_minutes %></span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @telephone_deal.price %>/mo.</span></p>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
+            <% if @cellphone_deal.present? %>
+              <table  width="100%" align="center">
+                <tr>
+                  <td align="center" width="130" height="130px"><img src="http://52.24.62.7/assets/emailer/cellphone.png" alt="cellphone" /></td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Cellphone </td>
+                </tr>
+                <tr height="10"></tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Domestic call <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cellphone_deal.domestic_call_minutes %></span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @cellphone_deal.price %>/mo.</span></p>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+          </td>
+          <td width="20"></td>
+          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
+            <% if @cable_deal.present? %>
+              <table  width="100%" align="center">
+                <tr>
+                  <td align="center" width="130" height="130px"><img src="http://52.24.62.7/assets/emailer/cable.png" alt="cable" /></td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Cable </td>
+                </tr>
+                <tr height="10"></tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cable_deal.free_channels %></span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @cable_deal.price %>/mo.</span></p>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+          </td>
+        </tr>
+        <tr height="20"></tr>
+        <tr>
+          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center"></td>
+          <td width="20"></td>
+          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
+            <% if @bundle_deal.present? %>
+              <table  width="100%" align="center">
+                <tr>
+                  <td align="center" width="130" height="130px"><img src="http://52.24.62.7/assets/emailer/bundle.png" alt="bundle" /></td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Bundle </td>
+                </tr>
+                <tr height="10"></tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Domestic call <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.domestic_call_minutes %></span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @bundle_deal.domestic_call_minutes %>/mo.</span></p>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+      <tr height="20"></tr>
+        <tr>
+          <td style="font-size:14px; color:#666666; padding-bottom:10px; line-height:22px; text-align:center; padding-top:15px;"> Connect with us </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding-bottom:20px; border-bottom:solid 1px #d3d3d3;"> <a href="#"><img src="http://52.24.62.7/assets/emailer/fb-icon.png" width="36" height="36" alt="facebook" title="Facebook" style="padding-right:5px;"></a> <a href="#"><img src="http://52.24.62.7/assets/emailer/linkedIn-icon.png" width="36" height="36" alt="Linkein" title="LinkedIn" style="padding-right:5px;"></a> <a href="#"><img src="http://52.24.62.7/assets/emailer/twitter-icon.png" width="36" height="36" alt="twitter" title="Twitter" style="padding-right:5px;"></a> <a href="#"><img src="http://52.24.62.7/assets/emailer/whatapp-icon.png" width="36" height="36" alt="whatsapp" title="Whatsapp"></a> </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12px; color:#8f8f8f; padding-top:15px; line-height:20px; text-align:center">ServiceDeal has sent this e-mail to you because your subscription preferences <br>
+              indicate that you want to receive alerts on this email address. Click here to <a href="#" style="color:#808080">unsubscribe</a></p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
 </html>

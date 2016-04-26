@@ -20,7 +20,7 @@
           <td style="text-align:center; color:#fff; font-size:24px; padding-bottom:15px;">Hi <%=@app_user.first_name%>,</td>
         </tr>
         <tr>
-          <td  style="text-align:center; color:#fff; font-size:23px; font-weight:bold; line-height:26px;">Switch to the best deal before your bill goes up by 20% to 30%.</td>
+          <td  style="text-align:center; color:#fff; font-size:23px; font-weight:bold; line-height:26px;">Switch to the best deal and save 20% to 30% on your mothly cost.</td>
         </tr>
       </table>
     </td>
@@ -45,54 +45,46 @@
   </tr>
   <tr>
     <td>
-      <table align="center" style="margin-top:30px;">
-        
-        <tr>
-          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
-                <p><img src="http://52.24.62.7/assets/emailer/internet.png" alt="internet" /></P>
+      <div style="width:100%;margin: 0 75px;">
+        <% if @internet_deal.present? %>
+        <div style="float:left;width:200px;height:275px;background:#f4f4f4; border:1px solid #e5e5e5; padding:5px; text-align:center; margin-right:20px;">
+                <p><img height="75" src="http://52.24.62.7/assets/emailer/internet.png" alt="internet" /></P>
                 <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Internet </p>
                 <p style="font-size:15px; color:#3b3b3b;">Download <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @internet_deal.download %> Mbps</span></p>
                 <p style="font-size:15px; color:#3b3b3b;">Upload <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @internet_deal.upload %> Mbps</span></p>
                 <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @internet_deal.price %>/mo.</span></p>
-          </td>
-        </tr>
+        </div>
+        <% end %>
         <% if @telephone_deal.present? %>
-        <tr>
-          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
-              <p><img src="http://52.24.62.7/assets/emailer/telephone.png" alt="telephone" /></p>
+        <div style="float:left;width:200px;height:275px;background:#f4f4f4; border:1px solid #e5e5e5; padding:5px; text-align:center; margin-right:20px;">
+              <p><img height="75" src="http://52.24.62.7/assets/emailer/telephone.png" alt="telephone" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Telephone </p>
               <p style="font-size:15px; color:#3b3b3b;">Domestic calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @telephone_deal.domestic_call_minutes %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">International call <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @telephone_deal.international_call_minutes %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @telephone_deal.price %>/mo.</span></p>
-          </td>
-        </tr>
+        </div>
         <% end %>
         <% if @cellphone_deal.present? %>
-        <tr>
-          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
-              <p><img src="http://52.24.62.7/assets/emailer/cellphone.png" alt="cellphone" /></p>
+        <div style="float:left;width:200px;height:275px;background:#f4f4f4; border:1px solid #e5e5e5; padding:5px; text-align:center; margin-right:20px;">
+              <p><img height="75" src="http://52.24.62.7/assets/emailer/cellphone.png" alt="cellphone" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Cellphone </p>
               <p style="font-size:15px; color:#3b3b3b;">Domestic calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cellphone_deal.domestic_call_minutes %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">International calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cellphone_deal.international_call_minutes %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @cellphone_deal.price %>/mo.</span></p>
-          </td>
-        </tr>
+        </div>
         <% end %>
         <% if @cable_deal.present? %>
-        <tr>
-          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
-              <p><img src="http://52.24.62.7/assets/emailer/cable.png" alt="cable" /></p>
+        <div style="float:left;width:200px;height:275px;background:#f4f4f4; border:1px solid #e5e5e5; padding:5px; text-align:center; margin-right:20px;">
+              <p><img height="75" src="http://52.24.62.7/assets/emailer/cable.png" alt="cable" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Cable </p>
               <p style="font-size:15px; color:#3b3b3b;">Free Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cable_deal.free_channels %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">Premium Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cable_deal.premium_channels %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @cable_deal.price %>/mo.</span></p>
-          </td>
-        </tr>
+        </div>
         <% end %>
         <% if @bundle_deal.present? %>
-        <tr>
-          <td width="206" style=" background:#f4f4f4; border:1px solid #e5e5e5; padding:25px 0; text-align:center; margin-right:20px;" align="center">
-              <p><img src="http://52.24.62.7/assets/emailer/bundle.png" alt="bundle" /></p>
+        <div style="float:left;width:200px;height:275px;background:#f4f4f4; border:1px solid #e5e5e5; padding:5px; text-align:center; margin-right:20px;">
+              <p><img height="75" src="http://52.24.62.7/assets/emailer/bundle.png" alt="bundle" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Bundle </p>
               <p style="font-size:15px; color:#3b3b3b;">Download <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.download %> Mbps</span></p>
               <p style="font-size:15px; color:#3b3b3b;">Upload <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.upload %> Mbps</span></p>
@@ -101,10 +93,9 @@
               <p style="font-size:15px; color:#3b3b3b;">Free Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.free_channels %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">Premium Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.premium_channels %></span></p>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @bundle_deal.domestic_call_minutes %>/mo.</span></p>
-          </td>
-        </tr>
+        </div>
         <% end %>
-      </table>
+      </div>
     </td>
   </tr>
   <tr>

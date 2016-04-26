@@ -60,6 +60,7 @@ class DealNotifier < ApplicationMailer
   def send_best_deal_contract(app_user,service_preference)
     recipient = app_user.email
     @app_user = app_user
+    @service_preference=service_preference
     @current_plan_price = service_preference.price
     if service_preference.service_category_id == 1
       @current_d_speed = service_preference.internet_service_preference.download_speed

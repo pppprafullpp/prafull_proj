@@ -30,7 +30,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		      	)
 		      	pusher.push(notification)
 		    end
-      end
+      	end
 		render :status => 200,:json => { :success => true }
 
 	end

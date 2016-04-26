@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <table width="540" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666; margin:0 auto; padding:15px 30px;">
+      <tr>
+        <td>
+          <table width="100%" style="border-bottom:solid 1px #d3d3d3; padding-bottom:15px; margin-bottom:15px;">
+              <tr>
+                  <td><img src="http://52.24.62.7/assets/emailer/logo.png" width="228" height="79" alt="Service Deal"></td>
+                  <td/>
+                </tr>
+            </table>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <table width="100%" style="border-bottom:solid 1px #d3d3d3; margin-bottom:25px;">
+              <tr>
+                  <td><img src="http://52.24.62.7/assets/emailer/banner.png" width="533" height="508" alt="Service Deal"></td>
+                </tr>
+            </table>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <table width="100%">
+              <tr>
+                  <td style="padding-bottom:35px; border-bottom:solid 1px #d3d3d3;">
+                      <p style="font-size:16px; color:#020202;">Dear <%=@app_user.first_name%>,</p>
+                        <p style="font-size:14px; color:#666666; line-height:22px;">Based on your saved preferences with us, here is the best deal you can't afford to miss!</p>
+                        <p style="font-size:14px; color:#666666; line-height:22px;">
+                          <table>
+                              <tr>
+                                <td>
+                                  <table>
+                                    <tr>Deal Title<td></td><td><%= @best_deal.title %></td></tr>
+                                    <tr>Deal Details<td></td><td><%= @best_deal.short_description %></td></tr>
+                                    <tr>Vendor<td></td><td><%= @best_deal.service_provider_id %></td></tr>
+                                    <tr>Price<td></td><td><%= @best_deal.price %></td></tr>
+                                  </table>
+                                 </td>
+                              </tr>  
+                          </table> 
+                        </p>
+                        <p style="font-size:14px; color:#666666; line-height:22px;">ServiceDeals can help you find deals that can save you 20%-30% or more.</p>
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td style="font-size:14px; color:#666666; padding-bottom:10px; line-height:22px; text-align:center; padding-top:15px;">
+                      Connect with us
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td align="center" style="padding-bottom:20px; border-bottom:solid 1px #d3d3d3;">
+                      <a href="#"><img src="http://52.24.62.7/assets/emailer/fb-icon.png" width="36" height="36" alt="facebook" title="Facebook" style="padding-right:5px;"></a>
+                        <a href="#"><img src="http://52.24.62.7/assets/emailer/linkedIn-icon.png" width="36" height="36" alt="Linkein" title="LinkedIn" style="padding-right:5px;"></a>
+                        <a href="#"><img src="http://52.24.62.7/assets/emailer/twitter-icon.png" width="36" height="36" alt="twitter" title="Twitter" style="padding-right:5px;"></a>
+                        <a href="#"><img src="http://52.24.62.7/assets/emailer/whatapp-icon.png" width="36" height="36" alt="whatsapp" title="Whatsapp"></a>
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td>
+                      <p style="font-size:12px; color:#8f8f8f; padding-top:15px; line-height:20px;">ServiceDeal has sent this e-mail to you because your subscription preferences <br>
+              indicate that you want to receive alerts on this email address. Click here to unsubscribe</p>
+                    </td>
+                </tr>
+                 
+            </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

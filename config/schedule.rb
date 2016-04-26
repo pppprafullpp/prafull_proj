@@ -14,6 +14,10 @@ set :output, {:error => "#{path}/log/cron_error_log.log", :standard => "#{path}/
 
 every 4.hours do
 	rake "send_trending_deals:email_trending_deals"
+end
+
+every 10.minutes do
+	rake "reminder_notification:send_notification"
 end	
 
 #every 5.minutes do

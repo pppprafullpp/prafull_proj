@@ -4,7 +4,7 @@ namespace :send_trending_deals do
     @app_users = AppUser.joins(:notification).where("recieve_trending_deals = ?", true).to_a
     @app_users.each do |app_user|
 
-      DealNotifier.send_trending_deal(app_user).deliver
+      DealNotifier.send_trending_deal(app_user).deliver_now
       puts "#{app_user.id} Email sent successfully"
       #@app_user_device = app_user.device_flag
       #@state = app_user.state

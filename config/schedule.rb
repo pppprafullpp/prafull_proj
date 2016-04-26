@@ -16,7 +16,7 @@ every 4.hours do
 	rake "send_trending_deals:email_trending_deals"
 end
 
-every 10.minutes do
+every 4.hours do
 	rake "reminder_notification:send_notification"
 end	
 

@@ -1,32 +1,33 @@
 class DealNotifier < ApplicationMailer
 	def send_trending_deal(app_user)
 		recipient = app_user.email
+    @app_user = app_user
 		@service_preferences = app_user.service_preferences.to_a
     @service_preferences.each do |sp|
       if sp.service_category_id == 1
         @internet_t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
       	if @internet_t_deal.present?
-      		@internet_deal = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.*").where("deals.id = ?", @internet_t_deal.deal_id).take
+      		@internet_deal = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.*").where("deals.id = ?", @internet_t_deal.deal_id).first
       	end	
       elsif sp.service_category_id == 2
         @telephone_t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
       	if @telephone_t_deal.present?
-      		@telephone_deal = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.*").where("deals.id = ?", @telephone_t_deal.deal_id).take
+      		@telephone_deal = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.*").where("deals.id = ?", @telephone_t_deal.deal_id).first
       	end
       elsif sp.service_category_id == 3
       	@cable_t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
       	if @cable_t_deal.present?
-      		@cable_deal = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.*").where("deals.id = ?", @cable_t_deal.deal_id).take
+      		@cable_deal = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.*").where("deals.id = ?", @cable_t_deal.deal_id).first
       	end
       elsif sp.service_category_id == 4
       	@cell_t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
       	if @cell_t_deal.present?
-      		@cellphone_deal = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.*").where("deals.id = ?", @cell_t_deal.deal_id).take
+      		@cellphone_deal = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.*").where("deals.id = ?", @cell_t_deal.deal_id).first
       	end
       elsif sp.service_category_id == 5
         @bundle_t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
         if @bundle_t_deal.present?
-          @bundle_deal = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.id = ?", @bundle_t_deal.deal_id).take
+          @bundle_deal = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.id = ?", @bundle_t_deal.deal_id).first
         end
       end  
     end 
@@ -38,7 +39,6 @@ class DealNotifier < ApplicationMailer
     @app_user = app_user
     @best_deal=best_deal
     mail(to: recipient, subject: "Best Deals for you") rescue nil
-
   end
 
   def send_best_deal_contract(app_user,service_preference)

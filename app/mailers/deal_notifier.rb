@@ -84,7 +84,7 @@ class DealNotifier < ApplicationMailer
       end 
     elsif service_preference.service_category_id == 5
       @bundle_combo = service_preference.bundle_service_preference.bundle_combo
-      @equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, service_preference.service_category_id, @current_d_speed,@bundle_combo).order("price ASC").limit(5)  
+      @equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, service_preference.service_category_id,@bundle_combo).order("price ASC").limit(5)  
     end 
     if @equal_deals.present? && @greater_deals.present?
       @merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)

@@ -224,8 +224,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					@greater_deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes > ?", true,@is_business, params[:service_category_id], @current_c_minutes).order("price ASC").limit(2)
 				end	
 			elsif params[:service_category_id] == "5"
-				@equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
-				@greater_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
+				@equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],params[:bundle_combo]).order("price ASC").limit(5)	
+				@greater_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],params[:bundle_combo]).order("price ASC").limit(5)	
 			end	
 			if @equal_deals.present? && @greater_deals.present?
 				@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
@@ -283,7 +283,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		if params[:service_category_id] == "1"
 			@current_d_speed = params[:download_speed]
 			@equal_deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND internet_deal_attributes.download = ?", true,@is_business, params[:service_category_id], @current_d_speed).order("price ASC")
-			@greater_deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.*").where("deals.is_active = ? AND deals.service_category_id = ? AND internet_deal_attributes.download > ?", true,@is_business, params[:service_category_id], @current_d_speed).order("price ASC").limit(2)
+			@greater_deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND internet_deal_attributes.download > ?", true,@is_business, params[:service_category_id], @current_d_speed).order("price ASC").limit(2)
 		elsif params[:service_category_id] == "2"	
 			if params[:domestic_call_unlimited] == "true"
 				@equal_deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND telephone_deal_attributes.domestic_call_minutes = 'Unlimited' ", true, @is_business,params[:service_category_id]).order("price ASC")
@@ -308,8 +308,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@greater_deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND cellphone_deal_attributes.domestic_call_minutes > ?", true,@is_business, params[:service_category_id], @current_c_minutes).order("price ASC").limit(2)
 			end	
 		elsif params[:service_category_id] == "5"
-			@equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
-			@greater_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
+			@equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],params[:bundle_combo]).order("price ASC").limit(5)	
+			@greater_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.is_business = ? AND deals.service_category_id = ? AND bundle_deal_attributes.bundle_combo = ?", true,@is_business, params[:service_category_id],params[:bundle_combo]).order("price ASC").limit(5)	
 		end	
 		if @equal_deals.present? && @greater_deals.present?
 			@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)

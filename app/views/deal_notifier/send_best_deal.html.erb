@@ -31,7 +31,7 @@
           <% elsif @best_deal.service_category_id==5 %>
               <% category_name="Bundle" %>
           <% end %>
-          <td  style="text-align:center; color:#fff; font-size:23px; font-weight:bold; line-height:26px;">Thanks for adding your <%= category_name %> service details to ServiceDeals. Switch to the best deal offered below and save on your monthly cost.</td>
+          <td  style="text-align:center; color:#fff; font-size:23px; font-weight:bold; line-height:26px;">Thanks for adding your <%= category_name %> service details. Switch to this deal and may save your $100s.</td>
         </tr>
       </table>
     </td>
@@ -58,31 +58,41 @@
                 <td style="padding-left:30px;">
                   <% if category_name=="Internet" %>
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Internet Deal</h1>
-                    <p style="font-size:15px; padding:5px 0; margin:0;">Upload Speed <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.upload %> Mbps</span></p>
+                    <p style="font-size:15px; padding:5px 0; margin:0;">Download Speed <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.download %> Mbps</span></p>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Price Start at <span style="font-size:20px; color:#18920b; font-weight:bold">$<%= @best_deal.price %>/mo.</span></p>
                   <% elsif category_name=="Telephone" %>
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Telephone Deal</h1>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Domestic Calls <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.domestic_call_minutes %></span></p>
+                    <% if @best_deal.international_call_minutes %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">International Calls <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.international_call_minutes %></span></p>
+                    <% end %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Price Start at <span style="font-size:20px; color:#18920b; font-weight:bold">$<%= @best_deal.price %>/mo.</span></p>
                   <% elsif category_name=="Cable" %>
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Cable Deal</h1>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Free Channels <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.free_channels %></span></p>
+                    <% if @best_deal.premium_channels %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Premium Channels <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.premium_channels %></span></p>
+                    <% end %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Price Start at <span style="font-size:20px; color:#18920b; font-weight:bold">$<%= @best_deal.price %>/mo.</span></p>
                   <% elsif category_name=="Cellphone" %>
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Cellphone Deal</h1>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Domestic Calls <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.domestic_call_minutes %></span></p>
+                    <% if @best_deal.international_call_minutes %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">International Calls <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.international_call_minutes %></span></p>
+                    <% end %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Price Start at <span style="font-size:20px; color:#18920b; font-weight:bold">$<%= @best_deal.price %>/mo.</span></p>
                   <% elsif category_name=="Bundle" %>
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Bundle Deal</h1>
                     <% begin %>
+                    <% if @best_deal.download %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Download Speed <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.download %> Mbps</span></p>
+                    <% end %>
+                    <% if @best_deal.domestic_call_minutes %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Domestic Calls <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.domestic_call_minutes %></span></p>
-                    <p style="font-size:15px; padding:5px 0; margin:0;">International Calls <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.international_call_minutes %></span></p>
+                    <% end %>
+                    <% if @best_deal.free_channels %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Free Channels <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.free_channels %></span></p>
-                    <p style="font-size:15px; padding:5px 0; margin:0;">Premium Channels <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.premium_channels %></span></p>
+                    <% end %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Price Start at <span style="font-size:20px; color:#18920b; font-weight:bold">$<%= @best_deal.price %>/mo.</span></p>
                     <% rescue %>
                     <% end %>

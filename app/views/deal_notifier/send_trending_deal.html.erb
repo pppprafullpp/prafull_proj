@@ -60,7 +60,9 @@
               <p><img height="75" src="http://52.24.62.7/assets/emailer/telephone.png" alt="telephone" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Telephone </p>
               <p style="font-size:15px; color:#3b3b3b;">Domestic calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @telephone_deal.domestic_call_minutes %></span></p>
+              <% if @telephone_deal.international_call_minutes %>
               <p style="font-size:15px; color:#3b3b3b;">International call <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @telephone_deal.international_call_minutes %></span></p>
+              <% end %>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @telephone_deal.price %>/mo.</span></p>
         </div>
         <% end %>
@@ -69,7 +71,9 @@
               <p><img height="75" src="http://52.24.62.7/assets/emailer/cellphone.png" alt="cellphone" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Cellphone </p>
               <p style="font-size:15px; color:#3b3b3b;">Domestic calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cellphone_deal.domestic_call_minutes %></span></p>
+              <% if @telephone_deal.international_call_minutes %>
               <p style="font-size:15px; color:#3b3b3b;">International calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cellphone_deal.international_call_minutes %></span></p>
+              <% end %>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @cellphone_deal.price %>/mo.</span></p>
         </div>
         <% end %>
@@ -78,7 +82,9 @@
               <p><img height="75" src="http://52.24.62.7/assets/emailer/cable.png" alt="cable" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Cable </p>
               <p style="font-size:15px; color:#3b3b3b;">Free Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cable_deal.free_channels %></span></p>
+              <% if @telephone_deal.premium_channels %>
               <p style="font-size:15px; color:#3b3b3b;">Premium Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @cable_deal.premium_channels %></span></p>
+              <% end %>
               <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @cable_deal.price %>/mo.</span></p>
         </div>
         <% end %>

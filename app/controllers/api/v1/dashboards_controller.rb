@@ -21,10 +21,9 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@advertisement = []
 		  		@best_deal = []
 		  		@trending_deal = []
-		  		@t_deal = TrendingDeal.where("category_id = ?", sp.service_category_id).order("subscription_count DESC").first
+		  		@t_deal = TrendingDeal.joins(:deal).where("trending_deals.category_id = ? AND deals.is_business = ?", sp.service_category_id,@is_business).order("trending_deals.subscription_count DESC").first
 		  		if @t_deal.present?
-		  			@trending = Deal.where("id=? AND is_active=? AND is_business=?",@t_deal.deal_id,true,@is_business).first
-		  			@trending_deal << @trending
+		  			@trending_deal = Deal.where("id=? AND is_active=? AND is_business=?",@t_deal.deal_id,true,@is_business).first
 		  		end
 		  		# For Zip code @b_deal = Deal.where("is_active = ? AND zip = ? AND service_category_id = ? AND end_date > ?", true, @zip_code, sp.service_category_id, Date.today).order("price ASC").first
 		  		if sp.service_category_id == 1
@@ -190,12 +189,14 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@preferred_deal = []
 
 		  		@allowed_trending_deal=[]
-				@trending_deal.each do |deal|
-					if deal.present?
-						@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
-						if not @restricted_deal.present?
-							@allowed_trending_deal.push(deal)
-					    end
+		  		if @trending_deal.present?
+					@trending_deal.each do |deal|
+						if deal.present?
+							@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
+							if not @restricted_deal.present?
+								@allowed_trending_deal.push(deal)
+						    end
+						end
 					end
 				end
 

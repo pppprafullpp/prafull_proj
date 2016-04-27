@@ -58,7 +58,6 @@
                 <td style="padding-left:30px;">
                   <% if category_name=="Internet" %>
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Internet Deal</h1>
-                    <p style="font-size:15px; padding:5px 0; margin:0;">Download Speed <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.download %> Mbps</span></p>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Upload Speed <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.upload %> Mbps</span></p>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Price Start at <span style="font-size:20px; color:#18920b; font-weight:bold">$<%= @best_deal.price %>/mo.</span></p>
                   <% elsif category_name=="Telephone" %>
@@ -80,7 +79,6 @@
                     <h1 style="font-size:25px; padding:5px 0; margin:0;">Bundle Deal</h1>
                     <% begin %>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Download Speed <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.download %> Mbps</span></p>
-                    <p style="font-size:15px; padding:5px 0; margin:0;">Upload Speed <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.upload %> Mbps</span></p>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Domestic Calls <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.domestic_call_minutes %></span></p>
                     <p style="font-size:15px; padding:5px 0; margin:0;">International Calls <span  style="font-size:20px; color:#205ba9; font-weight:bold"><%= @best_deal.international_call_minutes %></span></p>
                     <p style="font-size:15px; padding:5px 0; margin:0;">Free Channels <span style="font-size:20px; color:#ef7601; font-weight:bold"><%= @best_deal.free_channels %></span></p>

@@ -86,12 +86,22 @@
         <div style="float:left;width:200px;height:275px;background:#f4f4f4; border:1px solid #e5e5e5; padding:5px; text-align:center; margin-right:20px;">
               <p><img height="75" src="http://52.24.62.7/assets/emailer/bundle.png" alt="bundle" /></p>
               <p style="font-size:25px; color:#000; font-weight:bold; margin-bottom:10px;"> Bundle </p>
+              <% if @bundle_deal.download %>
               <p style="font-size:15px; color:#3b3b3b;">Download <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.download %> Mbps</span></p>
+              <% end %>
+              <% if @bundle_deal.domestic_call_minutes %>
               <p style="font-size:15px; color:#3b3b3b;">Domestic calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.domestic_call_minutes %></span></p>
+              <% end %>
+              <% if @bundle_deal.international_call_minutes %>
               <p style="font-size:15px; color:#3b3b3b;">International calls <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.international_call_minutes %></span></p>
+              <% end %>
+              <% if @bundle_deal.free_channels %>
               <p style="font-size:15px; color:#3b3b3b;">Free Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.free_channels %></span></p>
+              <% end %>
+              <% if @bundle_deal.premium_channels %>
               <p style="font-size:15px; color:#3b3b3b;">Premium Channels <span style="font-size:17px; color:#ee7600; font-weight:bold;"><%= @bundle_deal.premium_channels %></span></p>
-              <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @bundle_deal.domestic_call_minutes %>/mo.</span></p>
+              <% end %>
+              <p style="font-size:15px; color:#3b3b3b;">Price Start at<span style="font-size:18px; color:#1c9e0e; font-weight:bold;"> $<%= @bundle_deal.price %>/mo.</span></p>
         </div>
         <% end %>
       </div>

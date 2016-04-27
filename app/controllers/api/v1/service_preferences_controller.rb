@@ -220,6 +220,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				end	
 			elsif params[:service_category_id] == "5"
 				@equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
+				@greater_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
 			end	
 			if @equal_deals.present? && @greater_deals.present?
 				@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)
@@ -298,6 +299,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			end	
 		elsif params[:service_category_id] == "5"
 			@equal_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
+			@greater_deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.*").where("deals.is_active = ? AND deals.service_category_id = ? AND bundle_deal_attributes.download = ? AND bundle_deal_attributes.bundle_combo = ?", true, params[:service_category_id],@current_d_speed,params[:bundle_combo]).order("price ASC").limit(5)	
 		end	
 		if @equal_deals.present? && @greater_deals.present?
 			@merged_deals = (@equal_deals + @greater_deals).sort_by(&:price)

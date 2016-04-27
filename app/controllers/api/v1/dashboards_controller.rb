@@ -190,14 +190,10 @@ class Api::V1::DashboardsController < ApplicationController
 
 		  		@allowed_trending_deal=[]
 		  		if @trending_deal.present?
-					@trending_deal.each do |deal|
-						if deal.present?
-							@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],@zip_code)
-							if not @restricted_deal.present?
-								@allowed_trending_deal.push(deal)
-						    end
-						end
-					end
+					@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",@trending_deal.id,@zip_code)
+					if not @restricted_deal.present?
+						@allowed_trending_deal.push(@trending_deal)
+				    end
 				end
 
 				@allowed_best_deal=[]

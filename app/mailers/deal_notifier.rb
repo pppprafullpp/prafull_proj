@@ -31,7 +31,7 @@ class DealNotifier < ApplicationMailer
         end
       end  
     end 
-    mail(to: recipient, subject: "Trending Deals for you") rescue nil
+    mail(to: recipient, subject: "Switch to the trending deals in your area and save $100s") rescue nil
 	end	
 
   def send_best_deal(app_user,best_deal)

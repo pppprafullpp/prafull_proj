@@ -296,9 +296,9 @@ class Api::V1::DashboardsController < ApplicationController
 	end	
 
 	def dashboard_deals
-		@app_user = AppUser.find_by_id(params[:app_user_id])
-		@zip_code = @app_user.zip
-		if @app_user.present? && @zip_code.present?
+		if params[:app_user_id].present? && params[:service_category_id].present? && params[:zip_code].present?
+			@app_user = AppUser.find_by_id(params[:app_user_id])
+			@zip_code = @app_user.zip
 			if @app_user.user_type=="residence"
 				@is_business=false
 			else
@@ -369,7 +369,19 @@ class Api::V1::DashboardsController < ApplicationController
 			elsif json_1.present? && json_2.blank?
 				@matched_deal = json_1		
 			end
-			
+		elsif params[:app_user_id].blank? && params[:service_category_id].present? && params[:zip_code].present?
+			@zip_code = params[:zip_code]
+			if params[:service_category_id] == '1'
+				@matched_deal = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ?", true,params[:service_category_id]).order("price ASC")
+			elsif params[:service_category_id] == '2'
+				@matched_deal = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ?", true,params[:service_category_id]).order("price ASC")
+			elsif params[:service_category_id] == '3'
+				@matched_deal = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ?", true,params[:service_category_id]).order("price ASC")
+			elsif params[:service_category_id] == '4'
+				@matched_deal = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ?", true, params[:service_category_id]).order("price ASC")
+			elsif params[:service_category_id] == '5'
+				@matched_deal = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ?", true,params[:service_category_id]).order("price ASC")
+			end
 		end	
 
 		@allowed_deals=[]

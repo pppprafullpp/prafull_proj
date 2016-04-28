@@ -21,7 +21,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  		@advertisement = []
 		  		@best_deal = []
 		  		@trending_deal = []
-		  		@t_deal = TrendingDeal.joins(:deal).where("trending_deals.category_id = ? AND deals.is_business = ?", sp.service_category_id,@is_business).order("trending_deals.subscription_count DESC").first
+		  		@t_deal = TrendingDeal.joins(:deal).where("trending_deals.category_id = ? AND deals.is_active = ? AND deals.is_business = ?", sp.service_category_id,true,@is_business).order("trending_deals.subscription_count DESC").first
 		  		if @t_deal.present?
 		  			@trending_deal = Deal.where("id=? AND is_active=? AND is_business=?",@t_deal.deal_id,true,@is_business).first
 		  		end
@@ -222,9 +222,24 @@ class Api::V1::DashboardsController < ApplicationController
 			else
 				render :json => { :success => false }
 			end	
-
-			###############   When User is Logged In and ServiceCategory and ZipCode both are present   ###############
-		
+		###############   When User is not logged in and zip code is present   ###############	
+		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank? && params[:state].blank?	
+			@service_categories = ServiceCategory.where("name in ('Internet','Telephone','Cellphone','Cable','Bundle')")
+		  	@categoryList = @service_categories.map do |sc|
+				@t_deal = TrendingDeal.joins(:deal).where("trending_deals.category_id = ? AND deals.is_active = ?",sc.id,true).order("trending_deals.subscription_count DESC").first
+		  		if @t_deal.present?
+		  			@trending_deal = Deal.where("id=? AND is_active=?",@t_deal.deal_id,true).first
+		  		end
+		  		if @trending_deal.present?
+					@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",@trending_deal.id,@zip_code)
+					if not @restricted_deal.present?
+						@allowed_trending_deal=@trending_deal
+				    end
+				end
+		  		{:you_save_text => "", :contract_fee => "", :service_provider_name => @allowed_trending_deal.service_provider_name, :service_category_name => @allowed_trending_deal.service_category_name,:trending_deal => @allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
+			end	
+			render :json => { :dashboard_data => @categoryList }
+		###############  Filtering  ###############
 		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[:sorting_flag].present? && params[:state].blank?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			if @app_user.user_type=="residence"

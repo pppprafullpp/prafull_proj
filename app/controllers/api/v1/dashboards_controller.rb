@@ -6,7 +6,7 @@ class Api::V1::DashboardsController < ApplicationController
 
 	def index
 		###############   When User is Logged In and zip code is present   ###############	
-		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank? && params[:state].blank?											                	
+		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?											                	
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			@zip_code = @app_user.zip
 			if @app_user.present? && @zip_code.present?
@@ -223,7 +223,7 @@ class Api::V1::DashboardsController < ApplicationController
 				render :json => { :success => false }
 			end	
 		###############   When User is not logged in and zip code is present   ###############	
-		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank? && params[:state].blank?	
+		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?
 			@service_categories = ServiceCategory.where("name in ('Internet','Telephone','Cellphone','Cable','Bundle')")
 		  	@categoryList = @service_categories.map do |sc|
 				@t_deal = TrendingDeal.joins(:deal).where("trending_deals.category_id = ? AND deals.is_active = ?",sc.id,true).order("trending_deals.subscription_count DESC").first
@@ -240,7 +240,53 @@ class Api::V1::DashboardsController < ApplicationController
 			end	
 			render :json => { :dashboard_data => @categoryList }
 		###############  Filtering  ###############
-		elsif params[:zip_code].present? && params[:category].present? && params[:app_user_id].present? && params[:sorting_flag].present? && params[:state].blank?
+		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:category].present? && params[:sorting_flag].present?
+			if params[:sorting_flag] == 'download_speed' #For Internet and bundle
+				if params[:category] == '1'
+					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("internet_deal_attributes.download DESC")
+				elsif params[:category] == '5'
+					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("bundle_deal_attributes.download DESC")
+				end
+			elsif params[:sorting_flag] == 'price' #For all on the basis of Price
+				if params[:category] == '1'
+					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("deals.price ASC")
+				elsif params[:category]=='2'
+					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("deals.price ASC")
+		  		elsif params[:category]=='3'
+					@deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("deals.price ASC")
+				elsif params[:category]=='4'
+					@deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("deals.price ASC")
+				elsif params[:category]=='5'
+					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("deals.price ASC")
+				else
+		  			@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true,params[:category], Date.today).order("price ASC")
+		  		end
+			elsif params[:sorting_flag] == 'free_channels' #For Cable
+				if params[:category] == '3'
+					@deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("cable_deal_attributes.free_channels DESC")
+				elsif params[:category] == '5'
+					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("bundle_deal_attributes.free_channels DESC")
+				end
+			elsif params[:sorting_flag] == 'call_minutes' #For CellPhone, Telephone & Bundle
+				if params[:category] == '2'
+					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("telephone_deal_attributes.domestic_call_minutes DESC")
+		  		elsif params[:category] == '4'
+		  			@deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true, params[:category], Date.today).order("cellphone_deal_attributes.domestic_call_minutes DESC")
+				elsif params[:category] == '5'
+		  			@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where("deals.is_active = ? AND deals.service_category_id = ? AND deals.end_date > ?", true,params[:category], Date.today).order("bundle_deal_attributes.domestic_call_minutes DESC")
+				end
+		  	else
+				@deals = Deal.where("is_active = ? AND service_category_id = ? AND end_date > ?", true,params[:category], Date.today).order("price ASC")
+			end
+			@allowed_deals=[]
+			@deals.each do |deal|
+				@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],params[:zip_code])
+				if not @restricted_deal.present?
+					@allowed_deals.push(deal)
+			    end
+			end
+			render :json => {:deal => @allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
+		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:category].present? && params[:sorting_flag].present?
 			@app_user = AppUser.find_by_id(params[:app_user_id])
 			if @app_user.user_type=="residence"
 				@is_business=false

@@ -221,7 +221,7 @@ ActiveRecord::Schema.define(version: 20160420073520) do
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_nationwide",                     default: false
-    t.boolean  "is_business",                       default: false
+    t.string  "deal_type",                       default: "residense"
     t.boolean  "is_active",                         default: true
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false

@@ -12,7 +12,7 @@ class CreateDeals < ActiveRecord::Migration
       t.datetime :start_date
       t.datetime :end_date
       t.boolean :is_nationwide, default: false
-      t.boolean :is_business, default: false
+      t.string :deal_type, null: false, default: "residence"
       t.boolean :is_active, default: true
       
       t.timestamps null: false

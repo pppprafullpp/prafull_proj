@@ -88,8 +88,9 @@
 		      </tr>
 		      <tr>
 		      		<td>
-		      			<div><%= f.check_box :is_business %> Is Business? </div>
-		      		</td>
+		      			<div>Deal Type:</div>
+				  		<%= f.select :deal_type,[["Residence", "residence"],["Business","business"]] %>
+				  	</td>
 		      		<td>
 		      			<div><%= f.check_box :is_active %> Is Active? </div>
 		      		</td>

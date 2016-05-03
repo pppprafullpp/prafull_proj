@@ -241,7 +241,7 @@ class Api::V1::DashboardsController < ApplicationController
 							@allowed_category_trending_deals=@trending_deal
 					    end
 					end
-			  		{:you_save_text => "", :contract_fee => "", :service_provider_name => @allowed_category_trending_deals.service_provider_name, :service_category_name => @allowed_category_trending_deals.service_category_name,:advertisement =>[],:trending_deal => @allowed_category_trending_deals.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:best_deal =>[],:preferred_deal =>[] } 
+			  		{:you_save_text => "", :contract_fee => "", :service_provider_name => @allowed_category_trending_deals.service_provider_name, :service_category_name => @allowed_category_trending_deals.service_category_name,:advertisement =>[],:trending_deal => [ @allowed_category_trending_deals.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price])],:best_deal =>[],:preferred_deal =>[] } 
 				end	
 
 				render :json => { :dashboard_data => (@servicelist + @categoryList) }

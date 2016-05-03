@@ -15,6 +15,7 @@ class Api::V1::DashboardsController < ApplicationController
 				elsif @app_user.user_type=="business"
 					@deal_type="business"
 				end
+				excluded_categories="'Gas','Electricity','Home Security'"
 				@service_preferences = @app_user.service_preferences.order("created_at DESC") 
 		  		@servicelist = @service_preferences.map do |sp|
 		  		@app_user_current_plan = sp.price
@@ -30,6 +31,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  		deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+@deal_type+"' AND deals.service_category_id="+sp.service_category_id.to_s+" "
 
 		  		if sp.service_category.name == 'Internet'
+		  			excluded_categories+=",'Internet'"
 		  			@app_user_d_speed = sp.internet_service_preference.download_speed
 		  			@equal_deals = Deal.joins(:internet_deal_attributes).where(deal_validation_conditions+" AND internet_deal_attributes.download = ?", @app_user_d_speed).order("price ASC")
 					@greater_deals = Deal.joins(:internet_deal_attributes).where(deal_validation_conditions+" AND internet_deal_attributes.download > ?", @app_user_d_speed).order("price ASC").limit(2)
@@ -53,6 +55,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  				@best_deal << @b_deal 
 		  			end
 		  		elsif sp.service_category.name == 'Telephone'
+		  			excluded_categories+=",'Telephone'"
 		  			if sp.telephone_service_preference.domestic_call_unlimited == true
 	  					@equal_deals = Deal.joins(:telephone_deal_attributes).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ").order("price ASC")
 						@greater_deals = Deal.joins(:telephone_deal_attributes).where(deal_validation_conditions+" AND price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", @app_user_current_plan).order("price ASC").limit(2)
@@ -99,6 +102,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  				end			
 		  			end
 		  		elsif sp.service_category.name == 'Cable'
+		  			excluded_categories+=",'Cable'"
 		  			@app_user_f_channel = sp.cable_service_preference.free_channels
 		  			@equal_deals = Deal.joins(:cable_deal_attributes).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels = ?", @app_user_f_channel).order("price ASC")
 					@greater_deals = Deal.joins(:cable_deal_attributes).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels > ?", @app_user_f_channel).order("price ASC").limit(2)
@@ -121,6 +125,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  				@best_deal << @b_deal 
 		  			end	
 		  		elsif sp.service_category.name == 'Cellphone'	
+		  			excluded_categories+=",'Cellphone'"
 		  			if sp.cellphone_service_preference.domestic_call_unlimited == true
 		  				@equal_deals = Deal.joins(:cellphone_deal_attributes).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' ").order("price ASC")
 		  				@greater_deals = Deal.joins(:cellphone_deal_attributes).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price > ?", @app_user_current_plan).order("price ASC").limit(2)
@@ -168,6 +173,7 @@ class Api::V1::DashboardsController < ApplicationController
 		  				end		
 		  			end
 		  		elsif sp.service_category.name == 'Bundle'
+		  			excluded_categories+=",'Bundle'"
 		  			@app_user_bundle_combo = sp.bundle_service_preference.bundle_combo
 		  			@app_user_d_speed = sp.bundle_service_preference.download_speed
 		  			@equal_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ?", @app_user_bundle_combo).order("price ASC")
@@ -221,7 +227,24 @@ class Api::V1::DashboardsController < ApplicationController
 
 				{ :you_save_text => @you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_name => sp.service_category.name, :advertisement => @advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => @allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :best_deal => @allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :preferred_deal => @allowed_preferred_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
 		  	end	
-				render :json => { :dashboard_data => @servicelist }
+		  		# Show trending deals for unsubscribed services
+		  		@service_categories = ServiceCategory.where("name not in ("+excluded_categories+")")
+		  		@categoryList = @service_categories.map do |sc|
+					@t_deal = TrendingDeal.joins(:deal).where("trending_deals.category_id = ? AND deals.is_active = ? AND deal_type = ?",sc.id,true,@deal_type).order("trending_deals.subscription_count DESC").first
+			  		if @t_deal.present?
+			  			@trending_deal = Deal.where("id=? AND is_active=? AND deal_type=?",@t_deal.deal_id,true,@deal_type).first
+			  		end
+			  		@allowed_category_trending_deals
+			  		if @trending_deal.present?
+						@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",@trending_deal.id,@zip_code)
+						if not @restricted_deal.present?
+							@allowed_category_trending_deals=@trending_deal
+					    end
+					end
+			  		{:you_save_text => "", :contract_fee => "", :service_provider_name => @allowed_category_trending_deals.service_provider_name, :service_category_name => @allowed_category_trending_deals.service_category_name,:trending_deal => @allowed_category_trending_deals.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
+				end	
+
+				render :json => { :dashboard_data => (@servicelist + @categoryList) }
 			else
 				render :json => { :success => false }
 			end	

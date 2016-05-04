@@ -4,136 +4,30 @@ class Api::V1::DashboardsController < ApplicationController
 	include DashboardsHelper
 
 	skip_before_filter :verify_authenticity_token
+	
 	respond_to :json
 
 	def index
 		###############   When User is Logged In and zip code is present   ###############	
 		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?											                	
-			user_dashboard_deals(params[:app_user_id])
+			user_dashboard_deals(params[:app_user_id],nil,nil)
+		
 		###############   When User is not logged in and zip code is present   ###############	
 		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:deal_type].present? && params[:category].blank? && params[:sort_by_d_speed].blank?
-			@service_categories = ServiceCategory.where("name in ('Internet','Telephone','Cellphone','Cable','Bundle')")
-		  	@categoryList = @service_categories.map do |sc|
-				
-				trending_deal = category_trending_deal(params[:deal_type],sc.id)
-		  		
-		  		if trending_deal.present?
-					restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",trending_deal.id,params[:zip_code])
-					if not restricted_deal.present?
-						allowed_trending_deal=trending_deal
-				    end
-				end
-		  		{:you_save_text => "", :contract_fee => "", :service_provider_name => allowed_trending_deal.service_provider_name, :service_category_name => allowed_trending_deal.service_category_name,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]) } 
-			end	
-			render :json => { :dashboard_data => @categoryList }
+			user_dashboard_deals(nil,params[:zip_code],params[:deal_type])
+		
 		###############  Filtering  ###############
 		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:deal_type].present? && params[:category].present? && params[:sorting_flag].present?
-			if params[:deal_type]=="residence"
-				@deal_type="residence"
-			elsif params[:deal_type]=="business"
-				@deal_type="business"
-			end
-			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+@deal_type+"' AND deals.service_category_id="+params[:category]+" "
+			
+			allowed_deals=filtered_deals(nil,params[:category],params[:zip_code],params[:deal_type],params[:sorting_flag])
 
-			if params[:sorting_flag] == 'download_speed' #For Internet and bundle
-				if params[:category] == '1'
-					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where(deal_validation_conditions).order("internet_deal_attributes.download DESC")
-				elsif params[:category] == '5'
-					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("bundle_deal_attributes.download DESC")
-				end
-			elsif params[:sorting_flag] == 'price' #For all on the basis of Price
-				if params[:category] == '1'
-					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				elsif params[:category]=='2'
-					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-		  		elsif params[:category]=='3'
-					@deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				elsif params[:category]=='4'
-					@deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				elsif params[:category]=='5'
-					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				else
-		  			@deals = Deal.where(deal_validation_conditions).order("price ASC")
-		  		end
-			elsif params[:sorting_flag] == 'free_channels' #For Cable
-				if params[:category] == '3'
-					@deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where(deal_validation_conditions).order("cable_deal_attributes.free_channels DESC")
-				elsif params[:category] == '5'
-					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("bundle_deal_attributes.free_channels DESC")
-				end
-			elsif params[:sorting_flag] == 'call_minutes' #For CellPhone, Telephone & Bundle
-				if params[:category] == '2'
-					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where(deal_validation_conditions).order("telephone_deal_attributes.domestic_call_minutes DESC")
-		  		elsif params[:category] == '4'
-		  			@deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where(deal_validation_conditions).order("cellphone_deal_attributes.domestic_call_minutes DESC")
-				elsif params[:category] == '5'
-		  			@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("bundle_deal_attributes.domestic_call_minutes DESC")
-				end
-		  	else
-				@deals = Deal.where(deal_validation_conditions).order("price ASC")
-			end
-			@allowed_deals=[]
-			@deals.each do |deal|
-				@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],params[:zip_code])
-				if not @restricted_deal.present?
-					@allowed_deals.push(deal)
-			    end
-			end
-			render :json => {:deal => @allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
-		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:category].present? && params[:sorting_flag].present?
-			@app_user = AppUser.find_by_id(params[:app_user_id])
-			if @app_user.user_type=="residence"
-				@deal_type="residence"
-			elsif @app_user.user_type=="business"
-				@deal_type="business"
-			end
-			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+@deal_type+"' AND deals.service_category_id="+params[:category]+" "
+			render :json => {:deal => allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
+		
+		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:deal_type].blank? && params[:category].present? && params[:sorting_flag].present?
+			
+			allowed_deals=filtered_deals(params[:app_user_id],params[:category],nil,nil,params[:sorting_flag])
 
-			if params[:sorting_flag] == 'download_speed' #For Internet and bundle
-				if params[:category] == '1'
-					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where(deal_validation_conditions).order("internet_deal_attributes.download DESC")
-				elsif params[:category] == '5'
-					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("bundle_deal_attributes.download DESC")
-				end
-			elsif params[:sorting_flag] == 'price' #For all on the basis of Price
-				if params[:category] == '1'
-					@deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				elsif params[:category]=='2'
-					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-		  		elsif params[:category]=='3'
-					@deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				elsif params[:category]=='4'
-					@deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				elsif params[:category]=='5'
-					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("deals.price ASC")
-				else
-		  			@deals = Deal.where(deal_validation_conditions).order("price ASC")
-		  		end
-			elsif params[:sorting_flag] == 'free_channels' #For Cable
-				if params[:category] == '3'
-					@deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where(deal_validation_conditions).order("cable_deal_attributes.free_channels DESC")
-				elsif params[:category] == '5'
-					@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("bundle_deal_attributes.free_channels DESC")
-				end
-			elsif params[:sorting_flag] == 'call_minutes' #For CellPhone, Telephone & Bundle
-				if params[:category] == '2'
-					@deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where(deal_validation_conditions).order("telephone_deal_attributes.domestic_call_minutes DESC")
-		  		elsif params[:category] == '4'
-		  			@deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.data_speed,cellphone_deal_attributes.equipment,cellphone_deal_attributes.installation,cellphone_deal_attributes.activation").where(deal_validation_conditions).order("cellphone_deal_attributes.domestic_call_minutes DESC")
-				elsif params[:category] == '5'
-		  			@deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("bundle_deal_attributes.domestic_call_minutes DESC")
-				end
-		  	else
-				@deals = Deal.where(deal_validation_conditions).order("price ASC")
-			end
-			@allowed_deals=[]
-			@deals.each do |deal|
-				@restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",deal['id'],params[:zip_code])
-				if not @restricted_deal.present?
-					@allowed_deals.push(deal)
-			    end
-			end
-			render :json => {:deal => @allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
+			render :json => {:deal => allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:additional_offer_title,:additional_offer_detail,:additional_offer_price_value])}
 		end
 	end	
 
@@ -246,6 +140,5 @@ class Api::V1::DashboardsController < ApplicationController
 		end
 		render :json => {:deal => @allowed_deals }
 	end
-
 end	
 		

@@ -3,6 +3,17 @@
   <table class="form-data">
     <tr>
       <td>
+        <%= f.label :no_of_lines %>
+        <%= f.text_field :no_of_lines %>
+      </td>
+      <td>
+        <%= f.label :price_per_line %>
+        <%= f.text_field :price_per_line %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <div>Talk & Text</div></br>
       <div>Domestic Call Minutes<span class="mandat">*</span></div>
       <div><input type='checkbox' id='cellphone_domestic_unlimited'><span> Unlimited</span></div>
       <%= f.text_field :domestic_call_minutes, :id=>'cellphone-domestic-call-minutes' %>
@@ -24,32 +35,40 @@
       </td>
     </tr>
     <tr>
+      <td><div>Data Plan</div></br></td>
+    </tr>
+    <tr>   
       <td>
       <%= f.label :data_plan %>
       <%= f.text_field :data_plan %>
       </td>
       <td>
-      <%= f.label :data_speed %>
-      <%= f.text_field :data_speed %>
+        <%= f.label :data_plan_price %>
+        <%= f.text_field :data_plan_price %>
       </td>
     </tr>
     <tr>
       <td>
-      <%= f.label :equipment %>
-      <%= f.text_field :equipment %>
+        <%= f.label :additional_data %>
+        <%= f.text_field :additional_data %>
       </td>
       <td>
-      <%= f.label :installation %>
-      <%= f.text_field :installation %>
+        <%= f.label :additional_data_price %>
+        <%= f.text_field :additional_data_price %>
       </td>
     </tr>
     <tr>
       <td>
-      <%= f.label :activation %>
-      <%= f.text_field :activation %>
+        <%= f.label :rollover_data %>
+        <%#= f.check_box :rollover_data %>
       </td>
-      <td/>
+      <td>
+      <%#= f.label :data_speed %>
+      <%#= f.text_field :data_speed %>
+      </td>
     </tr>
+    <%= render 'cellphone_equipment', f: f %>
   </table>
-  
 </fieldset>
+
+

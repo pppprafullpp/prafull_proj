@@ -1,0 +1,27 @@
+<%= f.fields_for :cellphone_equipments do |b_form| %>
+  <tr>
+    <td>
+      <div>Equipments</div></br>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= b_form.label :name %>
+      <%= b_form.text_field :name %>
+    </td>
+    <td>
+      <%= b_form.label :price %>
+      <%= b_form.text_field :price %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= b_form.label :installation %>
+      <%= b_form.text_field :installation %>
+    </td>
+    <td>
+      <%= b_form.label :activation %>
+      <%= b_form.text_field :activation %>
+    </td>
+  </tr>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420073520) do
+ActiveRecord::Schema.define(version: 20160504063151) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",     limit: 4
@@ -175,6 +175,17 @@ ActiveRecord::Schema.define(version: 20160420073520) do
   end
 
   add_index "cellphone_deal_attributes", ["deal_id"], name: "index_cellphone_deal_attributes_on_deal_id", using: :btree
+
+  create_table "cellphone_equipments", force: :cascade do |t|
+    t.integer  "cellphone_deal_attribute_id", limit: 4
+    t.string   "name",                        limit: 255
+    t.decimal  "price",                                     precision: 30, scale: 2
+    t.text     "installation",                limit: 65535
+    t.string   "activation",                  limit: 255
+    t.boolean  "is_active"
+    t.datetime "created_at",                                                         null: false
+    t.datetime "updated_at",                                                         null: false
+  end
 
   create_table "cellphone_service_preferences", force: :cascade do |t|
     t.integer  "service_preference_id",        limit: 4

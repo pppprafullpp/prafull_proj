@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       match 'comment_ratings' => 'comment_ratings#create', :via => :post
       match 'comment_ratings' => 'comment_ratings#index', :via => :get
       match 'referral_tracking' => 'referral_infos#create', :via => :post
-      match 'get_category_deals' => 'dashboards#dashboard_deals', :via => :get
+      match 'get_category_deals' => 'dashboards#category_deals', :via => :get
       match 'subscribed_deals' => 'subscribe_deals#subscription_info', :via => :post
     end
   end

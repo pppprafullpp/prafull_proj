@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160420073520) do
     t.integer  "deal_id",     limit: 4
     t.string   "title",       limit: 255
     t.text     "description", limit: 65535
-    t.float    "price_value", limit: 24
+    t.float    "price_value", limit: 24,    default: 0.0,  null: false
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_active",                 default: true
@@ -48,10 +48,12 @@ ActiveRecord::Schema.define(version: 20160420073520) do
   add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree
 
   create_table "app_users", force: :cascade do |t|
-    t.string   "first_name",             limit: 255, default: "",   null: false
-    t.string   "last_name",              limit: 255, default: "",   null: false
-    t.string   "email",                  limit: 255, default: "",   null: false
-    t.string   "encrypted_password",     limit: 255, default: "",   null: false
+    t.string   "user_type",              limit: 25,  default: "residence", null: false
+    t.string   "business_name",          limit: 255, default: "",          null: false
+    t.string   "first_name",             limit: 255, default: "",          null: false
+    t.string   "last_name",              limit: 255, default: "",          null: false
+    t.string   "email",                  limit: 255, default: "",          null: false
+    t.string   "encrypted_password",     limit: 255, default: "",          null: false
     t.string   "address",                limit: 255
     t.string   "state",                  limit: 255
     t.string   "city",                   limit: 255
@@ -63,7 +65,7 @@ ActiveRecord::Schema.define(version: 20160420073520) do
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,    null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,           null: false
     t.boolean  "active",                             default: true
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -157,17 +159,19 @@ ActiveRecord::Schema.define(version: 20160420073520) do
 
   create_table "cellphone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                    limit: 4
+    t.integer  "no_of_lines",                limit: 4
+    t.decimal  "price_per_line",                         precision: 5, scale: 2, default: 0.0,   null: false
     t.string   "domestic_call_minutes",      limit: 255
     t.string   "domestic_text",              limit: 255
     t.string   "international_call_minutes", limit: 255
     t.string   "international_text",         limit: 255
     t.float    "data_plan",                  limit: 24
-    t.string   "data_speed",                 limit: 255
-    t.text     "equipment",                  limit: 65535
-    t.text     "installation",               limit: 65535
-    t.string   "activation",                 limit: 255
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.decimal  "data_plan_price",                        precision: 5, scale: 2, default: 0.0,   null: false
+    t.float    "additional_data",            limit: 24
+    t.decimal  "additional_data_price",                  precision: 5, scale: 2, default: 0.0,   null: false
+    t.boolean  "rollover_data",                                                  default: false
+    t.datetime "created_at",                                                                     null: false
+    t.datetime "updated_at",                                                                     null: false
   end
 
   add_index "cellphone_deal_attributes", ["deal_id"], name: "index_cellphone_deal_attributes_on_deal_id", using: :btree
@@ -215,16 +219,16 @@ ActiveRecord::Schema.define(version: 20160420073520) do
     t.string   "title",               limit: 255
     t.text     "short_description",   limit: 65535
     t.text     "detail_description",  limit: 65535
-    t.float    "price",               limit: 24
+    t.float    "price",               limit: 24,    default: 0.0,         null: false
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_nationwide",                     default: false
-    t.string  "deal_type",                       default: "residense"
+    t.string   "deal_type",           limit: 100,   default: "residence", null: false
     t.boolean  "is_active",                         default: true
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree

@@ -93,7 +93,13 @@ class Deal < ActiveRecord::Base
       cellphone=self.cellphone_deal_attributes.first
       equipment=cellphone.cellphone_equipments.first
       additional_offer=self.additional_offers.first
-      effective_price=(cellphone.no_of_lines*cellphone.price_per_line)+cellphone.data_plan_price+cellphone.additional_data_price+equipment.price-additional_offer.price
+      effective_price=(cellphone.no_of_lines*cellphone.price_per_line)+cellphone.data_plan_price+cellphone.additional_data_price
+      if equipment.present?
+        effective_price+=equipment.price
+      end
+      if additional_offer.present?
+        effective_price-=additional_offer.price
+      end
       sprintf '%.2f', effective_price
     else
 		  sprintf '%.2f', self.price if self.price.present?

@@ -178,11 +178,14 @@ ActiveRecord::Schema.define(version: 20160504063151) do
 
   create_table "cellphone_equipments", force: :cascade do |t|
     t.integer  "cellphone_deal_attribute_id", limit: 4
-    t.string   "name",                        limit: 255
+    t.string   "model",                       limit: 255
+    t.string   "make",                        limit: 255
+    t.integer  "memory",                      limit: 4
     t.decimal  "price",                                     precision: 30, scale: 2
     t.text     "installation",                limit: 65535
     t.string   "activation",                  limit: 255
     t.boolean  "is_active"
+    t.string   "offer",                       limit: 255
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
   end

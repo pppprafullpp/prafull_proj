@@ -17,8 +17,10 @@
         <%= f.text_field :price_value %>
       </td>
       <td>
+        <br/>
+        <div><%= f.check_box :is_nationwide,:id=>'additional-offer-nationwide', :checked=>'checked' %> Is Nationwide? </div>
         <%= f.label 'Select Allowed Zipcodes:' %>
-        <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
+        <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "additional-offer-zipcode",multiple: true,size: 10,disabled: "disabled" } %>
       </td>
   </tr>
   <tr>
@@ -35,8 +37,7 @@
       <td>
         <div><%= f.check_box :is_active %> Is Active? </div>
       </td>
-      <td>
-      </td>
+      <td/>
   </tr>
   </table>
 </fieldset>

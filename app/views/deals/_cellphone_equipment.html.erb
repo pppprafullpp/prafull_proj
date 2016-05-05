@@ -1,13 +1,23 @@
 <%= f.fields_for :cellphone_equipments do |b_form| %>
   <tr>
     <td>
-      <div>Equipments</div></br>
+      <b>Equipments</b>
     </td>
   </tr>
   <tr>
     <td>
-      <%= b_form.label :name %>
-      <%= b_form.text_field :name %>
+      <%= b_form.label :model %>
+      <%= b_form.text_field :model %>
+    </td>
+    <td>
+      <%= b_form.label :make %>
+      <%= b_form.text_field :make %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= b_form.label :memory %>
+      <%= b_form.text_field :memory %>
     </td>
     <td>
       <%= b_form.label :price %>

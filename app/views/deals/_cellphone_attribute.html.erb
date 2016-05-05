@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <td>
-      <div>Talk & Text</div></br>
+      <div><b>Talk &amp; Text</b></div><br/>
       <div>Domestic Call Minutes<span class="mandat">*</span></div>
       <div><input type='checkbox' id='cellphone_domestic_unlimited'><span> Unlimited</span></div>
       <%= f.text_field :domestic_call_minutes, :id=>'cellphone-domestic-call-minutes' %>
@@ -35,7 +35,7 @@
       </td>
     </tr>
     <tr>
-      <td><div>Data Plan</div></br></td>
+      <td><div><b>Data Plan</b></div></td>
     </tr>
     <tr>   
       <td>
@@ -59,12 +59,7 @@
     </tr>
     <tr>
       <td>
-        <%= f.label :rollover_data %>
-        <%#= f.check_box :rollover_data %>
-      </td>
-      <td>
-      <%#= f.label :data_speed %>
-      <%#= f.text_field :data_speed %>
+        <div><%= f.check_box :rollover_data %> Rollover data </div>
       </td>
     </tr>
     <%= render 'cellphone_equipment', f: f %>

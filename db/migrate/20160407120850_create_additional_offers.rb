@@ -7,6 +7,7 @@ class CreateAdditionalOffers < ActiveRecord::Migration
       t.float :price_value, null: false, default: "0"
       t.datetime :start_date
       t.datetime :end_date
+      t.boolean :is_nationwide, default: false
       t.boolean :is_active, default: true
       t.timestamps null: false
     end

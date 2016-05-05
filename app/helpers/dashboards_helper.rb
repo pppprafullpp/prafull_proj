@@ -53,7 +53,7 @@ module DashboardsHelper
 						service_provider_name=""
 					end
 
-					{:you_save_text => "", :contract_fee => "", :service_provider_name => allowed_trending_deal.service_provider_name, :service_category_id => allowed_trending_deal.service_category_id, :service_category_name => allowed_trending_deal.service_category_name,:advertisement =>nil,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:best_deal =>nil} 
+					{:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:advertisement =>nil,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:best_deal =>nil} 
 				end	
 
 				render :json => { :dashboard_data => (servicelist + categoryList) }

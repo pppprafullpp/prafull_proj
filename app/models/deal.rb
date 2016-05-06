@@ -118,8 +118,8 @@ class Deal < ActiveRecord::Base
   def additional_offer_detail
     self.additional_offers.pluck('description') if self.additional_offers.present?
   end
-  def additional_offer_price_value
-    self.additional_offers.pluck('price_value') if self.additional_offers.present?
+  def additional_offer_price
+    self.additional_offers.pluck('price') if self.additional_offers.present?
   end
 
 	private

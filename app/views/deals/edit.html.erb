@@ -117,9 +117,11 @@
             <%= render 'bundle_attribute', f: builder %>
           <% end %>
             
-            <%= f.fields_for :additional_offers do |builder| %>
-             <%= render 'additional_offer', f: builder %>
+          <%= f.fields_for :additional_offers do |builder| %>
+            <%= render 'additional_offer_fields', f: builder %>
           <% end %>
+          <%= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
+          
           
 
       <div><%= f.submit "Update" %></div>

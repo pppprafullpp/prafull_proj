@@ -13,6 +13,14 @@
         <span id='title'>Zipcodes</span>
       </div>
 
+      <div>
+          <h6>Import from CSV</h6>
+          <%= form_tag import_zipcodes_path, multipart: true do %>
+            <%= file_field_tag :file %>
+            <%= submit_tag "Import CSV" %>
+          <% end %></br>
+        </div>
+
       <table id="service_deals_list" class="datatable" cellpadding='0' cellspacing='0' border='1'>
         <thead>
           <tr>
@@ -27,8 +35,8 @@
         <tbody>
           <% @zipcodes.each do |zipcode| %>
             <tr>
-              <td><%= zipcode.code %></td>
-              <td><%= zipcode.area %></td>
+              <td class="best_in"><%= zipcode.code %></td>
+              <td class="best_in"><%= zipcode.area %></td>
               <td><%= zipcode.city %></td>
               <td><%= zipcode.state %></td>
               <td><%= zipcode.country %></td>
@@ -41,6 +49,12 @@
           <% end %>
         </tbody>
       </table>
+      <p>
+          Download:
+          <%= link_to "CSV", zipcodes_path(format: "csv") %>
+          <%#= link_to "Excel", service_categories_path(format: "xls") %>
+        </p>
     </td>
   </tr>
 </table>
+<script>

@@ -30,7 +30,7 @@
 				  <%= f.select :service_category_id, ServiceCategory.all.map { |r| [r.name, r.id]},{:include_blank => "---Select---"},:onchange=>"populate_service_provider(this);" %>
 				  </div>
 				</td>
-				<td>
+				<td style="width:50%;">
 				  <div>Service Provider:<span id="mandat">*</span> </div>
 				  <%= f.select :service_provider_id, [],{:include_blank => "---Select---"} %>
 				  </div>
@@ -97,6 +97,7 @@
 		      </tr>
 		  		  
 		   </table>
+		   
 	        <%= f.fields_for :internet_deal_attributes do |builder| %>
 	          <%= render 'internet_attribute', f: builder %>
 	        <% end %>
@@ -117,9 +118,10 @@
 	          <%= render 'bundle_attribute', f: builder %>
 	        <% end %>
             
-            <%= f.fields_for :additional_offers do |builder| %>
-	           <%= render 'additional_offer', f: builder %>
+          <%= f.fields_for :additional_offers do |builder| %>
+	        	<%= render 'additional_offer_fields', f: builder %>
 	        <% end %>
+	        <%= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
 	        
 
 		  <div><%= f.submit "Create" %></div>
@@ -127,4 +129,3 @@
 	</td>
 	</tr>
 </table>
-

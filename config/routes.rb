@@ -82,7 +82,9 @@ Rails.application.routes.draw do
   resources :bundle_service_preferences
   resources :subscribe_deals
   resources :trending_deals
-  resources :zipcodes
+  resources :zipcodes do
+    post 'import', on: :collection
+  end
   
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 

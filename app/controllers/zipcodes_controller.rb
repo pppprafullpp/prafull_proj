@@ -3,8 +3,49 @@ class ZipcodesController < ApplicationController
 
   # GET /zipcodes
   # GET /zipcodes.json
+  # def index
+  #   @zipcodes = Zipcode.all
+  # end
+
   def index
     @zipcodes = Zipcode.all
+    respond_to do |format|
+      format.html
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << 
+          [ "id",              
+            "code",             
+            "area",  
+            "city",  
+            "state",  
+            "country",  
+            "created_at",
+            "updated_at",           
+          ]  
+
+          # data rows
+          @zipcodes.each do |zp|
+            csv << 
+            [ zp.id,              
+              zp.code,
+              zp.area,
+              zp.city,
+              zp.state,
+              zp.country,
+              zp.created_at,
+              zp.updated_at
+            ]
+          end               
+        end 
+        # send it to the browser
+        send_data csv_string, 
+          :type => 'text/csv; charset=iso-8859-1; header=present', 
+          :disposition => "attachment; filename=zipcodes.csv" 
+      }
+    end
   end
 
   # GET /zipcodes/1
@@ -59,6 +100,11 @@ class ZipcodesController < ApplicationController
       format.html { redirect_to zipcodes_url, notice: 'Zipcode was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def import
+    Zipcode.import(params[:file])
+    redirect_to zipcodes_path, notice: "Successfully imported."
   end
 
   private

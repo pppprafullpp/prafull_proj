@@ -136,6 +136,11 @@ module DashboardsHelper
 
 	def category_trending_deal(deal_type,category_id,zip_code)
 		trending_deal=Deal.joins(:trending_deals).where("deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",true,deal_type,category_id).order("trending_deals.subscription_count DESC").first
+  		
+  		if not trending_deal.present?
+  			trending_deal=Deal.where("deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",true,deal_type,category_id).order("price ASC").first
+  		end
+
   		if trending_deal.present?
 			restricted_deal=Deal.joins(:deals_zipcodes).joins(:zipcodes).where("deals_zipcodes.deal_id= ? AND zipcodes.code= ? ",trending_deal.id,zip_code)
 			if not restricted_deal.present?

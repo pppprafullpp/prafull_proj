@@ -11,9 +11,6 @@ class CreateTelephoneDealAttributes < ActiveRecord::Migration
       t.integer  :international_additional_minutes
       t.text	   :countries
       t.text	   :features
-      t.text     :equipment
-      t.text     :installation
-      t.string   :activation
       t.timestamps null:false
     end
     add_index :telephone_deal_attributes, :deal_id

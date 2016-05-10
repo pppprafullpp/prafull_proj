@@ -9,10 +9,7 @@ class CreateInternetDealAttributes < ActiveRecord::Migration
     	t.string 	:online_storage
     	t.text 		:wifi_hotspot_networks
         t.boolean   :static_ip
-    	t.text		:equipment
-    	t.text		:installation
-    	t.string	:activation
-      	t.timestamps null: false
+    	t.timestamps null: false
     end
     add_index :internet_deal_attributes, :deal_id
   end

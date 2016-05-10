@@ -8,9 +8,6 @@ class CreateCableDealAttributes < ActiveRecord::Migration
       	t.text 		  :premium_channels_list
       	t.integer   :hd_channels
       	t.text 		  :hd_channels_list
-      	t.text		  :equipment
-      	t.text		  :installation
-      	t.string	  :activation
       	t.timestamps null: false
     end
     add_index :cable_deal_attributes, :deal_id

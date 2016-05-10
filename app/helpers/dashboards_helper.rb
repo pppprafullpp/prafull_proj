@@ -295,7 +295,7 @@ module DashboardsHelper
 					deals = Deal.joins(:internet_deal_attributes).select("deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed,internet_deal_attributes.equipment,internet_deal_attributes.installation,internet_deal_attributes.activation").where(deal_validation_conditions).order("price ASC")
 					
 					if deals.present?
-						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
 					if json.present?
@@ -321,7 +321,7 @@ module DashboardsHelper
 					deals = Deal.joins(:telephone_deal_attributes).select("deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features,telephone_deal_attributes.equipment,telephone_deal_attributes.installation,telephone_deal_attributes.activation").where(deal_validation_conditions).order("price ASC")
 					
 					if deals.present?
-						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
 					if json.present?
@@ -340,7 +340,7 @@ module DashboardsHelper
 					deals = Deal.joins(:cable_deal_attributes).select("deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list,cable_deal_attributes.equipment,cable_deal_attributes.installation,cable_deal_attributes.activation").where(deal_validation_conditions).order("price ASC")
 					
 					if deals.present?
-						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
 					if json.present?
@@ -366,7 +366,7 @@ module DashboardsHelper
 					deals = Deal.joins(:cellphone_deal_attributes).select("deals.*,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan").where(deal_validation_conditions).order("price ASC")
 					
 					if deals.present?
-						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
 					if json.present?
@@ -382,7 +382,7 @@ module DashboardsHelper
 					deals = Deal.joins(:bundle_deal_attributes).select("deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed,bundle_deal_attributes.equipment,bundle_deal_attributes.installation,bundle_deal_attributes.activation").where(deal_validation_conditions).order("price ASC")
 					
 					if deals.present?
-						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
 					if json.present?
@@ -400,10 +400,10 @@ module DashboardsHelper
 			end
 					
 			if merged_deals.present?
-				json_1 = merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+				json_1 = merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 			end
 			if smaller_deals.present?
-				json_2 = smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+				json_2 = smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 			end
 			if json_1.present? && json_2.present?
 				matched_deal = json_1 + json_2
@@ -428,7 +428,7 @@ module DashboardsHelper
 			end
 
 			if deals.present?
-				json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:additional_offers])
+				json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 			end
 
 			if json.present?

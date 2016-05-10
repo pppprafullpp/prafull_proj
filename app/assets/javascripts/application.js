@@ -25,8 +25,7 @@ $(window).bind('page:change', function() {
 });
 function initPage() {
   	$("#deal_service_category_id").change(function(){
-  		$("#deal_price").prop("disabled",false);
-    	if($("#deal_service_category_id option:selected").text()=="Internet"){
+  		if($("#deal_service_category_id option:selected").text()=="Internet"){
 			$("#telephone-attributes").css("display","none");
 			$("#telephone-domestic-call-minutes").prop("required",false);
 
@@ -94,8 +93,7 @@ function initPage() {
 
 			$("#cellphone-attributes").css("display","block");
 			$("#cellphone-telephone-domestic-call-minutes").prop("required",true);
-			$("#deal_price").prop("disabled",true);
-
+	
 		}else if($("#deal_service_category_id option:selected").text()=="Bundle"){
 			$("#internet-attributes").css("display","none");
 			$("#internet-download").prop("required",false);

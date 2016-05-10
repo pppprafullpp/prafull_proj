@@ -81,7 +81,7 @@ class Deal < ActiveRecord::Base
   	#end
 
 	def average_rating
-		self.comment_ratings.average(:rating_point)
+		self.comment_ratings.average(:rating_point).to_f.round(2)
 	end
 
 	def rating_count

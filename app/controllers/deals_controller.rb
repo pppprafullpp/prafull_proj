@@ -84,12 +84,16 @@ class DealsController < ApplicationController
 
 	def new
     @deal = Deal.new
-    @deal.internet_deal_attributes.build
-    @deal.telephone_deal_attributes.build
-    @deal.cable_deal_attributes.build
-    @deal_cellphone = @deal.cellphone_deal_attributes.new
+    @deal_internet = @deal.internet_deal_attributes.build
+    @deal_internet.internet_equipments.build
+    @deal_telephone = @deal.telephone_deal_attributes.build
+    @deal_telephone.telephone_equipments.build
+    @deal_cable = @deal.cable_deal_attributes.build
+    @deal_cable.cable_equipments.build
+    @deal_cellphone = @deal.cellphone_deal_attributes.build
     @deal_cellphone.cellphone_equipments.build
-    @deal.bundle_deal_attributes.build
+    @deal_bundle = @deal.bundle_deal_attributes.build
+    @deal_bundle.bundle_equipments.build
     @deal.additional_offers.build
   end
   

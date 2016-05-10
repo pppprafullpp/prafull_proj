@@ -3,8 +3,8 @@
   <table class="form-data">
     <tr>
       <td valign="top">
-        <div>Title<span id="mandat">*</span> </div>
-        <%= f.text_field :title, :id=>'additional-offer-title',  :required => true %>
+        <%= f.label :title %>
+        <%= f.text_field :title, :id=>'additional-offer-title' %>
       </td>
       <td>
         <%= f.label :description %>

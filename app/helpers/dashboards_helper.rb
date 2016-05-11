@@ -182,7 +182,7 @@ module DashboardsHelper
 	
   		elsif sp.service_category.name == 'Telephone'
   			if sp.telephone_service_preference.domestic_call_unlimited == true
-				equal_deals = Deal.joins(:telephone_deal_attributes).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ").order("price ASC")
+				equal_deals = Deal.joins(:telephone_deal_attributes).where(deal_validation_conditions+" AND price = ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", sp.price).order("price ASC")
 				greater_deals = Deal.joins(:telephone_deal_attributes).where(deal_validation_conditions+" AND price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", sp.price).order("price ASC").limit(2)
 				
 				if equal_deals.present? && greater_deals.present?	
@@ -226,7 +226,7 @@ module DashboardsHelper
 			
   		elsif sp.service_category.name == 'Cellphone'	
   			if sp.cellphone_service_preference.domestic_call_unlimited == true
-  				equal_deals = Deal.joins(:cellphone_deal_attributes).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' ").order("price ASC")
+  				equal_deals = Deal.joins(:cellphone_deal_attributes).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price = ?", sp.price).order("price ASC")
   				greater_deals = Deal.joins(:cellphone_deal_attributes).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price > ?", sp.price).order("price ASC").limit(2)
   				if equal_deals.present? && greater_deals.present?
   					merged_deals = (equal_deals + greater_deals).sort_by(&:price)
@@ -318,7 +318,7 @@ module DashboardsHelper
 					current_plan_price = user_preference.price
 					current_t_plan = user_preference.telephone_service_preference.domestic_call_unlimited
 					if current_t_plan == true
-						equal_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND deals.price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", current_plan_price).order("price ASC")
+						equal_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND deals.price = ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", current_plan_price).order("price ASC")
 						greater_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND deals.price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", current_plan_price).order("price ASC")
 						smaller_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND deals.price < ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' ", current_plan_price).order("price DESC")
 					else
@@ -361,7 +361,7 @@ module DashboardsHelper
 					current_plan_price = user_preference.price
 					current_t_plan = user_preference.cellphone_service_preference.domestic_call_unlimited
 					if current_t_plan == true
-						equal_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' ").order("price ASC")
+						equal_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price = ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' ", current_plan_price).order("price ASC")
 						greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price > ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited'", current_plan_price).order("price ASC")
 						smaller_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price < ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited'", current_plan_price).order("price ASC")
 					else

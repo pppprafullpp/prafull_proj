@@ -95,6 +95,7 @@ class DealsController < ApplicationController
     @deal_bundle = @deal.bundle_deal_attributes.build
     @deal_bundle.bundle_equipments.build
     @deal.additional_offers.build
+    @deal.deal_include_zipcodes.build
   end
   
   def get_service_providers

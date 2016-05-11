@@ -10,6 +10,7 @@ class Deal < ActiveRecord::Base
   has_many  :cellphone_deal_attributes, dependent: :destroy
   has_many  :bundle_deal_attributes, dependent: :destroy
   has_many  :additional_offers, dependent: :destroy
+  has_many  :deal_include_zipcodes, dependent: :destroy
   has_and_belongs_to_many  :zipcodes, dependent: :destroy
   
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
@@ -18,6 +19,7 @@ class Deal < ActiveRecord::Base
   accepts_nested_attributes_for :cellphone_deal_attributes,:reject_if => :reject_cellphone, allow_destroy: true
   accepts_nested_attributes_for :bundle_deal_attributes,:reject_if => :reject_bundle, allow_destroy: true
   accepts_nested_attributes_for :additional_offers,:reject_if => :reject_additional, allow_destroy: true
+  accepts_nested_attributes_for :deal_include_zipcodes,:reject_if => :reject_include_zipcodes, allow_destroy: true
   
 	mount_uploader :image, ImageUploader
 
@@ -233,6 +235,16 @@ class Deal < ActiveRecord::Base
 	
   def reject_additional(attributes)
     if attributes[:title].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
+
+  def reject_include_zipcodes(attributes)
+    if attributes[:deal_id].blank? || attributes[:zipcode_id].blank?
       if attributes[:id].present?
         attributes.merge!({:_destroy => 1}) && false
       else

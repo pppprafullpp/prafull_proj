@@ -232,11 +232,14 @@ function initPage() {
 
     $("#additional-offer-nationwide").click(function(){
 		if($(this).is(':checked')){
-    		$("#additional-offer-zipcode").prop("disabled",true);
+    		$(".additional-offer-zipcode").prop("disabled",true);
     	}else{
-    		$("#additional-offer-zipcode").prop("disabled",false);
+    		$(".additional-offer-zipcode").prop("disabled",false);
     	}
 	});
+
+    $("#deal-include-zipcode").prop("disabled",true);
+	$(".additional-offer-zipcode").prop("disabled",true);
 }
 
 function populate_service_provider(obj)

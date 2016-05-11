@@ -23,13 +23,10 @@ class Deal < ActiveRecord::Base
 
 	validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
 
-  def as_json(opts={})
-  	json = super(opts)
-    begin
-     Hash[*json.map{|k, v| [k, v || ""]}.flatten]
-    rescue
-    end
-  end
+  #def as_json(opts={})
+  #	json = super(opts)
+  # Hash[*json.map{|k, v| [k, v || ""]}.flatten]
+  #end
 
 	def self.import(file)
   	CSV.foreach(file.path, headers: true) do |row|

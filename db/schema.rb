@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510072949) do
+ActiveRecord::Schema.define(version: 20160510133145) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",       limit: 4
@@ -268,6 +268,11 @@ ActiveRecord::Schema.define(version: 20160510072949) do
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
   add_index "deals", ["service_provider_id"], name: "index_deals_on_service_provider_id", using: :btree
+
+  create_table "deals_include_zipcodes", force: :cascade do |t|
+    t.integer "deal_id",            limit: 4
+    t.integer "include_zipcode_id", limit: 4
+  end
 
   create_table "deals_zipcodes", id: false, force: :cascade do |t|
     t.integer "deal_id",    limit: 4, null: false

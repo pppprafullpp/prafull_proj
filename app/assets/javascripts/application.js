@@ -220,6 +220,16 @@ function initPage() {
     $("#service_preference_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#service_preference_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
 
+    $("#deal-nationwide").click(function(){
+		if($(this).is(':checked')){
+    		$("#deal-include-zipcode").prop("disabled",true);
+    		$("#deal-exclude-zipcode").prop("disabled",false);
+    	}else{
+    		$("#deal-include-zipcode").prop("disabled",false);
+    		$("#deal-exclude-zipcode").prop("disabled",true);
+    	}
+	});
+
     $("#additional-offer-nationwide").click(function(){
 		if($(this).is(':checked')){
     		$("#additional-offer-zipcode").prop("disabled",true);

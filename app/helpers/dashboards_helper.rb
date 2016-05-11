@@ -35,7 +35,7 @@ module DashboardsHelper
 			  		allowed_best_deal=category_best_deal(deal_type,sp,zip_code)
 		  			
 		  			if allowed_best_deal.present?
-		  				if not allowed_best_deal.effective_price.empty?
+		  				if allowed_best_deal.effective_price.to_f>0
 		  					you_save = '%.2f' % (app_user_current_plan - allowed_best_deal.effective_price.to_f)	
 		  			    else
 		  			    	you_save = '%.2f' % (app_user_current_plan - allowed_best_deal.price)

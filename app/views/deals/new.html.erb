@@ -69,11 +69,17 @@
 		      </tr>
 		      <tr>
 		      		<td valign="top">
-		      			<div><%= f.check_box :is_nationwide, :checked=>'checked' %> Is Nationwide? </div>
+		      			<div style="width:49%;display: inline-block;vertical-align: top;">
+			      			<div><%= f.check_box :is_nationwide,:id=>'deal-nationwide', :checked=>'checked' %> Is Nationwide? </div>
+			      			</div>
+		      			<!--div style="width:50%;display: inline-block;">
+			      			<%= f.label 'Include Zipcodes:' %>
+	          				<%#= f.select :include_zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{id: "deal-include-zipcode",multiple: true,size: 10,disabled: "disabled" } %>
+          				</div-->
 		      		</td>
 		      		<td>
 		      			<%= f.label 'Exclude Zipcodes:' %>
-          				<%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ multiple: true,size: 10 } %>
+          				<%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "deal-exclude-zipcode",multiple: true,size: 10  } %>
 		      		</td>
 		      </tr>
 		      <tr>

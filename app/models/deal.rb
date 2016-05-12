@@ -10,6 +10,7 @@ class Deal < ActiveRecord::Base
   has_many  :cellphone_deal_attributes, dependent: :destroy
   has_many  :bundle_deal_attributes, dependent: :destroy
   has_many  :additional_offers, dependent: :destroy
+  has_many  :deal_include_zipcodes, dependent: :destroy
   has_and_belongs_to_many  :zipcodes, dependent: :destroy
   
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
@@ -18,15 +19,16 @@ class Deal < ActiveRecord::Base
   accepts_nested_attributes_for :cellphone_deal_attributes,:reject_if => :reject_cellphone, allow_destroy: true
   accepts_nested_attributes_for :bundle_deal_attributes,:reject_if => :reject_bundle, allow_destroy: true
   accepts_nested_attributes_for :additional_offers,:reject_if => :reject_additional, allow_destroy: true
+  accepts_nested_attributes_for :deal_include_zipcodes,:reject_if => :reject_include_zipcodes, allow_destroy: true
   
 	mount_uploader :image, ImageUploader
 
 	validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
 
-  def as_json(opts={})
-  	json = super(opts)
-  	#Hash[*json.map{|k, v| [k, v || ""]}.flatten]
-  end
+  #def as_json(opts={})
+  #	json = super(opts)
+  # Hash[*json.map{|k, v| [k, v || ""]}.flatten]
+  #end
 
 	def self.import(file)
   	CSV.foreach(file.path, headers: true) do |row|
@@ -81,7 +83,11 @@ class Deal < ActiveRecord::Base
   	#end
 
 	def average_rating
-		self.comment_ratings.average(:rating_point).to_f.round(2)
+    if self.comment_ratings.present?
+		  self.comment_ratings.average(:rating_point).to_f.round(2)
+    else
+      return 0
+    end  
 	end
 
 	def rating_count
@@ -93,10 +99,10 @@ class Deal < ActiveRecord::Base
   end
 
   def effective_price
-    if self.cellphone_deal_attributes.present?
-      cellphone=self.cellphone_deal_attributes.first
-      equipment=cellphone.cellphone_equipments.first
-      effective_price=(cellphone.no_of_lines*cellphone.price_per_line)+cellphone.data_plan_price
+    if self.internet_deal_attributes.present?
+      internet=self.internet_deal_attributes.first
+      equipment=internet.internet_equipments.first
+      effective_price=self.deal_price.to_f
       if equipment.present?
         effective_price+=equipment.price
       end
@@ -105,9 +111,60 @@ class Deal < ActiveRecord::Base
           effective_price-=additional_offer.price
         end
       end
+    elsif self.telephone_deal_attributes.present?
+      telephone=self.telephone_deal_attributes.first
+      equipment=telephone.telephone_equipments.first
+      effective_price=self.deal_price.to_f
+      if equipment.present?
+        effective_price+=equipment.price
+      end
+      if self.additional_offers.present?
+        self.additional_offers.each do |additional_offer|
+          effective_price-=additional_offer.price
+        end
+      end
+    elsif self.cable_deal_attributes.present?
+      cable=self.cable_deal_attributes.first
+      equipment=cable.cable_equipments.first
+      effective_price=self.deal_price.to_f
+      if equipment.present?
+        effective_price+=equipment.price
+      end
+      if self.additional_offers.present?
+        self.additional_offers.each do |additional_offer|
+          effective_price-=additional_offer.price
+        end
+      end
+    elsif self.cellphone_deal_attributes.present?
+      cellphone=self.cellphone_deal_attributes.first
+      equipment=cellphone.cellphone_equipments.first
+      effective_price=(cellphone.no_of_lines*cellphone.price_per_line)+cellphone.data_plan_price+cellphone.additional_data_price
+      if equipment.present?
+        effective_price+=(cellphone.no_of_lines*equipment.price)
+      end
+      if self.additional_offers.present?
+        self.additional_offers.each do |additional_offer|
+          effective_price-=additional_offer.price
+        end
+      end
+    elsif self.bundle_deal_attributes.present?
+      bundle=self.bundle_deal_attributes.first
+      equipment=bundle.bundle_equipments.first
+      effective_price=self.deal_price.to_f
+      if equipment.present?
+        effective_price+=equipment.price
+      end
+      if self.additional_offers.present?
+        self.additional_offers.each do |additional_offer|
+          effective_price-=additional_offer.price
+        end
+      end
+    end
+
+    if effective_price != self.deal_price.to_f
       sprintf '%.2f', effective_price
     else
-      effective_price="0.00"
+      effective_price=0
     end
   end
 
@@ -178,6 +235,16 @@ class Deal < ActiveRecord::Base
 	
   def reject_additional(attributes)
     if attributes[:title].blank?
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+  end
+
+  def reject_include_zipcodes(attributes)
+    if attributes[:deal_id].blank? || attributes[:zipcode_id].blank?
       if attributes[:id].present?
         attributes.merge!({:_destroy => 1}) && false
       else

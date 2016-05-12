@@ -5,7 +5,7 @@ class CreateCellphoneEquipments < ActiveRecord::Migration
       t.string  :model
       t.string  :make
       t.integer :memory
-      t.decimal :price, precision: 30, scale: 2
+      t.decimal :price, precision: 30, scale: 2,default: "0"
       t.text    :installation
       t.string  :activation
       t.string  :offer

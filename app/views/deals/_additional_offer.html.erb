@@ -20,7 +20,7 @@
         <br/>
         <div><%= f.check_box :is_nationwide,:id=>'additional-offer-nationwide', :checked=>'checked' %> Is Nationwide? </div>
         <%= f.label 'Select Allowed Zipcodes:' %>
-        <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "additional-offer-zipcode",multiple: true,size: 10,disabled: "disabled" } %>
+        <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "additional-offer-zipcode",multiple: true,size: 10 } %>
       </td>
   </tr>
   <tr>

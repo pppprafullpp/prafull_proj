@@ -220,13 +220,26 @@ function initPage() {
     $("#service_preference_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#service_preference_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
 
-    $("#additional-offer-nationwide").click(function(){
+    $("#deal-nationwide").click(function(){
 		if($(this).is(':checked')){
-    		$("#additional-offer-zipcode").prop("disabled",true);
+    		$("#deal-include-zipcode").prop("disabled",true);
+    		$("#deal-exclude-zipcode").prop("disabled",false);
     	}else{
-    		$("#additional-offer-zipcode").prop("disabled",false);
+    		$("#deal-include-zipcode").prop("disabled",false);
+    		$("#deal-exclude-zipcode").prop("disabled",true);
     	}
 	});
+
+    $("#additional-offer-nationwide").click(function(){
+		if($(this).is(':checked')){
+    		$(".additional-offer-zipcode").prop("disabled",true);
+    	}else{
+    		$(".additional-offer-zipcode").prop("disabled",false);
+    	}
+	});
+
+    $("#deal-include-zipcode").prop("disabled",true);
+	$(".additional-offer-zipcode").prop("disabled",true);
 }
 
 function populate_service_provider(obj)

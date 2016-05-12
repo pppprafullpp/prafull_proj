@@ -140,7 +140,7 @@ class Deal < ActiveRecord::Base
       equipment=cellphone.cellphone_equipments.first
       effective_price=(cellphone.no_of_lines*cellphone.price_per_line)+cellphone.data_plan_price+cellphone.additional_data_price
       if equipment.present?
-        effective_price+=equipment.price
+        effective_price+=(cellphone.no_of_lines*equipment.price)
       end
       if self.additional_offers.present?
         self.additional_offers.each do |additional_offer|
@@ -161,7 +161,7 @@ class Deal < ActiveRecord::Base
       end
     end
 
-    if effective_price.to_s!=self.deal_price
+    if effective_price != self.deal_price.to_f
       sprintf '%.2f', effective_price
     else
       effective_price=0

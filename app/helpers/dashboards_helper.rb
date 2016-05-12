@@ -410,7 +410,7 @@ module DashboardsHelper
 			end
 		else
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
-			deal_validation_conditions="deals.id not in ("+restricted_deals+") AND deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+category_id+" "
+			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+category_id+" "
 
 			if category_id == '1'
 				deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("price ASC")

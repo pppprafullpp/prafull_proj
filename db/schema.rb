@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511105609) do
+ActiveRecord::Schema.define(version: 20160512065136) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",       limit: 4
@@ -322,12 +322,19 @@ ActiveRecord::Schema.define(version: 20160511105609) do
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
-    t.integer  "app_user_id",            limit: 4
+    t.integer  "app_user_id",                   limit: 4
     t.boolean  "recieve_notification"
-    t.integer  "day",                    limit: 4
-    t.boolean  "recieve_trending_deals",           default: true
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.integer  "day",                           limit: 4
+    t.boolean  "recieve_trending_deals",                    default: true
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+    t.string   "repeat_notification_frequency", limit: 255, default: "Weekly"
+    t.string   "trending_deal_frequency",       limit: 255, default: "Weekly"
+    t.boolean  "receive_call",                              default: true
+    t.integer  "min_service_provider_rating",   limit: 4
+    t.integer  "min_deal_rating",               limit: 4
+    t.boolean  "receive_email",                             default: true
+    t.boolean  "receive_text",                              default: true
   end
 
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree

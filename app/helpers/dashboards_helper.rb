@@ -142,6 +142,8 @@ module DashboardsHelper
 				allowed_deals.push(deal)
 		    end
 		end
+
+		return allowed_deals
 	end
 
 	def category_trending_deal(deal_type,category_id,zip_code)
@@ -450,5 +452,7 @@ module DashboardsHelper
 				allowed_deals.push(deal)
 		    end
 		end
+
+		return allowed_deals
   	end
 end

@@ -99,9 +99,9 @@ module DashboardsHelper
 												
 		if sorting_key == 'download_speed' #For Internet and bundle
 			if category_id == '1'
-				deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions).order("internet_deal_attributes.download DESC")
+				deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions).order("internet_deal_attributes.download DESC,deals.price ASC")
 			elsif category_id == '5'
-				deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions).order("bundle_deal_attributes.download DESC")
+				deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions).order("bundle_deal_attributes.download DESC,deals.price ASC")
 			end
 		elsif sorting_key == 'price' #For all on the basis of Price
 			if category_id == '1'
@@ -119,17 +119,17 @@ module DashboardsHelper
 	  		end
 		elsif sorting_key == 'free_channels' #For Cable
 			if category_id == '3'
-				deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions).order("cable_deal_attributes.free_channels DESC")
+				deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions).order("cable_deal_attributes.free_channels DESC,deals.price ASC")
 			elsif category_id == '5'
-				deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions).order("bundle_deal_attributes.free_channels DESC")
+				deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions).order("bundle_deal_attributes.free_channels DESC,deals.price ASC")
 			end
 		elsif sorting_key == 'call_minutes' #For CellPhone, Telephone & Bundle
 			if category_id == '2'
-				deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions).order("telephone_deal_attributes.domestic_call_minutes DESC")
+				deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions).order("telephone_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
 	  		elsif category_id == '4'
-	  			deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions).order("cellphone_deal_attributes.domestic_call_minutes DESC")
+	  			deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions).order("cellphone_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
 			elsif category_id == '5'
-	  			deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions).order("bundle_deal_attributes.domestic_call_minutes DESC")
+	  			deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions).order("bundle_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
 			end
 	  	else
 			deals = Deal.where(deal_validation_conditions).order("price ASC")

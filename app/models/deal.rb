@@ -181,8 +181,16 @@ class Deal < ActiveRecord::Base
   end
 
   def deal_equipments
-    if self.cellphone_deal_attributes.present?
+    if self.internet_deal_attributes.present?
+      self.internet_deal_attributes.first.internet_equipments if self.internet_deal_attributes.first.internet_equipments.present?
+    elsif self.telephone_deal_attributes.present?
+      self.telephone_deal_attributes.first.telephone_equipments if self.telephone_deal_attributes.first.telephone_equipments.present?
+    elsif self.cable_deal_attributes.present?
+      self.cable_deal_attributes.first.cable_equipments if self.cable_deal_attributes.first.cable_equipments.present?
+    elsif self.cellphone_deal_attributes.present?
       self.cellphone_deal_attributes.first.cellphone_equipments if self.cellphone_deal_attributes.first.cellphone_equipments.present?
+    elsif self.bundle_deal_attributes.present?
+      self.bundle_deal_attributes.first.bundle_equipments if self.bundle_deal_attributes.first.bundle_equipments.present?
     end
   end
   

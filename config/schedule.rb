@@ -12,8 +12,20 @@ set :environment, "production"
 
 set :output, {:error => "#{path}/log/cron_error_log.log", :standard => "#{path}/log/cron_log.log"}
 
-every 4.hours do
-	rake "send_trending_deals:email_trending_deals"
+# every 4.hours do
+	# rake "send_trending_deals:email_trending_deals"
+# end
+
+every :day, at: '10pm' do
+	rake "send_trending_deals_daily:email_trending_deals_daily"
+end
+
+every Date.today.tuesday?, :at => "11:00pm" do
+	rake "send_trending_deals_weekly:email_trending_deals_weekly"
+end
+
+every (Date.today.tuesday?) || (Date.today.thursday?), :at => "11:00pm" do
+	rake "send_trending_deals_weekly:email_trending_deals_bi_weekly"
 end
 
 every 4.hours do

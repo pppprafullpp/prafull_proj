@@ -196,16 +196,15 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		
 		if @user_contract_end_date.present? && @user_notification_day.present?
 			
-			@b_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1)
-
-			if @b_deal.present?	
+			best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
+			if best_deal.present?	
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
-		      		DealNotifier.send_best_deal(@app_user,@b_deal).deliver_now
+		      		DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]
-		      			gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
+		      			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}"}})
 		      		elsif @app_user_device == "iphone"
 		      			pusher = Grocer.pusher(
 		        			certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
@@ -216,7 +215,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		      			)
 		      			notification = Grocer::Notification.new(
 		        			device_token:      "#{@app_user.gcm_id}",
-		        			alert:             "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}",
+		        			alert:             "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}",
 		        			badge:             42
 		        			#category:          "a category",         																	# optional; used for custom notification actions
 		        			#sound:             "siren.aiff",         																	# optional
@@ -236,14 +235,13 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		@app_user_device = @app_user.device_flag
 		@user_preference = @app_user.service_preferences.where("service_category_id = ?",params[:service_category_id]).first
 
-		@b_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1)
-		
-		if @b_deal.present?
-			DealNotifier.send_best_deal(@app_user,@b_deal).deliver_now
+		best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
+		if best_deal.present?
+			DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]
-    			gcm.send(registration_id, {data: {message: "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}"}})
+    			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}"}})
 			elsif @app_user_device == "iphone"
 				pusher = Grocer.pusher(
 		        	certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
@@ -254,7 +252,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		      	)
 		      	notification = Grocer::Notification.new(
 		        	device_token:      "#{@app_user.gcm_id}",
-		        	alert:             "Price : "+"#{@b_deal.price}" + "\n" + "Short Description : "+"#{@b_deal.short_description}",
+		        	alert:             "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}",
 		        	badge:             42
 		        	#category:          "a category",         																	# optional; used for custom notification actions
 		        	#sound:             "siren.aiff",         																	# optional

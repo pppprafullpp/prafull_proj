@@ -7,6 +7,8 @@ class CreateDeals < ActiveRecord::Migration
       t.text :short_description
       t.text :detail_description
       t.float :price, null: false, default: "0"
+      t.boolean :is_contract, default: false
+      t.string :contract_period
       t.string :url
       t.string :image
       t.datetime :start_date

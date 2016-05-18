@@ -53,11 +53,20 @@
             <%= f.text_field :price %></div>
           </td>
           <td>
-              <div>URL:<span id="mandat">*</span></div>
+              <div>URL:</div>
               <%= f.text_field :url %></div>
           </td>
           </tr>
-          <tr>
+        <tr>
+          <td>
+            <div><%= f.check_box :is_contract %> Is Contract?</div>
+          </td>
+          <td>
+              <div>Contract Period (months):</div>
+              <%= f.text_field :contract_period %></div>
+          </td>
+        </tr>
+        <tr>
               <td>
                 <div>Enter a Short Description:<span id="mandat">*</span> </div>
               <%= f.text_area :short_description %></div>

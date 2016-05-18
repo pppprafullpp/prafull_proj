@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       match 'referral_tracking' => 'referral_infos#create', :via => :post
       match 'get_category_deals' => 'dashboards#category_deals', :via => :get
       match 'subscribed_deals' => 'subscribe_deals#subscription_info', :via => :post
+      match 'orders' => 'orders#create', :via => :post
+      match 'get_orders' => 'orders#get_orders', :via => :get
     end
   end
 
@@ -85,6 +87,7 @@ Rails.application.routes.draw do
   resources :zipcodes do
     post 'import', on: :collection
   end
+  resources :orders
   
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 

@@ -211,6 +211,7 @@ function initPage() {
 	});
 
 
+	$("#order_activation_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
 	$("#deal_start_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#deal_end_date").datepicker({ dateFormat: 'dd-mm-yy' });
     $("#additional-offer-start-date").datepicker({ dateFormat: 'dd-mm-yy' });
@@ -235,14 +236,6 @@ function initPage() {
     		$(".additional-offer-zipcode").prop("disabled",true);
     	}else{
     		$(".additional-offer-zipcode").prop("disabled",false);
-    	}
-	});
-
-    $("#is_contract").click(function(){
-		if($(this).is(':checked')){
-    		$("#contract_period").prop("disabled",false);
-    	}else{
-    		$("#contract_period").prop("disabled",true);
     	}
 	});
 

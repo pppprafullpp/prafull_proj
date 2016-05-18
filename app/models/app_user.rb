@@ -7,6 +7,7 @@ class AppUser < ActiveRecord::Base
   has_one :notification, dependent: :destroy
   has_many :comment_ratings, dependent: :destroy
   has_many :subscribe_deals, dependent: :destroy
+  has_many :orders, dependent: :destroy
   #has_many :comments, dependent: :destroy
   #has_many :ratings, dependent: :destroy
   mount_uploader :avatar, ImageUploader

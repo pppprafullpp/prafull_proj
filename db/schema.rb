@@ -342,14 +342,14 @@ ActiveRecord::Schema.define(version: 20160518085952) do
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "deal_id",               limit: 4
-    t.integer  "app_user_id",           limit: 4
-    t.boolean  "status"
-    t.float    "effective_price",       limit: 24
-    t.float    "deal_price",            limit: 24
-    t.datetime "activation_start_date"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.integer  "deal_id",         limit: 4
+    t.integer  "app_user_id",     limit: 4
+    t.string   "status",          limit: 255
+    t.float    "deal_price",      limit: 24
+    t.float    "effective_price", limit: 24
+    t.datetime "activation_date"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "referral_infos", force: :cascade do |t|

@@ -48,6 +48,6 @@ class OrdersController < ApplicationController
 
 	private
   def order_params
-   params.require(:order).permit( :deal_id,:app_user_id,:status,:effective_price,:deal_price,:activation_start_date)
+   params.require(:order).permit( :deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
   end
 end

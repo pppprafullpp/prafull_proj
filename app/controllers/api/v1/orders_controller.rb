@@ -4,7 +4,6 @@ class Api::V1::OrdersController < ApplicationController
 
 	def create
 		@order = Order.new(order_params) 
-		@order.activation_start_date = Time.now
 		if @order.save
     	render :status => 200,
            			:json => { :success => true }
@@ -30,7 +29,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.permit(:deal_id,:app_user_id,:status,:effective_price,:deal_price,:activation_start_date)
+		params.permit(:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
 	end
 
 end

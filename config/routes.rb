@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       match 'subscribed_deals' => 'subscribe_deals#subscription_info', :via => :post
       match 'orders' => 'orders#create', :via => :post
       match 'get_orders' => 'orders#get_orders', :via => :get
+      match 'my_orders' => 'orders#my_orders', :via => :get
+
     end
   end
 

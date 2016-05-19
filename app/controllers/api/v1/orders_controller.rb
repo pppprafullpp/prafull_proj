@@ -27,6 +27,20 @@ class Api::V1::OrdersController < ApplicationController
 		end	
 	end
 
+	def my_orders
+		@orders = Order.where("app_user_id = ?", params[:app_user_id])
+		if @orders.present?
+      render :status => 200,
+             :json => {
+                      :success => true,
+                      :order => @orders.as_json(:except => [:created_at, :updated_at]
+                      	:methods => [:deal])
+                      }
+    else
+      render :json => { :success => false }
+    end  
+	end
+
 	private
 	def order_params
 		params.permit(:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)

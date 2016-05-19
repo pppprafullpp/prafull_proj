@@ -34,8 +34,9 @@ class Api::V1::OrdersController < ApplicationController
       	render :status => 200,
              :json => {
                       :success => true,
-                      :order => @orders.as_json(:include => {:deal => {:methods => :deal_image_url,:except=> :image}})
+                      :order => @orders.as_json(:include => {:deal => {:methods => :deal_image_url}},:methods => :order_place_time)
                       }
+                     
     else
       render :json => { :success => false }
     end  

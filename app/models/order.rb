@@ -5,4 +5,9 @@ class Order < ActiveRecord::Base
   	has_many :gifts, through: :gift_orders
 
   	validates_presence_of :deal_id, :app_user_id, :effective_price, :deal_price, :status, :activation_date
+
+  	def order_place_time
+  		self.created_at.strftime("%d/%m/%Y %I:%M %p")
+  	end
+  	
 end

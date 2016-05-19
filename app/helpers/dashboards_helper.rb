@@ -182,7 +182,7 @@ module DashboardsHelper
 				best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download = ? AND price <= ? AND deals.id not in (?)", app_user_download_speed,sp.price,restricted_deals).order("price ASC")
 			end
 			if best_deals.blank?
-				best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND price <= ? AND deals.id not in (?)", app_user_download_speed,sp.price+10,restricted_deals).order("price ASC")
+				best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download < ? AND price <= ? AND deals.id not in (?)", app_user_download_speed,sp.price,restricted_deals).order("download DESC").order("price ASC")
 			end
 			if best_deals.blank?
 				best_deals=Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
@@ -209,7 +209,7 @@ module DashboardsHelper
 					best_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes = ? AND price <= ? AND deals.id not in (?)", app_user_call_minutes,sp.price,restricted_deals).order("price ASC")
 				end
 				if best_deals.blank?
-					best_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes > ? AND price <= ? AND deals.id not in (?)", app_user_call_minutes,sp.price+10,restricted_deals).order("price ASC")
+					best_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes < ? AND price <= ? AND deals.id not in (?)", app_user_call_minutes,sp.price,restricted_deals).order("domestic_call_minutes DESC").order("price ASC")
 				end
 				if best_deals.blank?
 					best_deals=Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
@@ -228,7 +228,7 @@ module DashboardsHelper
 				best_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels = ? AND price <= ? AND deals.id not in (?)", app_user_free_channels,sp.price,restricted_deals).order("price ASC")
 			end
 			if best_deals.blank?
-				best_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels > ? AND price <= ? AND deals.id not in (?)", app_user_free_channels,sp.price+10,restricted_deals).order("price ASC")
+				best_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels < ? AND price <= ? AND deals.id not in (?)", app_user_free_channels,sp.price,restricted_deals).order("free_channels DESC").order("price ASC")
 			end
 			if best_deals.blank?
 				best_deals=Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
@@ -255,7 +255,7 @@ module DashboardsHelper
   					best_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes = ? AND price <= ? AND deals.id not in (?)", app_user_call_minutes,sp.price,restricted_deals).order("price ASC")
   				end
   				if best_deals.blank?
-  					best_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes > ? AND price <= ? AND deals.id not in (?)", app_user_call_minutes,sp.price+10,restricted_deals).order("price ASC")
+  					best_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes < ? AND price <= ? AND deals.id not in (?)", app_user_call_minutes,sp.price,restricted_deals).order("domestic_call_minutes DESC").order("price ASC")
   				end
 				if best_deals.blank?
 					best_deals=Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
@@ -500,7 +500,7 @@ module DashboardsHelper
 			end
 
 			if best_deals.present? && greater_deals.present?	
-				merged_deals = (best_deals + greater_deals).sort_by(&:price)
+				merged_deals = best_deals + greater_deals
 			elsif best_deals.present? && greater_deals.blank?
 				merged_deals = best_deals
 			elsif best_deals.blank? && greater_deals.present?

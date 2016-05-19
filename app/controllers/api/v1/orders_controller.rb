@@ -30,10 +30,10 @@ class Api::V1::OrdersController < ApplicationController
 	def my_orders
 		@orders = Order.where("app_user_id = ?", params[:app_user_id])
 		if @orders.present?
-      render :status => 200,
+      	render :status => 200,
              :json => {
                       :success => true,
-                      :order => @orders.as_json(:except => [:created_at, :updated_at]
+                      :order => @orders.as_json(:except => [:created_at, :updated_at],
                       	:methods => [:deal])
                       }
     else

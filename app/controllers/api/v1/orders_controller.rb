@@ -19,7 +19,7 @@ class Api::V1::OrdersController < ApplicationController
 			render :status => 200,
              :json => {
                         :success => true,
-                        :order => @order.as_json(:except => [:created_at, :updated_at])
+                        :orders => @order.as_json(:except => [:created_at, :updated_at])
                         
                       }
 		else

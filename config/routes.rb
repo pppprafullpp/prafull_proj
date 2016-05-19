@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       match 'orders' => 'orders#create', :via => :post
       match 'get_orders' => 'orders#get_orders', :via => :get
       match 'my_orders' => 'orders#my_orders', :via => :get
+      match 'get_gifts' => 'gifts#get_gifts', :via => :get
 
     end
   end
@@ -90,6 +91,7 @@ Rails.application.routes.draw do
     post 'import', on: :collection
   end
   resources :orders
+  resources :gifts
   
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 

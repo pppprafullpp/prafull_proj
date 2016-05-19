@@ -10,7 +10,20 @@
 
 			<div class="small-6 large-centered columns">
 				<%= form_for(@order, :url => @orders) do |f| %>
-					<br/>
+				<br/>
+					<% if @order.errors.any? %>
+  					<div id="error_explanation">
+    					<div class="alert alert-danger">
+      					The form contains <%= pluralize(@order.errors.count, "error") %>.
+    					</div>
+    					<ul>
+    						<% @order.errors.full_messages.each do |msg| %>
+      						<li><%= msg %></li>
+    						<% end %>
+    					</ul>
+  					</div>
+					<% end %>
+				  <br/>
 						<div><span style="color:#4285F4"><strong><i>Fields marked * are mandatory</i></strong></span></div><br/>
 					<div><strong>Deal Id : </strong><span id="mandat">*</span><br />
 				  <%= f.text_field :deal_id %></div>

@@ -5,6 +5,7 @@ class Api::V1::OrdersController < ApplicationController
 	def create
 		@order = Order.new(order_params) 
 		if @order.save
+			@order.gift_orders.create(gift_id: params[:gift_id])
     	render :status => 200,
            			:json => { :success => true }
     else

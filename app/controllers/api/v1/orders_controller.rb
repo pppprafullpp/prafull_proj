@@ -4,6 +4,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	def create
 		@order = Order.new(order_params)
+		@order.order_id=rand(36**8).to_s(36).upcase  
 		if @order.save
 			# @order.gift_orders.create(gift_id: params[:gift_id])
     	render :status => 200,
@@ -44,7 +45,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.permit(:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
+		params.permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
 	end
 
 end

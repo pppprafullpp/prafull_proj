@@ -9,7 +9,8 @@ class OrdersController < ApplicationController
      @order = Order.find(params[:id])
 	end
 	def create
-     @order = Order.new(order_params)    
+    @order = Order.new(order_params)
+    @order.order_id=rand(36**8).to_s(36).upcase    
     respond_to do |format|
       if @order.save
         format.html { redirect_to orders_path, :notice => 'You have successfully created a order' }
@@ -48,6 +49,6 @@ class OrdersController < ApplicationController
 
 	private
   def order_params
-   params.require(:order).permit( :deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
+   params.require(:order).permit(:order_id, :deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
   end
 end

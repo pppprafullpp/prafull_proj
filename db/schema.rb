@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(version: 20160519085438) do
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
+    t.string   "order_id",        limit: 255, default: "",            null: false
     t.integer  "deal_id",         limit: 4
     t.integer  "app_user_id",     limit: 4
     t.string   "status",          limit: 255, default: "In-progress", null: false

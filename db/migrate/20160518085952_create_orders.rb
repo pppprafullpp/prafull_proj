@@ -1,6 +1,7 @@
 class CreateOrders < ActiveRecord::Migration
   def change
     create_table :orders do |t|
+      t.string :order_id, null: false, default: ""
       t.integer :deal_id
       t.integer :app_user_id
       t.string :status, null: false, default: "In-progress"

@@ -31,6 +31,8 @@ module DashboardsHelper
 			  		end
 
 			  		allowed_trending_deal = category_trending_deal(deal_type,sp.service_category_id,zip_code)
+
+			  		allowed_order_deal=category_order_deal(app_user_id,sp.service_category_id,false)
 			  		
 			  		allowed_best_deal=category_best_deal(deal_type,sp,zip_code,1,false)
 		  			
@@ -43,8 +45,12 @@ module DashboardsHelper
 		  			else
 		  				you_save = ""
 		  			end
-		  			
-			  		{:you_save_text => you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_id => sp.service_category.id, :service_category_name => sp.service_category.name, :advertisement => advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]), :best_deal => allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price])} 
+		  				
+		  			if allowed_best_deal.present? && allowed_order_deal.present? && allowed_best_deal.id==allowed_order_deal.id
+		  				allowed_order_deal=nil
+		  			end	
+
+			  		{:you_save_text => you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_id => sp.service_category.id, :service_category_name => sp.service_category.name, :advertisement => advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]), :best_deal => allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]),:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price])} 
 			  	end	
 		  		# Show trending deals for unsubscribed services
 		  		service_categories = ServiceCategory.where("name not in ("+excluded_categories+")")
@@ -81,6 +87,43 @@ module DashboardsHelper
 			render :json => { :dashboard_data => categoryList }
 		end
 	end
+
+	def category_order_deal(app_user_id,category_id,return_attributes)
+		
+		order_deals=Deal.joins(:orders).select("deals.id").where("deals.service_category_id = ? AND orders.app_user_id = ?",category_id,app_user_id)
+
+		if return_attributes==true
+			select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
+			select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
+			select_fields_cable="deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list"
+			select_fields_cellphone="deals.*,cellphone_deal_attributes.no_of_lines,cellphone_deal_attributes.price_per_line,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.additional_data,cellphone_deal_attributes.rollover_data"
+			select_fields_bundle="deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
+		else
+			select_fields_internet="deals.*"
+			select_fields_telephone="deals.*"
+			select_fields_cable="deals.*"
+			select_fields_cellphone="deals.*"
+			select_fields_bundle="deals.*"
+		end
+
+		if category_id == 1
+			order_deal = Deal.joins(:internet_deal_attributes).joins(:orders).select(select_fields_internet).where("deals.id in (?)",order_deals).order("deals.price ASC").last
+		elsif category_id == 2
+			order_deal = Deal.joins(:telephone_deal_attributes).joins(:orders).select(select_fields_telephone).where("deals.id in (?)",order_deals).order("deals.price ASC").last
+		elsif category_id == 3
+			order_deal = Deal.joins(:cable_deal_attributes).joins(:orders).select(select_fields_cable).where("deals.id in (?)",order_deals).order("deals.price ASC").last
+		elsif category_id == 4
+			order_deal = Deal.joins(:cellphone_deal_attributes).joins(:orders).select(select_fields_cellphone).where("deals.id in (?)",order_deals).order("deals.price ASC").last
+		elsif category_id == 5
+			order_deal = Deal.joins(:bundle_deal_attributes).joins(:orders).select(select_fields_bundle).where("deals.id in (?)",order_deals).order("deals.price ASC").last
+		end
+
+  		if order_deal.present?
+  			return order_deal
+  		else
+  			return nil
+  		end
+  	end
 
 	def filtered_deals(app_user_id,category_id,zip_code,deal_type,sorting_key)
 		if app_user_id.present?

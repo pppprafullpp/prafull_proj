@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519085438) do
+ActiveRecord::Schema.define(version: 20160520081609) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",       limit: 4
@@ -492,6 +492,15 @@ ActiveRecord::Schema.define(version: 20160519085438) do
   end
 
   add_index "trending_deals", ["deal_id"], name: "index_trending_deals_on_deal_id", using: :btree
+
+  create_table "user_gifts", force: :cascade do |t|
+    t.integer  "app_user_id", limit: 4
+    t.integer  "gift_id",     limit: 4
+    t.integer  "order_id",    limit: 4
+    t.string   "status",      limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   limit: 255, default: "", null: false

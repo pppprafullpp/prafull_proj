@@ -13,11 +13,9 @@ class Api::V1::OrdersController < ApplicationController
 			if @gift_id.present? && @order.present?
 				@user_gifts = @order.user_gifts.create(gift_id: @gift_id, app_user_id: params[:app_user_id])
 			end
-			@gifts =@app_user.gifts
     	render :status => 200,
            	 :json => { 
            	          :success => true,
-           	          :gifts => @gifts.as_json(:include => :orders) 
            			      }
     else
       render :status => 401,

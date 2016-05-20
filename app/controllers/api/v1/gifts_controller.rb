@@ -12,13 +12,12 @@ class Api::V1::GiftsController < ApplicationController
 	def get_gifts
 		if params[:app_user_id].present?
 			@app_user = AppUser.find(params[:app_user_id])
-			@order_count = @app_user.orders.count 
-			@gift = Gift.where("activation_count_condition =?", @order_count )
-			if @gift.present?
+			@gifts =@app_user.gifts
+			if @gifts.present?
 				render 	:status => 200,
 		        		:json => {
 		                     	:success => true,
-		                      :gifts => @gift.as_json                        
+		                      :gifts => @gifts.as_json(:include => :orders)                         
 		                     }
 			else
 				render :json => { :success => false }

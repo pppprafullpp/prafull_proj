@@ -5,7 +5,7 @@ class CreateGifts < ActiveRecord::Migration
       t.string :description
       t.float :amount
       t.integer :activation_count_condition, default: 0
-      t.boolean :is_active, default: false
+      t.boolean :is_active, default: true
       
       t.timestamps null: false
     end

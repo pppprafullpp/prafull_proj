@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518085952) do
+ActiveRecord::Schema.define(version: 20160519085438) do
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",       limit: 4
@@ -263,7 +263,7 @@ ActiveRecord::Schema.define(version: 20160518085952) do
     t.text     "detail_description",  limit: 65535
     t.float    "price",               limit: 24,    default: 0.0,         null: false
     t.boolean  "is_contract",                       default: false,       null: false
-    t.integer  "contract_period",     limit: 4,     default: 0
+    t.integer  "contract_period",     limit: 4,     default: 0,           null: false
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
@@ -281,6 +281,23 @@ ActiveRecord::Schema.define(version: 20160518085952) do
   create_table "deals_zipcodes", id: false, force: :cascade do |t|
     t.integer "deal_id",    limit: 4, null: false
     t.integer "zipcode_id", limit: 4, null: false
+  end
+
+  create_table "gift_orders", force: :cascade do |t|
+    t.integer  "gift_id",    limit: 4
+    t.integer  "order_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "gifts", force: :cascade do |t|
+    t.string   "name",                       limit: 255
+    t.string   "description",                limit: 255
+    t.float    "amount",                     limit: 24
+    t.integer  "activation_count_condition", limit: 4,   default: 0
+    t.boolean  "is_active",                              default: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
   create_table "internet_deal_attributes", force: :cascade do |t|
@@ -344,12 +361,12 @@ ActiveRecord::Schema.define(version: 20160518085952) do
   create_table "orders", force: :cascade do |t|
     t.integer  "deal_id",         limit: 4
     t.integer  "app_user_id",     limit: 4
-    t.string   "status",          limit: 255
+    t.string   "status",          limit: 255, default: "In-progress", null: false
     t.float    "deal_price",      limit: 24
     t.float    "effective_price", limit: 24
     t.datetime "activation_date"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   create_table "referral_infos", force: :cascade do |t|

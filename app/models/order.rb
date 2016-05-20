@@ -4,8 +4,8 @@ class Order < ActiveRecord::Base
 
 	validates_uniqueness_of :order_id
 	
-	# has_many :gift_orders
- 	# has_many :gifts, through: :gift_orders
+	has_many :user_gifts,:dependent => :destroy
+ 	has_many :gifts, through: :user_gifts
 
   	# validates_presence_of :deal_id, :app_user_id, :effective_price, :deal_price, :status
 

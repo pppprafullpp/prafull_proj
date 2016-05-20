@@ -27,13 +27,13 @@
 						<div><span style="color:#4285F4"><strong><i>Fields marked * are mandatory</i></strong></span></div><br/>
 					<div><strong>Name: </strong><span id="mandat">*</span><br />
 				  <%= f.text_field :name %></div>
-				  <div><strong>Description: </strong><span id="mandat">*</span><br />
+				  <div><strong>Description: </strong><br />
 				  <%= f.text_field :description %></div>
 				  <div><strong>Amount:</strong><span id="mandat">*</span><br />
 				  <%= f.text_field :amount %></div>
-				  <div><%= f.check_box :is_active %><strong>Is Active</strong></div>
 				  <div><strong>Activation Count Condition:</strong><span id="mandat">*</span><br />
 				  <%= f.text_field :activation_count_condition %></div>
+				  <div><%= f.check_box :is_active %><strong>Is Active</strong></div>
 				  <div><%= f.submit "Create" %></div>
 				<% end %>
 			</div>

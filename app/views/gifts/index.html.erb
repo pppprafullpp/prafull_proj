@@ -15,8 +15,8 @@
 							<th><strong>Name</strong></th>
 							<th><strong>Description</strong></th>
 							<th><strong>Amount</strong></th>
-							<th><strong>Is Active</strong></th>
 							<th><strong>Activation Count Condition</strong></th>
+							<th><strong>Is Active</strong></th>
 							<th><strong>Action</strong></th>
 						</tr>
 					</thead>
@@ -28,8 +28,8 @@
 									<td><%= gift.name %></td>
 									<td><%= gift.description %></td>
 									<td><%= gift.amount %></td>
-									<td><%= gift.is_active %></td>
 									<td><%= gift.activation_count_condition %></td>
+									<td><%= gift.is_active %></td>
 									<td><%= (link_to 'Edit', edit_gift_path(gift)) if can? :manage, gift %> | <%= (link_to "Delete", gift, method: :delete, data: { confirm: "You sure?" }) if can? :manage, gift %></td>
 								</tr>
 							<% end %>

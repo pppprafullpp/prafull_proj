@@ -4,11 +4,21 @@ class Api::V1::OrdersController < ApplicationController
 
 	def create
 		@order = Order.new(order_params)
-		@order.order_id=rand(36**8).to_s(36).upcase  
+		@order.order_id=rand(36**8).to_s(36).upcase
+		@order.activation_date = Time.now  
 		if @order.save
-			# @order.gift_orders.create(gift_id: params[:gift_id])
+			@app_user= @order.app_user
+			@orders_count = @app_user.orders.count
+			@gift_id = Gift.find_by_activation_count_condition(@orders_count).try(:id)
+			if @gift_id.present? && @order.present?
+				@user_gifts = @order.user_gifts.create(gift_id: @gift_id, app_user_id: params[:app_user_id])
+			end
+			@gifts =@app_user.gifts
     	render :status => 200,
-           			:json => { :success => true }
+           	 :json => { 
+           	          :success => true,
+           	          :gifts => @gifts.as_json(:include => :orders) 
+           			      }
     else
       render :status => 401,
       					:json => { :success => false }

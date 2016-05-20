@@ -4,12 +4,12 @@ one:
   name: MyString
   description: MyString
   amount: 1.5
-  is_active: false
   activation_count_condition: 1
+  is_active: false
 
 two:
   name: MyString
   description: MyString
   amount: 1.5
-  is_active: false
   activation_count_condition: 1
+  is_active: false

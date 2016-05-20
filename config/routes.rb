@@ -92,6 +92,7 @@ Rails.application.routes.draw do
   end
   resources :orders
   resources :gifts
+  resources :user_gifts
   
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 

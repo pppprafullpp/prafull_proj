@@ -9,14 +9,28 @@ class Api::V1::OrdersController < ApplicationController
 		if @order.save
 			@app_user= @order.app_user
 			@orders_count = @app_user.orders.count
-			@gift_id = Gift.find_by_activation_count_condition(@orders_count).try(:id)
+			@gift = Gift.find_by_activation_count_condition(@orders_count)
+			@gift_id = @gift.try(:id)
 			if @gift_id.present? && @order.present?
 				@user_gifts = @order.user_gifts.create(gift_id: @gift_id, app_user_id: params[:app_user_id])
+				@gift_amount = @gift.amount
+				@message = "You have won $#{@gift_amount} gift card."
+				@message_status = true
+			else 
+				@last_gift_activation_count = @app_user.gifts.last.try(:activation_count_condition)
+				@next_gift_activation_count = Gift.all.where("activation_count_condition > ?", @last_gift_activation_count ).limit(1).first.activation_count_condition rescue nil
+				if @next_gift_activation_count.present?
+					@message_count = @next_gift_activation_count - @orders_count 
+					@message = "Please include #{@message_count} more service in your order"
+					@message_status = true
+				else
+					@message = "There are no Gifts"
+					@message_status = false
+				end
 			end
-    	render :status => 200,
-           	 :json => { 
-           	          :success => true,
-           			      }
+			@order_message = "for switching #{@orders_count} service using ServiceDeals"
+			@gifts = Gift.all
+    	render :status => 200,:json => {:success => true,:order_message => @order_message, :message => @message,:message_status => @message_status,:gifts => @gifts}
     else
       render :status => 401,
       					:json => { :success => false }

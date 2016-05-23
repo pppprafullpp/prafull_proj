@@ -14,10 +14,12 @@ class Api::V1::GiftsController < ApplicationController
 			@app_user = AppUser.find(params[:app_user_id])
 			@gifts =@app_user.gifts
 			if @gifts.present?
+				@total_amount = @gifts.collect(&:amount).sum
 				render 	:status => 200,
 		        		:json => {
 		                     	:success => true,
-		                      :gifts => @gifts.as_json(:include => :orders)                         
+		                      :gifts => @gifts.as_json(:include => :orders) ,
+		                      :total_amount =>  @total_amount                      
 		                     }
 			else
 				render :json => { :success => false }

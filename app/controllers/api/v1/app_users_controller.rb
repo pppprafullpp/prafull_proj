@@ -91,6 +91,19 @@ class Api::V1::AppUsersController < ApplicationController
     end
   end
 
+  def my_referral_code
+    if params[:app_user_id].present?
+      app_user_code = AppUser.find(params[:app_user_id]).try(:referral_code)
+      if app_user_code.present?
+        render  :json => { :success => true, :app_user_code => app_user_code }
+      else
+        render  :json => { :success => false }
+      end
+    else
+        render  :json => { :success => false }
+    end
+  end
+
 	private
 	def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?

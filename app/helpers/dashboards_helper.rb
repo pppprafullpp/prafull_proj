@@ -288,7 +288,7 @@ module DashboardsHelper
 					best_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price = ? AND deals.id not in (?)", sp.price,restricted_deals).order("price ASC")
   				end
 				if best_deals.blank?
-					best_deals=Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?)",restricted_deals).order("price ASC")
+					best_deals=Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?)",restricted_deals).order("price ASC")
 				end
   			else
   				app_user_call_minutes = sp.cellphone_service_preference.domestic_call_minutes

@@ -48,6 +48,6 @@ class GiftsController < ApplicationController
 
 	private
   def gift_params
-   params.require(:gift).permit(:name, :description, :amount, :is_active, :activation_count_condition)
+   params.require(:gift).permit(:name, :description, :amount, :is_active, :activation_count_condition,:image)
   end
 end

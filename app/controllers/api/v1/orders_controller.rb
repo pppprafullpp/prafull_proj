@@ -30,7 +30,7 @@ class Api::V1::OrdersController < ApplicationController
 			end
 			@order_message = "for switching #{@orders_count} service using ServiceDeals"
 			@gifts = Gift.all
-    	render :status => 200,:json => {:success => true,:order_message => @order_message, :message => @message,:message_status => @message_status,:gifts => @gifts}
+    	render :status => 200,:json => {:success => true,:order_message => @order_message, :message => @message,:message_status => @message_status,:gifts => @gifts.as_json(:methods => :gift_image_url)}
     else
       render :status => 401,
       					:json => { :success => false }

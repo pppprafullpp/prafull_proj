@@ -18,6 +18,8 @@
 				  <%= f.text_field :amount %></div>
 				  <div><strong>Activation Count Condition:</strong><span id="mandat">*</span><br />
 				  <%= f.text_field :activation_count_condition %></div>
+				  <div><strong>Image:</strong><br />
+            	  <%= f.file_field :image %></div>
 				  <div><%= f.check_box :is_active %><strong>Is Active</strong></div>
 				  <div><%= f.submit "Update" %></div>
 				<% end %>

@@ -31,6 +31,7 @@ class Api::V1::AppUsersController < ApplicationController
     else
       @app_user = AppUser.new(app_user_params) 
       @app_user.unhashed_password = params[:password]
+      @app_user.referral_code = rand(36**4).to_s(36).upcase
       if @app_user.save
         render :status => 200,
                :json => { :success => true, :app_user_id => @app_user.id }
@@ -93,7 +94,7 @@ class Api::V1::AppUsersController < ApplicationController
 	private
 	def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-		params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag)
+		params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code)
 	end
 
   def decode_picture_data(picture_data)

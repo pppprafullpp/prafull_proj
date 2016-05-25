@@ -1,6 +1,6 @@
 class ServiceProvidersController < ApplicationController
 	def index
-		@service_providers = ServiceProvider.all
+		@service_providers = ServiceProvider.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html
       #format.xls # { send_data @products.to_csv(col_sep: "\t") }

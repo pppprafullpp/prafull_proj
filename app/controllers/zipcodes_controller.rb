@@ -8,7 +8,7 @@ class ZipcodesController < ApplicationController
   # end
 
   def index
-    @zipcodes = Zipcode.all
+    @zipcodes = Zipcode.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html
       #format.xls # { send_data @products.to_csv(col_sep: "\t") }
@@ -27,7 +27,8 @@ class ZipcodesController < ApplicationController
           ]  
 
           # data rows
-          @zipcodes.each do |zp|
+          zipcodes = Zipcode.all
+          zipcodes.each do |zp|
             csv << 
             [ zp.id,              
               zp.code,

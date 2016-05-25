@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
 
 	def index
-		@deals = Deal.all.order("created_at DESC")
+		@deals = Deal.paginate(:page => params[:page], :per_page => 20).order("created_at DESC")
     respond_to do |format|
       format.html
       #format.xls # { send_data @products.to_csv(col_sep: "\t") }

@@ -44,7 +44,7 @@ gem 'roo'
 gem 'fastercsv'
 
 gem 'figaro'
-
+gem 'will_paginate'
 group :development do
   gem 'capistrano'
   gem 'capistrano-rails', require: false
@@ -70,7 +70,7 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  
+
   # For better error explanation during development
   gem "better_errors"
 end

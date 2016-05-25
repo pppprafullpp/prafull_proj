@@ -1,6 +1,6 @@
 class AppUsersController < ApplicationController
 	def index
-		@app_users = AppUser.all.order("id DESC")
+		@app_users = AppUser.paginate(:page => params[:page], :per_page => 20).order("id DESC")
 		respond_to do |format|
       format.html
       #format.xls # { send_data @products.to_csv(col_sep: "\t") }

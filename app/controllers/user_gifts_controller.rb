@@ -1,6 +1,6 @@
 class UserGiftsController < ApplicationController
 	def index
-    @user_gifts = UserGift.all.order("id ASC")
+    @user_gifts = UserGift.paginate(:page => params[:page], :per_page => 20).order("id ASC")
 	end
 	def new
     @user_gift = UserGift.new

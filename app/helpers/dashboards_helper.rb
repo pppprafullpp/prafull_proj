@@ -109,18 +109,21 @@ module DashboardsHelper
 			select_fields_cellphone="deals.*"
 			select_fields_bundle="deals.*"
 		end
-		app_user = AppUser.find(app_user_id)
-		last_order_deal_id = app_user.orders.last.deal_id rescue nil
+		# app_user = AppUser.find(app_user_id)
+		# app_user.service_preferences
+		# last_order_deal_id = app_user.orders.last.deal_id rescue nil
+		# .order("deals.price ASC").where(id: last_order_deal_id).first
 		if category_id == 1
-			order_deal = Deal.joins(:internet_deal_attributes).joins(:orders).select(select_fields_internet).where("deals.id in (?)",order_deals).order("deals.price ASC").where(id: last_order_deal_id).first
+			order_deal = Deal.joins(:internet_deal_attributes).joins(:orders).select(select_fields_internet).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 2
-			order_deal = Deal.joins(:telephone_deal_attributes).joins(:orders).select(select_fields_telephone).where("deals.id in (?)",order_deals).order("deals.price ASC").where(id: last_order_deal_id).first
+			order_deal = Deal.joins(:telephone_deal_attributes).joins(:orders).select(select_fields_telephone).where("deals.id in (?)",order_deals).to_a.last
+			# where(id: last_order_deal_id).first
 		elsif category_id == 3
-			order_deal = Deal.joins(:cable_deal_attributes).joins(:orders).select(select_fields_cable).where("deals.id in (?)",order_deals).order("deals.price ASC").where(id: last_order_deal_id).first
+			order_deal = Deal.joins(:cable_deal_attributes).joins(:orders).select(select_fields_cable).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 4
-			order_deal = Deal.joins(:cellphone_deal_attributes).joins(:orders).select(select_fields_cellphone).where("deals.id in (?)",order_deals).order("deals.price ASC").where(id: last_order_deal_id).first
+			order_deal = Deal.joins(:cellphone_deal_attributes).joins(:orders).select(select_fields_cellphone).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 5
-			order_deal = Deal.joins(:bundle_deal_attributes).joins(:orders).select(select_fields_bundle).where("deals.id in (?)",order_deals).order("deals.price ASC").where(id: last_order_deal_id).first
+			order_deal = Deal.joins(:bundle_deal_attributes).joins(:orders).select(select_fields_bundle).where("deals.id in (?)",order_deals).to_a.last
 		end
 
   		if order_deal.present?

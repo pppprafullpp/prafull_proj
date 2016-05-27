@@ -113,6 +113,7 @@ module DashboardsHelper
 		# app_user.service_preferences
 		# last_order_deal_id = app_user.orders.last.deal_id rescue nil
 		# .order("deals.price ASC").where(id: last_order_deal_id).first
+		
 		if category_id == 1
 			order_deal = Deal.joins(:internet_deal_attributes).joins(:orders).select(select_fields_internet).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 2

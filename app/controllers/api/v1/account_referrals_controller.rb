@@ -16,7 +16,7 @@ class Api::V1::AccountReferralsController < ApplicationController
 					app_user.refer_status = true
 					app_user.save
 					gift_received = account_referral.referrer_gift_coins
-					message = "Congratulations!! You have earned #{account_referral.referrer_gift_coins}" 
+					message = "Congratulations!! You have earned $#{account_referral.referrer_gift_coins}" 
 					render 	:status => 200,
 			        		:json => {
 			                     	:success => true,

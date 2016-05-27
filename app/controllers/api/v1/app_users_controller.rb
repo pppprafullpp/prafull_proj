@@ -112,10 +112,10 @@ class Api::V1::AppUsersController < ApplicationController
       app_user = AppUser.find_by_id(params[:app_user_id])
       gifts = app_user.gifts.order("id DESC")
       gift_amount = gifts.collect(&:amount).sum
-      account_referral = AccountReferral.where("referral_id = ? or referrer_id = ?", params[:app_user_id], params[:app_user_id])
+      account_referral = AccountReferral.where("referral_id = ? or referrer_id = ?", params[:app_user_id], params[:app_user_id]).order("id DESC")
       total_referral_amount = AccountReferral.where("referral_id = ?",params[:app_user_id]).collect(&:referral_gift_coins).sum +  AccountReferral.where("referrer_id = ?",params[:app_user_id]).collect(&:referrer_gift_coins).sum
       total_amount = gift_amount + total_referral_amount
-      render  :json => { :success => true, account_referral: account_referral.as_json(:param_for_message => params[:app_user_id]), :gifts=> gifts, total_referral_amount: total_referral_amount, gift_amount: gift_amount, total_amount: total_amount}
+      render  :json => { :success => true, account_referral: account_referral.as_json(:param_for_message => params[:app_user_id]), :gifts=> gifts.as_json(:methods => :gift_image_url, :except => :image), total_referral_amount: total_referral_amount, gift_amount: gift_amount, total_amount: total_amount}
     else
       render  :json => { :success => false }
     end

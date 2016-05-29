@@ -12,7 +12,7 @@ class Api::V1::GiftsController < ApplicationController
 	def get_gifts
 		if params[:app_user_id].present?
 			@app_user = AppUser.find(params[:app_user_id])
-			@gifts =@app_user.gifts
+			@gifts =@app_user.gifts.order("id DESC")
 			if @gifts.present?
 				@total_amount = @gifts.collect(&:amount).sum
 				render 	:status => 200,

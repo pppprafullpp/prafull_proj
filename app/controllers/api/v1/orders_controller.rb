@@ -52,7 +52,8 @@ class Api::V1::OrdersController < ApplicationController
 	end
 
 	def my_orders
-		@orders = Order.where("app_user_id = ?", params[:app_user_id])
+		@orders = Order.where("app_user_id = ?", params[:app_user_id]).order("id DESC")
+
 		if @orders.present?
       	render :status => 200,
              :json => {

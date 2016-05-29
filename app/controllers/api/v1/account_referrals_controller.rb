@@ -7,24 +7,32 @@ class Api::V1::AccountReferralsController < ApplicationController
 
 	def create
 		if params[:referral_code].present? && params[:referrer_id].present?
-			params[:referral_id] = AppUser.find_by_referral_code(params[:referral_code]).try(:id)
-			account_referral = AccountReferral.new(account_referral_params)
-			if account_referral.save
-				gift_received = account_referral.referrer_gift_coins
-				message = "Congratulations!! You have earned #{account_referral.referrer_gift_coins}" 
-				render 	:status => 200,
-		        		:json => {
-		                     	:success => true,
-		                     	:gift => gift_received,
-		                     	:message => message
-		                     }
-			else
-				if account_referral.errors.full_messages[0] == "Referrer has already been taken"
-					message = "Referral Id is already used."
-					render :json => { :success => false, :message => message }
+			app_user_id = AppUser.find_by_referral_code(params[:referral_code]).try(:id)
+			if app_user_id.present?
+				params[:referral_id] = app_user_id
+				account_referral = AccountReferral.new(account_referral_params)
+				if account_referral.save
+					app_user = AppUser.find_by_id(params[:referrer_id])
+					app_user.refer_status = true
+					app_user.save
+					gift_received = account_referral.referrer_gift_coins
+					message = "Congratulations!! You have earned $#{account_referral.referrer_gift_coins}" 
+					render 	:status => 200,
+			        		:json => {
+			                     	:success => true,
+			                     	:gift => gift_received,
+			                     	:message => message
+			                     }
 				else
-					render :json => { :success => false }
+					if account_referral.errors.full_messages[0] == "Referrer has already been taken"
+						message = "Referral Id is already used."
+						render :json => { :success => false, :message => message }
+					else
+						render :json => { :success => false }
+					end
 				end
+			else
+				render :json => { :success => false, message: "Invalid Code" }
 			end
 		end
 

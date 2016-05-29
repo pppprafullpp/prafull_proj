@@ -19,10 +19,10 @@ Rails.application.routes.draw do
       match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => :delete
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
-      end 
+      end
       resources :deals do
         get 'deals' => 'deals#index'
-      end  
+      end
       match 'app_user' => 'app_users#get_app_user', :via => :get
       match 'service_preferences' => 'service_preferences#get_service_preferences', :via => :get
       match 'forget_password' => 'app_users#recover_password', :via => :post
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       match 'referral_code' => 'app_users#my_referral_code', :via => :get
       match 'my_earnings' => 'app_users#referrals_and_gifts', :via => :get
 
-      
+
 
 
     end
@@ -63,27 +63,27 @@ Rails.application.routes.draw do
       get :reset_password
       post :set_reset_password
     end
-  end  
+  end
 
   get 'deals/get_service_providers'=>'deals#get_service_providers'
-  
-  
+
+
   resources :deals do
-    post 'import', on: :collection  
+    post 'import', on: :collection
   end
   resources :service_categories do
-    post 'import', on: :collection  
+    post 'import', on: :collection
   end
   resources :app_users
   resources :service_preferences
   resources :notifications
   resources :service_providers do
     post 'import', on: :collection
-  end  
+  end
   resources :advertisements
   #resources :comments
   #resources :ratings
-  resources :bulk_notifications 
+  resources :bulk_notifications
   resources :comment_ratings
   resources :referral_infos
   resources :internet_service_preferences
@@ -99,11 +99,24 @@ Rails.application.routes.draw do
   resources :orders
   resources :gifts
   resources :user_gifts
-  
-    #:path_names => { sign_in: 'login', sign_out: 'logout' },
-    #:controllers => { :sessions => "sessions", 
-    #                  :registrations => 'registrations'
-    #                }
+
+
+
+  get 'service_deals' => 'website/home#index'
+  namespace :website do
+    resources :home
+    resources :app_users do
+      collection do
+        get :check_user_email_ajax
+        get :signout
+        post :signin
+      end
+    end
+  end
+  #:path_names => { sign_in: 'login', sign_out: 'logout' },
+  #:controllers => { :sessions => "sessions",
+  #                  :registrations => 'registrations'
+  #                }
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

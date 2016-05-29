@@ -10,13 +10,16 @@
 * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
 * file per style scope.
 *
-*= require_tree .
-*= require_self
-//= require foundation_and_overrides
 
+//= require foundation_and_overrides
+*= require _settings
+*= require header
+*= require pagination
 *= require jquery-ui
 *= require foundation_and_overrides
+*= require font-awesome
 */
+
 .center{
   margin: auto;
   width: 480px;
@@ -28,13 +31,13 @@
   padding: 20px;
   width: 450px;
   input[type="email"], input[type="password"]{
-  font-size: 16px;
-  padding: 2px;
-  width: 355px;
-}
-input[type="submit"]{
-  font-size: 14px;
-}
+    font-size: 16px;
+    padding: 2px;
+    width: 355px;
+  }
+  input[type="submit"]{
+    font-size: 14px;
+  }
 }
 .title{
   border-bottom: 1px gray solid;
@@ -44,8 +47,8 @@ input[type="submit"]{
   padding-bottom: 2px;
 }
 .title_tools{
-	float: right;
-	margin: 4px 0px 0px 0px;
+  float: right;
+  margin: 4px 0px 0px 0px;
 }
 p.alert {
   margin-left: auto;
@@ -61,5 +64,5 @@ p.alert {
 }
 
 table.form-data tr:nth-of-type(even) {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }

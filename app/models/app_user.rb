@@ -16,13 +16,30 @@ class AppUser < ActiveRecord::Base
   #has_many :ratings, dependent: :destroy
   mount_uploader :avatar, ImageUploader
 
+  before_save { self.email = email.downcase }
+  validates :email, :presence => true, :uniqueness => true
+  validates :password, :presence => true, :confirmation => true, :on => :create
+
   def avatar_url
-      avatar.url
+    avatar.url
   end
 
   def as_json(opts={})
-      json = super(opts)
-      Hash[*json.map{|k, v| [k, v || ""]}.flatten]
+    json = super(opts)
+    Hash[*json.map{|k, v| [k, v || ""]}.flatten]
   end
-  
+
+  def self.encrypt(password)
+    Digest::SHA1.hexdigest("#{password}")
+  end
+
+  def self.authenticate(email, password)
+    user = self.select('id,first_name,last_name,email,encrypted_password,active').where(:email => email).first
+    if user.present? && password.present?
+      user.valid_password?(password) ? user : nil
+    else
+      nil
+    end
+  end
 end
+

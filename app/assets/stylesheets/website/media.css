@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+@media (max-width: 767px) {
+    h1 {
+        font-size: 20px;
+    }
+    h2 {
+        font-size: 15px;
+    }
+    .carousel-inner img {
+        width: auto;
+    }
+    .navbar-collapse {
+        width: 100%;
+        margin: 0 !important;
+        padding: 0;
+    }
+    .navService li {
+        display: block;
+        padding: 6px 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #eceaea;
+    }
+    #navbar {
+        border-top: 1px solid #eceaea;
+    }
+    .navService li:hover {
+        background: #e50005;
+    }
+    .navService li:hover a {
+        color: #fff;
+    }
+    .navbar .container {
+        padding: 0;
+        margin: 0;
+    }
+    .navbar-header {
+        padding-left: 10px;
+    }
+    .bestdeal {
+        background: #2586d4;
+        padding: 15px
+    }
+    .bestdeal h1 {
+        color: #fff;
+        text-align: center;
+    }
+}

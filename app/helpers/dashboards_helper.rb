@@ -70,9 +70,9 @@ module DashboardsHelper
 					{:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:advertisement =>nil,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]),:best_deal =>nil}
 				end
 
-				render :json => { :dashboard_data => (servicelist + categoryList) }
+				return (servicelist + categoryList)
 			else
-				render :json => { :success => false }
+				return false
 			end
 		else
 			service_categories = ServiceCategory.where("name in ('Internet','Telephone','Cellphone','Cable','Bundle')")
@@ -88,7 +88,7 @@ module DashboardsHelper
 
 				{:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]) }
 			end
-			render :json => { :dashboard_data => categoryList }
+			return categoryList
 		end
 	end
 
@@ -410,7 +410,7 @@ module DashboardsHelper
 	end
 
 	def get_category_deals(app_user_id,category_id,zip_code,deal_type)
-
+		category_id = category_id.present? ? category_id.to_i : 1
 		select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
 		select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
 		select_fields_cable="deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list"
@@ -423,11 +423,11 @@ module DashboardsHelper
 			deal_type=app_user.user_type
 
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
-			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+category_id+" "
+			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "
 
 			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
 			matched_deal = []
-			if category_id == '1'
+			if category_id == Deal::INTERNET_CATEGORY
 				if user_preference.present?
 					current_download_speed = user_preference.internet_service_preference.download_speed
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
@@ -444,7 +444,7 @@ module DashboardsHelper
 						matched_deal = json
 					end
 				end
-			elsif category_id == '2'
+			elsif category_id == Deal::TELEPHONE_CATEGORY
 				if user_preference.present?
 					current_plan_price = user_preference.price
 					current_t_plan = user_preference.telephone_service_preference.domestic_call_unlimited
@@ -469,7 +469,7 @@ module DashboardsHelper
 						matched_deal = json
 					end
 				end
-			elsif category_id == '3'
+			elsif category_id == Deal::CABLE_CATEGORY
 				if user_preference.present?
 					current_plan_price = user_preference.price
 					current_free_channels = user_preference.cable_service_preference.free_channels
@@ -487,7 +487,7 @@ module DashboardsHelper
 						matched_deal = json
 					end
 				end
-			elsif category_id == '4'
+			elsif category_id == Deal::CELLPHONE_CATEGORY
 				if user_preference.present?
 					current_plan_price = user_preference.price
 					current_t_plan = user_preference.cellphone_service_preference.domestic_call_unlimited
@@ -512,7 +512,7 @@ module DashboardsHelper
 						matched_deal = json
 					end
 				end
-			elsif category_id == '5'
+			elsif category_id == Deal::BUNDLE_CATEGORY
 				if user_preference.present?
 					app_user_bundle_combo = user_preference.bundle_service_preference.bundle_combo
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
@@ -574,17 +574,17 @@ module DashboardsHelper
 			end
 		else
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
-			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+category_id+" "
+			deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "
 
-			if category_id == '1'
+			if category_id == Deal::INTERNET_CATEGORY
 				deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("price ASC")
-			elsif category_id == '2'
+			elsif category_id == Deal::TELEPHONE_CATEGORY
 				deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("price ASC")
-			elsif category_id == '3'
+			elsif category_id == Deal::CABLE_CATEGORY
 				deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("price ASC")
-			elsif category_id == '4'
+			elsif category_id == Deal::CELLPHONE_CATEGORY
 				deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("price ASC")
-			elsif category_id == '5'
+			elsif category_id == Deal::BUNDLE_CATEGORY
 				deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("price ASC")
 			end
 

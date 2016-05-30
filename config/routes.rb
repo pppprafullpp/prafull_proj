@@ -104,7 +104,11 @@ Rails.application.routes.draw do
 
   get 'service_deals' => 'website/home#index'
   namespace :website do
-    resources :home
+    resources :home do
+      collection do
+        get :deals
+      end
+    end
     resources :app_users do
       collection do
         get :check_user_email_ajax

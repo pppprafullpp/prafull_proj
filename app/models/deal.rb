@@ -26,6 +26,13 @@ class Deal < ActiveRecord::Base
 
 	validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
 
+  ### CONSTANTS ###
+  INTERNET_CATEGORY = 1
+  TELEPHONE_CATEGORY = 2
+  CABLE_CATEGORY = 3
+  CELLPHONE_CATEGORY = 4
+  BUNDLE_CATEGORY = 5
+
   #def as_json(opts={})
   #	json = super(opts)
   # Hash[*json.map{|k, v| [k, v || ""]}.flatten]

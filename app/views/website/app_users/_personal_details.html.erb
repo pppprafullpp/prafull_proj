@@ -1,0 +1,76 @@
+<%
+   name = @app_user.first_name + ' ' + @app_user.last_name
+   address = @app_user.address.present? ? @app_user.address.split('===') : []
+   address_name = address[0].present? ? address[0] : ''
+   address_1 = address[1].present? ? address[1] : ''
+   address_2 = address[2].present? ? address[2] : ''
+%>
+<div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
+  <div class="col-sm-3">
+    <div class="profile_imgbox"> <span class="profile_img"><%= image_tag('website/user.png',:alt => 'Sonal',:class => 'img-responsive') %></span>
+      <h4>Sonal</h4>
+    </div>
+  </div>
+  <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'col-sm-9 form-horizontal' do %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <!-- Text input-->
+      <div class="col-sm-6">
+        <label class="control-label" for="Name">Name</label>
+        <%= text_field_tag(:first_name,name,:class => 'form-control input-md',:placeholder => 'Your Name') %>
+      </div>
+
+      <!-- Text input-->
+      <div class="col-sm-6">
+        <label class="control-label" for="Email">Email</label>
+        <%= email_field_tag(:email,@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address') %>
+      </div>
+      <div class="btn-group col-lg-12 margin_top">
+        <h5>Billing Address</h5>
+        <div class="row">
+          <div class="col-sm-6">
+            <label class="control-label" for="Address">Address Name</label>
+            <%= text_field_tag(:address,address_name,:class => 'form-control input-md',:placeholder => 'Address Name') %>
+          </div>
+          <div class="col-sm-6">
+            <label class="control-label" for="Country">Country</label>
+            <%= select_tag(:country,options_for_select(COUNTRIES),:class => 'form-control',:prompt => 'Select your Country') %>
+          </div>
+          <div class="col-sm-6">
+            <label class="control-label" for="Address">Address 1</label>
+            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1') %>
+          </div>
+          <div class="col-sm-6">
+            <label class="control-label" for="Address 2">Address 2</label>
+            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2') %>
+          </div>
+          <div class="col-sm-6">
+            <label class="control-label" for="City">City</label>
+            <%= select_tag(:city,options_for_select(CITY,@app_user.city),:class => 'form-control',:prompt => 'Select your City') %>
+          </div>
+          <div class="col-sm-6">
+            <label class="control-label" for="State">State</label>
+            <%= select_tag(:state,options_for_select(STATE,@app_user.state),:class => 'form-control',:prompt => 'Select your State') %>
+          </div>
+          <div class="col-sm-6">
+            <label class="control-label" for="Phone">Phone</label>
+            <%= phone_field_tag(:mobile,nil,:class => 'form-control input-md',:placeholder => 'Mobile') %>
+          </div>
+        </div>
+      </div>
+      <div class="btn-group col-sm-12" data-toggle="buttons">
+        <h5>User type</h5>
+        <label class="btn active col-sm-3">
+          <input type="radio" name="gender1" checked="">
+          <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> Residence</span> </label>
+        <label class="btn col-sm-3">
+          <input type="radio" name="gender1">
+          <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Business</span> </label>
+      </div>
+
+      <!-- Button -->
+      <div class="col-sm-6">
+        <%= submit_tag('Save',:class => 'btn btn-info') %>
+      </div>
+
+  <% end %>
+</div>

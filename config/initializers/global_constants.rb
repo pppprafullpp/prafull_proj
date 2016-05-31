@@ -1,0 +1,3 @@
+COUNTRIES = ['USA']
+STATE = ['ALASKA','CALIFORNIA','FLORIDA']
+CITY = ['Fairbanks','Arcadia','WASHINGTON DC']

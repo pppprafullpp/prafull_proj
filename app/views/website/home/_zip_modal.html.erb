@@ -1,0 +1,71 @@
+<div class="modal fade text-left" id="zipcode" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+
+    <div class="modal-content">
+      <div class="zipcode-body">
+        <div class="text-center"> <%= image_tag('website/map-pointer.png',:alt => 'map-pointer') %>
+          <h4>Enter Your Zip Code</h4>
+        </div>
+        <div class="details-zip">
+          <div class="col-md-11 col-md-offset-1">
+            <h5>User Type</h5>
+            <div class="radio col-md-5">
+              <label>
+                <input type="radio" name="optionsRadios" id="residence" value="option1" checked="">
+                Residence </label>
+            </div>
+            <div class="radio col-md-5">
+              <label>
+                <input type="radio" name="optionsRadios" id="business" value="option2">
+                Business </label>
+            </div>
+          </div>
+          <div class="col-md-11 col-md-offset-1">
+            <form>
+              <div class="form-group residence-opt" style="display: none;">
+                <label>Zipcode &nbsp;</label>
+                <input type="text" class="form-control" placeholder="Zipcode">
+              </div>
+              <div class="form-group business-opt " style="display: block;">
+                <div>
+                  <label>Business name</label>
+                  <input type="text" class="form-control" placeholder="Zipcode">
+                </div>
+                <div class="mgt20">
+                  <label>Zipcode &nbsp;</label>
+                  <input type="text" class="form-control" placeholder="Zipcode">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-default btn-red mg20">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    $( document ).ready(function() {
+        $(".business-opt").hide();
+        $(".residence-opt").show();
+    });
+
+    $("#residence").click(function(){
+        $(".residence-opt").show();
+        $(".business-opt").hide();
+    });
+
+    $("#business").click(function(){
+
+        $(".business-opt").show();
+        $(".residence-opt").hide();
+    });
+
+</script>

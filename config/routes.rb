@@ -107,6 +107,7 @@ Rails.application.routes.draw do
     resources :home do
       collection do
         get :deals
+        get :compare_deals
       end
     end
     resources :app_users do
@@ -114,6 +115,7 @@ Rails.application.routes.draw do
         get :check_user_email_ajax
         get :signout
         post :signin
+        get :profile
       end
     end
   end

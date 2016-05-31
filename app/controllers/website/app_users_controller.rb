@@ -1,5 +1,5 @@
 class Website::AppUsersController < ApplicationController
-
+  layout 'website_layout'
   def new
 
   end
@@ -29,7 +29,26 @@ class Website::AppUsersController < ApplicationController
   end
 
   def update
-
+    if session[:user_id].present?
+      @app_user = AppUser.find(session[:user_id])
+      address = params[:address].present? ? params[:address] : ''
+      address1 = params[:address1].present? ? params[:address1] : ''
+      address2 = params[:address2].present? ? params[:address2] : ''
+      first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
+      last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
+      @app_user.address = address + '===' + address1 + '===' + address2
+      @app_user.first_name = first_name ; @app_user.last_name = last_name
+      @app_user.city = params[:city];@app_user.state = params[:state]
+      if @app_user.save!
+        flash[:notice] = 'User Updated successfully'
+        redirect_to profile_website_app_users_path
+      else
+        flash[:warning] = @app_user.errors.full_messages
+        redirect_to profile_website_app_users_path
+      end
+    else
+      redirect_to website_home_index_path
+    end
   end
 
   def signin
@@ -61,6 +80,14 @@ class Website::AppUsersController < ApplicationController
     respond_to do |format|
       format.html {render :nothing => true }
       format.js { render :json => { :data => user, :layout => false}.to_json}
+    end
+  end
+
+  def profile
+    if session[:user_id].present?
+      @app_user = AppUser.find(session[:user_id])
+    else
+      redirect_to website_home_index_path
     end
   end
 

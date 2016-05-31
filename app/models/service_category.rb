@@ -25,6 +25,10 @@ class ServiceCategory < ActiveRecord::Base
     end # end CSV.foreach
   end # end self.import(file)
 
+  def self.get_service_categories
+    self.select('id,name')
+  end
+
   #def self.import(file)
   #	spreadsheet = open_spreadsheet(file)
   #  header = spreadsheet.row(1)

@@ -26,4 +26,8 @@ class Website::HomeController < ApplicationController
     end
   end
 
+
+  def compare_deals
+
+  end
 end

@@ -1,0 +1,34 @@
+<div class="col-xs-12 col-sm-4 col-md-3 bor_sec_left">
+  <div class="border-radius-bg">
+    <h5>PRICE</h5>
+
+    <div id="slider"></div>
+
+    <span class="separator"></span>
+    <h5>DOWNLOAD SPEED</h5>
+    <div class="checkbox checkbox-info">
+      <input id="checkbox7a" type="checkbox">
+      <label for="checkbox7a"> <span>Fast </span> ( Upto 3 Mbps ) </label>
+    </div>
+    <div class="checkbox checkbox-info">
+      <input id="checkbox7b" type="checkbox">
+      <label for="checkbox7b"> <span>Faster</span> ( Upto 25 Mbps) </label>
+    </div>
+    <div class="checkbox checkbox-info">
+      <input id="checkbox7c" type="checkbox">
+      <label for="checkbox7c"> <span>Fastest</span> ( 100 Mbps ) </label>
+    </div>
+
+    <span class="separator"></span>
+    <h5>COMPANIES</h5>
+    <div class="scroller">
+      <% @providers.each do |provider| %>
+          <div class="checkbox checkbox-info">
+            <input id="checkbox8a" type="checkbox">
+            <label for="checkbox8a"> <span> <%= provider.name %> </span> </label>
+          </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

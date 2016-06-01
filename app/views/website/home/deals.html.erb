@@ -1,10 +1,4 @@
-<section class="inner internet-banner">
-  <div class="container text-center">
-
-    <h3>Internet</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-  </div>
-</section>
+<%= render :partial => 'website/home/internet_banner' %>
 
 <div class="best_deals">
   <div class="container serviceCon1">
@@ -15,11 +9,11 @@
       <% @dashboard_data.each do |data| %>
           <div class="col-xs-6 col-md-3">
             <div class="text-center serviceRow1">
-              <div class="img_box" style="overflow: hidden;"><img src="<%= data['deal_image_url'] %>" alt=""> </div>
-              <p class="para_1"> <%= data['title'].truncate(25) %> </p>
+              <div class="img_box" style="overflow: hidden;"><img src="<%= data[:trending_deal]['deal_image_url'] %>" alt=""> </div>
+              <p class="para_1"> <%= data[:service_provider_name].present? ? data[:service_provider_name].truncate(25) : ''%> </p>
               <p class="para_2"> starting at </p>
-              <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
-              <a href="internetdeal-details.html">Select &amp; customize</a>
+              <h2>$<%= data[:trending_deal]['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+              <a href="<%= deal_details_website_home_index_path %>?category_id=<%= data[:service_category_id] %>&zip_code=75024">Select &amp; customize</a>
             </div>
           </div>
       <% end %>

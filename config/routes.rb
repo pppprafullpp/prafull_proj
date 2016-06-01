@@ -108,6 +108,7 @@ Rails.application.routes.draw do
       collection do
         get :deals
         get :compare_deals
+        get :deal_details
       end
     end
     resources :app_users do

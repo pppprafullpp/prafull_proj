@@ -14,6 +14,10 @@ class ServiceProvider < ActiveRecord::Base
   		logo.url
   end
 
+  def self.get_provider_by_category(service_category_id)
+    (service_category_id.present?) ? self.select('id,name').where(:service_category_id => service_category_id) : []
+  end
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       #service_provider_hash = row.to_hash # exclude the price field

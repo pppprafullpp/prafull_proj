@@ -11,18 +11,29 @@ class Api::V1::AccountReferralsController < ApplicationController
 			if app_user_id.present?
 				params[:referral_id] = app_user_id
 				account_referral = AccountReferral.new(account_referral_params)
+				referral_gift_amount_id = ReferralGiftAmount.where(is_active: true).first.try(:id)
 				if account_referral.save
-					app_user = AppUser.find_by_id(params[:referrer_id])
-					app_user.refer_status = true
-					app_user.save
-					gift_received = account_referral.referrer_gift_coins
-					message = "Congratulations!! You have earned $#{account_referral.referrer_gift_coins}" 
-					render 	:status => 200,
+					if referral_gift_amount_id.present?
+						account_referral_amount = AccountReferralAmount.create(account_referral_id: account_referral.id, referral_gift_amount_id: referral_gift_amount_id)
+						gift_received = account_referral.referral_gift_amount.referrer_amount
+						referral_gift = account_referral.referral_gift_amount.referral_amount
+						referral = AppUser.find_by_id(app_user_id)
+						referral.total_amount = referral.total_amount + referral_gift
+						referral.save
+						app_user = AppUser.find_by_id(params[:referrer_id])
+						app_user.refer_status = true
+						app_user.total_amount = app_user.total_amount + gift_received
+						app_user.save
+						message = "Congratulations!! You have earned $#{gift_received}" 
+						render 	:status => 200,
 			        		:json => {
 			                     	:success => true,
 			                     	:gift => gift_received,
 			                     	:message => message
 			                     }
+					else
+						render :json => { :success => false, :message => "Sorry! No Gifts Available for now." }
+					end
 				else
 					if account_referral.errors.full_messages[0] == "Referrer has already been taken"
 						message = "Referral Id is already used."

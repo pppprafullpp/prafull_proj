@@ -73,6 +73,11 @@ class Deal < ActiveRecord::Base
   	end # end CSV.foreach
 	end # end self.import(file)
 
+  def order_status
+    @order = Order.where(deal_id: self.id).first.status
+    return @order
+  end
+
 	def deal_image_url
 		image.url
 	end

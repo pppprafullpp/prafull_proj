@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       match 'account_referrals' => 'account_referrals#create', :via => :post
       match 'referral_code' => 'app_users#my_referral_code', :via => :get
       match 'my_earnings' => 'app_users#referrals_and_gifts', :via => :get
+      match 'cashout' => 'cashout_infos#create', :via => :post
 
       
 
@@ -99,6 +100,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :gifts
   resources :user_gifts
+  resources :referral_gift_amounts
   
     #:path_names => { sign_in: 'login', sign_out: 'logout' },
     #:controllers => { :sessions => "sessions", 

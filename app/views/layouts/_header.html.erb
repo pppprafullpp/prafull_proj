@@ -17,12 +17,14 @@
         <li><%= link_to "Service Providers", service_providers_path %></li>
 
         <li><%= link_to "Zip Codes", zipcodes_path %></li>
-        
+
         <li><%= link_to "Deals", deals_path %></li>
 
         <li><%= link_to "Orders", orders_path %></li>
 
         <li><%= link_to "Gifts", gifts_path %></li>
+
+        <li><%= link_to "Referral Gifts", referral_gift_amounts_path %></li>
         
         <li><%= link_to "App Users", app_users_path %></li>
         
@@ -34,34 +36,34 @@
        
     </ul>
     <!--ul class="menu">
-      <% if user_signed_in? && current_user.is_at_admin_level? %>
-        <li><%= link_to "Service Preferences", service_preferences_path %></li>
+      <%# if user_signed_in? && current_user.is_at_admin_level? %>
+        <li><%#= link_to "Service Preferences", service_preferences_path %></li>
         
-        <li><%= link_to "Notification", notifications_path %></l>
+        <li><%#= link_to "Notification", notifications_path %></l>
 
-        <li><%= link_to "BulkNotification", bulk_notifications_path %></li>
+        <li><%#= link_to "BulkNotification", bulk_notifications_path %></li>
         
-        <li><%= link_to "Comment&Rating", comment_ratings_path %></li>
+        <li><%#= link_to "Comment&Rating", comment_ratings_path %></li>
         
-        <li><%= link_to "ReferralInfo", referral_infos_path %></li>
+        <li><%#= link_to "ReferralInfo", referral_infos_path %></li>
 
-        <li><%= link_to "Advertisement", advertisements_path %></li>
+        <li><%#= link_to "Advertisement", advertisements_path %></li>
         
-        <li><%= link_to "InternetPreference", internet_service_preferences_path %></li>
+        <li><%#= link_to "InternetPreference", internet_service_preferences_path %></li>
         
-        <li><%= link_to "CablePreference", cable_service_preferences_path %></li>
+        <li><%#= link_to "CablePreference", cable_service_preferences_path %></li>
         
-        <li><%= link_to "TelephonePreference", telephone_service_preferences_path %></li>
+        <li><%#= link_to "TelephonePreference", telephone_service_preferences_path %></li>
         
-        <li><%= link_to "CellphonePreference", cellphone_service_preferences_path %></li>
+        <li><%#= link_to "CellphonePreference", cellphone_service_preferences_path %></li>
         
-        <li><%= link_to "BundlePreference", bundle_service_preferences_path %></li>
+        <li><%#= link_to "BundlePreference", bundle_service_preferences_path %></li>
         
-        <li><%= link_to "DealSubscription", subscribe_deals_path %></li>
+        <li><%#= link_to "DealSubscription", subscribe_deals_path %></li>
         
-        <li><%= link_to "TrendingDeals", trending_deals_path %></li>
+        <li><%#= link_to "TrendingDeals", trending_deals_path %></li>
         
-      <% end %>
+      <%# end %>
       
     </ul-->
   </section>

@@ -1,6 +1,11 @@
 class AccountReferral < ActiveRecord::Base
 	belongs_to :referral, class_name: "AppUser"
 	belongs_to :referrer, class_name: "AppUser"
+
+	has_one :account_referral_amount,:dependent => :destroy
+  	has_one :referral_gift_amount, through: :account_referral_amount
+
+	
  
 	validates_uniqueness_of :referrer_id
 	

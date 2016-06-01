@@ -14,6 +14,8 @@ class Api::V1::OrdersController < ApplicationController
 			if @gift_id.present? && @order.present?
 				@user_gifts = @order.user_gifts.create(gift_id: @gift_id, app_user_id: params[:app_user_id])
 				@gift_amount = @gift.amount
+				@app_user.total_amount = @app_user.total_amount + @gift_amount
+				@app_user.save
 				@message = "You have won $#{@gift_amount} gift card."
 				@message_status = true
 			else 

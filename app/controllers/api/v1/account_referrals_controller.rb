@@ -8,7 +8,7 @@ class Api::V1::AccountReferralsController < ApplicationController
 	def create
 		if params[:referral_code].present? && params[:referrer_id].present?
 			app_user_id = AppUser.find_by_referral_code(params[:referral_code]).try(:id)
-			if app_user_id.present?
+			if app_user_id.present? && app_user_id != params[:referrer_id].to_i
 				params[:referral_id] = app_user_id
 				account_referral = AccountReferral.new(account_referral_params)
 				referral_gift_amount_id = ReferralGiftAmount.where(is_active: true).first.try(:id)

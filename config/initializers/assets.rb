@@ -13,3 +13,7 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( vendor/modernizr.js )
 # Rails.application.config.assets.precompile += %w( website/* )
 Rails.application.config.assets.precompile += %w( website/bootstrap.min.css )
+Rails.application.config.assets.precompile += %w( website/main.css )
+Rails.application.config.assets.precompile += %w( website/developer.css )
+Rails.application.config.assets.precompile += %w( website/media.css )
+Rails.application.config.assets.precompile += %w( website/font-awesome.min.css )

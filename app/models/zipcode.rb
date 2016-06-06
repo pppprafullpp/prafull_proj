@@ -15,7 +15,7 @@ class Zipcode < ActiveRecord::Base
       zipcode_code = Zipcode.where(code: zipcode_hash["code"])
       if zipcode.count == 1
         zipcode.first.update_attributes(zipcode_hash)
-      elsif zipcode_code.count == 1
+      elsif zipcode_code.first.present?
         zipcode_code.first.update_attributes(zipcode_hash)
       else
         Zipcode.create!(zipcode_hash)

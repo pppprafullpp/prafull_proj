@@ -40,7 +40,11 @@ Rails.application.routes.draw do
       match 'my_earnings' => 'app_users#referrals_and_gifts', :via => :get
       match 'cashout' => 'cashout_infos#create', :via => :post
 
-
+      resources :orders do
+        collection do
+          post :fetch_user_and_deal_details
+        end
+      end
 
 
     end

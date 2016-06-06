@@ -68,6 +68,21 @@ class Api::V1::OrdersController < ApplicationController
     end  
 	end
 
+	def fetch_user_and_deal_details
+		if params[:app_user_id].present? and params[:deal_ids].present?
+			app_user = AppUser.where(:id => params[:app_user_id])
+			deals = Deal.where(:id => params[:deal_ids].split(','))
+			render :status => 200,
+						 :json => {
+								 :success => true,
+								 :app_users => app_user.as_json({:include => :app_user_addresses}),
+								 :deals => deals.as_json(:except => [:created_at, :updated_at])
+						 }
+		else
+			render :json => { :success => false }
+		end
+	end
+
 	private
 	def order_params
 		params.permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)

@@ -2,10 +2,28 @@ class Api::V1::OrdersController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
+
 	def create
+		order = Order.new(order_params)
+		order.order_id=rand(36**8).to_s(36).upcase
+		#raise order.inspect
+		if order.save
+			order_items = OrderItem.create_order_items(params,order.id)
+			app_user = AppUser.update_app_user(params,order.app_user_id)
+			business = Business.create_business(params)
+			business_address = BusinessAddress.create_business_address(params,business.id)
+			business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+			render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_address => business_address.as_json}
+		else
+			render :status => 401,
+						 :json => { :success => false ,:message => order.errors.full_messages}
+		end
+	end
+
+	def create_bck
 		@order = Order.new(order_params)
 		@order.order_id=rand(36**8).to_s(36).upcase
-		@order.activation_date = Time.now  
+		@order.activation_date = Time.now
 		if @order.save
 			@app_user= @order.app_user
 			@orders_count = @app_user.orders.count
@@ -18,11 +36,11 @@ class Api::V1::OrdersController < ApplicationController
 				@app_user.save
 				@message = "You have won $#{@gift_amount} gift card."
 				@message_status = true
-			else 
+			else
 				@last_gift_activation_count = @app_user.gifts.last.try(:activation_count_condition)
 				@next_gift_activation_count = Gift.all.where("activation_count_condition > ?", @last_gift_activation_count ).limit(1).first.activation_count_condition rescue nil
 				if @next_gift_activation_count.present?
-					@message_count = @next_gift_activation_count - @orders_count 
+					@message_count = @next_gift_activation_count - @orders_count
 					@message = "Please include #{@message_count} more service in your order"
 					@message_status = true
 				else
@@ -32,52 +50,72 @@ class Api::V1::OrdersController < ApplicationController
 			end
 			@order_message = "for switching #{@orders_count} service using ServiceDeals"
 			@gifts = Gift.all
-    	render :status => 200,:json => {:success => true,:order_message => @order_message, :message => @message,:message_status => @message_status,:gifts => @gifts.as_json(:methods => :gift_image_url, :except => :image)}
-    else
-      render :status => 401,
-      					:json => { :success => false }
-    end
+			render :status => 200,:json => {:success => true,:order_message => @order_message, :message => @message,:message_status => @message_status,:gifts => @gifts.as_json(:methods => :gift_image_url, :except => :image)}
+		else
+			render :status => 401,
+						 :json => { :success => false }
+		end
 	end
 
 	def get_orders
 		@order = Order.where("id = ?", params[:id])
 		if @order.present?
 			render :status => 200,
-             :json => {
-                        :success => true,
-                        :orders => @order.as_json(:except => [:created_at, :updated_at])
-                        
-                      }
+						 :json => {
+								 :success => true,
+								 :orders => @order.as_json(:except => [:created_at, :updated_at])
+
+						 }
 		else
 			render :json => { :success => false }
-		end	
+		end
 	end
 
 	def my_orders
-		@orders = Order.where("app_user_id = ?", params[:app_user_id]).order("id DESC")
+		app_user = AppUser.where(:id => params[:app_user_id]).first
+		if app_user.present? and app_user.user_type == AppUser::BUSINESS
+			business = BusinessAppUser.where(:app_user_id => params[:app_user_id]).first
+			app_user_id = business.present? ? BusinessAppUser.where(:business_id => business.id).pluck(:app_user_id) : []
+		else
+			app_user_id = [params[:app_user_id]]
+		end
+		@orders = Order.where("app_user_id = ?",app_user_id).order("id DESC")
 
 		if @orders.present?
-      	render :status => 200,
-             :json => {
-                      :success => true,
-                      :order => @orders.as_json(:include => {:deal => {:methods => :deal_image_url}},:methods => :order_place_time)
-                      }
-                     
-    else
-      render :json => { :success => false }
-    end  
+			render :status => 200,
+						 :json => {
+								 :success => true,
+								 :order => @orders.as_json(:include => {:deal => {:methods => :deal_image_url}},:methods => :order_place_time)
+						 }
+
+		else
+			render :json => { :success => false }
+		end
 	end
 
 	def fetch_user_and_deal_details
 		if params[:app_user_id].present? and params[:deal_ids].present?
-			app_user = AppUser.where(:id => params[:app_user_id])
+			app_user = AppUser.where(:id => params[:app_user_id]).first
 			deals = Deal.where(:id => params[:deal_ids].split(','))
-			render :status => 200,
-						 :json => {
-								 :success => true,
-								 :app_users => app_user.as_json({:include => :app_user_addresses}),
-								 :deals => deals.as_json(:except => [:created_at, :updated_at])
-						 }
+			if app_user.user_type == AppUser::BUSINESS
+				business = BusinessAppUser.select('businesses.*').joins(:business).where(:app_user_id => app_user.id).first
+				render :status => 200,
+							 :json => {
+									 :success => true,
+									 :app_users => app_user.as_json(:except => [:created_at, :updated_at]),
+									 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {},
+									 :business_addresses => business.present? ? business.business_addresses.as_json(:except => [:created_at, :updated_at]) : [],
+									 :deals => deals.as_json(:except => [:created_at, :updated_at])
+							 }
+			else
+				render :status => 200,
+							 :json => {
+									 :success => true,
+									 :app_users => app_user.as_json(:except => [:created_at, :updated_at]),
+									 :app_user_addresses => app_user.app_user_addresses.as_json(:except => [:created_at, :updated_at]),
+									 :deals => deals.as_json(:except => [:created_at, :updated_at])
+							 }
+			end
 		else
 			render :json => { :success => false }
 		end
@@ -85,7 +123,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date)
+		params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type)
 	end
 
 end

@@ -6,14 +6,13 @@ class Api::V1::OrdersController < ApplicationController
 	def create
 		order = Order.new(order_params)
 		order.order_id=rand(36**8).to_s(36).upcase
-		#raise order.inspect
 		if order.save
 			order_items = OrderItem.create_order_items(params,order.id)
 			app_user = AppUser.update_app_user(params,order.app_user_id)
 			business = Business.create_business(params)
-			business_address = BusinessAddress.create_business_address(params,business.id)
+			business_addresses = BusinessAddress.create_business_addresses(params,business.id)
 			business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
-			render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_address => business_address.as_json}
+			render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
 		else
 			render :status => 401,
 						 :json => { :success => false ,:message => order.errors.full_messages}

@@ -8,17 +8,19 @@ class BusinessAddress < ActiveRecord::Base
   BUSINESS_ADDRESS = 3
   HOME_ADDRESS = 4
 
-  def self.create_business_address(params,business_id)
-    business_address = self.new
-    business_address.business_id = business_id
-    params[:business_address].each do |key,value|
-      business_address[key] = value
+  def self.create_business_addresses(params,business_id)
+    business_addresses = []
+    params[:business_addresses].each do |address|
+      business_address = self.new
+      business_address.business_id = business_id
+      address.each do |key,value|
+        business_address[key] = value
+      end
+      if business_address.save!
+        business_addresses << business_address
+      end
     end
-    if business_address.save!
-      business_address
-    else
-      business_address
-    end
+    business_addresses
   end
 
 end

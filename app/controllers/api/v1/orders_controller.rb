@@ -4,18 +4,29 @@ class Api::V1::OrdersController < ApplicationController
 
 
 	def create
-		order = Order.new(order_params)
-		order.order_id=rand(36**8).to_s(36).upcase
-		if order.save
-			order_items = OrderItem.create_order_items(params,order.id)
-			app_user = AppUser.update_app_user(params,order.app_user_id)
-			business = Business.create_business(params)
-			business_addresses = BusinessAddress.create_business_addresses(params,business.id)
-			business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
-			render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
+		user_type = params[:app_user][:user_type].present? ? params[:app_user][:user_type] : nil
+		if [AppUser::RESIDENCE,AppUser::BUSINESS].include?(user_type)
+			order = Order.new(order_params)
+			order.order_id=rand(36**8).to_s(36).upcase
+			if order.save
+				order_items = OrderItem.create_order_items(params,order.id)
+				app_user = AppUser.update_app_user(params,order.app_user_id)
+				if user_type == AppUser::BUSINESS
+					business = Business.create_business(params)
+					business_addresses = BusinessAddress.create_business_addresses(params,business.id)
+					business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
+				else
+					app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
+					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:app_user_addresses => app_user_addresses.as_json}
+				end
+			else
+				render :status => 401,
+							 :json => { :success => false ,:message => order.errors.full_messages}
+			end
 		else
 			render :status => 401,
-						 :json => { :success => false ,:message => order.errors.full_messages}
+						 :json => { :success => false ,:message => 'Invalid Parameters'}
 		end
 	end
 

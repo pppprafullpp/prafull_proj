@@ -11,12 +11,17 @@ class BusinessAddress < ActiveRecord::Base
   def self.create_business_addresses(params,business_id)
     business_addresses = []
     params[:business_addresses].each do |address|
-      business_address = self.new
-      business_address.business_id = business_id
-      address.each do |key,value|
-        business_address[key] = value
-      end
-      if business_address.save!
+      business_address = self.where(:address_name => address[:address_name],:business_id => business_id).first
+      unless business_address.present?
+        business_address = self.new
+        business_address.business_id = business_id
+        address.each do |key,value|
+          business_address[key] = value
+        end
+        if business_address.save!
+          business_addresses << business_address
+        end
+      else
         business_addresses << business_address
       end
     end

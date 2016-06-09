@@ -11,6 +11,7 @@ class Api::V1::OrdersController < ApplicationController
 			if order.save
 				order_items = OrderItem.create_order_items(params,order.id)
 				app_user = AppUser.update_app_user(params,order.app_user_id)
+				order_addresses = OrderAddress.create_order_addresses(params,order.id)
 				if user_type == AppUser::BUSINESS
 					business = Business.create_business(params)
 					business_addresses = BusinessAddress.create_business_addresses(params,business.id)
@@ -89,7 +90,7 @@ class Api::V1::OrdersController < ApplicationController
 		else
 			app_user_id = [params[:app_user_id]]
 		end
-		@orders = Order.where("app_user_id = ?",app_user_id).order("id DESC")
+		@orders = Order.select("orders.*,order_items.deal_id,order_items.deal_price,order_items.effective_price").joins(:order_items).where("app_user_id = ?",app_user_id).order("id DESC")
 
 		if @orders.present?
 			render :status => 200,
@@ -128,6 +129,24 @@ class Api::V1::OrdersController < ApplicationController
 			end
 		else
 			render :json => { :success => false }
+		end
+	end
+
+	def get_order_address
+		if params[:order_id].present?
+			order_addresses = OrderAddress.where(:order_id => params[:order_id])
+			if order_addresses.present?
+				render :status => 200,
+							 :json => {
+									 :success => true,
+									 :order_addresses => order_addresses.as_json
+							 }
+
+			else
+				render :json => { :success => false, :message => 'no address exists with this order, please try some different order.' }
+			end
+		else
+			render :json => { :success => false,:message => 'please provide order_id in params' }
 		end
 	end
 

@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       match 'orders' => 'orders#create', :via => :post
       match 'get_orders' => 'orders#get_orders', :via => :get
       match 'my_orders' => 'orders#my_orders', :via => :get
+      match 'get_order_address' => 'orders#get_order_address', :via => :get
       match 'get_gifts' => 'gifts#get_gifts', :via => :get
       match 'account_referrals' => 'account_referrals#create', :via => :post
       match 'referral_code' => 'app_users#my_referral_code', :via => :get

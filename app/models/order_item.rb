@@ -1,5 +1,6 @@
 class OrderItem < ActiveRecord::Base
   belongs_to :order
+  belongs_to :deal
   before_create :add_default_details
 
   def self.create_order_items(params,order_id)

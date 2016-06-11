@@ -44,9 +44,10 @@ Rails.application.routes.draw do
       resources :orders do
         collection do
           post :fetch_user_and_deal_details
+          post :my_order_details
+          post :validate_business_name
         end
       end
-
 
     end
   end

@@ -90,7 +90,7 @@ class Api::V1::OrdersController < ApplicationController
 		else
 			app_user_id = [params[:app_user_id]]
 		end
-		@orders = Order.select("orders.*,order_items.deal_id,order_items.deal_price,order_items.effective_price").joins(:order_items).where("app_user_id = ?",app_user_id).order("id DESC")
+		@orders = Order.select("orders.*,order_items.deal_id,order_items.deal_price,order_items.effective_price").joins(:order_items).where(:app_user_id => app_user_id).order("id DESC")
 
 		if @orders.present?
 			render :status => 200,

@@ -46,6 +46,7 @@ gem 'fastercsv'
 gem 'figaro'
 gem 'will_paginate'
 gem "font-awesome-rails"
+gem 'delayed_job_active_record'
 group :development do
   gem 'capistrano'
   gem 'capistrano-rails', require: false

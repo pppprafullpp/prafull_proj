@@ -1,0 +1,84 @@
+<tr>
+  <td>
+    <table width="100%" style="padding:30px;  border-bottom:solid 1px #ebebeb;">
+      <tbody><tr>
+        <td style="text-align:left; color:#e9292a; font-size:20px;">Hi <%= @app_user.first_name %>,</td>
+      </tr>
+      <tr>
+        <td style="text-align:left; color:#8f8f8f; font-size:14px; line-height:18px;">Thank You for your purchase from ServiceDeals.</td>
+      </tr>
+      </tbody></table>
+  </td>
+</tr>
+
+
+
+<tr>
+  <td>
+    <table width="100%" style="padding:20px 30px;">
+      <tbody><tr>
+        <td style="text-align:left; color:#000; font-size:18px; padding-bottom:20px;">Order Details</td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tbody><tr>
+              <td width="50%" valign="top" style="color:#181818; font-size:13px; line-height:18px;">
+                <p style="padding:0; margin:0">Order# <span style="font-weight:bold"><%= @order.order_number %> </span></p>
+                <p style="padding:0; margin:0">Placed on <%= @order.created_at.strftime('%A, %B %d, %Y') %></p>
+              </td>
+              <td width="50%" style="text-align:right; color:#181818; font-size:13px; line-height:18px;">
+                <% order_address = @order.order_addresses.where(:address_type => [BusinessAddress::SHIPPING_ADDRESS]).first %>
+                <b>Shipping Address: </b><br>
+                <%= order_address.address_name %> <br>
+                <%= order_address.address1 %> <br>
+                <%= order_address.address2 %> <br>
+                <%= order_address.zip %><br>
+                <%= order_address.contact_number %><br>
+              </td>
+            </tr>
+            </tbody></table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%" style="font-size:14px; font-weight:bold;padding: 5px 0; margin-top: 20px; border-top:solid 1px #ebebeb;  background:#ececec;">
+            <tbody><tr>
+              <td width="30%" style="padding:0 10px 0 0;">Item</td>
+              <td width="60%" style="padding:0 10px;">Description</td>
+              <td width="10%" style="padding:0 0 0 0">Price</td>
+            </tr>
+            </tbody></table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%" style=" padding:20px 10px; ">
+            <tbody>
+            <% total_price = 0.00 %>
+            <% @order.order_items.each do |order_item| %>
+                <% deal = Deal.find_by_id(order_item.deal_id)%>
+                <% if deal.present? %>
+                    <tr>
+                      <td width="30%" style="padding:0 10px 0 0;"><img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>"></td>
+                      <td width="60%" style="padding:0 10px; font-size:12px;"><%= deal.title %> <br>
+                        <%= deal.short_description %></td>
+                      <td width="10%" style="padding:0 0 0 10px;">$<%= order_item.effective_price %></td>
+                    </tr>
+                    <% total_price += order_item.effective_price %>
+                <% end %>
+            <% end %>
+
+            </tbody></table>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="right" style="font-size:15px; color:#315a81; font-weight:bold; padding:8px 15px;  background:#f7f7f7;">Order Total: $<%=total_price%></td>
+      </tr>
+
+
+
+      </tbody></table>
+  </td>
+</tr>

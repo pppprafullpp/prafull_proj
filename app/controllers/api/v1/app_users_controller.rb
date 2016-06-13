@@ -1,10 +1,10 @@
 class Api::V1::AppUsersController < ApplicationController
-	skip_before_filter :verify_authenticity_token
-	respond_to :json
+  skip_before_filter :verify_authenticity_token
+  respond_to :json
 
-	def new
-		@app_user = AppUser.new
-	end
+  def new
+    @app_user = AppUser.new
+  end
 
   def update_app_user
     @app_user = AppUser.find_by_email(params[:email])
@@ -15,12 +15,12 @@ class Api::V1::AppUsersController < ApplicationController
                :json => { :success => true }
       else
         render :status => 400,
-               :json => { :success => false }  
+               :json => { :success => false }
       end
     else
-        render :status => 400,
-               :json => { :success => false }
-    end 
+      render :status => 400,
+             :json => { :success => false }
+    end
   end
 
   def create
@@ -29,7 +29,7 @@ class Api::V1::AppUsersController < ApplicationController
       render :status => 400,
              :json => {:success => false}
     else
-      @app_user = AppUser.new(app_user_params) 
+      @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:password]
       # @app_user.referral_code = rand(36**4).to_s(36).upcase
 
@@ -49,12 +49,11 @@ class Api::V1::AppUsersController < ApplicationController
       @app_user = AppUser.find_by_id(params[:id])
       if @app_user.present?
         render :status => 200,
-             :json => {
-                        :success => true,
-
-                        :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url])
-                      
-                      }
+               :json => {
+                   :success => true,
+                   :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                   :app_user_addresses => @app_user.app_user_addresses.as_json
+               }
       else
         render :status => 404,
                :json => { :success => false }
@@ -68,16 +67,17 @@ class Api::V1::AppUsersController < ApplicationController
           @user_preference = false
         end
         render :status => 200,
-             :json => {
-                        :success => true,
-                        :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
-                        :user_preference => @user_preference
-                      }
-      else  
+               :json => {
+                   :success => true,
+                   :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                   :user_preference => @user_preference,
+                   :app_user_addresses => @app_user.app_user_addresses.as_json
+               }
+      else
         render :status => 404,
                :json => { :success => false }
       end
-    else  
+    else
       render :status => 404,
              :json => { :success => false }
     end
@@ -100,9 +100,9 @@ class Api::V1::AppUsersController < ApplicationController
       app_user = AppUser.find(params[:app_user_id])
       app_user_code = app_user.try(:referral_code)
       refer_status = app_user.try(:refer_status)
-        render  :json => { :success => true, :app_user_code => app_user_code, :refer_status => refer_status}
+      render  :json => { :success => true, :app_user_code => app_user_code, :refer_status => refer_status}
     else
-        render  :json => { :success => false }
+      render  :json => { :success => false }
     end
   end
 
@@ -125,11 +125,11 @@ class Api::V1::AppUsersController < ApplicationController
     end
   end
 
-	private
-	def app_user_params
+  private
+  def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-		params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status)
-	end
+    params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status)
+  end
 
   def decode_picture_data(picture_data)
     # decode the base64

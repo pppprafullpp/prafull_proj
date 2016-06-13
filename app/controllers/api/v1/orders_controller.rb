@@ -16,9 +16,11 @@ class Api::V1::OrdersController < ApplicationController
 					business = Business.create_business(params)
 					business_addresses = BusinessAddress.create_business_addresses(params,business.id)
 					business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+					OrderMailer.delay.order_confirmation(app_user,order)
 					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
 				else
 					app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
+					OrderMailer.delay.order_confirmation(app_user,order)
 					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:app_user_addresses => app_user_addresses.as_json}
 				end
 			else
@@ -110,13 +112,15 @@ class Api::V1::OrdersController < ApplicationController
 			if order.present?
 				order_items = order.order_items
 				app_user = AppUser.where(:id => params[:app_user_id]).first
+				category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order_items.first.deal_id).first.name.downcase
 				if app_user.present? and app_user.user_type == AppUser::BUSINESS
 					business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",app_user.id).first
 					render :status => 200,
 								 :json => {
 										 :success => true,
 										 :order => order.as_json(:except => [:created_at, :updated_at]),
-										 :order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url}},:methods => :order_place_time),
+										 :order_addresses => order.order_addresses.as_json(:except => [:created_at, :updated_at]),
+										 :order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url,:include => ["#{category}_deal_attributes".to_sym => {:include => ["#{category}_equipments".to_sym]}]}},:methods => :order_place_time),
 										 :app_user => app_user,
 										 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {}
 								 }
@@ -125,7 +129,8 @@ class Api::V1::OrdersController < ApplicationController
 								 :json => {
 										 :success => true,
 										 :order => order.as_json(:except => [:created_at, :updated_at]),
-										 :order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url}},:methods => :order_place_time),
+										 :order_addresses => order.order_addresses.as_json(:except => [:created_at, :updated_at]),
+										 :order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url,:include => ["#{category}_deal_attributes".to_sym => {:include => ["#{category}_equipments".to_sym]}]}},:methods => :order_place_time),
 										 :app_user => app_user
 								 }
 				end

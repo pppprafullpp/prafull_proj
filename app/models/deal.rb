@@ -12,6 +12,7 @@ class Deal < ActiveRecord::Base
   has_many  :additional_offers, dependent: :destroy
   has_many  :deal_include_zipcodes, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :order_items, dependent: :destroy
   has_and_belongs_to_many  :zipcodes, dependent: :destroy
   
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
@@ -81,8 +82,8 @@ class Deal < ActiveRecord::Base
 	end # end self.import(file)
 
   def order_status
-    @order = Order.where(deal_id: self.id).first.status
-    return @order
+    order = OrderItem.select('status').where(deal_id: self.id).first.status
+    return order
   end
 
 	def deal_image_url

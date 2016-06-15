@@ -125,20 +125,30 @@ class Api::V1::AppUsersController < ApplicationController
     end
   end
 
-  
+
 
   def refer_contact
-    if params[:app_user_id].present?
-      app_user = AppUser.find_by_id(params[:app_user_id])
-      refer_contact_detail = app_user.refer_contact_details.new(email_id: params[:email_id],mobile_no: params[:mobile_no],name: params[:name])
-      if refer_contact_detail.save
-        render  :json => { :success => true, :refer_contact_detail => refer_contact_detail }
-      else  
-        render  :json => { :success => false}
+    if params['referred_contacts'].class.to_s == 'Array'
+      error = false
+      params['referred_contacts'].each do |p|
+        keys = p.keys
+        arr_match = ["app_user_id", "email_id", "mobile_no", "name"] - keys
+        if arr_match.present?
+          error = true
+          break
+        end
+      end
+      unless error
+        params.permit!
+        referred_contacts = ReferContactDetail.create_referred_users(params['referred_contacts'])
+        render  :json => { :success => true,:referred_contacts => referred_contacts.as_json}
+      else
+        render  :json => { :success => false,:message => 'Some keys are missing in JSON, please verify.'}
       end
     else
-      render  :json => { :success => false}
+      render  :json => { :success => false,:message => 'Invalid Json Input'}
     end
+
   end
 
   private

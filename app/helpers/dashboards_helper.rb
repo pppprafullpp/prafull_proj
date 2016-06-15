@@ -8,6 +8,7 @@ module DashboardsHelper
 
 				excluded_categories="'Gas','Electricity','Home Security'"
 				service_preferences = app_user.service_preferences.order("created_at DESC")
+
 				servicelist = service_preferences.map do |sp|
 
 					app_user_current_plan = sp.price
@@ -52,6 +53,7 @@ module DashboardsHelper
 						allowed_order_deal=allowed_order_deal
 					end
 				end
+
 				service_preferences = app_user.service_preferences.order("created_at DESC")
 				servicelist = service_preferences.map do |sp|
 
@@ -138,7 +140,7 @@ module DashboardsHelper
 
 	def category_order_deal(app_user_id,category_id,return_attributes)
 
-		order_deals=Deal.joins(:orders).select("deals.id").where("deals.service_category_id = ? AND orders.app_user_id = ?",category_id,app_user_id)
+		order_deals=Deal.joins("inner join order_items on order_items.deal_id = deals.id inner join orders on orders.id = order_items.order_id").select("deals.id").where("deals.service_category_id = ? AND orders.app_user_id = ?",category_id,app_user_id)
 
 		if return_attributes==true
 			select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
@@ -159,16 +161,16 @@ module DashboardsHelper
 		# .order("deals.price ASC").where(id: last_order_deal_id).first
 
 		if category_id == 1
-			order_deal = Deal.joins(:internet_deal_attributes).joins(:orders).select(select_fields_internet).where("deals.id in (?)",order_deals).to_a.last
+			order_deal = Deal.joins(:internet_deal_attributes).joins(:order_items).select(select_fields_internet).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 2
-			order_deal = Deal.joins(:telephone_deal_attributes).joins(:orders).select(select_fields_telephone).where("deals.id in (?)",order_deals).to_a.last
+			order_deal = Deal.joins(:telephone_deal_attributes).joins(:order_items).select(select_fields_telephone).where("deals.id in (?)",order_deals).to_a.last
 			# where(id: last_order_deal_id).first
 		elsif category_id == 3
-			order_deal = Deal.joins(:cable_deal_attributes).joins(:orders).select(select_fields_cable).where("deals.id in (?)",order_deals).to_a.last
+			order_deal = Deal.joins(:cable_deal_attributes).joins(:order_items).select(select_fields_cable).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 4
-			order_deal = Deal.joins(:cellphone_deal_attributes).joins(:orders).select(select_fields_cellphone).where("deals.id in (?)",order_deals).to_a.last
+			order_deal = Deal.joins(:cellphone_deal_attributes).joins(:order_items).select(select_fields_cellphone).where("deals.id in (?)",order_deals).to_a.last
 		elsif category_id == 5
-			order_deal = Deal.joins(:bundle_deal_attributes).joins(:orders).select(select_fields_bundle).where("deals.id in (?)",order_deals).to_a.last
+			order_deal = Deal.joins(:bundle_deal_attributes).joins(:order_items).select(select_fields_bundle).where("deals.id in (?)",order_deals).to_a.last
 		end
 
 		if order_deal.present?

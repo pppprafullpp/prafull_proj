@@ -126,6 +126,9 @@ Rails.application.routes.draw do
   end
 
   resources :referral_gift_amounts
+  resources :service_provider_checklists do
+    post 'import', on: :collection
+  end
   #:path_names => { sign_in: 'login', sign_out: 'logout' },
   #:controllers => { :sessions => "sessions",
   #                  :registrations => 'registrations'

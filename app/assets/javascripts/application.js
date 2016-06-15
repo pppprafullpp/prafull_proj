@@ -288,4 +288,43 @@ function populate_service_provider(obj)
 	}
 
 }
+function populate_checklist_service_provider(obj)
+{
+    if (obj.value != '')
+	{
+		var handleResponse = function (status, response) {
+		   	var data=JSON.parse(response);
+		   	var selectList = document.getElementById("service_provider_checklist_service_provider_id");
+		   		debugger
+		   	
+		   	selectList.options.length = 0;
+		   	for(var i=0;i<data.length;i++){
+				var option = document.createElement("option");
+   				option.value = data[i].id;
+    			option.text = data[i].name;
+    			selectList.appendChild(option);
+			}
+		   	
+		}
+		var handleStateChange = function () {
+		   switch (xmlhttp.readyState) {
+		      case 0 : // UNINITIALIZED
+		      case 1 : // LOADING
+		      case 2 : // LOADED
+		      case 3 : // INTERACTIVE
+		      break;
+		      case 4 : // COMPLETED
+		      handleResponse(xmlhttp.status, xmlhttp.responseText);
+		      break;
+		      default: alert("error");
+		   }
+		}
+		var xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange=handleStateChange;
+		xmlhttp.open("GET", "/deals/get_service_providers/?category="+obj.value,true);
+		xmlhttp.send(null);
+		
+	}
+
+}
 //$(function(){ $(document).foundation(); });

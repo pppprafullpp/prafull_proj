@@ -14,6 +14,7 @@ class AppUser < ActiveRecord::Base
   has_one :referrer, :class_name => "AccountReferral", :foreign_key => "referrer_id",dependent: :destroy
   has_many :app_user_addresses, dependent: :destroy
   has_many :business_app_users, dependent: :destroy
+  has_many :refer_contact_details
   #has_many :comments, dependent: :destroy
   #has_many :ratings, dependent: :destroy
   mount_uploader :avatar, ImageUploader

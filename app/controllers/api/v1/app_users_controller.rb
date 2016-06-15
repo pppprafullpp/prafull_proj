@@ -125,6 +125,22 @@ class Api::V1::AppUsersController < ApplicationController
     end
   end
 
+  
+
+  def refer_contact
+    if params[:app_user_id].present?
+      app_user = AppUser.find_by_id(params[:app_user_id])
+      refer_contact_detail = app_user.refer_contact_details.new(email_id: params[:email_id],mobile_no: params[:mobile_no],name: params[:name])
+      if refer_contact_detail.save
+        render  :json => { :success => true, :refer_contact_detail => refer_contact_detail }
+      else  
+        render  :json => { :success => false}
+      end
+    else
+      render  :json => { :success => false}
+    end
+  end
+
   private
   def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?

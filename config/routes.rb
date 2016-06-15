@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       match 'referral_code' => 'app_users#my_referral_code', :via => :get
       match 'my_earnings' => 'app_users#referrals_and_gifts', :via => :get
       match 'cashout' => 'cashout_infos#create', :via => :post
+      match 'refer_contact' => 'app_users#refer_contact', :via => :post
 
       resources :orders do
         collection do

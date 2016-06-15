@@ -53,7 +53,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm'
 end
-
+gem "exception_notification", github: "smartinez87/exception_notification", branch: "master"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

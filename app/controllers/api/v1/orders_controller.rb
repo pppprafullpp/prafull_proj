@@ -146,7 +146,7 @@ class Api::V1::OrdersController < ApplicationController
 	def fetch_user_and_deal_details
 		if params[:app_user_id].present? and params[:deal_ids].present?
 			app_user = AppUser.where(:id => params[:app_user_id]).first
-			deals = Deal.where(:id => params[:deal_ids].split(','))
+			deals = Deal.where(:id => params[:deal_ids].to_s.split(','))
 			if app_user.user_type == AppUser::BUSINESS
 				business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",app_user.id).first
 				render :status => 200,

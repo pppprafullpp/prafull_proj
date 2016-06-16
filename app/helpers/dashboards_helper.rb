@@ -149,11 +149,11 @@ module DashboardsHelper
 			select_fields_cellphone="deals.*,cellphone_deal_attributes.no_of_lines,cellphone_deal_attributes.price_per_line,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.additional_data,cellphone_deal_attributes.rollover_data"
 			select_fields_bundle="deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
 		else
-			select_fields_internet="deals.*"
-			select_fields_telephone="deals.*"
-			select_fields_cable="deals.*"
-			select_fields_cellphone="deals.*"
-			select_fields_bundle="deals.*"
+			select_fields_internet="deals.*,order_items.order_id"
+			select_fields_telephone="deals.*,order_items.order_id"
+			select_fields_cable="deals.*,order_items.order_id"
+			select_fields_cellphone="deals.*,order_items.order_id"
+			select_fields_bundle="deals.*,order_items.order_id"
 		end
 		# app_user = AppUser.find(app_user_id)
 		# app_user.service_preferences

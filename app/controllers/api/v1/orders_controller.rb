@@ -108,7 +108,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	def my_order_details
 		if params[:order_id].present? and params[:app_user_id].present?
-			order = Order.where(:id => params[:order_id],:app_user_id => params[:app_user_id]).first
+			order = Order.where(:id => params[:order_id]).first
 			if order.present?
 				order_items = order.order_items
 				app_user = AppUser.where(:id => params[:app_user_id]).first

@@ -213,7 +213,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type)
+		params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same)
 	end
 
 end

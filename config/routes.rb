@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       match 'my_earnings' => 'app_users#referrals_and_gifts', :via => :get
       match 'cashout' => 'cashout_infos#create', :via => :post
       match 'refer_contact' => 'app_users#refer_contact', :via => :post
+      match 'validate_business_name' => 'dashboards#validate_business_name', :via => :post
 
       resources :orders do
         collection do

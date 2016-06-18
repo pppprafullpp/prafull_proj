@@ -7,10 +7,12 @@ class Api::V1::AppUsersController < ApplicationController
   end
 
   def update_app_user
-    @app_user = AppUser.find_by_email(params[:email])
-    if @app_user.present?
+    app_user = AppUser.find_by_email(params[:email])
+    if app_user.present?
       if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
-        @app_user.update(app_user_params)
+        app_user.update(app_user_params)
+        business = Business.create_business(params)
+        business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
         render :status => 200,
                :json => { :success => true }
       else
@@ -46,32 +48,34 @@ class Api::V1::AppUsersController < ApplicationController
 
   def get_app_user
     if params[:id].present? && params[:email].blank?
-      @app_user = AppUser.find_by_id(params[:id])
-      if @app_user.present?
+      app_user = AppUser.find_by_id(params[:id])
+      if app_user.present?
         render :status => 200,
                :json => {
                    :success => true,
-                   :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
-                   :app_user_addresses => @app_user.app_user_addresses.as_json
+                   :app_user => app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                   :app_user_addresses => app_user.app_user_addresses.as_json,
+                   :business => app_user.business_app_users.map{|business_app_user| business_app_user.business}.as_json
                }
       else
         render :status => 404,
                :json => { :success => false }
       end
     elsif params[:email].present? && params[:id].blank?
-      @app_user = AppUser.find_by_email(params[:email])
-      if @app_user.present?
-        if @app_user.service_preferences.present?
-          @user_preference = true
+      app_user = AppUser.find_by_email(params[:email])
+      if app_user.present?
+        if app_user.service_preferences.present?
+          user_preference = true
         else
           @user_preference = false
         end
         render :status => 200,
                :json => {
                    :success => true,
-                   :app_user => @app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
-                   :user_preference => @user_preference,
-                   :app_user_addresses => @app_user.app_user_addresses.as_json
+                   :app_user => app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                   :user_preference => user_preference,
+                   :app_user_addresses => app_user.app_user_addresses.as_json,
+                   :business => app_user.business_app_users.map{|business_app_user| business_app_user.business}.as_json
                }
       else
         render :status => 404,
@@ -117,7 +121,7 @@ class Api::V1::AppUsersController < ApplicationController
       total_amount = gift_amount + total_referral_amount
       total_redeem_amount =  app_user.total_amount
       redeem_amount = (gift_amount + total_referral_amount) - total_redeem_amount
-      render  :json => { :success => true, account_referral: account_referral.as_json(:only=>[],:param_for_message => params[:app_user_id],:param_for_image =>params[:app_user_id]), :gifts=> gifts.as_json(:methods => :gift_image_url, :except => :image), total_referral_amount: total_referral_amount, gift_amount: gift_amount, total_amount: total_amount, redeem_amount: redeem_amount}
+      render  :json => { :success => true, :account_referral => account_referral.as_json(:only=>[],:param_for_message => params[:app_user_id],:param_for_image =>params[:app_user_id]), :gifts=> gifts.as_json(:methods => :gift_image_url, :except => :image), total_referral_amount: total_referral_amount, gift_amount: gift_amount, total_amount: total_amount, redeem_amount: redeem_amount}
 
       # :include => {:deal => {:methods => :deal_image_url}}
     else
@@ -148,7 +152,6 @@ class Api::V1::AppUsersController < ApplicationController
     else
       render  :json => { :success => false,:message => 'Invalid Json Input'}
     end
-
   end
 
   private

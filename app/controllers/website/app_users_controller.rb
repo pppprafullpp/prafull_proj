@@ -51,6 +51,11 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+  def order_history
+    @app_user = AppUser.find_by_id(params[:id])
+    @orders = @app_user.try(:orders)
+  end
+
   def signin
     if request.method.eql? 'POST'
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
@@ -86,6 +91,8 @@ class Website::AppUsersController < ApplicationController
   def profile
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
+      # @orders = @app_user.orders
+      @orders = Order.select("orders.*,order_items.deal_id,order_items.deal_price,order_items.effective_price").joins(:order_items).where(:app_user_id => session[:user_id]).order("id DESC")
     else
       redirect_to website_home_index_path
     end

@@ -296,7 +296,6 @@ function populate_checklist_service_provider(obj)
 		   	var data=JSON.parse(response);
 		   	var selectList = document.getElementById("service_provider_checklist_service_provider_id");
 		   		debugger
-		   	
 		   	selectList.options.length = 0;
 		   	for(var i=0;i<data.length;i++){
 				var option = document.createElement("option");

@@ -1,19 +1,15 @@
 <div id="Order" class="order-tab tab-pane fade" role="tabpanel">
   <div class="scroller_order">
     <div class="border-radius-bg">
-
       <ul class="nav nav-pills">
         <li class="active"><a data-toggle="tab" href="#home" aria-expanded="false">All order</a></li>
-        <li class=""><a data-toggle="tab" href="#menu1" aria-expanded="false">Internet</a></li>
-        <li class=""><a data-toggle="tab" href="#menu2" aria-expanded="false">Telephone</a></li>
-        <li class=""><a data-toggle="tab" href="#menu3" aria-expanded="false">Cellphone </a></li>
-        <li class=""><a data-toggle="tab" href="#menu4" aria-expanded="false"> Cable   </a></li>
-        <li class=""><a data-toggle="tab" href="#menu5" aria-expanded="false">Bundle</a></li>
+         <% ServiceCategory.first(5).each do |service_category| %>
+            <li class=""><a href="#<%= service_category.name.downcase %>" data-toggle="tab" aria-expanded="false">
+            <%=service_category.name %></a></li>
+        <% end %>
       </ul>
-
       <div class="tab-content">
         <div id="home" class="tab-pane fade active in">
-
           <div class="row desc_heading">
             <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
             <div class="col-xs-8 col-md-7">
@@ -25,296 +21,59 @@
               </div>
             </div>
           </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/AT&amp;T_logo_2005.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="panding">Pending</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
+          <% @orders.each do |order| %>
+            <div class="row desc_cont">
+              <div class="col-xs-4 col-md-5">
+                <span class="img_border"><%= image_tag("#{Deal.find_by_id(order.order_items.first.deal_id).image}", :alt => "logo") %></span>
+                  <!-- <img src="img/AT&amp;T_logo_2005.png" alt="logo"> -->
+                <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
+              </div>
+              <div class="col-xs-8 col-md-7">
+                <div class="row">
+                  <div class="col-xs-3"> <p><span class="panding"><%= order.status %></span></p> </div>
+                  <div class="col-xs-3"> <p><%= order.order_items.first.deal_price%></p>   </div>
+                  <div class="col-xs-3"> <p><%= order.order_number%></p> </div>
+                  <div class="col-xs-3"> <p><%= order.order_items.first.effective_price %></p> </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-
+          <% end %>
         </div>
-
-        <div id="menu1" class="tab-pane fade">
-
-          <div class="row desc_heading">
-            <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <h5>Status</h5> </div>
-                <div class="col-xs-3"> <h5>Price</h5>   </div>
-                <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                <div class="col-xs-3"> <h5>Order Total</h5> </div>
+        <% ServiceCategory.first(5).each do |service_category| %>
+          <div class="tab-pane fade in" id="<%=service_category.name.downcase%>">
+            <div class="row desc_heading">
+              <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
+              <div class="col-xs-8 col-md-7">
+                <div class="row">
+                  <div class="col-xs-3"> <h5>Status</h5> </div>
+                  <div class="col-xs-3"> <h5>Price</h5>   </div>
+                  <div class="col-xs-3"> <h5>Order No.</h5> </div>
+                  <div class="col-xs-3"> <h5>Order Total</h5> </div>
+                </div>
               </div>
             </div>
+            <% @orders.each do |order| %>
+              <% category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order.order_items.first.deal_id).first.name.downcase %>
+              <% if category == "#{service_category.name.downcase}" %>
+                <div class="row desc_cont">
+                  <div class="col-xs-4 col-md-5">
+                    <span class="img_border"><%= image_tag("#{Deal.find_by_id(order.order_items.first.deal_id).image}", :alt => "logo") %></span>
+                    <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
+                  </div>
+                  <div class="col-xs-8 col-md-7">
+                    <div class="row">
+                      <div class="col-xs-3"> <p><span class="panding"><%= order.status %></span></p> </div>
+                      <div class="col-xs-3"> <p><%= order.order_items.first.deal_price%></p>   </div>
+                      <div class="col-xs-3"> <p><%= order.order_number%></p> </div>
+                      <div class="col-xs-3"> <p><%= order.order_items.first.effective_price %></p> </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
           </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/AT&amp;T_logo_2005.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="panding">Pending</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div id="menu2" class="tab-pane fade">
-
-          <div class="row desc_heading">
-            <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <h5>Status</h5> </div>
-                <div class="col-xs-3"> <h5>Price</h5>   </div>
-                <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                <div class="col-xs-3"> <h5>Order Total</h5> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/AT&amp;T_logo_2005.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="panding">Pending</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div id="menu3" class="tab-pane fade">
-
-          <div class="row desc_heading">
-            <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <h5>Status</h5> </div>
-                <div class="col-xs-3"> <h5>Price</h5>   </div>
-                <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                <div class="col-xs-3"> <h5>Order Total</h5> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/AT&amp;T_logo_2005.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="panding">Pending</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div id="menu4" class="tab-pane fade">
-
-          <div class="row desc_heading">
-            <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <h5>Status</h5> </div>
-                <div class="col-xs-3"> <h5>Price</h5>   </div>
-                <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                <div class="col-xs-3"> <h5>Order Total</h5> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/AT&amp;T_logo_2005.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="panding">Pending</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div id="menu5" class="tab-pane fade">
-
-          <div class="row desc_heading">
-            <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <h5>Status</h5> </div>
-                <div class="col-xs-3"> <h5>Price</h5>   </div>
-                <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                <div class="col-xs-3"> <h5>Order Total</h5> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/AT&amp;T_logo_2005.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="panding">Pending</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-          <div class="row desc_cont">
-            <div class="col-xs-4 col-md-5">
-              <span class="img_border"><img src="img/Verizon_Logo.png" alt="logo"></span>
-              <p class="para_3">Internet Plan (40) LED TV(Full HD)</p>
-            </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <p><span class="delivered">Delivered</span></p> </div>
-                <div class="col-xs-3"> <p>$200</p>   </div>
-                <div class="col-xs-3"> <p>11064803</p> </div>
-                <div class="col-xs-3"> <p>$200</p> </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
+        <% end %>
       </div>
-
     </div>
   </div>
 </div>

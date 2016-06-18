@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520081609) do
+ActiveRecord::Schema.define(version: 20160614011702) do
+
+  create_table "account_referral_amounts", force: :cascade do |t|
+    t.integer  "account_referral_id",     limit: 4
+    t.integer  "referral_gift_amount_id", limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  create_table "account_referrals", force: :cascade do |t|
+    t.integer  "referral_id",         limit: 4
+    t.integer  "referrer_id",         limit: 4
+    t.float    "referral_gift_coins", limit: 24
+    t.float    "referrer_gift_coins", limit: 24
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "additional_offers", force: :cascade do |t|
     t.integer  "deal_id",       limit: 4
@@ -48,32 +64,56 @@ ActiveRecord::Schema.define(version: 20160520081609) do
 
   add_index "advertisements", ["service_category_id"], name: "index_advertisements_on_service_category_id", using: :btree
 
+  create_table "app_user_addresses", force: :cascade do |t|
+    t.integer  "app_user_id",    limit: 4
+    t.string   "name",           limit: 255
+    t.string   "dba",            limit: 255
+    t.string   "zip",            limit: 255
+    t.string   "address",        limit: 255
+    t.integer  "address_type",   limit: 4
+    t.string   "contact_number", limit: 255
+    t.string   "federal_number", limit: 255
+    t.string   "db_number",      limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
   create_table "app_users", force: :cascade do |t|
-    t.string   "user_type",              limit: 255, default: "residence", null: false
-    t.string   "business_name",          limit: 255, default: "",          null: false
-    t.string   "first_name",             limit: 255, default: "",          null: false
-    t.string   "last_name",              limit: 255, default: "",          null: false
-    t.string   "email",                  limit: 255, default: "",          null: false
-    t.string   "encrypted_password",     limit: 255, default: "",          null: false
-    t.string   "address",                limit: 255
-    t.string   "state",                  limit: 255
-    t.string   "city",                   limit: 255
-    t.string   "zip",                    limit: 255
-    t.string   "gcm_id",                 limit: 255
-    t.string   "avatar",                 limit: 255
-    t.string   "unhashed_password",      limit: 255
-    t.string   "device_flag",            limit: 255
-    t.string   "reset_password_token",   limit: 255
+    t.string   "user_type",                limit: 25,  default: "residence", null: false
+    t.string   "business_name",            limit: 255, default: "",          null: false
+    t.string   "first_name",               limit: 255, default: "",          null: false
+    t.string   "last_name",                limit: 255, default: "",          null: false
+    t.string   "email",                    limit: 255, default: "",          null: false
+    t.string   "encrypted_password",       limit: 255, default: "",          null: false
+    t.string   "address",                  limit: 255
+    t.string   "state",                    limit: 255
+    t.string   "city",                     limit: 255
+    t.string   "zip",                      limit: 255
+    t.string   "gcm_id",                   limit: 255
+    t.string   "avatar",                   limit: 255
+    t.string   "unhashed_password",        limit: 255
+    t.string   "device_flag",              limit: 255
+    t.string   "reset_password_token",     limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,           null: false
-    t.boolean  "active",                             default: true
+    t.integer  "sign_in_count",            limit: 4,   default: 0,           null: false
+    t.boolean  "active",                               default: true
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip",       limit: 255
+    t.string   "last_sign_in_ip",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "referral_code",            limit: 255, default: ""
+    t.boolean  "refer_status",                         default: false
+    t.float    "total_amount",             limit: 24,  default: 0.0
+    t.string   "customer_service_account", limit: 255
+    t.string   "business_type",            limit: 255
+    t.string   "business_status",          limit: 255
+    t.string   "credit_worthy",            limit: 255
+    t.string   "customer_contract",        limit: 255
+    t.string   "ssn",                      limit: 255
+    t.date     "dob"
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -112,7 +152,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.integer  "bundle_deal_attribute_id", limit: 4
     t.string   "name",                     limit: 255
     t.string   "make",                     limit: 255
-    t.decimal  "price",                                  precision: 30, scale: 2, default: 0.0
+    t.decimal  "price",                                  precision: 30, scale: 2, default: 0.0, null: false
     t.text     "installation",             limit: 65535
     t.string   "activation",               limit: 255
     t.string   "offer",                    limit: 255
@@ -141,6 +181,41 @@ ActiveRecord::Schema.define(version: 20160520081609) do
 
   add_index "bundle_service_preferences", ["service_preference_id"], name: "index_bundle_service_preferences_on_service_preference_id", using: :btree
 
+  create_table "business_addresses", force: :cascade do |t|
+    t.integer  "business_id",     limit: 4
+    t.integer  "address_type",    limit: 4
+    t.string   "address_name",    limit: 255
+    t.string   "zip",             limit: 255
+    t.string   "address1",        limit: 255
+    t.string   "address2",        limit: 255
+    t.string   "contact_number",  limit: 255
+    t.string   "manager_name",    limit: 255
+    t.string   "manager_contact", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "business_app_users", force: :cascade do |t|
+    t.integer "business_id", limit: 4
+    t.integer "app_user_id", limit: 4
+    t.string  "role",        limit: 255
+  end
+
+  create_table "businesses", force: :cascade do |t|
+    t.string   "business_name",   limit: 255
+    t.integer  "business_type",   limit: 4
+    t.string   "business_status", limit: 255
+    t.string   "business_dba",    limit: 255
+    t.string   "federal_number",  limit: 255
+    t.string   "db_number",       limit: 255
+    t.date     "dob"
+    t.string   "ssn",             limit: 255
+    t.string   "contact_number",  limit: 255
+    t.string   "status",          limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
   create_table "cable_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",               limit: 4
     t.integer  "free_channels",         limit: 4
@@ -159,7 +234,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.integer  "cable_deal_attribute_id", limit: 4
     t.string   "name",                    limit: 255
     t.string   "make",                    limit: 255
-    t.decimal  "price",                                 precision: 30, scale: 2, default: 0.0
+    t.decimal  "price",                                 precision: 30, scale: 2, default: 0.0, null: false
     t.text     "installation",            limit: 65535
     t.string   "activation",              limit: 255
     t.string   "offer",                   limit: 255
@@ -178,9 +253,19 @@ ActiveRecord::Schema.define(version: 20160520081609) do
 
   add_index "cable_service_preferences", ["service_preference_id"], name: "index_cable_service_preferences_on_service_preference_id", using: :btree
 
+  create_table "cashout_infos", force: :cascade do |t|
+    t.integer  "app_user_id",    limit: 4
+    t.float    "reedeem_amount", limit: 24
+    t.string   "email_id",       limit: 255
+    t.boolean  "is_cash"
+    t.string   "gift_card_type", limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
   create_table "cellphone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                    limit: 4
-    t.integer  "no_of_lines",                limit: 4
+    t.integer  "no_of_lines",                limit: 4,                           default: 0,     null: false
     t.decimal  "price_per_line",                         precision: 5, scale: 2, default: 0.0,   null: false
     t.string   "domestic_call_minutes",      limit: 255
     t.string   "domestic_text",              limit: 255
@@ -202,7 +287,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.string   "model",                       limit: 255
     t.string   "make",                        limit: 255
     t.integer  "memory",                      limit: 4
-    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0
+    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0, null: false
     t.text     "installation",                limit: 65535
     t.string   "activation",                  limit: 255
     t.string   "offer",                       limit: 255
@@ -224,6 +309,27 @@ ActiveRecord::Schema.define(version: 20160520081609) do
   end
 
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
+
+  create_table "channel_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "channels", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.integer  "channel_category_id", limit: 4
+    t.float    "price",               limit: 24
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "checklists", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "status",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comment_ratings", force: :cascade do |t|
     t.integer  "app_user_id",   limit: 4
@@ -262,14 +368,14 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.text     "short_description",   limit: 65535
     t.text     "detail_description",  limit: 65535
     t.float    "price",               limit: 24,    default: 0.0,         null: false
-    t.boolean  "is_contract",                       default: false
-    t.string   "contract_period",     limit: 255
+    t.boolean  "is_contract",                       default: false,       null: false
+    t.integer  "contract_period",     limit: 4,     default: 0,           null: false
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_nationwide",                     default: false
-    t.string   "deal_type",           limit: 255,   default: "residence", null: false
+    t.string   "deal_type",           limit: 100,   default: "residence", null: false
     t.boolean  "is_active",                         default: true
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
@@ -283,6 +389,22 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.integer "zipcode_id", limit: 4, null: false
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   limit: 4,     default: 0, null: false
+    t.integer  "attempts",   limit: 4,     default: 0, null: false
+    t.text     "handler",    limit: 65535,             null: false
+    t.text     "last_error", limit: 65535
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "gifts", force: :cascade do |t|
     t.string   "name",                       limit: 255
     t.string   "description",                limit: 255
@@ -291,6 +413,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.boolean  "is_active",                              default: true
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
+    t.string   "image",                      limit: 255
   end
 
   create_table "internet_deal_attributes", force: :cascade do |t|
@@ -312,7 +435,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.integer  "internet_deal_attribute_id", limit: 4
     t.string   "name",                       limit: 255
     t.string   "make",                       limit: 255
-    t.decimal  "price",                                    precision: 30, scale: 2, default: 0.0
+    t.decimal  "price",                                    precision: 30, scale: 2, default: 0.0, null: false
     t.text     "installation",               limit: 65535
     t.string   "activation",                 limit: 255
     t.string   "offer",                      limit: 255
@@ -351,16 +474,78 @@ ActiveRecord::Schema.define(version: 20160520081609) do
 
   add_index "notifications", ["app_user_id"], name: "index_notifications_on_app_user_id", using: :btree
 
-  create_table "orders", force: :cascade do |t|
-    t.string   "order_id",        limit: 255, default: "",            null: false
+  create_table "order_addresses", force: :cascade do |t|
+    t.integer  "order_id",        limit: 4
+    t.integer  "address_type",    limit: 4
+    t.string   "address_name",    limit: 255
+    t.string   "zip",             limit: 255
+    t.string   "address1",        limit: 255
+    t.string   "address2",        limit: 255
+    t.string   "contact_number",  limit: 255
+    t.string   "manager_name",    limit: 255
+    t.string   "manager_contact", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer  "order_id",        limit: 4
+    t.string   "ref_number",      limit: 255
     t.integer  "deal_id",         limit: 4
-    t.integer  "app_user_id",     limit: 4
-    t.string   "status",          limit: 255, default: "In-progress", null: false
     t.float    "deal_price",      limit: 24
     t.float    "effective_price", limit: 24
+    t.float    "discount_price",  limit: 24
+    t.date     "activation_date"
+    t.string   "status",          limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.float    "you_save",        limit: 24
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string   "order_id",         limit: 255, default: "",            null: false
+    t.integer  "deal_id",          limit: 4
+    t.integer  "app_user_id",      limit: 4
+    t.string   "status",           limit: 255, default: "In-progress", null: false
+    t.float    "deal_price",       limit: 24
+    t.float    "effective_price",  limit: 24
     t.datetime "activation_date"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "plan_id",          limit: 255
+    t.string   "channel_id",       limit: 255
+    t.string   "order_number",     limit: 255
+    t.integer  "order_type",       limit: 4
+    t.integer  "security_deposit", limit: 4
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.integer  "channel_category_id", limit: 4
+    t.float    "price",               limit: 24
+    t.text     "channel_id",          limit: 65535
+    t.text     "channel_ids",         limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  create_table "refer_contact_details", force: :cascade do |t|
+    t.integer  "app_user_id", limit: 4
+    t.string   "email_id",    limit: 255
+    t.string   "mobile_no",   limit: 255
+    t.string   "name",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "referral_gift_amounts", force: :cascade do |t|
+    t.float    "referrer_amount",     limit: 24
+    t.float    "referral_amount",     limit: 24
+    t.string   "referrer_gift_image", limit: 255
+    t.string   "referral_gift_image", limit: 255
+    t.boolean  "is_active",                       default: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   create_table "referral_infos", force: :cascade do |t|
@@ -376,6 +561,11 @@ ActiveRecord::Schema.define(version: 20160520081609) do
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sequences", force: :cascade do |t|
+    t.string  "seq_type",   limit: 255
+    t.integer "seq_number", limit: 4
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -403,6 +593,14 @@ ActiveRecord::Schema.define(version: 20160520081609) do
   add_index "service_preferences", ["app_user_id"], name: "index_service_preferences_on_app_user_id", using: :btree
   add_index "service_preferences", ["service_category_id"], name: "index_service_preferences_on_service_category_id", using: :btree
   add_index "service_preferences", ["service_provider_id"], name: "index_service_preferences_on_service_provider_id", using: :btree
+
+  create_table "service_provider_checklists", force: :cascade do |t|
+    t.integer "checklist_id",        limit: 4
+    t.integer "service_provider_id", limit: 4
+    t.integer "service_category_id", limit: 4
+    t.boolean "is_mandatory"
+    t.integer "status",              limit: 4
+  end
 
   create_table "service_providers", force: :cascade do |t|
     t.string   "name",                limit: 255
@@ -436,10 +634,10 @@ ActiveRecord::Schema.define(version: 20160520081609) do
 
   create_table "telephone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                          limit: 4
-    t.string   "domestic_call_minutes",            limit: 255
+    t.string   "domestic_call_minutes",            limit: 25
     t.integer  "domestic_receive_minutes",         limit: 4
     t.integer  "domestic_additional_minutes",      limit: 4
-    t.string   "international_call_minutes",       limit: 255
+    t.string   "international_call_minutes",       limit: 25
     t.integer  "international_landline_minutes",   limit: 4
     t.integer  "international_mobile_minutes",     limit: 4
     t.integer  "international_additional_minutes", limit: 4
@@ -455,7 +653,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.integer  "telephone_deal_attribute_id", limit: 4
     t.string   "name",                        limit: 255
     t.string   "make",                        limit: 255
-    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0
+    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0, null: false
     t.text     "installation",                limit: 65535
     t.string   "activation",                  limit: 255
     t.string   "offer",                       limit: 255
@@ -528,6 +726,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "additional_offers", "deals"
   add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
@@ -535,6 +734,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
   add_foreign_key "comment_ratings", "app_users"
   add_foreign_key "comment_ratings", "deals"
   add_foreign_key "deals", "service_categories"
+  add_foreign_key "internet_deal_attributes", "deals"
   add_foreign_key "internet_service_preferences", "service_preferences"
   add_foreign_key "notifications", "app_users"
   add_foreign_key "service_preferences", "app_users"
@@ -542,6 +742,7 @@ ActiveRecord::Schema.define(version: 20160520081609) do
   add_foreign_key "service_providers", "service_categories"
   add_foreign_key "subscribe_deals", "app_users"
   add_foreign_key "subscribe_deals", "deals"
+  add_foreign_key "telephone_deal_attributes", "deals"
   add_foreign_key "telephone_service_preferences", "service_preferences"
   add_foreign_key "trending_deals", "deals"
 end

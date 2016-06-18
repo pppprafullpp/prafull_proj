@@ -52,7 +52,7 @@ class AppUser < ActiveRecord::Base
   def self.update_app_user(params,app_user_id)
     app_user = self.where(:id => app_user_id).first
     params[:app_user].each do |key,value|
-      app_user[key] = value
+      app_user[key] = value unless key == 'email'
     end
     if app_user.save!
       app_user

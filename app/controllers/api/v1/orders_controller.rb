@@ -108,7 +108,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	def my_order_details
 		if params[:order_id].present? and params[:app_user_id].present?
-			order = Order.where(:id => params[:order_id],:app_user_id => params[:app_user_id]).first
+			order = Order.where(:id => params[:order_id]).first
 			if order.present?
 				order_items = order.order_items
 				app_user = AppUser.where(:id => params[:app_user_id]).first
@@ -146,7 +146,7 @@ class Api::V1::OrdersController < ApplicationController
 	def fetch_user_and_deal_details
 		if params[:app_user_id].present? and params[:deal_ids].present?
 			app_user = AppUser.where(:id => params[:app_user_id]).first
-			deals = Deal.where(:id => params[:deal_ids].split(','))
+			deals = Deal.where(:id => params[:deal_ids].to_s.split(','))
 			if app_user.user_type == AppUser::BUSINESS
 				business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",app_user.id).first
 				render :status => 200,
@@ -213,7 +213,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type)
+		params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same)
 	end
 
 end

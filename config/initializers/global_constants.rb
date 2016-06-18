@@ -1,3 +1,4 @@
+APP_URL = "http://52.39.162.150/"
 COUNTRIES = ['USA']
 STATE = ['ALASKA','CALIFORNIA','FLORIDA']
 CITY = ['Fairbanks','Arcadia','WASHINGTON DC']

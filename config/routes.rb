@@ -34,18 +34,21 @@ Rails.application.routes.draw do
       match 'orders' => 'orders#create', :via => :post
       match 'get_orders' => 'orders#get_orders', :via => :get
       match 'my_orders' => 'orders#my_orders', :via => :get
+      match 'get_order_address' => 'orders#get_order_address', :via => :get
       match 'get_gifts' => 'gifts#get_gifts', :via => :get
       match 'account_referrals' => 'account_referrals#create', :via => :post
       match 'referral_code' => 'app_users#my_referral_code', :via => :get
       match 'my_earnings' => 'app_users#referrals_and_gifts', :via => :get
       match 'cashout' => 'cashout_infos#create', :via => :post
+      match 'refer_contact' => 'app_users#refer_contact', :via => :post
 
       resources :orders do
         collection do
           post :fetch_user_and_deal_details
+          post :my_order_details
+          post :validate_business_name
         end
       end
-
 
     end
   end

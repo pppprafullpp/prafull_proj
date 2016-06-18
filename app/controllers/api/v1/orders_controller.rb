@@ -11,13 +11,16 @@ class Api::V1::OrdersController < ApplicationController
 			if order.save
 				order_items = OrderItem.create_order_items(params,order.id)
 				app_user = AppUser.update_app_user(params,order.app_user_id)
+				order_addresses = OrderAddress.create_order_addresses(params,order.id)
 				if user_type == AppUser::BUSINESS
 					business = Business.create_business(params)
 					business_addresses = BusinessAddress.create_business_addresses(params,business.id)
 					business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+					OrderMailer.delay.order_confirmation(app_user,order)
 					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
 				else
 					app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
+					OrderMailer.delay.order_confirmation(app_user,order)
 					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:app_user_addresses => app_user_addresses.as_json}
 				end
 			else
@@ -85,11 +88,11 @@ class Api::V1::OrdersController < ApplicationController
 		app_user = AppUser.where(:id => params[:app_user_id]).first
 		if app_user.present? and app_user.user_type == AppUser::BUSINESS
 			business = BusinessAppUser.where(:app_user_id => params[:app_user_id]).first
-			app_user_id = business.present? ? BusinessAppUser.where(:business_id => business.id).pluck(:app_user_id) : []
+			app_user_id = business.present? ? BusinessAppUser.where(:business_id => business.business_id).pluck(:app_user_id) : []
 		else
 			app_user_id = [params[:app_user_id]]
 		end
-		@orders = Order.where("app_user_id = ?",app_user_id).order("id DESC")
+		@orders = Order.select("orders.*,order_items.deal_id,order_items.deal_price,order_items.effective_price").joins(:order_items).where(:app_user_id => app_user_id).order("id DESC")
 
 		if @orders.present?
 			render :status => 200,
@@ -103,12 +106,49 @@ class Api::V1::OrdersController < ApplicationController
 		end
 	end
 
+	def my_order_details
+		if params[:order_id].present? and params[:app_user_id].present?
+			order = Order.where(:id => params[:order_id],:app_user_id => params[:app_user_id]).first
+			if order.present?
+				order_items = order.order_items
+				app_user = AppUser.where(:id => params[:app_user_id]).first
+				category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order_items.first.deal_id).first.name.downcase
+				if app_user.present? and app_user.user_type == AppUser::BUSINESS
+					business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",app_user.id).first
+					render :status => 200,
+								 :json => {
+										 :success => true,
+										 :order => order.as_json(:except => [:created_at, :updated_at]),
+										 :order_addresses => order.order_addresses.as_json(:except => [:created_at, :updated_at]),
+										 :order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url,:include => ["#{category}_deal_attributes".to_sym => {:include => ["#{category}_equipments".to_sym]}]}},:methods => :order_place_time),
+										 :app_user => app_user,
+										 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {}
+								 }
+				else
+					render :status => 200,
+								 :json => {
+										 :success => true,
+										 :order => order.as_json(:except => [:created_at, :updated_at]),
+										 :order_addresses => order.order_addresses.as_json(:except => [:created_at, :updated_at]),
+										 :order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url,:include => ["#{category}_deal_attributes".to_sym => {:include => ["#{category}_equipments".to_sym]}]}},:methods => :order_place_time),
+										 :app_user => app_user
+								 }
+				end
+
+			else
+				render :json => { :success => false,:message => 'No order found for the combination of order_id and app_user_id' }
+			end
+		else
+			render :json => { :success => false,:message => 'please provide order_id & app_user_id in params and this is post request.' }
+		end
+	end
+
 	def fetch_user_and_deal_details
 		if params[:app_user_id].present? and params[:deal_ids].present?
 			app_user = AppUser.where(:id => params[:app_user_id]).first
 			deals = Deal.where(:id => params[:deal_ids].split(','))
 			if app_user.user_type == AppUser::BUSINESS
-				business = BusinessAppUser.select('businesses.*').joins(:business).where(:app_user_id => app_user.id).first
+				business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",app_user.id).first
 				render :status => 200,
 							 :json => {
 									 :success => true,
@@ -127,7 +167,47 @@ class Api::V1::OrdersController < ApplicationController
 							 }
 			end
 		else
-			render :json => { :success => false }
+			render :json => { :success => false,:message => 'please provide app_user_id and deal_ids in params' }
+		end
+	end
+
+	def get_order_address
+		if params[:order_id].present?
+			order_addresses = OrderAddress.where(:order_id => params[:order_id])
+			if order_addresses.present?
+				render :status => 200,
+							 :json => {
+									 :success => true,
+									 :order_addresses => order_addresses.as_json
+							 }
+
+			else
+				render :json => { :success => false, :message => 'no address exists with this order, please try some different order.' }
+			end
+		else
+			render :json => { :success => false,:message => 'please provide order_id in params' }
+		end
+	end
+
+	def validate_business_name
+		if params[:business_type].present? and params[:business_name].present? and (params[:ssn].present? || params[:federal_number].present?)
+			if params[:business_type].to_i == Business::SOLE_PROPRIETOR
+				business = Business.where("business_type = ? and (business_name = ? or ssn = ?)",params[:business_type],params[:business_name],params[:ssn]).first
+				if business.present?
+					render :json => { :success => false,:message => 'Business with this name or SSN already exists, Please enter valid information.' }
+				else
+					render :json => { :success => true }
+				end
+			elsif params[:business_type].to_i == Business::REGISTERED
+				business = Business.where("business_type = ? and (business_name = ? or federal_number = ?)",params[:business_type],params[:business_name],params[:federal_number]).first
+				if business.present?
+					render :json => { :success => false,:business => business,:message => "We found Business #{params[:business_name]} with Federal Tax No: #{params[:federal_number]} is already registered with us, do you want to add yourself in this business." }
+				else
+					render :json => { :success => true }
+				end
+			end
+		else
+			render :json => { :success => false,:message => 'Insufficient Parameters' }
 		end
 	end
 

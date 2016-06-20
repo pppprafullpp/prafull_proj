@@ -52,8 +52,18 @@ class Website::AppUsersController < ApplicationController
   end
 
   def order_history
-    @app_user = AppUser.find_by_id(params[:id])
-    @orders = @app_user.try(:orders)
+    if session[:user_id].present?
+      app_user = AppUser.find(session[:user_id])
+      @orders = app_user.try(:orders)
+      @orders.each do |order|
+        category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order.order_items.first.deal_id).first.name.downcase
+        if  params[:id] == category
+         @order_history = app_user.try(:orders)
+        elsif params[:id] == "home"
+          @order_history = app_user.try(:orders)
+        end
+      end
+    end
   end
 
   def signin

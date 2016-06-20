@@ -125,6 +125,7 @@ Rails.application.routes.draw do
         get :signout
         post :signin
         get :profile
+        get :order_history
       end
     end
   end

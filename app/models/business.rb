@@ -15,15 +15,19 @@ class Business < ActiveRecord::Base
   UPGRADE = 'Upgrade'
 
   def self.create_business(params)
-    business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
-    if business_type.present?
-      if business_type == SOLE_PROPRIETOR
-        business = self.where(:ssn => params[:business][:ssn]).first
-      elsif business_type == REGISTERED
-        business = self.where(:federal_number => params[:business][:federal_number]).first
-      end
-      unless business.present?
-        business = self.new
+    if params[:business].present?
+      business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
+      if business_type.present?
+        if business_type == SOLE_PROPRIETOR
+          business = self.where(:ssn => params[:business][:ssn]).first
+        elsif business_type == REGISTERED
+          business = self.where(:federal_number => params[:business][:federal_number]).first
+        end
+        unless business.present?
+          business = self.new
+        else
+          business = business
+        end
         params[:business].each do |key,value|
           business[key] = value
         end
@@ -32,11 +36,10 @@ class Business < ActiveRecord::Base
         else
           business
         end
-      else
-        business
       end
+    else
+      nil
     end
   end
-
 
 end

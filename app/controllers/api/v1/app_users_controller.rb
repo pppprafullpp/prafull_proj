@@ -12,7 +12,7 @@ class Api::V1::AppUsersController < ApplicationController
       if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
         app_user.update(app_user_params)
         business = Business.create_business(params)
-        business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+        business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id) if business.present?
         render :status => 200,
                :json => { :success => true }
       else
@@ -55,7 +55,7 @@ class Api::V1::AppUsersController < ApplicationController
                    :success => true,
                    :app_user => app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
                    :app_user_addresses => app_user.app_user_addresses.as_json,
-                   :business => app_user.business_app_users.map{|business_app_user| business_app_user.business}.as_json
+                   :business => app_user.business_app_users.first.try(:business).as_json
                }
       else
         render :status => 404,
@@ -75,7 +75,7 @@ class Api::V1::AppUsersController < ApplicationController
                    :app_user => app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
                    :user_preference => user_preference,
                    :app_user_addresses => app_user.app_user_addresses.as_json,
-                   :business => app_user.business_app_users.map{|business_app_user| business_app_user.business}.as_json
+                   :business => app_user.business_app_users.first.try(:business).as_json
                }
       else
         render :status => 404,

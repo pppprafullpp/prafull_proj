@@ -14,8 +14,10 @@ class Api::V1::OrdersController < ApplicationController
 				order_addresses = OrderAddress.create_order_addresses(params,order.id)
 				if user_type == AppUser::BUSINESS
 					business = Business.create_business(params)
-					business_addresses = BusinessAddress.create_business_addresses(params,business.id)
-					business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+					if business.present?
+						business_addresses = BusinessAddress.create_business_addresses(params,business.id)
+						business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
+					end
 					OrderMailer.delay.order_confirmation(app_user,order)
 					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
 				else

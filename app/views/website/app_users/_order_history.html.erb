@@ -1,79 +1,36 @@
 <div id="Order" class="order-tab tab-pane fade" role="tabpanel">
   <div class="scroller_order">
     <div class="border-radius-bg">
-      <ul class="nav nav-pills">
-        <li class="active"><a data-toggle="tab" href="#home" aria-expanded="false">All order</a></li>
+      <ul class="nav nav-pills" id="orderMenu">
+        <li class="active"><a data-toggle="tab" id="home" href="#home" aria-expanded="false">All order</a></li>
          <% ServiceCategory.first(5).each do |service_category| %>
-            <li class=""><a href="#<%= service_category.name.downcase %>" data-toggle="tab" aria-expanded="false">
-            <%=service_category.name %></a></li>
+            <li class=""><a href="#<%= service_category.name.downcase %>" id="<%= service_category.name.downcase %>" data-toggle="tab" aria-expanded="false">
+               <%=service_category.name %></a></li>
         <% end %>
       </ul>
-      <div class="tab-content">
-        <div id="home" class="tab-pane fade active in">
-          <div class="row desc_heading">
-            <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-            <div class="col-xs-8 col-md-7">
-              <div class="row">
-                <div class="col-xs-3"> <h5>Status</h5> </div>
-                <div class="col-xs-3"> <h5>Price</h5>   </div>
-                <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                <div class="col-xs-3"> <h5>Order Total</h5> </div>
-              </div>
-            </div>
-          </div>
-          <% @orders.each do |order| %>
-            <div class="row desc_cont">
-              <div class="col-xs-4 col-md-5">
-                <span class="img_border"><%= image_tag("#{Deal.find_by_id(order.order_items.first.deal_id).image}", :alt => "logo") %></span>
-                  <!-- <img src="img/AT&amp;T_logo_2005.png" alt="logo"> -->
-                <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
-              </div>
-              <div class="col-xs-8 col-md-7">
-                <div class="row">
-                  <div class="col-xs-3"> <p><span class="panding"><%= order.status %></span></p> </div>
-                  <div class="col-xs-3"> <p><%= order.order_items.first.deal_price%></p>   </div>
-                  <div class="col-xs-3"> <p><%= order.order_number%></p> </div>
-                  <div class="col-xs-3"> <p><%= order.order_items.first.effective_price %></p> </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <% ServiceCategory.first(5).each do |service_category| %>
-          <div class="tab-pane fade in" id="<%=service_category.name.downcase%>">
-            <div class="row desc_heading">
-              <div class="col-xs-4 col-md-5"> <h5>Description</h5> </div>
-              <div class="col-xs-8 col-md-7">
-                <div class="row">
-                  <div class="col-xs-3"> <h5>Status</h5> </div>
-                  <div class="col-xs-3"> <h5>Price</h5>   </div>
-                  <div class="col-xs-3"> <h5>Order No.</h5> </div>
-                  <div class="col-xs-3"> <h5>Order Total</h5> </div>
-                </div>
-              </div>
-            </div>
-            <% @orders.each do |order| %>
-              <% category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order.order_items.first.deal_id).first.name.downcase %>
-              <% if category == "#{service_category.name.downcase}" %>
-                <div class="row desc_cont">
-                  <div class="col-xs-4 col-md-5">
-                    <span class="img_border"><%= image_tag("#{Deal.find_by_id(order.order_items.first.deal_id).image}", :alt => "logo") %></span>
-                    <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
-                  </div>
-                  <div class="col-xs-8 col-md-7">
-                    <div class="row">
-                      <div class="col-xs-3"> <p><span class="panding"><%= order.status %></span></p> </div>
-                      <div class="col-xs-3"> <p><%= order.order_items.first.deal_price%></p>   </div>
-                      <div class="col-xs-3"> <p><%= order.order_number%></p> </div>
-                      <div class="col-xs-3"> <p><%= order.order_items.first.effective_price %></p> </div>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
+      <div class="tab-content" id="order_list">
+
+
       </div>
     </div>
   </div>
 </div>
+<script>
+    $("#orderMenu").children('li').click( function() {
+        var order_category_id = $(this).children('a').attr('id');
+        request = void 0;
+        request = $.ajax({
+            type:'GET',
+            url: "<%= order_history_website_app_users_path%>",
+            data: {id: order_category_id}
+        });
+    });
+    $("#order-tab").click( function() {
+        request = void 0;
+        request = $.ajax({
+            type:'GET',
+            url: "<%= order_history_website_app_users_path%>",
+            data: {id: "home"}
+        });
+    });
+</script>

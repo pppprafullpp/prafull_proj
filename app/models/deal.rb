@@ -207,7 +207,60 @@ class Deal < ActiveRecord::Base
       self.bundle_deal_attributes.first.bundle_equipments if self.bundle_deal_attributes.first.bundle_equipments.present?
     end
   end
-  
+
+  def self.build_custom_json(order_id)
+    order_items_array = []
+    order_items = OrderItem.where(:order_id => order_id)
+    order_items.each do |order_item|
+      order_items_hash = {}
+      order_items_hash['deal'] = {}
+      order_items_hash['deal']['deal_equipments'] = []
+      #order_items_hash['deal']['deal_attributes']['deal_equipments'] = {}
+      category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order_item.deal_id).first.name.downcase
+      order_items_hash['id'] = order_item.order_id
+      order_items_hash['order_id'] = order_item.id
+      order_items_hash['deal_id'] = order_item.deal_id
+      order_items_hash['deal_price'] = order_item.deal_price
+      order_items_hash['effective_price'] = order_item.effective_price
+      order_items_hash['activation_date'] = order_item.activation_date
+      order_items_hash['status'] = order_item.status
+      order_items_hash['you_save'] = order_item.you_save
+      deal = order_item.deal
+      order_items_hash['deal']['id'] = deal.id
+      order_items_hash['deal']['service_category_id'] = deal.service_category_id
+      order_items_hash['deal']['service_provider_id'] = deal.service_provider_id
+      order_items_hash['deal']['title'] = deal.title
+      order_items_hash['deal']['short_description'] = deal.short_description
+      order_items_hash['deal']['detail_description'] = deal.detail_description
+      order_items_hash['deal']['price'] = deal.price
+      order_items_hash['deal']['is_contract'] = deal.is_contract
+      order_items_hash['deal']['contract_period'] = deal.contract_period
+      order_items_hash['deal']['url'] = deal.url
+      order_items_hash['deal']['start_date'] = deal.start_date
+      order_items_hash['deal']['end_date'] = deal.end_date
+      order_items_hash['deal']['is_nationwide'] = deal.is_nationwide
+      order_items_hash['deal']['deal_type'] = deal.deal_type
+      order_items_hash['deal']['is_active'] = deal.is_active
+      order_items_hash['deal']['deal_image_url'] = deal.image.url
+
+
+      deal_equipments = eval("#{category.camelize}DealAttribute").select("#{category}_equipments.*").joins("#{category}_equipments".to_sym).where(:deal_id => deal.id)
+      #raise deal_equipments.inspect
+      deal_equipments.each do |deal_equipment|
+        deal_equipment_hash = {}
+        deal_equipment_hash['make'] = deal_equipment.make
+        deal_equipment_hash['price'] =  '%.2f' % deal_equipment.price
+        deal_equipment_hash['installation'] = deal_equipment.installation
+        deal_equipment_hash['activation'] = deal_equipment.activation
+        deal_equipment_hash['offer'] = deal_equipment.offer
+        order_items_hash['deal']['deal_equipments'] << deal_equipment_hash
+      end
+      order_items_array << order_items_hash
+    end
+    order_items_array
+  end
+
+
 	private
   def reject_internet(attributes)
     if attributes[:download].blank?

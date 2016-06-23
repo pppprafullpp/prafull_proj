@@ -1,11 +1,18 @@
 <div id="Preference" class="prefrence-tab tab-pane fade" role="tabpanel">
+  <%#= form_for(Notification.new, :url => @notifications, id: 'notification-form') do |f| %>
+  <%= form_tag preferences_website_app_users_path(@app_user), method: :post do %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <h4>Deal Notification</h4>
   <div> <strong>Receive notification before contract expire</strong></div>
-  <form>
     <div class="row">
 
       <div class="col-md-12">
-        <div class="radio col-md-2" data-toggle="buttons">
+        <%= label_tag :recieve_notification, "Yes", :value => "true"  %>
+        <%= radio_button_tag 'notification[recieve_notification]', true,@app_user.notification.try(:recieve_notification) %>
+        <%= label_tag :recieve_notification, "No", :value => "false" %>
+        <%= radio_button_tag 'notification[recieve_notification]', false%>
+
+        <!-- <div class="radio col-md-2" data-toggle="buttons">
           <label class="btn active">
             <input type="radio" name="optionsRadios" id="" value="option1" checked="">
             <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> Yes </label>
@@ -15,90 +22,85 @@
           <label class="btn">
             <input type="radio" name="optionsRadios" id="" value="option2">
             <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> No </label>
-        </div>
+        </div> -->
+
 
       </div>
 
 
       <div class="col-md-12"><div class="form-group  col-md-4 ">
         <label>First Notification</label>
-        <input type="text" placeholder="Zipcode" class="form-control">
+        <%= text_field_tag('notification[day]' ,@app_user.notification.try(:day),:class => 'form-control',:placeholder => 'Day') %>
       </div>
 
         <div class="form-group col-md-4">
           <div>
             <label>Last Notification</label>
-            <input type="text" placeholder="Zipcode" class="form-control">
+            <%= select_tag('notification[repeat_notification_frequency]',options_for_select(["Weekly" , "Bi-Weekly","Daily" ],selected: @app_user.notification.try(:repeat_notification_frequency)),:class => 'form-control',) %>
           </div>
         </div></div>
 
 
-      <div class="col-md-12"><div class="checkbox checkbox-info">
-        <input type="checkbox" id="checkbox8a">
-        <label for="checkbox8a"> <span> Receive Trending Deals and Special offers </span> </label>
+      <div class="col-md-12">
+        <!-- <input type="checkbox" id="checkbox8a"> -->
+        <%= check_box_tag('notification[recieve_trending_deals]','1',@app_user.notification.try(:recieve_trending_deals)) %>
+        <%#= f.check_box :recieve_trending_deals%><span> Receive Trending Deals and Special offers </span> 
       </div>
+
+
+
+      <div class="col-md-12">
+        <!-- <input type="checkbox" id="checkbox8b"> -->
+        <%= check_box_tag('notification[receive_call]','1',@app_user.notification.try(:receive_call)) %>
+         <%#= f.check_box :receive_call%><span> Call and Receive calls </span> 
       </div>
-
-
-
-      <div class="col-md-12"><div class="checkbox checkbox-info">
-        <input type="checkbox" id="checkbox8b">
-        <label for="checkbox8b"> <span> Call and Receive calls </span> </label>
-      </div></div>
     </div>
-  </form>
 
 
 
-  <form class="form_2">
     <h4>Ratings</h4>
     <div class="row">
 
       <div class="col-md-12"><div class="form-group  col-md-4 ">
         <label>Minimum Service Provider Rating</label>
-        <select class="form-control" id="exampleSelect1">
-          <option>☆ ☆ ☆ ☆ ☆</option>
-          <option>☆ ☆ ☆ ☆</option>
-          <option>☆ ☆ ☆</option>
-          <option>☆ ☆</option>
-          <option>☆</option>
-        </select>
+        <%= select_tag('notification[min_service_provider_rating]',options_for_select([["☆ ☆ ☆ ☆ ☆","5"], ["☆ ☆ ☆ ☆","4"],["☆ ☆ ☆","3"],["☆ ☆","2"],["☆","1" ]],selected: @app_user.notification.try(:min_service_provider_rating)),:class => 'form-control',) %>
       </div>
 
         <div class="form-group col-md-4">
           <div>
             <label>Minimum Deal Rating</label>
-            <select class="form-control" id="exampleSelect1">
-              <option>☆ ☆ ☆ ☆ ☆</option>
-              <option>☆ ☆ ☆ ☆</option>
-              <option>☆ ☆ ☆</option>
-              <option>☆ ☆</option>
-              <option>☆</option>
-            </select>
+            <%= select_tag('notification[min_deal_rating]',options_for_select([["☆ ☆ ☆ ☆ ☆","5"], ["☆ ☆ ☆ ☆","4"],["☆ ☆ ☆","3"],["☆ ☆","2"],["☆","1" ]],selected: @app_user.notification.try(:min_deal_rating)),:class => 'form-control',) %>
           </div>
         </div></div>
 
 
       <div class="col-md-12 margin_checkbox">
         <h4>Communications Permissions</h4>
-        <div class="checkbox checkbox-info">
-          <input type="checkbox" id="checkbox9a">
-          <label for="checkbox9a"> <span> Receive Emails</span> </label>
-        </div>
+        <!-- <div class="checkbox checkbox-info"> -->
+          <!-- <input type="checkbox" id="checkbox9a"> -->
+          <!-- <%#= f.check_box :recieve_notification %><strong>Wants to recieve notification ? :</strong> -->
+          <%= check_box_tag('notification[receive_email]','1',@app_user.notification.try(:receive_email)) %>
+          <%#= f.check_box :receive_email%><span> Receive Emails</span> 
+        <!-- </div> -->
       </div>
 
       <div class="col-md-12">
-        <div class="checkbox checkbox-info">
-          <input type="checkbox" id="checkbox9b">
-          <label for="checkbox9b"> <span> Receive Texts </span> </label>
-        </div>
+        <!-- <div class="checkbox checkbox-info"> -->
+          <!-- <input type="checkbox" id="checkbox9b"> -->
+          <%= check_box_tag('notification[receive_text]','1',@app_user.notification.try(:receive_text)) %>
+
+          <%#= f.check_box :receive_text%><span> Receive Texts </span> 
+        <!-- </div> -->
       </div>
 
       <div class="col-sm-6">
-        <button id="Send" name="Send" class="btn btn-info">Save</button>
+        <div>
+          <%= submit_tag('Send',:class => 'btn btn-info') %>
+          <%#= f.submit "Send",class:"btn btn-info",id: 'notification-submit' %>
+        </div>
+        <!-- <button id="Send" name="Send" class="btn btn-info">Save</button> -->
       </div>
     </div>
-  </form>
-
+<%end%>
 
 </div>

@@ -3,7 +3,12 @@
  */
 $( document ).ready(function() {
     $(".comparebox-display").click(function() {
+      if ($("input:checkbox:checked").length == 2){
         $("#compare_box").show();
+      }
+      else if ($("input:checkbox:checked").length != 2){
+        $("#compare_box").hide();
+      }
     });
 
     $(".close2").click(function() {
@@ -24,4 +29,6 @@ $( document ).ready(function() {
             top: 500
         }
     });
+
+
 });

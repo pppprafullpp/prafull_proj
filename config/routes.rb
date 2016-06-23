@@ -126,6 +126,7 @@ Rails.application.routes.draw do
         post :signin
         get :profile
         get :order_history
+        post :preferences
       end
     end
   end

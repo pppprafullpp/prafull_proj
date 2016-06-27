@@ -7,7 +7,9 @@ class ServiceCategory < ActiveRecord::Base
 	has_many :service_provider_checklists, :dependent => :destroy
 
 	#validates_presence_of :name
-	
+
+  CATEGORIES = ['internet','cable','bundle','telephone','cellphone']
+
 	def as_json(opts={})
     json = super(opts)
     Hash[*json.map{|k, v| [k, v || ""]}.flatten]
@@ -28,6 +30,10 @@ class ServiceCategory < ActiveRecord::Base
 
   def self.get_service_categories
     self.select('id,name')
+  end
+
+  def self.get_category_name_by_id(category_id)
+    category_id.present? ? self.where(:id => category_id).first.name.downcase : ''
   end
 
   #def self.import(file)

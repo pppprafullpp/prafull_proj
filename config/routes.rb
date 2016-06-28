@@ -135,6 +135,7 @@ Rails.application.routes.draw do
   resources :service_provider_checklists do
     post 'import', on: :collection
   end
+  resources :deal_equipments
   #:path_names => { sign_in: 'login', sign_out: 'logout' },
   #:controllers => { :sessions => "sessions",
   #                  :registrations => 'registrations'

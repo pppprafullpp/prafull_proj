@@ -127,6 +127,8 @@ Rails.application.routes.draw do
         get :profile
         get :order_history
         post :preferences
+        get :order
+        post :create_order
       end
     end
   end

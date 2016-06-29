@@ -74,6 +74,53 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+  def create_order
+    if session[:user_id].present?
+      @app_user = AppUser.find(session[:user_id])
+      user_type = @app_user.user_type.present? ? @app_user.user_type : nil
+      if [AppUser::RESIDENCE,AppUser::BUSINESS].include?(user_type)
+        order = Order.new(app_user_id: @app_user.id,status: "new_order",order_type: 0, primary_id: params[:primary_id], secondary_id: params[:secondary_id] )
+        order.order_id=rand(36**8).to_s(36).upcase
+        if order.save
+          order_item_hash = {:order_items => [params[:order_items]] }
+          order_items = OrderItem.create_order_items(order_item_hash,order.id)
+          app_user_hash = {:app_user => params[:app_user] }
+          @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id)
+          address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
+          address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
+          order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
+          if user_type == AppUser::BUSINESS
+            business_hash = {:business => params[:business] }
+            business = Business.create_business(business_hash)
+            if business.present?
+              business_addresses = BusinessAddress.create_business_addresses(address_hash,business.id)
+              business_user = BusinessAppUser.create_business_app_user(business.id,@app_user.id)
+            end
+            OrderMailer.delay.order_confirmation(@app_user,order)
+            redirect_to profile_website_app_users_path
+          else
+            app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
+            OrderMailer.delay.order_confirmation(@app_user,order)
+            redirect_to profile_website_app_users_path
+          end
+        else
+          redirect_to profile_website_app_users_path
+        end
+      else
+        redirect_to profile_website_app_users_path
+      end
+    end
+  end
+
+  def order
+    if session[:user_id].present?
+      @app_user = AppUser.find(session[:user_id])
+      @deal = Deal.find_by_id(params[:deal_id])
+    else
+      redirect_to order_website_app_users_path
+    end
+  end
+
   def signin
     if request.method.eql? 'POST'
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
@@ -121,6 +168,10 @@ class Website::AppUsersController < ApplicationController
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
     params.require(:app_user).permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status)
   end
+
+  # def order_params
+  #   params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:order_number,:security_deposit,:primary_id,:secondary_id)
+  # end
 
   def decode_picture_data(picture_data)
     # decode the base64

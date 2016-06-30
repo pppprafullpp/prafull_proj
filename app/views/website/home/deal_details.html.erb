@@ -34,7 +34,7 @@
             <div class="row box-sec" id="deal-form">
               <% @dashboard_data.each do |data| %>
               <div class="col-xs-6 col-sm-6 col-md-4">
-                <div class="border-radius-bg">
+                <div class="border-radius-bg auto-height">
                   <div class="vertical_middle" style="overflow: hidden;"><img src="<%= data['deal_image_url1'] %>" alt=""></div>
                   <h5>$<%= data['deal_price'] %> <%= data['title'] %></h5>
                   <ul>

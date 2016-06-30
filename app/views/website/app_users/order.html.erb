@@ -159,67 +159,67 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 1</label>
-                          <%= text_field_tag('app_user_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1') %>
+                          <%= text_field_tag('app_user_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 2</label>
-                          <%= text_field_tag('app_user_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2') %>
+                          <%= text_field_tag('app_user_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_billing_address_2") %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Town/City</label>
-                          <input type="text" class="form-control input-md" placeholder="" name="Name" id="Name">
+                          <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Zipcode</label>
-                          <%= text_field_tag('app_user_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip') %>
+                          <%= text_field_tag('app_user_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip") %>
                         </div>
                         <div class="col-md-12 address-sty">
                           <h4>Shipping Address</h4>
                           <div class="checkbox checkbox-info">
-                            <input id="checkbox7a" type="checkbox">
+                            <input id="checkbox7a" type="checkbox" onclick="SetAppUserShipping(this.checked);">
                             <label for="checkbox7a">Same as Billing Address </label>
                           </div>
                         </div>
                         <div id="shipping_address"> 
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 1</label>
-                            <%= text_field_tag('shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1') %>
+                            <%= text_field_tag('shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_shipping_address_1") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 2</label>
-                            <%= text_field_tag('shipping_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2') %>
+                            <%= text_field_tag('shipping_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_shipping_address_2") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
-                            <input type="text" class="form-control input-md" placeholder="" name="Name" id="Name">
+                            <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Zipcode</label>
-                            <%= text_field_tag('shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip') %>
+                            <%= text_field_tag('shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip") %>
                           </div>
                         </div>
                         <div class="col-md-12 address-sty">
                           <h4>Service Address</h4>
                           <div class="checkbox checkbox-info">
-                            <input id="checkboxb" type="checkbox">
+                            <input id="checkboxb" type="checkbox" onclick="SetAppUserService(this.checked);">
                             <label for="checkboxb">Same as Billing Address </label>
                           </div>
                           <div id="service_address">
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Address 1</label>
-                              <%= text_field_tag('service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1') %>
+                              <%= text_field_tag('service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_service_address_1") %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Address 2</label>
-                              <%= text_field_tag('service_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2') %>
+                              <%= text_field_tag('service_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_service_address_2") %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Town/City</label>
-                              <input type="text" class="form-control input-md" placeholder="" name="Name" id="Name">
+                              <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Zipcode</label>
-                              <%= text_field_tag('service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip') %>
+                              <%= text_field_tag('service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip") %>
                             </div>
                           </div>
                         </div>
@@ -252,7 +252,7 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Town/City</label>
-                          <input type="text" class="form-control input-md" placeholder="" name="Name" id="Name">
+                          <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Zipcode</label>
@@ -276,7 +276,7 @@
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
-                            <input type="text" class="form-control input-md" placeholder="" name="Name" id="Name">
+                            <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Zipcode</label>
@@ -301,7 +301,7 @@
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
-                            <input type="text" class="form-control input-md" placeholder="" name="Name" id="Name">
+                            <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Zipcode</label>
@@ -486,5 +486,30 @@ function SetShipping(checked) {
   }  
 }  
 
+function SetAppUserService(checked) {  
+  if (checked) {  
+    document.getElementById('app_user_service_address_1').value = document.getElementById('app_user_billing_address_1').value; 
+    document.getElementById('app_user_service_address_2').value = document.getElementById('app_user_billing_address_2').value; 
+    document.getElementById('app_user_service_zip').value = document.getElementById('app_user_billing_zip').value;   
+  } 
+  else {  
+    document.getElementById('app_user_service_address_1').value = '';
+    document.getElementById('app_user_service_address_2').value = '';   
+    document.getElementById('app_user_service_zip').value = '';
+  }  
+}  
+
+function SetAppUserShipping(checked) {  
+  if (checked) {  
+    document.getElementById('app_user_shipping_address_1').value = document.getElementById('app_user_billing_address_1').value; 
+    document.getElementById('app_user_shipping_address_2').value = document.getElementById('app_user_billing_address_2').value; 
+    document.getElementById('app_user_shipping_zip').value = document.getElementById('app_user_billing_zip').value;   
+  } 
+  else {  
+    document.getElementById('app_user_shipping_address_1').value = '';
+    document.getElementById('app_user_shipping_address_2').value = '';   
+    document.getElementById('app_user_shipping_zip').value = '';
+  }  
+}  
 </script>
 

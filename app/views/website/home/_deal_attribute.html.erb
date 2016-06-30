@@ -1,4 +1,4 @@
-<% if @category == "internet" || "bundle" %>
+<% if @category == ("internet" || "bundle") %>
   <tr>
     <th scope="row">Speed</th>
     <th></th>
@@ -18,7 +18,7 @@
     <td><%= @deal_attributes_first.try(:upload)%></td>
     <td><%= @deal_attributes_second.try(:upload)%></td>
   </tr>
-<% elsif @category == "telephone" || "cellphone" || "bundle"%>
+<% elsif @category == ("telephone" || "cellphone" || "bundle")%>
   <tr>
     <th scope="row">Minutes</th>
     <th></th>
@@ -37,7 +37,7 @@
     <td><%= @deal_attributes_first.try(:international_call_minutes) %></td>
     <td><%= @deal_attributes_second.try(:international_call_minutes) %></td>
   </tr>
-<% elsif @category == "cable" || "bundle" %>
+<% elsif @category == ("cable" || "bundle") %>
   <tr>
     <th scope="row">Channel</th>
     <th></th>

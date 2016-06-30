@@ -136,6 +136,7 @@ Rails.application.routes.draw do
     post 'import', on: :collection
   end
   resources :deal_equipments
+  resources :deal_attributes
   #:path_names => { sign_in: 'login', sign_out: 'logout' },
   #:controllers => { :sessions => "sessions",
   #                  :registrations => 'registrations'

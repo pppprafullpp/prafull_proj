@@ -1,0 +1,45 @@
+<%= form_tag deal_attributes_path(@deal_attribute), method: :POST do %>
+    <%= hidden_field_tag :deal_id,@deal_id,:name => 'deal_attributes[deal_id]' %>
+    <%= hidden_field_tag :category_name,@category_name %>
+
+    <div><strong>Bundle Combo:<span id="mandat">*</span> </strong><br />
+      <%= select_tag :bundle_combo, options_for_select(['Internet,Telephone and Cable','Internet and Telephone','Internet and Cable','Telephone and Cable'].map{|o| [o,o] }),:name => 'deal_attributes[bundle_combo]' %>
+    </div>
+    <div><strong>Download(mbps):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :download,'',:placeholder => 'Input download',:name => 'deal_attributes[download]' %>
+    </div>
+    <div><strong>Upload(mbps):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :upload,'',:placeholder => 'Input upload',:name => 'deal_attributes[upload]' %>
+    </div>
+    <div><strong>Data:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :data,'',:placeholder => 'Input data',:name => 'deal_attributes[data]' %>
+    </div>
+    <div><strong>Static IP:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :static_ip,'',:placeholder => 'Input static_ip',:name => 'deal_attributes[static_ip]' %>
+    </div>
+    <div><strong>Domestic Call Mins:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :domestic_call_minutes,'',:placeholder => 'Input domestic_call_minutes',:name => 'deal_attributes[domestic_call_minutes]' %>
+    </div>
+    <div><strong>International Call Mins:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :international_call_minutes,'',:placeholder => 'Input international_call_minutes',:name => 'deal_attributes[international_call_minutes]' %>
+    </div>
+    <div><strong>Free Channels:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :free_channels,'',:placeholder => 'Input free_channels',:name => 'deal_attributes[free_channels]' %>
+    </div>
+    <div><strong>Free channels list (comma separated):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :free_channels_list,'',:placeholder => 'Input free_channels_list',:name => 'deal_attributes[free_channels_list]' %>
+    </div>
+    <div><strong>Premium Channels:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :premium_channels,'',:placeholder => 'Input premium_channels',:name => 'deal_attributes[premium_channels]' %>
+    </div>
+    <div><strong>Premium channels list (comma separated):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :premium_channels_list,'',:placeholder => 'Input premium_channels_list',:name => 'deal_attributes[premium_channels_list]' %>
+    </div>
+    <div><strong>HD Channels:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :hd_channels,'',:placeholder => 'Input hd_channels',:name => 'deal_attributes[hd_channels]' %>
+    </div>
+    <div><strong>HD Channels list (comma separated):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :hd_channels_list,'',:placeholder => 'Input hd_channels_list',:name => 'deal_attributes[hd_channels_list]' %>
+    </div>
+    <%= submit_tag 'Submit' %>
+<% end %>

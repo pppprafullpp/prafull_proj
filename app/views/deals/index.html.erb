@@ -50,7 +50,11 @@
                     <td><%= s_deal.start_date %></td>
                     <td><%= s_deal.end_date %></td>
                     <td><%= s_deal.is_active %></td>
-                    <td><%= (link_to 'Edit', edit_deal_path(s_deal)) if can? :manage, s_deal %> | <%= (link_to "Delete", s_deal, method: :delete, data: { confirm: "Are you sure?" }) if can? :manage, s_deal %></td>
+                    <td><%= (link_to 'Edit', edit_deal_path(s_deal)) if can? :manage, s_deal %> |
+                      <%= (link_to "Delete", s_deal, method: :delete, data: { confirm: "Are you sure?" }) if can? :manage, s_deal %> |
+                      <%= (link_to 'Add Equipment', new_deal_equipment_path(:deal_id => s_deal.id)) if can? :manage, s_deal %> |
+                      <%= (link_to 'Add Attributes', new_deal_attribute_path(:deal_id => s_deal.id)) if can? :manage, s_deal %>
+                    </td>
                   </tr>
               <% end %>
           <% end %>

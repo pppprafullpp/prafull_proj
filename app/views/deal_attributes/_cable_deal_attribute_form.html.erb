@@ -1,0 +1,23 @@
+<%= form_tag deal_attributes_path(@deal_equipment), method: :POST do %>
+    <%= hidden_field_tag :deal_id,@deal_id,:name => 'deal_equipments[deal_id]' %>
+    <%= hidden_field_tag :category_name,@category_name %>
+    <div><strong>Free Channels:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :free_channels,'',:placeholder => 'Input free_channels',:name => 'deal_attributes[free_channels]' %>
+    </div>
+    <div><strong>Free channels list (comma separated):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :free_channels_list,'',:placeholder => 'Input free_channels_list',:name => 'deal_attributes[free_channels_list]' %>
+    </div>
+    <div><strong>Premium Channels:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :premium_channels,'',:placeholder => 'Input premium_channels',:name => 'deal_attributes[premium_channels]' %>
+    </div>
+    <div><strong>Premium channels list (comma separated):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :premium_channels_list,'',:placeholder => 'Input premium_channels_list',:name => 'deal_attributes[premium_channels_list]' %>
+    </div>
+    <div><strong>HD Channels:<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :hd_channels,'',:placeholder => 'Input hd_channels',:name => 'deal_attributes[hd_channels]' %>
+    </div>
+    <div><strong>HD Channels list (comma separated):<span id="mandat">*</span> </strong><br />
+      <%= text_field_tag :hd_channels_list,'',:placeholder => 'Input hd_channels_list',:name => 'deal_attributes[hd_channels_list]' %>
+    </div>
+    <%= submit_tag 'Submit' %>
+<% end %>

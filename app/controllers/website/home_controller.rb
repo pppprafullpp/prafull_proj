@@ -3,7 +3,7 @@ class Website::HomeController < ApplicationController
   include DashboardsHelper
 
   def index
-   
+    session[:zip_code] = 75024 unless session[:zip_code].present?
   end
 
   def deals
@@ -58,5 +58,11 @@ class Website::HomeController < ApplicationController
       @deal_equipment_first = eval("@deal_attributes_first.#{@category}_equipments").first
       @deal_attributes_second = eval("@deal_attributes_second.#{@category}_equipments").first
     end
+  end
+
+  def set_zipcode_and_usertype
+    session[:zip_code] = params[:zip_code]
+    session[:user_type] = (params[:user_type] == 'option1') ? AppUser::RESIDENCE : AppUser::BUSINESS
+    redirect_to service_deals_path
   end
 end

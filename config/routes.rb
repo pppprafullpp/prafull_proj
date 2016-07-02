@@ -118,6 +118,7 @@ Rails.application.routes.draw do
         get :compare_deals
         get :deal_details
         get :more_deal_details
+        get :set_zipcode_and_usertype
       end
     end
     resources :app_users do

@@ -1,9 +1,9 @@
 class Deal < ActiveRecord::Base
-	belongs_to :service_category
-	belongs_to :service_provider
-	has_many :comment_ratings, dependent: :destroy
-	has_many :subscribe_deals, dependent: :destroy
-	has_many :trending_deals, dependent: :destroy
+  belongs_to :service_category
+  belongs_to :service_provider
+  has_many :comment_ratings, dependent: :destroy
+  has_many :subscribe_deals, dependent: :destroy
+  has_many :trending_deals, dependent: :destroy
   has_many  :internet_deal_attributes, dependent: :destroy
   has_many  :telephone_deal_attributes, dependent: :destroy
   has_many  :cable_deal_attributes, dependent: :destroy
@@ -14,7 +14,7 @@ class Deal < ActiveRecord::Base
   has_many :orders, dependent: :destroy
   has_many :order_items, dependent: :destroy
   has_and_belongs_to_many  :zipcodes, dependent: :destroy
-  
+
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
   accepts_nested_attributes_for :telephone_deal_attributes,:reject_if => :reject_telephone, allow_destroy: true
   accepts_nested_attributes_for :cable_deal_attributes,:reject_if => :reject_cable, allow_destroy: true
@@ -22,11 +22,11 @@ class Deal < ActiveRecord::Base
   accepts_nested_attributes_for :bundle_deal_attributes,:reject_if => :reject_bundle, allow_destroy: true
   accepts_nested_attributes_for :additional_offers,:reject_if => :reject_additional, allow_destroy: true
   accepts_nested_attributes_for :deal_include_zipcodes,:reject_if => :reject_include_zipcodes, allow_destroy: true
-  
-	mount_uploader :image, ImageUploader
 
-	validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
+  mount_uploader :image, ImageUploader
 
+  validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
+  before_save :update_effective_price
   ### CONSTANTS ###
   INTERNET_CATEGORY = 1
   TELEPHONE_CATEGORY = 2
@@ -39,80 +39,93 @@ class Deal < ActiveRecord::Base
   # Hash[*json.map{|k, v| [k, v || ""]}.flatten]
   #end
 
-	def self.import(file)
-  	CSV.foreach(file.path, headers: true) do |row|
-    	#deal_hash = row.to_hash # exclude the price field
-    	deal_hash = { :id => row['ID'], 
-    								:service_category_id => row['Service Category ID'], 
-    								:service_provider_id => row['Service Provider ID'],
-    								:title => row['Title'],
-    								:state => row['State'], 
-    								:city => row['City'], 
-    								:zip => row['Zip'], 
-    								:price => row['Price'], 
-    								:upload_speed => row['Upload Speed'], 
-    								:download_speed => row['Download Speed'], 
-    								:free_channels => row['Free Channels'], 
-    								:premium_channels => row['Premium Channels'], 
-    								:data_plan => row['Data Plan'],
-    								:data_speed => row['Data Speed'],
-    								:domestic_call_minutes => row['Domestic Call Minutes'],
-    								:international_call_minutes => row['International Call Minutes'],
-    								:domestic_call_unlimited => row['Domestic Call Unlimited'],
-    								:international_call_unlimited => row['International Call Unlimited'],
-    								:bundle_combo => row['Bundle Combo'],
-    								:is_active => row['Is Active'], 
-    								:url => row['URL'],
-    								:start_date => row['Start Date'],
-    								:end_date => row['End Date'],
-    								:short_description => row['Short Description'],
-    								:detail_description => row['Detail Description'],
-                    :image => row['Image'], 
-                    :created_at => row['Created At'], 
-                    :updated_at => row['Updated At'], 
-                  }
-    	deal = Deal.where(id: deal_hash[:id])
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      #deal_hash = row.to_hash # exclude the price field
+      deal_hash = { :id => row['ID'],
+                    :service_category_id => row['Service Category ID'],
+                    :service_provider_id => row['Service Provider ID'],
+                    :title => row['Title'],
+                    :state => row['State'],
+                    :city => row['City'],
+                    :zip => row['Zip'],
+                    :price => row['Price'],
+                    :upload_speed => row['Upload Speed'],
+                    :download_speed => row['Download Speed'],
+                    :free_channels => row['Free Channels'],
+                    :premium_channels => row['Premium Channels'],
+                    :data_plan => row['Data Plan'],
+                    :data_speed => row['Data Speed'],
+                    :domestic_call_minutes => row['Domestic Call Minutes'],
+                    :international_call_minutes => row['International Call Minutes'],
+                    :domestic_call_unlimited => row['Domestic Call Unlimited'],
+                    :international_call_unlimited => row['International Call Unlimited'],
+                    :bundle_combo => row['Bundle Combo'],
+                    :is_active => row['Is Active'],
+                    :url => row['URL'],
+                    :start_date => row['Start Date'],
+                    :end_date => row['End Date'],
+                    :short_description => row['Short Description'],
+                    :detail_description => row['Detail Description'],
+                    :image => row['Image'],
+                    :created_at => row['Created At'],
+                    :updated_at => row['Updated At'],
+      }
+      deal = Deal.where(id: deal_hash[:id])
 
-    	if deal.count == 1
-      	deal.first.update_attributes(deal_hash.except("image"))
-    	else
-      	Deal.create!(deal_hash)
-    	end # end if !service_category.nil?
-  	end # end CSV.foreach
-	end # end self.import(file)
+      if deal.count == 1
+        deal.first.update_attributes(deal_hash.except("image"))
+      else
+        Deal.create!(deal_hash)
+      end # end if !service_category.nil?
+    end # end CSV.foreach
+  end # end self.import(file)
 
   def order_status
     order = OrderItem.select('status').where(deal_id: self.id).first.status
     return order
   end
 
-	def deal_image_url
-		image.url
-	end
+  def deal_image_url
+    image.url
+  end
 
-	#def deal_image=(obj)
-    #	super(obj)
-    #	# Put your callbacks here, e.g.
-    #	self.moderated = false  
-  	#end
+  #def deal_image=(obj)
+  #	super(obj)
+  #	# Put your callbacks here, e.g.
+  #	self.moderated = false
+  #end
 
-	def average_rating
+  def average_rating
     if self.comment_ratings.present?
-		  self.comment_ratings.average(:rating_point).to_f.round(2)
+      self.comment_ratings.average(:rating_point).to_f.round(2)
     else
       return 0
-    end  
-	end
+    end
+  end
 
-	def rating_count
-		self.comment_ratings.count
-	end
+  def rating_count
+    self.comment_ratings.count
+  end
 
-	def deal_price
-	  sprintf '%.2f', self.price if self.price.present?
+  def deal_price
+    sprintf '%.2f', self.price if self.price.present?
+  end
+
+  def update_effective_price
+    self.effective_price = get_effective_price
   end
 
   def effective_price
+    effective_price = get_effective_price
+    if effective_price != self.deal_price.to_f
+      sprintf '%.2f', effective_price
+    else
+      effective_price=0
+    end
+  end
+
+  def get_effective_price
     if self.internet_deal_attributes.present?
       internet=self.internet_deal_attributes.first
       equipment=internet.internet_equipments.first
@@ -174,9 +187,8 @@ class Deal < ActiveRecord::Base
         end
       end
     end
-
     if effective_price != self.deal_price.to_f
-      sprintf '%.2f', effective_price
+      effective_price
     else
       effective_price=0
     end
@@ -261,7 +273,7 @@ class Deal < ActiveRecord::Base
   end
 
 
-	private
+  private
   def reject_internet(attributes)
     if attributes[:download].blank?
       if attributes[:id].present?
@@ -307,7 +319,7 @@ class Deal < ActiveRecord::Base
       end
     end
   end
-	
+
   def reject_additional(attributes)
     if attributes[:title].blank?
       if attributes[:id].present?
@@ -327,5 +339,5 @@ class Deal < ActiveRecord::Base
       end
     end
   end
-  
+
 end

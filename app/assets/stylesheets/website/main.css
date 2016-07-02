@@ -925,7 +925,7 @@ input, input:focus, label, label:focus {
 .compare-design {
     background: #f6f8fa;
 }
-#zipcode .modal-content {
+#zipcode-modal .modal-content {
     width: 100%;
     float: left;
 }

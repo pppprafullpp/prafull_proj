@@ -1,34 +1,35 @@
-<div class="modal fade text-left" id="zipcode" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade text-left" id="zipcode-modal" role="dialog" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
 
     <!-- Modal content-->
 
     <div class="modal-content">
       <div class="zipcode-body">
-        <div class="text-center"> <%= image_tag('website/map-pointer.png',:alt => 'map-pointer') %>
-          <h4>Enter Your Zip Code</h4>
-        </div>
-        <div class="details-zip">
-          <div class="col-md-11 col-md-offset-1">
-            <h5>User Type</h5>
-            <div class="radio col-md-5">
-              <label>
-                <input type="radio" name="optionsRadios" id="residence" value="option1" checked="">
-                Residence </label>
-            </div>
-            <div class="radio col-md-5">
-              <label>
-                <input type="radio" name="optionsRadios" id="business" value="option2">
-                Business </label>
-            </div>
+        <form method="get" action="<%= set_zipcode_and_usertype_website_home_index_path %>">
+          <div class="text-center"> <%= image_tag('website/map-pointer.png',:alt => 'map-pointer') %>
+            <h4>Enter Your Zip Code</h4>
           </div>
-          <div class="col-md-11 col-md-offset-1">
-            <form>
-              <div class="form-group residence-opt" style="display: none;">
-                <label>Zipcode &nbsp;</label>
-                <input type="text" class="form-control" placeholder="Zipcode">
+          <div class="details-zip">
+            <div class="col-md-11 col-md-offset-1">
+              <h5>User Type</h5>
+              <div class="radio col-md-5">
+                <label>
+                  <input type="radio" name="user_type" id="residence" value="option1" checked="">
+                  Residence </label>
               </div>
-              <div class="form-group business-opt " style="display: block;">
+              <div class="radio col-md-5">
+                <label>
+                  <input type="radio" name="user_type" id="business" value="option2">
+                  Business </label>
+              </div>
+            </div>
+            <div class="col-md-11 col-md-offset-1">
+
+              <div class="form-group residence-opt-off">
+                <label>Zipcode &nbsp;</label>
+                <input type="text" class="form-control" name="zip_code" placeholder="Zipcode">
+              </div>
+              <!--<div class="form-group business-opt " style="display: block;">
                 <div>
                   <label>Business name</label>
                   <input type="text" class="form-control" placeholder="Zipcode">
@@ -37,13 +38,14 @@
                   <label>Zipcode &nbsp;</label>
                   <input type="text" class="form-control" placeholder="Zipcode">
                 </div>
-              </div>
-            </form>
+              </div>-->
+
+            </div>
           </div>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-default btn-red mg20">Submit</button>
-        </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-default btn-red mg20">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -67,5 +69,4 @@
         $(".business-opt").show();
         $(".residence-opt").hide();
     });
-
 </script>

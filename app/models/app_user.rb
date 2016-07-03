@@ -27,6 +27,8 @@ class AppUser < ActiveRecord::Base
   RESIDENCE = 'residence'
   BUSINESS = 'business'
 
+  USER_TYPES = [RESIDENCE,BUSINESS]
+
   def avatar_url
     avatar.url
   end
@@ -49,10 +51,14 @@ class AppUser < ActiveRecord::Base
     end
   end
 
-  def self.update_app_user(params,app_user_id)
+  def self.update_app_user(params,app_user_id,order = nil)
     app_user = self.where(:id => app_user_id).first
     params[:app_user].each do |key,value|
       app_user[key] = value unless key == 'email'
+    end
+    if order.present?
+      app_user.primary_id = order.primary_id
+      app_user.secondary_id = order.secondary_id
     end
     if app_user.save!
       app_user

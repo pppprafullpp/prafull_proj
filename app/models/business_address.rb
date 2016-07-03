@@ -8,6 +8,8 @@ class BusinessAddress < ActiveRecord::Base
   BUSINESS_ADDRESS = 3
   HOME_ADDRESS = 4
 
+  ADDRESSES = {'Billing Address' => BILLING_ADDRESS,'Shipping Address' => SHIPPING_ADDRESS, 'Business Address' => BUSINESS_ADDRESS}
+
   def self.create_business_addresses(params,business_id)
     business_addresses = []
     params[:business_addresses].each do |address|

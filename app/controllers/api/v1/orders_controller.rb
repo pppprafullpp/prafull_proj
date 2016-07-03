@@ -9,7 +9,7 @@ class Api::V1::OrdersController < ApplicationController
 			order.order_id=rand(36**8).to_s(36).upcase
 			if order.save
 				order_items = OrderItem.create_order_items(params,order.id)
-				app_user = AppUser.update_app_user(params,order.app_user_id)
+				app_user = AppUser.update_app_user(params,order.app_user_id,order)
 				order_addresses = OrderAddress.create_order_addresses(params,order.id)
 				if user_type == AppUser::BUSINESS
 					business = Business.create_business(params)

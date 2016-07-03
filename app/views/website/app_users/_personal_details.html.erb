@@ -1,9 +1,19 @@
 <%
+   if @business.present?
+     addresses = @business.business_addresses.first
+   else
+     addresses = @app_user.app_user_addresses.first
+   end
+
    name = @app_user.first_name + ' ' + @app_user.last_name
-   address = @app_user.address.present? ? @app_user.address.split('===') : []
-   address_name = address[0].present? ? address[0] : ''
-   address_1 = address[1].present? ? address[1] : ''
-   address_2 = address[2].present? ? address[2] : ''
+   if addresses.present?
+     address_type = addresses.address_type
+     address_name = addresses.address_name
+     address_1 = addresses.address1
+     address_2 = addresses.address2
+     zip = addresses.zip
+     contact_number = addresses.contact_number
+   end
 %>
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
   <div class="col-sm-3">
@@ -11,7 +21,7 @@
       <h4>Sonal</h4>
     </div>
   </div>
-  <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'col-sm-9 form-horizontal' do %>
+  <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'col-sm-9 form-horizontal',:id => 'update_user_form' do %>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <!-- Text input-->
       <div class="col-sm-6">
@@ -22,55 +32,206 @@
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Email">Email</label>
-        <%= email_field_tag(:email,@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address') %>
+        <%= email_field_tag(:email,@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address',:readonly =>true) %>
+      </div>
+      <div class="col-sm-6">
+        <label class="control-label" for="Phone">Mobile</label>
+        <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
       </div>
       <div class="btn-group col-lg-12 margin_top">
         <h5>Billing Address</h5>
+
         <div class="row">
           <div class="col-sm-6">
+            <label class="control-label" for="Address">Address Type</label>
+            <%= select_tag :address_type,options_for_select(BusinessAddress::ADDRESSES,address_type),:class => 'form-control input-md',:name => "addresses[address_type]" %>
+          </div>
+
+          <div class="col-sm-6">
             <label class="control-label" for="Address">Address Name</label>
-            <%= text_field_tag(:address,address_name,:class => 'form-control input-md',:placeholder => 'Address Name') %>
+            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Address Name',:name => "addresses[address_name]",:maxlength => 50) %>
           </div>
           <div class="col-sm-6">
-            <label class="control-label" for="Country">Country</label>
-            <%= select_tag(:country,options_for_select(COUNTRIES),:class => 'form-control',:prompt => 'Select your Country') %>
+            <label class="control-label" for="Address">Zip</label>
+            <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
           </div>
           <div class="col-sm-6">
             <label class="control-label" for="Address">Address 1</label>
-            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1') %>
+            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1',:name => "addresses[address1]") %>
           </div>
           <div class="col-sm-6">
             <label class="control-label" for="Address 2">Address 2</label>
-            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2') %>
+            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2',:name => "addresses[address2]") %>
           </div>
           <div class="col-sm-6">
-            <label class="control-label" for="City">City</label>
-            <%= select_tag(:city,options_for_select(CITY,@app_user.city),:class => 'form-control',:prompt => 'Select your City') %>
-          </div>
-          <div class="col-sm-6">
-            <label class="control-label" for="State">State</label>
-            <%= select_tag(:state,options_for_select(STATE,@app_user.state),:class => 'form-control',:prompt => 'Select your State') %>
-          </div>
-          <div class="col-sm-6">
-            <label class="control-label" for="Phone">Phone</label>
-            <%= phone_field_tag(:mobile,nil,:class => 'form-control input-md',:placeholder => 'Mobile') %>
+            <label class="control-label" for="Phone">Contact Number</label>
+            <%= phone_field_tag(:contact_number,contact_number,:class => 'form-control input-md',:placeholder => 'Contact Number',:name => "addresses[contact_number]",:maxlength => 10) %>
           </div>
         </div>
+
       </div>
-      <div class="btn-group col-sm-12" data-toggle="buttons">
+      <!-- <div class="btn-group col-sm-12" data-toggle="buttons">
         <h5>User type</h5>
         <label class="btn active col-sm-3">
-          <input type="radio" name="gender1" checked="">
+          <input type="radio" name="user_type" checked="" value="<%#= AppUser::RESIDENCE %>">
           <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> Residence</span> </label>
         <label class="btn col-sm-3">
-          <input type="radio" name="gender1">
+          <input type="radio" name="user_type" value="<%#= AppUser::BUSINESS %>" id="business_checkbox">
           <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Business</span> </label>
+      </div>-->
+      <% disable_flag = @business.present? ? true : false  %>
+      <div class="btn-group col-sm-12">
+        <h5>User type</h5>
+        <%= select_tag(:user_type,options_for_select(AppUser::USER_TYPES,@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
+      </div>
+
+      <%
+         business_name = @business.present? ? @business.business_name : ''
+         business_type = @business.present? ? @business.business_type : ''
+         federal_number = @business.present? ? @business.federal_number : ''
+         ssn = @business.present? ? @business.ssn : ''
+      %>
+
+      <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">
+        <h5>Business Name</h5>
+        <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+      </div>
+
+      <div class="btn-group col-sm-12" style="display: none;" id="business_type_div">
+        <h5>Business Type</h5>
+        <% if @business.present? %>
+            <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(@business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
+            <%= hidden_field_tag :business_type,business_type,:name => "business[business_type]",:class => 'form-control',:placeholder => 'Please enter your Business Type',:readonly => disable_flag %>
+        <% else %>
+            <%= select_tag(:business_type,options_for_select(Business::BUSINESS_TYPES,business_type),:class => 'form-control',:prompt => 'Select your Business Type',:name => "business[business_type]") %>
+        <% end %>
+      </div>
+
+      <div class="btn-group col-sm-12" style="display: none;" id="federal_number_div">
+        <h5>Federal Number</h5>
+        <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+      </div>
+
+      <div class="btn-group col-sm-12" style="display: none;" id="ssn_div">
+        <h5>SSN</h5>
+        <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
       </div>
 
       <!-- Button -->
       <div class="col-sm-6">
-        <%= submit_tag('Save',:class => 'btn btn-info') %>
+        <%= submit_tag('Save',:class => 'btn btn-info',:id => 'submit_button') %>
       </div>
 
   <% end %>
 </div>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        populate_user_type($('#user_type').val());
+        populate_business_type($('#business_type').val());
+        $('#user_type').on('change', function() {
+            populate_user_type($('#user_type').val())
+        });
+        $('#business_type').on('change', function() {
+            populate_business_type($('#business_type').val())
+        });
+    });
+    function populate_user_type(user_type) {
+        if(user_type == 'business'){
+            $('#business_type_div').show();
+            $('#business_name_div').show();
+        }else{
+            $("#business_type :selected").prop('selected', false);
+            $('#business_type_div').hide();
+            $('#business_name').val('');
+            $('#business_name_div').hide();
+            $('#federal_number').val('');
+            $('#ssn').val('');
+            $('#federal_number_div').hide();
+            $('#ssn_div').hide();
+        }
+    }
+    function populate_business_type(business_type){
+        if(business_type != '') {
+            if (business_type == <%= Business::SOLE_PROPRIETOR %>) {
+                $('#ssn_div').show();
+                $('#federal_number_div').hide();
+                $('#federal_number').val('');
+            } else if (business_type == <%= Business::REGISTERED %>) {
+                $('#ssn_div').hide();
+                $('#ssn').val('');
+                $('#federal_number_div').show();
+            }
+            $('#federal_number, #business_name, #ssn').removeAttr("disabled");
+        }else{
+            $('#ssn_div').hide();
+            $('#ssn').val('');
+            $('#federal_number_div').hide();
+            $('#federal_number').val('');
+        }
+    }
+
+    $( "#federal_number, #ssn").focusout(function() {
+        validateBusinessName();
+    });
+
+    function validateBusinessName() {
+        var business_type = $('#business_type').val();
+        var business_name = $('#business_name').val();
+        var federal_number = $('#federal_number').val();
+        var ssn = $('#ssn').val();
+        if( business_type != '' && business_name != '' && (federal_number != '' || ssn != '')) {
+            $.ajax({
+                type: "POST",
+                url: "<%= validate_business_name_api_v1_orders_path %>?business_type=" + business_type + "&business_name=" + business_name + "&federal_number=" + federal_number + "&ssn=" + ssn,
+                dataType: "json",
+                success: function (data) {
+                    if(data['success'] == 'false' || data['success'] == false) {
+                        if(business_type == <%= Business::SOLE_PROPRIETOR %>){
+                            $('#federal_number, #business_name, #ssn').val('');
+                            $('#federal_number, #business_name, #ssn').addClass('custom-input-error');
+                            alert('Business with this SSN is already registered, please insert another SSN');
+                        }else{
+                            $('#federal_number, #business_name, #ssn').attr("disabled", "disabled");
+                            alert('Business with this Federal Number is already registered, Do you want to register yourself inside this business');
+                        }
+                    }else{
+                        $('#federal_number, #business_name, #ssn').removeClass('custom-input-error');
+                    }
+                },
+                error: function (data) {
+                    //alert(data)
+                }
+            });
+        }
+    }
+    $("#submit_button").click(function(){
+        event.preventDefault();
+        var business_type = $('#business_type').val();
+        var business_name = $('#business_name').val();
+        var federal_number = $('#federal_number').val();
+        var ssn = $('#ssn').val();
+        if( business_type != '' || business_name != '' || federal_number != '' || ssn != '') {
+            if( business_type != '' && business_name != '' && (federal_number != '' || ssn != '')) {
+                var address_name = $('#address_name').val();
+                var zip = $('#zip').val();
+                var address1 = $('#address1').val();
+                if(address_name == '' || zip == '' || address1 == '' ){
+                    alert('Please enter address name,zip and address1')
+                }else{
+                    $('#update_user_form').submit();
+                }
+            }else{
+                alert('Please enter all business information')
+            }
+        }else{
+            var address_name = $('#address_name').val();
+            var zip = $('#zip').val();
+            var address1 = $('#address1').val();
+            if(address_name == '' || zip == '' || address1 == '' ){
+                alert('Please enter address name,zip and address1')
+            }else{
+                $('#update_user_form').submit();
+            }
+        }
+    });
+</script>

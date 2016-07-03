@@ -11,15 +11,24 @@
           </div>
           <div class="details-zip">
             <div class="col-md-11 col-md-offset-1">
+              <%
+                 if session[:user_type] == AppUser::BUSINESS
+                   checked_business = "checked=''"
+                   checked_residential = ''
+                 else
+                   checked_residential = "checked=''"
+                   checked_business = ''
+                 end
+              %>
               <h5>User Type</h5>
               <div class="radio col-md-5">
                 <label>
-                  <input type="radio" name="user_type" id="residence" value="option1" checked="">
+                  <input type="radio" name="user_type" id="residence" value="option1" <%= checked_residential %>>
                   Residence </label>
               </div>
               <div class="radio col-md-5">
                 <label>
-                  <input type="radio" name="user_type" id="business" value="option2">
+                  <input type="radio" name="user_type" id="business" value="option2" <%= checked_business %>>
                   Business </label>
               </div>
             </div>
@@ -27,7 +36,7 @@
 
               <div class="form-group residence-opt-off">
                 <label>Zipcode &nbsp;</label>
-                <input type="text" class="form-control" name="zip_code" placeholder="Zipcode">
+                <input type="text" class="form-control" name="zip_code" placeholder="Zipcode" value="<%= session[:zip_code] %>">
               </div>
               <!--<div class="form-group business-opt " style="display: block;">
                 <div>

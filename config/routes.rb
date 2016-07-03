@@ -131,6 +131,7 @@ Rails.application.routes.draw do
         post :preferences
         get :order
         post :create_order
+        get :forget_password
       end
     end
   end

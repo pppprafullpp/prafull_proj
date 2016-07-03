@@ -7,6 +7,8 @@ class Business < ActiveRecord::Base
   SOLE_PROPRIETOR = 0
   REGISTERED = 1
 
+  BUSINESS_TYPES = {'Sole Proprietor' => SOLE_PROPRIETOR, 'Registered' => REGISTERED}
+
   ## business status
   NEW = 'New'
   EXISTING = 'Existing'

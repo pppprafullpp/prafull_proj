@@ -4,6 +4,7 @@ class Website::HomeController < ApplicationController
 
   def index
     session[:zip_code] = 75024 unless session[:zip_code].present?
+    session[:user_type] = AppUser::RESIDENCE unless session[:user_type].present?
   end
 
   def deals

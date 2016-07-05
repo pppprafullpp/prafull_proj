@@ -195,14 +195,16 @@ class Api::V1::OrdersController < ApplicationController
 	def validate_business_name
 		if params[:business_type].present? and params[:business_name].present? and (params[:ssn].present? || params[:federal_number].present?)
 			if params[:business_type].to_i == Business::SOLE_PROPRIETOR
-				business = Business.where("business_name = ? or ssn = ?",params[:business_name],params[:ssn]).first
+				#business = Business.where("business_name = ? or ssn = ?",params[:business_name],params[:ssn]).first
+				business = Business.where("ssn = ?",params[:ssn]).first
 				if business.present?
 					render :json => { :success => false,:message => 'Business with this name or SSN already exists, Please enter valid information.' }
 				else
 					render :json => { :success => true }
 				end
 			elsif params[:business_type].to_i == Business::REGISTERED
-				business = Business.where("business_name = ? or federal_number = ?",params[:business_name],params[:federal_number]).first
+				#business = Business.where("business_name = ? or federal_number = ?",params[:business_name],params[:federal_number]).first
+				business = Business.where("federal_number = ?",params[:federal_number]).first
 				if business.present?
 					render :json => { :success => false,:business => business,:message => "We found Business #{params[:business_name]} with Federal Tax No: #{params[:federal_number]} is already registered with us, do you want to add yourself in this business." }
 				else

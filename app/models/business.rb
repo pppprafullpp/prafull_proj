@@ -1,7 +1,8 @@
 class Business < ActiveRecord::Base
   has_many :business_addresses
   has_many :business_app_users
-  validates :business_name,:uniqueness => true
+  #validates :business_name,:uniqueness => true
+  #validates :business_name, uniqueness: { scope: :federal_number }
   before_save { self.business_name = business_name.squish if business_name.present?}
   ## business type
   SOLE_PROPRIETOR = 0
@@ -25,6 +26,7 @@ class Business < ActiveRecord::Base
         elsif business_type == REGISTERED
           business = self.where(:federal_number => params[:business][:federal_number]).first
         end
+        business = self.where(:id => params[:business][:id]).first if params[:business][:id].present? and !business.present?
         unless business.present?
           business = self.new
         else

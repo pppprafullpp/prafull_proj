@@ -24,6 +24,7 @@
                 <div class="col-xs-3"> <p><%= order.order_items.first.deal_price%></p>   </div>
                 <div class="col-xs-3"> <p><%= order.order_number%></p> </div>
                 <div class="col-xs-3"> <p><%= order.order_items.first.effective_price %></p> </div>
+                 <div class="col-xs-3"> <p><%= link_to "Order Detail",  order_detail_website_app_users_path(order_id: order.id)%></p> </div>
               </div>
             </div>
           </div>

@@ -201,7 +201,7 @@ div.modal-open {
     font-family: 'open_sansregular';
     border: 1px solid #fff;
     border-radius: 5px;
-    background: url(../img/input-bg.png) repeat;
+    background: url(../website/input-bg.png) repeat;
     color: #fff !important;
     height: 45px !important;
     margin-bottom: 35px;
@@ -372,10 +372,10 @@ footer p {
     color: #fff !important;
 }
 a.fb {
-    background: #354f88 url(../img/fb.png) no-repeat 0 3px;
+    background: #354f88 url(../website/fb.png) no-repeat 0 3px;
 }
 a.gplus {
-    background: #ce3e26 url(../img/gplus.png) no-repeat 5px 3px;
+    background: #ce3e26 url(../website/gplus.png) no-repeat 5px 3px;
     margin-right: 0 !important;
 }
 .modal-dialog {
@@ -398,7 +398,7 @@ color:#fff;
 /*  deal page */
 
 .internet-banner {
-    background: url(../img/internet-banner.png) no-repeat;
+    background: url(../website/internet-banner.png) no-repeat;
     background-size: cover;
     width: 100%;
     height: 306px;
@@ -460,7 +460,7 @@ color:#fff;
     position: relative;
 }
 .inte_ser ul li::before {
-    background-image: url(../img/right_arrow.png);
+    background-image: url(../website/right_arrow.png);
     background-repeat: no-repeat;
     background-position: 10px 12px;
     position: absolute;
@@ -930,7 +930,7 @@ input, input:focus, label, label:focus {
     float: left;
 }
 .zipcode-body {
-    background: url(../img/zipcodebg.png) no-repeat 0 0;
+    background: url(../website/zipcodebg.png) no-repeat 0 0;
     padding: 50px 20px;
     float: left;
     width: 100%;
@@ -2190,7 +2190,7 @@ color: #fff !important;
     color: #fff;
 }
 .order-form {
-    margin-top: 40px;
+    margin-top: 50px;
 }
 .order-form .tabber .nav-tabs {
     background: #e5e5e5 none repeat scroll 0 0;
@@ -2207,7 +2207,7 @@ color: #fff !important;
 .order-form .form-control::-moz-placeholder {
 color:#555;
 }
-.order-form .tab-content .col-lg-12 .col-md-6, .order-form .tab-content .col-lg-12 .col-md-4,  .order-form .tab-content .col-lg-12 .col-md-9 {
+.order-form .tab-content .col-lg-12 .col-md-6, .order-form .tab-content .col-lg-12 .col-md-4, .order-form .tab-content .col-lg-12 .col-md-9 {
     padding: 15px 0 15px 10px
 }
 .order-form .tab-content .control-label {
@@ -2248,5 +2248,165 @@ color:#555;
 .bold {
     font-weight: bold;
 }
-.address-sty h4{ margin:15px 0;}
-.auto-height {min-height:400px;}
+.address-sty h4 {
+    margin: 15px 0;
+}
+/*1july 2015*/
+    
+.order-details {
+    margin-top: 50px;
+}
+.left-order-dt, .right-order-dt {
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    padding: 20px;
+    float: left;
+    width: 100%;
+    margin-bottom:20px;
+}
+.ordersty-top {
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 15px;
+    float: left;
+    width: 100%;
+}
+.accepted-btn {
+    background: #f5942b;
+    color: #fff;
+    padding: 5px 25px;
+    margin-top: 5px;
+}
+.recontracted-btn {
+    background: #fff;
+    color: #00aeef;
+    padding: 5px 25px;
+    border: 1px solid #00aeef;
+    margin-top: 5px;
+}
+.service-sty {
+    border: 1px solid #dedede;
+}
+.order-no-dt {
+    font-size: 16px;
+    color: #939393
+}
+.order-no-dt span {
+    color: #000;
+}
+.order-service-dt {
+    padding-top: 30px;
+    float: left;
+    width: 100%;
+}
+.servicelogo-sty {
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding: 2%;
+    border: 1px solid #dedede;
+}
+.servicedt-text {
+    color: #000;
+    font-size: 14px;
+    font-family: 'open_sansregular';
+    margin-left: 15px;
+    float: left;
+}
+.in-progress-btn {
+    color: #fff;
+    background: #25b04f;
+    padding: 0 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+.order-service-left {
+    padding: 0;
+}
+.order-product-right {
+    padding: 0;
+    text-align: right;
+    font-size: 14px;
+}
+.order-price {
+    font-family: 'open_sanssemibold';
+}
+.order-price span {
+    color: #646464;
+    font-family: 'open_sanslight';
+}
+.order-efprice {
+    font-family: 'open_sanssemibold';
+}
+.order-efprice span {
+    color: #00b551;
+}
+.equipment-details {
+    font-size: 14px;
+    float: left;
+    width: 100%;
+    padding: 30px 0 30px;
+    border-bottom: 1px solid #dedede;
+}
+.equipment-details h5 {
+    font-size: 16px;
+    color: #000;
+    font-family: 'open_sansregular';
+    padding-bottom: 10px;
+}
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+    border: none;
+}
+.equipment-details th {
+    font-family: 'open_sanssemibold';
+}
+.saveurdollar {
+    border: 1px solid #b67a0f;
+    border-radius: 6px;
+    color: #ae740d;
+    padding: 8px;
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+.applicant-telcome {
+    margin-top: 10px;
+    float: left;
+    padding: 0 0 0 10px;
+}
+.applicant-telcome h6 {
+    font-size: 16px;
+    font-family: 'open_sansregular';
+}
+.applicant-telcome ul {
+    margin-top: 12px;
+}
+.applicant-telcome ul li .col1 {
+    color: #828282;
+    float: left;
+    font-size: 14px;
+    font-weight: 400;
+    margin-right: 10px;
+    text-align: right;
+}
+.applicant-telcome ul li {
+    float: left;
+    width: 100%;
+}
+.applicant-telcome ul li .col2 {
+    color: #000;
+    float: left;
+    font-size: 14px;
+    font-family: 'open_sansregular';
+    margin-right: 20px;
+}
+.border-ones {
+    border-right: 1px solid #dedede;
+    padding: 0;
+}
+.address-det , .billing-det{
+    border-bottom: 1px solid #dedede;
+    float: left;
+    padding: 10px 0 20px;
+    width: 100%;
+}
+.bor-btno{ border-bottom:none;}

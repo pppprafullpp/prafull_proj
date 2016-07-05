@@ -130,6 +130,7 @@ Rails.application.routes.draw do
         get :order_history
         post :preferences
         get :order
+        get :order_detail
         post :create_order
         get :forget_password
       end

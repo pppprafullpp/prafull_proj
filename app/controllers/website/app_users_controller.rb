@@ -17,7 +17,11 @@ class Website::AppUsersController < ApplicationController
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         flash[:notice] = 'SignUp Successfull'
-        redirect_to request.referrer
+        if session[:deal].present?
+          redirect_to order_website_app_users_path(:deal_id=> session[:deal])
+        else
+          redirect_to request.referrer
+        end
       else
         flash[:warning] = @app_user.errors.full_messages
         redirect_to request.referrer
@@ -131,8 +135,13 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.find(session[:user_id])
       @deal = Deal.find_by_id(params[:deal_id])
     else
+      session[:deal] = params[:deal_id]
       redirect_to service_deals_path
     end
+  end
+
+  def order_detail
+    @order = Order.find_by_id(params[:order_id].to_i)
   end
 
   def signin
@@ -142,7 +151,11 @@ class Website::AppUsersController < ApplicationController
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         flash[:notice] = 'Signin Successfull'
-        redirect_to website_home_index_path
+        if session[:deal].present?
+          redirect_to order_website_app_users_path(:deal_id=> session[:deal])
+        else
+          redirect_to website_home_index_path
+        end
       else
         flash[:warning] = 'Incorrect Username or Password!'
         redirect_to request.referrer and return

@@ -126,6 +126,7 @@ Rails.application.routes.draw do
         get :check_user_email_ajax
         get :signout
         post :signin
+        get :checkout
         get :profile
         get :order_history
         post :preferences

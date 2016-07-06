@@ -17,7 +17,7 @@
                 <div class="col-sm-10">
                   <div id="box1" class="col-sm-3">
                     <div class="compare_box_border" id="box-deal">
-                      <span><img src="img/AT&amp;T_logo_2005.png"></span>
+                      <span><img src="website/AT&amp;T_logo_2005.png"></span>
                       <p id ="p-deal">Products name here</p>
                       <a class="btn1" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </div>
@@ -35,7 +35,7 @@
               <% @dashboard_data.each do |data| %>
               <div class="col-xs-6 col-sm-6 col-md-4">
                 <div class="border-radius-bg auto-height">
-                  <div class="vertical_middle" style="overflow: hidden;"><img src="<%= data['deal_image_url1'] %>" alt=""></div>
+                  <div class="vertical_middle" style="overflow: hidden;"><img src="<%= data['deal_image_url'] %>"  height="70" width="155" alt=""></div>
                   <h5>$<%= data['deal_price'] %> <%= data['title'] %></h5>
                   <ul>
                     <li><%= data['download_speed'] %> Mbps Download Speed</li>

@@ -1,13 +1,14 @@
 
+
 <% deal = @order.order_items.first.deal
   category_name = deal.service_category.name.downcase
   deal_equipment = eval("deal.try(:#{category_name}_deal_attributes).first.try(:#{@category_name}_equipments)")
- app_user = @order.app_user 
- billing_address = @order.order_addresses.where(address_type: 2).first
- shipping_address = @order.order_addresses.where(address_type: 1).first
- service_address = @order.order_addresses.where(address_type: 0).first
- business = app_user.try(:business_app_users).first.try(:business)
- %>
+  app_user = @order.app_user 
+  billing_address = @order.order_addresses.where(address_type: 2).first
+  shipping_address = @order.order_addresses.where(address_type: 1).first
+  service_address = @order.order_addresses.where(address_type: 0).first
+  business = app_user.try(:business_app_users).first.try(:business)
+  %>
 <!--//nav-->
 <section class="order-details">
   <div class="container">
@@ -16,7 +17,8 @@
         <div class="left-order-dt">
           <div class="ordersty-top">
             <div class="order-no-dt pull-left"> Order No: <span><%= @order.order_number%></span> <br />
-               <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>  </div>
+              <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>  
+            </div>
             <div class="order-no-dt pull-right"> AT&T Order No:<span>114568026973</span><br/>
               <button type="button" class=" btn accepted-btn">Accepted</button>
               <button type="button" class=" btn recontracted-btn">Accepted</button>
@@ -24,9 +26,10 @@
           </div>
           <div class="order-service-dt">
             <div class="order-service-left col-md-8">
-              <div class="servicelogo-sty"> <img src="<%= deal['deal_image_url1'] %>" class="img-responsive" /> </div>
+              <div class="servicelogo-sty"><img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" /> </div>
               <div class="servicedt-text"><%=deal.short_description  %>
-                <span class="in-progress-btn"><%= @order.status %> </span> </div>
+                <span class="in-progress-btn"><%= @order.status %> </span> 
+              </div>
             </div>
             <div class="order-product-right col-md-4">
               <div class="order-price">Price <span>$<%= deal.price %></span> </div>
@@ -34,54 +37,55 @@
             </div>
           </div>
           <% if deal_equipment.present? %>
-            <div class="equipment-details">
-
-              <h5>Equipments  &  Installation</h5>
-               <% if category_name == "cellphone" %>
-                <table class="table table-bordered">
-                  <thead>
-                    <tr class="active">
-                      <th colspan="3"><%= deal_equipment.try(:model) %></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td width="20%">Make</td>
-                      <td width="80%" colspan="2"><%= deal_equipment.try(:make) %></td>
-                    </tr>
-                    <tr>
-                      <td width="20%">Memory</td>
-                      <td width="80%" colspan="2">$<%= deal_equipment.try(:memory) %></td>
-                    </tr><tr>
-                      <td width="20%">Price</td>
-                      <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
-                    </tr>
-                    <tr>
-                    </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <% else %>
-                <table class="table table-bordered">
-                  <thead>
-                    <tr class="active">
-                      <th colspan="3"><%= deal_equipment.try(:name) %></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td width="20%">Installation</td>
-                      <td width="80%" colspan="2"><%= deal_equipment.try(:installation) %></td>
-                    </tr>
-                    <tr>
-                      <td width="20%">Price</td>
-                      <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <% end %>
-          <% end %>
-            <span class="saveurdollar">You Save   $40.29</span> </div>
+          <div class="equipment-details">
+            <h5>Equipments  &  Installation</h5>
+            <% if category_name == "cellphone" %>
+            <table class="table table-bordered">
+              <thead>
+                <tr class="active">
+                  <th colspan="3"><%= deal_equipment.try(:model) %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td width="20%">Make</td>
+                  <td width="80%" colspan="2"><%= deal_equipment.try(:make) %></td>
+                </tr>
+                <tr>
+                  <td width="20%">Memory</td>
+                  <td width="80%" colspan="2">$<%= deal_equipment.try(:memory) %></td>
+                </tr>
+                <tr>
+                  <td width="20%">Price</td>
+                  <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
+                </tr>
+                <tr>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <% else %>
+            <table class="table table-bordered">
+              <thead>
+                <tr class="active">
+                  <th colspan="3"><%= deal_equipment.try(:name) %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td width="20%">Installation</td>
+                  <td width="80%" colspan="2"><%= deal_equipment.try(:installation) %></td>
+                </tr>
+                <tr>
+                  <td width="20%">Price</td>
+                  <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
+                </tr>
+              </tbody>
+            </table>
+            <% end %>
+            <% end %>
+            <span class="saveurdollar">You Save   $40.29</span> 
+          </div>
           <div class="address-det">
             <div class="applicant-telcome col-md-6 border-ones">
               <h6>Applicant</h6>
@@ -109,19 +113,19 @@
               </ul>
             </div>
             <% if app_user.user_type == AppUser::BUSINESS %>
-              <div class="applicant-telcome col-md-6">
-                <h6>Telecom Manager</h6>
-                <ul>
-                  <li>
-                    <div class="col1">Name:</div>
-                    <div class="col2"><%= business.try(:manager_name) %></div>
-                  </li>
-                  <li>
-                    <div class="col1">Contact No:</div>
-                    <div class="col2"><%= business.try(:manager_contact) %></div>
-                  </li>
-                </ul>
-              </div>
+            <div class="applicant-telcome col-md-6">
+              <h6>Telecom Manager</h6>
+              <ul>
+                <li>
+                  <div class="col1">Name:</div>
+                  <div class="col2"><%= business.try(:manager_name) %></div>
+                </li>
+                <li>
+                  <div class="col1">Contact No:</div>
+                  <div class="col2"><%= business.try(:manager_contact) %></div>
+                </li>
+              </ul>
+            </div>
             <% end %>
           </div>
           <div class="billing-det bor-btno">
@@ -169,71 +173,60 @@
             </div>
           </div>
         </div>
-      </div>
-      <% if app_user.user_type == AppUser::BUSINESS %>
+        <% if app_user.user_type == AppUser::BUSINESS %>
         <div class="col-md-4">
           <div class="right-order-dt">
-          
-          <div class="applicant-telcome">
-                <h6>Registered</h6>
-                <ul>
-                  <li>
-                    <div class="col1">Business Name:</div>
-                    <div class="col2"><%= business.try(:business_name) %></div>
-                  </li>
-                  <li>
-                    <div class="col1">DBA : </div>
-                    <div class="col2"><%= business.try(:business_dba) %></div>
-                  </li>
-                  <li>
-                    <div class="col1">Federal Tax ID: </div>
-                    <div class="col2"><%= business.try(:federal_number) %></div>
-                  </li>
-                  <li>
-                    <div class="col1">Dan & Bradstreet Number: </div>
-                    <div class="col2"><%= business.try(:db_number) %></div>
-                  </li>
-                 
-                </ul>
-              </div>
-          
-           </div>
+            <div class="applicant-telcome">
+              <h6>Registered</h6>
+              <ul>
+                <li>
+                  <div class="col1">Business Name:</div>
+                  <div class="col2"><%= business.try(:business_name) %></div>
+                </li>
+                <li>
+                  <div class="col1">DBA : </div>
+                  <div class="col2"><%= business.try(:business_dba) %></div>
+                </li>
+                <li>
+                  <div class="col1">Federal Tax ID: </div>
+                  <div class="col2"><%= business.try(:federal_number) %></div>
+                </li>
+                <li>
+                  <div class="col1">Dan & Bradstreet Number: </div>
+                  <div class="col2"><%= business.try(:db_number) %></div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </section>
-
 <!--Order-form--> 
-
-
-
 <script>
-$(".registerDetails").hide();
-$("#soleprop").click(function(){
-
   $(".registerDetails").hide();
-  $(".soleproDetails").show();
-});
-
-$("#registered").click(function(){
+  $("#soleprop").click(function(){
   
-  $(".soleproDetails").hide();
-  $(".registerDetails").show();
-});
-
+    $(".registerDetails").hide();
+    $(".soleproDetails").show();
+  });
+  
+  $("#registered").click(function(){
+    
+    $(".soleproDetails").hide();
+    $(".registerDetails").show();
+  });
+  
 </script> 
 <script>
-
-$('.btnNext').click(function(){
-  $('.nav-tabs > .active').next('li').find('a').trigger('click');
-});
-
-  $('.btnPrevious').click(function(){
-  $('.nav-tabs > .active').prev('li').find('a').trigger('click');
-});
-
-
-
+  $('.btnNext').click(function(){
+    $('.nav-tabs > .active').next('li').find('a').trigger('click');
+  });
+  
+    $('.btnPrevious').click(function(){
+    $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+  });
 </script>
 

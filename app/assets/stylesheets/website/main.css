@@ -1927,19 +1927,19 @@ color: #fff !important;
     clear: both;
 }
 .cable {
-    background: url(../img/cable-banner.jpg) no-repeat;
+    background: url(../website/cable-banner.jpg) no-repeat;
     background-size: cover;
 }
 .telephone {
-    background: url(../img/telephone-banner.jpg) no-repeat;
+    background: url(../website/telephone-banner.jpg) no-repeat;
     background-size: cover;
 }
 .electricity {
-    background: url(../img/electricity-banner.jpg) no-repeat;
+    background: url(../website/electricity-banner.jpg) no-repeat;
     background-size: cover;
 }
 .bundle {
-    background: url(../img/bundle-banner.jpg) no-repeat;
+    background: url(../website/bundle-banner.jpg) no-repeat;
     background-size: cover;
 }
 .more-details {

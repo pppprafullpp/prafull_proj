@@ -130,13 +130,16 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+  def checkout
+  end
+
   def order
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       @deal = Deal.find_by_id(params[:deal_id])
     else
       session[:deal] = params[:deal_id]
-      redirect_to service_deals_path
+      redirect_to checkout_website_app_users_path
     end
   end
 

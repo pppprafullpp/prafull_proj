@@ -1,3 +1,5 @@
+
+<script type="text/javascript" src="jquery.min.js"></script>
 <section class="order-form">
   <div class="container">
     <div class="row">
@@ -35,7 +37,7 @@
               <li><a data-toggle="tab" href="#address-info">Address Information</a></li>
               <li><a data-toggle="tab" href="#order-review" id="ordertab">Order Review</a></li>
             </ul>
-            <%= form_tag create_order_website_app_users_path(@app_user), method: :post do %>
+            <%= form_tag create_order_website_app_users_path(@app_user), method: :post, :id=> "order_create_form" do %>
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <div class="tab-content formContainer"> 
                 <!-- About -->
@@ -43,27 +45,27 @@
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="col-md-4">
-                        <label for="Name" class="control-label">First Name</label>
-                        <%= text_field_tag('app_user[first_name]',@app_user.first_name,:class => 'form-control input-md',:placeholder => 'Your Name', :id=> 'first_name') %>
+                        <label for="Name" class="control-label">First Name*</label>
+                        <%= text_field_tag('app_user[first_name]',@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name') %>
                       </div>
                       <div class="col-md-4">
-                        <label for="Name" class="control-label">Last Name</label>
+                        <label for="Name" class="control-label">Last Name*</label>
                         <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Your Name') %>
                       </div>
                       <div class="col-md-6">
-                        <label for="Name" class="control-label">Contact Number</label>
+                        <label for="Name" class="control-label">Contact Number*</label>
                         <%= text_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile") %>
                       </div>
                       <div class="col-md-6">
                         <label for="Name" class="control-label">Email</label>
-                        <%= email_field_tag('app_user[email]',@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address') %>
+                        <%= email_field_tag('app_user[email]',@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address',:disabled => true) %>
                       </div>
                       <div class="col-md-6">
-                        <label for="Name" class="control-label">Primary Id</label>
+                        <label for="Name" class="control-label">Primary Id*</label>
                         <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:orders).try(:last).try(:primary_id)),:class => 'form-control',:id => "primary_id") %> 
                       </div>
                       <div class="col-md-6">
-                        <label for="Name" class="control-label">Secondary Id</label>
+                        <label for="Name" class="control-label">Secondary Id*</label>
                         <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]),:class => 'form-control',:id => "secondary_id") %> 
                       </div>
                     </div>
@@ -71,7 +73,7 @@
                   <!-- Button group -->
                   <div class="btn-group btnBox">
                     <div class="col-sm-12 text-right">
-                      <button class="btn-primary btn-sm save btnNext" type="button">
+                      <button class="btn-primary btn-sm save btnNext" type="button" id="personal_information_tab">
                       <a href="#">Next</a>
                       </button>
                     </div>
@@ -83,15 +85,60 @@
                   <div id="business-info" class="tab-pane">
                     <div class="row">
                       <div class="col-lg-12">
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                           <label for="Name" class="control-label">Business Name</label>
-                          <%= text_field_tag('business[business_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_name),:class => 'form-control input-md',:placeholder => 'Secondary Id') %>
+                          <%#= text_field_tag('business[business_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_name),:class => 'form-control input-md',:placeholder => 'Secondary Id') %>
+                        </div> -->
+                        <% business = @app_user.business_app_users.first.business %>
+                        <% disable_flag = business.present? ? true : false  %>
+                        <div class="btn-group col-sm-12">
+                          <h5>User type</h5>
+                          <%= select_tag(:user_type,options_for_select(AppUser::USER_TYPES,@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
                         </div>
+
+                        <%
+                           business_name = business.present? ? business.business_name : ''
+                           business_type = business.present? ? business.business_type : ''
+                           federal_number = business.present? ? business.federal_number : ''
+                           ssn = business.present? ? business.ssn : ''
+                        %>
+
+                        <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">
+                          <h5>Business Name</h5>
+                          <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+                        </div>
+
+                        <div class="btn-group col-sm-12" style="display: none;" id="business_type_div">
+                          <h5>Business Type</h5>
+                          <% if business.present? %>
+                              <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
+                              <%= hidden_field_tag :business_type,business_type,:name => "business[business_type]",:class => 'form-control',:placeholder => 'Please enter your Business Type',:readonly => disable_flag %>
+                          <% else %>
+                              <%= select_tag(:business_type,options_for_select(Business::BUSINESS_TYPES,business_type),:class => 'form-control',:prompt => 'Select your Business Type',:name => "business[business_type]") %>
+                          <% end %>
+                        </div>
+
+                        <div class="btn-group col-sm-12" style="display: none;" id="federal_number_div">
+                          <h5>Federal Number</h5>
+                          <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+                        </div>
+
+                        <div class="btn-group col-sm-12" style="display: none;" id="ssn_div">
+                          <h5>SSN</h5>
+                          <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+                        </div>
+
                         <div class="col-md-6">
-                          <label for="Name" class="control-label">Main Telephone Number</label>
+                          <label for="Name" class="control-label">Manager Name*</label>
+                          <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
+                        </div>
+                         
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Main Telephone Number*</label>
                           <%= text_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone') %>
                         </div>
-                        <div class="col-md-8">
+
+                       <!--  <div class="col-md-8">
                           <div class="details-zip">
                             <div class="col-xs-6 radio_inline">
                               <label class="btn active">
@@ -107,34 +154,34 @@
                         </div>
                         <div class="registerDetails form-group">
                           <div class="col-md-6">
-                            <%= hidden_field_tag :business_type,1,{:name=> 'business[business_type]'}%>
+                            <%#= hidden_field_tag :business_type,1,{:name=> 'business[business_type]'}%>
                             <label for="Name" class="control-label">Dan & Bradsheet Number</label>
-                            <%= text_field_tag('business[db_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:db_number),:class => 'form-control input-md',:placeholder => 'DAN') %>
+                            <%#= text_field_tag('business[db_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:db_number),:class => 'form-control input-md',:placeholder => 'DAN') %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">DBA</label>
-                            <%= text_field_tag('business[business_dba]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DBA') %>
+                            <%#= text_field_tag('business[business_dba]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DBA') %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Federal Tax ID</label>
-                            <%= text_field_tag('business[federal_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:federal_number),:class => 'form-control input-md',:placeholder => 'Federal Number') %>
+                            <%#= text_field_tag('business[federal_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:federal_number),:class => 'form-control input-md',:placeholder => 'Federal Number') %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Manager Name</label>
-                            <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
+                            <%#= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
                           </div>
                         </div>
                         <div class="soleproDetails  form-group">
                           <div class="col-md-6">
-                            <%= hidden_field_tag :business_type,0,{:name=> 'business[business_type]'}%>
+                            <%#= hidden_field_tag :business_type,0,{:name=> 'business[business_type]'}%>
                             <label for="Name" class="control-label">DOB</label>
-                            <%= text_field_tag('business[dob]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DOB') %>
+                            <%#= text_field_tag('business[dob]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DOB') %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">SSN</label>
-                            <%= text_field_tag('business[ssn]',@app_user.try(:business_app_users).try(:first).try(:business).try(:ssn),:class => 'form-control input-md',:placeholder => 'SSN') %>
+                            <%#= text_field_tag('business[ssn]',@app_user.try(:business_app_users).try(:first).try(:business).try(:ssn),:class => 'form-control input-md',:placeholder => 'SSN') %>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     <!-- Button group -->
@@ -158,7 +205,7 @@
                           <h2>Billing Address</h2>
                         </div>
                         <div class="col-md-6">
-                          <label for="Name" class="control-label">Address 1</label>
+                          <label for="Name" class="control-label">Address 1*</label>
                           <%= text_field_tag('app_user_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
                         </div>
                         <div class="col-md-6">
@@ -170,7 +217,7 @@
                           <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                         </div>
                         <div class="col-md-6">
-                          <label for="Name" class="control-label">Zipcode</label>
+                          <label for="Name" class="control-label">Zipcode*</label>
                           <%= text_field_tag('app_user_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip") %>
                         </div>
                         <div class="col-md-12 address-sty">
@@ -182,7 +229,7 @@
                         </div>
                         <div id="shipping_address"> 
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Address 1</label>
+                            <label for="Name" class="control-label">Address 1*</label>
                             <%= text_field_tag('shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_shipping_address_1") %>
                           </div>
                           <div class="col-md-6">
@@ -194,7 +241,7 @@
                             <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                           </div>
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Zipcode</label>
+                            <label for="Name" class="control-label">Zipcode*</label>
                             <%= text_field_tag('shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip") %>
                           </div>
                         </div>
@@ -206,7 +253,7 @@
                           </div>
                           <div id="service_address">
                             <div class="col-md-6">
-                              <label for="Name" class="control-label">Address 1</label>
+                              <label for="Name" class="control-label">Address 1*</label>
                               <%= text_field_tag('service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_service_address_1") %>
                             </div>
                             <div class="col-md-6">
@@ -218,7 +265,7 @@
                               <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                             </div>
                             <div class="col-md-6">
-                              <label for="Name" class="control-label">Zipcode</label>
+                              <label for="Name" class="control-label">Zipcode*</label>
                               <%= text_field_tag('service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip") %>
                             </div>
                           </div>
@@ -243,7 +290,7 @@
                           <h2>Billing Address</h2>
                         </div>
                         <div class="col-md-6">
-                          <label for="Name" class="control-label">Address 1</label>
+                          <label for="Name" class="control-label">Address 1*</label>
                           <%= text_field_tag('business_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
                         </div>
                         <div class="col-md-6">
@@ -255,7 +302,7 @@
                           <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                         </div>
                         <div class="col-md-6">
-                          <label for="Name" class="control-label">Zipcode</label>
+                          <label for="Name" class="control-label">Zipcode*</label>
                           <%= text_field_tag('business_addresses[zip]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip") %>
                         </div>
                         <div class="col-md-12 address-sty">
@@ -267,11 +314,11 @@
                         </div>
                         <div id="business_service_address">
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Address 1</label>
+                            <label for="Name" class="control-label">Address 1*</label>
                             <%= text_field_tag('business_shipping_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
                           </div>
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Address 2</label>
+                            <label for="Name" class="control-label">Address 2*</label>
                             <%= text_field_tag('business_shipping_addresses[address2]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
                           </div>
                           <div class="col-md-6">
@@ -279,7 +326,7 @@
                             <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                           </div>
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Zipcode</label>
+                            <label for="Name" class="control-label">Zipcode*</label>
                             <%= text_field_tag('business_shipping_addresses[zip]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip") %>
                           </div>
                         </div>
@@ -292,7 +339,7 @@
                         </div>
                         <div id="business_shipping_address" %>
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Address 1</label>
+                            <label for="Name" class="control-label">Address 1*</label>
                             <%= text_field_tag('business_service_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
                           </div>
                           <div class="col-md-6">
@@ -304,7 +351,7 @@
                             <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
                           </div>
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Zipcode</label>
+                            <label for="Name" class="control-label">Zipcode*</label>
                             <%= text_field_tag('business_service_addresses[zip]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip") %>
                           </div>
                         </div>
@@ -350,7 +397,7 @@
                         <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
                         <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
                         <%= hidden_field_tag :effective_price,135,{:name=> 'order_items[effective_price]'}%>
-                        <%= submit_tag('Submit') %>
+                         <%= submit_tag('Submit',:class => 'btn btn-info',:id => 'order_submit_button') %>
                       </div>
                     </div>
                   </div>
@@ -372,6 +419,158 @@
 
 
 <script>
+$('#first_name').blur(function(){
+  var  first_name = $('#first_name').val();
+  if (first_name == '') {
+    alert("Please enter First Name")
+  }
+});
+$('#mobile').blur(function(){
+  var  mobile = $('#mobile').val();
+  if (mobile == '') {
+    alert("Please enter Mobile")
+  }
+});
+$('#app_user_last_name').blur(function(){
+  var  last_name = $('#app_user_last_name').val();
+  if (last_name == '') {
+    alert("Please enter Last Name")
+  }
+});
+$('#primary_id').blur(function(){
+  var primary_id = $('#primary_id').val();
+  if (primary_id == '') {
+    alert("Please select one Id")
+  }
+});
+$('#secondary_id').blur(function(){
+  var secondary_id = $('#secondary_id').val();
+  if (secondary_id == '') {
+    alert("Please select one Id")
+  }
+});
+$('#business_manager_name').blur(function(){
+  var business_manager_name = $('#business_manager_name').val();
+  if (business_manager_name == '') {
+    alert("Please enter Manager Name")
+  }
+});
+$('#business_manager_contact').blur(function(){
+  var business_manager_contact = $('#business_manager_contact').val();
+  if (business_manager_contact == '') {
+    alert("Please enter Manager Contact")
+  }
+});
+$('#billing_address_1').blur(function(){
+  var billing_address_1 = $('#billing_address_1').val();
+  if (billing_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#billing_zip').blur(function(){
+  var billing_zip = $('#billing_zip').val();
+  if (billing_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#shipping_address_1').blur(function(){
+  var shipping_address_1 = $('#shipping_address_1').val();
+  if (shipping_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#shipping_zip').blur(function(){
+  var shipping_zip = $('#shipping_zip').val();
+  if (shipping_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#service_address_1').blur(function(){
+  var service_address_1 = $('#service_address_1').val();
+  if (service_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#service_zip').blur(function(){
+  var service_zip = $('#service_zip').val();
+  if (service_zip == '') {
+    alert("Please fill the field")
+  }
+});
+
+
+ $("#order_submit_button").click(function(event){
+  event.preventDefault();
+        var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('#order_create_form').submit();
+         
+        }
+        
+    });
+
+
+
+ $( document ).ready(function() {
+        populate_user_type($('#user_type').val());
+        populate_business_type($('#business_type').val());
+        $('#user_type').on('change', function() {
+            populate_user_type($('#user_type').val())
+        });
+        $('#business_type').on('change', function() {
+            populate_business_type($('#business_type').val())
+        });
+    });
+    function populate_user_type(user_type) {
+        if(user_type == 'business'){
+            $('#business_type_div').show();
+            $('#business_name_div').show();
+        }else{
+            $("#business_type :selected").prop('selected', false);
+            $('#business_type_div').hide();
+            $('#business_name').val('');
+            $('#business_name_div').hide();
+            $('#federal_number').val('');
+            $('#ssn').val('');
+            $('#federal_number_div').hide();
+            $('#ssn_div').hide();
+        }
+    }
+    function populate_business_type(business_type){
+        if(business_type != '') {
+            if (business_type == <%= Business::SOLE_PROPRIETOR %>) {
+                $('#ssn_div').show();
+                $('#federal_number_div').hide();
+                $('#federal_number').val('');
+            } else if (business_type == <%= Business::REGISTERED %>) {
+                $('#ssn_div').hide();
+                $('#ssn').val('');
+                $('#federal_number_div').show();
+            }
+            $('#federal_number, #business_name, #ssn').removeAttr("disabled");
+        }else{
+            $('#ssn_div').hide();
+            $('#ssn').val('');
+            $('#federal_number_div').hide();
+            $('#federal_number').val('');
+        }
+    }
+
 $( document ).ready(function() {
   var  abc = $('#first_name').val();
   $('#getnamevalue').val(abc);

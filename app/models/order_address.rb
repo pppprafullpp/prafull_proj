@@ -17,4 +17,24 @@ class OrderAddress < ActiveRecord::Base
     order_addresses
   end
 
+  def self.update_order_addresses(params)
+    order_addresses = []
+    order_addresses_param = params[:order_addresses].present? ? params[:order_addresses] : []
+    order_addresses_param.each do |address|
+      order_address = ''
+      address.each do |key,value|
+        order_address = self.find_by_id(value) if key == 'id'
+      end
+      if order_address.present?
+        address.each do |key,value|
+          order_address[key] = value unless key == 'id'
+        end
+        if order_address.save!
+          order_addresses << order_address
+        end
+      end
+    end
+    order_addresses
+  end
+
 end

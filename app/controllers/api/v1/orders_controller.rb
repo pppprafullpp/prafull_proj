@@ -34,6 +34,37 @@ class Api::V1::OrdersController < ApplicationController
 		end
 	end
 
+	def update
+		user_type = params[:app_user][:user_type].present? ? params[:app_user][:user_type] : nil
+		if [AppUser::RESIDENCE,AppUser::BUSINESS].include?(user_type)
+			order = Order.where(:id => params[:order][:id],:app_user_id => params[:order][:app_user_id]).first
+			if order.present?
+				if order.update_attributes(order_params)
+					order_items = OrderItem.update_order_items(params)
+					app_user = AppUser.update_app_user(params,order.app_user_id,order)
+					order_addresses = OrderAddress.update_order_addresses(params)
+					if user_type == AppUser::BUSINESS
+						business = Business.get_business_by_user(app_user.id)
+						OrderMailer.delay.order_confirmation(app_user,order)
+						render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business.business_addresses.as_json}
+					else
+						OrderMailer.delay.order_confirmation(app_user,order)
+						render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:app_user_addresses => app_user.app_user_addresses.as_json}
+					end
+				else
+					render :status => 401,
+								 :json => { :success => false ,:message => order.errors.full_messages}
+				end
+			else
+				render :status => 401,
+							 :json => { :success => false ,:message => 'No Order Found'}
+			end
+		else
+			render :status => 401,
+						 :json => { :success => false ,:message => 'Invalid Parameters'}
+		end
+	end
+
 	def create_bck
 		@order = Order.new(order_params)
 		@order.order_id=rand(36**8).to_s(36).upcase
@@ -115,7 +146,7 @@ class Api::V1::OrdersController < ApplicationController
 				app_user = AppUser.where(:id => params[:app_user_id]).first
 				#category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order_items.first.deal_id).first.name.downcase
 				if app_user.present? and app_user.user_type == AppUser::BUSINESS
-					business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",app_user.id).first
+					business = Business.get_business_by_user(app_user.id)
 					render :status => 200,
 								 :json => {
 										 :success => true,
@@ -218,7 +249,7 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.require(:order).permit(:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same)
+		params.require(:order).permit(:id,:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same)
 	end
 
 end

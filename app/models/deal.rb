@@ -229,8 +229,8 @@ class Deal < ActiveRecord::Base
       order_items_hash['deal']['deal_equipments'] = []
       #order_items_hash['deal']['deal_attributes']['deal_equipments'] = {}
       category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order_item.deal_id).first.name.downcase
-      order_items_hash['id'] = order_item.order_id
-      order_items_hash['order_id'] = order_item.id
+      order_items_hash['id'] = order_item.id
+      order_items_hash['order_id'] = order_item.order_id
       order_items_hash['deal_id'] = order_item.deal_id
       order_items_hash['deal_price'] = order_item.deal_price
       order_items_hash['effective_price'] = order_item.effective_price

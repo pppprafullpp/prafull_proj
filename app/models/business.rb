@@ -46,4 +46,8 @@ class Business < ActiveRecord::Base
     end
   end
 
+  def self.get_business_by_user(user_id)
+    Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",user_id).first
+  end
+
 end

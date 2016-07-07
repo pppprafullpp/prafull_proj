@@ -497,7 +497,42 @@ $('#service_zip').blur(function(){
     alert("Please fill the field")
   }
 });
-
+$('#app_user_billing_address_1').blur(function(){
+  var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+  if (app_user_billing_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_billing_zip').blur(function(){
+  var app_user_billing_zip = $('#app_user_billing_zip').val();
+  if (app_user_billing_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_shipping_address_1').blur(function(){
+  var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+  if (app_user_shipping_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_shipping_zip').blur(function(){
+  var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+  if (app_user_shipping_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_service_address_1').blur(function(){
+  var app_user_service_address_1 = $('#app_user_service_address_1').val();
+  if (app_user_service_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_service_zip').blur(function(){
+  var app_user_service_zip = $('#app_user_service_zip').val();
+  if (app_user_service_zip == '') {
+    alert("Please fill the field")
+  }
+});
 
  $("#order_submit_button").click(function(event){
   event.preventDefault();
@@ -514,7 +549,13 @@ $('#service_zip').blur(function(){
         var shipping_zip = $('#shipping_zip').val();
         var service_address_1 = $('#service_address_1').val();
         var service_zip = $('#service_zip').val();
-        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' ) {
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
              alert("Please fill all the mandatory fields.")
         }
         else {

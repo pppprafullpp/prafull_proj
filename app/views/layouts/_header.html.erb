@@ -2,40 +2,42 @@
   <div class="title-area">
     <%= link_to "Service Deals", root_path, class: "text-header" %>
     <div class="logout">
-        <% if user_signed_in? %>
-           <div><%= link_to 'Logout', destroy_user_session_path, :method=>:delete%></div>
-        <% end %> 
-      </div>
+      <% if user_signed_in? %>
+          <div><%= link_to 'Logout', destroy_user_session_path, :method=>:delete%></div>
+      <% end %>
+    </div>
   </div>
-  
+
   <section class="top-bar-section">
     <ul class="menu">
-        <% if user_signed_in? && current_user.is_at_admin_level? %>
-        
-        <li><%= link_to "Service Category", service_categories_path %></li>
-        
-        <li><%= link_to "Service Providers", service_providers_path %></li>
+      <% if user_signed_in? && current_user.is_at_admin_level? %>
 
-        <li><%= link_to "Zip Codes", zipcodes_path %></li>
+          <li><%= link_to "S Category", service_categories_path %></li>
 
-        <li><%= link_to "Deals", deals_path %></li>
+          <li><%= link_to "S Providers", service_providers_path %></li>
 
-        <li><%= link_to "Orders", orders_path %></li>
+          <li><%= link_to "Zips", zipcodes_path %></li>
 
-        <li><%= link_to "Gifts", gifts_path %></li>
+          <li><%= link_to "Deals", deals_path %></li>
 
-        <li><%= link_to "Referral Gifts", referral_gift_amounts_path %></li>
+          <li><%= link_to "Orders", orders_path %></li>
 
-        <li><%= link_to "Service Provider Checklists", service_provider_checklists_path %></li>
-        
-        <li><%= link_to "App Users", app_users_path %></li>
-        
-        <li><%= link_to "Users", users_path %></li>
+          <li><%= link_to "Gifts", gifts_path %></li>
 
-        <li><%= link_to "User Gifts", user_gifts_path %></li>
+          <li><%= link_to "Referral Gifts", referral_gift_amounts_path %></li>
 
-        <% end %>
-       
+          <li><%= link_to "SP Checklists", service_provider_checklists_path %></li>
+
+          <li><%= link_to "App Users", app_users_path %></li>
+
+          <li><%= link_to "Users", users_path %></li>
+
+          <li><%= link_to "User Gifts", user_gifts_path %></li>
+
+          <li><%= link_to "Channels", channels_path %></li>
+          <li><%= link_to "Packages", channel_packages_path %></li>
+      <% end %>
+
     </ul>
     <!--ul class="menu">
       <%# if user_signed_in? && current_user.is_at_admin_level? %>

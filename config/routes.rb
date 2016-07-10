@@ -42,7 +42,9 @@ Rails.application.routes.draw do
       match 'cashout' => 'cashout_infos#create', :via => :post
       match 'refer_contact' => 'app_users#refer_contact', :via => :post
       match 'validate_business_name' => 'dashboards#validate_business_name', :via => :post
-
+      match 'get_deal_channels' => 'deals#get_deal_channels', :via => :get
+      match 'get_channel_details' => 'deals#get_channel_details', :via => :get
+      match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
       resources :orders do
         collection do
           post :fetch_user_and_deal_details
@@ -108,6 +110,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :gifts
   resources :user_gifts
+  resources :channels
+  resources :channel_packages
 
 
   get 'service_deals' => 'website/home#index'

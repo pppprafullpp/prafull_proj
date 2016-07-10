@@ -1,7 +1,9 @@
 class DealAttributesController < ApplicationController
 
   def index
-
+    @category_name = params[:category_name]
+    @deal_id = params[:deal_id]
+    @deal_attributes = eval("#{@category_name.camelcase}DealAttribute").where(:deal_id => @deal_id)
   end
 
   def new
@@ -15,10 +17,10 @@ class DealAttributesController < ApplicationController
     @deal_attribute = eval("#{params[:category_name].camelcase}DealAttribute").new(deal_attributes_params)
 
     respond_to do |format|
-      if @deal_attribute.save
+      if @deal_attribute.save!
         #send_notification
         format.html { redirect_to deals_path, :notice => 'You have successfully created a deal attribute' }
-        format.xml  { render :xml => @deal_attribute, :status => :created, :deal => @deal }
+        format.xml  { render :xml => @deal_attribute, :status => :created, :deal_attribute => @deal_attribute }
       else
         #raise @deal.errors.inspect
         format.html { render :action => "new" }
@@ -28,26 +30,32 @@ class DealAttributesController < ApplicationController
   end
 
   def edit
-    @deal = Deal.find(params[:id])
+    @category_name = params[:category_name]
+    @deal_id = params[:deal_id]
+    @deal_attribute = eval("#{@category_name.camelcase}DealAttribute").where(:id => params[:id]).first
   end
+
   def update
-    @deal = Deal.find(params[:id])
+    @deal_attribute = eval("#{params[:category_name].camelcase}DealAttribute").where(:id => params[:id]).first
     respond_to do |format|
-      if @deal.update(deal_params)
+      if @deal_attribute.update(deal_attributes_params)
+        flash[:notice] = 'You have successfully updated a Deal attribute.'
         format.html { redirect_to deals_path, notice: 'You have successfully updated a Deal attribute.' }
-        format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
+        format.xml  { render :xml => @deal_attribute, :status => :created, :deal_attribute => @deal_attribute }
       else
-        format.html { render :edit }
-        format.json { render json: @deal.errors, status: :unprocessable_entity }
+        flash[:warning] = @deal_attribute.errors.full_messages
+        format.html {  redirect_to edit_deal_attribute_path(:id => params[:id],:category_name => params[:category_name],:deal_id => @deal_attribute.deal_id) }
+        format.json { render json: @deal_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
+
   def destroy
-    @deal = Deal.find(params[:id])
+    @deal_attribute = Deal.find(params[:id])
     respond_to do |format|
-      if @deal.destroy
+      if true#@deal_attribute.destroy
         format.html { redirect_to deals_path, :notice => 'You have successfully removed a deal' }
-        format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
+        format.xml  { render :xml => @deal_attribute, :status => :created, :deal_attribute => @deal_attribute }
       end
     end
   end

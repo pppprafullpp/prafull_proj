@@ -22,9 +22,9 @@ class Business < ActiveRecord::Base
       business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
       if business_type.present?
         if business_type == SOLE_PROPRIETOR
-          business = self.where(:ssn => params[:business][:ssn]).first
+          business = self.where(:ssn => params[:business][:ssn]).first if params[:business][:ssn].present?
         elsif business_type == REGISTERED
-          business = self.where(:federal_number => params[:business][:federal_number]).first
+          business = self.where(:federal_number => params[:business][:federal_number]).first if params[:business][:federal_number].present?
         end
         business = self.where(:id => params[:business][:id]).first if params[:business][:id].present? and !business.present?
         unless business.present?

@@ -30,12 +30,12 @@
         <div class="tabber">
           <div class="tab-wrapper tab-primary">
             <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#personal-info">Personal Information</a></li>
+              <li class="active"><a id="personal_information_menu_tab" data-toggle="tab" href="#personal-info">Personal Information</a></li>
               <% if @app_user.user_type == "business" %>
-                <li><a data-toggle="tab" href="#business-info">Business Information</a></li>
+                <li><a id="business_information_menu_tab" data-toggle="tab" href="#business-info">Business Information</a></li>
               <% end %>
-              <li><a data-toggle="tab" href="#address-info">Address Information</a></li>
-              <li><a data-toggle="tab" href="#order-review" id="ordertab">Order Review</a></li>
+              <li><a id="address_information_menu_tab" data-toggle="tab" href="#address-info">Address Information</a></li>
+              <li><a id="order_information_menu_tab" data-toggle="tab" href="#order-review" id="ordertab">Order Review</a></li>
             </ul>
             <%= form_tag create_order_website_app_users_path(@app_user), method: :post, :id=> "order_create_form" do %>
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -188,7 +188,7 @@
                     <div class="btn-group btnBox">
                       <div class="col-sm-12 text-right">
                         <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
-                        <button class="btn-primary btn-sm save btnNext" type="button">
+                        <button class="btn-primary btn-sm save btnNext" type="button" id="business_information_tab">
                           <a href="#">Next</a>
                         </button>
                       </div>
@@ -276,7 +276,7 @@
                     <div class="btn-group btnBox">
                       <div class="col-sm-12 text-right">
                         <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
-                        <button class="btn-primary btn-sm save btnNext" type="button">
+                        <button class="btn-primary btn-sm save btnNext" type="button" id="residence_address_information_tab">
                           <a href="#">Next</a>
                         </button>
                       </div>
@@ -318,7 +318,7 @@
                             <%= text_field_tag('business_shipping_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
                           </div>
                           <div class="col-md-6">
-                            <label for="Name" class="control-label">Address 2*</label>
+                            <label for="Name" class="control-label">Address 2</label>
                             <%= text_field_tag('business_shipping_addresses[address2]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
                           </div>
                           <div class="col-md-6">
@@ -361,7 +361,7 @@
                     <div class="btn-group btnBox">
                       <div class="col-sm-12 text-right">
                         <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
-                        <button class="btn-primary btn-sm save btnNext" type="button">
+                        <button class="btn-primary btn-sm save btnNext" type="button" id="business_address_information_tab">
                           <a href="#">Next</a>
                         </button>
                       </div>
@@ -534,6 +534,8 @@ $('#app_user_service_zip').blur(function(){
   }
 });
 
+
+
  $("#order_submit_button").click(function(event){
   event.preventDefault();
         var  first_name = $('#first_name').val();
@@ -566,6 +568,131 @@ $('#app_user_service_zip').blur(function(){
     });
 
 
+$("#order_information_menu_tab").click(function(event){
+       var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+    });
+
+
+$("#address_information_menu_tab").click(function(event){
+        var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+    });
+
+$("#business_information_menu_tab").click(function(event) {
+  var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+       
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '') {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+});
+
+
+
+$("#residence_address_information_tab").click(function(event){
+  event.preventDefault();
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+
+$("#business_address_information_tab").click(function(event){
+  event.preventDefault();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '') {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+
+
+
+$("#business_information_tab").click(function(event){
+  event.preventDefault();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        if( business_manager_name == '' || business_manager_contact == '' ) {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+$("#personal_information_tab").click(function(event){
+  event.preventDefault();
+        var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' )  {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
 
  $( document ).ready(function() {
         populate_user_type($('#user_type').val());
@@ -645,9 +772,9 @@ $("#registered").click(function(){
 	$(".registerDetails").show();
 });
 
-$('.btnNext').click(function(){
-  $('.nav-tabs > .active').next('li').find('a').trigger('click');
-});
+// $('.btnNext').click(function(){
+//   $('.nav-tabs > .active').next('li').find('a').trigger('click');
+// });
 
 $('.btnPrevious').click(function(){
   $('.nav-tabs > .active').prev('li').find('a').trigger('click');

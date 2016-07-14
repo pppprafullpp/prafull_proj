@@ -291,11 +291,11 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 1*</label>
-                          <%= text_field_tag('business_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
+                          <%= text_field_tag('business_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 2</label>
-                          <%= text_field_tag('business_addresses[address2]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address2',:id => "billing_address_2") %>
+                          <%= text_field_tag('business_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "billing_address_2") %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Town/City</label>
@@ -303,7 +303,7 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Zipcode*</label>
-                          <%= text_field_tag('business_addresses[zip]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip") %>
+                          <%= text_field_tag('business_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip") %>
                         </div>
                         <div class="col-md-12 address-sty">
                           <h4>Shipping Address</h4>
@@ -315,11 +315,11 @@
                         <div id="business_service_address">
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 1*</label>
-                            <%= text_field_tag('business_shipping_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
+                            <%= text_field_tag('business_shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 2</label>
-                            <%= text_field_tag('business_shipping_addresses[address2]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
+                            <%= text_field_tag('business_shipping_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
@@ -327,7 +327,7 @@
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Zipcode*</label>
-                            <%= text_field_tag('business_shipping_addresses[zip]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip") %>
+                            <%= text_field_tag('business_shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip") %>
                           </div>
                         </div>
                         <div class="col-md-12 address-sty">
@@ -340,11 +340,11 @@
                         <div id="business_shipping_address" %>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 1*</label>
-                            <%= text_field_tag('business_service_addresses[address1]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
+                            <%= text_field_tag('business_service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 2</label>
-                            <%= text_field_tag('business_service_addresses[address2]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Address2', :id=> "service_address_2") %>
+                            <%= text_field_tag('business_service_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2', :id=> "service_address_2") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
@@ -352,7 +352,7 @@
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Zipcode*</label>
-                            <%= text_field_tag('business_service_addresses[zip]',@app_user.app_user_addresses.first,:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip") %>
+                            <%= text_field_tag('business_service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip") %>
                           </div>
                         </div>
                       </div>

@@ -38,8 +38,8 @@
                   <div class="vertical_middle" style="overflow: hidden;"><img src="<%= data['deal_image_url'] %>"  height="70" width="155" alt=""></div>
                   <h5>$<%= data['deal_price'] %> <%= data['title'] %></h5>
                   <ul>
-                    <li><%= data['download_speed'] %> Mbps Download Speed</li>
-                    <li><%= data['upload_speed'] %> Mbps Upload Speeds</li>
+                    <!-- <li><%#= data['download_speed'] %> Mbps Download Speed</li> -->
+                    <li><%= data['short_description'] %></li>
                   </ul>
                   <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
                   <div class="box_down">

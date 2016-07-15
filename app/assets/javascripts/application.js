@@ -239,13 +239,13 @@ function initPage() {
     	}
 	});
 
-	$("#is_contract").click(function(){
-		if($(this).is(':checked')){
-    		$("#contract_period").prop("disabled",false);
-    	}else{
-    		$("#contract_period").prop("disabled",true);
-    	}
-	});
+	// $("#is_contract").click(function(){
+	// 	if($(this).is(':checked')){
+ //    		$("#contract_period").prop("disabled",false);
+ //    	}else{
+ //    		$("#contract_period").prop("disabled",true);
+ //    	}
+	// });
 
     $("#deal-include-zipcode").prop("disabled",true);
 	$(".additional-offer-zipcode").prop("disabled",true);

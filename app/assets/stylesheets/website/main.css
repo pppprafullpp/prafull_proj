@@ -2410,3 +2410,5 @@ color:#555;
     width: 100%;
 }
 .bor-btno{ border-bottom:none;}
+.auto-height {min-height:520px;}
+.description-height {height: 40px;}

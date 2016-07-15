@@ -113,30 +113,30 @@
           </tr>
             
        </table>
-          <%= f.fields_for :internet_deal_attributes do |builder| %>
-            <%= render 'internet_attribute', f: builder %>
-          <% end %>
+          <%#= f.fields_for :internet_deal_attributes do |builder| %>
+            <%#= render 'internet_attribute', f: builder %>
+          <%# end %>
 
-          <%= f.fields_for :telephone_deal_attributes do |builder| %>
-            <%= render 'telephone_attribute', f: builder %>
-            <% end %>
+          <%#= f.fields_for :telephone_deal_attributes do |builder| %>
+            <%#= render 'telephone_attribute', f: builder %>
+            <%# end %>
           
-          <%= f.fields_for :cable_deal_attributes do |builder| %>
-            <%= render 'cable_attribute', f: builder %>
-          <% end %>
+          <%#= f.fields_for :cable_deal_attributes do |builder| %>
+            <%#= render 'cable_attribute', f: builder %>
+          <%# end %>
 
-          <%= f.fields_for :cellphone_deal_attributes do |builder| %>
-            <%= render 'cellphone_attribute', f: builder %>
-          <% end %>
+          <%#= f.fields_for :cellphone_deal_attributes do |builder| %>
+            <%#= render 'cellphone_attribute', f: builder %>
+          <%# end %>
 
-          <%= f.fields_for :bundle_deal_attributes do |builder| %>
-            <%= render 'bundle_attribute', f: builder %>
-          <% end %>
+          <%#= f.fields_for :bundle_deal_attributes do |builder| %>
+            <%#= render 'bundle_attribute', f: builder %>
+          <%# end %>
             
           <%= f.fields_for :additional_offers do |builder| %>
             <%= render 'additional_offer_fields', f: builder %>
           <% end %>
-          <%= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
+          <%#= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
           
           
 
@@ -170,6 +170,14 @@
       $("#bundle-cable-free-channels").prop("required",true);
     }
   }
+
+$("#deal_is_contract").click(function(){
+    if($(this).is(':checked')){
+        $("#deal_contract_period").prop("disabled",false);
+      }else{
+        $("#deal_contract_period").prop("disabled",true);
+      }
+  });
 
   
 </script>

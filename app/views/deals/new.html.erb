@@ -53,7 +53,7 @@
                 <%= f.text_field :price %></div>
               </td>
               <td>
-                <div>URL:</div>
+                <div>URL:<span id="mandat">*</span></div>
                 <%= f.text_field :url %></div>
               </td>
             </tr>
@@ -138,7 +138,7 @@
           <%= f.fields_for :additional_offers do |builder| %>
               <%= render 'additional_offer_fields', f: builder %>
           <% end %>
-          <%= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
+          <%#= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
 
 
           <div><%= f.submit "Create" %></div>
@@ -146,3 +146,13 @@
     </td>
   </tr>
 </table>
+
+<script>
+$("#is_contract").click(function(){
+    if($(this).is(':checked')){
+        $("#contract_period").prop("disabled",false);
+      }else{
+        $("#contract_period").prop("disabled",true);
+      }
+  });
+</script>

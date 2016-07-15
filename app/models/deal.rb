@@ -25,7 +25,7 @@ class Deal < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-  validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
+  validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date, :image
   before_save :update_effective_price
   ### CONSTANTS ###
   INTERNET_CATEGORY = 1
@@ -119,6 +119,7 @@ class Deal < ActiveRecord::Base
   def effective_price
     effective_price = get_effective_price
     if effective_price != self.deal_price.to_f
+      effective_price = effective_price.present? ? effective_price : 0
       sprintf '%.2f', effective_price
     else
       effective_price=0

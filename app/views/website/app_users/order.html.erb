@@ -7,9 +7,9 @@
         <div class="order-info text-center">
           <div class="thumb"><img src="<%= @deal.image.present? ? @deal.image.url : '' %>" alt="<%= @deal.title %>" height="70" width="155"></div>
           <h2 class="text-center"><%= @deal.title %></h2>
-          <div class="text-center"> 
+          <div class="text-center">
             <small><%= @deal.short_description %></small><br />
-            <small> Contract period <%= @deal.contract_period %></small> 
+            <small> Contract period <%= @deal.contract_period %></small>
           </div>
           <div class="gen-info">
             <table class="table table-condensed">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-8">
         <div class="tabber">
           <div class="tab-wrapper tab-primary">
@@ -39,7 +39,7 @@
             </ul>
             <%= form_tag create_order_website_app_users_path(@app_user), method: :post, :id=> "order_create_form" do %>
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-              <div class="tab-content formContainer"> 
+              <div class="tab-content formContainer">
                 <!-- About -->
                 <div id="personal-info" class="tab-pane active">
                   <div class="row">
@@ -62,11 +62,11 @@
                       </div>
                       <div class="col-md-6">
                         <label for="Name" class="control-label">Primary Id*</label>
-                        <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:orders).try(:last).try(:primary_id)),:class => 'form-control',:id => "primary_id") %> 
+                        <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:orders).try(:last).try(:primary_id)),:class => 'form-control',:id => "primary_id") %>
                       </div>
                       <div class="col-md-6">
                         <label for="Name" class="control-label">Secondary Id*</label>
-                        <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]),:class => 'form-control',:id => "secondary_id") %> 
+                        <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]),:class => 'form-control',:id => "secondary_id") %>
                       </div>
                     </div>
                   </div>
@@ -79,7 +79,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Body -->
                 <% if @app_user.user_type == "business" %>
                   <div id="business-info" class="tab-pane">
@@ -132,7 +132,7 @@
                           <label for="Name" class="control-label">Manager Name*</label>
                           <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
                         </div>
-                         
+
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Main Telephone Number*</label>
                           <%= text_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone') %>
@@ -195,7 +195,7 @@
                     </div>
                   </div>
                 <% end %>
-                
+
                 <!-- Membership Info -->
                 <% if @app_user.user_type == "residence" %>
                   <div id="address-info" class="tab-pane">
@@ -206,11 +206,14 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 1*</label>
-                          <%= text_field_tag('app_user_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
+                          <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 %>
+                          <% @ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address2 %>
+                          <% @zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.zip %>
+                          <%= text_field_tag('app_user_addresses[address1]',@ad1.present? ? @ad1: nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 2</label>
-                          <%= text_field_tag('app_user_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_billing_address_2") %>
+                          <%= text_field_tag('app_user_addresses[address2]', @ad2.present? ? @ad2: nil ,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_billing_address_2") %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Town/City</label>
@@ -218,23 +221,26 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Zipcode*</label>
-                          <%= text_field_tag('app_user_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip") %>
+                          <%= text_field_tag('app_user_addresses[zip]',@zip.present? ? @zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip") %>
                         </div>
                         <div class="col-md-12 address-sty">
                           <h4>Shipping Address</h4>
+                          <% @ship_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.address1 %>
+                          <% @ship_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.address2 %>
+                          <% @ship_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.zip %>
                           <div class="checkbox checkbox-info">
                             <input id="checkbox7a" type="checkbox" onclick="SetAppUserShipping(this.checked);">
                             <label for="checkbox7a">Same as Billing Address </label>
                           </div>
                         </div>
-                        <div id="shipping_address"> 
+                        <div id="shipping_address">
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 1*</label>
-                            <%= text_field_tag('shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_shipping_address_1") %>
+                            <%= text_field_tag('shipping_addresses[address1]',@ship_ad1.present? ? @ship_ad1: nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_shipping_address_1") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 2</label>
-                            <%= text_field_tag('shipping_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_shipping_address_2") %>
+                            <%= text_field_tag('shipping_addresses[address2]',@ship_ad2.present? ? @ship_ad2: nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_shipping_address_2") %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
@@ -242,11 +248,15 @@
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Zipcode*</label>
-                            <%= text_field_tag('shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip") %>
+                            <%= text_field_tag('shipping_addresses[zip]',@ship_zip.present? ? @ship_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip") %>
                           </div>
                         </div>
                         <div class="col-md-12 address-sty">
                           <h4>Service Address</h4>
+                          <% @s_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address1 %>
+                          <% @s_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address2 %>
+                          <% @s_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.zip %>
+
                           <div class="checkbox checkbox-info">
                             <input id="checkboxb" type="checkbox" onclick="SetAppUserService(this.checked);">
                             <label for="checkboxb">Same as Billing Address </label>
@@ -254,11 +264,11 @@
                           <div id="service_address">
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Address 1*</label>
-                              <%= text_field_tag('service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_service_address_1") %>
+                              <%= text_field_tag('service_addresses[address1]',@s_ad1.present? ? @s_ad1: nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_service_address_1") %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Address 2</label>
-                              <%= text_field_tag('service_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_service_address_2") %>
+                              <%= text_field_tag('service_addresses[address2]',@s_ad2.present? ? @s_ad2: nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_service_address_2") %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Town/City</label>
@@ -266,7 +276,7 @@
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Zipcode*</label>
-                              <%= text_field_tag('service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip") %>
+                              <%= text_field_tag('service_addresses[zip]',@s_zip.present? ? @s_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip") %>
                             </div>
                           </div>
                         </div>
@@ -415,7 +425,7 @@
 <input type="hidden" id="getsecondaryvalue">
 </section>
 
-<!--Order-form--> 
+<!--Order-form-->
 
 
 <script>
@@ -562,9 +572,9 @@ $('#app_user_service_zip').blur(function(){
         }
         else {
           $('#order_create_form').submit();
-         
+
         }
-        
+
     });
 
 
@@ -615,7 +625,7 @@ $("#business_information_menu_tab").click(function(event) {
         var  last_name = $('#app_user_last_name').val();
         var primary_id = $('#primary_id').val();
         var secondary_id = $('#secondary_id').val();
-       
+
         if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '') {
              alert("Please fill all the mandatory fields.")
              event.stopImmediatePropagation();
@@ -637,9 +647,9 @@ $("#residence_address_information_tab").click(function(event){
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-         
+
         }
-        
+
     });
 
 $("#business_address_information_tab").click(function(event){
@@ -655,9 +665,9 @@ $("#business_address_information_tab").click(function(event){
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-         
+
         }
-        
+
     });
 
 
@@ -671,9 +681,9 @@ $("#business_information_tab").click(function(event){
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-         
+
         }
-        
+
     });
 $("#personal_information_tab").click(function(event){
   event.preventDefault();
@@ -689,9 +699,9 @@ $("#personal_information_tab").click(function(event){
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-         
+
         }
-        
+
     });
 
  $( document ).ready(function() {
@@ -826,57 +836,56 @@ $("#checkbox8a").change(function () {
 $("#checkbox8b").change(function () {
   $("#business_shipping_address").toggle();
 });
-  
-function SetService(checked) {  
-  if (checked) {  
-    document.getElementById('service_address_1').value = document.getElementById('billing_address_1').value; 
-    document.getElementById('service_address_2').value = document.getElementById('billing_address_2').value; 
-    document.getElementById('service_zip').value = document.getElementById('billing_zip').value;   
-  } 
-  else {  
+
+function SetService(checked) {
+  if (checked) {
+    document.getElementById('service_address_1').value = document.getElementById('billing_address_1').value;
+    document.getElementById('service_address_2').value = document.getElementById('billing_address_2').value;
+    document.getElementById('service_zip').value = document.getElementById('billing_zip').value;
+  }
+  else {
     document.getElementById('service_address_1').value = '';
-    document.getElementById('service_address_2').value = '';   
+    document.getElementById('service_address_2').value = '';
     document.getElementById('service_zip').value = '';
-  }  
-}  
+  }
+}
 
-function SetShipping(checked) {  
-  if (checked) {  
-    document.getElementById('shipping_address_1').value = document.getElementById('billing_address_1').value; 
-    document.getElementById('shipping_address_2').value = document.getElementById('billing_address_2').value; 
-    document.getElementById('shipping_zip').value = document.getElementById('billing_zip').value;   
-  } 
-  else {  
+function SetShipping(checked) {
+  if (checked) {
+    document.getElementById('shipping_address_1').value = document.getElementById('billing_address_1').value;
+    document.getElementById('shipping_address_2').value = document.getElementById('billing_address_2').value;
+    document.getElementById('shipping_zip').value = document.getElementById('billing_zip').value;
+  }
+  else {
     document.getElementById('shipping_address_1').value = '';
-    document.getElementById('shipping_address_2').value = '';   
+    document.getElementById('shipping_address_2').value = '';
     document.getElementById('shipping_zip').value = '';
-  }  
-}  
+  }
+}
 
-function SetAppUserService(checked) {  
-  if (checked) {  
-    document.getElementById('app_user_service_address_1').value = document.getElementById('app_user_billing_address_1').value; 
-    document.getElementById('app_user_service_address_2').value = document.getElementById('app_user_billing_address_2').value; 
-    document.getElementById('app_user_service_zip').value = document.getElementById('app_user_billing_zip').value;   
-  } 
-  else {  
+function SetAppUserService(checked) {
+  if (checked) {
+    document.getElementById('app_user_service_address_1').value = document.getElementById('app_user_billing_address_1').value;
+    document.getElementById('app_user_service_address_2').value = document.getElementById('app_user_billing_address_2').value;
+    document.getElementById('app_user_service_zip').value = document.getElementById('app_user_billing_zip').value;
+  }
+  else {
     document.getElementById('app_user_service_address_1').value = '';
-    document.getElementById('app_user_service_address_2').value = '';   
+    document.getElementById('app_user_service_address_2').value = '';
     document.getElementById('app_user_service_zip').value = '';
-  }  
-}  
+  }
+}
 
-function SetAppUserShipping(checked) {  
-  if (checked) {  
-    document.getElementById('app_user_shipping_address_1').value = document.getElementById('app_user_billing_address_1').value; 
-    document.getElementById('app_user_shipping_address_2').value = document.getElementById('app_user_billing_address_2').value; 
-    document.getElementById('app_user_shipping_zip').value = document.getElementById('app_user_billing_zip').value;   
-  } 
-  else {  
+function SetAppUserShipping(checked) {
+  if (checked) {
+    document.getElementById('app_user_shipping_address_1').value = document.getElementById('app_user_billing_address_1').value;
+    document.getElementById('app_user_shipping_address_2').value = document.getElementById('app_user_billing_address_2').value;
+    document.getElementById('app_user_shipping_zip').value = document.getElementById('app_user_billing_zip').value;
+  }
+  else {
     document.getElementById('app_user_shipping_address_1').value = '';
-    document.getElementById('app_user_shipping_address_2').value = '';   
+    document.getElementById('app_user_shipping_address_2').value = '';
     document.getElementById('app_user_shipping_zip').value = '';
-  }  
-}  
+  }
+}
 </script>
-

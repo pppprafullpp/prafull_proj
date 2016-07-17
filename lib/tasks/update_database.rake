@@ -10,6 +10,14 @@ namespace :update_database do
     end
   end
 
+
+  task update_effective_price_in_cellphone_deal_attributes: :environment do
+    deals = CellphoneDealAttribute.all
+    deals.each do |deal|
+      deal.save!
+    end
+  end
+
   task update_deal_equipments_set_deal_id: :environment do
     deals = Deal.all
     deals.each do |deal|

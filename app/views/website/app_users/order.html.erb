@@ -206,10 +206,11 @@
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 1*</label>
-                          <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 %>
+                          <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 if Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1.present?  %>
                           <% @ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address2 %>
                           <% @zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.zip %>
                           <%= text_field_tag('app_user_addresses[address1]',@ad1.present? ? @ad1: nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
+                          <%= hidden_field_tag 'app_user_addresses[address_type]',2,:name => "app_user_addresses[address_type]" %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 2</label>
@@ -242,6 +243,7 @@
                             <label for="Name" class="control-label">Address 2</label>
                             <%= text_field_tag('shipping_addresses[address2]',@ship_ad2.present? ? @ship_ad2: nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_shipping_address_2") %>
                           </div>
+                          <%= hidden_field_tag 'shipping_addresses[address_type]',1,:name => "shipping_addresses[address_type]" %>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Town/City</label>
                             <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
@@ -269,6 +271,7 @@
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Address 2</label>
                               <%= text_field_tag('service_addresses[address2]',@s_ad2.present? ? @s_ad2: nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_service_address_2") %>
+                              <%= hidden_field_tag 'service_addresses[address_type]',0,:name => "service_addresses[address_type]" %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Town/City</label>
@@ -302,6 +305,7 @@
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 1*</label>
                           <%= text_field_tag('business_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
+                          <%= hidden_field_tag 'business_addresses[address_type]',2,:name => "business_addresses[address_type]" %>
                         </div>
                         <div class="col-md-6">
                           <label for="Name" class="control-label">Address 2</label>
@@ -326,6 +330,7 @@
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 1*</label>
                             <%= text_field_tag('business_shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
+                            <%= hidden_field_tag 'business_shipping_addresses[address_type]',1,:name => "business_shipping_addresses[address_type]" %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 2</label>
@@ -351,6 +356,7 @@
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 1*</label>
                             <%= text_field_tag('business_service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
+  <%= hidden_field_tag 'business_service_addresses[address_type]',0,:name => "business_service_addresses[address_type]" %>
                           </div>
                           <div class="col-md-6">
                             <label for="Name" class="control-label">Address 2</label>
@@ -394,10 +400,18 @@
                         </div>
                       <% end %>
                       <div class="col-md-12"> <b>Address</b><br />
-                      <div class="">
-                        <span>Billing Address</span><br />
-                        <span>7708 Mapleridge Drive</span><br />
-                        <span>7502, United States</span><br />
+                      <div class="billing-address">
+                        <h5><b>Billing Address</b></h5>
+                          <div class="billing-address-innertxt"></div>
+
+                      </div>
+                      <div class="service-address">
+                        <h5><b>Shipping Address</b></h5>
+                        <div class="shipping-address-innertxt"></div>
+                      </div>
+                      <div class="service-address">
+                        <h5><b>Service Address</b></h5>
+                        <div class="service-address-innertxt"></div>
                       </div>
                       </div>
                     </div>
@@ -429,6 +443,7 @@
 
 
 <script>
+
 $('#first_name').blur(function(){
   var  first_name = $('#first_name').val();
   if (first_name == '') {
@@ -544,40 +559,6 @@ $('#app_user_service_zip').blur(function(){
   }
 });
 
-
-
- $("#order_submit_button").click(function(event){
-  event.preventDefault();
-        var  first_name = $('#first_name').val();
-        var  mobile = $('#mobile').val();
-        var  last_name = $('#app_user_last_name').val();
-        var primary_id = $('#primary_id').val();
-        var secondary_id = $('#secondary_id').val();
-        var business_manager_name = $('#business_manager_name').val();
-        var business_manager_contact = $('#business_manager_contact').val();
-        var billing_address_1 = $('#billing_address_1').val();
-        var billing_zip = $('#billing_zip').val();
-        var shipping_address_1 = $('#shipping_address_1').val();
-        var shipping_zip = $('#shipping_zip').val();
-        var service_address_1 = $('#service_address_1').val();
-        var service_zip = $('#service_zip').val();
-        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
-        var app_user_billing_zip = $('#app_user_billing_zip').val();
-        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
-        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
-        var app_user_service_address_1 = $('#app_user_service_address_1').val();
-        var app_user_service_zip = $('#app_user_service_zip').val();
-        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
-             alert("Please fill all the mandatory fields.")
-        }
-        else {
-          $('#order_create_form').submit();
-
-        }
-
-    });
-
-
 $("#order_information_menu_tab").click(function(event){
        var  first_name = $('#first_name').val();
         var  mobile = $('#mobile').val();
@@ -603,7 +584,6 @@ $("#order_information_menu_tab").click(function(event){
              event.stopImmediatePropagation();
         }
     });
-
 
 $("#address_information_menu_tab").click(function(event){
         var  first_name = $('#first_name').val();
@@ -632,22 +612,31 @@ $("#business_information_menu_tab").click(function(event) {
         }
 });
 
-
+var billing_address,service_address,shipping_address,app_user_billing_address_2,app_user_billing_address_1, app_user_billing_zip;
+var app_user_shipping_zip,app_user_service_address_1,app_user_service_address_2,app_user_service_zip,app_user_shipping_address_1,app_user_shipping_address_2;
 
 $("#residence_address_information_tab").click(function(event){
   event.preventDefault();
-        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
-        var app_user_billing_zip = $('#app_user_billing_zip').val();
-        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
-        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
-        var app_user_service_address_1 = $('#app_user_service_address_1').val();
-        var app_user_service_zip = $('#app_user_service_zip').val();
+        app_user_billing_address_2 = $('#app_user_billing_address_2').val();
+        app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        app_user_billing_zip = $('#app_user_billing_zip').val();
+        app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        app_user_service_address_1 = $('#app_user_service_address_1').val();
+        app_user_service_address_2 = $('#app_user_service_address_2').val();
+        app_user_service_zip = $('#app_user_service_zip').val();
+        app_user_shipping_address_1=$('#app_user_shipping_address_1').val();
+        app_user_shipping_address_2=$('#app_user_shipping_address_2').val();
         if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
              alert("Please fill all the mandatory fields.")
         }
         else {
+          billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b>Zip</b>"+app_user_billing_zip;
+          service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b>Zip</b>"+app_user_service_zip;
+          shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b>Zip</b>"+app_user_shipping_zip;
+          $(".service-address-innertxt").html(service_address);
+          $(".shipping-address-innertxt").html(shipping_address);
+          $(".billing-address-innertxt").html(billing_address);
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-
         }
 
     });
@@ -659,18 +648,15 @@ $("#business_address_information_tab").click(function(event){
         var shipping_address_1 = $('#shipping_address_1').val();
         var shipping_zip = $('#shipping_zip').val();
         var service_address_1 = $('#service_address_1').val();
+        var service_address_2 = $('#service_address_2').val();
         var service_zip = $('#service_zip').val();
         if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '') {
              alert("Please fill all the mandatory fields.")
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-
         }
-
     });
-
-
 
 $("#business_information_tab").click(function(event){
   event.preventDefault();
@@ -681,9 +667,7 @@ $("#business_information_tab").click(function(event){
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-
         }
-
     });
 $("#personal_information_tab").click(function(event){
   event.preventDefault();
@@ -699,10 +683,40 @@ $("#personal_information_tab").click(function(event){
         }
         else {
           $('.nav-tabs > .active').next('li').find('a').trigger('click');
-
         }
-
     });
+
+
+     $("#order_submit_button").click(function(event){
+       event.preventDefault();
+            var  first_name = $('#first_name').val();
+            var  mobile = $('#mobile').val();
+            var  last_name = $('#app_user_last_name').val();
+            var primary_id = $('#primary_id').val();
+            var secondary_id = $('#secondary_id').val();
+
+            var business_manager_name = $('#business_manager_name').val();
+            var business_manager_contact = $('#business_manager_contact').val();
+
+            var billing_address_1 = app_user_shipping_address_1;
+            var billing_address_2 = app_user_shipping_address_2;
+            var billing_zip = app_user_billing_zip;
+
+            var shipping_address_1 = app_user_shipping_address_1;
+            var shipping_address_2 = app_user_shipping_address_2;
+            var shipping_zip = app_user_shipping_zip;
+
+            var service_address_1 =app_user_service_address_1;
+            var service_address_2 =app_user_service_address_2;
+            var service_zip = app_user_service_zip;
+
+            if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+                 alert("Please fill all the mandatory fields.")
+            }
+            else {
+               $('#order_create_form').submit();
+            }
+        });
 
  $( document ).ready(function() {
         populate_user_type($('#user_type').val());

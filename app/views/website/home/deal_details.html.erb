@@ -72,9 +72,10 @@ var checkedValues;
   $( document ).ready(function() {
     $("#compare_box").hide();
   });
-    
+
 
 $(document).ready(function () {
+  $(".comparebox-display:checkbox:checked").attr("checked", false);
   if ($("input:checkbox:checked").length >= 2) {
     $("input:checkbox").not(":checked").attr("disabled", 2);
   }

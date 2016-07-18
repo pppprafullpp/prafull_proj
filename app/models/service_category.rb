@@ -1,16 +1,20 @@
 class ServiceCategory < ActiveRecord::Base
   require 'csv'
   has_many :service_preferences, :dependent => :destroy
-	has_many :deals, :dependent => :destroy
-	has_many :service_providers, :dependent => :destroy
-	has_many :advertisements, :dependent => :destroy
-	has_many :service_provider_checklists, :dependent => :destroy
+  has_many :deals, :dependent => :destroy
+  has_many :service_providers, :dependent => :destroy
+  has_many :advertisements, :dependent => :destroy
+  has_many :service_provider_checklists, :dependent => :destroy
 
-	#validates_presence_of :name
+  #validates_presence_of :name
+  INTERNET_CATEGORY = 'internet'
+  CABLE_CATEGORY = 'cable'
+  BUNDLE_CATEGORY = 'bundle'
+  TELEPHONE_CATEGORY = 'telephone'
+  CELLPHONE_CATEGORY = 'cellphone'
+  CATEGORIES = [INTERNET_CATEGORY,CABLE_CATEGORY,BUNDLE_CATEGORY,TELEPHONE_CATEGORY,CELLPHONE_CATEGORY]
 
-  CATEGORIES = ['internet','cable','bundle','telephone','cellphone']
-
-	def as_json(opts={})
+  def as_json(opts={})
     json = super(opts)
     Hash[*json.map{|k, v| [k, v || ""]}.flatten]
   end
@@ -60,5 +64,5 @@ class ServiceCategory < ActiveRecord::Base
   #	when ".xlsx" then Roo::Excelx.new(file.path, {})
   #	else raise "Unknown file type: #{file.original_filename}"
   #	end
-	#end
+  #end
 end

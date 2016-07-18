@@ -13,6 +13,12 @@ class Deal < ActiveRecord::Base
   has_many  :deal_include_zipcodes, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :order_items, dependent: :destroy
+
+  has_many :cable_equipments, dependent: :destroy
+  has_many :cellphone_equipments, dependent: :destroy
+  has_many :bundle_equipments, dependent: :destroy
+  has_many :internet_equipments, dependent: :destroy
+  has_many :telephone_equipments, dependent: :destroy
   has_and_belongs_to_many  :zipcodes, dependent: :destroy
 
   accepts_nested_attributes_for :internet_deal_attributes,:reject_if => :reject_internet, allow_destroy: true
@@ -164,7 +170,8 @@ class Deal < ActiveRecord::Base
         end
       end
     elsif self.cellphone_deal_attributes.present?
-      cellphone=self.cellphone_deal_attributes.first
+      cellphone_attributes = self.cellphone_deal_attributes.where(:no_of_lines => 2).first
+      cellphone = cellphone_attributes.present? ? cellphone_attributes : self.cellphone_deal_attributes.first
       equipment=cellphone.cellphone_equipments.first
       effective_price=(cellphone.no_of_lines*cellphone.price_per_line)+cellphone.data_plan_price+cellphone.additional_data_price
       if equipment.present?

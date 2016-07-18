@@ -114,6 +114,7 @@ Rails.application.routes.draw do
   resources :channel_packages
 
 
+  get 'service_dealz' => 'website/home#index'
   get 'service_deals' => 'website/home#index'
   namespace :website do
     resources :home do

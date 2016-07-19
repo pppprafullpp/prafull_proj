@@ -14,7 +14,17 @@ module DashboardsHelper
 					app_user_current_plan = sp.price
 
 					service_category_name = sp.service_category.name.camelcase
-					excluded_categories += ", '#{service_category_name}'"
+					if sp.service_category.name == 'Internet'
+						excluded_categories+=",'Internet'"
+					elsif sp.service_category.name == 'Telephone'
+						excluded_categories+=",'Telephone'"
+					elsif sp.service_category.name == 'Cable'
+						excluded_categories+=",'Cable'"
+					elsif sp.service_category.name == 'Cellphone'
+						excluded_categories+=",'Cellphone'"
+					elsif sp.service_category.name == 'Bundle'
+						excluded_categories+=",'Bundle'"
+					end
 
 					advertisement = sp.service_category.advertisements.order("created_at DESC").first
 					if advertisement.blank?

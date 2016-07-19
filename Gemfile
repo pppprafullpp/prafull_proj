@@ -52,6 +52,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm'
+  gem 'unicorn-rails'
 end
 gem "exception_notification", github: "smartinez87/exception_notification", branch: "master"
 # Use ActiveModel has_secure_password
@@ -76,4 +77,3 @@ group :development, :test do
   # For better error explanation during development
   gem "better_errors"
 end
-

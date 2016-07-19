@@ -13,7 +13,7 @@
                 </div>
                 <div class="gen-info">
                   <table class="table table-condensed">
-                    <tr> 
+                    <tr>
                       <td align="right" width="50%">Price</td>
                       <td align="left"  width="50%" class="bold">$<%= @deal.price %></td>
                     </tr>
@@ -736,7 +736,7 @@
               });
 
        $( document ).ready(function() {
-
+        $(".comparebox-display:checked").attr("checked",false);
               populate_user_type($('#user_type').val());
               populate_business_type($('#business_type').val());
               $('#user_type').on('change', function() {

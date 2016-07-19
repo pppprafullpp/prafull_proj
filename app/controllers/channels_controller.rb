@@ -20,6 +20,7 @@ class ChannelsController < ApplicationController
 
   # GET /Channels/new
   def new
+
     @channel = Channel.new
   end
 

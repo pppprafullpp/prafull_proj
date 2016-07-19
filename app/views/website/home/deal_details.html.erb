@@ -36,15 +36,18 @@
               <div class="col-xs-6 col-sm-6 col-md-4">
                 <div class="border-radius-bg auto-height">
                   <div class="vertical_middle" style="overflow: hidden;"><img src="<%= data['deal_image_url'] %>"  height="70" width="155" alt=""></div>
-                  <h5>$<%= data['deal_price'] %> <%= data['title'] %></h5>
-                  <ul>
-                    <li><%= data['download_speed'] %> Mbps Download Speed</li>
-                    <li><%= data['upload_speed'] %> Mbps Upload Speeds</li>
+                  <h5><%= data['title'].truncate(20) %></h5>
+                  <ul class="description-height">
+                    <!-- $<%#= data['deal_price'] %>  -->
+                    <!-- <li><%#= data['download_speed'] %> Mbps Download Speed</li> -->
+                    <li><%= data['short_description'].truncate(55) %></li>
                   </ul>
                   <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
                   <div class="box_down">
                     <span class="separator_2"></span>
-                    <p>starting at</p>
+                    <p>price</p>
+                    <h2 class="heading_price">$<%= data['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+                    <p>effective price</p>
                     <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
                     <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> data['id']) %>">Order</a>
                     <div class="checkbox checkbox-info" id="deal-checkbox">
@@ -69,9 +72,11 @@ var checkedValues;
   $( document ).ready(function() {
     $("#compare_box").hide();
   });
-    
+
 
 $(document).ready(function () {
+  $(".comparebox-display:checked").attr("checked",false);
+  $(".comparebox-display:checkbox:checked").attr("checked", false);
   if ($("input:checkbox:checked").length >= 2) {
     $("input:checkbox").not(":checked").attr("disabled", 2);
   }

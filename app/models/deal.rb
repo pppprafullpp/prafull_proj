@@ -31,7 +31,7 @@ class Deal < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-  validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date
+  validates_presence_of :service_category_id, :service_provider_id, :title, :short_description, :detail_description, :price, :url, :start_date, :end_date, :image
   before_save :update_effective_price
   ### CONSTANTS ###
   INTERNET_CATEGORY = 1

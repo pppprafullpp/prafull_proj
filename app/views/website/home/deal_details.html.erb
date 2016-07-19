@@ -75,6 +75,7 @@ var checkedValues;
 
 
 $(document).ready(function () {
+  $(".comparebox-display:checked").attr("checked",false);
   $(".comparebox-display:checkbox:checked").attr("checked", false);
   if ($("input:checkbox:checked").length >= 2) {
     $("input:checkbox").not(":checked").attr("disabled", 2);

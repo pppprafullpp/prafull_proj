@@ -3,7 +3,7 @@ development:
   encoding: utf8
   database: servicedeals
   username: root
-  password: root
+  password: password
   host: localhost
   pool: 5
 
@@ -12,7 +12,7 @@ test:
   encoding: utf8
   database: servicedeals
   username: root
-  password: root
+  password: password
   host: localhost
   pool: 5
 
@@ -50,7 +50,7 @@ production:
   #password: 59nLoAkjOQ
   #host: 192.241.218.243
 #  password: root
-#  host: localhost  
+#  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -72,7 +72,7 @@ production:
 #  encoding: utf8
 #  database: sdeals_production
 #  pool: 5
-#  username: 
+#  username:
 #  password:
 #  host:
 

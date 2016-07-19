@@ -2283,15 +2283,23 @@ color:#555;
     border: 1px solid #00aeef;
     margin-top: 5px;
 }
+button.recontracted-btn { 
+    margin-left:  10px;
+}
+.order-no-dt.pull-right {
+    text-align: right;
+}
 .service-sty {
     border: 1px solid #dedede;
 }
 .order-no-dt {
     font-size: 16px;
-    color: #939393
+    color: #000000;
+    font-family: "open_sansregular";
 }
 .order-no-dt span {
     color: #000;
+    font-family: "open_sanslight";
 }
 .order-service-dt {
     padding-top: 30px;
@@ -2329,6 +2337,7 @@ color:#555;
 }
 .order-price {
     font-family: 'open_sanssemibold';
+    margin-bottom: 3px;
 }
 .order-price span {
     color: #646464;
@@ -2371,7 +2380,7 @@ color:#555;
 .applicant-telcome {
     margin-top: 10px;
     float: left;
-    padding: 0 0 0 10px;
+    padding: 0px;
 }
 .applicant-telcome h6 {
     font-size: 16px;
@@ -2381,22 +2390,24 @@ color:#555;
     margin-top: 12px;
 }
 .applicant-telcome ul li .col1 {
-    color: #828282;
+    color: #000000;
+    font-family: "open_sansregular";
     float: left;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: normal;
     margin-right: 10px;
     text-align: right;
 }
 .applicant-telcome ul li {
     float: left;
     width: 100%;
+    margin-top: 10px;
+    color: #000000;
 }
 .applicant-telcome ul li .col2 {
     color: #000;
     float: left;
     font-size: 14px;
-    font-family: 'open_sansregular';
     margin-right: 20px;
 }
 .border-ones {
@@ -2406,9 +2417,35 @@ color:#555;
 .address-det , .billing-det{
     border-bottom: 1px solid #dedede;
     float: left;
-    padding: 10px 0 20px;
+    padding: 10px 0 30px;
     width: 100%;
 }
 .bor-btno{ border-bottom:none;}
 .auto-height {min-height:520px;}
 .description-height {height: 40px;}
+.box-sec h2.heading_price ,
+.box-sec h2.heading_price .light,
+.box-sec h2.heading_price .regular {
+    color:  #105679;
+    font-size: 20px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+.order-details .servicedt-text {
+    margin: 20px 0px;
+}
+.ordersty-top .order-no-dt:first-child {
+    margin-top: 4px;
+}
+span.style3 {
+    display:  block;  
+    color: #000000;  
+    margin-top: 5px;
+    font-family: "open_sansregular";
+}
+.coll2 {
+    font-family: "open_sanslight" !important;
+}
+.marginL20 {
+    padding-left: 20px;
+}

@@ -16,8 +16,10 @@
       <div class="col-md-8">
         <div class="left-order-dt">
           <div class="ordersty-top">
-            <div class="order-no-dt pull-left"> Order No: <span><%= @order.order_number%></span> <br />
+            <div class="order-no-dt pull-left"> Order No: <span><%= @order.order_number%></span> 
+              <span class="style3">
               <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>  
+            </span>
             </div>
             <div class="order-no-dt pull-right"> AT&T Order No:<span>114568026973</span><br/>
               <button type="button" class=" btn accepted-btn">Accepted</button>
@@ -88,7 +90,7 @@
           </div>
           <div class="address-det">
             <div class="applicant-telcome col-md-6 border-ones">
-              <h6>Applicant</h6>
+              <h2>Applicant</h2>
               <ul>
                 <li>
                   <div class="col1">Name:</div>
@@ -113,8 +115,8 @@
               </ul>
             </div>
             <% if app_user.user_type == AppUser::BUSINESS %>
-            <div class="applicant-telcome col-md-6">
-              <h6>Telecom Manager</h6>
+            <div class="applicant-telcome col-md-6 marginL20">
+              <h2>Telecom Manager</h2>
               <ul>
                 <li>
                   <div class="col1">Name:</div>
@@ -130,44 +132,44 @@
           </div>
           <div class="billing-det bor-btno">
             <div class="applicant-telcome col-md-6">
-              <h6>Billing Address</h6>
+              <h2>Billing Address</h2>
               <ul>
                 <li>
-                  <div class="col1"><%= shipping_address.try(:address_name) %></div>
+                  <div class="col1 coll2"><%= shipping_address.try(:address_name) %></div>
                 </li>
                 <li>
-                  <div class="col1"><%= shipping_address.try(:address1) %></div>
+                  <div class="col1 coll2"><%= shipping_address.try(:address1) %></div>
                 </li>
                 <li>
-                  <div class="col1"><%= shipping_address.try(:address2) %></div>
+                  <div class="col1 coll2"><%= shipping_address.try(:address2) %></div>
                 </li>
               </ul>
             </div>
             <div class="applicant-telcome col-md-6">
-              <h6>Shipping Address</h6>
+              <h2>Shipping Address</h2>
               <ul>
                 <li>
-                  <div class="col1"><%= shipping_address.try(:address_name) %></div>
+                  <div class="col1 coll2"><%= shipping_address.try(:address_name) %></div>
                 </li>
                 <li>
-                  <div class="col1"><%= shipping_address.try(:address1) %></div>
+                  <div class="col1 coll2"><%= shipping_address.try(:address1) %></div>
                 </li>
                 <li>
-                  <div class="col1"><%= shipping_address.try(:address2) %></div>
+                  <div class="col1 coll2"><%= shipping_address.try(:address2) %></div>
                 </li>
               </ul>
             </div>
             <div class="applicant-telcome col-md-6">
-              <h6>Service Address</h6>
+              <h2>Service Address</h2>
               <ul>
                 <li>
-                  <div class="col1"><%= service_address.try(:address_name) %></div>
+                  <div class="col1 coll2"><%= service_address.try(:address_name) %></div>
                 </li>
                 <li>
-                  <div class="col1"><%= service_address.try(:address1) %></div>
+                  <div class="col1 coll2"><%= service_address.try(:address1) %></div>
                 </li>
                 <li>
-                  <div class="col1"><%= service_address.try(:address2) %></div>
+                  <div class="col1 coll2"><%= service_address.try(:address2) %></div>
                 </li>
               </ul>
             </div>
@@ -177,7 +179,7 @@
         <div class="col-md-4">
           <div class="right-order-dt">
             <div class="applicant-telcome">
-              <h6>Registered</h6>
+              <h2>Registered</h2>
               <ul>
                 <li>
                   <div class="col1">Business Name:</div>

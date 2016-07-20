@@ -13,7 +13,7 @@
                 </div>
                 <div class="gen-info">
                   <table class="table table-condensed">
-                    <tr> 
+                    <tr>
                       <td align="right" width="50%">Price</td>
                       <td align="left"  width="50%" class="bold">$<%= @deal.price %></td>
                     </tr>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-6 padding15right">
                               <label for="Name" class="control-label">Contact Number*</label>
-                              <%= text_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile") %>
+                              <%= phone_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10) %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Email</label>
@@ -78,13 +78,13 @@
                             </button> -->
                             <button class="btn btn-info" type="button" id="personal_information_tab">
                             Next
-                            </button> 
+                            </button>
                           </div>
                         </div>
                       </div>
 
                       <!-- Body -->
-                     
+
 
                        <% if @app_user.user_type == "business" %>
                   <div id="business-info" class="tab-pane">
@@ -139,7 +139,7 @@
                           <label for="Name" class="control-label">Manager Name*</label>
                           <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
                         </div>
-                         
+
                         <div class="col-sm-6">
                           <label for="Name" class="control-label">Main Telephone Number*</label>
                           <%= text_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone') %>
@@ -199,7 +199,7 @@
                         </button> -->
                         <button class="btn btn-info" type="button">Previous</button>
                         <button class="btn btn-info" type="button" id="business_information_tab">Next
-                        </button> 
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -268,7 +268,7 @@
                               </div>
                               <div class="col-md-12 address-sty">
                                 <h2 class="padding-bott">Service Address</h2>
-                                
+
                                 <div class="checkbox checkbox-info">
                                   <input id="checkboxb" type="checkbox" onclick="SetAppUserService(this.checked);">
                                   <label for="checkboxb">Same as Billing Address </label>
@@ -754,6 +754,16 @@
               });
 
        $( document ).ready(function() {
+         $("#mobile").keydown(function (e) {
+
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
+                   return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+      });
         $(".comparebox-display:checked").attr("checked",false);
               populate_user_type($('#user_type').val());
               populate_business_type($('#business_type').val());

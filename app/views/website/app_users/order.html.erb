@@ -673,6 +673,7 @@
               else {
                 billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/><b></b>"+billing_zip;
                 service_address=service_address_1+"<br/>"+service_address_2+"<br/><b></b>"+service_zip;
+                shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/><b></b>"+shipping_zip;
                 $(".service-address-innertxt").html(service_address);
                 $(".shipping-address-innertxt").html(shipping_address);
                 $(".billing-address-innertxt").html(billing_address);
@@ -700,9 +701,9 @@
               var  last_name = $('#app_user_last_name').val();
               var primary_id = $('#primary_id').val();
               var secondary_id = $('#secondary_id').val();
-              var business_manager_name = $('#business_manager_name').val();
-              var business_manager_contact = $('#business_manager_contact').val();
-              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' )  {
+              // var business_manager_name = $('#business_manager_name').val();
+              // var business_manager_contact = $('#business_manager_contact').val();
+              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
                    alert("Please fill all the mandatory fields.")
               }
               else {

@@ -116,17 +116,17 @@ class Website::AppUsersController < ApplicationController
               business_user = BusinessAppUser.create_business_app_user(business.id,@app_user.id)
             end
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to profile_website_app_users_path
+            redirect_to website_home_index_path
           else
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to profile_website_app_users_path
+            redirect_to website_home_index_path
           end
         else
-          redirect_to profile_website_app_users_path
+          redirect_to website_home_index_path
         end
       else
-        redirect_to profile_website_app_users_path
+        redirect_to website_home_index_path
       end
     end
   end
@@ -154,6 +154,8 @@ class Website::AppUsersController < ApplicationController
       if @app_user.present?
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
+        session[:zip_code] = @app_user.zip
+        session[:user_type] = @app_user.user_type
         flash[:notice] = 'Signin Successfull'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])

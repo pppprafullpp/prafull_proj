@@ -8,12 +8,13 @@ class Api::V1::DashboardsController < ApplicationController
 	respond_to :json
 
 	def index
-		###############   When User is Logged In and zip code is present   ###############	
+		###############   When User is Logged In and zip code is present   ###############
 		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?
 			dashboard_data = get_dashboard_deals(params[:app_user_id],nil,nil)
 			if dashboard_data == false
 				render :json => { :success => false }
 			else
+			 
 				render :json => { :dashboard_data => dashboard_data }
 			end
 
@@ -72,5 +73,4 @@ class Api::V1::DashboardsController < ApplicationController
 		end
 	end
 
-end	
-		
+end

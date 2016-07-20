@@ -47,5 +47,10 @@ class ChannelpicUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  def file_size
+     if file.file.size.to_f/(1000*1000) > user.product_upload_limit.to_f
+       errors.add(:file, "You cannot upload a file greater than #{upload_limit.to_f}MB")
+     end
+   end
 
 end

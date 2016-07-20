@@ -62,31 +62,48 @@
       <p>CABLE AND SATELLITE TV</p> -->
     <!-- </a>  -->
     <div class="col-sm-4 col-xs-6 text-center serviceRow">
+      <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::BUNDLE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
+      <div class="img-circle"><%= image_tag('website/bundel.png',:alt => 'bundle') %></div>
+      <p>PHONE, TV & INTERNET BUNDLES</p>
+    </a>
+    </div>
+
+    <div class="col-sm-4 col-xs-6 text-center serviceRow">
+      <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::INTERNET_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
+      <div class="img-circle"><%= image_tag('website/wifi.png',:alt => 'wifi') %></div>
+      <p>HIGH SPEED INTERNET</p>
+      </a>
+    </div>
+
+    <div class="col-sm-4 col-xs-6 text-center serviceRow">
      <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::CABLE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">
       <div class="img-circle"><%= image_tag('website/tv.png',:alt => 'tv') %></div>
       <p>CABLE AND SATELLITE TV</p>
-    </a></div>
+    </a>
+    </div>
+
+
+
+
     <div class="col-sm-4 col-xs-6 text-center serviceRow">
-    <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::INTERNET_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
-    <div class="img-circle"><%= image_tag('website/wifi.png',:alt => 'wifi') %></div>
-    <p>HIGH SPEED INTERNET</p></div>
-    <div class="col-sm-4 col-xs-6 text-center serviceRow">
-  </a> <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::TELEPHONE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
-    <div class="img-circle"><%= image_tag('website/phone.png',:alt => 'telephone') %></div>
-    <p>PHONE SERVICE</p></div>
-    <div class="col-sm-4 col-xs-6 text-center serviceRow">
-  </a> <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::BUNDLE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
-    <div class="img-circle"><%= image_tag('website/bundel.png',:alt => 'bundle') %></div>
-    <p>PHONE, TV & INTERNETBUNDLES</p></div>
-  </a>
+      <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::TELEPHONE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
+      <div class="img-circle"><%= image_tag('website/phone.png',:alt => 'telephone') %></div>
+      <p>PHONE SERVICE</p>
+    </a>
+    </div>
+
+
+
   <div class="col-sm-4 col-xs-6 text-center serviceRow">
   <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::CELLPHONE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
     <div class="img-circle"><%= image_tag('website/phone.png',:alt => 'cellphone') %></div>
-    <p>Cellphone</p></div>
+    <p>Cellphone</p>
+  </a>
+  </div>
  <!--  </a> <a href="#" class="col-md-4 text-center serviceRow">
     <div class="img-circle"><%#= image_tag('website/electric.png',:alt => 'electricity') %></div>
     <p>ELECTRICITY</p> -->
-  </a> </div>
+  </div>
 </div>
 
 <!--Client-->

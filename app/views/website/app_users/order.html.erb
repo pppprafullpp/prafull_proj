@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-6 padding15right">
                               <label for="Name" class="control-label">Contact Number*</label>
-                              <%= text_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile") %>
+                              <%= phone_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10) %>
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Email</label>
@@ -145,50 +145,7 @@
                           <%= text_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone') %>
                         </div>
 
-                       <!--  <div class="col-md-8">
-                          <div class="details-zip">
-                            <div class="col-xs-6 radio_inline">
-                              <label class="btn active">
-                              <input type="radio" name="optionsRadios" id="soleprop" value="option1" checked >
-                              <i class="fa fa-circle-o fa-lg"></i><i class="fa fa-dot-circle-o fa-lg"></i> <span> Sole Proprietary</span> </label>
-                            </div>
-                            <div class="col-sx-6 radio_inline">
-                              <label class="btn">
-                                <input type="radio" name="optionsRadios" id="registered" value="option2">
-                                <i class="fa fa-circle-o fa-lg"></i><i class="fa fa-dot-circle-o fa-lg"></i> <span> Registered </span> </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="registerDetails form-group">
-                          <div class="col-md-6">
-                            <%#= hidden_field_tag :business_type,1,{:name=> 'business[business_type]'}%>
-                            <label for="Name" class="control-label">Dan & Bradsheet Number</label>
-                            <%#= text_field_tag('business[db_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:db_number),:class => 'form-control input-md',:placeholder => 'DAN') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">DBA</label>
-                            <%#= text_field_tag('business[business_dba]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DBA') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">Federal Tax ID</label>
-                            <%#= text_field_tag('business[federal_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:federal_number),:class => 'form-control input-md',:placeholder => 'Federal Number') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">Manager Name</label>
-                            <%#= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
-                          </div>
-                        </div>
-                        <div class="soleproDetails  form-group">
-                          <div class="col-md-6">
-                            <%#= hidden_field_tag :business_type,0,{:name=> 'business[business_type]'}%>
-                            <label for="Name" class="control-label">DOB</label>
-                            <%#= text_field_tag('business[dob]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DOB') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">SSN</label>
-                            <%#= text_field_tag('business[ssn]',@app_user.try(:business_app_users).try(:first).try(:business).try(:ssn),:class => 'form-control input-md',:placeholder => 'SSN') %>
-                          </div>
-                        </div> -->
+                     
                       </div>
                     </div>
                     <!-- Button group -->
@@ -473,13 +430,13 @@
       $('#first_name').blur(function(){
         var  first_name = $('#first_name').val();
         if (first_name == '') {
-          alert("Please enter First Name")
+          alert("Please enter First Name.")
         }
       });
       $('#mobile').blur(function(){
         var  mobile = $('#mobile').val();
         if (mobile == '') {
-          alert("Please enter Mobile")
+          alert("Please enter mobile number.")
         }
       });
       $('#app_user_last_name').blur(function(){
@@ -585,7 +542,48 @@
         }
       });
 
+      $( document ).ready(function() {
+
+     $("#mobile").keydown(function(e)  {
+if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
+return;
+}
+// Ensure that it is a number and stop the keypress
+if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+e.preventDefault();
+}
+});
+
+        var  abc = $('#first_name').val();
+        $('#getnamevalue').val(abc);
+        var y= $(getnamevalue).val()
+        $("#review-name").text(y);
+
+        var mobile_value = $('#mobile').val();
+        $('#getmobilevalue').val(mobile_value);
+        var get_mobile= $(getmobilevalue).val()
+        $("#review-mobile").text(get_mobile);
+
+        var primary_value = $('#primary_id').val();
+        $('#getprimaryvalue').val(primary_value);
+        var get_primary= $(getprimaryvalue).val()
+        $("#review-primary").text(get_primary);
+
+        var secondary_value = $('#secondary_id').val();
+        $('#getsecondaryvalue').val(secondary_value);
+        var get_secondary= $(getsecondaryvalue).val()
+        $("#review-secondary").text(get_secondary);
+
+
+      });
+
       $("#order_information_menu_tab").click(function(event){
+        $('#review-name').text($('#first_name').val());
+        $('#review-mobile').text($('#mobile').val());
+        $('#review-primary').text($('#primary_id').val());
+        $('#review-secondary').text($('#secondary_id').val());
+
+        
               var first_name = $('#first_name').val();
               var mobile = $('#mobile').val();
               var last_name = $('#app_user_last_name').val();
@@ -610,7 +608,7 @@
                    event.stopImmediatePropagation();
               }
           });
-
+        
       $("#address_information_menu_tab").click(function(event){
               var  first_name = $('#first_name').val();
               var  mobile = $('#mobile').val();
@@ -800,27 +798,7 @@
               }
           }
 
-      $( document ).ready(function() {
-        var  abc = $('#first_name').val();
-        $('#getnamevalue').val(abc);
-        var y= $(getnamevalue).val()
-        $("#review-name").text(y);
-
-        var mobile_value = $('#mobile').val();
-        $('#getmobilevalue').val(mobile_value);
-        var get_mobile= $(getmobilevalue).val()
-        $("#review-mobile").text(get_mobile);
-
-        var primary_value = $('#primary_id').val();
-        $('#getprimaryvalue').val(primary_value);
-        var get_primary= $(getprimaryvalue).val()
-        $("#review-primary").text(get_primary);
-
-         var secondary_value = $('#secondary_id').val();
-        $('#getsecondaryvalue').val(secondary_value);
-        var get_secondary= $(getsecondaryvalue).val()
-        $("#review-secondary").text(get_secondary);
-      });
+      
 
       $(".registerDetails").hide();
       $("#soleprop").click(function(){

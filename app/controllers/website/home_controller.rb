@@ -28,6 +28,15 @@ class Website::HomeController < ApplicationController
     #end
   end
 
+  def get_deals_from_first_page
+    service_category_id=params[:service_category_id]
+    deals=Deal.find_by_service_category_id(service_category_id).where(:zip_code=>params[:zip])
+    render :json=>{
+      value: deals.to_yaml
+    }
+
+  end
+
   def deal_details
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil)

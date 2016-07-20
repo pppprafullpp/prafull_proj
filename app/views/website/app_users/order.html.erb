@@ -206,15 +206,15 @@
                 <% end %>
 
                       <!-- Membership Info -->
-                      <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 if Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1.present?  %>
-                      <% @ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address2 %>
-                      <% @zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.zip %>
-                      <% @ship_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.address1 %>
-                      <% @ship_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.address2 %>
-                      <% @ship_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.zip %>
-                      <% @s_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address1 %>
-                      <% @s_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address2 %>
-                      <% @s_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.zip %>
+                      <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 if Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1.present? rescue nil %>
+                      <% @ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address2 rescue nil%>
+                      <% @zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.zip rescue nil%>
+                      <% @ship_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.address1 rescue nil%>
+                      <% @ship_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.address2 rescue nil %>
+                      <% @ship_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>0).first.zip rescue nil%>
+                      <% @s_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address1 rescue nil %>
+                      <% @s_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address2 rescue nil%>
+                      <% @s_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.zip rescue nil %>
 
                       <% if @app_user.user_type == "residence" %>
                         <div id="address-info" class="tab-pane">

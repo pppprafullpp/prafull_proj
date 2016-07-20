@@ -145,18 +145,17 @@ class DealsController < ApplicationController
   end
   def import
     Deal.import(params[:file])
-    redirect_to deals_path, notice: "Successfully imported."
+    redirect_to deals_path, :notice => "Successfully imported."
   end
 
 	def searchzip
-		puts params.to_yaml
-		zip=Zipcode.find_by(:code=>params[:zip])
-		puts zip.to_yaml
+		zip = Zipcode.where("code like '#{params[:zip]}%' ").first
+		#puts zip.to_yaml
 		if zip
 			render :json=>{
-				city: zip.city,
-				area: zip.area,
-				country: zip.country
+				:city => zip.city,
+				:area => zip.area,
+				:country => zip.country
 			}
 		end
 	end

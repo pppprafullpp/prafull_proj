@@ -1,6 +1,6 @@
 class BusinessAddress < ActiveRecord::Base
   belongs_to :business
-
+  before_save { self.address_name = address_name.squish if address_name.present?}
   ## address type constants
   BRANCH_ADDRESS = 0
   SHIPPING_ADDRESS = 1
@@ -16,16 +16,15 @@ class BusinessAddress < ActiveRecord::Base
       business_address = self.where(:address_name => address[:address_name],:business_id => business_id).first
       unless business_address.present?
         business_address = self.new
-        business_address.business_id = business_id
-        address.each do |key,value|
-          business_address[key] = value
-        end
-        if business_address.save!
-          business_addresses << business_address
-        end
-      else
+      end
+      business_address.business_id = business_id
+      address.each do |key,value|
+        business_address[key] = value
+      end
+      if business_address.save!
         business_addresses << business_address
       end
+
     end
     business_addresses
   end

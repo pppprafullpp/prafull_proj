@@ -1,4 +1,5 @@
 <% if @category == ("internet" || "bundle") %>
+
   <tr>
     <th scope="row">Speed</th>
     <th></th>
@@ -56,4 +57,4 @@
     <td><%= @deal_attributes_first.try(:premium_channels) %></td>
     <td><%= @deal_attributes_second.try(:premium_channels) %></td>
   </tr>
-<% end %>  
+<% end %>

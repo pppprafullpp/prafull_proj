@@ -1,0 +1,904 @@
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<section class="order-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="order-info text-center">
+          <div class="thumb"><img src="<%= @deal.image.present? ? @deal.image.url : '' %>" alt="<%= @deal.title %>" height="70" width="155"></div>
+          <h2 class="text-center"><%= @deal.title %></h2>
+          <div class="text-center"> 
+            <small><%= @deal.short_description %></small><br />
+            <small> Contract period <%= @deal.contract_period %></small> 
+          </div>
+          <div class="gen-info">
+            <table class="table table-condensed">
+              <tr>
+                <td align="right" width="50%">Price</td>
+                <td align="left"  width="50%" class="bold">$<%= @deal.price %></td>
+              </tr>
+              <tr>
+                <td  align="right" class="bold effective-color">Efective Price</td>
+                <td  align="left" class="bold">$20.88</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-8">
+        <div class="tabber">
+          <div class="tab-wrapper tab-primary">
+            <ul class="nav nav-tabs">
+              <li class="active"><a id="personal_information_menu_tab" data-toggle="tab" href="#personal-info">Personal Information</a></li>
+              <% if @app_user.user_type == "business" %>
+                <li><a id="business_information_menu_tab" data-toggle="tab" href="#business-info">Business Information</a></li>
+              <% end %>
+              <li><a id="address_information_menu_tab" data-toggle="tab" href="#address-info">Address Information</a></li>
+              <li><a id="order_information_menu_tab" data-toggle="tab" href="#order-review" id="ordertab">Order Review</a></li>
+            </ul>
+            <%= form_tag create_order_website_app_users_path(@app_user), method: :post, :id=> "order_create_form" do %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+              <div class="tab-content formContainer"> 
+                <!-- About -->
+                <div id="personal-info" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="col-md-6">
+                        <label for="Name" class="control-label">First Name*</label>
+                        <%= text_field_tag('app_user[first_name]',@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name') %>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="Name" class="control-label">Last Name*</label>
+                        <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Your Name') %>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="Name" class="control-label">Contact Number*</label>
+                        <%= text_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile") %>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="Name" class="control-label">Email</label>
+                        <%= email_field_tag('app_user[email]',@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address',:disabled => true) %>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="Name" class="control-label">Primary Id*</label>
+                        <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:orders).try(:last).try(:primary_id)),:class => 'form-control',:id => "primary_id") %> 
+                      </div>
+                      <div class="col-md-6">
+                        <label for="Name" class="control-label">Secondary Id*</label>
+                        <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]),:class => 'form-control',:id => "secondary_id") %> 
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Button group -->
+                  <div class="btn-group btnBox">
+                    <div class="col-sm-12 text-right">
+                      <!-- <button class="btn-primary btn-sm save btnNext" type="button" id="personal_information_tab">
+                      <a href="#">Next</a>
+                      </button> -->
+                      <button class="btn btn-info" type="button" id="personal_information_tab">
+                      Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Body -->
+                <% if @app_user.user_type == "business" %>
+                  <div id="business-info" class="tab-pane">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <!-- <div class="col-md-6">
+                          <label for="Name" class="control-label">Business Name</label>
+                          <%#= text_field_tag('business[business_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_name),:class => 'form-control input-md',:placeholder => 'Secondary Id') %>
+                        </div> -->
+                        <% business = @app_user.business_app_users.first.business %>
+                        <% disable_flag = business.present? ? true : false  %>
+                        <div class="btn-group col-sm-6">
+
+                          <label for="Name" class="control-label">User type</label>
+
+                          <%= select_tag(:user_type,options_for_select(AppUser::USER_TYPES,@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
+                        </div>
+
+                        <%
+                           business_name = business.present? ? business.business_name : ''
+                           business_type = business.present? ? business.business_type : ''
+                           federal_number = business.present? ? business.federal_number : ''
+                           ssn = business.present? ? business.ssn : ''
+                        %>
+
+                        <div class="btn-group col-sm-6" style="display: none;" id="business_name_div">
+                          <label for="Name" class="control-label"> Business Name </label>
+                          <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+                        </div>
+
+                        <div class="btn-group col-sm-6" style="display: none;" id="business_type_div">
+                          <label for="Name" class="control-label">Business Type</label>
+                          <% if business.present? %>
+                              <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
+                              <%= hidden_field_tag :business_type,business_type,:name => "business[business_type]",:class => 'form-control',:placeholder => 'Please enter your Business Type',:readonly => disable_flag %>
+                          <% else %>
+                              <%= select_tag(:business_type,options_for_select(Business::BUSINESS_TYPES,business_type),:class => 'form-control',:prompt => 'Select your Business Type',:name => "business[business_type]") %>
+                          <% end %>
+                        </div>
+
+                        <div class="btn-group col-sm-6" style="display: none;" id="federal_number_div">
+                          <label for="Name" class="control-label">Federal Number</label>
+                          <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+                        </div>
+
+                        <div class="btn-group col-sm-6" style="display: none;" id="ssn_div">
+                          <label for="Name" class="control-label">SSN</label>
+                          <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label for="Name" class="control-label">Manager Name*</label>
+                          <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
+                        </div>
+                         
+                        <div class="col-sm-6">
+                          <label for="Name" class="control-label">Main Telephone Number*</label>
+                          <%= text_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone') %>
+                        </div>
+
+                       <!--  <div class="col-md-8">
+                          <div class="details-zip">
+                            <div class="col-xs-6 radio_inline">
+                              <label class="btn active">
+                              <input type="radio" name="optionsRadios" id="soleprop" value="option1" checked >
+                              <i class="fa fa-circle-o fa-lg"></i><i class="fa fa-dot-circle-o fa-lg"></i> <span> Sole Proprietary</span> </label>
+                            </div>
+                            <div class="col-sx-6 radio_inline">
+                              <label class="btn">
+                                <input type="radio" name="optionsRadios" id="registered" value="option2">
+                                <i class="fa fa-circle-o fa-lg"></i><i class="fa fa-dot-circle-o fa-lg"></i> <span> Registered </span> </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="registerDetails form-group">
+                          <div class="col-md-6">
+                            <%#= hidden_field_tag :business_type,1,{:name=> 'business[business_type]'}%>
+                            <label for="Name" class="control-label">Dan & Bradsheet Number</label>
+                            <%#= text_field_tag('business[db_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:db_number),:class => 'form-control input-md',:placeholder => 'DAN') %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">DBA</label>
+                            <%#= text_field_tag('business[business_dba]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DBA') %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Federal Tax ID</label>
+                            <%#= text_field_tag('business[federal_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:federal_number),:class => 'form-control input-md',:placeholder => 'Federal Number') %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Manager Name</label>
+                            <%#= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
+                          </div>
+                        </div>
+                        <div class="soleproDetails  form-group">
+                          <div class="col-md-6">
+                            <%#= hidden_field_tag :business_type,0,{:name=> 'business[business_type]'}%>
+                            <label for="Name" class="control-label">DOB</label>
+                            <%#= text_field_tag('business[dob]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DOB') %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">SSN</label>
+                            <%#= text_field_tag('business[ssn]',@app_user.try(:business_app_users).try(:first).try(:business).try(:ssn),:class => 'form-control input-md',:placeholder => 'SSN') %>
+                          </div>
+                        </div> -->
+                      </div>
+                    </div>
+                    <!-- Button group -->
+                    <div class="btn-group btnBox">
+                      <div class="col-sm-12 text-right">
+                        <!-- <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button> -->
+                        <!-- <button class="btn-primary btn-sm save btnNext" type="button" id="business_information_tab">Next
+                        </button> -->
+                        <button class="btn btn-info" type="button">Previous</button>
+                        <button class="btn btn-info" type="button" id="business_information_tab">Next
+                        </button> 
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                
+                <!-- Membership Info -->
+                <% if @app_user.user_type == "residence" %>
+                  <div id="address-info" class="tab-pane">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="col-md-9">
+                          <h2>Billing Address</h2>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
+                          <%= text_field_tag('app_user_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Address 2</label>
+                          <%= text_field_tag('app_user_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_billing_address_2") %>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Town/City</label>
+                          <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Zipcode*</label>
+                          <%= text_field_tag('app_user_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip") %>
+                        </div>
+                        <div class="col-md-12 address-sty">
+                          <h4>Shipping Address</h4>
+                          <div class="checkbox checkbox-info">
+                            <input id="checkbox7a" type="checkbox" onclick="SetAppUserShipping(this.checked);">
+                            <label for="checkbox7a">Same as Billing Address </label>
+                          </div>
+                        </div>
+                        <div id="shipping_address"> 
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Address 1*</label>
+                            <%= text_field_tag('shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_shipping_address_1") %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Address 2</label>
+                            <%= text_field_tag('shipping_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_shipping_address_2") %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Town/City</label>
+                            <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Zipcode*</label>
+                            <%= text_field_tag('shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip") %>
+                          </div>
+                        </div>
+                        <div class="col-md-12 address-sty">
+                          <h4>Service Address</h4>
+                          <div class="checkbox checkbox-info">
+                            <input id="checkboxb" type="checkbox" onclick="SetAppUserService(this.checked);">
+                            <label for="checkboxb">Same as Billing Address </label>
+                          </div>
+                          <div id="service_address">
+                            <div class="col-md-6">
+                              <label for="Name" class="control-label">Address 1*</label>
+                              <%= text_field_tag('service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_service_address_1") %>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="Name" class="control-label">Address 2</label>
+                              <%= text_field_tag('service_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_service_address_2") %>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="Name" class="control-label">Town/City</label>
+                              <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="Name" class="control-label">Zipcode*</label>
+                              <%= text_field_tag('service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip") %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Button group -->
+                    <div class="btn-group btnBox">
+                      <div class="col-sm-12 text-right">
+                        <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous11</button>
+                        <button class="btn-primary btn-sm save btnNext" type="button" id="residence_address_information_tab">
+                          <a href="#">Next</a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                <% else %>
+                  <div id="address-info" class="tab-pane">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="col-md-12">
+                          <h2>Billing Address</h2>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Address 111<span class="mandat-red">*</span></label>
+                          <%= text_field_tag('business_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Address 2</label>
+                          <%= text_field_tag('business_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2',:id => "billing_address_2") %>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Town/City</label>
+                          <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Name" class="control-label">Zipcode*</label>
+                          <%= text_field_tag('business_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip") %>
+                        </div>
+                        <div class="col-md-12 address-sty">
+                          <h4>Shipping Address</h4>
+                          <div class="checkbox checkbox-info">
+                            <input id="checkbox8a" type="checkbox" onclick="SetShipping(this.checked);">
+                            <label for="checkbox8a">Same as Billing Address </label>
+                          </div>
+                        </div>
+                        <div id="business_service_address">
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Address 1*</label>
+                            <%= text_field_tag('business_shipping_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Address 2</label>
+                            <%= text_field_tag('business_shipping_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Town/City</label>
+                            <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Zipcode*</label>
+                            <%= text_field_tag('business_shipping_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip") %>
+                          </div>
+                        </div>
+                        <div class="col-md-12 address-sty">
+                          <h4>Service Address</h4>
+                          <div class="checkbox checkbox-info">
+                            <input id="checkbox8b" type="checkbox" onclick="SetService(this.checked);">
+                            <label for="checkbox8b">Same as Billing Address </label>
+                          </div>
+                        </div>
+                        <div id="business_shipping_address" %>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Address 1*</label>
+                            <%= text_field_tag('business_service_addresses[address1]',nil,:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Address 2</label>
+                            <%= text_field_tag('business_service_addresses[address2]',nil,:class => 'form-control input-md',:placeholder => 'Address2', :id=> "service_address_2") %>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Town/City</label>
+                            <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="Name" class="control-label">Zipcode*</label>
+                            <%= text_field_tag('business_service_addresses[zip]',nil,:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip") %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Button group -->
+                    <div class="btn-group btnBox">
+                      <div class="col-sm-12 text-right">
+                        <!-- <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
+                        <button class="btn-primary btn-sm save btnNext" type="button" id="business_address_information_tab">
+                          <a href="#">Next</a>
+                        </button> -->
+                        <button class="btn btn-info" type="button">Previous</button>
+                        <button class="btn btn-info" type="button" id="business_address_information_tab">
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <!-- Billing -->
+                <div id="order-review" class="tab-pane">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="col-md-6"><h2 class="heading8">Personal details</h2>
+                        <span class="style4">Name:</span> <span id="review-name"></span><br />
+                        <span class="style4">Mobile:</span> <span id="review-mobile"></span><br />
+                        <span class="style4">Primary Id:</span> <span id="review-primary"></span><br/>
+                        <span class="style4">Secondary Id:</span> <span id="review-secondary"></span><br/>
+                      </div>
+                      <% if @app_user.user_type == AppUser::BUSINESS %>
+                        <div class="col-md-6"> <h2 class="heading8">Registered</h2>
+                          <span class="style4">Federal Tax ID:</span> <span id="review-federal">4444</span><br />
+                          <span class="style4">Dan & Bradsheet Number:</span> <span id="review-db" >44444444</span>
+                        </div>
+                      <% end %>
+                      <div class="col-md-12"> <h2 class="heading8">Address</h2>
+                      <div class="col-md-4">
+                        <span class="style3">Billing Address</span>
+                        <p class="sub_address">7708 Mapleridge Drive <br />
+                        <span>7502, United States</p>
+                      </div>
+                      <div class="col-md-4">
+                        <span class="style3">Shipping Address</span>
+                        <p class="sub_address">7708 Mapleridge Drive<br />
+                        7502, United States</p>
+                      </div>
+                      <div class="col-md-4">
+                        <span class="style3">Service Address</span>
+                        <p class="sub_address">7708 Mapleridge Drive <br />
+                        7502, United States </p>
+                      </div>
+                      </div>
+                    </div>
+                    <div class="btn-group btnBox">
+                      <div class="col-sm-12 text-right">
+                        <%= hidden_field_tag :deal_id,@deal.id,{:name=> 'order_items[deal_id]'}%>
+                        <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
+                        <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
+                        <%= hidden_field_tag :effective_price,135,{:name=> 'order_items[effective_price]'}%>
+                         <%= submit_tag('Submit',:class => 'btn btn-info',:id => 'order_submit_button') %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<input type="hidden" id="getnamevalue">
+<input type="hidden" id="getmobilevalue">
+<input type="hidden" id="getprimaryvalue">
+<input type="hidden" id="getsecondaryvalue">
+</section>
+
+<!--Order-form--> 
+
+
+<script>
+$('#first_name').blur(function(){
+  var  first_name = $('#first_name').val();
+  if (first_name == '') {
+    alert("Please enter First Name")
+  }
+});
+$('#mobile').blur(function(){
+  var  mobile = $('#mobile').val();
+  if (mobile == '') {
+    alert("Please enter Mobile")
+  }
+});
+$('#app_user_last_name').blur(function(){
+  var  last_name = $('#app_user_last_name').val();
+  if (last_name == '') {
+    alert("Please enter Last Name")
+  }
+});
+$('#primary_id').blur(function(){
+  var primary_id = $('#primary_id').val();
+  if (primary_id == '') {
+    alert("Please select one Id")
+  }
+});
+$('#secondary_id').blur(function(){
+  var secondary_id = $('#secondary_id').val();
+  if (secondary_id == '') {
+    alert("Please select one Id")
+  }
+});
+$('#business_manager_name').blur(function(){
+  var business_manager_name = $('#business_manager_name').val();
+  if (business_manager_name == '') {
+    alert("Please enter Manager Name")
+  }
+});
+$('#business_manager_contact').blur(function(){
+  var business_manager_contact = $('#business_manager_contact').val();
+  if (business_manager_contact == '') {
+    alert("Please enter Manager Contact")
+  }
+});
+$('#billing_address_1').blur(function(){
+  var billing_address_1 = $('#billing_address_1').val();
+  if (billing_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#billing_zip').blur(function(){
+  var billing_zip = $('#billing_zip').val();
+  if (billing_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#shipping_address_1').blur(function(){
+  var shipping_address_1 = $('#shipping_address_1').val();
+  if (shipping_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#shipping_zip').blur(function(){
+  var shipping_zip = $('#shipping_zip').val();
+  if (shipping_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#service_address_1').blur(function(){
+  var service_address_1 = $('#service_address_1').val();
+  if (service_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#service_zip').blur(function(){
+  var service_zip = $('#service_zip').val();
+  if (service_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_billing_address_1').blur(function(){
+  var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+  if (app_user_billing_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_billing_zip').blur(function(){
+  var app_user_billing_zip = $('#app_user_billing_zip').val();
+  if (app_user_billing_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_shipping_address_1').blur(function(){
+  var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+  if (app_user_shipping_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_shipping_zip').blur(function(){
+  var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+  if (app_user_shipping_zip == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_service_address_1').blur(function(){
+  var app_user_service_address_1 = $('#app_user_service_address_1').val();
+  if (app_user_service_address_1 == '') {
+    alert("Please fill the field")
+  }
+});
+$('#app_user_service_zip').blur(function(){
+  var app_user_service_zip = $('#app_user_service_zip').val();
+  if (app_user_service_zip == '') {
+    alert("Please fill the field")
+  }
+});
+
+
+
+ $("#order_submit_button").click(function(event){
+  event.preventDefault();
+        var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('#order_create_form').submit();
+         
+        }
+        
+    });
+
+
+$("#order_information_menu_tab").click(function(event){
+       var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+    });
+
+
+$("#address_information_menu_tab").click(function(event){
+        var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+    });
+
+$("#business_information_menu_tab").click(function(event) {
+  var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+       
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '') {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+});
+
+
+
+$("#residence_address_information_tab").click(function(event){
+  event.preventDefault();
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+
+$("#business_address_information_tab").click(function(event){
+  event.preventDefault();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '') {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+
+
+
+$("#business_information_tab").click(function(event){
+  event.preventDefault();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        if( business_manager_name == '' || business_manager_contact == '' ) {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+$("#personal_information_tab").click(function(event){
+  event.preventDefault();
+        var  first_name = $('#first_name').val();
+        var  mobile = $('#mobile').val();
+        var  last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' )  {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
+         
+        }
+        
+    });
+
+ $( document ).ready(function() {
+        populate_user_type($('#user_type').val());
+        populate_business_type($('#business_type').val());
+        $('#user_type').on('change', function() {
+            populate_user_type($('#user_type').val())
+        });
+        $('#business_type').on('change', function() {
+            populate_business_type($('#business_type').val())
+        });
+    });
+    function populate_user_type(user_type) {
+        if(user_type == 'business'){
+            $('#business_type_div').show();
+            $('#business_name_div').show();
+        }else{
+            $("#business_type :selected").prop('selected', false);
+            $('#business_type_div').hide();
+            $('#business_name').val('');
+            $('#business_name_div').hide();
+            $('#federal_number').val('');
+            $('#ssn').val('');
+            $('#federal_number_div').hide();
+            $('#ssn_div').hide();
+        }
+    }
+    function populate_business_type(business_type){
+        if(business_type != '') {
+            if (business_type == <%= Business::SOLE_PROPRIETOR %>) {
+                $('#ssn_div').show();
+                $('#federal_number_div').hide();
+                $('#federal_number').val('');
+            } else if (business_type == <%= Business::REGISTERED %>) {
+                $('#ssn_div').hide();
+                $('#ssn').val('');
+                $('#federal_number_div').show();
+            }
+            $('#federal_number, #business_name, #ssn').removeAttr("disabled");
+        }else{
+            $('#ssn_div').hide();
+            $('#ssn').val('');
+            $('#federal_number_div').hide();
+            $('#federal_number').val('');
+        }
+    }
+
+$( document ).ready(function() {
+  var  abc = $('#first_name').val();
+  $('#getnamevalue').val(abc);
+  var y= $(getnamevalue).val()
+  $("#review-name").text(y);
+
+  var mobile_value = $('#mobile').val();
+  $('#getmobilevalue').val(mobile_value);
+  var get_mobile= $(getmobilevalue).val()
+  $("#review-mobile").text(get_mobile);
+
+  var primary_value = $('#primary_id').val();
+  $('#getprimaryvalue').val(primary_value);
+  var get_primary= $(getprimaryvalue).val()
+  $("#review-primary").text(get_primary);
+
+   var secondary_value = $('#secondary_id').val();
+  $('#getsecondaryvalue').val(secondary_value);
+  var get_secondary= $(getsecondaryvalue).val()
+  $("#review-secondary").text(get_secondary);
+});
+
+$(".registerDetails").hide();
+$("#soleprop").click(function(){
+  $(".registerDetails").hide();
+	$(".soleproDetails").show();
+});
+
+$("#registered").click(function(){
+	$(".soleproDetails").hide();
+	$(".registerDetails").show();
+});
+
+// $('.btnNext').click(function(){
+//   $('.nav-tabs > .active').next('li').find('a').trigger('click');
+// });
+
+$('.btnPrevious').click(function(){
+  $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+});
+
+$('#first_name').keyup(function(){
+  var  abc = $('#first_name').val();
+  $('#getnamevalue').val(abc);
+});
+
+$("#ordertab").click(function(){
+  var y= $(getnamevalue).val()
+  $("#review-name").text(y);
+  var get_mobile= $(getmobilevalue).val()
+  $("#review-mobile").text(get_mobile);
+  var get_primary= $(getprimaryvalue).val()
+  $("#review-primary").text(get_primary);
+  var get_secondary= $(getsecondaryvalue).val()
+  $("#review-secondary").text(get_secondary);
+});
+
+$('#mobile').keyup(function(){
+  var  mobile_value = $('#mobile').val();
+  $('#getmobilevalue').val(mobile_value);
+});
+
+$('#primary_id').change(function(){
+  var  primary_value = $('#primary_id').val();
+  $('#getprimaryvalue').val(primary_value);
+});
+
+$('#secondary_id').change(function(){
+  var  secondary_value = $('#secondary_id').val();
+  $('#getsecondaryvalue').val(secondary_value);
+});
+
+$("#checkbox7a").change(function () {
+  $("#shipping_address").toggle();
+});
+
+$("#checkboxb").change(function () {
+  $("#service_address").toggle();
+});
+
+$("#checkbox8a").change(function () {
+  $("#business_service_address").toggle();
+});
+
+$("#checkbox8b").change(function () {
+  $("#business_shipping_address").toggle();
+});
+  
+function SetService(checked) {  
+  if (checked) {  
+    document.getElementById('service_address_1').value = document.getElementById('billing_address_1').value; 
+    document.getElementById('service_address_2').value = document.getElementById('billing_address_2').value; 
+    document.getElementById('service_zip').value = document.getElementById('billing_zip').value;   
+  } 
+  else {  
+    document.getElementById('service_address_1').value = '';
+    document.getElementById('service_address_2').value = '';   
+    document.getElementById('service_zip').value = '';
+  }  
+}  
+
+function SetShipping(checked) {  
+  if (checked) {  
+    document.getElementById('shipping_address_1').value = document.getElementById('billing_address_1').value; 
+    document.getElementById('shipping_address_2').value = document.getElementById('billing_address_2').value; 
+    document.getElementById('shipping_zip').value = document.getElementById('billing_zip').value;   
+  } 
+  else {  
+    document.getElementById('shipping_address_1').value = '';
+    document.getElementById('shipping_address_2').value = '';   
+    document.getElementById('shipping_zip').value = '';
+  }  
+}  
+
+function SetAppUserService(checked) {  
+  if (checked) {  
+    document.getElementById('app_user_service_address_1').value = document.getElementById('app_user_billing_address_1').value; 
+    document.getElementById('app_user_service_address_2').value = document.getElementById('app_user_billing_address_2').value; 
+    document.getElementById('app_user_service_zip').value = document.getElementById('app_user_billing_zip').value;   
+  } 
+  else {  
+    document.getElementById('app_user_service_address_1').value = '';
+    document.getElementById('app_user_service_address_2').value = '';   
+    document.getElementById('app_user_service_zip').value = '';
+  }  
+}  
+
+function SetAppUserShipping(checked) {  
+  if (checked) {  
+    document.getElementById('app_user_shipping_address_1').value = document.getElementById('app_user_billing_address_1').value; 
+    document.getElementById('app_user_shipping_address_2').value = document.getElementById('app_user_billing_address_2').value; 
+    document.getElementById('app_user_shipping_zip').value = document.getElementById('app_user_billing_zip').value;   
+  } 
+  else {  
+    document.getElementById('app_user_shipping_address_1').value = '';
+    document.getElementById('app_user_shipping_address_2').value = '';   
+    document.getElementById('app_user_shipping_zip').value = '';
+  }  
+}  
+</script>
+

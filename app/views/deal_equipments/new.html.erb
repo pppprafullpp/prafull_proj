@@ -2,7 +2,7 @@
   <tr>
     <td class='main' id='main' valign='top'>
       <div class='title_tools'>
-        <%= link_to "View All Deals", deals_path %>
+        <%= link_to "View All Deal Equipments", "#{deal_equipments_path}?deal_id=#{@deal_id}&category_name=#{@category_name}" %>
       </div>
       <div class='title'>
         <span id='title'>Add a New Equipment in Deal</span>
@@ -14,3 +14,5 @@
     </td>
   </tr>
 </table>
+
+

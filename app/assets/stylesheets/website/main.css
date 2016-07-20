@@ -2207,9 +2207,14 @@ color: #fff !important;
 .order-form .form-control::-moz-placeholder {
 color:#555;
 }
-.order-form .tab-content .col-lg-12 .col-md-6, .order-form .tab-content .col-lg-12 .col-md-4, .order-form .tab-content .col-lg-12 .col-md-9 {
-    padding: 15px 0 15px 10px
-}
+.order-form .tab-content .col-lg-12 .col-md-6,
+.order-form .tab-content .col-lg-12 .col-md-4 {
+    padding: 15px 0 15px 0px
+} 
+ .order-form .tab-content .col-lg-12 .col-md-12 {
+    padding: 0px;
+    padding-top: 15px;
+ }
 .order-form .tab-content .control-label {
     color: #000;
     font-family: "open_sansregular";
@@ -2288,10 +2293,12 @@ color:#555;
 }
 .order-no-dt {
     font-size: 16px;
-    color: #939393
+    color: #000;
+    font-family: "open_sansregular";
 }
 .order-no-dt span {
-    color: #000;
+    color: #939393;
+    font-family: "open_sansregular";
 }
 .order-service-dt {
     padding-top: 30px;
@@ -2371,7 +2378,7 @@ color:#555;
 .applicant-telcome {
     margin-top: 10px;
     float: left;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 0px;
 }
 .applicant-telcome h6 {
     font-size: 16px;
@@ -2384,7 +2391,7 @@ color:#555;
     color: #828282;
     float: left;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: normal;
     margin-right: 10px;
     text-align: right;
 }
@@ -2412,3 +2419,127 @@ color:#555;
 .bor-btno{ border-bottom:none;}
 .auto-height {min-height:520px;}
 .description-height {height: 40px;}
+.box-sec h2.heading_price ,
+.box-sec h2.heading_price .light,
+.box-sec h2.heading_price .regular {
+    color:  #105679;
+    font-size: 20px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+.order-details .servicedt-text {
+    margin: 20px 0px;
+}
+.ordersty-top .order-no-dt:first-child {
+    margin-top: 4px;
+}
+span.style3 {
+    display:  inline-block;  
+    color: #000000;  
+    font-size: 14px;
+    margin-top: 5px;
+    font-family: "open_sansregular";
+}
+.coll2 {
+    font-family: "open_sanslight" !important;
+}
+.marginL20 {
+    padding-left: 20px;
+}
+.btn-info {
+    font-family: "open_sansregular";
+    margin-right: 10px;
+}
+#business-info .form-control {
+    background: #fafafa;
+}
+#business-info .control-label {
+    margin-top: 0px;
+}
+#business-info .col-lg-12 .col-sm-6 {
+    padding: 15px 0px;
+}
+/*
+#business-info .col-lg-12 .col-sm-6:nth-child(1),
+#business-info .col-lg-12 .col-sm-6:nth-child(3),
+#business-info .col-lg-12 .col-sm-6:nth-child(6),
+#personal-info .col-lg-12 .col-md-6:nth-child(1),
+#personal-info .col-lg-12 .col-md-6:nth-child(3),
+#personal-info .col-lg-12 .col-md-6:nth-child(5),
+#address-info .col-lg-12 .col-md-6:nth-child(2),
+#address-info .col-lg-12 .col-md-6:nth-child(4),
+#address-info .col-lg-12 #business_service_address .col-md-6:nth-child(1),
+#address-info .col-lg-12 #business_service_address .col-md-6:nth-child(3),
+#address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(1),
+#address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(3) {
+    padding-right: 15px;
+} 
+#address-info .col-lg-12 #business_service_address .col-md-6:nth-child(2),
+#address-info .col-lg-12 #business_service_address .col-md-6:nth-child(4),
+#address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(2),
+#address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(4) {
+    padding-right: 0px;
+}*/
+.padding0 {
+    padding: 0px;
+}
+.padding15right {
+    padding-right: 15px !important;
+}
+.order-form .btnBox {
+    margin-top: 15px;
+    padding-left: 0px;
+}
+.order-form .btnBox .col-sm-12 {
+    padding-left: 0px;
+}
+.order-form .col-lg-12 {
+    margin-top: 15px;
+}
+.padding-bott {
+    margin-bottom: 15px;
+}
+.padding-top {
+    margin-top: 15px;
+}
+.heading8 {
+    font-size: 16px;
+    color: #000000;
+    font-family: "open_sansregular";
+    margin: 5px 0px !important;
+    color: #105679;
+}
+#order-review h2 {
+    margin-bottom: 15px;
+}
+#order_submit_button {
+    margin: 0px;
+    margin-left: 15px;
+}
+.style5 {
+    font-size: 14px;
+    font-family: "open_sansregular";
+    color: #686868;
+}
+.applicant-telcome ul li .col1  {
+    color: #000000;
+    font-family: "open_sansregular";
+}
+.applicant-telcome ul li .col2 {
+        color: #828282;
+        font-family: "open_sansregular";
+}
+.applicant-telcome ul li {
+    margin-top: 5px;
+}
+.applicant-telcome ul li .col1.coll2 {
+    color: #828282;
+    font-family: "open_sansregular";
+}
+span.style4 {
+    color: #000;
+    font-family: "open_sansregular";
+    font-size: 16px;
+   
+    margin-top:  5px;
+}

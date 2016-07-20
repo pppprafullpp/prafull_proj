@@ -1,7 +1,9 @@
 class DealEquipmentsController < ApplicationController
 
   def index
-
+    @category_name = params[:category_name]
+    @deal_id = params[:deal_id]
+    @deal_equipments = eval("#{@category_name.camelcase}Equipment").where(:deal_id => @deal_id)
   end
 
   def new
@@ -28,20 +30,37 @@ class DealEquipmentsController < ApplicationController
   end
 
   def edit
-    @deal = Deal.find(params[:id])
+    @category_name = params[:category_name]
+    @deal_id = params[:deal_id]
+    @deal_equipment = eval("#{@category_name.camelcase}Equipment").where(:id => params[:id]).first
   end
+
   def update
-    @deal = Deal.find(params[:id])
+     @deal_equipment = eval("#{params[:category_name].camelcase}Equipment").where(:id => params[:id]).first
     respond_to do |format|
-      if @deal.update(deal_params)
-        format.html { redirect_to deals_path, notice: 'You have successfully updated a Deal.' }
-        format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
+      if @deal_equipment.update(deal_equipments_params)
+        flash[:notice] = 'You have successfully updated a Deal equipment.'
+        format.html { redirect_to deals_path, notice: 'You have successfully updated a Deal equipment.' }
+        format.xml  { render :xml => @deal_equipment, :status => :created, :deal_equipment => @deal_equipment }
       else
-        format.html { render :edit }
-        format.json { render json: @deal.errors, status: :unprocessable_entity }
+        flash[:warning] = @deal_equipment.errors.full_messages
+        format.html {  redirect_to edit_deal_equipment_path(:id => params[:id],:category_name => params[:category_name],:deal_id => @deal_equipment.deal_id) }
+        format.json { render json: @deal_equipment.errors, status: :unprocessable_entity }
       end
     end
+
+    # @deal = Deal.find(params[:id])
+    # respond_to do |format|
+    #   if @deal.update(deal_params)
+    #     format.html { redirect_to deals_path, notice: 'You have successfully updated a Deal.' }
+    #     format.xml  { render :xml => @deal, :status => :created, :deal => @deal }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @deal.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
+
   def destroy
     @deal = Deal.find(params[:id])
     respond_to do |format|

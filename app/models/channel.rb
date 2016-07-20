@@ -1,5 +1,8 @@
 class Channel < ActiveRecord::Base
   validates_uniqueness_of :channel_name, :channel_code
+
+  mount_uploader :image, ChannelpicUploader
+
   CATEGORIES = ['Sports','News','Entertainment','Movies','Knowledge','Cartoon','Rituals','Music & Audio','Regional','Others']
   CHANNEL_TYPES = ['normal','adult','children']
 

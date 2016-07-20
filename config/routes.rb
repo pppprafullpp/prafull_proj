@@ -77,8 +77,7 @@ Rails.application.routes.draw do
   end
 
   get 'deals/get_service_providers'=>'deals#get_service_providers'
-
-
+  get "/searchzip" => "deals#searchzip"
   resources :deals do
     post 'import', on: :collection
   end

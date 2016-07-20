@@ -9,8 +9,8 @@ class DealsController < ApplicationController
         csv_string = CSV.generate do |csv|
           # header row
 
-          csv << 
-          [ "ID",              
+          csv <<
+          [ "ID",
             "Service Category ID",
             "Service Provider ID",
             "Title",
@@ -34,16 +34,16 @@ class DealsController < ApplicationController
             "Start Date",
             "End Date",
             "Short Description",
-            "Detail Description",  
-            "Image", 
+            "Detail Description",
+            "Image",
             "Created At",
-            "Updated At",          
-          ]  
+            "Updated At",
+          ]
 
           # data rows
           Deal.all.order("id ASC").each do |deal|
-            csv << 
-            [ deal.id,              
+            csv <<
+            [ deal.id,
               deal.service_category_id,
               deal.service_provider_id,
               deal.title,
@@ -72,12 +72,12 @@ class DealsController < ApplicationController
               deal.created_at,
               deal.updated_at
             ]
-          end               
-        end 
+          end
+        end
         # send it to the browser
-        send_data csv_string, 
-          :type => 'text/csv; charset=iso-8859-1; header=present', 
-          :disposition => "attachment; filename=deals.csv" 
+        send_data csv_string,
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=deals.csv"
       }
     end
 	end
@@ -97,7 +97,7 @@ class DealsController < ApplicationController
     @deal.additional_offers.build
     @deal.deal_include_zipcodes.build
   end
-  
+
   def get_service_providers
     #@ServiceProviders=ServiceProvider.select("id, name").where(service_category_name: params[:category])
     @ServiceProviders=ServiceProvider.select("id, name").where(service_category_id: params[:category])
@@ -105,7 +105,7 @@ class DealsController < ApplicationController
   end
 
 	def create
-    @deal = Deal.new(deal_params)  
+    @deal = Deal.new(deal_params)
 
     respond_to do |format|
       if @deal.save
@@ -147,7 +147,20 @@ class DealsController < ApplicationController
     Deal.import(params[:file])
     redirect_to deals_path, notice: "Successfully imported."
   end
-  
+
+	def searchzip
+		puts params.to_yaml
+		zip=Zipcode.find_by(:code=>params[:zip])
+		puts zip.to_yaml
+		if zip
+			render :json=>{
+				city: zip.city,
+				area: zip.area,
+				country: zip.country
+			}
+		end
+	end
+
 	private
 
   #def send_notification
@@ -157,13 +170,13 @@ class DealsController < ApplicationController
   #    registration_id = ["#{a_user.gcm_id}"]
       #message = "New deal for zip #{params[:deal][:zip]}.Visit Url : #{params[:deal][:url]}"
   #    gcm.send(registration_id, {data: {message: "New deal for zip #{params[:deal][:zip]}.Visit Url : #{params[:deal][:url]}"}})
-  #  end  
+  #  end
   #end
 
   def deal_params
     params.require(:deal).permit!
   end
 
-  
+
 
 end

@@ -27,16 +27,16 @@
         <h2>Please enter valid Street Address | ZIP Code</h2>
         <div class="col-md-12">
           <div class="col-md-5 col-xs-offset-1">
-            <%=text_field(:zip,nil, :class=>"form-control", :placeholder=>"Enter Zip")%>
+            <%=text_field(:zip,nil, :class=>"form-control", :placeholder=>"Enter Zip", :required=>true)%>
           </div>
           <div class="col-md-5 ">
-            <%= select_tag(:service_category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => '-Select Service-') %>
+            <%= select_tag(:service_category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => '-Select Service', :required=>true) %>
           </div>
         </div>
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-8">
-            <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type') %>
+            <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type',  :required=>true) %>
         </div>
       </div><br />
         <button type="submit" class="btn btn-default btn-red">Enter Now</button>

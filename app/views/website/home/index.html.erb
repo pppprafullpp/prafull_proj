@@ -33,6 +33,12 @@
             <%= select_tag(:service_category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => '-Select Service-') %>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type') %>
+        </div>
+      </div><br />
         <button type="submit" class="btn btn-default btn-red">Enter Now</button>
       <%end%>
     </div>

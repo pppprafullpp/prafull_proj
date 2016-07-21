@@ -77,13 +77,13 @@ var checkedValues;
 $(document).ready(function () {
   $(".comparebox-display:checked").attr("checked",false);
   $(".comparebox-display:checkbox:checked").attr("checked", false);
-  if ($("input:checkbox:checked").length >= 2) {
-    $("input:checkbox").not(":checked").attr("disabled", 2);
+  if ($(".comparebox-display:checkbox:checked").length >= 2) {
+    $(".comparebox-display:checkbox").not(":checked").attr("disabled", 2);
   }
-  $("input:checkbox").click(function () {
-    var bol = $("input:checkbox:checked").length >= 2;
-    $("input:checkbox").not(":checked").attr("disabled", bol);
-    checkedValues = $('input:checkbox:checked').map(function() {
+  $(".comparebox-display:checkbox").click(function () {
+    var bol = $(".comparebox-display:checkbox:checked").length >= 2;
+    $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
+    checkedValues = $('.comparebox-display:checkbox:checked').map(function() {
       return this.value;
     }).get();
   });

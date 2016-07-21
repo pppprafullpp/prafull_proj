@@ -3,10 +3,10 @@
  */
 $( document ).ready(function() {
     $(".comparebox-display").click(function() {
-      if ($("input:checkbox:checked").length == 2){
+      if ($(".comparebox-display:checkbox:checked").length == 2){
         $("#compare_box").show();
       }
-      else if ($("input:checkbox:checked").length != 2){
+      else if ($(".comparebox-display:checkbox:checked").length != 2){
         $("#compare_box").hide();
       }
     });

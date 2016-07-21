@@ -33,11 +33,8 @@ class Website::AppUsersController < ApplicationController
   def edit
 
   end
-  def uploadprofile_pic
-     @user=AppUser.find(@app_user.id).new
-  end
+  
   def update
-
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       address = params[:address].present? ? params[:address] : ''

@@ -64,7 +64,7 @@ class Website::HomeController < ApplicationController
   end
 
   def compare_deals
-    if params[:deal_ids].present?
+    if params[:deal_ids].present? && session[:user_id]
       @app_user = AppUser.find(session[:user_id])
       deal_ids = params[:deal_ids].split(",")
       @deal_first = Deal.find(deal_ids.first)

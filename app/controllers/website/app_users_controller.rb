@@ -34,18 +34,21 @@ class Website::AppUsersController < ApplicationController
   end
 
   def update
+
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
-      #address = params[:address].present? ? params[:address] : ''
-      #address1 = params[:address1].present? ? params[:address1] : ''
-      #address2 = params[:address2].present? ? params[:address2] : ''
-      #@app_user.address = address + '===' + address1 + '===' + address2
+      address = params[:address].present? ? params[:address] : ''
+      address1 = params[:address1].present? ? params[:address1] : ''
+      address2 = params[:address2].present? ? params[:address2] : ''
+      @app_user.address = address + '===' + address1 + '===' + address2
       #@app_user.city = params[:city];@app_user.state = params[:state]
       first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
       last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
-      @app_user.first_name = first_name ; @app_user.last_name = last_name
+      @app_user.first_name = first_name
+      @app_user.last_name = last_name.present? ? last_name : " "
       @app_user.mobile = params[:mobile]
       @app_user.user_type = params[:user_type] if params[:user_type].present?
+    
       if @app_user.save!
         if @app_user.user_type == AppUser::BUSINESS
           @business = Business.create_business(params)
@@ -71,6 +74,31 @@ class Website::AppUsersController < ApplicationController
 
   def preferences
     if session[:user_id].present?
+
+      if params[:notification][:recieve_trending_deals] == "on"
+        params[:notification][:recieve_trending_deals]=true
+      else
+        params[:notification][:recieve_trending_deals]=false
+      end
+
+      if params[:notification][:receive_call] == "on"
+        params[:notification][:receive_call]=true
+      else
+        params[:notification][:receive_call]=false
+      end
+
+      if params[:notification][:receive_email] == "on"
+        params[:notification][:receive_email]=true
+      else
+        params[:notification][:receive_email]=false
+      end
+
+      if params[:notification][:receive_text] == "on"
+        params[:notification][:receive_text]=true
+      else
+        params[:notification][:receive_text]=false
+      end
+
       @notification = Notification.create_notification(params,session[:user_id])
       flash[:notice] = 'Preference Updated successfully'
       redirect_to profile_website_app_users_path

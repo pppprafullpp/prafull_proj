@@ -53,7 +53,7 @@
                 <%= f.text_field :price %></div>
               </td>
               <td>
-                <div>URL:<span id="mandat">*</span></div>
+                <div>URL:</div>
                 <%= f.text_field :url %></div>
               </td>
             </tr>
@@ -79,22 +79,17 @@
             <tr>
               <td valign="top">
                 <div style="width:49%;display: inline-block;vertical-align: top;">
-                  <div><%= f.check_box :is_nationwide,:id=>'deal-nationwide', :checked=>'checked' %> Is Nationwide??? </div>
+                  <div><%= f.check_box :is_nationwide,:id=>'deal-nationwide', :checked=>'checked' %> Is Nationwide? </div>
                 </div>
                 <div style="width:50%;display: inline-block;">
-                  <%=text_field_tag(:include_zip ,"" ,:onkeyup=>"searchforzip(this.value)", :placeholder=>"Enter zip to exclude")%>
-                  <%#= f.fields_for :deal_include_zipcodes do |builder| %>
-                      <%#= render 'include_zipcodes', f: builder %>
-                  <%# end %>
-                  <div id="excluded-zip-options" class="excluded-zip">
-                  </div>
-                  <div id="excluded-zip" class="excluded-zip">
-                  </div>
+                  <%= f.fields_for :deal_include_zipcodes do |builder| %>
+                      <%= render 'include_zipcodes', f: builder %>
+                  <% end %>
                 </div>
               </td>
               <td>
-                <%#= f.label 'Exclude Zipcodes:' %>
-                <%#= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "deal-exclude-zipcode",multiple: true,size: 10  } %>
+                <%= f.label 'Exclude Zipcodes:' %>
+                <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "deal-exclude-zipcode",multiple: true,size: 10  } %>
               </td>
             </tr>
             <tr>
@@ -119,10 +114,31 @@
 
           </table>
 
+          <!--
+<%#= f.fields_for :internet_deal_attributes do |builder| %>
+              <%#= render 'internet_attribute', f: builder %>
+          <%# end %>
+
+          <%#= f.fields_for :telephone_deal_attributes do |builder| %>
+              <%#= render 'telephone_attribute', f: builder %>
+          <%# end %>
+
+          <%#= f.fields_for :cable_deal_attributes do |builder| %>
+              <%#= render 'cable_attribute', f: builder %>
+          <%# end %>
+
+          <%#= f.fields_for :cellphone_deal_attributes do |builder| %>
+              <%#= render 'cellphone_attribute', f: builder %>
+          <%# end %>
+
+          <%#= f.fields_for :bundle_deal_attributes do |builder| %>
+              <%#= render 'bundle_attribute', f: builder %>
+          <%# end %>-->
+
           <%= f.fields_for :additional_offers do |builder| %>
               <%= render 'additional_offer_fields', f: builder %>
           <% end %>
-          <%#= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
+          <%= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
 
 
           <div><%= f.submit "Create" %></div>
@@ -130,29 +146,3 @@
     </td>
   </tr>
 </table>
-
-<script>
-$("#is_contract").click(function(){
-    if($(this).is(':checked')){
-        $("#contract_period").prop("disabled",false);
-      }else{
-        $("#contract_period").prop("disabled",true);
-      }
-  });
-  function searchforzip(value){
-    if (value.length==5)
-      $.ajax({
-        url:"/searchzip",
-        type: "GET",
-        data: {"zip": value},
-        success: function(zip){
-          $("#excluded-zip-options").show();
-          $("#excluded-zip-options").html("<p href='#'style='cursor:pointer' onclick='appendzip("+value+")'>"+value+"("+ zip["city"]+","+zip["area"]+","+zip["country"]+")</p>");
-        }
-      });
-    }
-    function appendzip(zip,e){
-      $("#excluded-zip-options").hide();
-      $("#excluded-zip").append(","+zip)
-    }
-</script>

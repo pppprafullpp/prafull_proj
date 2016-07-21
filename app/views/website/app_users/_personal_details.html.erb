@@ -18,7 +18,8 @@
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
   <div class="col-sm-3">
     <div class="profile_imgbox"> <span class="profile_img"><%= image_tag('website/user.png',:alt => 'Sonal',:class => 'img-responsive') %></span>
-      <h4>Sonal</h4>
+      <h4><%=@app_user.first_name+" "+@app_user.last_name%></h4>
+    
     </div>
   </div>
   <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'col-sm-9 form-horizontal',:id => 'update_user_form' do %>
@@ -36,7 +37,7 @@
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Phone">Mobile</label>
-        <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
+        <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength=>10) %>
       </div>
       <div class="btn-group col-lg-12 margin_top">
         <h5>Billing Address</h5>
@@ -70,15 +71,6 @@
         </div>
 
       </div>
-      <!-- <div class="btn-group col-sm-12" data-toggle="buttons">
-        <h5>User type</h5>
-        <label class="btn active col-sm-3">
-          <input type="radio" name="user_type" checked="" value="<%#= AppUser::RESIDENCE %>">
-          <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> Residence</span> </label>
-        <label class="btn col-sm-3">
-          <input type="radio" name="user_type" value="<%#= AppUser::BUSINESS %>" id="business_checkbox">
-          <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Business</span> </label>
-      </div>-->
       <% disable_flag = @business.present? ? true : false  %>
       <div class="btn-group col-sm-12">
         <h5>User type</h5>
@@ -126,6 +118,18 @@
 </div>
 <script type="text/javascript">
     $( document ).ready(function() {
+
+      $("#mobile").keydown(function (e) {
+
+       if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
+                return;
+       }
+       // Ensure that it is a number and stop the keypress
+       if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+           e.preventDefault();
+       }
+   });
+
         populate_user_type($('#user_type').val());
         populate_business_type($('#business_type').val());
         $('#user_type').on('change', function() {

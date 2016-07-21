@@ -29,11 +29,11 @@
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <!-- Text input-->
       <div class="col-sm-6">
-        <label class="control-label" for="Name">Name</label>
+        <label class="control-label" for="Name">First Name</label>
         <%= text_field_tag(:first_name,@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name') %>
       </div>
       <div class="col-sm-6">
-        <label class="control-label" for="Name">Name</label>
+        <label class="control-label" for="Name">Last Name</label>
         <%= text_field_tag(:last_name,@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name') %>
       </div>
       <!-- Text input-->

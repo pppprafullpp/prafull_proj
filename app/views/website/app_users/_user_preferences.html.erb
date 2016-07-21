@@ -11,20 +11,6 @@
         <%= radio_button_tag 'notification[recieve_notification]', true,@app_user.notification.try(:recieve_notification) %>
         <%= label_tag :recieve_notification, "No", :value => "false" %>
         <%= radio_button_tag 'notification[recieve_notification]', false%>
-
-        <!-- <div class="radio col-md-2" data-toggle="buttons">
-          <label class="btn active">
-            <input type="radio" name="optionsRadios" id="" value="option1" checked="">
-            <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> Yes </label>
-        </div>
-
-        <div class="radio col-md-2" data-toggle="buttons">
-          <label class="btn">
-            <input type="radio" name="optionsRadios" id="" value="option2">
-            <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> No </label>
-        </div> -->
-
-
       </div>
 
 
@@ -43,19 +29,27 @@
 
       <div class="col-md-12">
         <!-- <input type="checkbox" id="checkbox8a"> -->
-        <%= check_box_tag('notification[recieve_trending_deals]','1',@app_user.notification.try(:recieve_trending_deals)) %>
-        <%#= f.check_box :recieve_trending_deals%><span> Receive Trending Deals and Special offers </span> 
+          <%=check_box_tag('notification[recieve_trending_deals]', nil,0,:class=>"recievecallcbox") %>
+        <%#= f.check_box :recieve_trending_deals%><span>Receive Trending Deals and Special offers </span>
       </div>
-
+      <%if @app_user.notification.recieve_trending_deals%>
+      <script>$(".recievecallcbox:checked").prop("checked",true)</script>
+      <%else%>
+        <script>$(".recievecallcbox:checked").attr("checked",false)</script>
+      <%end%>
 
 
       <div class="col-md-12">
         <!-- <input type="checkbox" id="checkbox8b"> -->
-        <%= check_box_tag('notification[receive_call]','1',@app_user.notification.try(:receive_call)) %>
-         <%#= f.check_box :receive_call%><span> Call and Receive calls </span> 
+        <%= check_box_tag('notification[receive_call]',nil,0,:class=>"recievecallcbox") %>
+         <%#= f.check_box :receive_call%><span> Call and Receive calls </span>
+         <%if @app_user.notification.receive_call%>
+         <script>$(".recievecallcbox:checked").prop("checked",true)</script>
+         <%else%>
+           <script>$(".recievecallcbox:checked").attr("checked",false)</script>
+         <%end%>
       </div>
     </div>
-
 
 
     <h4>Ratings</h4>
@@ -76,21 +70,24 @@
 
       <div class="col-md-12 margin_checkbox">
         <h4>Communications Permissions</h4>
-        <!-- <div class="checkbox checkbox-info"> -->
-          <!-- <input type="checkbox" id="checkbox9a"> -->
-          <!-- <%#= f.check_box :recieve_notification %><strong>Wants to recieve notification ? :</strong> -->
-          <%= check_box_tag('notification[receive_email]','1',@app_user.notification.try(:receive_email)) %>
-          <%#= f.check_box :receive_email%><span> Receive Emails</span> 
-        <!-- </div> -->
+          <%= check_box_tag('notification[receive_email]',nil,0, :class=>"recieve_emailcbox") %>Recieve emails
+          <%if @app_user.notification.receive_email%>
+          <script>$(".recieve_emailcbox:checked").prop("checked",true)</script>
+          <%else%>
+            <script>$(".recieve_emailcbox:checked").attr("checked",false)</script>
+          <%end%>
+
       </div>
 
       <div class="col-md-12">
-        <!-- <div class="checkbox checkbox-info"> -->
-          <!-- <input type="checkbox" id="checkbox9b"> -->
-          <%= check_box_tag('notification[receive_text]','1',@app_user.notification.try(:receive_text)) %>
+          <%= check_box_tag('notification[receive_text]',nil,0,:class=>"recieve_textcbox") %>
+          <%if @app_user.notification.receive_text%>
+          <script>$(".recieve_textcbox:checked").prop("checked",true)</script>
+          <%else%>
+            <script>$(".recieve_textcbox:checked").attr("checked",false)</script>
+          <%end%>
+           <span> Receive Texts </span>
 
-          <%#= f.check_box :receive_text%><span> Receive Texts </span> 
-        <!-- </div> -->
       </div>
 
       <div class="col-sm-6">

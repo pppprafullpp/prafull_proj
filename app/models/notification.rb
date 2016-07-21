@@ -7,6 +7,7 @@ class Notification < ActiveRecord::Base
  #  	end
 
   def self.create_notification(params,user_id)
+		
     if params[:notification].present?
       notification = self.where(app_user_id: user_id).first
       unless notification.present?

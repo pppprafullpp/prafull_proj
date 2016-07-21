@@ -38,13 +38,6 @@ class Website::HomeController < ApplicationController
   end
 
   def deal_details 
-    @category_name=ServiceCategory.find(params[:category_id]).name
-    if session[:user_id].present?
-      ordered_deals_id=[]
-      order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
-      @deal_ids=[]
-      @deal_ids << OrderItem.find_by(:order_id=>order_ids).deal_id
-    end
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil)
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?

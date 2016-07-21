@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Last Name*</label>
-                              <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Your Name') %>
+                              <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name') %>
                             </div>
                             <div class="col-md-6 padding15right">
                               <label for="Name" class="control-label">Contact Number*</label>
@@ -142,53 +142,10 @@
 
                         <div class="col-sm-6">
                           <label for="Name" class="control-label">Main Telephone Number*</label>
-                          <%= text_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone') %>
+                          <%= phone_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone', :maxlength => 10) %>
                         </div>
 
-                       <!--  <div class="col-md-8">
-                          <div class="details-zip">
-                            <div class="col-xs-6 radio_inline">
-                              <label class="btn active">
-                              <input type="radio" name="optionsRadios" id="soleprop" value="option1" checked >
-                              <i class="fa fa-circle-o fa-lg"></i><i class="fa fa-dot-circle-o fa-lg"></i> <span> Sole Proprietary</span> </label>
-                            </div>
-                            <div class="col-sx-6 radio_inline">
-                              <label class="btn">
-                                <input type="radio" name="optionsRadios" id="registered" value="option2">
-                                <i class="fa fa-circle-o fa-lg"></i><i class="fa fa-dot-circle-o fa-lg"></i> <span> Registered </span> </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="registerDetails form-group">
-                          <div class="col-md-6">
-                            <%#= hidden_field_tag :business_type,1,{:name=> 'business[business_type]'}%>
-                            <label for="Name" class="control-label">Dan & Bradsheet Number</label>
-                            <%#= text_field_tag('business[db_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:db_number),:class => 'form-control input-md',:placeholder => 'DAN') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">DBA</label>
-                            <%#= text_field_tag('business[business_dba]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DBA') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">Federal Tax ID</label>
-                            <%#= text_field_tag('business[federal_number]',@app_user.try(:business_app_users).try(:first).try(:business).try(:federal_number),:class => 'form-control input-md',:placeholder => 'Federal Number') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">Manager Name</label>
-                            <%#= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
-                          </div>
-                        </div>
-                        <div class="soleproDetails  form-group">
-                          <div class="col-md-6">
-                            <%#= hidden_field_tag :business_type,0,{:name=> 'business[business_type]'}%>
-                            <label for="Name" class="control-label">DOB</label>
-                            <%#= text_field_tag('business[dob]',@app_user.try(:business_app_users).try(:first).try(:business).try(:business_dba),:class => 'form-control input-md',:placeholder => 'DOB') %>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="Name" class="control-label">SSN</label>
-                            <%#= text_field_tag('business[ssn]',@app_user.try(:business_app_users).try(:first).try(:business).try(:ssn),:class => 'form-control input-md',:placeholder => 'SSN') %>
-                          </div>
-                        </div> -->
+                     
                       </div>
                     </div>
                     <!-- Button group -->
@@ -206,6 +163,9 @@
                 <% end %>
 
                       <!-- Membership Info -->
+ 
+                      <%if Order.find_by_app_user_id(session[:user_id]).present?%>
+
                       <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 if Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1.present?  %>
                       <% @ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address2 %>
                       <% @zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.zip %>
@@ -215,7 +175,8 @@
                       <% @s_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address1 %>
                       <% @s_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address2 %>
                       <% @s_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.zip %>
-
+                      <%end%>
+ 
                       <% if @app_user.user_type == "residence" %>
                         <div id="address-info" class="tab-pane">
                           <div class="row">
@@ -414,7 +375,8 @@
                         <div class="row">
                           <div class="col-lg-12">
                             <div class="col-md-6"><h2>Personal details</h2>
-                              <span class="style3">Name:</span> <span id="review-name" class="style5"></span><br />
+                              <span class="style3">First Name:</span> <span id="review-name" class="style5"></span><br />
+                              <span class="style3">Last Name:</span> <span id="review-last-name" class="style5"></span><br />
                               <span class="style3">Mobile:</span> <span id="review-mobile" class="style5"></span><br />
                               <span class="style3">Primary Id:</span> <span id="review-primary" class="style5"></span><br/>
                               <span class="style3">Secondary Id:</span> <span id="review-secondary" class="style5"></span>
@@ -460,6 +422,7 @@
         </div>
       </div>
       <input type="hidden" id="getnamevalue">
+      <input type="hidden" id="getlastnamevalue">
       <input type="hidden" id="getmobilevalue">
       <input type="hidden" id="getprimaryvalue">
       <input type="hidden" id="getsecondaryvalue">
@@ -473,13 +436,13 @@
       $('#first_name').blur(function(){
         var  first_name = $('#first_name').val();
         if (first_name == '') {
-          alert("Please enter First Name")
+          alert("Please enter First Name.")
         }
       });
       $('#mobile').blur(function(){
         var  mobile = $('#mobile').val();
         if (mobile == '') {
-          alert("Please enter Mobile")
+          alert("Please enter mobile number.")
         }
       });
       $('#app_user_last_name').blur(function(){
@@ -585,7 +548,54 @@
         }
       });
 
+      $( document ).ready(function() {
+
+     $("#mobile,#business_manager_contact").keydown(function(e)  {
+if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
+return;
+}
+// Ensure that it is a number and stop the keypress
+if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+e.preventDefault();
+}
+});
+
+        var  abc = $('#first_name').val();
+        $('#getnamevalue').val(abc);
+        var y= $(getnamevalue).val()
+        $("#review-name").text(y);
+
+        var  last_name = $('#last_name').val();
+        $('#getlastnamevalue').val(last_name);
+        var get_last_name= $(getlastnamevalue).val()
+        $("#review-last-name").text(get_last_name);
+
+        var mobile_value = $('#mobile').val();
+        $('#getmobilevalue').val(mobile_value);
+        var get_mobile= $(getmobilevalue).val()
+        $("#review-mobile").text(get_mobile);
+
+        var primary_value = $('#primary_id').val();
+        $('#getprimaryvalue').val(primary_value);
+        var get_primary= $(getprimaryvalue).val()
+        $("#review-primary").text(get_primary);
+
+        var secondary_value = $('#secondary_id').val();
+        $('#getsecondaryvalue').val(secondary_value);
+        var get_secondary= $(getsecondaryvalue).val()
+        $("#review-secondary").text(get_secondary);
+
+
+      });
+
       $("#order_information_menu_tab").click(function(event){
+        $('#review-name').text($('#first_name').val());
+        $('#review-last-name').text($('#last_name').val());
+        $('#review-mobile').text($('#mobile').val());
+        $('#review-primary').text($('#primary_id').val());
+        $('#review-secondary').text($('#secondary_id').val());
+
+        
               var first_name = $('#first_name').val();
               var mobile = $('#mobile').val();
               var last_name = $('#app_user_last_name').val();
@@ -610,7 +620,7 @@
                    event.stopImmediatePropagation();
               }
           });
-
+        
       $("#address_information_menu_tab").click(function(event){
               var  first_name = $('#first_name').val();
               var  mobile = $('#mobile').val();
@@ -673,6 +683,7 @@
               else {
                 billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/><b></b>"+billing_zip;
                 service_address=service_address_1+"<br/>"+service_address_2+"<br/><b></b>"+service_zip;
+                shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/><b></b>"+shipping_zip;
                 $(".service-address-innertxt").html(service_address);
                 $(".shipping-address-innertxt").html(shipping_address);
                 $(".billing-address-innertxt").html(billing_address);
@@ -700,9 +711,9 @@
               var  last_name = $('#app_user_last_name').val();
               var primary_id = $('#primary_id').val();
               var secondary_id = $('#secondary_id').val();
-              var business_manager_name = $('#business_manager_name').val();
-              var business_manager_contact = $('#business_manager_contact').val();
-              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' )  {
+              // var business_manager_name = $('#business_manager_name').val();
+              // var business_manager_contact = $('#business_manager_contact').val();
+              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
                    alert("Please fill all the mandatory fields.")
               }
               else {
@@ -810,27 +821,7 @@
               }
           }
 
-      $( document ).ready(function() {
-        var  abc = $('#first_name').val();
-        $('#getnamevalue').val(abc);
-        var y= $(getnamevalue).val()
-        $("#review-name").text(y);
-
-        var mobile_value = $('#mobile').val();
-        $('#getmobilevalue').val(mobile_value);
-        var get_mobile= $(getmobilevalue).val()
-        $("#review-mobile").text(get_mobile);
-
-        var primary_value = $('#primary_id').val();
-        $('#getprimaryvalue').val(primary_value);
-        var get_primary= $(getprimaryvalue).val()
-        $("#review-primary").text(get_primary);
-
-         var secondary_value = $('#secondary_id').val();
-        $('#getsecondaryvalue').val(secondary_value);
-        var get_secondary= $(getsecondaryvalue).val()
-        $("#review-secondary").text(get_secondary);
-      });
+      
 
       $(".registerDetails").hide();
       $("#soleprop").click(function(){

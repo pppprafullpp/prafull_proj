@@ -84,7 +84,7 @@ a, a-hover, a:focus {
 
 /*topbar*/
 .top-bar {
-    background: #eeeeee;
+    background: #272525;
     padding: 8px 0;
     height: 40px;
     border-bottom: 1px solid #c3c1c1;
@@ -1012,6 +1012,7 @@ color:#555 !important;
 
 
 .profile_img {
+    border: 3px solid #ccc;
     display: block;
     width: 150px;
     height: 150px;
@@ -1109,7 +1110,7 @@ color:#555 !important;
     box-shadow: none;
     background-color: #ffffff;
 }
-.profile_section .form-control { 
+.profile_section .form-control {
  border-radius: 0px;
  -webkit-border-radius: 0px;
  -moz-border-radius: 0px;
@@ -2210,7 +2211,7 @@ color:#555;
 .order-form .tab-content .col-lg-12 .col-md-6,
 .order-form .tab-content .col-lg-12 .col-md-4 {
     padding: 15px 0 15px 0px
-} 
+}
  .order-form .tab-content .col-lg-12 .col-md-12 {
     padding: 0px;
     padding-top: 15px;
@@ -2257,7 +2258,7 @@ color:#555;
     margin: 15px 0;
 }
 /*1july 2015*/
-    
+
 .order-details {
     margin-top: 50px;
 }
@@ -2434,8 +2435,8 @@ color:#555;
     margin-top: 4px;
 }
 span.style3 {
-    display:  inline-block;  
-    color: #000000;  
+    display:  inline-block;
+    color: #000000;
     font-size: 14px;
     margin-top: 5px;
     font-family: "open_sansregular";
@@ -2473,7 +2474,7 @@ span.style3 {
 #address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(1),
 #address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(3) {
     padding-right: 15px;
-} 
+}
 #address-info .col-lg-12 #business_service_address .col-md-6:nth-child(2),
 #address-info .col-lg-12 #business_service_address .col-md-6:nth-child(4),
 #address-info .col-lg-12 #business_shipping_address .col-md-6:nth-child(2),
@@ -2540,6 +2541,33 @@ span.style4 {
     color: #000;
     font-family: "open_sansregular";
     font-size: 16px;
-   
+
     margin-top:  5px;
+}
+
+.inputfile {
+  /* visibility: hidden etc. wont work */
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile:focus + label {
+  /* keyboard navigation */
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+.inputfile + label * {
+  pointer-events: none;
+}
+.profile_img img {
+    height: 150px;
+
+.btn_3{
+background-color: #5cb85c;
+color:#fff;
+
+
 }

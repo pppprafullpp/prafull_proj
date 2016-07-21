@@ -179,6 +179,7 @@
         <div class="col-md-4">
           <div class="right-order-dt">
             <div class="applicant-telcome">
+              <% if app_user.business_app_users.first.business.business_type ==  Business::REGISTERED %>
               <h2>Registered</h2>
               <ul>
                 <li>
@@ -198,6 +199,23 @@
                   <div class="col2"><%= business.try(:db_number) %></div>
                 </li>
               </ul>
+              <% elsif app_user.business_app_users.first.business.business_type ==  Business::SOLE_PROPRIETOR %>
+                <h2>Registered</h2>
+               <ul>
+                <li>
+                  <div class="col1">Business Name:</div>
+                  <div class="col2"><%= business.try(:business_name) %></div>
+                </li>
+                <li>
+                  <div class="col1">SSN:</div>
+                  <div class="col2"><%= business.try(:ssn) %></div>
+                </li>
+                <li>
+                  <div class="col1">DOB:</div>
+                  <div class="col2"><%= business.try(:dob)%></div>
+                </li>
+              </ul>
+            <% end %>
             </div>
           </div>
         </div>

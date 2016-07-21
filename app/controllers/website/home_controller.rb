@@ -26,6 +26,7 @@ class Website::HomeController < ApplicationController
     #else
     #@dashboard_data = []
     #end
+
   end
 
   def get_deals_from_first_page
@@ -36,8 +37,7 @@ class Website::HomeController < ApplicationController
     @category_name=ServiceCategory.find(params[:service_category_id]).name
   end
 
-  def deal_details
-    @category_name=ServiceCategory.find(params[:category_id]).name
+  def deal_details 
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil)
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
@@ -46,6 +46,15 @@ class Website::HomeController < ApplicationController
       @dashboard_data = []
     end
     @providers = ServiceProvider.get_provider_by_category(params[:category_id])
+    begin
+        if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
+          ordered_deals_id=[]
+          order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
+          @deal_ids=[]
+          @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
+        end
+      rescue
+      end
   end
 
   def more_deal_details
@@ -55,7 +64,7 @@ class Website::HomeController < ApplicationController
   end
 
   def compare_deals
-    if params[:deal_ids].present?
+    if params[:deal_ids].present? && session[:user_id]
       @app_user = AppUser.find(session[:user_id])
       deal_ids = params[:deal_ids].split(",")
       @deal_first = Deal.find(deal_ids.first)

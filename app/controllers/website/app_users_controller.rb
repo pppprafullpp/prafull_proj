@@ -5,6 +5,7 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
+
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
@@ -32,9 +33,8 @@ class Website::AppUsersController < ApplicationController
   def edit
 
   end
-
+  
   def update
-
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       address = params[:address].present? ? params[:address] : ''
@@ -42,21 +42,27 @@ class Website::AppUsersController < ApplicationController
       address2 = params[:address2].present? ? params[:address2] : ''
       @app_user.address = address + '===' + address1 + '===' + address2
       #@app_user.city = params[:city];@app_user.state = params[:state]
-      first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
-      last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
-      @app_user.first_name = first_name
-      @app_user.last_name = last_name.present? ? last_name : " "
+      # first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
+      # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
+      @app_user.first_name = params[:first_name]
+      @app_user.last_name = params[:last_name]
       @app_user.mobile = params[:mobile]
       @app_user.user_type = params[:user_type] if params[:user_type].present?
-    
+      @app_user.avatar=params[:avatar] if params[:avatar].present?
+
       if @app_user.save!
+
         if @app_user.user_type == AppUser::BUSINESS
-          @business = Business.create_business(params)
-          if @business.present?
-            address_hash = {:business_addresses => [params[:addresses]]}
-            business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
-            business_addresses = BusinessAddress.create_business_addresses(address_hash,@business.id)
-          end
+
+             business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
+             business_addresses = BusinessAddress.find_by_business_id(business_user_id)
+             
+             business_addresses.update_attributes(
+             :address_name=>params[:addresses][:address_name],
+             :zip=>params[:addresses][:zip],
+             :address1 =>params[:addresses][:address1],
+             :address2=>params[:addresses][:address2],
+             :contact_number=>params[:addresses][:contact_number])
         else
           address_hash = {:app_user_addresses => [params[:addresses]]}
           app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
@@ -67,6 +73,8 @@ class Website::AppUsersController < ApplicationController
         flash[:warning] = @app_user.errors.full_messages
         redirect_to profile_website_app_users_path
       end
+      # @app_user.update_attributes(:avatar=>params[:avatar])
+
     else
       redirect_to website_home_index_path
     end
@@ -144,17 +152,17 @@ class Website::AppUsersController < ApplicationController
               business_user = BusinessAppUser.create_business_app_user(business.id,@app_user.id)
             end
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to profile_website_app_users_path
+            redirect_to website_home_index_path
           else
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to profile_website_app_users_path
+            redirect_to website_home_index_path
           end
         else
-          redirect_to profile_website_app_users_path
+          redirect_to website_home_index_path
         end
       else
-        redirect_to profile_website_app_users_path
+        redirect_to website_home_index_path
       end
     end
   end
@@ -182,6 +190,8 @@ class Website::AppUsersController < ApplicationController
       if @app_user.present?
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
+        session[:zip_code] = @app_user.zip
+        session[:user_type] = @app_user.user_type
         flash[:notice] = 'Signin Successfull'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
@@ -216,9 +226,6 @@ class Website::AppUsersController < ApplicationController
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       @business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",@app_user.id).first
-      #@business = Business.new unless @business.present?
-      # @orders = @app_user.orders
-      # @orders = Order.select("orders.*,order_items.deal_id,order_items.deal_price,order_items.effective_price").joins(:order_items).where(:app_user_id => session[:user_id]).order("id DESC")
     else
       redirect_to website_home_index_path
     end
@@ -239,8 +246,7 @@ class Website::AppUsersController < ApplicationController
 
   private
   def app_user_params
-    params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-    params.require(:app_user).permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :mobile,:password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status,:primary_id,:secondary_id,:primary_id_number,:secondary_id_number)
+    params.require(:app_user).permit!
   end
 
   # def order_params

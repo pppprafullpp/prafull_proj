@@ -32,7 +32,7 @@
           <%=check_box_tag('notification[recieve_trending_deals]', nil,0,:class=>"recievecallcbox") %>
         <%#= f.check_box :recieve_trending_deals%><span>Receive Trending Deals and Special offers </span>
       </div>
-      <%if @app_user.notification.recieve_trending_deals%>
+      <%if @app_user.notification.present? and @app_user.notification.recieve_trending_deals%>
       <script>$(".recievecallcbox:checked").prop("checked",true)</script>
       <%else%>
         <script>$(".recievecallcbox:checked").attr("checked",false)</script>
@@ -43,14 +43,13 @@
         <!-- <input type="checkbox" id="checkbox8b"> -->
         <%= check_box_tag('notification[receive_call]',nil,0,:class=>"recievecallcbox") %>
          <%#= f.check_box :receive_call%><span> Call and Receive calls </span>
-         <%if @app_user.notification.receive_call%>
+         <%if @app_user.notification.present? and @app_user.notification.receive_call%>
          <script>$(".recievecallcbox:checked").prop("checked",true)</script>
          <%else%>
            <script>$(".recievecallcbox:checked").attr("checked",false)</script>
          <%end%>
       </div>
     </div>
-
 
 
     <h4>Ratings</h4>
@@ -72,7 +71,7 @@
       <div class="col-md-12 margin_checkbox">
         <h4>Communications Permissions</h4>
           <%= check_box_tag('notification[receive_email]',nil,0, :class=>"recieve_emailcbox") %>Recieve emails
-          <%if @app_user.notification.receive_email%>
+          <%if @app_user.notification.present? and @app_user.notification.receive_email%>
           <script>$(".recieve_emailcbox:checked").prop("checked",true)</script>
           <%else%>
             <script>$(".recieve_emailcbox:checked").attr("checked",false)</script>
@@ -82,7 +81,7 @@
 
       <div class="col-md-12">
           <%= check_box_tag('notification[receive_text]',nil,0,:class=>"recieve_textcbox") %>
-          <%if @app_user.notification.receive_text%>
+          <%if @app_user.notification.present? and @app_user.notification.receive_text%>
           <script>$(".recieve_textcbox:checked").prop("checked",true)</script>
           <%else%>
             <script>$(".recieve_textcbox:checked").attr("checked",false)</script>

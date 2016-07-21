@@ -43,7 +43,7 @@ class AppUser < ActiveRecord::Base
   end
 
   def self.authenticate(email, password)
-    user = self.select('id,first_name,last_name,email,encrypted_password,active').where(:email => email).first
+    user = self.select('id,first_name,last_name,email,encrypted_password,active,zip,user_type').where(:email => email).first
     if user.present? && password.present?
       user.valid_password?(password) ? user : nil
     else

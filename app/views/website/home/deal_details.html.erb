@@ -74,13 +74,23 @@ var checkedValues,dealids;
   $( document ).ready(function() {
 
     $("#compare_box").hide();
-    dealids = [<%= @deal_ids.map(&:to_s).join(", ") %>];
+
+    dealids = [
+      <%
+      if @deal_ids.present?%>
+      <%=
+      @deal_ids.map(&:to_s).join(", ")
+      %>
+      <%end
+      %>
+    ];
     for(i=0;i<dealids.length;i++){
       $("#"+dealids[i]).addClass("btn_3");
       $("#"+dealids[i]).text("Already Ordered");
       $("#"+dealids[i]).prop("href","javascript:void(0)")
     }
     dealids=[];
+
   });
 
 

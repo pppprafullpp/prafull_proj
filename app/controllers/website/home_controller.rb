@@ -39,12 +39,15 @@ class Website::HomeController < ApplicationController
       @dashboard_data = []
     end
     @providers = ServiceProvider.get_provider_by_category(params[:category_id])
+    begin
         if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
           ordered_deals_id=[]
           order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
           @deal_ids=[]
           @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
         end
+      rescue
+      end
   end
 
   def more_deal_details

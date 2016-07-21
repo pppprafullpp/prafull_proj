@@ -206,6 +206,8 @@
                 <% end %>
 
                       <!-- Membership Info -->
+                      <%if Order.find_by_app_user_id(session[:user_id]).present?%>
+
                       <% @ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1 if Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address1.present?  %>
                       <% @ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.address2 %>
                       <% @zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>2).first.zip %>
@@ -215,7 +217,7 @@
                       <% @s_ad1=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address1 %>
                       <% @s_ad2=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.address2 %>
                       <% @s_zip=Order.find_by_app_user_id(session[:user_id]).order_addresses.where(:address_type=>1).first.zip %>
-
+                      <%end%>
                       <% if @app_user.user_type == "residence" %>
                         <div id="address-info" class="tab-pane">
                           <div class="row">

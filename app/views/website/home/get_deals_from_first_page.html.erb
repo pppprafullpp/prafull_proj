@@ -32,8 +32,8 @@
 
           <div class="col-xs-12">
             <div class="row box-sec" id="deal-form">
+              <%if @dashboard_data.present?%>
               <% @dashboard_data.each do |data| %>
-
               <div class="col-xs-6 col-sm-6 col-md-4">
                 <div class="border-radius-bg auto-height">
                   <div class="vertical_middle" style="overflow: hidden;"><img src="<%= data['deal_image_url'] %>"  height="70" width="155" alt=""></div>
@@ -50,19 +50,7 @@
                     <h2 class="heading_price">$<%= data['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
                     <p>effective price</p>
                     <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
-                    <%if @deal_ids.present?%>
-                    <%@deal_ids.each do |deal_id|%>
-                    <% if deal_id == data['id'] %>
-                     <a class="btn_2 btn_3" href="javascript:void(0)">Already Ordered</a>
-                     <%else%>
-                     <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> data['id']) %>">Order</a>
-                    <%end%>
-                    <%end%>
-                    <%else%>
-                     <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> data['id']) %>">Order</a>
-                    <%end%>
-
-
+                    <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> data['id']) %>">Order</a>
                     <div class="checkbox checkbox-info" id="deal-checkbox">
                       <input class="comparebox-display" value="<%=data.first.last%>" id="checkbox<%=data.first.last%>" type="checkbox">
                       <label for="checkbox<%=data.first.last%>"> Add to compare </label>
@@ -71,6 +59,11 @@
                 </div>
               </div>
               <% end %>
+              <%else%>
+              <br />
+              <center><%=image_tag("/assets/No-results-found.jpg")%></center>
+              <center><h4><%=link_to "Try again", :back%></h4></center>
+              <%end%>
             </div>
           </div>
 

@@ -32,6 +32,7 @@
 
           <div class="col-xs-12">
             <div class="row box-sec" id="deal-form">
+              <%if @dashboard_data.present?%>
               <% @dashboard_data.each do |data| %>
               <div class="col-xs-6 col-sm-6 col-md-4">
                 <div class="border-radius-bg auto-height">
@@ -58,6 +59,11 @@
                 </div>
               </div>
               <% end %>
+              <%else%>
+              <br />
+              <center><%=image_tag("/assets/No-results-found.jpg")%></center>
+              <center><h4><%=link_to "Try again", :back%></h4></center>
+              <%end%>
             </div>
           </div>
 

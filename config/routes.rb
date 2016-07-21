@@ -75,7 +75,6 @@ Rails.application.routes.draw do
       post :set_reset_password
     end
   end
-
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
   resources :deals do

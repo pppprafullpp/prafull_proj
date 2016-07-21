@@ -7,8 +7,8 @@ class AppUsersController < ApplicationController
       format.csv {
         csv_string = CSV.generate do |csv|
           # header row
-          csv << 
-          [	"ID",              
+          csv <<
+          [	"ID",
           	"First Name",
           	"Last Name",
           	"Email",
@@ -23,7 +23,7 @@ class AppUsersController < ApplicationController
           	"Password",
           	"Device Id",
           	"ResetPassword Token",
-          	"ResetPasswordSent At", 
+          	"ResetPasswordSent At",
           	"RememberCreated At",
           	"CurrentSignIn At",
           	"LastSignIn At",
@@ -31,12 +31,12 @@ class AppUsersController < ApplicationController
           	"LastSignIn IP",
           	"Created At",
           	"Updated At",
-          ]  
+          ]
 
           # data rows
           AppUser.all.order("id ASC").each do |app_user|
-            csv << 
-            [ app_user.id,              
+            csv <<
+            [ app_user.id,
               app_user.first_name,
               app_user.last_name,
               app_user.email,
@@ -60,12 +60,12 @@ class AppUsersController < ApplicationController
               app_user.created_at,
               app_user.updated_at
             ]
-          end               
-        end 
+          end
+        end
         # send it to the browser
-        send_data csv_string, 
-          :type => 'text/csv; charset=iso-8859-1; header=present', 
-          :disposition => "attachment; filename=app_users.csv" 
+        send_data csv_string,
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=app_users.csv"
       }
     end
 	end
@@ -76,6 +76,7 @@ class AppUsersController < ApplicationController
 		@app_user = AppUser.find(params[:id])
 	end
 	def create
+		 
 		@app_user = AppUser.new(app_user_params)
 		respond_to do |format|
 			if @app_user.save

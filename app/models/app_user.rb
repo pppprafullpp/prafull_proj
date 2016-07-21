@@ -67,5 +67,5 @@ class AppUser < ActiveRecord::Base
     end
   end
 
-end
 
+end

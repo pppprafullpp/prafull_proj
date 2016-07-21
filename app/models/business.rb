@@ -18,6 +18,7 @@ class Business < ActiveRecord::Base
   UPGRADE = 'Upgrade'
 
   def self.create_business(params)
+     
     if params[:business].present?
       business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
       if business_type.present?

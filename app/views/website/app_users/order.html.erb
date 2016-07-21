@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-md-6">
                               <label for="Name" class="control-label">Last Name*</label>
-                              <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Your Name') %>
+                              <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name') %>
                             </div>
                             <div class="col-md-6 padding15right">
                               <label for="Name" class="control-label">Contact Number*</label>
@@ -375,7 +375,8 @@
                         <div class="row">
                           <div class="col-lg-12">
                             <div class="col-md-6"><h2>Personal details</h2>
-                              <span class="style3">Name:</span> <span id="review-name" class="style5"></span><br />
+                              <span class="style3">First Name:</span> <span id="review-name" class="style5"></span><br />
+                              <span class="style3">Last Name:</span> <span id="review-last-name" class="style5"></span><br />
                               <span class="style3">Mobile:</span> <span id="review-mobile" class="style5"></span><br />
                               <span class="style3">Primary Id:</span> <span id="review-primary" class="style5"></span><br/>
                               <span class="style3">Secondary Id:</span> <span id="review-secondary" class="style5"></span>
@@ -421,6 +422,7 @@
         </div>
       </div>
       <input type="hidden" id="getnamevalue">
+      <input type="hidden" id="getlastnamevalue">
       <input type="hidden" id="getmobilevalue">
       <input type="hidden" id="getprimaryvalue">
       <input type="hidden" id="getsecondaryvalue">
@@ -548,7 +550,7 @@
 
       $( document ).ready(function() {
 
-     $("#mobile").keydown(function(e)  {
+     $("#mobile,#business_manager_contact").keydown(function(e)  {
 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
 return;
 }
@@ -562,6 +564,11 @@ e.preventDefault();
         $('#getnamevalue').val(abc);
         var y= $(getnamevalue).val()
         $("#review-name").text(y);
+
+        var  last_name = $('#last_name').val();
+        $('#getlastnamevalue').val(last_name);
+        var get_last_name= $(getlastnamevalue).val()
+        $("#review-last-name").text(get_last_name);
 
         var mobile_value = $('#mobile').val();
         $('#getmobilevalue').val(mobile_value);
@@ -583,6 +590,7 @@ e.preventDefault();
 
       $("#order_information_menu_tab").click(function(event){
         $('#review-name').text($('#first_name').val());
+        $('#review-last-name').text($('#last_name').val());
         $('#review-mobile').text($('#mobile').val());
         $('#review-primary').text($('#primary_id').val());
         $('#review-secondary').text($('#secondary_id').val());

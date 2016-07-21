@@ -42,10 +42,10 @@ class Website::AppUsersController < ApplicationController
       address2 = params[:address2].present? ? params[:address2] : ''
       @app_user.address = address + '===' + address1 + '===' + address2
       #@app_user.city = params[:city];@app_user.state = params[:state]
-      first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
-      last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
-      @app_user.first_name = first_name
-      @app_user.last_name = last_name.present? ? last_name : " "
+      # first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
+      # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
+      @app_user.first_name = params[:first_name]
+      @app_user.last_name = params[:last_name]
       @app_user.mobile = params[:mobile]
       @app_user.user_type = params[:user_type] if params[:user_type].present?
       @app_user.avatar=params[:avatar] if params[:avatar].present?

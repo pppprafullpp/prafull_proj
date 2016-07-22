@@ -27,7 +27,7 @@
         <h2>Please enter valid ZIP Code & Choose Category and Type.</h2>
         <div class="col-md-12">
           <div class="col-md-5 col-xs-offset-1">
-            <%=text_field(:zip,nil, :class=>"form-control", :placeholder=>"Enter Zip", :required=>true)%>
+            <%=text_field(:zip,nil, :class=>"form-control", :placeholder=>"Enter Zip", :required=>true, :id => "first_zip_code", maxlength: 6)%>
           </div>
           <div class="col-md-5 ">
             <%= select_tag(:service_category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => '-Select Service', :required=>true) %>
@@ -112,6 +112,15 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
+      //  $("#first_zip_code").keydown(function(e)  {
+      //   if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
+      //     return;
+      //   }
+      //   // Ensure that it is a number and stop the keypress
+      //   if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+      //     e.preventDefault();
+      //   }
+      // });
         //$("#zipcode-modal").dialog({modal: true});
         //$( "#zipcode-modal" ).dialog({modal: true});
         //toggleDialog('show');

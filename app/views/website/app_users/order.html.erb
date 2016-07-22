@@ -199,7 +199,7 @@
                               </div>
                               <div class="col-md-6">
                                 <label for="Name" class="control-label">Zipcode*</label>
-                                <%= text_field_tag('app_user_addresses[zip]',@zip.present? ? @zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip") %>
+                                <%= text_field_tag('app_user_addresses[zip]',@zip.present? ? @zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip",maxlength: 6) %>
                               </div>
                               <div class="col-md-12 address-sty">
                                 <h2 class="padding-bott">Shipping Address</h2>
@@ -224,7 +224,7 @@
                                 </div>
                                 <div class="col-md-6">
                                   <label for="Name" class="control-label">Zipcode*</label>
-                                  <%= text_field_tag('shipping_addresses[zip]',@ship_zip.present? ? @ship_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip") %>
+                                  <%= text_field_tag('shipping_addresses[zip]',@ship_zip.present? ? @ship_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip",maxlength: 6) %>
                                 </div>
                               </div>
                               <div class="col-md-12 address-sty">
@@ -250,7 +250,7 @@
                                   </div>
                                   <div class="col-md-6">
                                     <label for="Name" class="control-label">Zipcode*</label>
-                                    <%= text_field_tag('service_addresses[zip]',@s_zip.present? ? @s_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip") %>
+                                    <%= text_field_tag('service_addresses[zip]',@s_zip.present? ? @s_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip",maxlength: 6) %>
                                   </div>
                                 </div>
                               </div>
@@ -296,7 +296,7 @@
                   </div>
                   <div class="col-md-6">
                     <label for="Name" class="control-label">Zipcode*</label>
-                    <%= text_field_tag('business_addresses[zip]',@zip.present? ? @zip: nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip") %>
+                    <%= text_field_tag('business_addresses[zip]',@zip.present? ? @zip: nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip", maxlength: 6) %>
                   </div>
                   <div class="col-md-12 address-sty">
                     <h2 class="padding-bott">Shipping Address</h2>
@@ -323,7 +323,7 @@
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Zipcode*</label>
-                      <%= text_field_tag('business_shipping_addresses[zip]',@ship_zip.present? ? @ship_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip") %>
+                      <%= text_field_tag('business_shipping_addresses[zip]',@ship_zip.present? ? @ship_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip", maxlength: 6) %>
                     </div>
                   </div>
                   <div class="col-md-12 address-sty">
@@ -349,7 +349,7 @@
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Zipcode*</label>
-                      <%= text_field_tag('business_service_addresses[zip]',@s_zip.present? ? @s_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip") %>
+                      <%= text_field_tag('business_service_addresses[zip]',@s_zip.present? ? @s_zip: nil,:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip", maxlength: 6) %>
                     </div>
                   </div>
                 </div>
@@ -550,15 +550,6 @@
 
       $( document ).ready(function() {
 
-     $("#mobile,#business_manager_contact").keydown(function(e)  {
-if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
-return;
-}
-// Ensure that it is a number and stop the keypress
-if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-e.preventDefault();
-}
-});
 
         var  abc = $('#first_name').val();
         $('#getnamevalue').val(abc);

@@ -86,7 +86,7 @@
       <% disable_flag = @business.present? ? true : false  %>
       <div class="btn-group col-sm-12">
         <h5>User type</h5>
-        <%= select_tag(:user_type,options_for_select(AppUser::USER_TYPES,@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
+        <%= select_tag(:user_type,options_for_select(["Residence", "Business"],@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
       </div>
 
       <%

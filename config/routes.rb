@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   #end
 
 
-  root to: "website/home#index"
+  root to: "home#index"
 
   devise_for :users
   resources :users do

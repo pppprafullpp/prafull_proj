@@ -30,7 +30,7 @@
             <%=text_field(:zip,nil, :class=>"form-control", :placeholder=>"Enter Zip", :required=>true, :id => "first_zip_code", maxlength: 6)%>
           </div>
           <div class="col-md-5 ">
-            <%= select_tag(:service_category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => '-Select Service', :required=>true) %>
+            <%= select_tag(:service_category_id,options_for_select(get_service_categories.first(5)),:class => 'form-control',:prompt => '-Select Service', :required=>true) %>
           </div>
         </div>
         <div class="row">

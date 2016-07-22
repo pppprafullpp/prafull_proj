@@ -38,6 +38,7 @@ class Website::HomeController < ApplicationController
   end
 
   def deal_details 
+    @category_name = ServiceCategory.find_by_id(params[:category_id]).name
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil)
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?

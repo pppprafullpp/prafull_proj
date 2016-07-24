@@ -123,6 +123,8 @@ Rails.application.routes.draw do
         get :deal_details
         get :more_deal_details
         get :set_zipcode_and_usertype
+        get :contact_us
+        get :about_us
       end
     end
     resources :app_users do

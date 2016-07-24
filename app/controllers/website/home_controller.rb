@@ -5,8 +5,14 @@ class Website::HomeController < ApplicationController
   def index
     session[:zip_code] = 75024 unless session[:zip_code].present?
     session[:user_type] = AppUser::RESIDENCE unless session[:user_type].present?
+    if session[:user_id].present? && session[:zip_code].present?
+      @dashboard_data = get_dashboard_deals(session[:user_id],nil,nil)
+    elsif session[:user_id].blank? && session[:zip_code].present? && session[:user_type].present?
+      @dashboard_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])
+    end
   end
 
+  ## we are not using this function in website as this gives mixed deals of all categories
   def deals
     ###############   When User is Logged In and zip code is present   ###############
     if session[:user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?
@@ -37,7 +43,7 @@ class Website::HomeController < ApplicationController
     @category_name=ServiceCategory.find(params[:service_category_id]).name
   end
 
-  def deal_details 
+  def deal_details
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil)
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
@@ -47,14 +53,14 @@ class Website::HomeController < ApplicationController
     end
     @providers = ServiceProvider.get_provider_by_category(params[:category_id])
     begin
-        if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
-          ordered_deals_id=[]
-          order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
-          @deal_ids=[]
-          @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
-        end
-      rescue
+      if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
+        ordered_deals_id=[]
+        order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
+        @deal_ids=[]
+        @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
       end
+    rescue
+    end
   end
 
   def more_deal_details

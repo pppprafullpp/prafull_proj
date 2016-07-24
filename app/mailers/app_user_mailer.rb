@@ -8,7 +8,7 @@ class AppUserMailer < ApplicationMailer
   def recover_password_email(app_user)
     recipient = app_user.email
     @secret_p = app_user.unhashed_password
-    mail(to: recipient, subject: "Service-Deal recover password") rescue nil
+    mail(:to => recipient, :subject => "Service-Deal recover password") rescue nil
   end
 
   def cashout_email(app_user,cashout)
@@ -16,6 +16,12 @@ class AppUserMailer < ApplicationMailer
     @reedeem_amount = cashout.reedeem_amount
     @email = cashout.email_id
     @name = app_user.first_name
-    mail(to: recipient, subject: "Cashout") rescue nil
+    mail(:to => recipient, :subject => "Cashout") rescue nil
+  end
+
+  def contact_us(name,email,subject,message)
+    recipient = "amit.pandey@spa-systems.com,apoorv@sp-assurance.com"
+    @name = name;@email = email; @subject = subject; @message = message
+    mail(:to => recipient, :cc => @email,:subject => "Service Dealz Contact Us - #{@subject}") rescue nil
   end
 end

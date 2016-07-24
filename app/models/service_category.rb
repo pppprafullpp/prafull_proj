@@ -20,9 +20,9 @@ class ServiceCategory < ActiveRecord::Base
   end
 
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, :headers => true) do |row|
       service_category_hash = row.to_hash # exclude the price field
-      service_category = ServiceCategory.where(id: service_category_hash["id"])
+      service_category = ServiceCategory.where(:id => service_category_hash["id"])
 
       if service_category.count == 1
         service_category.first.update_attributes(service_category_hash)

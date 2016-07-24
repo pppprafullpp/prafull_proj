@@ -6,9 +6,10 @@ class Website::HomeController < ApplicationController
     session[:zip_code] = 75024 unless session[:zip_code].present?
     session[:user_type] = AppUser::RESIDENCE unless session[:user_type].present?
     if session[:user_id].present? && session[:zip_code].present?
-      @dashboard_data = get_dashboard_deals(session[:user_id],nil,nil)
-    elsif session[:user_id].blank? && session[:zip_code].present? && session[:user_type].present?
-      @dashboard_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])
+      @best_deal_data = get_dashboard_deals(session[:user_id],nil,nil)
+    end
+    if session[:zip_code].present? && session[:user_type].present?
+      @trending_deal_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])
     end
   end
 
@@ -45,13 +46,14 @@ class Website::HomeController < ApplicationController
 
   def deal_details
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
-      @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil)
+      @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
-      @dashboard_data = get_category_deals(nil,params[:category_id],params[:zip_code],params[:deal_type])
+      @dashboard_data = get_category_deals(nil,params[:category_id],params[:zip_code],params[:deal_type],{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
     else
       @dashboard_data = []
     end
-    @providers = ServiceProvider.get_provider_by_category(params[:category_id])
+    deal_provider_ids =  ServiceProvider.get_deal_wise_provider_ids(@dashboard_data)
+    @providers = ServiceProvider.get_provider_by_category(params[:category_id]).where(:id => deal_provider_ids)
     begin
       if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
         ordered_deals_id=[]
@@ -76,7 +78,7 @@ class Website::HomeController < ApplicationController
       @deal_first = Deal.find(deal_ids.first)
       @deal_second = Deal.find(deal_ids.last)
       @category = ServiceCategory.find(@deal_first.service_category_id).name.downcase
-      @current_deal = @app_user.service_preferences.where(service_category_name: @category.capitalize).first
+      @current_deal = @app_user.service_preferences.where(:service_category_name => @category.capitalize).first
       @current_deal_preferences = eval("@current_deal.#{@category}_service_preferences").first rescue nil
       @deal_attributes_first = eval("@deal_first.#{@category}_deal_attributes").first
       @deal_attributes_second = eval("@deal_second.#{@category}_deal_attributes").first

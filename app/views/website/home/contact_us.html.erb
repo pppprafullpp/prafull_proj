@@ -11,25 +11,25 @@
         <div class="form-contact">
           <p>Please be patient while waiting for response. (24/7 Support!)&nbsp; <br><strong>Inquiries: 972-992-4200</strong></p>
           <h4>SEND US A <strong> MESSAGE! </strong></h4>
-          <form>
+          <form method="post" action="<%= contact_us_website_app_users_path %>" id="contact_us_form">
             <div class="col-md-6 pd-r20">
               <label>Name</label>
-              <input class="form-control" type="text" id="name" name="form_name">
+              <input class="form-control" type="text" id="name" name="name" maxlength="50" required>
             </div>
             <div class="col-md-6">
               <label>Email</label>
-              <input class="form-control" type="text" id="name" name="form_email">
+              <input class="form-control" type="text" id="name" name="email" maxlength="50" required>
             </div>
             <div class="col-md-12">
               <label>Subject</label>
-              <input class="form-control" type="text" id="name" name="form_subject">
+              <input class="form-control" type="text" id="name" name="subject" maxlength="50" required>
             </div>
             <div class="col-md-12">
               <label>Message</label>
-              <textarea class="form-control" id="message" name="form_message" rows="4"></textarea>
+              <textarea class="form-control" id="message" name="message" rows="4" maxlength="1000" required></textarea>
             </div>
             <div class="col-md-12">
-              <button class="btn send-btn" type="submit">Send message</button>
+              <button class="btn send-btn" type="submit" form="contact_us_form" value="Submit">Send message</button>
             </div>
           </form>
         </div>

@@ -139,6 +139,7 @@ Rails.application.routes.draw do
         get :order
         get :order_detail
         post :create_order
+        post :contact_us
         get :forget_password
       end
     end

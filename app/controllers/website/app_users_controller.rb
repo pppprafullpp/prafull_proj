@@ -51,18 +51,26 @@ class Website::AppUsersController < ApplicationController
       @app_user.avatar=params[:avatar] if params[:avatar].present?
 
       if @app_user.save!
+        if @app_user.user_type == AppUser::BUSINESS 
+          if  @app_user.business_app_users.present?
 
-        if @app_user.user_type == AppUser::BUSINESS
+            business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
+            business_addresses = BusinessAddress.find_by_business_id(business_user_id)
 
-          business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
-          business_addresses = BusinessAddress.find_by_business_id(business_user_id)
-
-          business_addresses.update_attributes(
-              :address_name=>params[:addresses][:address_name],
-              :zip=>params[:addresses][:zip],
-              :address1 =>params[:addresses][:address1],
-              :address2=>params[:addresses][:address2],
-              :contact_number=>params[:addresses][:contact_number])
+            business_addresses.update_attributes(
+                :address_name=>params[:addresses][:address_name],
+                :zip=>params[:addresses][:zip],
+                :address1 =>params[:addresses][:address1],
+                :address2=>params[:addresses][:address2],
+                :contact_number=>params[:addresses][:contact_number])
+          else
+            @business = Business.create_business(params)
+            if @business.present?
+              address_hash = {:business_addresses => [params[:addresses]]}
+              business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
+              business_addresses = BusinessAddress.create_business_addresses(address_hash,@business.id)
+            end
+          end
         else
           address_hash = {:app_user_addresses => [params[:addresses]]}
           app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)

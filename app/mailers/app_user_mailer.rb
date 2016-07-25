@@ -20,8 +20,8 @@ class AppUserMailer < ApplicationMailer
   end
 
   def contact_us(name,email,subject,message)
-    recipient = "amit.pandey@spa-systems.com,apoorv@sp-assurance.com"
-    @name = name;@email = email; @subject = subject; @message = message
-    mail(:to => recipient, :cc => @email,:subject => "Service Dealz Contact Us - #{@subject}") rescue nil
+    recipient = "amit.pandey@spa-systems.com,apoorv@sp-assurance.com,ankit@spa-systems.com"
+    @name = name;@email = email; @subject = subject.titleize; @message = message
+    mail(:to => recipient, :cc => @email,:subject => "New Query: #{@subject}") rescue nil
   end
 end

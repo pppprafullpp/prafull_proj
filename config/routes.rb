@@ -77,7 +77,7 @@ Rails.application.routes.draw do
   end
 
   get "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
-
+  get '/get_user_addresses'=> "website/app_users#user_addresses"
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
   resources :deals do

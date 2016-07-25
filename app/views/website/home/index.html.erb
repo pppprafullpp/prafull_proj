@@ -32,7 +32,7 @@
             <span class="pos-rel error-msg" id="zip-error">Please enter this field</span>
           </div>
           <div class="col-md-5 ">
-            <%= select_tag(:category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => 'Select Service', :id=>"service-type") %>
+            <%= select_tag(:category_id,options_for_select(get_service_categories.first(5)),:class => 'form-control',:prompt => 'Select Service', :id=>"service-type") %>
             <span class="pos-rel error-msg" id="category-type-error">Please enter this field</span>
           </div>
         </div>
@@ -85,7 +85,7 @@
     <div class="col-sm-4 col-xs-6 text-center serviceRow">
      <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::CABLE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">
       <div class="img-circle"><%= image_tag('website/tv.png',:alt => 'tv') %></div>
-      <p>TV</p>
+      <p>Cable</p>
     </a>
     </div>
 

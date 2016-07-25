@@ -170,6 +170,15 @@ class Website::AppUsersController < ApplicationController
   def checkout
   end
 
+  def user_addresses
+    if params[:id].present?
+      @addresses=AppUser.find(params[:id]).orders.last.order_addresses
+      render :json=>{
+        :status=>@addresses
+      }
+    end
+  end
+
   def order
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])

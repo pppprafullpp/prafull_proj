@@ -24,20 +24,23 @@
       <span class="sr-only">Next</span>
     </a>
     <div class="formcontainer">
-      <%=form_tag("/get_deals_from_first_page", method: :get) do%>
+      <%=form_tag("/website/home/deal_details", method: :get, :id=>"firstpageform") do%>
         <h2>Please enter valid ZIP Code & Choose Category and Type.</h2>
         <div class="col-md-12">
           <div class="col-md-5 col-xs-offset-1">
-            <%=text_field(:zip,nil, :class=>"form-control", :placeholder=>"Enter Zip", :required=>true, :id => "first_zip_code", maxlength: 6)%>
+            <%=text_field(:zip_code,nil, :class=>"form-control", :placeholder=>"Enter Zip",:id=>"zip-code")%>
+            <span class="pos-rel error-msg" id="zip-error">Please enter this field</span>
           </div>
           <div class="col-md-5 ">
-            <%= select_tag(:service_category_id,options_for_select(get_service_categories.first(5)),:class => 'form-control',:prompt => '-Select Service', :required=>true) %>
+            <%= select_tag(:category_id,options_for_select(get_service_categories),:class => 'form-control',:prompt => 'Select Service', :id=>"service-type") %>
+            <span class="pos-rel error-msg" id="category-type-error">Please enter this field</span>
           </div>
         </div>
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-8">
-            <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type',  :required=>true) %>
+            <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type', :id=>"user-type") %>
+            <span class="pos-rel error-msg" id="deal-type-error">Please enter this field</span>
         </div>
       </div><br />
         <button type="submit" class="btn btn-default btn-red">Enter Now</button>
@@ -116,19 +119,35 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
-      //  $("#first_zip_code").keydown(function(e)  {
-      //   if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
-      //     return;
-      //   }
-      //   // Ensure that it is a number and stop the keypress
-      //   if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-      //     e.preventDefault();
-      //   }
-      // });
         //$("#zipcode-modal").dialog({modal: true});
         //$( "#zipcode-modal" ).dialog({modal: true});
         //toggleDialog('show');
     });
+    $("#firstpageform").submit(function(e){
+
+      var zip=$("#zip-code").val();
+      var service_type=$("#service-type option:selected").text();
+      var user_type=$("#user-type option:selected").text();
+      if(zip.length<5 && service_type=="Select Service" && user_type=="Select your User Type"){
+        $("#zip-error").css("display","block");
+        $("#category-type-error").css("display","block");
+        $("#deal-type-error").css("display","block");
+          e.preventDefault();
+      }
+      else if(zip.length<5 ){
+          $("#zip-error").css("display","block");  e.preventDefault();
+      }
+      else if(service_type=="Select Service"){
+        $("#category-type-error").css("display","block");  e.preventDefault();
+      }
+      else if(user_type=="Select your User Type"){
+        $("#deal-type-error").css("display","block");  e.preventDefault();
+      }
+      else {
+        $("#firstpageform").submit();
+      }
+      console.log(zip.length+" "+service_type+" "+user_type);
+    })
     var dialogOpen = false, lastFocus, dialog, pagebackground;
     function toggleDialog(sh) {
         alert(sh)

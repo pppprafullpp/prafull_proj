@@ -129,6 +129,7 @@ Rails.application.routes.draw do
         get :about_us
       end
     end
+
     resources :app_users do
       collection do
         get :check_user_email_ajax

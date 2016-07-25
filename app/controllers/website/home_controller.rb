@@ -35,7 +35,7 @@ class Website::HomeController < ApplicationController
     #end
 
   end
-
+  #depretiated
   def get_deals_from_first_page
     service_category_id=params[:service_category_id]
     deals=get_dashboard_deals(nil,params[:zip_code],params[:deal_type])
@@ -50,9 +50,10 @@ class Website::HomeController < ApplicationController
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
       @dashboard_data = get_category_deals(nil,params[:category_id],params[:zip_code],params[:deal_type],{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
-    else
+      else
       @dashboard_data = []
     end
+
     deal_provider_ids =  ServiceProvider.get_deal_wise_provider_ids(@dashboard_data)
     @providers = ServiceProvider.get_provider_by_category(params[:category_id]).where(:id => deal_provider_ids)
     begin
@@ -62,7 +63,8 @@ class Website::HomeController < ApplicationController
         @deal_ids=[]
         @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
       end
-    rescue
+    rescue Exception=>e
+      raise e.to_yaml
     end
     @category_name = ServiceCategory.find(params[:category_id]).name.titleize
   end

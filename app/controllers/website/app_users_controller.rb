@@ -172,6 +172,7 @@ class Website::AppUsersController < ApplicationController
       else
         redirect_to website_home_index_path
       end
+      flash[:notice] = 'Order submitted successfully'
     end
   end
 

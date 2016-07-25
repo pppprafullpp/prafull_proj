@@ -31,7 +31,7 @@ $( document ).ready(function() {
     });
 
 
-     $("#first_zip_code,#zip_modal,#zip,#billing_zip,#shipping_zip,#service_zip,#app_user_billing_zip,#app_user_shipping_zip,#app_user_service_zip,#mobile,#business_manager_contact, #contact_number").keydown(function(e)  {
+     $("#zip-code,#first_zip_code,#zip_modal,#zip,#billing_zip,#shipping_zip,#service_zip,#app_user_billing_zip,#app_user_shipping_zip,#app_user_service_zip,#mobile,#business_manager_contact, #contact_number").keydown(function(e)  {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
           return;
         }

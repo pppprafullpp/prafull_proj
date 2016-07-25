@@ -134,14 +134,28 @@
         $("#deal-type-error").css("display","block");
           e.preventDefault();
       }
-      else if(zip.length<5 ){
-          $("#zip-error").css("display","block");  e.preventDefault();
+      else if(zip==""){
+          $("#zip-error").css("display","block");
+          $("#category-type-error").css("display","none");
+          $("#deal-type-error").css("display","none");  e.preventDefault();
       }
+        else if(zip.length<5){
+          $("#zip-error").html("zip should be of 5 digits");
+          $("#zip-error").css("display","block");
+          $("#category-type-error").css("display","none");
+          $("#deal-type-error").css("display","none");  e.preventDefault();
+        }
       else if(service_type=="Select Service"){
-        $("#category-type-error").css("display","block");  e.preventDefault();
+        $("#category-type-error").css("display","block");
+        $("#zip-error").css("display","none");
+        $("#deal-type-error").css("display","none");
+        e.preventDefault();
       }
       else if(user_type=="Select your User Type"){
-        $("#deal-type-error").css("display","block");  e.preventDefault();
+        $("#deal-type-error").css("display","block");
+        $("#category-type-error").css("display","none");
+        $("#zip-error").css("display","none");
+        e.preventDefault();
       }
       else {
         $("#firstpageform").submit();

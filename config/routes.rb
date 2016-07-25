@@ -127,6 +127,7 @@ Rails.application.routes.draw do
         get :set_zipcode_and_usertype
         get :contact_us
         get :about_us
+        get :our_providers
       end
     end
 

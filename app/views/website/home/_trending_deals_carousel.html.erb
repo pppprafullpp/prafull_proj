@@ -17,8 +17,8 @@
                           <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px">
                         </div>
                         <p class="caption-title" title="<%= trending_deal['title'] %>"><%= trending_deal['title'].present? ? trending_deal['title'].truncate(25) : ''  %></p>
-                        <p class="caption-price">Deal Price : <%= trending_deal['deal_price']  %></p>
-                        <p class="caption-price">Effective Price : <strong><%= trending_deal['effective_price']  %></strong></p>
+                        <p class="caption-price">Deal Price : <span style="color: #105679;">$ <%= trending_deal['deal_price']  %></span></p>
+                        <p class="caption-price">Effective Price : <span style="color: #009904;font-weight: bold;">$ <%= trending_deal['effective_price']  %></span></p>
                       </a>
                     </div>
                   </div>

@@ -33,7 +33,7 @@ class Website::AppUsersController < ApplicationController
   def edit
 
   end
-  
+
   def update
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
@@ -54,15 +54,15 @@ class Website::AppUsersController < ApplicationController
 
         if @app_user.user_type == AppUser::BUSINESS
 
-             business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
-             business_addresses = BusinessAddress.find_by_business_id(business_user_id)
-             
-             business_addresses.update_attributes(
-             :address_name=>params[:addresses][:address_name],
-             :zip=>params[:addresses][:zip],
-             :address1 =>params[:addresses][:address1],
-             :address2=>params[:addresses][:address2],
-             :contact_number=>params[:addresses][:contact_number])
+          business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
+          business_addresses = BusinessAddress.find_by_business_id(business_user_id)
+
+          business_addresses.update_attributes(
+              :address_name=>params[:addresses][:address_name],
+              :zip=>params[:addresses][:zip],
+              :address1 =>params[:addresses][:address1],
+              :address2=>params[:addresses][:address2],
+              :contact_number=>params[:addresses][:contact_number])
         else
           address_hash = {:app_user_addresses => [params[:addresses]]}
           app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
@@ -134,7 +134,7 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
       if [AppUser::RESIDENCE,AppUser::BUSINESS].include?(user_type)
-        order = Order.new(app_user_id: @app_user.id,status: "new_order",order_type: 0, primary_id: params[:primary_id], secondary_id: params[:secondary_id] )
+        order = Order.new(:app_user_id => @app_user.id,:status => "new_order",:order_type => Order::TRANSACTIONAL_ORDER, :primary_id => params[:primary_id], :secondary_id => params[:secondary_id] )
         order.order_id=rand(36**8).to_s(36).upcase
         if order.save
           order_item_hash = {:order_items => [params[:order_items]] }
@@ -242,6 +242,12 @@ class Website::AppUsersController < ApplicationController
       flash[:warning] = 'This Email is not registered with us.'
       redirect_to request.referrer and return
     end
+  end
+
+  def contact_us
+    AppUserMailer.contact_us(params[:name],params[:email],params[:subject],params[:message]).deliver_now
+    flash[:notice] = 'Your Request is forwarded to Service Dealz Team.'
+    redirect_to request.referrer and return
   end
 
   private

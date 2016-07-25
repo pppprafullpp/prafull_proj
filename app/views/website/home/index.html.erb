@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'website/owl.carousel' %>
 <div id="carousel-example-generic" class="carousel slide hidden-xs" data-ride="carousel">
 
   <!-- Wrapper for slides -->
@@ -45,6 +46,9 @@
   </div>
 </div>
 <!-- //banner -->
+
+<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
 
 <!--<banner form small device>-->
 
@@ -147,4 +151,10 @@
             lastFocus.focus();
         }
     }
+
+    $(window).load(function(){
+        $("#sticky-top").sticky({ topSpacing: 0 });
+    });
 </script>
+
+<%= javascript_include_tag 'website/owl.carousel' %>

@@ -5,9 +5,21 @@
       <div class="col-md-8">
         <h6 class="heading-2">Sort By:</h6>
         <ul>
-          <li><a class="active" href="#">Relevance</a></li>
-          <li><a href="#">Price Low to High</a></li>
-          <li><a href="#">Price High to Low</a></li>
+          <!--<li><a class="active" href="#">Relevance</a></li>-->
+          <%
+             if params[:sort_by] == 'price ASC'
+               active_class1 = 'active'
+               active_class2 = ''
+             elsif params[:sort_by] == 'price DESC'
+               active_class1 = ''
+               active_class2 = 'active'
+             else
+               active_class1 = 'active'
+               active_class2 = ''
+             end
+          %>
+          <li><%= link_to 'Price Low to High',params.merge({:sort_by => 'price ASC'}),:class => active_class1 %></li>
+          <li><%= link_to 'Price High to Low',params.merge({:sort_by => 'price DESC'}),:class => active_class2 %></li>
         </ul>
       </div>
       <div class="col-md-4">

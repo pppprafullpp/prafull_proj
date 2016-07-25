@@ -128,7 +128,9 @@ class Deal < ActiveRecord::Base
       effective_price = effective_price.present? ? effective_price : 0
       sprintf '%.2f', effective_price
     else
-      effective_price=0
+      deal_price = self.deal_price.present? ? self.deal_price : 0
+      sprintf '%.2f', deal_price.to_f
+      #effective_price=0
     end
   end
 
@@ -198,7 +200,8 @@ class Deal < ActiveRecord::Base
     if effective_price != self.deal_price.to_f
       effective_price
     else
-      effective_price=0
+      self.deal_price.to_f
+      #effective_price=0
     end
   end
 

@@ -18,11 +18,16 @@
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
   <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'form-horizontal',:id => 'update_user_form', multipart: true do %>
     <div class="col-sm-3">
+
       <input type="file" name="avatar" id="avatar" class="inputfile" />
-      <label for="avatar" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label>
+      <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label>
+      <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
+      <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
       <div class="profile_imgbox">
         <h4><%= name %></h4>
+
       </div>
+
     </div>
 
     <div class="col-sm-9">
@@ -45,7 +50,7 @@
         <label class="control-label" for="Phone">Mobile</label>
         <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
       </div>
-      
+
       <div class="btn-group col-lg-12 margin_top">
         <h5>Billing Address</h5>
 
@@ -56,33 +61,37 @@
           </div>
 
           <div class="col-sm-6">
-            <label class="control-label" for="Address">Address Name</label>
-            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Address Name',:name => "addresses[address_name]",:maxlength => 50) %>
+            <label class="control-label" for="Address">Address 1</label>
+            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1',:name => "addresses[address1]") %>
+          </div>
+
+          <div class="col-sm-6">
+            <label class="control-label" for="Address 2">Address 2</label>
+            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2',:name => "addresses[address2]") %>
+          </div>
+
+          <div class="col-sm-6">
+            <label class="control-label" for="Address">Town/City</label>
+            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[address_name]",:maxlength => 50) %>
           </div>
           <div class="col-sm-6">
             <label class="control-label" for="Address">Zip</label>
             <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
           </div>
-          <div class="col-sm-6">
-            <label class="control-label" for="Address">Address 1</label>
-            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1',:name => "addresses[address1]") %>
-          </div>
-          <div class="col-sm-6">
-            <label class="control-label" for="Address 2">Address 2</label>
-            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2',:name => "addresses[address2]") %>
-          </div>
-          <div class="col-sm-6">
+
+
+          <!-- <div class="col-sm-6">
             <label class="control-label" for="Phone">Contact Number</label>
-            <%= phone_field_tag(:contact_number,contact_number,:class => 'form-control input-md',:placeholder => 'Contact Number',:name => "addresses[contact_number]",:maxlength => 10) %>
-          </div>
+            <%#= phone_field_tag(:contact_number,contact_number,:class => 'form-control input-md',:placeholder => 'Contact Number',:name => "addresses[contact_number]",:maxlength => 10) %>
+          </div> -->
         </div>
 
       </div>
-      
+
       <% disable_flag = @business.present? ? true : false  %>
       <div class="btn-group col-sm-12">
         <h5>User type</h5>
-        <%= select_tag(:user_type,options_for_select(AppUser::USER_TYPES,@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
+        <%= select_tag(:user_type,options_for_select(["Residence", "Business"],@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
       </div>
 
       <%
@@ -126,15 +135,7 @@
 </div>
 <script type="text/javascript">
     $( document ).ready(function() {
-      $("#mobile, #contact_number").keydown(function(e)  {
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||(e.keyCode >= 35 && e.keyCode <= 40)) {
-          return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-          e.preventDefault();
-        }
-      });
+      $("#spinner").hide();
         populate_user_type($('#user_type').val());
         populate_business_type($('#business_type').val());
         $('#user_type').on('change', function() {
@@ -144,6 +145,13 @@
             populate_business_type($('#business_type').val())
         });
     });
+   $("#dp-upload").click(function(){$('#avatar').click()});
+   $("#avatar").change(function(e){
+     $("#spinner").show();
+     $("#dp-upload").hide();
+    $("#submit_button").click();
+   })
+
     function populate_user_type(user_type) {
         if(user_type == 'business'){
             $('#business_type_div').show();

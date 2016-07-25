@@ -1024,6 +1024,7 @@ color:#555 !important;
     -moz-border-radius: 50%;
     border-radius: 50%;
     margin: auto;
+    cursor:pointer;
 }
 .profile_img .img-responsive {
     width: 100%;
@@ -2852,4 +2853,12 @@ color:#fff;
   top: 47px !important;
   display: none;
   font-weight: 600;
+}
+.avatar-uploader{
+  position: absolute;
+  margin-top: -31px;
+  margin-left: -10px;
+  color: #fff;
+  font-size: 23px !important;
+  cursor: pointer;
 }

@@ -35,7 +35,7 @@ class Website::HomeController < ApplicationController
     #end
 
   end
-  #deretiated
+  #depretiated
   def get_deals_from_first_page
     service_category_id=params[:service_category_id]
     deals=get_dashboard_deals(nil,params[:zip_code],params[:deal_type])

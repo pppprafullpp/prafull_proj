@@ -1024,6 +1024,7 @@ color:#555 !important;
     -moz-border-radius: 50%;
     border-radius: 50%;
     margin: auto;
+    cursor:pointer;
 }
 .profile_img .img-responsive {
     width: 100%;
@@ -2842,3 +2843,22 @@ color:#fff;
 .sticky-wrapper{ position:relative; z-index:99999;}
 .sticky-wrapper.is-sticky nav {box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); transition: padding 0.35s ease 0s;}
 
+.pos-rel{
+  position: relative !important;
+}
+.error-msg{
+  color: #f00 !important;
+  left: 20px !important;
+  position: absolute !important;
+  top: 47px !important;
+  display: none;
+  font-weight: 600;
+}
+.avatar-uploader{
+  position: absolute;
+  margin-top: -31px;
+  margin-left: -10px;
+  color: #fff;
+  font-size: 23px !important;
+  cursor: pointer;
+}

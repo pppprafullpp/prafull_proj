@@ -40,6 +40,7 @@ $( document ).ready(function() {
           e.preventDefault();
         }
       });
+
 /*
     $('.owl-carousel').owlCarousel({
         loop:true,

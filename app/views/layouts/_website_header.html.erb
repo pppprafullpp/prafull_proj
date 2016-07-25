@@ -20,75 +20,91 @@
               <div class="modal-dialog">
 
                 <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <ul class="nav nav-tabs">
-                      <li class="active"><a href="#login" role="tab" data-toggle="tab">Login</a></li>
-                      <li><a href="#signup" role="tab" data-toggle="tab">SignUp</a></li>
+                <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
+                <div class="modal-content height_popup">
+                  <div class="popup_left">
+                    <h5>Welcome to service deals</h5>
+                    <p>Save Hundred’s Of $ Month On Month &amp; Pick The Best Deals</p>
+                    <ul>
+                      <li>Unlimited internet plans</li>
+                      <li>Customize your Bundles offer</li>
+                      <li>Unlimited Digital Cable TV Plans &amp; Packages</li>
+                      <li>Looking For Best Deals please sign up</li>
                     </ul>
                   </div>
-                  <div class="modal-body">
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="login">
-                        <div class="login-signup col-lg-12 col-xs-12">
+                  <div class="popup_right">
+                    <div class="modal-header">
+                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a href="#login" role="tab" data-toggle="tab">Login</a></li>
+                        <li><a href="#signup" role="tab" data-toggle="tab">SignUp</a></li>
+                      </ul>
+                    </div>
+                    <div class="modal-body">
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="login">
+                          <div class="login-signup col-lg-12 col-xs-12">
 
-                          <form class="form-horizontal" id="login_app_user" action="/website/app_users/signin" accept-charset="UTF-8" method="post">
-                            <div class="form-group">
-                              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
-                              <input type="text" class="form-control" placeholder="Email"  name="user[email]" id="user_email" >
-
-                            </div>
-                            <div class="form-group">
-                              <input type="password" class="form-control" placeholder="Password" name="user[password]" id="user_password" >
-                            </div>
-                            <div class="form-group">
-                              <div class="col-md-12"> <span class="pull-left">
+                            <form class="form-horizontal" id="login_app_user" action="/website/app_users/signin" accept-charset="UTF-8" method="post">
+                              <div class="form-group">
+                                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+                                <input type="text" class="form-control" placeholder="Email"  name="user[email]" id="user_email" >
+                                <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-login-email-valid">Email does not Exists.</span>
+                              </div>
+                              <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password" name="user[password]" id="user_password" >
+                              </div>
+                              <div class="form-group">
+                                <div class="col-md-12"> <span class="pull-left">
                                 <label class="checkbox-inline" >
                                   <input type="checkbox" value="" id="" name="" >
                                   Remember Me</label>
                                 <br>
                                 </span> <span class="pull-right"><a class="help-block" href="javascript:void(0)" id="forgot_password">Forgot Your Password?</a></span> </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-md-12 text-center">
-                                <input type="submit" name="commit" value="Login" class="btn  btn-login" id="login_user">
                               </div>
-                              <strong></strong> </div>
-                          </form>
-
-                        </div>
-                      </div>
-                      <div role="tabpanel" class="tab-pane" id="signup">
-
-                        <div class="login-signup col-lg-12 col-xs-12">
-                          <% @user = AppUser.new() %>
-                          <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
-                              <div class="form-group">
-                                <%= f.text_field :email,:class => "form-control",:placeholder => "Email" %>
-                              </div>
-                              <div class="form-group">
-                                <%= f.password_field :password,:class => "form-control",:placeholder => "Password" %>
-                              </div>
-
-                              <div class="form-group">
-                                <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" %>
-                              </div>
-
                               <div class="form-group">
                                 <div class="col-md-12 text-center">
-                                  <%= f.submit "Signup", :class => "btn  btn-login",:id => 'create_user' %>
+                                  <input type="submit" name="commit" value="Login" class="btn  btn-login" id="login_user">
                                 </div>
-                                <strong></strong>
-                              </div>
-                          <% end %>
+                                <strong></strong> </div>
+                            </form>
+
+                          </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="signup">
+
+                          <div class="login-signup col-lg-12 col-xs-12">
+                            <% @user = AppUser.new() %>
+                            <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
+                                <div class="form-group">
+                                  <%= f.text_field :email,:class => "form-control",:placeholder => "Email" %>
+                                  <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-email-valid">Email Already Exists.</span>
+                                </div>
+                                <div class="form-group">
+                                  <%= f.password_field :password,:class => "form-control",:placeholder => "Password" %>
+                                </div>
+
+                                <div class="form-group">
+                                  <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" %>
+                                </div>
+
+                                <div class="form-group">
+                                  <div class="col-md-12 text-center">
+                                    <%= f.submit "Signup", :class => "btn  btn-login",:id => 'create_user' %>
+                                  </div>
+                                  <strong></strong>
+                                </div>
+                            <% end %>
+
+                          </div>
 
                         </div>
-
                       </div>
                     </div>
                   </div>
                 </div>
+
+
               </div>
             </div>
         <% end %>
@@ -194,15 +210,19 @@
                         if (data['data'] && data['data']['email']) {
                             $('#app_user_email').addClass('custom-input-error');
                             $('#app_user_email').val('');
+                            $('#is-signup-email-valid').show();
                         } else {
-                            $('#app_user_email').removeClass('custom-input-error')
+                            $('#app_user_email').removeClass('custom-input-error');
+                            $('#is-signup-email-valid').hide();
                         }
                     }else{
                         if (data['data'] && data['data']['email']) {
-                            $('#user_email').removeClass('custom-input-error')
+                            $('#user_email').removeClass('custom-input-error');
+                            $('#is-login-email-valid').hide();
                         } else {
                             $('#user_email').addClass('custom-input-error');
                             $('#user_email').val('');
+                            $('#is-login-email-valid').show();
                         }
                     }
                 },

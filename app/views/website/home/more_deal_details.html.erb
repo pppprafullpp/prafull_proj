@@ -47,6 +47,7 @@
             <li>Expiry Date : <%= (@deal.end_date).strftime("%m/%d/%Y") %></li>
           </ul>
         </div>
+        <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>"  id=<%=@deal.id%>>Order</a>
       </div>
 
     </div>

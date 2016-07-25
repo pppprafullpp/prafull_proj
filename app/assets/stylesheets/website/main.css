@@ -2908,3 +2908,18 @@ color:#fff;
     font-size: 35px;
     color: #fff;
 }
+#mandat{
+    color: red !important;
+}
+
+.contact_email
+{
+    color: #f00 !important;
+    display: none;
+    font-weight: 600;
+    font-size:  10px;
+    left: 1px !important;
+    position: absolute !important;
+    top: 69px !important;
+}
+

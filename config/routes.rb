@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   #end
 
 
-  root to: "website/home#index"
+  root to: "home#index"
 
   devise_for :users
   resources :users do
@@ -75,7 +75,9 @@ Rails.application.routes.draw do
       post :set_reset_password
     end
   end
-  post "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
+
+  get "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
+  get '/get_user_addresses'=> "website/app_users#user_addresses"
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
   resources :deals do
@@ -127,6 +129,7 @@ Rails.application.routes.draw do
         get :about_us
       end
     end
+
     resources :app_users do
       collection do
         get :check_user_email_ajax

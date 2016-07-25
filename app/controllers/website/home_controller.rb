@@ -45,7 +45,7 @@ class Website::HomeController < ApplicationController
   end
 
 
-  def deal_details 
+  def deal_details
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
@@ -53,7 +53,6 @@ class Website::HomeController < ApplicationController
       else
       @dashboard_data = []
     end
-
     deal_provider_ids =  ServiceProvider.get_deal_wise_provider_ids(@dashboard_data)
     @providers = ServiceProvider.get_provider_by_category(params[:category_id]).where(:id => deal_provider_ids)
     begin

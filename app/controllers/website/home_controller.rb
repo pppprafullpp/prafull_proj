@@ -65,6 +65,7 @@ class Website::HomeController < ApplicationController
       end
     rescue
     end
+    @category_name = ServiceCategory.find(params[:category_id]).name.titleize
   end
 
   def more_deal_details

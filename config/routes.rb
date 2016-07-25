@@ -76,7 +76,7 @@ Rails.application.routes.draw do
     end
   end
 
-  post "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
+  get "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
 
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"

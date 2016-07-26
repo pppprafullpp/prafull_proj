@@ -51,7 +51,7 @@ class Website::AppUsersController < ApplicationController
       @app_user.avatar=params[:avatar] if params[:avatar].present?
 
       if @app_user.save!
-        if @app_user.user_type == AppUser::BUSINESS 
+        if @app_user.user_type == AppUser::BUSINESS
           if  @app_user.business_app_users.present?
 
             business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
@@ -149,6 +149,7 @@ class Website::AppUsersController < ApplicationController
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
+           
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)

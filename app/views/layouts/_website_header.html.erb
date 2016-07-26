@@ -10,7 +10,12 @@
       <div class="col-md-6 pull-right text-right login-tab">
 
         <% if session[:user_id].present? %>
-            <a href="<%= profile_website_app_users_path %>">Welcome <%= @app_user.first_name %></a> |
+        <% if AppUser.find(session[:user_id]).first_name.present? %>
+        <%headername= AppUser.find(session[:user_id]).first_name%>
+        <%else%>
+        <%headername=session[:user_name]%>
+        <%end%>
+            <a href="<%= profile_website_app_users_path %>">Welcome <%= headername %></a> |
             <a href="<%= signout_website_app_users_path %>">SignOut</a> |
             <a href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%= session[:zip_code] %></a>
         <% else %>

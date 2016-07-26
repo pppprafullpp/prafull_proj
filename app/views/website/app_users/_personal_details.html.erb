@@ -239,7 +239,7 @@
                 var zip = $('#zip').val();
                 var address1 = $('#address1').val();
                 if(address_name == '' || zip == '' || address1 == '' ){
-                      $("#error-msg").html('Please enter address name,zip and address1');
+                      $("#error-msg").html('Please enter City , Zip and Address 1');
                       $("html, body").animate({ scrollTop: 0 }, 600);
                     }else{
                     $('#update_user_form').submit();
@@ -252,7 +252,7 @@
             var zip = $('#zip').val();
             var address1 = $('#address1').val();
             if(address_name == '' || zip == '' || address1 == '' ){
-              $("#error-msg").removeClass('hidden').html('Please enter address name,zip and address1').focus();
+              $("#error-msg").removeClass('hidden').html('Please enter City , Zip and Address 1').focus();
                 $("html, body").animate({ scrollTop: 0 }, 600);
             }else{
                 $("#save-spinner").show();

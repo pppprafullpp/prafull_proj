@@ -145,7 +145,7 @@
                           <%= phone_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone', :maxlength => 10) %>
                         </div>
 
-                     
+
                       </div>
                     </div>
                     <!-- Button group -->
@@ -163,9 +163,6 @@
                 <% end %>
 
                       <!-- Membership Info -->
- 
-                      
- 
                       <% if @app_user.user_type == "residence" %>
                         <div id="address-info" class="tab-pane">
                           <div class="row">
@@ -184,7 +181,7 @@
                               </div>
                               <div class="col-md-6 padding15right">
                                 <label for="Name" class="control-label">Town/City</label>
-                                <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                                <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'ACity',:id => "name") %>
                               </div>
                               <div class="col-md-6">
                                 <label for="Name" class="control-label">Zipcode*</label>
@@ -209,7 +206,8 @@
                                 <%= hidden_field_tag 'shipping_addresses[address_type]',1,:name => "shipping_addresses[address_type]" %>
                                 <div class="col-md-6 padding15right">
                                   <label for="Name" class="control-label">Town/City</label>
-                                  <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                                   <%= text_field_tag('shipping_addresses[address_type]',"",:class => 'form-control input-md',:placeholder => 'city',:id => "name") %>
+                                  <!-- <input type="text" class="form-control input-md" placeholder="Town/City" name="shipping_addresses[address_name]" id="Name"> -->
                                 </div>
                                 <div class="col-md-6">
                                   <label for="Name" class="control-label">Zipcode*</label>
@@ -235,7 +233,7 @@
                                   </div>
                                   <div class="col-md-6 padding15right">
                                     <label for="Name" class="control-label">Town/City</label>
-                                    <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                                    <%= text_field_tag('service_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'city',:id => "app_user_service_address_2") %>
                                   </div>
                                   <div class="col-md-6">
                                     <label for="Name" class="control-label">Zipcode*</label>
@@ -281,7 +279,7 @@
                   </div>
                   <div class="col-md-6 padding15right">
                     <label for="Name" class="control-label">Town/City</label>
-                    <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                    <input type="text" class="form-control input-md" placeholder="Town/City" name="business_addresses[address_name]" id="billing-name">
                   </div>
                   <div class="col-md-6">
                     <label for="Name" class="control-label">Zipcode*</label>
@@ -308,7 +306,7 @@
                     </div>
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">Town/City</label>
-                      <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                      <input type="text" class="form-control input-md" placeholder="Town/City" name="business_shipping_addresses[address_name]" id="business-name">
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Zipcode*</label>
@@ -334,7 +332,7 @@
                     </div>
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">Town/City</label>
-                      <input type="text" class="form-control input-md" placeholder="Town/City" name="Name" id="Name">
+                      <input type="text" class="form-control input-md" placeholder="Town/City" name="business_service_addresses[address_name]" id="shipping-name">
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Zipcode*</label>
@@ -419,7 +417,7 @@
 
       <!--Order-form-->
 
-billing_address
+
       <script>
 
       $('#first_name').blur(function(){
@@ -575,208 +573,207 @@ billing_address
         $('#review-primary').text($('#primary_id').val());
         $('#review-secondary').text($('#secondary_id').val());
 
-        
-              var first_name = $('#first_name').val();
-              var mobile = $('#mobile').val();
-              var last_name = $('#app_user_last_name').val();
-              var primary_id = $('#primary_id').val();
-              var secondary_id = $('#secondary_id').val();
-              var business_manager_name = $('#business_manager_name').val();
-              var business_manager_contact = $('#business_manager_contact').val();
-              var billing_address_1 = $('#billing_address_1').val();
-              var billing_zip = $('#billing_zip').val();
-              var shipping_address_1 = $('#shipping_address_1').val();
-              var shipping_zip = $('#shipping_zip').val();
-              var service_address_1 = $('#service_address_1').val();
-              var service_zip = $('#service_zip').val();
-              var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
-              var app_user_billing_zip = $('#app_user_billing_zip').val();
-              var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
-              var app_user_shipping_zip = $('#app_user_shipping_zip').val();
-              var app_user_service_address_1 = $('#app_user_service_address_1').val();
-              var app_user_service_zip = $('#app_user_service_zip').val();
-              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
-                   alert("Please fill all the mandatory fields.")
-                   event.stopImmediatePropagation();
-              }
-          });
-        
-      $("#address_information_menu_tab").click(function(event){
-              var  first_name = $('#first_name').val();
-              var  mobile = $('#mobile').val();
-              var  last_name = $('#app_user_last_name').val();
-              var primary_id = $('#primary_id').val();
-              var secondary_id = $('#secondary_id').val();
-              var business_manager_name = $('#business_manager_name').val();
-              var business_manager_contact = $('#business_manager_contact').val();
-              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
-                   alert("Please fill all the mandatory fields.")
-                   event.stopImmediatePropagation();
-              }
-          });
+        var first_name = $('#first_name').val();
+        var mobile = $('#mobile').val();
+        var last_name = $('#app_user_last_name').val();
+        var primary_id = $('#primary_id').val();
+        var secondary_id = $('#secondary_id').val();
+        var business_manager_name = $('#business_manager_name').val();
+        var business_manager_contact = $('#business_manager_contact').val();
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_zip = $('#service_zip').val();
+        var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+        var app_user_billing_zip = $('#app_user_billing_zip').val();
+        var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
+        var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+        var app_user_service_address_1 = $('#app_user_service_address_1').val();
+        var app_user_service_zip = $('#app_user_service_zip').val();
+        if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+             alert("Please fill all the mandatory fields.")
+             event.stopImmediatePropagation();
+        }
+    });
 
+      $("#address_information_menu_tab").click(function(event){
+          var  first_name = $('#first_name').val();
+          var  mobile = $('#mobile').val();
+          var  last_name = $('#app_user_last_name').val();
+          var primary_id = $('#primary_id').val();
+          var secondary_id = $('#secondary_id').val();
+          var business_manager_name = $('#business_manager_name').val();
+          var business_manager_contact = $('#business_manager_contact').val();
+          if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
+               alert("Please fill all the mandatory fields.")
+               event.stopImmediatePropagation();
+          }
+      });
 
       var billing_address,service_address,shipping_address,app_user_billing_address_2,app_user_billing_address_1, app_user_billing_zip;
       var app_user_shipping_zip,app_user_service_address_1,app_user_service_address_2,app_user_service_zip,app_user_shipping_address_1,app_user_shipping_address_2;
 
       $("#residence_address_information_tab").click(function(event){
-              event.preventDefault();
-              app_user_billing_address_2 = $('#app_user_billing_address_2').val();
-              app_user_billing_address_1 = $('#app_user_billing_address_1').val();
-              app_user_billing_zip = $('#app_user_billing_zip').val();
-              app_user_shipping_zip = $('#app_user_shipping_zip').val();
-              app_user_service_address_1 = $('#app_user_service_address_1').val();
-              app_user_service_address_2 = $('#app_user_service_address_2').val();
-              app_user_service_zip = $('#app_user_service_zip').val();
-              app_user_shipping_address_1=$('#app_user_shipping_address_1').val();
-              app_user_shipping_address_2=$('#app_user_shipping_address_2').val();
-              if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
-                   alert("Please fill all the mandatory fields.")
-              }
-              else {
-                billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b></b>"+app_user_billing_zip;
-                service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b></b>"+app_user_service_zip;
-                shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b></b>"+app_user_shipping_zip;
-                $(".service-address-innertxt").html(service_address);
-                $(".shipping-address-innertxt").html(shipping_address);
-                $(".billing-address-innertxt").html(billing_address);
-                $('.nav-tabs > .active').next('li').find('a').trigger('click');
-
-              }
-
+          event.preventDefault();
+          app_user_billing_address_2 = $('#app_user_billing_address_2').val();
+          app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+          app_user_billing_zip = $('#app_user_billing_zip').val();
+          app_user_shipping_zip = $('#app_user_shipping_zip').val();
+          app_user_service_address_1 = $('#app_user_service_address_1').val();
+          app_user_service_address_2 = $('#app_user_service_address_2').val();
+          app_user_service_zip = $('#app_user_service_zip').val();
+          app_user_shipping_address_1=$('#app_user_shipping_address_1').val();
+          app_user_shipping_address_2=$('#app_user_shipping_address_2').val();
+          if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+               alert("Please fill all the mandatory fields.")
+          }
+          else {
+            billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b></b>"+app_user_billing_zip;
+            service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b></b>"+app_user_service_zip;
+            shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b></b>"+app_user_shipping_zip;
+            $(".service-address-innertxt").html(service_address);
+            $(".shipping-address-innertxt").html(shipping_address);
+            $(".billing-address-innertxt").html(billing_address);
+            $('.nav-tabs > .active').next('li').find('a').trigger('click');
+          }
           });
 
       $("#business_address_information_tab").click(function(event){
         event.preventDefault();
-              var billing_address_1 = $('#billing_address_1').val();
-              var billing_address_2 = $('#billing_address_2').val();
-              var billing_zip = $('#billing_zip').val();
-              var shipping_address_1 = $('#shipping_address_1').val();
-              var shipping_address_2 = $('#shipping_address_2').val();
-              var shipping_zip = $('#shipping_zip').val();
-              var service_address_1 = $('#service_address_1').val();
-              var service_address_2 = $('#service_address_2').val();
-              var service_zip = $('#service_zip').val();
-              if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '') {
-                   alert("Please fill all the mandatory fields.")
-              }
-              else {
-                billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/><b></b>"+billing_zip;
-                service_address=service_address_1+"<br/>"+service_address_2+"<br/><b></b>"+service_zip;
-                shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/><b></b>"+shipping_zip;
-                $(".service-address-innertxt").html(service_address);
-                $(".shipping-address-innertxt").html(shipping_address);
-                $(".billing-address-innertxt").html(billing_address);
-                $('.nav-tabs > .active').next('li').find('a').trigger('click');
+        var billing_address_1 = $('#billing_address_1').val();
+        var billing_address_2 = $('#billing_address_2').val();
+        var billing_zip = $('#billing_zip').val();
+        var shipping_address_1 = $('#shipping_address_1').val();
+        var shipping_address_2 = $('#shipping_address_2').val();
+        var shipping_zip = $('#shipping_zip').val();
+        var service_address_1 = $('#service_address_1').val();
+        var service_address_2 = $('#service_address_2').val();
+        var service_zip = $('#service_zip').val();
+        if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '') {
+             alert("Please fill all the mandatory fields.")
+        }
+        else {
+          billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/><b></b>"+billing_zip;
+          service_address=service_address_1+"<br/>"+service_address_2+"<br/><b></b>"+service_zip;
+          shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/><b></b>"+shipping_zip;
+          $(".service-address-innertxt").html(service_address);
+          $(".shipping-address-innertxt").html(shipping_address);
+          $(".billing-address-innertxt").html(billing_address);
+          $('.nav-tabs > .active').next('li').find('a').trigger('click');
 
-                // $('.nav-tabs > .active').next('li').find('a').trigger('click');
-              }
+          // $('.nav-tabs > .active').next('li').find('a').trigger('click');
+        }
           });
 
       $("#business_information_tab").click(function(event){
         event.preventDefault();
-              var business_manager_name = $('#business_manager_name').val();
-              var business_manager_contact = $('#business_manager_contact').val();
-              if( business_manager_name == '' || business_manager_contact == '' ) {
-                   alert("Please fill all the mandatory fields.")
-              }
-              else {
-                $('.nav-tabs > .active').next('li').find('a').trigger('click');
-              }
+          var business_manager_name = $('#business_manager_name').val();
+          var business_manager_contact = $('#business_manager_contact').val();
+          if( business_manager_name == '' || business_manager_contact == '' ) {
+               alert("Please fill all the mandatory fields.")
+          }
+          else {
+            $('.nav-tabs > .active').next('li').find('a').trigger('click');
+          }
           });
       $("#personal_information_tab").click(function(event){
-              event.preventDefault();
-              var  first_name = $('#first_name').val();
-              var  mobile = $('#mobile').val();
-              var  last_name = $('#app_user_last_name').val();
-              var primary_id = $('#primary_id').val();
-              var secondary_id = $('#secondary_id').val();
-              // var business_manager_name = $('#business_manager_name').val();
-              // var business_manager_contact = $('#business_manager_contact').val();
-              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
-                   alert("Please fill all the mandatory fields.")
-              }
-              else {
-                $('.nav-tabs > .active').next('li').find('a').trigger('click');
-              }
+            event.preventDefault();
+            var  first_name = $('#first_name').val();
+            var  mobile = $('#mobile').val();
+            var  last_name = $('#app_user_last_name').val();
+            var primary_id = $('#primary_id').val();
+            var secondary_id = $('#secondary_id').val();
+            // var business_manager_name = $('#business_manager_name').val();
+            // var business_manager_contact = $('#business_manager_contact').val();
+            if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
+                 alert("Please fill all the mandatory fields.")
+            }
+            else {
+              $('.nav-tabs > .active').next('li').find('a').trigger('click');
+            }
           });
 
-            $("#business_information_menu_tab").click(function(event) {
-              var  first_name = $('#first_name').val();
-              var mobile = $('#mobile').val();
-              var last_name = $('#app_user_last_name').val();
-              var primary_id = $('#primary_id').val();
-              var secondary_id = $('#secondary_id').val();
-              if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '') {
-                   alert("Please fill all the mandatory fields.")
-                   event.stopImmediatePropagation();
-              }
-            });
-
-           $("#order_submit_button").click(function(event){
-             event.preventDefault();
-                  var  first_name = $('#first_name').val();
-                  var  mobile = $('#mobile').val();
-                  var  last_name = $('#app_user_last_name').val();
-                  var primary_id = $('#primary_id').val();
-                  var secondary_id = $('#secondary_id').val();
-
-                  var business_manager_name = $('#business_manager_name').val();
-                  var business_manager_contact = $('#business_manager_contact').val();
-
-                  var billing_address_1 = app_user_shipping_address_1;
-                  var billing_address_2 = app_user_shipping_address_2;
-                  var billing_zip = app_user_billing_zip;
-
-                  var shipping_address_1 = app_user_shipping_address_1;
-                  var shipping_address_2 = app_user_shipping_address_2;
-                  var shipping_zip = app_user_shipping_zip;
-
-                  var service_address_1 =app_user_service_address_1;
-                  var service_address_2 =app_user_service_address_2;
-                  var service_zip = app_user_service_zip;
-
-                  if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
-                       alert("Please fill all the mandatory fields.")
-                  }
-                  else {
-                     $('#order_create_form').submit();
-                  }
-              });
-
-       $(document).ready(function() {
-        var billing_address;
-        var service_address;
-        var shipping_addres;
-        $.ajax({
-          url:"/get_user_addresses",
-          type: "GET",
-          data:{ id:<%=@app_user.id%>},
-          success: function(data){
-            billing_address=data.status[0];
-            service_address=data.status[2];
-            shipping_address=data.status[1];
-            $("#billing_address_1").val(billing_address.address1);
-            $("#billing_address_2").val(billing_address.address2);
-            $("#billing_zip").val(billing_address.zip);
-            $("#shipping_address_1").val(shipping_address.address1);
-            $("#shipping_address_2").val(shipping_address.address2);
-            $("#shipping_zip").val(shipping_address.zip);
-            $("#service_address_1").val(service_address.address1);
-            $("#service_address_2").val(service_address.address2);
-            $("#service_zip").val(service_address.zip);
-
-            $("#app_user_billing_address_1").val(billing_address.address1);
-            $("#app_user_billing_address_2").val(billing_address.address2);
-            $("#app_user_billing_zip").val(billing_address.zip);
-            $("#app_user_shipping_address_1").val(shipping_address.address1);
-            $("#app_user_shipping_address_2").val(shipping_address.address2);
-            $("#app_user_shipping_zip").val(shipping_address.zip);
-            $("#app_user_service_address_1").val(service_address.address1);
-            $("#app_user_service_address_2").val(service_address.address2);
-            $("#app_user_service_zip").val(service_address.zip);
+        $("#business_information_menu_tab").click(function(event) {
+          var  first_name = $('#first_name').val();
+          var mobile = $('#mobile').val();
+          var last_name = $('#app_user_last_name').val();
+          var primary_id = $('#primary_id').val();
+          var secondary_id = $('#secondary_id').val();
+          if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '') {
+               alert("Please fill all the mandatory fields.")
+               event.stopImmediatePropagation();
           }
         });
+
+         $("#order_submit_button").click(function(event){
+           event.preventDefault();
+                var  first_name = $('#first_name').val();
+                var  mobile = $('#mobile').val();
+                var  last_name = $('#app_user_last_name').val();
+                var primary_id = $('#primary_id').val();
+                var secondary_id = $('#secondary_id').val();
+
+                var business_manager_name = $('#business_manager_name').val();
+                var business_manager_contact = $('#business_manager_contact').val();
+
+                var billing_address_1 = app_user_shipping_address_1;
+                var billing_address_2 = app_user_shipping_address_2;
+                var billing_zip = app_user_billing_zip;
+
+                var shipping_address_1 = app_user_shipping_address_1;
+                var shipping_address_2 = app_user_shipping_address_2;
+                var shipping_zip = app_user_shipping_zip;
+
+                var service_address_1 =app_user_service_address_1;
+                var service_address_2 =app_user_service_address_2;
+                var service_zip = app_user_service_zip;
+
+                if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+                     alert("Please fill all the mandatory fields.")
+                }
+                else {
+                   $('#order_create_form').submit();
+                }
+            });
+
+         $(document).ready(function() {
+          var billing_address;
+          var service_address;
+          var shipping_addres;
+          $.ajax({
+            url:"/get_user_addresses",
+            type: "GET",
+            data:{ id:<%=@app_user.id%>},
+            success: function(data){
+              console.log(data);
+              billing_address=data.status[0];
+              service_address=data.status[2];
+              shipping_address=data.status[1];
+              $("#billing_address_1").val(billing_address.address1);
+              $("#billing_address_2").val(billing_address.address2);
+              $("#billing_zip").val(billing_address.zip);
+              $("billing-name").val(billing_address.address_name);
+              $("#shipping_address_1").val(shipping_address.address1);
+              $("#shipping_address_2").val(shipping_address.address2);
+              $("#shipping_zip").val(shipping_address.zip);
+              $("shipping-name").val(shipping_address.address_name);
+              $("#service_address_1").val(service_address.address1);
+              $("#service_address_2").val(service_address.address2);
+              $("#service_zip").val(service_address.zip);
+              $("service-name").val(service_address.address_name);
+              $("#app_user_billing_address_1").val(billing_address.address1);
+              $("#app_user_billing_address_2").val(billing_address.address2);
+              $("#app_user_billing_zip").val(billing_address.zip);
+              $("#app_user_shipping_address_1").val(shipping_address.address1);
+              $("#app_user_shipping_address_2").val(shipping_address.address2);
+              $("#app_user_shipping_zip").val(shipping_address.zip);
+              $("#app_user_service_address_1").val(service_address.address1);
+              $("#app_user_service_address_2").val(service_address.address2);
+              $("#app_user_service_zip").val(service_address.zip);
+            }
+          });
 
         $(".comparebox-display:checked").attr("checked",false);
               populate_user_type($('#user_type').val());
@@ -823,7 +820,7 @@ billing_address
               }
           }
 
-      
+
 
       $(".registerDetails").hide();
       $("#soleprop").click(function(){
@@ -943,4 +940,3 @@ billing_address
         }
       }
       </script>
-

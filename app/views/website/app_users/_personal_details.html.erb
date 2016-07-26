@@ -32,6 +32,7 @@
 
     <div class="col-sm-9">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <p class="alert alert-danger hidden text-center" id="error-msg"></p>
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name</label>
@@ -127,8 +128,9 @@
       </div>
 
       <!-- Button -->
-      <div class="col-sm-6">
-        <%= submit_tag('Save',:class => 'btn btn-info',:id => 'submit_button') %>
+      <div class="col-sm-6 text-center">
+        <%= submit_tag('Save',:class => 'btn btn-info save-btn-new',:id => 'submit_button', :data => { :disable_with => "Updating" } ) %>
+         <i id="save-spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
       </div>
     </div>
   <% end %>
@@ -136,6 +138,7 @@
 <script type="text/javascript">
     $( document ).ready(function() {
       $("#spinner").hide();
+      $("#save-spinner").hide();
         populate_user_type($('#user_type').val());
         populate_business_type($('#business_type').val());
         $('#user_type').on('change', function() {
@@ -149,8 +152,8 @@
    $("#avatar").change(function(e){
      $("#spinner").show();
      $("#dp-upload").hide();
-    $("#submit_button").click();
-   })
+     $("#submit_button").click();
+   });
 
     function populate_user_type(user_type) {
         if(user_type == 'business'){
@@ -206,13 +209,16 @@
                         if(business_type == <%= Business::SOLE_PROPRIETOR %>){
                             $('#federal_number, #business_name, #ssn').val('');
                             $('#federal_number, #business_name, #ssn').addClass('custom-input-error');
-                            alert('Business with this SSN is already registered, please insert another SSN');
+                            $("#error-msg").removeClass('hidden').html('Business with this SSN is already registered, please insert another SSN');
+                            $("html, body").animate({ scrollTop: 0 }, 600);
                         }else{
                             $('#federal_number, #business_name, #ssn').attr("disabled", "disabled");
-                            alert('Business with this Federal Number is already registered, Do you want to register yourself inside this business');
+                            $("#error-msg").removeClass('hidden').html('Business with this Federal Number is already registered, Do you want to register yourself inside this business');
+                            $("html, body").animate({ scrollTop: 0 }, 600);
                         }
                     }else{
                         $('#federal_number, #business_name, #ssn').removeClass('custom-input-error');
+                        $("html, body").animate({ scrollTop: 0 }, 600);
                     }
                 },
                 error: function (data) {
@@ -233,20 +239,23 @@
                 var zip = $('#zip').val();
                 var address1 = $('#address1').val();
                 if(address_name == '' || zip == '' || address1 == '' ){
-                    alert('Please enter address name,zip and address1')
-                }else{
+                      $("#error-msg").html('Please enter address name,zip and address1');
+                      $("html, body").animate({ scrollTop: 0 }, 600);
+                    }else{
                     $('#update_user_form').submit();
                 }
             }else{
-                alert('Please enter all business information')
+                $("#error-msg").removeClass('hidden').html('Please enter all business information')
             }
         }else{
             var address_name = $('#address_name').val();
             var zip = $('#zip').val();
             var address1 = $('#address1').val();
             if(address_name == '' || zip == '' || address1 == '' ){
-                alert('Please enter address name,zip and address1')
+              $("#error-msg").removeClass('hidden').html('Please enter address name,zip and address1').focus();
+                $("html, body").animate({ scrollTop: 0 }, 600);
             }else{
+                $("#save-spinner").show();
                 $('#update_user_form').submit();
             }
         }

@@ -1,5 +1,5 @@
 class AppUser < ActiveRecord::Base
-  include Encrypt
+  ##include Encrypt
   #before_save :encrypt_password
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -21,7 +21,7 @@ class AppUser < ActiveRecord::Base
   mount_uploader :avatar, ImageUploader
 
   before_save { self.email = email.downcase }
-  before_save :encrypt_data
+  ##before_save :encrypt_data
   validates :email, :presence => true, :uniqueness => true
   validates :password, :presence => true, :confirmation => true, :on => :create
 
@@ -32,7 +32,7 @@ class AppUser < ActiveRecord::Base
   USER_TYPES = [RESIDENCE,BUSINESS]
 
   def encrypt_data
-    self.zip = encode_data({'data' => self.zip}) if self.zip.present?
+    ##self.zip = encode_data({'data' => self.zip}) if self.zip.present?
   end
 
   def avatar_url
@@ -65,6 +65,8 @@ class AppUser < ActiveRecord::Base
     if order.present?
       app_user.primary_id = order.primary_id
       app_user.secondary_id = order.secondary_id
+      app_user.primary_id_number = order.primary_id_number
+      app_user.secondary_id_number = order.secondary_id_number
     end
     if app_user.save!
       app_user

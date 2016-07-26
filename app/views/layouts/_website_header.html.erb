@@ -28,7 +28,7 @@
                 <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
                 <div class="modal-content height_popup">
                   <div class="popup_left">
-                    <h5>Welcome to service deals</h5>
+                    <h5>Welcome to service dealz</h5>
                     <p>Save Hundred’s Of $ Month On Month &amp; Pick The Best Deals</p>
                     <ul>
                       <li>Unlimited internet plans</li>
@@ -57,7 +57,7 @@
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-login-email-valid">Email does not Exists.</span>
                               </div>
                               <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password" name="user[password]" id="user_password" >
+                                <input type="password" class="form-control" placeholder="Password" name="user[password]" id="user_password" maxlength="10" >
                               </div>
                               <div class="form-group">
                                 <div class="col-md-12"> <span class="pull-left">
@@ -86,11 +86,11 @@
                                   <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-email-valid">Email Already Exists.</span>
                                 </div>
                                 <div class="form-group">
-                                  <%= f.password_field :password,:class => "form-control",:placeholder => "Password" %>
+                                  <%= f.password_field :password,:class => "form-control",:placeholder => "Password", :maxlength=>10 %>
                                 </div>
 
                                 <div class="form-group">
-                                  <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" %>
+                                  <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password", :maxlength=>10 %>
                                 </div>
 
                                 <div class="form-group">
@@ -182,6 +182,7 @@
             var user_email = $('#user_email').val();
             if(user_email != ''){
                 location.href = "<%= forget_password_website_app_users_path %>?email=" + user_email
+                alert("You will recieve an email for password");
             }else{
                 alert('Please enter your email address')
             }

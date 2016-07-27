@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711205242) do
+ActiveRecord::Schema.define(version: 20160718125242) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20160711205242) do
     t.integer  "is_shipping_address_same", limit: 4
     t.string   "primary_id",               limit: 255
     t.string   "secondary_id",             limit: 255
+    t.string   "primary_id_number",        limit: 255
+    t.string   "secondary_id_number",      limit: 255
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -287,19 +289,20 @@ ActiveRecord::Schema.define(version: 20160711205242) do
 
   create_table "cellphone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                    limit: 4
-    t.integer  "no_of_lines",                limit: 4,                           default: 0,     null: false
-    t.decimal  "price_per_line",                         precision: 5, scale: 2, default: 0.0,   null: false
+    t.integer  "no_of_lines",                limit: 4,                            default: 0,     null: false
+    t.decimal  "price_per_line",                         precision: 5,  scale: 2, default: 0.0,   null: false
     t.string   "domestic_call_minutes",      limit: 255
     t.string   "domestic_text",              limit: 255
     t.string   "international_call_minutes", limit: 255
     t.string   "international_text",         limit: 255
     t.float    "data_plan",                  limit: 24
-    t.decimal  "data_plan_price",                        precision: 5, scale: 2, default: 0.0,   null: false
+    t.decimal  "data_plan_price",                        precision: 5,  scale: 2, default: 0.0,   null: false
     t.float    "additional_data",            limit: 24
-    t.decimal  "additional_data_price",                  precision: 5, scale: 2, default: 0.0,   null: false
-    t.boolean  "rollover_data",                                                  default: false
-    t.datetime "created_at",                                                                     null: false
-    t.datetime "updated_at",                                                                     null: false
+    t.decimal  "additional_data_price",                  precision: 5,  scale: 2, default: 0.0,   null: false
+    t.boolean  "rollover_data",                                                   default: false
+    t.datetime "created_at",                                                                      null: false
+    t.datetime "updated_at",                                                                      null: false
+    t.decimal  "effective_price",                        precision: 10,           default: 0
   end
 
   add_index "cellphone_deal_attributes", ["deal_id"], name: "index_cellphone_deal_attributes_on_deal_id", using: :btree
@@ -546,22 +549,24 @@ ActiveRecord::Schema.define(version: 20160711205242) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string   "order_id",         limit: 255, default: "",            null: false
-    t.integer  "deal_id",          limit: 4
-    t.integer  "app_user_id",      limit: 4
-    t.string   "status",           limit: 255, default: "In-progress", null: false
-    t.float    "deal_price",       limit: 24
-    t.float    "effective_price",  limit: 24
+    t.string   "order_id",            limit: 255, default: "",            null: false
+    t.integer  "deal_id",             limit: 4
+    t.integer  "app_user_id",         limit: 4
+    t.string   "status",              limit: 255, default: "In-progress", null: false
+    t.float    "deal_price",          limit: 24
+    t.float    "effective_price",     limit: 24
     t.datetime "activation_date"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.string   "plan_id",          limit: 255
-    t.string   "channel_id",       limit: 255
-    t.string   "order_number",     limit: 255
-    t.integer  "order_type",       limit: 4
-    t.integer  "security_deposit", limit: 4
-    t.string   "primary_id",       limit: 255
-    t.string   "secondary_id",     limit: 255
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.string   "plan_id",             limit: 255
+    t.string   "channel_id",          limit: 255
+    t.string   "order_number",        limit: 255
+    t.integer  "order_type",          limit: 4
+    t.integer  "security_deposit",    limit: 4
+    t.string   "primary_id",          limit: 255
+    t.string   "secondary_id",        limit: 255
+    t.string   "primary_id_number",   limit: 255
+    t.string   "secondary_id_number", limit: 255
   end
 
   create_table "plans", force: :cascade do |t|
@@ -772,8 +777,6 @@ ActiveRecord::Schema.define(version: 20160711205242) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "additional_offers", "deals"
-  add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
   add_foreign_key "cellphone_service_preferences", "service_preferences"

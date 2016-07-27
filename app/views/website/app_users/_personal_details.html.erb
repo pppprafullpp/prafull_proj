@@ -20,7 +20,11 @@
     <div class="col-sm-3">
 
       <input type="file" name="avatar" id="avatar" class="inputfile" />
-      <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label>
+      <label for="avatar" id="profile-img" class="profile_img">
+        <%if @app_user.avatar.url.present? %>
+        <%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%>
+        <%end %>
+       </label>
       <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
       <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
       <div class="profile_imgbox">
@@ -35,11 +39,11 @@
       <p class="alert alert-danger hidden text-center" id="error-msg"></p>
       <!-- Text input-->
       <div class="col-sm-6">
-        <label class="control-label" for="Name">First Name</label>
+        <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
         <%= text_field_tag(:first_name,@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name') %>
       </div>
       <div class="col-sm-6">
-        <label class="control-label" for="Name">Last Name</label>
+        <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
         <%= text_field_tag(:last_name,@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name') %>
       </div>
       <!-- Text input-->
@@ -48,7 +52,7 @@
         <%= email_field_tag(:email,@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address',:readonly =>true) %>
       </div>
       <div class="col-sm-6">
-        <label class="control-label" for="Phone">Mobile</label>
+        <label class="control-label" for="Phone">Mobile<span id="mandat">*</span></label>
         <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
       </div>
 
@@ -62,7 +66,7 @@
           </div>
 
           <div class="col-sm-6">
-            <label class="control-label" for="Address">Address 1</label>
+            <label class="control-label" for="Address">Address 1<span id="mandat">*</span></label>
             <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1',:name => "addresses[address1]") %>
           </div>
 
@@ -72,11 +76,11 @@
           </div>
 
           <div class="col-sm-6">
-            <label class="control-label" for="Address">Town/City</label>
+            <label class="control-label" for="Address">Town/City<span id="mandat">*</span></label>
             <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[address_name]",:maxlength => 50) %>
           </div>
           <div class="col-sm-6">
-            <label class="control-label" for="Address">Zip</label>
+            <label class="control-label" for="Address">Zip<span id="mandat">*</span></label>
             <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
           </div>
 
@@ -91,7 +95,7 @@
 
       <% disable_flag = @business.present? ? true : false  %>
       <div class="btn-group col-sm-12">
-        <h5>User type</h5>
+        <h5>User type<span id="mandat">*</span></h5>
         <%= select_tag(:user_type,options_for_select([[AppUser::USER_TYPES.first.titleize, AppUser::USER_TYPES.first], [AppUser::USER_TYPES.last.titleize, AppUser::USER_TYPES.last]],@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
       </div>
 
@@ -103,12 +107,12 @@
       %>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">
-        <h5>Business Name</h5>
+        <h5>Business Name<span id="mandat">*</span></h5>
         <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_type_div">
-        <h5>Business Type</h5>
+        <h5>Business Type<span id="mandat">*</span></h5>
         <% if @business.present? %>
             <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(@business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
             <%= hidden_field_tag :business_type,business_type,:name => "business[business_type]",:class => 'form-control',:placeholder => 'Please enter your Business Type',:readonly => disable_flag %>
@@ -118,12 +122,12 @@
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="federal_number_div">
-        <h5>Federal Number</h5>
+        <h5>Federal Number<span id="mandat">*</span></h5>
         <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="ssn_div">
-        <h5>SSN</h5>
+        <h5>SSN<span id="mandat">*</span></h5>
         <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
       </div>
 
@@ -229,35 +233,26 @@
     }
     $("#submit_button").click(function(){
         event.preventDefault();
+        var first_name = $('#first_name').val();
+        var last_name = $('#last_name').val();
+        var mobile = $('#mobile').val();
         var business_type = $('#business_type').val();
         var business_name = $('#business_name').val();
         var federal_number = $('#federal_number').val();
         var ssn = $('#ssn').val();
-        if( business_type != '' || business_name != '' || federal_number != '' || ssn != '') {
-            if( business_type != '' && business_name != '' && (federal_number != '' || ssn != '')) {
-                var address_name = $('#address_name').val();
-                var zip = $('#zip').val();
-                var address1 = $('#address1').val();
-                if(address_name == '' || zip == '' || address1 == '' ){
-                      $("#error-msg").html('Please enter City , Zip and Address 1');
-                      $("html, body").animate({ scrollTop: 0 }, 600);
-                    }else{
-                    $('#update_user_form').submit();
-                }
-            }else{
-                $("#error-msg").removeClass('hidden').html('Please enter all business information')
-            }
-        }else{
-            var address_name = $('#address_name').val();
-            var zip = $('#zip').val();
-            var address1 = $('#address1').val();
-            if(address_name == '' || zip == '' || address1 == '' ){
-              $("#error-msg").removeClass('hidden').html('Please enter City , Zip and Address 1').focus();
-                $("html, body").animate({ scrollTop: 0 }, 600);
-            }else{
-                $("#save-spinner").show();
-                $('#update_user_form').submit();
-            }
+        var address_name = $('#address_name').val();
+        var zip = $('#zip').val();
+        var address1 = $('#address1').val();
+        var user_type = $('#user_type').val();
+        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' || federal_number != '' && ssn != '' && first_name != '' && last_name != '' && mobile != ''){
+            $('#update_user_form').submit();
+        }
+        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != ''){
+            $('#update_user_form').submit();
+        }
+        else {
+          $("#error-msg").removeClass('hidden').html('Please fill in all the details');
+          $("html, body").animate({ scrollTop: 0 }, 600);
         }
     });
 </script>

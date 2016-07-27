@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727074338) do
+ActiveRecord::Schema.define(version: 20160727111403) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -451,6 +451,7 @@ ActiveRecord::Schema.define(version: 20160727074338) do
     t.text     "service_provider", limit: 65535
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.text     "imei",             limit: 65535
   end
 
   create_table "gifts", force: :cascade do |t|

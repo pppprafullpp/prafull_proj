@@ -11,6 +11,7 @@ class Api::V1::AppUsersController < ApplicationController
     if app_user.present?
       if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
         app_user.update(app_user_params)
+        app_user.update_attributes(:primary_id=>params[:primary_id], :secondary_id => params[:secondary_id])
         business = Business.create_business(params)
         business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id) if business.present?
         render :status => 200,
@@ -178,4 +179,4 @@ class Api::V1::AppUsersController < ApplicationController
 
   # end
 
-end	
+end

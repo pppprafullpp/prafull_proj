@@ -53,12 +53,11 @@ class Website::AppUsersController < ApplicationController
       if @app_user.save!
         if @app_user.user_type == AppUser::BUSINESS
           if  @app_user.business_app_users.present?
-
             business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
             business_addresses = BusinessAddress.find_by_business_id(business_user_id)
-
             business_addresses.update_attributes(
                 :address_name=>params[:addresses][:address_name],
+                :address_type => params[:addresses][:address_type],
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
@@ -72,8 +71,19 @@ class Website::AppUsersController < ApplicationController
             end
           end
         else
-          address_hash = {:app_user_addresses => [params[:addresses]]}
-          app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
+          if  @app_user.app_user_addresses.present?
+            app_user_address = @app_user.app_user_addresses.first
+            app_user_address.update_attributes(
+                :address_name=>params[:addresses][:address_name],
+                :address_type => params[:addresses][:address_type],
+                :zip=>params[:addresses][:zip],
+                :address1 =>params[:addresses][:address1],
+                :address2=>params[:addresses][:address2],
+                :contact_number=>params[:addresses][:contact_number])
+          else
+            address_hash = {:app_user_addresses => [params[:addresses]]}
+            app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
+          end
         end
         flash[:notice] = 'User Updated successfully'
         redirect_to profile_website_app_users_path

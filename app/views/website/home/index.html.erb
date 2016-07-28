@@ -21,7 +21,7 @@
     </a>
     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
       <span class="fa fa-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
+      <span class="sr-only">Next </span>
     </a>
     <div class="formcontainer">
       <%=form_tag("/website/home/deal_details", method: :get, :id=>"firstpageform") do%>
@@ -50,8 +50,7 @@
 </div>
 <!-- //banner -->
 
-<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
-<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
+
 
 <!--<banner form small device>-->
 
@@ -112,6 +111,9 @@
     <p>ELECTRICITY</p> -->
   </div>
 </div>
+
+<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
 
 <!--Client-->
 <%= render :partial => "website/home/clients" %>

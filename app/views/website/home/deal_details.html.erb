@@ -51,7 +51,7 @@
                         <p>effective price</p>
                         <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
 
-                        <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
+                        <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
                         <div class="checkbox checkbox-info" id="deal-checkbox">
                           <input class="comparebox-display" value="<%=data.first.last%>" id="checkbox<%=data.first.last%>" type="checkbox">
                           <label for="checkbox<%=data.first.last%>"> Add to compare </label>

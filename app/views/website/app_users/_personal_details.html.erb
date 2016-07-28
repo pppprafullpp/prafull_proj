@@ -15,28 +15,33 @@
      contact_number = addresses.contact_number
    end
 %>
+
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
   <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'form-horizontal',:id => 'update_user_form', multipart: true do %>
-    <div class="col-sm-3">
 
-      <input type="file" name="avatar" id="avatar" class="inputfile" />
-      <label for="avatar" id="profile-img" class="profile_img">
-        <%if @app_user.avatar.url.present? %>
-        <%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%>
-        <%end %>
-       </label>
-      <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
-      <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
-      <div class="profile_imgbox">
+
+    <div class="col-sm-3"> 
+ <input type="file" name="avatar" id="avatar" class="inputfile" style="visibility:hidden;"/> 
+       <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label> 
+      <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center> 
+      <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center> 
+<div class="profile_imgbox"> 
         <h4><%= name %></h4>
+
+
+
+
+
 
       </div>
 
     </div>
 
+
     <div class="col-sm-9">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <p class="alert alert-danger hidden text-center" id="error-msg"></p>
+      <div class="col-lg-12 margin-top0"><h5>Basic Details</h5></div>
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
@@ -132,8 +137,8 @@
       </div>
 
       <!-- Button -->
-      <div class="col-sm-6 text-center">
-        <%= submit_tag('Save',:class => 'btn btn-info save-btn-new',:id => 'submit_button', :data => { :disable_with => "Updating" } ) %>
+      <div class="col-sm-6 btn-con">
+        <%= submit_tag('Save',:class => 'btn save-btn',:id => 'submit_button', :data => { :disable_with => "Updating" } ) %>
          <i id="save-spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
       </div>
     </div>
@@ -244,7 +249,7 @@
         var zip = $('#zip').val();
         var address1 = $('#address1').val();
         var user_type = $('#user_type').val();
-        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' || federal_number != '' && ssn != '' && first_name != '' && last_name != '' && mobile != ''){
+        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != ''){
             $('#update_user_form').submit();
         }
         else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != ''){

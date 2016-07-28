@@ -4,7 +4,7 @@ class Api::V1::DeviceTrackerController < ApplicationController
     @status=""
     if !DeviceRegister.find_by_device_id(params[:device_id])
       # Device not yet registered
-      DeviceRegister.create!(:device_id=>params[:device_id], :imei=>params[:imei], :service_provider=>params[:service_provider], :token=>@session_token)
+      @save=DeviceRegister.create!(:device_id=>params[:device_id],:imei=>params[:imei], :token=>@session_token)
       DeviceTracker.create!(
       :device_id=>params[:device_id],
       :service_provider=>params[:service_provider],
@@ -17,7 +17,8 @@ class Api::V1::DeviceTrackerController < ApplicationController
       :location=>params[:location],
       :device_type=>params[:device_type],
       :provider_type=>params[:provider_type],
-      :roaming=>params[:roaming])
+      :roaming=>params[:roaming],
+      :device_register_id=>@save.id)
       @status="New Device Regisetered"
     else
       #device already registered ,so just updating token and regitering information

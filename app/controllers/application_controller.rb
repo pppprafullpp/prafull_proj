@@ -16,5 +16,12 @@ class ApplicationController < ActionController::Base
 		headers['Access-Control-Request-Method'] = '*'
 		headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 	end
-
+	def verify_token
+		if params[:device_id].present? and params[:token].present?
+			 saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
+				 if saved_token!=params[:token]
+					 raise "{message:'invalid token'}".to_json
+				 end
+		end
+	end
 end

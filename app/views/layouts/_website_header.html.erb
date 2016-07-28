@@ -1,4 +1,4 @@
-<section class="top-bar navbar-fixed-top">
+<section class="top-bar">
   <div class="container">
     <div class="row">
       <div class="col-md-6 pull-left social-icon">
@@ -240,3 +240,9 @@
         }
     }
 </script>
+<script src="js/jquery.sticky.js"></script>
+ <script>
+    $(window).load(function(){
+      $("#sticky-top").sticky({ topSpacing: 0 });
+    });
+  </script>

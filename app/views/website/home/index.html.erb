@@ -50,8 +50,7 @@
 </div>
 <!-- //banner -->
 
-<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
-<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
+
 
 <!--<banner form small device>-->
 
@@ -112,6 +111,9 @@
     <p>ELECTRICITY</p> -->
   </div>
 </div>
+
+<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
 
 <!--Client-->
 <%= render :partial => "website/home/clients" %>

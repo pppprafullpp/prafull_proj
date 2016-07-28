@@ -10,6 +10,8 @@
   business = app_user.try(:business_app_users).first.try(:business)
   %>
 <!--//nav-->
+<section class="account-banner">
+</section>
 <section class="order-details">
   <div class="container">
     <div class="row">
@@ -29,13 +31,14 @@
           <div class="order-service-dt">
             <div class="order-service-left col-md-8">
               <div class="servicelogo-sty"><img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" /> </div>
-              <div class="servicedt-text"><%=deal.short_description  %>
+              <div class="servicedt-text"><%=deal.short_description  %></br>
                 <span class="in-progress-btn"><%= @order.status %> </span> 
               </div>
             </div>
             <div class="order-product-right col-md-4">
               <div class="order-price">Price <span>$<%= deal.price %></span> </div>
               <div class="order-efprice"> <span>Effective Price</span> <%= deal.effective_price  %> </div>
+              <div><span class="saveurdollar">You Save   $40.29</span></div>
             </div>
           </div>
           <% if deal_equipment.present? %>
@@ -86,7 +89,7 @@
             </table>
             <% end %>
             <% end %>
-            <span class="saveurdollar">You Save   $40.29</span> 
+            <!-- <span class="saveurdollar">You Save   $40.29</span>  -->
           </div>
           <div class="address-det">
             <div class="applicant-telcome col-md-6 border-ones">
@@ -219,6 +222,30 @@
             </div>
           </div>
         </div>
+        <% else %>
+        <div class="col-lg-4">
+              <div class="order-info text-center">
+                <div class="thumb"><img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" height="70" width="155"></div>
+                <h2 class="text-center"><%= deal.title %></h2>
+                <div class="text-center">
+                  <small><%= deal.short_description %></small><br />
+                  <small> Contract period <%= deal.contract_period %></small>
+                </div>
+                <div class="gen-info">
+                  <table class="table table-condensed">
+                    <tr>
+                      <td align="right" width="50%">Price</td>
+                      <td align="left"  width="50%" class="bold">$<%= deal.price %></td>
+                    </tr>
+                    <tr>
+                      <td  align="right" class="bold effective-color">Efective Price</td>
+                      <td  align="left" class="bold">$<%= deal.effective_price %></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
         <% end %>
       </div>
     </div>

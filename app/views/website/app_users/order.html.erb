@@ -72,11 +72,11 @@
                         </div>
                         <!-- Button group -->
                         <div class="btn-group btnBox">
-                          <div class="col-sm-12 text-right">
+                          <div class="col-sm-12 btn-con">
                             <!-- <button class="btn-primary btn-sm save btnNext" type="button" id="personal_information_tab">
                             <a href="#">Next</a>
                             </button> -->
-                            <button class="btn btn-info" type="button" id="personal_information_tab">
+                            <button class="btn save-btn" type="button" id="personal_information_tab">
                             Next
                             </button>
                           </div>
@@ -150,12 +150,12 @@
                     </div>
                     <!-- Button group -->
                     <div class="btn-group btnBox">
-                      <div class="col-sm-12 text-right">
+                      <div class="col-sm-12 btn-con">
                         <!-- <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button> -->
                         <!-- <button class="btn-primary btn-sm save btnNext" type="button" id="business_information_tab">Next
                         </button> -->
-                        <button class="btn btn-info btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
-                        <button class="btn btn-info" type="button" id="business_information_tab">Next
+                        <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
+                        <button class="btn save-btn" type="button" id="business_information_tab">Next
                         </button>
                       </div>
                     </div>
@@ -245,13 +245,13 @@
                           </div>
                           <!-- Button group -->
                           <div class="btn-group btnBox">
-                            <div class="col-sm-12 text-right">
+                            <div class="col-sm-12 btn-con">
                               <!-- <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
                               <button class="btn-primary btn-sm save btnNext" type="button" id="residence_address_information_tab">
                                 <a href="#">Next</a>
                               </button> -->
-                              <button class="btn btn-info btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
-                              <button class="btn btn-info" type="button" id="residence_address_information_tab">
+                              <button class="btn cancel-btn btnPrevious btnPrevious" type="button">Previous</button>
+                              <button class="btn save-btn" type="button" id="residence_address_information_tab">
                                 Next
                               </button>
                             </div>
@@ -344,13 +344,13 @@
 
               <!-- Button group -->
               <div class="btn-group btnBox">
-                <div class="col-sm-12 text-right">
+                <div class="col-sm-12 btn-con">
                   <!-- <button class="btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
                   <button class="btn-primary btn-sm save btnNext" type="button" id="business_address_information_tab">
                     <a href="#">Next</a>
                   </button> -->
-                  <button class="btn btn-info btn-primary btn-sm cancel btnPrevious" type="button">Previous</button>
-                  <button class="btn btn-info" type="button" id="business_address_information_tab">
+                  <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
+                  <button class="btn save-btn" type="button" id="business_address_information_tab">
                     Next
                   </button>
                 </div>
@@ -396,7 +396,7 @@
                               <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
                               <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
                               <%= hidden_field_tag :effective_price,135,{:name=> 'order_items[effective_price]'}%>
-                               <%= submit_tag('Submit',:class => 'btn btn-info',:id => 'order_submit_button') %>
+                               <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
                             </div>
                           </div>
                         </div>
@@ -432,8 +432,8 @@
           alert("Please enter mobile number.")
         }
       });
-      $('#app_user_last_name').blur(function(){
-        var  last_name = $('#app_user_last_name').val();
+      $('#last_name').blur(function(){
+        var  last_name = $('#last_name').val();
         if (last_name == '') {
           alert("Please enter Last Name")
         }
@@ -459,7 +459,7 @@
       $('#business_manager_contact').blur(function(){
         var business_manager_contact = $('#business_manager_contact').val();
         if (business_manager_contact == '') {
-          alert("Please enter Manager Contact")
+          alert("Please enter Telephone number")
         }
       });
       $('#billing_address_1').blur(function(){
@@ -535,8 +535,8 @@
         }
       });
 
-      $( document ).ready(function() {
 
+      $( document ).ready(function() {
 
         var  abc = $('#first_name').val();
         $('#getnamevalue').val(abc);
@@ -575,7 +575,7 @@
 
         var first_name = $('#first_name').val();
         var mobile = $('#mobile').val();
-        var last_name = $('#app_user_last_name').val();
+        var last_name = $('#last_name').val();
         var primary_id = $('#primary_id').val();
         var secondary_id = $('#secondary_id').val();
         var business_manager_name = $('#business_manager_name').val();
@@ -601,7 +601,7 @@
       $("#address_information_menu_tab").click(function(event){
           var  first_name = $('#first_name').val();
           var  mobile = $('#mobile').val();
-          var  last_name = $('#app_user_last_name').val();
+          var  last_name = $('#last_name').val();
           var primary_id = $('#primary_id').val();
           var secondary_id = $('#secondary_id').val();
           var business_manager_name = $('#business_manager_name').val();
@@ -639,6 +639,13 @@
             $('.nav-tabs > .active').next('li').find('a').trigger('click');
           }
           });
+
+          // $(window).load(function () {
+
+       
+
+
+
 
       $("#business_address_information_tab").click(function(event){
         event.preventDefault();
@@ -682,7 +689,7 @@
             event.preventDefault();
             var  first_name = $('#first_name').val();
             var  mobile = $('#mobile').val();
-            var  last_name = $('#app_user_last_name').val();
+            var  last_name = $('#last_name').val();
             var primary_id = $('#primary_id').val();
             var secondary_id = $('#secondary_id').val();
             // var business_manager_name = $('#business_manager_name').val();
@@ -698,7 +705,7 @@
         $("#business_information_menu_tab").click(function(event) {
           var  first_name = $('#first_name').val();
           var mobile = $('#mobile').val();
-          var last_name = $('#app_user_last_name').val();
+          var last_name = $('#last_name').val();
           var primary_id = $('#primary_id').val();
           var secondary_id = $('#secondary_id').val();
           if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '') {
@@ -711,7 +718,7 @@
            event.preventDefault();
                 var  first_name = $('#first_name').val();
                 var  mobile = $('#mobile').val();
-                var  last_name = $('#app_user_last_name').val();
+                var  last_name = $('#last_name').val();
                 var primary_id = $('#primary_id').val();
                 var secondary_id = $('#secondary_id').val();
 

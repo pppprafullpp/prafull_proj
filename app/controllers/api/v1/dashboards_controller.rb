@@ -72,6 +72,7 @@ class Api::V1::DashboardsController < ApplicationController
 			render :json => { :success => false,:message => 'Insufficient Parameters' }
 		end
 	end
+
 	protected
 	def verify_token
 		if params[:device_id].present? and params[:token].present?

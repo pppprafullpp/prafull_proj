@@ -15,8 +15,8 @@ Rails.application.routes.draw do
       match 'app_users' => 'app_users#create', :via => :post
       match 'update_user' => 'app_users#update_app_user', :via => :post
       match 'service_providers' => 'service_providers#get_service_providers', :via => :get
-      match 'device_details' => 'device_tracker#add_devise_details', :via => :get
-      match 'destroy_session' => 'device_tracker#destroy_session', :via => :get
+      match 'device_details' => 'device_tracker#add_devise_details', :via => :post
+      match 'destroy_session' => 'device_tracker#destroy_session', :via => :post
       match 'get_preferences' => 'service_preferences#fetch_service_preferences', :via => :get
       match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => :delete
       resources :dashboards do

@@ -42,7 +42,6 @@ gem 'whenever', :require => false
 gem 'newrelic_rpm'
 gem 'roo'
 gem 'fastercsv'
-
 gem 'figaro'
 gem 'will_paginate'
 gem "font-awesome-rails"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727113555) do
+ActiveRecord::Schema.define(version: 20160728061002) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -333,6 +333,12 @@ ActiveRecord::Schema.define(version: 20160727113555) do
 
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
 
+  create_table "channel_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "channel_packages", force: :cascade do |t|
     t.string   "package_name",  limit: 255
     t.string   "package_code",  limit: 255
@@ -439,6 +445,15 @@ ActiveRecord::Schema.define(version: 20160727113555) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "device_registers", force: :cascade do |t|
+    t.text     "imei",             limit: 65535
+    t.text     "device_id",        limit: 65535
+    t.text     "service_provider", limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "token",            limit: 65535
+  end
 
   create_table "device_trackers", force: :cascade do |t|
     t.text     "device_id",         limit: 65535
@@ -573,6 +588,16 @@ ActiveRecord::Schema.define(version: 20160727113555) do
     t.string   "secondary_id",        limit: 255
     t.string   "primary_id_number",   limit: 255
     t.string   "secondary_id_number", limit: 255
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.integer  "channel_category_id", limit: 4
+    t.float    "price",               limit: 24
+    t.text     "channel_id",          limit: 65535
+    t.text     "channel_ids",         limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "refer_contact_details", force: :cascade do |t|

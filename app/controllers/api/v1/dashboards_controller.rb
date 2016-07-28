@@ -2,10 +2,10 @@
 
 class Api::V1::DashboardsController < ApplicationController
 	include DashboardsHelper
-
+  before_action :verify_token
 	skip_before_filter :verify_authenticity_token
-
 	respond_to :json
+
 
 	def index
 		###############   When User is Logged In and zip code is present   ###############
@@ -14,7 +14,7 @@ class Api::V1::DashboardsController < ApplicationController
 			if dashboard_data == false
 				render :json => { :success => false }
 			else
-			 
+
 				render :json => { :dashboard_data => dashboard_data }
 			end
 
@@ -72,5 +72,13 @@ class Api::V1::DashboardsController < ApplicationController
 			render :json => { :success => false,:message => 'Insufficient Parameters' }
 		end
 	end
-
+	protected
+	def verify_token
+		if params[:device_id].present? and params[:token].present?
+			 saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
+				 if saved_token!=params[:token]
+					 raise "{message:'invalid token'}".to_json
+				 end
+		end
+	end
 end

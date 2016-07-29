@@ -6,7 +6,6 @@ class Api::V1::DashboardsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
-
 	def index
 		###############   When User is Logged In and zip code is present   ###############
 		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?
@@ -14,7 +13,6 @@ class Api::V1::DashboardsController < ApplicationController
 			if dashboard_data == false
 				render :json => { :success => false }
 			else
-
 				render :json => { :dashboard_data => dashboard_data }
 			end
 

@@ -19,9 +19,9 @@ class ApplicationController < ActionController::Base
 	def verify_token
 		if params[:device_id].present? and params[:token].present?
 			 saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
-				 if saved_token!=params[:token]
-					 raise "{message:'invalid token'}".to_json
-				 end
+				render :json=>{
+					message:"invalid token"
+					} if saved_token!=params[:token]
 		end
 	end
 end

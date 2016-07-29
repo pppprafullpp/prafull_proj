@@ -333,6 +333,12 @@ ActiveRecord::Schema.define(version: 20160728203621) do
 
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
 
+  create_table "channel_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "channel_packages", force: :cascade do |t|
     t.string   "package_name",  limit: 255
     t.string   "package_code",  limit: 255
@@ -582,6 +588,16 @@ ActiveRecord::Schema.define(version: 20160728203621) do
     t.string   "secondary_id",        limit: 255
     t.string   "primary_id_number",   limit: 255
     t.string   "secondary_id_number", limit: 255
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.integer  "channel_category_id", limit: 4
+    t.float    "price",               limit: 24
+    t.text     "channel_id",          limit: 65535
+    t.text     "channel_ids",         limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "refer_contact_details", force: :cascade do |t|

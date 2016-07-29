@@ -206,7 +206,7 @@ class Api::V1::OrdersController < ApplicationController
 	end
 
 	def get_order_address
-		if params[:order_id].present?
+		if params[:order_id].present? and Order.find(params[:order_id]).order_addresses.present?
 			order_addresses = OrderAddress.where(:order_id => params[:order_id])
 			if order_addresses.present?
 				render :status => 200,
@@ -253,4 +253,3 @@ class Api::V1::OrdersController < ApplicationController
 	end
 
 end
-

@@ -1,0 +1,153 @@
+<div id="business-info" class="tab-pane">
+  <div class="row">
+    <div class="col-lg-12">
+    <% business = @app_user.business_app_users.first.business %>
+    <% disable_flag = business.present? ? true : false  %>
+    <div class="btn-group col-sm-6 padding15right">
+
+      <label for="Name" class="control-label">User type</label>
+
+      <%= select_tag(:user_type,options_for_select(AppUser::USER_TYPES,@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
+    </div>
+
+    <%
+    business_name = business.present? ? business.business_name : ''
+    business_type = business.present? ? business.business_type : ''
+    federal_number = business.present? ? business.federal_number : ''
+    ssn = business.present? ? business.ssn : ''
+    %>
+
+    <div class="btn-group col-sm-6" style="display: none;" id="business_name_div">
+      <label for="Name" class="control-label"> Business Name </label>
+      <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+    </div>
+
+    <div class="btn-group col-sm-6 padding15right" style="display: none;" id="business_type_div">
+      <label for="Name" class="control-label">Business Type</label>
+      <% if business.present? %>
+      <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
+      <%= hidden_field_tag :business_type,business_type,:name => "business[business_type]",:class => 'form-control',:placeholder => 'Please enter your Business Type',:readonly => disable_flag %>
+      <% else %>
+      <%= select_tag(:business_type,options_for_select(Business::BUSINESS_TYPES,business_type),:class => 'form-control',:prompt => 'Select your Business Type',:name => "business[business_type]") %>
+      <% end %>
+    </div>
+
+    <div class="btn-group col-sm-6" style="display: none;" id="federal_number_div">
+      <label for="Name" class="control-label">Federal Number</label>
+      <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+    </div>
+
+    <div class="btn-group col-sm-6" style="display: none;" id="ssn_div">
+      <label for="Name" class="control-label">SSN</label>
+      <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+    </div>
+
+    <div class="col-sm-6  padding15right">
+      <label for="Name" class="control-label">Manager Name*</label>
+      <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name') %>
+    </div>
+
+    <div class="col-sm-6">
+      <label for="Name" class="control-label">Main Telephone Number*</label>
+      <%= phone_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone', :maxlength => 10) %>
+    </div>
+
+
+  </div>
+</div>
+<!-- Button group -->
+<div class="btn-group btnBox">
+  <div class="col-sm-12 btn-con">
+  <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
+  <button class="btn save-btn" type="button" id="business_information_tab">Next</button>
+</div>
+</div>
+</div>
+
+<!--Address input area-->
+<div id="address-info" class="tab-pane">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-md-12">
+        <h2>Billing Address</h2>
+      </div>
+      <div class="col-md-6 padding15right">
+        <label for="Name" class="control-label">Address 1*</label>
+        <%= text_field_tag('business_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
+        <%= hidden_field_tag 'business_addresses[address_type]',2,:name => "business_addresses[address_type]" %>
+      </div>
+      <div class="col-md-6">
+        <label for="Name" class="control-label">Address 2</label>
+        <%= text_field_tag('business_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2',:id => "billing_address_2") %>
+      </div>
+      <div class="col-md-6 padding15right">
+        <label for="Name" class="control-label">Town/City</label>
+        <input type="text" class="form-control input-md" placeholder="Town/City" name="business_addresses[address_name]" id="billing-name">
+      </div>
+      <div class="col-md-6">
+        <label for="Name" class="control-label">Zipcode*</label>
+        <%= text_field_tag('business_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip", maxlength: 6) %>
+      </div>
+      <div class="col-md-12 address-sty">
+        <h2 class="padding-bott">Shipping Address</h2>
+        <div class="checkbox checkbox-info">
+          <input id="checkbox8a" type="checkbox" onclick="SetShipping(this.checked);">
+          <label for="checkbox8a">Same as Billing Address </label>
+        </div>
+      </div>
+
+      <div id="business_service_address">
+        <div class="col-md-6 padding15right">
+          <label for="Name" class="control-label">Address 1*</label>
+          <%= text_field_tag('business_shipping_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
+          <%= hidden_field_tag 'business_shipping_addresses[address_type]',1,:name => "business_shipping_addresses[address_type]" %>
+        </div>
+        <div class="col-md-6">
+          <label for="Name" class="control-label">Address 2</label>
+          <%= text_field_tag('business_shipping_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
+        </div>
+        <div class="col-md-6 padding15right">
+          <label for="Name" class="control-label">Town/City</label>
+          <input type="text" class="form-control input-md" placeholder="Town/City" name="business_shipping_addresses[address_name]" id="business-name">
+        </div>
+        <div class="col-md-6">
+          <label for="Name" class="control-label">Zipcode*</label>
+          <%= text_field_tag('business_shipping_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip", maxlength: 6) %>
+        </div>
+      </div>
+      <div class="col-md-12 address-sty">
+        <h2 class="padding-bott">Service Address</h2>
+        <div class="checkbox checkbox-info">
+          <input id="checkbox8b" type="checkbox" onclick="SetService(this.checked);">
+          <label for="checkbox8b">Same as Billing Address </label>
+        </div>
+      </div>
+      <div id="business_shipping_address" %>
+        <div class="col-md-6 padding15right">
+          <label for="Name" class="control-label">Address 1*</label>
+          <%= text_field_tag('business_service_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
+          <%= hidden_field_tag 'business_service_addresses[address_type]',0,:name => "business_service_addresses[address_type]" %>
+        </div>
+        <div class="col-md-6">
+          <label for="Name" class="control-label">Address 2</label>
+          <%= text_field_tag('business_service_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2', :id=> "service_address_2") %>
+        </div>
+        <div class="col-md-6 padding15right">
+          <label for="Name" class="control-label">Town/City</label>
+          <input type="text" class="form-control input-md" placeholder="Town/City" name="business_service_addresses[address_name]" id="shipping-name">
+        </div>
+        <div class="col-md-6">
+          <label for="Name" class="control-label">Zipcode*</label>
+          <%= text_field_tag('business_service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip", maxlength: 6) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-group btnBox">
+    <div class="col-sm-12 btn-con">
+      <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
+      <button class="btn save-btn" type="button" id="business_address_information_tab">Next</button>
+    </div>
+  </div>
+</div>

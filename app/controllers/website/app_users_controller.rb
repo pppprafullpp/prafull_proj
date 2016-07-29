@@ -159,7 +159,7 @@ class Website::AppUsersController < ApplicationController
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
-           
+
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
@@ -191,10 +191,14 @@ class Website::AppUsersController < ApplicationController
   end
 
   def user_addresses
-    if params[:id].present?
+    if params[:id].present? and AppUser.find(params[:id]).orders.present?
       @addresses=AppUser.find(params[:id]).orders.last.order_addresses
       render :json=>{
         :status=>@addresses
+      }
+    else
+      render :json=>{
+        :status=>"no addresses"
       }
     end
   end

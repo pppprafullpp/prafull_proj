@@ -1,6 +1,7 @@
 class Api::V1::AppUsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   respond_to :json
+  include DashboardsHelper
 
   def new
     @app_user = AppUser.new
@@ -152,6 +153,23 @@ class Api::V1::AppUsersController < ApplicationController
       end
     else
       render  :json => { :success => false,:message => 'Invalid Json Input'}
+    end
+  end
+
+  def you_save
+    if params[:id].present?
+      allowed_best_deal_sum = 0
+      app_user = AppUser.find_by_id(params[:id])
+      if app_user.service_preferences.present?
+        service_preference_sum = app_user.service_preferences.collect(&:price).sum 
+        app_user.service_preferences.map do |sp|
+          allowed_best_deal_sum= allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).price
+        end
+        you_save = service_preference_sum - allowed_best_deal_sum
+        render  :json => { :success => true, :you_save => you_save}
+      else
+        render  :json => { :success => false}
+      end
     end
   end
 

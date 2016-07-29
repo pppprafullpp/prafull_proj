@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         get 'deals' => 'deals#index'
       end
       match 'app_user' => 'app_users#get_app_user', :via => :get
+      match 'you_save' => 'app_users#you_save', :via => :get
       match 'service_preferences' => 'service_preferences#get_service_preferences', :via => :get
       match 'forget_password' => 'app_users#recover_password', :via => :post
       match 'comment_ratings' => 'comment_ratings#create', :via => :post

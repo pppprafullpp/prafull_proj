@@ -67,17 +67,17 @@
 
       <div class="col-sm-6">
         <label class="control-label" for="PrimaryIdNumber">Primary Id Number<span id="mandat">*</span></label>
-          <%= text_field_tag(:primary_id_number,@app_user.primary_id_number,:class => 'form-control',:placeholder => 'Primary Id Number',:id => "") %>
+          <%= text_field_tag(:primary_id_number,@app_user.primary_id_number,:class => 'form-control',:placeholder => 'Primary Id Number',:id => "primary_id_number") %>
       </div>
 
       <div class="col-md-6">
-         <label class="control-label" for="SecondaryNumber">Secondary Number<span id="mandat">*</span></label>
+         <label class="control-label" for="SecondaryNumber">Secondary Id<span id="mandat">*</span></label>
           <%= select_tag(:secondary_id,options_for_select(AppUser::SECONDARY_ID),:class => 'form-control',:id => "") %>
       </div>
 
       <div class="col-md-6">
         <label class="control-label" for="SecondaryIdNumber">Secondary Id Number<span id="mandat">*</span></label>
-          <%= text_field_tag(:secondary_id_number,@app_user.secondary_id_number,:class => 'form-control',:placeholder => 'Secondary Id Number',:id => "") %>
+          <%= text_field_tag(:secondary_id_number,@app_user.secondary_id_number,:class => 'form-control',:placeholder => 'Secondary Id Number',:id => "secondary_id_number") %>
       </div>
 
 
@@ -269,10 +269,12 @@
         var zip = $('#zip').val();
         var address1 = $('#address1').val();
         var user_type = $('#user_type').val();
-        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != ''){
+        var primary_id_number = $('#primary_id_number').val();
+        var secondary_id_number = $('#secondary_id_number').val();
+        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != '' && primary_id_number != '' && secondary_id_number != ''){
             $('#update_user_form').submit();
         }
-        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != ''){
+        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != '' && primary_id_number != '' && secondary_id_number != ''){
             $('#update_user_form').submit();
         }
         else {

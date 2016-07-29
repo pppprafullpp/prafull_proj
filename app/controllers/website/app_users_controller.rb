@@ -153,18 +153,18 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create_order
+
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
       if [AppUser::RESIDENCE,AppUser::BUSINESS].include?(user_type)
-        order = Order.new(:app_user_id => @app_user.id,:status => "new_order",:order_type => Order::TRANSACTIONAL_ORDER, :primary_id => params[:primary_id], :secondary_id => params[:secondary_id] )
+        order = Order.new(:app_user_id => @app_user.id,:status => "new_order",:order_type => Order::TRANSACTIONAL_ORDER, :primary_id => params[:primary_id], :secondary_id => params[:secondary_id], :primary_id_number => params[:primary_id_number], :secondary_id_number => params[:secondary_id_number]  )
         order.order_id=rand(36**8).to_s(36).upcase
         if order.save
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
-
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)

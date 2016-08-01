@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728203621) do
+ActiveRecord::Schema.define(version: 20160801064904) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -690,6 +690,14 @@ ActiveRecord::Schema.define(version: 20160728203621) do
   end
 
   add_index "service_providers", ["service_category_id"], name: "index_service_providers_on_service_category_id", using: :btree
+
+  create_table "statelists", force: :cascade do |t|
+    t.text     "state",      limit: 65535
+    t.text     "city",       limit: 65535
+    t.text     "county",     limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "subscribe_deals", force: :cascade do |t|
     t.integer  "app_user_id",   limit: 4

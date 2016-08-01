@@ -247,6 +247,20 @@ class Api::V1::OrdersController < ApplicationController
 		end
 	end
 
+	def get_states
+  states=Statelist.all.pluck(:state).uniq
+	render :json=>{
+	 :states=>states
+   }
+	end
+
+	def get_cities
+		cities=Statelist.where(:state=>params[:state]).pluck(:city)
+		render :json=>{
+		 :cities=>cities
+	   }
+	end
+
 	private
 	def order_params
 		params.require(:order).permit(:id,:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same,:primary_id_number,:secondary_id_number)

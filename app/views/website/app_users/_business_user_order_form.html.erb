@@ -17,12 +17,12 @@
     ssn = business.present? ? business.ssn : ''
     %>
 
-    <div class="btn-group col-sm-6" style="display: none;" id="business_name_div">
+    <div class="btn-group col-sm-6" id="business_name_div">
       <label for="Name" class="control-label"> Business Name </label>
       <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
     </div>
 
-    <div class="btn-group col-sm-6 padding15right" style="display: none;" id="business_type_div">
+    <div class="btn-group col-sm-6 padding15right"  id="business_type_div">
       <label for="Name" class="control-label">Business Type</label>
       <% if business.present? %>
       <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
@@ -32,15 +32,17 @@
       <% end %>
     </div>
 
-    <div class="btn-group col-sm-6" style="display: none;" id="federal_number_div">
-      <label for="Name" class="control-label">Federal Number</label>
-      <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
-    </div>
-
-    <div class="btn-group col-sm-6" style="display: none;" id="ssn_div">
+    <%if Business::BUSINESS_TYPES.key(business.business_type)=="Sole Proprietor"%>
+    <div class="btn-group col-sm-6" id="ssn_div">
       <label for="Name" class="control-label">SSN</label>
       <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
     </div>
+    <%elsif Business::BUSINESS_TYPES.key(business.business_type)=="Registered" %>
+    <div class="btn-group col-sm-6" id="federal_number_div">
+      <label for="Name" class="control-label">Federal Number</label>
+      <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+    </div>
+    <%end%>
 
     <div class="col-sm-6  padding15right">
       <label for="Name" class="control-label">Manager Name*</label>

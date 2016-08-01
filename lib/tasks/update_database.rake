@@ -31,5 +31,24 @@ namespace :update_database do
     end
   end
 
+ #task to map city and states
+   task map_state_and_city: :environment do
+     state_list=["TX", "NY", "OH", "NE", "SC", "CA", "PA", "NM", "NJ", "NC", "MO", "KS", "WI", "MI", "VA", "AL", "HI", "MA", "CO", "ID", "WA", "TN", "AZ", "ME", "NH", "IN", "KY", "WV", "IL", "VT", "FL", "RI", "CT", "DE", "DC", "MD", "GA", "AA", "MS", "IA", "MN", "SD", "ND", "MT", "LA", "AR", "OK", "WY", "UT", "NV", "AP", "GU", "PW ", "FM", "MP ", "MH ", "OR", "AK"]
+     state_list.each do | state |
+       puts "Mapping for "+state.downcase
+         begin
+             api_datas=JSON.parse(URI.parse("http://api.sba.gov/geodata/city_links_for_state_of/"+state+".json").read)
+             api_datas.each do |api_data|
+               city=api_data["name"]
+               state=api_data["state_abbreviation"]
+               county=api_data["county_name"]
+               Statelist.create!(:state=>state, :city=>city, :county=>county)
+               puts "Cities mapped for "+state
+             end
+         rescue
+               puts "bad request for "+state.downcase
+         end
+     end
+   end
 
 end

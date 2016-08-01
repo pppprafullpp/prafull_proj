@@ -109,14 +109,13 @@ module DashboardsHelper
 					allowed_trending_deal = category_trending_deal(deal_type,sc.id,zip_code)
 					allowed_order_deal=category_order_deal(app_user_id,sc.id,false)
 
-					best_deal_flag = nil.present? ? true : false
 
 					if allowed_trending_deal.present?
 						service_provider_name=allowed_trending_deal.service_provider_name
 					else
 						service_provider_name=""
 					end
-					{best_deal_flag: best_deal_flag,:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:advertisement =>nil,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]),:best_deal =>nil,:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price])}
+					{best_deal_flag: false,:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:advertisement =>nil,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]),:best_deal =>nil,:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price])}
 				end
 
 				return (servicelist + categoryList)

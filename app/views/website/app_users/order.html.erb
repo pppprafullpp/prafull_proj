@@ -117,25 +117,31 @@
           <span class="style3">Primary Id:</span> <span id="review-primary" class="style5"></span><br/>
           <span class="style3">Secondary Id:</span> <span id="review-secondary" class="style5"></span>
         </div>
-        <% if @app_user.user_type == AppUser::BUSINESS %>
+       
+        <% if @app_user.business_app_users.first.business.business_type ==  Business::REGISTERED %>
         <div class="col-md-6"> <h2>Registered</h2>
           <span class="style3">Federal Tax ID:</span> <span id="review-federal" class="style5"></span><br />
-          <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span>
+          <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
+        </div>
+        <% elsif @app_user.business_app_users.first.business.business_type ==  Business::SOLE_PROPRIETOR %>
+        <div class="col-md-6"> <h2>SOLE PROPRIETOR</h2>
+          <span class="style3">SSN:</span> <span id="review-ssn" class="style5"></span><br />
+          <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
         </div>
         <% end %>
         <div class="col-md-12"> <h2>Address</h2>
           <div class="billing-address col-sm-4 padding0">
             <h2 class="heading8">Billing Address</h2>
-            <div class="billing-address-innertxt"></div>
+            <div class="billing-address-innertxt word-wrap"></div>
 
           </div>
           <div class="service-address col-sm-4 padding0">
             <h2 class="heading8">Shipping Address</h2>
-            <div class="shipping-address-innertxt"></div>
+            <div class="shipping-address-innertxt word-wrap"></div>
           </div>
           <div class="service-address col-sm-4 padding0">
             <h2 class="heading8">Service Address</h2>
-            <div class="service-address-innertxt"></div>
+            <div class="service-address-innertxt word-wrap"></div>
           </div>
         </div>
       </div>
@@ -164,6 +170,9 @@
 <input type="hidden" id="getmobilevalue">
 <input type="hidden" id="getprimaryvalue">
 <input type="hidden" id="getsecondaryvalue">
+<input type="hidden" id="getssn">
+<input type="hidden" id="getfederal">
+
 </section>
 
 <!--Order-form-->
@@ -208,10 +217,17 @@ $(document).ready(function() {
   });
 });
 
-var  abc = $('#first_name').val();
-$('#getnamevalue').val(abc);
-var y= $(getnamevalue).val()
-$("#review-name").text(y);
+
+
+var  federal = $('#federal_number').val();
+$('#getfederal').val(federal);
+var federal_value= $(getfederal).val()
+$("#review-federal").text(federal_value);
+
+var  ssn = $('#ssn').val();
+$('#getssn').val(ssn);
+var ssn_value= $(getssn).val()
+$("#review-ssn").text(ssn_value);
 
 var  last_name = $('#last_name').val();
 $('#getlastnamevalue').val(last_name);

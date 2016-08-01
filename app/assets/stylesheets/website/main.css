@@ -2883,3 +2883,7 @@ color:#555;
     max-width: 200px;*/
     word-wrap: break-word;
 }
+.no-float{
+    float: none !important; 
+    text-align:  left !important;
+}

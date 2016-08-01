@@ -2878,3 +2878,12 @@ color:#555;
   display: none;
   font-weight: 600;
 }
+.word-wrap{
+/*margin: auto;
+    max-width: 200px;*/
+    word-wrap: break-word;
+}
+.no-float{
+    float: none !important; 
+    text-align:  left !important;
+}

@@ -45,11 +45,11 @@
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:first_name,@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name') %>
+        <%= text_field_tag(:first_name,@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:last_name,@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name') %>
+        <%= text_field_tag(:last_name,@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
       </div>
       <!-- Text input-->
       <div class="col-sm-6">

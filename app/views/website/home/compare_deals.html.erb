@@ -1,7 +1,7 @@
 <% if  session[:user_id].present? %>
   <section class="compare-design">
     <div class="container">
-      <h3>Compare Internet Deals</h3>
+      <h3>Compare <%= @category.capitalize %> Deals</h3>
       <div data-example-id="bordered-table" class="compare-table">
         <table class="table table-bordered">
           <tbody><tr>

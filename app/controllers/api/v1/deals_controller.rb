@@ -23,8 +23,7 @@ class Api::V1::DealsController < ApplicationController
 		deal_id = params[:deal_id]
 		cable_deal_attribute = CableDealAttribute.where(:deal_id => deal_id).last
 		channel_ids = cable_deal_attribute.channel_ids.present? ? eval(cable_deal_attribute.channel_ids) : []
-		# channels = Channel.where(:id => channel_ids)
-		channels = Channel.where("id = ? and category_name = ?", channel_ids, params[:category_name] )
+		channels = Channel.where(:id => channel_ids).where(:category_name => params[:category_name] )
 		render :json => { :channels   => channels.as_json}
 	end
 

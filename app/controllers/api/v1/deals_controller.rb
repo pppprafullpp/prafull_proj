@@ -23,8 +23,19 @@ class Api::V1::DealsController < ApplicationController
 		deal_id = params[:deal_id]
 		cable_deal_attribute = CableDealAttribute.where(:deal_id => deal_id).last
 		channel_ids = cable_deal_attribute.channel_ids.present? ? eval(cable_deal_attribute.channel_ids) : []
-		channels = Channel.where(:id => channel_ids).where(:category_name => params[:category_name] )
+		channels= []
+		Channel::CATEGORIES.each do |category_name|
+			channels_list = []
+			channels_hash = {}
+			channels_hash['category_name'] = category_name
+			category_channels = Channel.where(:id => channel_ids).where(category_name: category_name)
+			channels_hash['channel'] = category_channels 
+			channels_list << channels_hash
+			channels << channels_list
+		end
 		render :json => { :channels   => channels.as_json}
+
+
 	end
 
 	def get_channel_details

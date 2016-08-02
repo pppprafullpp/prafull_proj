@@ -30,12 +30,10 @@ class Api::V1::DealsController < ApplicationController
 			channels_hash['category_name'] = category_name
 			category_channels = Channel.where(:id => channel_ids).where(category_name: category_name)
 			channels_hash['channel'] = category_channels 
-			channels_list << channels_hash
-			channels << channels_list
+			#channels_list << channels_hash
+			channels << channels_hash
 		end
 		render :json => { :channels   => channels.as_json}
-
-
 	end
 
 	def get_channel_details

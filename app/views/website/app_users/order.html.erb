@@ -281,6 +281,24 @@ $("#order_information_menu_tab").click(function(event){
   var app_user_service_address_1 = $('#app_user_service_address_1').val();
   var app_user_service_address_2 = $('#app_user_service_address_2').val();
   var app_user_service_zip = $('#app_user_service_zip').val();
+
+  if ($('#user_type').val() == "business"){
+    billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/><b></b>"+billing_zip;
+      service_address=service_address_1+"<br/>"+service_address_2+"<br/><b></b>"+service_zip;
+      shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/><b></b>"+shipping_zip;
+      $(".service-address-innertxt").html(service_address);
+      $(".shipping-address-innertxt").html(shipping_address);
+      $(".billing-address-innertxt").html(billing_address);
+    }
+    else{
+      app_user_billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b></b>"+app_user_billing_zip;
+      app_user_service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b></b>"+app_user_service_zip;
+      app_user_shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b></b>"+app_user_shipping_zip;
+      $(".service-address-innertxt").html(app_user_billing_address);
+      $(".shipping-address-innertxt").html(app_user_service_address);
+      $(".billing-address-innertxt").html(app_user_shipping_address);
+    }
+
   if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
     alert("Please fill all the mandatory fields.")
     event.stopImmediatePropagation();
@@ -299,10 +317,19 @@ $("#order_information_menu_tab").click(function(event){
       alert("Please fill all the mandatory fields.")
       event.stopImmediatePropagation();
     }
-    else if (mobile.length < 10 || business_manager_contact.length < 10 ){
-      alert('Please enter 10-digit number.')
-      event.stopImmediatePropagation();  
+    if ($('#user_type').val() == "business"){
+      if (mobile.length < 10  || business_manager_contact.length < 10){
+        alert('Please enter 10-digit number.')
+        event.stopImmediatePropagation();  
+      }
+      else {
+       if (mobile.length < 10){
+        alert('Please enter 10-digit number.')
+        event.stopImmediatePropagation();  
+      }
+      }
     }
+   
   });
 
   var billing_address,service_address,shipping_address,app_user_billing_address_2,app_user_billing_address_1, app_user_billing_zip;
@@ -548,11 +575,11 @@ $("#order_information_menu_tab").click(function(event){
   });
 
   $("#checkbox8a").change(function () {
-    // $("#business_service_address").toggle();
+    $("#business_service_address").toggle();
   });
 
   $("#checkbox8b").change(function () {
-    // $("#business_shipping_address").toggle();
+    $("#business_shipping_address").toggle();
   });
 
   function SetService(checked) {

@@ -6,7 +6,7 @@ class BusinessAppUser < ActiveRecord::Base
     business_app_user = self.where(:business_id => business_id,:app_user_id => app_user_id).first
     unless business_app_user.present?
       business_app_user = self.new
-      business_app_user.business_id = business_id
+      business_app_user.business_id = business_id 
       business_app_user.app_user_id = app_user_id
       business_app_user.role = role
       if business_app_user.save!

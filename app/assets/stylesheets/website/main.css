@@ -2908,3 +2908,7 @@ color:#555;
     margin-top: 10px;
     font-size: 15px;
 }
+.signin-page .form-control::-moz-placeholder 
+{ 
+    color:#000 !important;
+}

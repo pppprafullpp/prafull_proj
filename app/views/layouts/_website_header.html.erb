@@ -11,7 +11,7 @@
 
         <% if session[:user_id].present? %>
         <% if AppUser.find(session[:user_id]).first_name.present? %>
-        <%headername= Base64.decode64(AppUser.find(session[:user_id]).first_name)%>
+        <%headername= AppUser.find(session[:user_id]).first_name%>
         <%else%>
         <%headername=session[:user_name]%>
         <%end%>

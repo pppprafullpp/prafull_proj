@@ -9,6 +9,8 @@ class Business < ActiveRecord::Base
    self.ssn=Base64.encode64(ssn) if ssn.present?
    self.db_number=Base64.encode64(db_number) if db_number.present?
    self.business_name=Base64.encode64(business_name) if business_name.present?
+   self.manager_name=Base64.encode64(manager_name) if manager_name.present?
+   self.manager_contact=Base64.encode64(manager_contact) if manager_contact.present?
  }
   ## business type
   SOLE_PROPRIETOR = 0

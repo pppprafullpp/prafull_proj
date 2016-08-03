@@ -1,4 +1,4 @@
-<%= render :partial => 'website/home/internet_banner' %>
+<%= render :partial => 'website/home/internet_banner',locals: { :category_name => @category_name } %>
 <section class="details">
   <div class="container">
     <div class="row">
@@ -71,9 +71,11 @@
 
 <script type="text/javascript">
     var checkedValues,dealids;
+        $("#compare_box").hide();
+    
     $( document ).ready(function() {
 
-        $("#compare_box").hide();
+        // $("#compare_box").hide();
 
         dealids = [
             <%

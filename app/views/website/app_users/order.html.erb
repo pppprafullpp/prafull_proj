@@ -54,15 +54,15 @@
                   <div class="col-lg-12">
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">First Name*</label>
-                      <%= text_field_tag('app_user[first_name]',Base64.decode64(@app_user.first_name),:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name',maxlength: 20) %>
+                      <%= text_field_tag('app_user[first_name]',@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name',maxlength: 20) %>
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Last Name*</label>
-                      <%= text_field_tag('app_user[last_name]',Base64.decode64(@app_user.last_name),:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name', maxlength: 20) %>
+                      <%= text_field_tag('app_user[last_name]',@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name', maxlength: 20) %>
                     </div>
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">Contact Number*</label>
-                      <%= phone_field_tag('app_user[mobile]',Base64.decode64(@app_user.mobile),:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10) %>
+                      <%= phone_field_tag('app_user[mobile]',@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10) %>
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Email</label>
@@ -119,7 +119,7 @@
         </div>
 
         <% if (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
- 
+
         <div class="col-md-6"> <h2>Registered</h2>
           <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
           <span class="style3">Federal Tax ID:</span> <span id="review-federal" class="style5"></span><br />

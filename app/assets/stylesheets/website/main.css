@@ -2887,3 +2887,24 @@ color:#555;
     float: none !important; 
     text-align:  left !important;
 }
+.btn_3{
+    background: #009904 none repeat scroll 0 0;
+}
+
+.channel-list h3
+{
+
+    font-size:20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.channel-list li{
+
+    display: inline-block;
+    margin-Right: 20PX;
+    border: 1px solid #eee;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 15px;
+}

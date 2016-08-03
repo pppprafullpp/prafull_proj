@@ -95,4 +95,7 @@ class Website::HomeController < ApplicationController
     session[:user_type] = (params[:user_type] == 'option1') ? AppUser::RESIDENCE : AppUser::BUSINESS
     redirect_to service_deals_path
   end
+
+  def calculate_bandwidth
+  end
 end

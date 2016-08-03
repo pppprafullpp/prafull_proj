@@ -15,3 +15,4 @@ user.save
 user = User.create(:email=>'service@example.com',:password=>'111111',:password_confirmation=>'111111',:name=>'Service Provider')
 user.role = 'service_provider'
 user.save
+BandwidthCalculatorSetting.create!(:email=>300,:web_page=>1000, :video_calling=>2048, :audio_calling=>512, :photo_upload_download=>250,  :video_streaming=>1024)

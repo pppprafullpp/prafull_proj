@@ -13,7 +13,7 @@ class Api::V1::DealsController < ApplicationController
 		if @deals.present?
 			#@deals.each do |deal|
 			render :json => { :deals   => @deals.as_json(:include => :ratings),}
-			#end								
+			#end
 		else
 			render :status => 401,:json => { :success => false }
 		end
@@ -29,7 +29,7 @@ class Api::V1::DealsController < ApplicationController
 			channels_hash = {}
 			channels_hash['category_name'] = category_name
 			category_channels = Channel.where(:id => channel_ids).where(category_name: category_name)
-			channels_hash['channel'] = category_channels 
+			channels_hash['channel'] = category_channels
 			#channels_list << channels_hash
 			channels << channels_hash
 		end
@@ -44,6 +44,7 @@ class Api::V1::DealsController < ApplicationController
 
 	def get_estimated_bandwidth
 		bandwidth_in_mb,bandwidth_in_gb = BandwidthCalculatorSetting.calculate_bandwidth(params)
-		render :json => { :bandwidth_in_mb => bandwidth_in_mb,:bandwidth_in_gb => bandwidth_in_gb}
+		matching_deal_id=InternetDealAttribute.where(:download=>bandwidth_in_gb).pluck(:deal_id).first
+		render :json => { :bandwidth_in_mb => bandwidth_in_mb.to_s,:bandwidth_in_gb => bandwidth_in_gb.to_s, :matching_deal_id=>matching_deal_id}
 	end
 end

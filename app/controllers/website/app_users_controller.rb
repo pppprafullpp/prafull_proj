@@ -144,9 +144,9 @@ class Website::AppUsersController < ApplicationController
         category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order.order_items.first.deal_id).first.name.downcase
         if  params[:id] == category
           category_id = ServiceCategory.find_by_name(params[:id].capitalize).id
-          @order_history = Order.joins("inner join order_items on order_items.order_id = orders.id inner join deals on deals.id = order_items.deal_id where app_user_id = "+session[:user_id].to_s+" and deals.service_category_id="+category_id.to_s)
+          @order_history = Order.joins("inner join order_items on order_items.order_id = orders.id inner join deals on deals.id = order_items.deal_id where app_user_id = "+session[:user_id].to_s+" and deals.service_category_id="+category_id.to_s).order('created_at DESC')
         elsif params[:id] == "home"
-          @order_history = app_user.try(:orders)
+          @order_history = app_user.try(:orders).order('created_at DESC')
         end
       end
     end

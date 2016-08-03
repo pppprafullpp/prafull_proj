@@ -1,6 +1,7 @@
 class Website::HomeController < ApplicationController
   layout 'website_layout'
   include DashboardsHelper
+  before_action :already_ordered, only: [:deal_details, :more_deal_details]
 
   def index
     session[:zip_code] = 75024 unless session[:zip_code].present?
@@ -55,16 +56,6 @@ class Website::HomeController < ApplicationController
     end
     deal_provider_ids =  ServiceProvider.get_deal_wise_provider_ids(@dashboard_data)
     @providers = ServiceProvider.get_provider_by_category(params[:category_id]).where(:id => deal_provider_ids)
-    begin
-      if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
-        ordered_deals_id=[]
-        order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
-        @deal_ids=[]
-        @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
-      end
-    rescue Exception=>e
-      raise e.to_yaml
-    end
     @category_name = ServiceCategory.find(params[:category_id]).name.titleize
   end
 
@@ -96,6 +87,19 @@ class Website::HomeController < ApplicationController
     redirect_to service_deals_path
   end
 
-  def calculate_bandwidth
+  private
+
+  def already_ordered
+    begin
+      if session[:user_id].present? and AppUser.find(session[:user_id]).orders.present?
+        ordered_deals_id=[]
+        order_ids=AppUser.find(session[:user_id]).orders.pluck(:id)
+        @deal_ids=[]
+        @deal_ids=OrderItem.where(:order_id=>order_ids).pluck(:deal_id)
+      end
+    rescue Exception=>e
+      raise e.to_yaml
+    end
+ 
   end
 end

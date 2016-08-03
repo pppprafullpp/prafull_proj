@@ -15,7 +15,7 @@
       </div>
       <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Town/City</label>
-        <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'ACity',:id => "name") %>
+        <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',placeholder: "Town/City",:id => "name") %>
       </div>
       <div class="col-md-6">
         <label for="Name" class="control-label">Zipcode*</label>
@@ -40,7 +40,7 @@
         <%= hidden_field_tag 'shipping_addresses[address_type]',1,:name => "shipping_addresses[address_type]" %>
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Town/City</label>
-          <%= text_field_tag('shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'city',:id => "cityname") %>
+          <%= text_field_tag('shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "cityname") %>
           <!-- <input type="text" class="form-control input-md" placeholder="Town/City" name="shipping_addresses[address_name]" id="Name"> -->
         </div>
         <div class="col-md-6">
@@ -67,7 +67,7 @@
           </div>
           <div class="col-md-6 padding15right">
             <label for="Name" class="control-label">Town/City</label>
-            <%= text_field_tag('service_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'city',:id => "app_user_service_address_2") %>
+            <%= text_field_tag('service_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "app_user_service_address_2") %>
           </div>
           <div class="col-md-6">
             <label for="Name" class="control-label">Zipcode*</label>

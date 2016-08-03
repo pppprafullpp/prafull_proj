@@ -19,7 +19,7 @@
 
     <div class="btn-group col-sm-6" id="business_name_div">
       <label for="Name" class="control-label"> Business Name </label>
-      <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+      <%= text_field_tag :business_name,Base64.decode64(business_name),:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
     </div>
 
     <div class="btn-group col-sm-6 padding15right"  id="business_type_div">
@@ -35,12 +35,12 @@
     <%if Business::BUSINESS_TYPES.key(business.business_type)=="Sole Proprietor"%>
     <div class="btn-group col-sm-6" id="ssn_div">
       <label for="Name" class="control-label">SSN</label>
-      <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+      <%= text_field_tag :ssn,Base64.decode64(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
     </div>
     <%elsif Business::BUSINESS_TYPES.key(business.business_type)=="Registered" %>
     <div class="btn-group col-sm-6" id="federal_number_div">
       <label for="Name" class="control-label">Federal Number</label>
-      <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+      <%= text_field_tag :federal_number,Base64.decode64(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
     </div>
     <%end%>
 

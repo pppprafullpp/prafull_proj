@@ -117,14 +117,16 @@
           <span class="style3">Primary Id:</span> <span id="review-primary" class="style5"></span><br/>
           <span class="style3">Secondary Id:</span> <span id="review-secondary" class="style5"></span>
         </div>
-        
-        <% if (@app_user.user_type == AppUser::Business) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
+        <% if (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
+
         <div class="col-md-6"> <h2>Registered</h2>
+          <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
           <span class="style3">Federal Tax ID:</span> <span id="review-federal" class="style5"></span><br />
           <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
         </div>
-        <% elsif (@app_user.user_type == AppUser::Business) && (@app_user.business_app_users.first.business.business_type ==  Business::SOLE_PROPRIETOR) %>
+        <% elsif (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::SOLE_PROPRIETOR) %>
         <div class="col-md-6"> <h2>SOLE PROPRIETOR</h2>
+          <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
           <span class="style3">SSN:</span> <span id="review-ssn" class="style5"></span><br />
           <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
         </div>
@@ -152,7 +154,7 @@
           <%= hidden_field_tag :deal_id,@deal.id,{:name=> 'order_items[deal_id]'}%>
           <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
           <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
-          <%= hidden_field_tag :effective_price,135,{:name=> 'order_items[effective_price]'}%>
+          <%= hidden_field_tag :effective_price,@deal.effective_price,{:name=> 'order_items[effective_price]'}%>
           <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
         </div>
       </div>
@@ -172,6 +174,8 @@
 <input type="hidden" id="getsecondaryvalue">
 <input type="hidden" id="getssn">
 <input type="hidden" id="getfederal">
+<input type="hidden" id="getbusiness">
+
 
 </section>
 
@@ -223,6 +227,11 @@ var  federal = $('#federal_number').val();
 $('#getfederal').val(federal);
 var federal_value= $(getfederal).val()
 $("#review-federal").text(federal_value);
+
+var  business = $('#business_name').val();
+$('#getbusiness').val(business);
+var business_value= $(getbusiness).val()
+$("#review-business").text(business_value);
 
 var  ssn = $('#ssn').val();
 $('#getssn').val(ssn);

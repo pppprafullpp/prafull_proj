@@ -18,6 +18,51 @@ namespace :update_database do
     end
   end
 
+  task create_multiline_deal_attribute_for_cellphone_deals: :environment do
+    service_category = ServiceCategory.where(:name => ServiceCategory::CELLPHONE_CATEGORY).first
+    deals = Deal.where(:service_category_id => service_category.id)
+    deals.each do |deal|
+      cellphone_deal_attribute = CellphoneDealAttribute.where(:deal_id => deal.id,:no_of_lines => 1).first
+      if cellphone_deal_attribute.present?
+        price_per_line = cellphone_deal_attribute.price_per_line
+        data_plan_price = cellphone_deal_attribute.data_plan_price
+        additional_data_price = cellphone_deal_attribute.additional_data_price
+        domestic_call_minutes = cellphone_deal_attribute.domestic_call_minutes
+        domestic_text = cellphone_deal_attribute.domestic_text
+        international_call_minutes = cellphone_deal_attribute.international_call_minutes
+        international_text = cellphone_deal_attribute.international_text
+        data_plan = cellphone_deal_attribute.data_plan
+        additional_data = cellphone_deal_attribute.additional_data
+        rollover_data = cellphone_deal_attribute.rollover_data
+        equipment=deal.cellphone_equipments.first
+        for i in 2..4
+          cellphone_deal_attribute_new = CellphoneDealAttribute.find_or_initialize_by(:deal_id => deal.id,:no_of_lines => i)
+          effective_price=(i*price_per_line)+data_plan_price+additional_data_price
+          if equipment.present?
+            effective_price+=(i*equipment.price)
+          end
+          if deal.additional_offers.present?
+            deal.additional_offers.each do |additional_offer|
+              effective_price-=additional_offer.price
+            end
+          end
+          cellphone_deal_attribute_new.effective_price = effective_price
+          cellphone_deal_attribute_new.price_per_line = price_per_line
+          cellphone_deal_attribute_new.data_plan_price = data_plan_price
+          cellphone_deal_attribute_new.additional_data_price = additional_data_price
+          cellphone_deal_attribute_new.domestic_call_minutes = domestic_call_minutes
+          cellphone_deal_attribute_new.domestic_text = domestic_text
+          cellphone_deal_attribute_new.international_call_minutes = international_call_minutes
+          cellphone_deal_attribute_new.international_text = international_text
+          cellphone_deal_attribute_new.data_plan = data_plan
+          cellphone_deal_attribute_new.additional_data = additional_data
+          cellphone_deal_attribute_new.rollover_data = rollover_data
+          cellphone_deal_attribute_new.save
+        end
+      end
+    end
+  end
+
   task update_deal_equipments_set_deal_id: :environment do
     deals = Deal.all
     deals.each do |deal|

@@ -1,0 +1,144 @@
+<section class="bandwidth-banner">
+  <div class="container text-center">
+    <h3>bandwidth calculator</h3>
+  </div>
+</section>
+<section class="bandwidth-calc">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Network <strong>Bandwidth Calculator</strong></h4>
+        <p>Estimate your requirements and get a detailed report with upload/download usage and recommended solutions </p>
+        <div class="usage-type hidden"> <strong>Please select your usage type:</strong>
+          <p>Select variation based upon your bandwidth consumption</p>
+          <div class="details-zip col-md-12">
+            <div class="col-xs-2 col-md-2 radio_inline">
+              <label>
+                <input type="radio" name="optionsRadios" id="residence" value="low" checked >
+                <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> Low</span> </label>
+            </div>
+            <div class="col-xs-2 col-md-2 radio_inline">
+              <label >
+                <input type="radio" name="optionsRadios" id="business" value="medium">
+                <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> Medium </span> </label>
+            </div>
+            <div class="col-xs-2 col-md-2 radio_inline">
+              <label >
+                <input type="radio" name="optionsRadios" id="business" value="high">
+                <i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> High </span> </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-6 left-usage">
+          <div class="email-count">
+            <label>Email</label>
+            <p>How mainy emails do you send/received?</p>
+            <input id="emails" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14"/>
+            <span>100 emails</span>
+          </div>
+          <div class="web-access">
+            <label>Web Access</label>
+            <p>How mainy web pages do you visit?</p>
+            <input id="web-access" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="14"/>
+            <span>500 pages</span>
+          </div>
+          <div class="video-calling">
+            <label>Video Calling</label>
+            <p>How mainy minutes do you spend on video calling?</p>
+            <input id="vc" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="90" data-slider-step="1" data-slider-value="14"/>
+            <span>90 mins</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 right-usage">
+          <div class="upload-downlaod">
+            <label>Upload/Download</label>
+            <p>How mainy photos do you upload/download?</p>
+            <input id="upload-photos" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14"/>
+            <span>100 photos</span>
+          </div>
+          <div class="usage-type">
+            <strong>Device(s)</strong>
+            <p>How many device(s) you are using?</p>
+            <div class="select-style">
+              <select id="devices">
+                <% (1..10).each do |i|%>
+                <option value="<%=i%>"><%=i%></option>
+                <%= %>
+                <%end%>
+                <%%>
+              </select>
+            </div>
+            <i>Calculated bandwidth will be multiplied by the number of devices you have chosen.</i> </div>
+            <div class="video-calling" style="margin-top: 13px;">
+              <label>Video Streaming</label>
+              <p>How mainy minutes do you spend on video calling?</p>
+              <input id="vs" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="14"/>
+              <span>500 mins</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="video-calling">
+            <label>Audio Calling</label>
+            <p>How mainy minutes do you spend on audio calling?</p>
+            <input id="ac" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="14"/>
+            <span>500 mins</span>
+          </div>
+        </div>
+
+
+      <div class="col-md-12 calculate-bandwidth text-center">
+      		<button id="bandwidth-calc-result" class="btn bandwidth-btn" type="button" onclick="get_estimated_bandwidth()"> Calculate Bandwidth</button>
+      </div>
+
+      <div class="col-md-12 text-center result-bandwidth">
+						<div id="result-innertxt" class="alert alert-success">
+
+            </div>
+					</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script>
+$('#emails, #vc, #web-access, #upload-photos, #vs, #ac').slider({
+	formatter: function(value) {
+		return 'Current value: ' + value;
+	}
+});
+  $("#bandwidth-calc-result").click(function(){
+    $(".result-bandwidth").show('slide');
+});
+function get_estimated_bandwidth(){
+email=$("#emails").val();
+no_of_devices=$("#devices option:selected").val();
+web_page=$("#web-access").val();
+video_calling=$("#vc").val();
+audio_calling=$("#ac").val();
+photo_upload_download=$("#upload-photos").val();
+video_streaming=$("#vs").val();
+$.ajax({
+  url: "/api/v1/get_estimated_bandwidth",
+  type: "POST",
+  data: {
+    no_of_devices: no_of_devices,
+    email: email,
+    web_page: web_page,
+    video_calling: video_calling,
+    audio_calling : audio_calling,
+    photo_upload_download:photo_upload_download,
+    video_streaming:video_streaming
+  },
+  success: function(data){
+    bandwidth_in_mb=data["bandwidth_in_mb"];
+    bandwidth_in_gb=data["bandwidth_in_gb"];
+    console.log(data);
+    $("#result-innertxt").html("<p> Bandwidth in MB =<b>"+bandwidth_in_mb+"</b></p><br /><p> Bandwidth in GB=<b>"+bandwidth_in_gb+"</b>");
+    $(".result-bandwidth").show('slide');
+  }
+})
+}
+</script>

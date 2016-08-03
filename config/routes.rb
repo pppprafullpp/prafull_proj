@@ -80,7 +80,7 @@ Rails.application.routes.draw do
       post :set_reset_password
     end
   end
-
+  get "/calculate_bandwidth" => "website/home#calculate_bandwidth"
   get "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
   get '/get_user_addresses'=> "website/app_users#user_addresses"
   get 'deals/get_service_providers'=>'deals#get_service_providers'

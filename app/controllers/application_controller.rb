@@ -24,4 +24,11 @@ class ApplicationController < ActionController::Base
 					} if saved_token!=params[:token]
 		end
 	end
+	def decode_api_data(data)
+		return Base64.decode64(data)
+	end
+	
+	def encode_api_data(data)
+		return Base64.encode64(data)
+	end
 end

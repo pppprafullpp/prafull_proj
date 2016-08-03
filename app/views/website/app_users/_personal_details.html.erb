@@ -5,7 +5,7 @@
      addresses = @app_user.app_user_addresses.first
    end
 
-   name = @app_user.first_name + ' ' + @app_user.last_name
+   name = Base64.decode64(@app_user.first_name) + ' ' + Base64.decode64(@app_user.last_name)
    if addresses.present?
      address_type = addresses.address_type
      address_name = addresses.address_name
@@ -20,12 +20,12 @@
   <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'form-horizontal',:id => 'update_user_form', multipart: true do %>
 
 
-    <div class="col-sm-3"> 
- <input type="file" name="avatar" id="avatar" class="inputfile" style="visibility:hidden;"/> 
-       <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label> 
-      <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center> 
-      <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center> 
-<div class="profile_imgbox"> 
+    <div class="col-sm-3">
+ <input type="file" name="avatar" id="avatar" class="inputfile" style="visibility:hidden;"/>
+       <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label>
+      <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
+      <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
+<div class="profile_imgbox">
         <h4 class='word-wrap'><%= name %></h4>
 
 
@@ -45,11 +45,11 @@
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:first_name,@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
+        <%= text_field_tag(:first_name,Base64.decode64(@app_user.first_name),:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:last_name,@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
+        <%= text_field_tag(:last_name,Base64.decode64(@app_user.last_name),:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
       </div>
       <!-- Text input-->
       <div class="col-sm-6">
@@ -58,7 +58,7 @@
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Phone">Mobile<span id="mandat">*</span></label>
-        <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
+        <%= phone_field_tag(:mobile,Base64.decode64(@app_user.mobile),:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="PrimaryId">Primary Id<span id="mandat">*</span></label>
@@ -133,7 +133,7 @@
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">
         <h5>Business Name<span id="mandat">*</span></h5>
-        <%= text_field_tag :business_name,business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+        <%= text_field_tag :business_name,Base64.decode64(business_name),:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_type_div">
@@ -148,12 +148,12 @@
 
       <div class="btn-group col-sm-12" style="display: none;" id="federal_number_div">
         <h5>Federal Number<span id="mandat">*</span></h5>
-        <%= text_field_tag :federal_number,federal_number,:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+        <%= text_field_tag :federal_number,Base64.decode64(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="ssn_div">
         <h5>SSN<span id="mandat">*</span></h5>
-        <%= text_field_tag :ssn,ssn,:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+        <%= text_field_tag :ssn,Base64.decode64(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
       </div>
 
       <!-- Button -->

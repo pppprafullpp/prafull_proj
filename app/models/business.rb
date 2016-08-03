@@ -3,7 +3,15 @@ class Business < ActiveRecord::Base
   has_many :business_app_users
   #validates :business_name,:uniqueness => true
   #validates :business_name, uniqueness: { scope: :federal_number }
-  before_save { self.business_name = business_name.squish if business_name.present?}
+  before_save {
+   self.business_name = business_name.squish if business_name.present?
+   self.federal_number=Base64.encode64(federal_number) if federal_number.present?
+   self.ssn=Base64.encode64(ssn) if ssn.present?
+   self.db_number=Base64.encode64(db_number) if db_number.present?
+   self.business_name=Base64.encode64(business_name) if business_name.present?
+   self.manager_name=Base64.encode64(manager_name) if manager_name.present?
+   self.manager_contact=Base64.encode64(manager_contact) if manager_contact.present?
+ }
   ## business type
   SOLE_PROPRIETOR = 0
   REGISTERED = 1
@@ -18,12 +26,17 @@ class Business < ActiveRecord::Base
   UPGRADE = 'Upgrade'
 
   def self.create_business(params)
-     
+    # raise params.to_yaml
+    params[:ssn]=Base64.encode64(params[:ssn]) if params[:ssn].present?
+    params[:federal_number]=Base64.encode64(params[:federal_number])  if params[:federal_number].present?
+    params[:dba]=Base64.encode64(params[:dba])  if params[:dba].present?
+    params[:manager_contact]=Base64.encode64(params[:manager_contact])  if params[:manager_contact].present?
+    params[:business_name]=Base64.encode64(params[:business_name])  if params[:business_name].present?
     if params[:business].present?
       business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
       if business_type.present?
         if business_type == SOLE_PROPRIETOR
-          business = self.where(:ssn => params[:business][:ssn]).first if params[:business][:ssn].present?
+          business = self.where(:ssn =>  params[:business][:ssn]).first if params[:business][:ssn].present?
         elsif business_type == REGISTERED
           business = self.where(:federal_number => params[:business][:federal_number]).first if params[:business][:federal_number].present?
         end

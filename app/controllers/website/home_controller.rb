@@ -51,7 +51,7 @@ class Website::HomeController < ApplicationController
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
       @dashboard_data = get_category_deals(nil,params[:category_id],params[:zip_code],params[:deal_type],{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
-      else
+    else
       @dashboard_data = []
     end
     deal_provider_ids =  ServiceProvider.get_deal_wise_provider_ids(@dashboard_data)
@@ -86,6 +86,7 @@ class Website::HomeController < ApplicationController
     session[:user_type] = (params[:user_type] == 'option1') ? AppUser::RESIDENCE : AppUser::BUSINESS
     redirect_to service_deals_path
   end
+
 
   private
 

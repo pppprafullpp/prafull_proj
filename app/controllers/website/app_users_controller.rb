@@ -44,8 +44,8 @@ class Website::AppUsersController < ApplicationController
       #@app_user.city = params[:city];@app_user.state = params[:state]
       # first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
       # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
-      @app_user.first_name = params[:first_name]
-      @app_user.last_name = params[:last_name]
+      @app_user.first_name = encode_api_data(params[:first_name])
+      @app_user.last_name = encode_api_data(params[:last_name])
       @app_user.mobile = params[:mobile]
       @app_user.primary_id = params[:primary_id]
       @app_user.primary_id_number = params[:primary_id_number]
@@ -160,6 +160,8 @@ class Website::AppUsersController < ApplicationController
       if [AppUser::RESIDENCE,AppUser::BUSINESS].include?(user_type)
         order = Order.new(:app_user_id => @app_user.id,:status => "new_order",:order_type => Order::TRANSACTIONAL_ORDER, :primary_id => params[:primary_id], :secondary_id => params[:secondary_id], :primary_id_number => params[:primary_id_number], :secondary_id_number => params[:secondary_id_number]  )
         order.order_id=rand(36**8).to_s(36).upcase
+        params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
+        params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
         if order.save
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)

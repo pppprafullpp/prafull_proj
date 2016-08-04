@@ -229,8 +229,8 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?
         session[:user_id] = @app_user.id
-        session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
-        session[:zip_code] = @app_user.zip
+        session[:user_name] = @app_user.first_name.present? ? decode_api_data(@app_user.first_name) : @app_user.email.split('@')[0]
+        session[:zip_code] = decode_api_data(@app_user.zip)
         session[:user_type] = @app_user.user_type
         flash[:notice] = 'Signin Successfull'
         if session[:deal].present?

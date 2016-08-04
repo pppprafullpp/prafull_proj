@@ -5,8 +5,7 @@
      addresses = @app_user.app_user_addresses.first
    end
 
-   name =  @app_user.first_name  + ' ' + @app_user.last_name
-   if addresses.present?
+    if addresses.present?
      address_type = addresses.address_type
      address_name = addresses.address_name
      address_1 = addresses.address1
@@ -26,12 +25,7 @@
       <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
       <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
 <div class="profile_imgbox">
-        <h4 class='word-wrap'><%= name %></h4>
-
-
-
-
-
+        <h4 class='word-wrap'><%= Base64.decode64("#{@app_user.first_name}") + ' ' + Base64.decode64(@app_user.last_name) %></h4>
 
       </div>
 
@@ -45,11 +39,11 @@
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:first_name,@app_user.first_name,:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
+        <%= text_field_tag(:first_name,Base64.decode64(@app_user.first_name),:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:last_name,@app_user.last_name,:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
+        <%= text_field_tag(:last_name,Base64.decode64(@app_user.last_name),:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
       </div>
       <!-- Text input-->
       <div class="col-sm-6">
@@ -58,7 +52,7 @@
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Phone">Mobile<span id="mandat">*</span></label>
-        <%= phone_field_tag(:mobile,@app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
+        <%= phone_field_tag(:mobile, @app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="PrimaryId">Primary Id<span id="mandat">*</span></label>
@@ -133,7 +127,7 @@
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">
         <h5>Business Name<span id="mandat">*</span></h5>
-        <%= text_field_tag :business_name,Base64.decode64(business_name),:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+        <%= text_field_tag :business_name, business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_type_div">

@@ -95,5 +95,43 @@ namespace :update_database do
          end
      end
    end
+   task encrypt_app_user_data: :environment do
+     obj=ApplicationController.new
+     @user=AppUser.all
+       @user.each do |user_data|
+        fname=user_data.first_name
+        lname=user_data.last_name
+        zip=user_data.zip
+        if fname.present?
+          fname=obj.encode_api_data(fname)
+          puts "first name=#{fname}"
+        end
+        if lname.present?
+          lname=obj.encode_api_data(lname)
+          puts "last name=#{lname}"
+        end
+        if zip.present?
+          zip=obj.encode_api_data(zip)
+          puts "zip=#{zip}"
+        end
+        user_data.update_attributes(:first_name=>fname, :last_name=>lname, :zip=>zip)
+        puts "----------------------------------------"
+      end
+      puts "==========================================="
+      puts "updated AppUser Table"
+      puts "==========================================="
+    end
 
+    task encrypt_business_data: :environment do
+       obj=ApplicationController.new
+      @business_data=Business.all
+      @business_data.each do |business|
+        business.update_attributes(:federal_number=>obj.encode_api_data(business.federal_number)) if business.federal_number.present?
+        business.update_attributes(:ssn=>obj.encode_api_data(business.ssn)) if business.ssn.present?
+        puts "business_id=#{business.id}"
+        puts "federal_number= #{business.federal_number}"
+        puts "ssn=#{business.ssn}"
+        puts "updated"
+      end
+    end
 end

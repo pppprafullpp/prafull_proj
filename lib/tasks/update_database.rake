@@ -95,5 +95,54 @@ namespace :update_database do
          end
      end
    end
+   task encrypt_data: :environment do
+     obj=ApplicationController.new
+     @user=AppUser.all
+    #  begin
+       @user.each do |user_data|
+        fname=user_data.first_name
+        lname=user_data.last_name
+        zip=user_data.zip
+        if user_data.business_app_users.present?
+        business_id=user_data.business_app_users[0]["business_id"].to_s
+        if Business.exists?(business_id)
+              business_info=Business.find(business_id)
+              if business_info.federal_number.present?
+                  business_federal_number=business_info.federal_number
+              else
+                 business_ssn=business_info.ssn
+              end
+            end
+         end
+        if fname.present?
+          fname=obj.encode_api_data(fname)
+          puts "first name=#{fname}"
+        end
+        if lname.present?
+          lname=obj.encode_api_data(lname)
+          puts "last name=#{lname}"
+        end
+        if zip.present?
+          zip=obj.encode_api_data(zip)
+          puts "zip=#{zip}"
+        end
+        if business_federal_number.present?
+           business_federal_number=obj.encode_api_data(business_federal_number)
+           puts "federal number=#{business_federal_number}"
+        end
+        if business_ssn.present?
+           business_ssn=obj.encode_api_data(business_ssn)
+           puts "ssn=#{business_ssn}"
+        end
+        user_data.update_attributes(:first_name=>fname, :last_name=>lname, :zip=>zip)
+        if Business.exists?(business_id)
+           Business.find(business_id).update_attributes(:ssn=>business_ssn, :federal_number=>business_federal_number)
+        end
+        puts "updated"
+      end
+    # rescue Exception => e
 
+      # next
+    # end
+ end
 end

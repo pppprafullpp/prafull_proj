@@ -46,6 +46,6 @@ class Api::V1::DealsController < ApplicationController
 	def get_estimated_bandwidth
 		bandwidth_in_mb,bandwidth_in_gb = BandwidthCalculatorSetting.calculate_bandwidth(params)
 		matching_deal_id=InternetDealAttribute.where(:download=>bandwidth_in_gb).pluck(:deal_id).first
-		render :json => { :bandwidth_in_mb => bandwidth_in_mb.to_s,:bandwidth_in_gb => bandwidth_in_gb.to_s, :matching_deal_id=>matching_deal_id}
+		render :json => { :bandwidth_in_mb => bandwidth_in_mb.to_s,:bandwidth_in_gb => bandwidth_in_gb.to_f.round, :matching_deal_id=>matching_deal_id}
 	end
 end

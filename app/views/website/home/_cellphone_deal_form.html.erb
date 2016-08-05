@@ -2,6 +2,38 @@
 
 <div class="row">
 <div class="col-lg-12">
+
+  <% if  @deal_attributes.present? %>
+    <h5 class="margin_bot20">Cellphone Lines </h5>
+     <table class="table table-bordered">
+      <tbody>
+        <tr>
+           <td width="20%">No. of Lines</td>
+           <td width="80%" colspan="2"><%= @deal_attributes.try(:no_of_lines) %></td>
+         </tr>
+         <tr>
+           <td width="20%">Price per Line</td>
+           <td width="80%" colspan="2">$<%= @deal_attributes.try(:price_per_line) %></td>
+         </tr>
+         <tr>
+         <td width="20%">Data Plan</td>
+         <td width="80%" colspan="2"><%= @deal_attributes.try(:data_plan) %></td>
+       </tr>
+       <tr>
+         <td width="20%">Data Plan Price</td>
+         <td width="80%" colspan="2">$<%= @deal_attributes.try(:data_plan_price) %></td>
+       </tr>
+       <tr>
+         <td width="20%">Additional Data</td>
+         <td width="80%" colspan="2"><%= @deal_attributes.try(:additional_data) %></td>
+       </tr>
+       <tr>
+        <td width="20%">Additional Data Price</td>
+         <td width="80%" colspan="2">$<%= @deal_attributes.try(:additional_data_price) %></td>
+       </tr>
+      </tbody>
+    </table>
+  <% end %> 
   
   <% if @deal_equipments.present? %>
   <h5 class="margin_bot20">Equipments & Installation</h5>

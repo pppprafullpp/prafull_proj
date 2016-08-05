@@ -62,7 +62,8 @@ class Website::HomeController < ApplicationController
   def more_deal_details
     @deal = Deal.find_by_id(params[:deal_id])
     @category_name = ServiceCategory.find(@deal.service_category_id).name.downcase
-    @deal_equipments = eval("@deal.#{@category_name}_deal_attributes.first.#{@category_name}_equipments")
+    @deal_attributes = eval("@deal.#{@category_name}_deal_attributes.first")
+    @deal_equipments = eval("@deal_attributes.#{@category_name}_equipments")
   end
 
   def compare_deals

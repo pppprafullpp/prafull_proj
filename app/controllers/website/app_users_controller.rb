@@ -13,7 +13,7 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
-      @app_user.zip = params[:app_user][:zip_code].present? ? params[:app_user][:zip_code] : 75024
+      @app_user.zip = params[:app_user][:zip_code].present? ? encode_api_data(params[:app_user][:zip_code]) : encode_api_data(75024)
       if @app_user.save!
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
@@ -68,8 +68,7 @@ class Website::AppUsersController < ApplicationController
                 :address2=>params[:addresses][:address2],
                 :contact_number=>params[:addresses][:contact_number])
           else
-            # params[:ssn]=encode_api_data(params[:ssn]) if params[:ssn]=encode_api_data(params[:ssn])
-            # raise params[:business].to_yaml
+
             params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
             @business = Business.create_business(params)

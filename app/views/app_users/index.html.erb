@@ -32,14 +32,14 @@
               <% if can? :read, app_user %>
                   <tr>
                     <td><%= app_user.id %></td>
-                    <td><%= app_user.first_name %></td>
-                    <td><%= app_user.last_name %></td>
+                    <td><%= Base64.decode64(app_user.first_name) %></td>
+                    <td><%= Base64.decode64(app_user.last_name) %></td>
                     <td><%= app_user.email %></td>
                     <td><%= app_user.active %></td>
                     <td><%= app_user.address %></td>
                     <td><%= app_user.state %></td>
                     <td><%= app_user.city %></td>
-                    <td><%= app_user.zip %></td>
+                    <td><%= Base64.decode64(app_user.zip) %></td>
                     <td><%= app_user.device_flag %></td>
                     <td><%= (link_to 'Edit', edit_app_user_path(app_user)) if can? :manage, app_user %> | <%= (link_to "Delete", app_user, method: :delete, data: { confirm: "You sure?" }) if can? :manage, app_user %>
                     </td>

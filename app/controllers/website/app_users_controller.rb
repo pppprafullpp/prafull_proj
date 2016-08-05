@@ -68,6 +68,8 @@ class Website::AppUsersController < ApplicationController
                 :address2=>params[:addresses][:address2],
                 :contact_number=>params[:addresses][:contact_number])
           else
+            params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
+            params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
             @business = Business.create_business(params)
             if @business.present?
               address_hash = {:business_addresses => [params[:addresses]]}

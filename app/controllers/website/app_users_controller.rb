@@ -68,6 +68,7 @@ class Website::AppUsersController < ApplicationController
                 :address2=>params[:addresses][:address2],
                 :contact_number=>params[:addresses][:contact_number])
           else
+
             params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
             @business = Business.create_business(params)
@@ -146,9 +147,9 @@ class Website::AppUsersController < ApplicationController
         category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order.order_items.first.deal_id).first.name.downcase
         if  params[:id] == category
           category_id = ServiceCategory.find_by_name(params[:id].capitalize).id
-          @order_history = Order.joins("inner join order_items on order_items.order_id = orders.id inner join deals on deals.id = order_items.deal_id where app_user_id = "+session[:user_id].to_s+" and deals.service_category_id="+category_id.to_s)
+          @order_history = Order.joins("inner join order_items on order_items.order_id = orders.id inner join deals on deals.id = order_items.deal_id where app_user_id = "+session[:user_id].to_s+" and deals.service_category_id="+category_id.to_s).order('created_at DESC')
         elsif params[:id] == "home"
-          @order_history = app_user.try(:orders)
+          @order_history = app_user.try(:orders).order('created_at DESC')
         end
       end
     end
@@ -231,8 +232,8 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?
         session[:user_id] = @app_user.id
-        session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
-        session[:zip_code] = @app_user.zip
+        session[:user_name] = @app_user.first_name.present? ? decode_api_data(@app_user.first_name) : @app_user.email.split('@')[0]
+        session[:zip_code] = decode_api_data(@app_user.zip)
         session[:user_type] = @app_user.user_type
         flash[:notice] = 'Signin Successfull'
         if session[:deal].present?

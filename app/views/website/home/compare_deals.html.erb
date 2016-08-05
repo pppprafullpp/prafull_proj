@@ -50,14 +50,14 @@
           <tr>
             <td scope="row">Offer Title</td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td><%= @deal_first.additional_offers.try(:first).try(:title) %></td>
+            <td><%= @deal_second.additional_offers.try(:first).try(:title) %></td>
           </tr>
           <tr>
             <td scope="row">Offer Price</td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td><%= @deal_first.additional_offers.try(:first).try(:price) %></td>
+            <td><%= @deal_second.additional_offers.try(:first).try(:price) %></td>
           </tr>
           </tbody></table>
       </div>

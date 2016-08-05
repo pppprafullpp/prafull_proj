@@ -1,4 +1,4 @@
-<%= render :partial => 'website/home/internet_banner' %>
+<%= render :partial => 'website/home/internet_banner',locals: { :category_name => @category_name } %>
 <section class="details">
   <div class="container">
     <div class="row">
@@ -41,7 +41,7 @@
                       <ul class="description-height">
                         <!-- $<%#= data['deal_price'] %>  -->
                         <!-- <li><%#= data['download_speed'] %> Mbps Download Speed</li> -->
-                        <li><%= data['short_description'].truncate(55) %></li>
+                        <li><%= data['short_description'].truncate(15) %></li>
                       </ul>
                       <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
                       <div class="box_down">
@@ -71,9 +71,11 @@
 
 <script type="text/javascript">
     var checkedValues,dealids;
+        $("#compare_box").hide();
+    
     $( document ).ready(function() {
 
-        $("#compare_box").hide();
+        // $("#compare_box").hide();
 
         dealids = [
             <%
@@ -99,6 +101,7 @@
 
 
         $(".comparebox-display:checked").attr("checked",false);
+          $(".comparebox-display").attr("disabled",false)
         $(".comparebox-display:checkbox:checked").attr("checked", false);
         if ($(".comparebox-display:checkbox:checked").length >= 2) {
             $(".comparebox-display:checkbox").not(":checked").attr("disabled", 2);

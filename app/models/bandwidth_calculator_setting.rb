@@ -2,7 +2,6 @@ class BandwidthCalculatorSetting < ActiveRecord::Base
 
   def self.calculate_bandwidth(params)
     setting = self.first
-   puts params.to_yaml
     no_of_devices = params[:no_of_devices].present? ? params[:no_of_devices].to_i : 1
 
     email = params[:email].present? ? params[:email].to_i : 0

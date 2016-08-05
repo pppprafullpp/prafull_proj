@@ -18,7 +18,7 @@
             <a href="<%= profile_website_app_users_path %>">Welcome <%= headername %></a> |
 
             <a href="<%= signout_website_app_users_path %>">SignOut</a> |
-            <a id="zipcode_header" href="#" class="text-center serviceRow " data-toggle="modal" data-target="#zipcode-modal">ZIP : <%= session[:zip_code] %></a>
+            <a id="zipcode_header" href="#" class="text-center serviceRow " data-toggle="modal" data-target="#zipcode-modal">ZIP : <%= Base64.decode64(session[:zip_code]) %></a>
         <% else %>
             <a href="#" data-toggle="modal" data-target="#myModal">Login / SignUp</a> |
             <a href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%= session[:zip_code] %></a>

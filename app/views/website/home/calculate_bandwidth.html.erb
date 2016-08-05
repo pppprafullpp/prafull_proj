@@ -110,17 +110,17 @@ $(document).ready(
     $("input[name=optionsRadios]").on("change",function(){
        value=$("input[name=optionsRadios]:checked").val();
        switch(value){
-         case "low": update_slider(value);break;
-         case "medium": update_slider(value);break;
-         case "high": update_slider(value);break;
+         case "low": update_slider(value);$('#devices').prop('selectedIndex',0);break;
+         case "medium": update_slider(value);$('#devices').prop('selectedIndex',4);break;
+         case "high": update_slider(value);$('#devices').prop('selectedIndex',9);break;
        }
      })
   }
 );
 function update_slider(type){
-  if(type=="low") {value=50;$("#devices option[value="+1+"]").attr("selected","selected");}
-  if(type=="medium") {value=100;$("#devices option[value="+5+"]").attr("selected","selected");}
-  if(type=="high"){ value=500;$("#devices option[value="+10+"]").attr("selected","selected");}
+  if(type=="low") {value=50}
+  if(type=="medium") {value=100}
+  if(type=="high"){ value=500}
   $("#emails").slider().slider('setValue', value)
   $("#web-access").slider().slider('setValue', value)
   $("#vc").slider().slider('setValue', value)

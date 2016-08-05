@@ -20,7 +20,7 @@ class AppUser < ActiveRecord::Base
   #has_many :ratings, dependent: :destroy
   mount_uploader :avatar, ImageUploader
 
-  before_save :encode_data
+  # before_save :encode_data
   ##before_save :encrypt_data
   validates :email, :presence => true, :uniqueness => true
   validates :password, :presence => true, :confirmation => true, :on => :create
@@ -76,14 +76,5 @@ class AppUser < ActiveRecord::Base
       app_user
     end
   end
-  def encode_data
-    self.email =email.downcase
-    self.first_name=Base64.encode64(first_name.downcase)
-    self.last_name=Base64.encode64(last_name.downcase)
-    # self.zip=Base64.encode64(zip)
-    self.mobile=Base64.encode64(mobile) if mobile.present?
-  end
-
-
 
 end

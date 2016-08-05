@@ -3,15 +3,15 @@ class Business < ActiveRecord::Base
   has_many :business_app_users
   #validates :business_name,:uniqueness => true
   #validates :business_name, uniqueness: { scope: :federal_number }
-  before_save {
-   self.business_name = business_name.squish if business_name.present?
-   self.federal_number=Base64.encode64(federal_number) if federal_number.present?
-   self.ssn=Base64.encode64(ssn) if ssn.present?
-   self.db_number=Base64.encode64(db_number) if db_number.present?
-   self.business_name=Base64.encode64(business_name) if business_name.present?
-   self.manager_name=Base64.encode64(manager_name) if manager_name.present?
-   self.manager_contact=Base64.encode64(manager_contact) if manager_contact.present?
- }
+ #  before_save {
+ #   self.business_name = business_name.squish if business_name.present?
+ #   self.federal_number=Base64.encode64(federal_number) if federal_number.present?
+ #   self.ssn=Base64.encode64(ssn) if ssn.present?
+ #   self.db_number=Base64.encode64(db_number) if db_number.present?
+ #   self.business_name=Base64.encode64(business_name) if business_name.present?
+ #   self.manager_name=Base64.encode64(manager_name) if manager_name.present?
+ #   self.manager_contact=Base64.encode64(manager_contact) if manager_contact.present?
+ # }
   ## business type
   SOLE_PROPRIETOR = 0
   REGISTERED = 1

@@ -3,7 +3,7 @@ module DashboardsHelper
 	def get_dashboard_deals(app_user_id,zip_code,deal_type)
 		if app_user_id.present?
 			app_user = AppUser.find_by_id(app_user_id)
-			zip_code = app_user.zip
+			zip_code = decode_api_data(app_user.zip)
 			if app_user.present? && zip_code.present?
 				deal_type=app_user.user_type
 
@@ -35,7 +35,6 @@ module DashboardsHelper
 					allowed_order_deal=category_order_deal(app_user_id,sp.service_category_id,false)
 
 					allowed_best_deal=category_best_deal(deal_type,sp,zip_code,1,false)
-
 					if allowed_best_deal.present?
 						if allowed_best_deal.effective_price.to_f>0
 							you_save = '%.2f' % (app_user_current_plan - allowed_best_deal.effective_price.to_f)
@@ -100,9 +99,9 @@ module DashboardsHelper
 					if allowed_trending_deal.present? && allowed_order_deal.present? && allowed_trending_deal.id==allowed_order_deal.id
 						allowed_order_deal=allowed_order_deal
 					end
-
-					{:best_deal_flag => best_deal_flag,:you_save_text => you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_id => sp.service_category.id, :service_category_name => sp.service_category.name, :advertisement => advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]), :best_deal => allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]),:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price])}
+					{:best_deal_flag => best_deal_flag,:you_save_text => you_save, :contract_fee => sp.price, :service_provider_name => sp.service_provider.name, :service_category_id => sp.service_category.id, :service_category_name => sp.service_category.name, :advertisement => advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price]), :best_deal => allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price, :effective_price])}
 				end
+				#raise servicelist.inspect
 				# Show trending deals for unsubscribed services
 				service_categories = ServiceCategory.where("name not in ("+excluded_categories+")")
 				categoryList = service_categories.map do |sc|

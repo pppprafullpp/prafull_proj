@@ -25,7 +25,7 @@
       <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
       <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
 <div class="profile_imgbox">
-        <h4 class='word-wrap'><%= Base64.decode64("#{@app_user.first_name}") + ' ' + Base64.decode64(@app_user.last_name) %></h4>
+        <h4 class='word-wrap'><%= decode_api_data("#{@app_user.first_name}") + ' ' + decode_api_data(@app_user.last_name) %></h4>
 
       </div>
 
@@ -39,11 +39,11 @@
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:first_name,Base64.decode64(@app_user.first_name),:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
+        <%= text_field_tag(:first_name,decode_api_data(@app_user.first_name),:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:last_name,Base64.decode64(@app_user.last_name),:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
+        <%= text_field_tag(:last_name,decode_api_data(@app_user.last_name),:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
       </div>
       <!-- Text input-->
       <div class="col-sm-6">
@@ -142,12 +142,12 @@
 
       <div class="btn-group col-sm-12" style="display: none;" id="federal_number_div">
         <h5>Federal Number<span id="mandat">*</span></h5>
-        <%= text_field_tag :federal_number,Base64.decode64(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+        <%= text_field_tag :federal_number,decode_api_data(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="ssn_div">
         <h5>SSN<span id="mandat">*</span></h5>
-        <%= text_field_tag :ssn,Base64.decode64(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+        <%= text_field_tag :ssn,decode_api_data(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
       </div>
 
       <!-- Button -->

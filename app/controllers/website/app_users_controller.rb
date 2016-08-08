@@ -180,14 +180,14 @@ class Website::AppUsersController < ApplicationController
               business_user = BusinessAppUser.create_business_app_user(business.id,@app_user.id)
             end
             OrderMailer.delay.order_confirmation(@app_user,order)
-            # redirect_to website_home_index_path
+            redirect_to "/website/app_users/profile?status=new_order"
           else
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
             OrderMailer.delay.order_confirmation(@app_user,order)
             redirect_to "/website/app_users/profile?status=new_order"
           end
         else
-          # redirect_to website_home_index_path
+          redirect_to "/website/app_users/profile?status=new_order"
         end
       else
         # redirect_to website_home_index_path

@@ -2,12 +2,13 @@
     <div id="home" class="tab-pane fade active in">
       <div class="row desc_heading">
         <div class="col-xs-2"> <h5>Description</h5> </div>
-    
+        <div class="col-xs-2"> <h5>Order date</h5> </div>
             <div class="col-xs-2"> <h5>Status</h5> </div>
+
             <div class="col-xs-2"> <h5>Price</h5>   </div>
             <div class="col-xs-2"> <h5>Order No.</h5> </div>
             <div class="col-xs-2"> <h5>Order Total</h5> </div>
-        
+
       </div>
       <% @order_history.each do |order| %>
           <div class="row desc_cont">
@@ -16,13 +17,13 @@
               <!-- <img src="img/AT&amp;T_logo_2005.png" alt="logo"> -->
               <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
             </div>
-   
+
                 <div class="col-xs-2"> <p><span class="panding"><%= order.status %></span></p> </div>
                 <div class="col-xs-2"> <p><%= order.order_items.first.deal_price%></p>   </div>
                 <div class="col-xs-2"> <p><%= order.order_number%></p> </div>
                 <div class="col-xs-2"> <p><%= order.order_items.first.effective_price %></p> </div>
-                 <div class="col-xs-2"> <p><%= link_to "Order Detail",  order_detail_website_app_users_path(order_id: order.id)%></p> </div>
-           
+                <div class="col-xs-2"> <p><%= link_to "Order Detail",  order_detail_website_app_users_path(order_id: order.id)%><br />(<%="placed on:"+order.created_at.strftime("%d/%B/%y")%>)</p> </div>
+
           </div>
       <% end %>
     </div>

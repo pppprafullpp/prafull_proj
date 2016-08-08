@@ -173,6 +173,8 @@ class Website::AppUsersController < ApplicationController
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
           if user_type == AppUser::BUSINESS
+            params[:business][:ssn]= encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
+            params[:business][:federal_number]= encode_api_data(params[:business][:ssn]) if  params[:business][:federal_number].present?
             business_hash = {:business => params[:business] }
             business = Business.create_business(business_hash)
             if business.present?

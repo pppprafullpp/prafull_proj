@@ -6,7 +6,7 @@
   billing_address = @order.order_addresses.where(address_type: 2).first
   shipping_address = @order.order_addresses.where(address_type: 1).first
   service_address = @order.order_addresses.where(address_type: 0).first
-  business = app_user.try(:business_app_users).first.try(:business)
+  business = app_user.try(:business_app_users).last.try(:business)
   %>
 <!--//nav-->
 <section class="account-banner">
@@ -42,7 +42,6 @@
             <div class="order-product-right col-md-4">
               <div class="order-price">Price <span>$<%= deal.price %></span> </div>
               <div class="order-efprice"> <span>Effective Price</span> <%= deal.effective_price  %> </div>
-              <div><span class="saveurdollar">You Save   $40.29</span></div>
             </div>
           </div>
           <% if deal_equipment.present? %>
@@ -215,7 +214,7 @@
                 </li>
                 <li>
                   <div class="col1">SSN:</div>
-                  <div class="col2"><%= decode_api_data(business.try(:ssn)) %></div>
+                  <div class="col2"><%=  business.try(:ssn)  %></div>
                 </li>
                 <li>
                   <div class="col1">DOB:</div>

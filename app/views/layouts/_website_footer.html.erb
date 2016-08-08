@@ -1,6 +1,11 @@
-<footer>
+<% if controller.controller_name=="app_users" and controller.action_name=="checkout" %>
+   <footer style="bottom: 0;height: 190px;position: absolute;width: 100%;">
+  <%else%>
+  <footer>
+<%end%>
+
   <div class="container">
-  
+
     <div class="col-sm-3 col-xs-6">
       <ul>
         <li class="heading">Home services made easy</li>
@@ -10,8 +15,8 @@
         <li><a href="<%= our_providers_website_home_index_path %>">Our Providers</a></li>
       </ul>
     </div>
-    
-    <div class="col-sm-3 col-xs-6">  
+
+    <div class="col-sm-3 col-xs-6">
       <ul>
         <li class="heading">Your Utilities and Services</li>
         <li><a href="#">Customer Service</a></li>
@@ -20,7 +25,7 @@
         <li><a href="#">Sitemap</a></li>
       </ul>
     </div>
-    
+
     <div class="col-sm-3 col-xs-6">
       <ul>
         <li class="heading">Trust ServiceDealz</li>
@@ -30,13 +35,13 @@
         <li><a href="#">Utility Partner Solutions</a></li>
       </ul>
     </div>
-       
+
     <div class="col-sm-3 col-xs-6 copyright">
       <p>Copyright © 2015 ServiceDealz Inc. <br>
         All Rights Reserved.</p>
       <span> <a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> <br>
-      Provider Copyright Statements </span> 
+      Provider Copyright Statements </span>
     </div>
-      
-  </div>  
+
+  </div>
 </footer>

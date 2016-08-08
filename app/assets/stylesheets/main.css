@@ -2986,3 +2986,9 @@ color:#555;
 .result-bandwidth {
 	display: none;
 }
+.footer-new {
+    bottom: 0;
+    height: 60px;
+    position: absolute;
+    width: 100%;
+}

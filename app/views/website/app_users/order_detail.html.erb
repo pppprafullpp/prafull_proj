@@ -112,11 +112,11 @@
                 </li>
                 <li>
                   <div class="col1">Primary Id:</div>
-                  <div class="col2"><%= app_user.try(:primary_id) %></div>
+                  <div class="col2"><%= app_user.try(:primary_id_number).truncate(15) %></div>
                 </li>
                 <li>
                   <div class="col1">Secondary Id:</div>
-                  <div class="col2"><%= app_user.try(:secondary_id) %></div>
+                  <div class="col2"><%= app_user.try(:secondary_id_number).truncate(15) %></div>
                 </li>
               </ul>
             </div>

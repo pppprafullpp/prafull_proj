@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
 			render :json=>{
 								 message:"invalid token"
 			} if saved_token!=params[:token]
+		else
+			render :json=>{
+				status:"token not issued"
+			}
 		end
 	end
 	def decode_api_data(data)

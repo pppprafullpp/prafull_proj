@@ -14,9 +14,11 @@
   <div class="container">
     <div class="row">
       <h3 class="col-sm-12 text-center"> Deal Details </h3>
+      <div class="col-sm-12 text-center alert alert-success"><b><%= @deal.title %></b></div>
       <div class="col-sm-8 about-offer">
+
         <h5>About the offer</h5>
-        <p><%= @deal.title %></p>
+
         <p><%= @deal.short_description %></p>
         <p><%= @deal.detail_description %></p>
         <%= render :partial => "#{@category_name}_deal_form" if @deal_equipments.present? && @category_name != "cellphone"  %>
@@ -47,7 +49,7 @@
           <ul>
             <li>Base Monthly Price $<%= @deal.price %></li>
             <li>Base Installation $0.00</li>
-            <li>Expiry Date : <%= (@deal.end_date).strftime("%m/%d/%Y") %></li>
+            <li>Contract tenure : <%= @deal.contract_period %> months</li>
           </ul>
         </div>
         <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>"  id="<%=@deal.id%>">Order</a>
@@ -65,34 +67,34 @@
 
 
 <div class="modal fade text-left" id="myModal2" role="dialog">
-  <div class="modal-dialog">             
+  <div class="modal-dialog">
   <!-- Modal content-->
-    <div class="modal-content">      
+    <div class="modal-content">
       <div class="modal-body channel_popup">
-        <button type="button" class="close" data-dismiss="modal">×</button>     
+        <button type="button" class="close" data-dismiss="modal">×</button>
           <div class="scroller">
-            <table class="table table-bordered"> 
+            <table class="table table-bordered">
               <div class="channel_heading">
                 <h1>Channel List</h1>
               </div>
 
               <div class="col-md-12" id="ajaxdata">
-            
+
                 <!-- <h4 id="channel_category_name"></h4>
                 <ul>
                   <li id="channel_name"><a href="#"></a></li>
-                  
+
                 </ul> -->
               </div>
 
 
             </table>
-          </div>        
-        </div>                
+          </div>
+        </div>
       </div>
     </div>
-  </div>   
-</div>   
+  </div>
+</div>
 
 <script type="text/javascript">
   var checkedValues,dealids;
@@ -131,5 +133,5 @@
   });
 
 
-   
+
 </script>

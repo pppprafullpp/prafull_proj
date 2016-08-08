@@ -17,7 +17,7 @@
               <!-- <img src="img/AT&amp;T_logo_2005.png" alt="logo"> -->
               <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
             </div>
-                <div class="col-xs-2"> <p><%=order.created_at.strftime("%d/%B/%y")%></div>
+                <div class="col-xs-2"> <p><%=order.created_at.strftime("%m/%d/%y")%></div>
                 <div class="col-xs-2"> <p><span class="panding"><%= order.status %></span></p> </div>
                 <!-- <div class="col-xs-2"> <p><%#s= order.order_items.first.deal_price%></p>   </div> -->
                 <div class="col-xs-2"> <p><%= order.order_number%></p> </div>

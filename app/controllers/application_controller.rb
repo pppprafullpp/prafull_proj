@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
 
+	helper_method :decode_api_data
+
 	before_filter do
 		resource = controller_name.singularize.to_sym
 		method = "#{resource}_params"
@@ -18,14 +20,18 @@ class ApplicationController < ActionController::Base
 	end
 	def verify_token
 		if params[:device_id].present? and params[:token].present?
-			 saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
-				render :json=>{
-					message:"invalid token"
-					} if saved_token!=params[:token]
+			saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
+			render :json=>{
+								 message:"invalid token"
+			} if saved_token!=params[:token]
 		end
 	end
 	def decode_api_data(data)
-		return Base64.decode64(data)
+		if data.present?
+			return Base64.decode64(data)
+		else
+			''
+		end
 	end
 
 	def encode_api_data(data)

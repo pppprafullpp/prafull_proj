@@ -1,8 +1,8 @@
 
-<% deal = @order.order_items.first.deal 
+<% deal = @order.order_items.first.deal
   category_name = deal.service_category.name.downcase
   deal_equipment = eval("deal.try(:#{category_name}_deal_attributes).first.try(:#{@category_name}_equipments)")
-  app_user = @order.app_user 
+  app_user = @order.app_user
   billing_address = @order.order_addresses.where(address_type: 2).first
   shipping_address = @order.order_addresses.where(address_type: 1).first
   service_address = @order.order_addresses.where(address_type: 0).first
@@ -22,9 +22,9 @@
       <div class="col-md-8">
         <div class="left-order-dt">
           <div class="ordersty-top">
-            <div class="order-no-dt pull-left"> Order No: <span><%= @order.order_number%></span> 
+            <div class="order-no-dt pull-left"> Order No: <span><%= @order.order_number%></span>
               <span class="style4">
-              <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>  
+              <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>
             </span>
             </div>
             <div class="order-no-dt pull-right"> AT&T Order No:<span>114568026973</span><br/>
@@ -36,7 +36,7 @@
             <div class="order-service-left col-md-8">
               <div class="servicelogo-sty"><img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" /> </div>
               <div class="servicedt-text"><%=deal.short_description  %></br>
-                <span class="in-progress-btn"><%= @order.status %> </span> 
+                <span class="in-progress-btn"><%= @order.status %> </span>
               </div>
             </div>
             <div class="order-product-right col-md-4">
@@ -101,7 +101,7 @@
               <ul>
                 <li>
                   <div class="col1">Name:</div>
-                  <div class="col2"><%= app_user.first_name + ' ' +app_user.last_name %></div>
+                  <div class="col2"><%= decode_api_data(app_user.first_name) + ' ' + decode_api_data(app_user.last_name) %></div>
                 </li>
                 <li>
                   <div class="col1">Contact No:</div>
@@ -215,7 +215,7 @@
                 </li>
                 <li>
                   <div class="col1">SSN:</div>
-                  <div class="col2"><%= business.try(:ssn) %></div>
+                  <div class="col2"><%= decode_api_data(business.try(:ssn)) %></div>
                 </li>
                 <li>
                   <div class="col1">DOB:</div>
@@ -255,29 +255,28 @@
     </div>
   </div>
 </section>
-<!--Order-form--> 
+<!--Order-form-->
 <script>
   $(".registerDetails").hide();
   $("#soleprop").click(function(){
-  
+
     $(".registerDetails").hide();
     $(".soleproDetails").show();
   });
-  
+
   $("#registered").click(function(){
-    
+
     $(".soleproDetails").hide();
     $(".registerDetails").show();
   });
-  
-</script> 
+
+</script>
 <script>
   $('.btnNext').click(function(){
     $('.nav-tabs > .active').next('li').find('a').trigger('click');
   });
-  
+
     $('.btnPrevious').click(function(){
     $('.nav-tabs > .active').prev('li').find('a').trigger('click');
   });
 </script>
-

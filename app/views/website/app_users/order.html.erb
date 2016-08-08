@@ -181,7 +181,7 @@
 
 <!--Order-form-->
 <script>
-$(document).ready(function() {
+$(document).ready(function(e) {
   var billing_address;
   var service_address;
   var shipping_addres;
@@ -219,8 +219,21 @@ $(document).ready(function() {
       }
     }
   });
-});
 
+});
+$(document).keydown(function(e){
+  if (e.which==13){
+  if($("#business_information_tab").is(":visible")==true){
+    $("#business_information_tab").click();
+    }
+   else if($("#personal_information_tab").is(":visible")==true){
+     $("#personal_information_tab").click();
+     }
+ else if($("#business_address_information_tab").is(":visible")==true) {
+   $("#business_address_information_tab").click();
+ }
+  }
+})
 
 var  federal = $('#federal_number').val();
 $('#getfederal').val(federal);

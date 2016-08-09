@@ -2992,3 +2992,6 @@ color:#555;
     position: absolute;
     width: 100%;
 }
+.overflow-hidden {
+	overflow:hidden;
+}

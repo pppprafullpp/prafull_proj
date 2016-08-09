@@ -248,8 +248,12 @@ $("#review-federal").text(federal_value);
 
 var  business = $('#business_name').val();
 $('#getbusiness').val(business);
-var business_value= $(getbusiness).val()
-$("#review-business").text(business_value);
+
+var business_value= $(getbusiness).val();
+f=business_value[0].toUpperCase();
+l=business_value.substr(1);
+
+$("#review-business").text(f+''+l);
 
 var  ssn = $('#ssn').val();
 $('#getssn').val(ssn);

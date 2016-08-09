@@ -277,7 +277,15 @@ var get_secondary= $(getsecondaryvalue).val()
 $("#review-secondary").text(get_secondary);
 
 $("#order_information_menu_tab").click(function(event){
-  $('#review-name').text($('#first_name').val()+" "+$("#last_name").val());
+   firstname=$('#first_name').val();
+   rest=firstname.substr(1);
+   first=firstname[0].toUpperCase();
+   finalfirstname=first+''+rest;
+   lastname=$("#last_name").val();
+   last_rest=lastname.substr(1);
+   last_first_char=lastname[0].toUpperCase();
+   finallastname=last_first_char+''+last_rest;
+  $('#review-name').text(finalfirstname+" "+finallastname);
   $('#review-last-name').text($('#last_name').val());
   $('#review-mobile').text($('#mobile').val());
   $('#review-primary').text($('#primary_id_number').val());

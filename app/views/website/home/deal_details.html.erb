@@ -17,7 +17,7 @@
                   <div id="compare-box-deal-1" class="col-md-3"></div>
                   <div id="compare-box-deal-2" class="col-md-3"></div>
                  <div class="col-sm-2 text-right">
-                   <a id="compare-deal" style="margin: 2px auto;padding: 14px;height: 50px;"class="btn_2" href="/website/home/compare_deals" onclick="location.href=this.href+'?deal_ids='+checkedValues;return false;">COMPARE</a></div>
+                   <a id="compare-deal" style="margin: 2px auto;padding: 14px;height: 50px;cursor:pointer"class="btn_2" onclick="comparedeals()">COMPARE</a></div>
               </div>
             </div>
           </div>
@@ -84,6 +84,13 @@
         dealids=[];
     });
 
+  function comparedeals(){
+    checked=new Array();
+    $(".comparebox-display:checkbox:checked").each(function(){
+     checked.push($(this).attr("deal_id"));
+    });
+    window.open("/website/home/compare_deals?deal_ids="+checked[0]+","+checked[1],"_self");
+  }
     $(document).ready(function () {
       checked=new Array();
         $(".comparebox-display:checked").attr("checked",false);
@@ -92,7 +99,8 @@
         if ($(".comparebox-display:checkbox:checked").length >= 2) {
             $(".comparebox-display:checkbox").not(":checked").attr("disabled", 2);
         }
-        $(".comparebox-display:checkbox").click(function () {
+
+        $(".comparebox-display:checkbox").on("change",function () {
             var bol = $(".comparebox-display:checkbox:checked").length >= 2;
             $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
 
@@ -101,14 +109,13 @@
             checked.push($(this).attr("deal_id"));
           });
 
-          $("#compare-box-deal-1").html("<div id=compare-"+checked[1]+"><img src='"+checked[0]+"' height='70' width='155' alt=''><i class='fa fa-times-circle' id='' onClick='hideandreset("+checked[1]+")' deal_id='"+checked[1]+"' style='position: absolute;cursor:pointer; top: -4px;right: 30px;' aria-hidden='true'></i></div>");
-          $("#compare-box-deal-2").html("<div id=compare-"+checked[3]+"><img src='"+checked[2]+"' height='70' width='155' alt=''><i class='fa fa-times-circle' id='' onClick='hideandreset("+checked[3]+")' deal_id='"+checked[2]+"' style='position: absolute;cursor:pointer; top: -4px;right: 30px;' aria-hidden='true'></i></div>");
+          $("#compare-box-deal-1").html("<div id=compare-"+checked[1]+"><img src="+checked[0]+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+checked[1]+")' deal_id="+checked[1]+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+          $("#compare-box-deal-2").html("<div id=compare-"+checked[3]+"><img src="+checked[2]+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+checked[3]+")' deal_id="+checked[2]+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
           checked=[];
         });
     });
 
 function hideandreset(id){
-  console.log(id);
   $("#checkbox"+id).attr("checked",false);
   $("#compare-"+id).hide();
   if ($("#compare-box-deal-1").is(":visible")==false && $("#compare-box-deal-1").is(":visible")==false){

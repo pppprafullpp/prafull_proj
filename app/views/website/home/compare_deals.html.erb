@@ -1,21 +1,20 @@
-<% if  session[:user_id].present? %>
+<%# if  session[:user_id].present? %>
   <section class="compare-design">
     <div class="container">
       <h3>Compare <%= @category.capitalize %> Deals</h3>
       <div data-example-id="bordered-table" class="compare-table">
         <table class="table table-bordered">
-          <tbody><tr>
+          <tbody>
+            <tr>
             <td scope="row" class="nobdr"></td>
             <td class="nobdr"></td>
             <td align="center" class="col-spacing"><a href="#"><%= @deal_first.try(:short_description)%></a><br>
               <%= image_tag("#{@deal_first.try(:image)}", :size => "100x100") %>  <br>
               <span class="price-com"> <b><%= @deal_first.try(:price) %> / month</b></span></td>
-            <td align="center" class="col-spacing"><a href="#"><%= @deal_second.try(:short_description)%></a> <br>
+              <td align="center" class="col-spacing"><a href="#"><%= @deal_second.try(:short_description)%></a> <br>
               <%= image_tag("#{@deal_second.try(:image)}", :size => "100x100") %> <br>
               <span class="price-com"> <b><%= @deal_second.try(:price) %> / month</b></span></td>
-
-          </tr>
-
+           </tr>
 
           <tr>
             <th width="20%" scope="row">Plan</th>
@@ -63,8 +62,8 @@
       </div>
     </div>
   </section>
-  <% else %>
-  <div> 
+  <%# else %>
+  <!-- <div>
 
     <div class="container">
 
@@ -76,16 +75,16 @@
 
         </div>
 
-      
+
       </div>
 
 
     </div>
 
-    
 
-  </div>
-<% end %>
+
+  </div> -->
+<%#e end %>
 <style>
 .login-comp{
 

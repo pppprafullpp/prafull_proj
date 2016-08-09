@@ -13,6 +13,9 @@ $( document ).ready(function() {
 
     $(".close2").click(function() {
         $("#compare_box").hide();
+        $(".comparebox-display:checked").attr("checked",false);
+        $(".comparebox-display").attr("disabled",false)
+        $(".comparebox-display:checkbox").attr("checked", false);
     });
 
     $(".btn1").click(function() {
@@ -74,5 +77,3 @@ $( document ).ready(function() {
 
 
 });
-
-

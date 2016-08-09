@@ -18,19 +18,15 @@
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
   <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'form-horizontal',:id => 'update_user_form', multipart: true do %>
 
-
     <div class="col-sm-3">
- <input type="file" name="avatar" id="avatar" class="inputfile" style="visibility:hidden;"/>
-       <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label>
+      <input type="file" name="avatar" id="avatar" class="inputfile" style="visibility:hidden;"/>
+      <label for="avatar" id="profile-img" class="profile_img"><%= image_tag(@app_user.avatar.url,:class => 'img-responsive')%></label>
       <center><i id="dp-upload" class="fa fa-upload avatar-uploader"></i></center>
       <center><i id="spinner" class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>
-<div class="profile_imgbox">
-        <h4 class='word-wrap'><%= decode_api_data("#{@app_user.first_name}").truncate(15) + ' ' + decode_api_data(@app_user.last_name) %></h4>
-
+      <div class="profile_imgbox">
+        <h4 class='word-wrap' style="overflow-wrap: break-word;"><%= decode_api_data("#{@app_user.first_name}") + ' ' + decode_api_data(@app_user.last_name) %></h4>
       </div>
-
     </div>
-
 
     <div class="col-sm-9">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>

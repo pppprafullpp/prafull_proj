@@ -13,19 +13,11 @@
           <div class="col-sm-12">
             <div id="compare_box" class="compare_box border-radius-bg affix" style="display: block;">
               <a class="close2" href="#"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
-              <div class="row">
-                <div class="col-sm-10">
-                  <div id="box1" class="col-sm-3">
-                    <div class="compare_box_border" id="box-deal">
-                      <span><img src="website/AT&amp;T_logo_2005.png"></span>
-                      <p id ="p-deal">Products name here</p>
-                      <a class="btn1" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-2"><a id="compare-deal "class="btn_2" href="/website/home/compare_deals" onclick="location.href=this.href+'?deal_ids='+checkedValues;return false;">COMPARE</a></div>
-                <!-- <a href="2.html" onclick="location.href=this.href+'?key='+scrt_var;return false;" -->
-                <!-- <input type="button" id="testB" onclick="submit()" value="OK" /> -->
+              <div class="row" style="padding-top: 3%;">
+                  <div id="compare-box-deal-1" class="col-md-5"></div>
+                  <div id="compare-box-deal-2" class="col-md-5"></div>
+                 <div class="col-sm-2 text-right">
+                   <a id="compare-deal" style="margin: 2px auto;padding: 14px;height: 50px;"class="btn_2" href="/website/home/compare_deals" onclick="location.href=this.href+'?deal_ids='+checkedValues;return false;">COMPARE</a></div>
               </div>
             </div>
           </div>
@@ -53,7 +45,7 @@
 
                         <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
                         <div class="checkbox checkbox-info" id="deal-checkbox">
-                          <input class="comparebox-display" value="<%=data.first.last%>" id="checkbox<%=data.first.last%>" type="checkbox">
+                          <input class="comparebox-display" value="<%=data.first.last%>" provider_name="<%= ServiceProvider.find(data['service_provider_id']).name%>" dealid="<%=data['title']%>" id="checkbox<%=data.first.last%>" type="checkbox">
                           <label for="checkbox<%=data.first.last%>"> Add to compare </label>
                         </div>
                       </div>
@@ -71,12 +63,8 @@
 
 <script type="text/javascript">
     var checkedValues,dealids;
-        $("#compare_box").hide();
-    
+    $("#compare_box").hide();
     $( document ).ready(function() {
-
-        // $("#compare_box").hide();
-
         dealids = [
             <%
             if @deal_ids.present?%>
@@ -92,16 +80,12 @@
             $("#"+dealids[i]).prop("href","javascript:void(0)")
         }
         dealids=[];
-
     });
 
-
     $(document).ready(function () {
-
-
-
+      checked=new Array();
         $(".comparebox-display:checked").attr("checked",false);
-          $(".comparebox-display").attr("disabled",false)
+        $(".comparebox-display").attr("disabled",false)
         $(".comparebox-display:checkbox:checked").attr("checked", false);
         if ($(".comparebox-display:checkbox:checked").length >= 2) {
             $(".comparebox-display:checkbox").not(":checked").attr("disabled", 2);
@@ -112,6 +96,14 @@
             checkedValues = $('.comparebox-display:checkbox:checked').map(function() {
                 return this.value;
             }).get();
+            $(".comparebox-display:checkbox:checked").each(function(){
+            checked.push($(this).attr("dealid"));
+            checked.push($(this).attr("provider_name"));
+          });
+          $("#compare-box-deal-1").html("<p class='alert alert-success'>"+checked[0]+"("+checked[1]+")</p>");
+          $("#compare-box-deal-2").html("<p class='alert alert-success'>"+checked[2]+"("+checked[3]+")</p>");
+          checked=[];
+
         });
     });
 

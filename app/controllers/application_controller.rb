@@ -19,11 +19,18 @@ class ApplicationController < ActionController::Base
 		headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 	end
 	def verify_token
-		if params[:device_id].present? and params[:token].present?
+		if params[:device_id].present? and (params[:token].present? or params[:session_token].present?)
 			saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
-			render :json=>{
-								 message:"invalid token"
-			} if saved_token!=params[:token]
+
+			if params[:token].present? and saved_token!=params[:token]
+				render :json=>{
+							 message:"invalid token"
+				}
+			elsif params[:session_token].present? and saved_token!=params[:session_token]
+				render :json=>{
+							 message:"invalid token"
+				}
+			end
 		else
 			render :json=>{
 				status:"token not issued"

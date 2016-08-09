@@ -118,6 +118,8 @@
 function hideandreset(id){
   $("#checkbox"+id).attr("checked",false);
   $("#compare-"+id).hide();
+  var bol = $(".comparebox-display:checkbox:checked").length >= 2;
+  $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
   if ($("#compare-box-deal-1").is(":visible")==false && $("#compare-box-deal-1").is(":visible")==false){
    $("#compare_box").hide();
   }

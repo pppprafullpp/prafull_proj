@@ -175,7 +175,9 @@
    $("#avatar").change(function(e){
      $("#spinner").show();
      $("#dp-upload").hide();
+     window.only_image=true;
      $("#submit_button").click();
+
    });
 
     function populate_user_type(user_type) {
@@ -251,6 +253,8 @@
         }
     }
     $("#submit_button").click(function(event){
+      console.log(window.only_image);
+      if(window.only_image==undefined){
         event.preventDefault();
         var first_name = $('#first_name').val();
         var last_name = $('#last_name').val();
@@ -281,5 +285,6 @@
           $("html, body").animate({ scrollTop: 0 }, 600);
         }
         }
+      }
     });
 </script>

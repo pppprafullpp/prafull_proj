@@ -198,7 +198,7 @@
                 </li>
                 <li>
                   <div class="col1">Federal Tax ID: </div>
-                  <div class="col2"><%= business.try(:federal_number) %></div>
+                  <div class="col2"><%= decode_api_data(business.try(:federal_number)) %></div>
                 </li>
                 <li>
                   <div class="col1">Dan & Bradstreet Number: </div>
@@ -214,7 +214,7 @@
                 </li>
                 <li>
                   <div class="col1">SSN:</div>
-                  <div class="col2"><%=  business.try(:ssn)  %></div>
+                  <div class="col2"><%=  decode_api_data(business.ssn) %></div>
                 </li>
                 <li>
                   <div class="col1">DOB:</div>

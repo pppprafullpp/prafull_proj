@@ -47,7 +47,7 @@
 
                         <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
                         <div class="checkbox checkbox-info" id="deal-checkbox">
-                          <input class="comparebox-display" value="<%=data.first.last%>" deal_id="<%=data['id']%>" logo_url=<%=data['deal_image_url']%> id="checkbox<%=data.first.last%>" type="checkbox">
+                          <input class="comparebox-display" value="<%=data.first.last%>" onclick='showcomparebox()' deal_id="<%=data['id']%>" logo_url=<%=data['deal_image_url']%> id="checkbox<%=data.first.last%>" type="checkbox">
                           <label for="checkbox<%=data.first.last%>"> Add to compare </label>
                         </div>
                       </div>
@@ -91,37 +91,40 @@
     });
     window.open("/website/home/compare_deals?deal_ids="+checked[0]+","+checked[1],"_self");
   }
-    $(document).ready(function () {
-      checked=new Array();
-        $(".comparebox-display:checked").attr("checked",false);
-        $(".comparebox-display").attr("disabled",false)
-        $(".comparebox-display:checkbox:checked").attr("checked", false);
-        if ($(".comparebox-display:checkbox:checked").length >= 2) {
-            $(".comparebox-display:checkbox").not(":checked").attr("disabled", 2);
-        }
-
-        $(".comparebox-display:checkbox").on("change",function () {
-            var bol = $(".comparebox-display:checkbox:checked").length >= 2;
-            $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
-
-            $(".comparebox-display:checkbox:checked").each(function(){
-            checked.push($(this).attr("logo_url"));
-            checked.push($(this).attr("deal_id"));
-          });
-
-          $("#compare-box-deal-1").html("<div id=compare-"+checked[1]+"><img src="+checked[0]+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+checked[1]+")' deal_id="+checked[1]+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
-          $("#compare-box-deal-2").html("<div id=compare-"+checked[3]+"><img src="+checked[2]+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+checked[3]+")' deal_id="+checked[2]+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
-          checked=[];
-        });
-    });
-
-function hideandreset(id){
-  $("#checkbox"+id).attr("checked",false);
-  $("#compare-"+id).hide();
-  var bol = $(".comparebox-display:checkbox:checked").length >= 2;
-  $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
-  if ($("#compare-box-deal-1").is(":visible")==false && $("#compare-box-deal-1").is(":visible")==false){
-   $("#compare_box").hide();
-  }
+//     $(document).ready(function () {
+//       checked=new Array();
+//         $(".comparebox-display:checked").attr("checked",false);
+//         $(".comparebox-display").attr("disabled",false)
+//         $(".comparebox-display:checkbox:checked").attr("checked", false);
+//         if ($(".comparebox-display:checkbox:checked").length >= 2) {
+//             $(".comparebox-display:checkbox").not(":checked").attr("disabled", 2);
+//         }
+//
+//         $(".comparebox-display:checkbox").on("change",function () {
+//             var bol = $(".comparebox-display:checkbox:checked").length >= 2;
+//             $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
+//
+//             $(".comparebox-display:checkbox:checked").each(function(){
+//             checked.push($(this).attr("logo_url"));
+//             checked.push($(this).attr("deal_id"));
+//           });
+//
+//           $("#compare-box-deal-1").html("<div id=compare-"+checked[1]+"><img src="+checked[0]+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+checked[1]+")' deal_id="+checked[1]+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+//           $("#compare-box-deal-2").html("<div id=compare-"+checked[3]+"><img src="+checked[2]+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+checked[3]+")' deal_id="+checked[2]+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+//           checked=[];
+//         });
+//     });
+//
+// function hideandreset(id){
+//   $("#checkbox"+id).attr("checked",false);
+//   $("#compare-"+id).hide();
+//   var bol = $(".comparebox-display:checkbox:checked").length >= 2;
+//   $(".comparebox-display:checkbox").not(":checked").attr("disabled", bol);
+//   if ($("#compare-box-deal-1").is(":visible")==false && $("#compare-box-deal-1").is(":visible")==false){
+//    $("#compare_box").hide();
+//   }
+// }
+function showcomparebox() {
+  
 }
 </script>

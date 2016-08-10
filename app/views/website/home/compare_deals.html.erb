@@ -7,32 +7,30 @@
           <tbody>
             <tr>
             <td scope="row" class="nobdr"></td>
-            <td class="nobdr"></td>
+            <
             <td align="center" class="col-spacing"><a href="#"><%= @deal_first.try(:short_description)%></a><br>
               <%= image_tag("#{@deal_first.try(:image)}", :size => "100x100") %>  <br>
               <span class="price-com"> <b><%= @deal_first.try(:price) %> / month</b></span></td>
+
               <td align="center" class="col-spacing"><a href="#"><%= @deal_second.try(:short_description)%></a> <br>
               <%= image_tag("#{@deal_second.try(:image)}", :size => "100x100") %> <br>
               <span class="price-com"> <b><%= @deal_second.try(:price) %> / month</b></span></td>
+
            </tr>
 
           <tr>
             <th width="20%" scope="row">Plan</th>
-            <th width="20%">Current</th>
-            <th width="30%"><%=@deal_first.service_provider.name
-   %></th>
-            <th width="30%"><%=@deal_second.service_provider.name
-   %></th>
+
+            <th width="30%"><%=@deal_first.service_provider.name%></th>
+            <th width="30%"><%=@deal_second.service_provider.name%></th>
           </tr>
           <tr>
             <td scope="row">Saving</td>
             <td></td>
             <td></td>
-            <td></td>
           </tr>
           <tr>
             <td scope="row">Contract</td>
-            <td><%= @current_deal.try(:end_date) %></td>
             <td><%= @deal_first.try(:contract_period) %></td>
             <td><%= @deal_second.try(:contract_period) %></td>
           </tr>
@@ -43,18 +41,15 @@
             <th scope="row">Offer</th>
             <th></th>
             <th></th>
-            <th></th>
           </tr>
 
           <tr>
             <td scope="row">Offer Title</td>
-            <td></td>
             <td><%= @deal_first.additional_offers.try(:first).try(:title) %></td>
             <td><%= @deal_second.additional_offers.try(:first).try(:title) %></td>
           </tr>
           <tr>
             <td scope="row">Offer Price</td>
-            <td></td>
             <td><%= @deal_first.additional_offers.try(:first).try(:price) %></td>
             <td><%= @deal_second.additional_offers.try(:first).try(:price) %></td>
           </tr>

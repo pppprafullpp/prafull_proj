@@ -1,6 +1,6 @@
 <section class="bandwidth-banner">
   <div class="container text-center">
-    <h3>bandwidth calculator</h3>
+    <h3>Bandwidth Calculator</h3>
   </div>
 </section>
 <section class="bandwidth-calc">
@@ -118,15 +118,31 @@ $(document).ready(
   }
 );
 function update_slider(type){
-  if(type=="low") {value=50}
-  if(type=="medium") {value=100}
-  if(type=="high"){ value=500}
-  $("#emails").slider().slider('setValue', value)
-  $("#web-access").slider().slider('setValue', value)
-  $("#vc").slider().slider('setValue', value)
-  $("#ac").slider().slider('setValue', value)
-  $("#upload-photos").slider().slider('setValue', value)
-  $("#vs").slider().slider('setValue', value)
+  if(type=="low") {
+    $("#emails").slider().slider('setValue', 10)
+    $("#web-access").slider().slider('setValue', 100)
+    $("#vc").slider().slider('setValue', 30)
+    $("#ac").slider().slider('setValue', 100)
+    $("#upload-photos").slider().slider('setValue', 25)
+    $("#vs").slider().slider('setValue', 200)
+  }
+  if(type=="medium") {
+    $("#emails").slider().slider('setValue', 50)
+    $("#web-access").slider().slider('setValue', 250)
+    $("#vc").slider().slider('setValue', 60)
+    $("#ac").slider().slider('setValue', 250)
+    $("#upload-photos").slider().slider('setValue', 50)
+    $("#vs").slider().slider('setValue', 250)
+  }
+  if(type=="high"){
+    $("#emails").slider().slider('setValue', 100)
+    $("#web-access").slider().slider('setValue', 500)
+    $("#vc").slider().slider('setValue', 90)
+    $("#ac").slider().slider('setValue',500)
+    $("#upload-photos").slider().slider('setValue', 100)
+    $("#vs").slider().slider('setValue', 500)
+  }
+
 }
 
 $('#emails, #vc, #web-access, #upload-photos, #vs, #ac').slider({

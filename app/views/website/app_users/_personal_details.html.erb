@@ -35,11 +35,11 @@
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:first_name,decode_api_data(@app_user.first_name).titleize,:class => 'form-control input-md',:placeholder => 'First Name', maxlength: 20) %>
+        <%= text_field_tag(:first_name,decode_api_data(@app_user.first_name).titleize ,:class => 'form-control input-md', :onkeyup=>"capitalise_first(this)",:placeholder => 'First Name', maxlength: 20) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:last_name,decode_api_data(@app_user.last_name).titleize,:class => 'form-control input-md',:placeholder => 'Last Name',maxlength: 20) %>
+        <%= text_field_tag(:last_name,decode_api_data(@app_user.last_name).titleize,:class => 'form-control input-md',:onkeyup=>"capitalise_first(this)",:placeholder => 'Last Name',maxlength: 20) %>
       </div>
       <!-- Text input-->
       <div class="col-sm-6">
@@ -156,6 +156,8 @@
 </div>
 <script type="text/javascript">
     $( document ).ready(function() {
+      $("checkbox8a").toggle();
+      $("checkbox8b").toggle();
       $("#spinner").hide();
       $("#save-spinner").hide();
         populate_user_type($('#user_type').val());
@@ -283,4 +285,5 @@
         }
       }
     });
+
 </script>

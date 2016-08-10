@@ -2,14 +2,14 @@
  * Created by pandey on 5/29/16.
  */
 $( document ).ready(function() {
-    $(".comparebox-display").click(function() {
-        if ($(".comparebox-display:checkbox:checked").length == 2){
-            $("#compare_box").show();
-        }
-        else if ($(".comparebox-display:checkbox:checked").length != 2){
-            $("#compare_box").hide();
-        }
-    });
+    // $(".comparebox-display").click(function() {
+    //     if ($(".comparebox-display:checkbox:checked").length == 2){
+    //         $("#compare_box").show();
+    //     }
+    //     else if ($(".comparebox-display:checkbox:checked").length != 2){
+    //         $("#compare_box").hide();
+    //     }
+    // });
 
     $(".close2").click(function() {
         $("#compare_box").hide();

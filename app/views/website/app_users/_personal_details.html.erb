@@ -285,5 +285,9 @@
         }
       }
     });
-
+    function capitalise_first(object) {
+       value=$("#"+object.id).val();
+       rest=value.substr(1);
+       object.value=value[0].toUpperCase()+""+rest
+    }
 </script>

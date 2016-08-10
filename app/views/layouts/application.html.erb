@@ -18,12 +18,6 @@
     <%= render :partial=>"/layouts/tabs" if user_signed_in? %>
     <%= yield %>
     <%= render :partial =>"/layouts/footer" %>
-<script>
-function capitalise_first(object) {
-   value=$("#"+object.id).val();
-   rest=value.substr(1);
-   object.value=value[0].toUpperCase()+""+rest
-}
-</script>
+ 
   </body>
 </html>

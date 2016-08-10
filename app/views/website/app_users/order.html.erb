@@ -53,11 +53,11 @@
                   <div class="col-lg-12">
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">First Name*</label>
-                      <%= text_field_tag('app_user[first_name]',Base64.decode64(@app_user.first_name).titleize,:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name',maxlength: 20) %>
+                      <%= text_field_tag('app_user[first_name]',Base64.decode64(@app_user.first_name).titleize,:onkeyup=>"capitalise_first(this)",:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name',maxlength: 20) %>
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Last Name*</label>
-                      <%= text_field_tag('app_user[last_name]',Base64.decode64(@app_user.last_name).titleize,:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name', maxlength: 20) %>
+                      <%= text_field_tag('app_user[last_name]',Base64.decode64(@app_user.last_name).titleize,:onkeyup=>"capitalise_first(this)",:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name', maxlength: 20) %>
                     </div>
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">Contact Number*</label>
@@ -338,7 +338,8 @@ $("#order_information_menu_tab").click(function(event){
     }
 
   if( primary_id=='' || secondary_id=='' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
-    alert("Please fill all the mandatory fields.")
+    alert("Please fill all the mandatory fields.");
+    console.log(1);
     event.stopImmediatePropagation();
   }
 });
@@ -353,11 +354,13 @@ $("#order_information_menu_tab").click(function(event){
     var business_manager_contact = $('#business_manager_contact').val();
     if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
       alert("Please fill all the mandatory fields.");
+      console.log(2);
       event.stopImmediatePropagation();
     }
     if ($('#user_type').val() == "business"){
       if (mobile.length < 10  || business_manager_contact.length < 10){
-        alert('Please enter 10-digit number.')
+        alert('Please enter 10-digit number.');
+        console.log(3);
         event.stopImmediatePropagation();
       }
       else {
@@ -431,7 +434,8 @@ $("#order_information_menu_tab").click(function(event){
       alert("Please fill all the mandatory fields.")
     }
     else if (business_manager_contact.length < 10 ) {
-      alert("Please enter 10-digit number.")
+      alert("Please enter 10-digit number.");
+      console.log(4);
     }
     else {
       $('.nav-tabs > .active').next('li').find('a').trigger('click');
@@ -685,5 +689,10 @@ $("#order_information_menu_tab").click(function(event){
       $('#app_user_service_zip').val(app_user_billing_zip);
 
     }
+  }
+  function capitalise_first(object) {
+     value=$("#"+object.id).val();
+     rest=value.substr(1);
+     object.value=value[0].toUpperCase()+""+rest
   }
 </script>

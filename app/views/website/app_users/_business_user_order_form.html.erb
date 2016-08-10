@@ -46,7 +46,8 @@
 
     <div class="col-sm-6  padding15right">
       <label for="Name" class="control-label">Manager Name*</label>
-      <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name', :maxlength=>"30") %>
+      <%= text_field_tag('business[manager_name]',:onkeyup=>"capitalise_first(this)",
+      app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class => 'form-control input-md',:placeholder => 'Manager Name', :maxlength=>"30") %>
     </div>
 
     <div class="col-sm-6">

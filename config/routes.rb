@@ -122,6 +122,7 @@ Rails.application.routes.draw do
 
   get 'service_dealz' => 'website/home#index'
   get 'service_deals' => 'website/home#index'
+  get 'website' => 'website/home#index'
   namespace :website do
     resources :home do
       collection do

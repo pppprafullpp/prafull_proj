@@ -24,7 +24,11 @@
             <a id="zipcode_header" href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%=  session[:zip_code] %></a>
             <%end%>
         <% else %>
+        <% if controller.controller_name=="app_users" and controller.action_name=="checkout" %>
+            <a href="#" class="hidden" data-toggle="modal" data-target="#myModal">Login / SignUp</a> |
+            <%else%>
             <a href="#" data-toggle="modal" data-target="#myModal">Login / SignUp</a> |
+        <%end%>
             <a id="zipcode_header" href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">75024</a>
             <div class="modal fade text-left" id="myModal" role="dialog">
               <div class="modal-dialog">

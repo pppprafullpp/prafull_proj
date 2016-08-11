@@ -90,9 +90,18 @@
         <label for="Name" class="control-label">Zipcode*</label>
         <%= text_field_tag('business_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip", maxlength: 6) %>
       </div>
+      <div class="col-md-12 padding15right">
+        <label for="Name" class="control-label">Select State</label>
+        <select class="form-control" id="billing_state">
+          <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+          <%= options_for_select(cities_array, :prompt=>"Select") %>
+      </select>
+      </div>
+
+      <div id="additional_data" class="hidden">
       <div class="col-md-12 address-sty">
         <h2 class="padding-bott">Shipping Address</h2>
-        <div class="checkbox checkbox-info">
+        <div id="sameasbilling-1" class="checkbox checkbox-info">
           <input id="checkbox8a" type="checkbox" onclick="SetShipping(this.checked);">
           <label for="checkbox8a">Same as Billing Address </label>
         </div>
@@ -116,7 +125,12 @@
           <label for="Name" class="control-label">Zipcode*</label>
           <%= text_field_tag('business_shipping_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip", maxlength: 6) %>
         </div>
+        <select class="form-control" id="service_state">
+          <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+          <%= options_for_select(cities_array, :prompt=>"Select") %>
+      </select>
       </div>
+
       <div class="col-md-12 address-sty">
         <h2 class="padding-bott">Service Address</h2>
         <div class="checkbox checkbox-info">
@@ -142,8 +156,13 @@
           <label for="Name" class="control-label">Zipcode*</label>
           <%= text_field_tag('business_service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip", maxlength: 6) %>
         </div>
+        <select class="form-control" id="shipping_state">
+          <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+          <%= options_for_select(cities_array, :prompt=>"Select") %>
+      </select>
       </div>
     </div>
+  </div>
   </div>
 
   <div class="btn-group btnBox">
@@ -153,3 +172,15 @@
     </div>
   </div>
 </div>
+<script>
+$(document).ready(function(){
+  $("#billing_address_1, #billing_address_2, #billing_zip").on("keyup",function(){
+    if($("#billing_address_1").val().length>4 && $("#billing_address_2").val().length>4 && $("#billing_zip").val().length>4){
+      $("#additional_data").removeClass("hidden");
+  }
+  else {
+    $("#additional_data").addClass("hidden")
+  }
+});
+})
+</script>

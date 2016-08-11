@@ -11,8 +11,8 @@
           <%= render :partial => 'website/home/sorting_filter' %>
 
           <div class="col-sm-12">
-            <div id="compare_box" class="compare_box border-radius-bg affix" style="display: block;">
-              <a class="close2" href="#"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+            <div id="compare_box" class="compare_box border-radius-bg affix" style="display: block;z-index: 9999999;position: fixed;">
+             <p><i onclick="resetcomparebox()"class="fa fa-times-circle close2" aria-hidden="true"></i></p>
               <div class="row">
                   <div id="compare-box-deal-1" class="col-md-3 hidden"></div>
                   <div id="compare-box-deal-2" class="col-md-3 hidden"></div>
@@ -159,5 +159,12 @@ function hideandreset(deal_id){
   }
   $(".comparebox-display:checkbox").not(":checked").attr("disabled",false);
 }
-
+function resetcomparebox() {
+    $("#compare_box").hide();
+    $(".comparebox-display:checked").attr("checked",false);
+    $(".comparebox-display").attr("disabled",false)
+    $(".comparebox-display:checkbox").attr("checked", false);
+    $("#compare-box-deal-1").addClass("hidden");
+    $("#compare-box-deal-2").addClass("hidden");
+};
 </script>

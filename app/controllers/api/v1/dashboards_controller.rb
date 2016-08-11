@@ -7,6 +7,7 @@ class Api::V1::DashboardsController < ApplicationController
 	respond_to :json
 
 	def index
+		puts params.to_yaml
 		###############   When User is Logged In and zip code is present   ###############
 		if params[:app_user_id].present? && params[:zip_code].present? && params[:category].blank? && params[:sort_by_d_speed].blank?
 			dashboard_data = get_dashboard_deals(params[:app_user_id],nil,nil)

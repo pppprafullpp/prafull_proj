@@ -163,12 +163,20 @@ class Api::V1::AppUsersController < ApplicationController
       if app_user.service_preferences.present?
         service_preference_sum = app_user.service_preferences.collect(&:price).sum
         app_user.service_preferences.map do |sp|
-          allowed_best_deal_sum= allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.to_i
+          allowed_best_deal_sum= allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.to_f
         end
         puts "service_preference_sum=#{service_preference_sum}"
         puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
-        you_save = (12*(service_preference_sum - allowed_best_deal_sum))
-      
+        you_save = (12*(service_preference_sum - allowed_best_deal_sum.to_f))
+        yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
+          if yousaveprecision > 5
+            you_save=you_save.ceil.to_i
+          elsif yousaveprecision < 5
+            you_save=you_save.floor.to_i
+          elsif yousaveprecision == 5
+            you_save=you_save.floor.to_i
+          end
+
         render  :json => { :success => true, :you_save => you_save}
       else
         render  :json => { :success => false}

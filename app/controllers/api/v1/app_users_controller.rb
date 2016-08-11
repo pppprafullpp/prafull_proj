@@ -37,7 +37,7 @@ class Api::V1::AppUsersController < ApplicationController
       @app_user.unhashed_password = params[:password]
       # @app_user.referral_code = rand(36**4).to_s(36).upcase
 
-      @app_user.referral_code = (params[:first_name].split(" ").first + rand(36**4).to_s(36)).upcase
+      @app_user.referral_code = (decode_api_data(params[:first_name]).split(" ").first + rand(36**4).to_s(36)).upcase
       if @app_user.save
         render :status => 200,
                :json => { :success => true, :app_user_id => @app_user.id }

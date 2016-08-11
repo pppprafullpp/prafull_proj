@@ -44,7 +44,7 @@ module DashboardsHelper
 					else
 						you_save = ""
 					end
-					
+
 					if allowed_best_deal.present? && allowed_order_deal.present? && allowed_best_deal.id==allowed_order_deal.id
 						allowed_order_deal=allowed_order_deal
 					end
@@ -83,9 +83,9 @@ module DashboardsHelper
 
 					if allowed_best_deal.present?
 						if allowed_best_deal.effective_price.to_f>0
-							you_save = '%.2f' % (12*(app_user_current_plan - allowed_best_deal.effective_price.to_f))
+							you_save =  (app_user_current_plan - allowed_best_deal.effective_price.to_f)
 						else
-							you_save = '%.2f' % (12*(app_user_current_plan - allowed_best_deal.price))
+							you_save =  (app_user_current_plan - allowed_best_deal.price)
 						end
 					else
 						you_save = ""

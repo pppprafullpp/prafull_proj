@@ -167,8 +167,8 @@ class Api::V1::AppUsersController < ApplicationController
         end
         puts "service_preference_sum=#{service_preference_sum}"
         puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
-        you_save =  '%.2f' % (12*(service_preference_sum - allowed_best_deal_sum))
-        puts "you_save=#{you_save}"
+        you_save = (12*(service_preference_sum - allowed_best_deal_sum))
+      
         render  :json => { :success => true, :you_save => you_save}
       else
         render  :json => { :success => false}

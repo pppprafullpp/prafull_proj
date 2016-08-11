@@ -83,9 +83,9 @@ module DashboardsHelper
 
 					if allowed_best_deal.present?
 						if allowed_best_deal.effective_price.to_f>0
-							you_save =  (app_user_current_plan - allowed_best_deal.effective_price.to_f)
+							you_save =  12*(app_user_current_plan - allowed_best_deal.effective_price.to_f)
 						else
-							you_save =  (app_user_current_plan - allowed_best_deal.price)
+							you_save =  12*(app_user_current_plan - allowed_best_deal.price)
 						end
 					else
 						you_save = ""

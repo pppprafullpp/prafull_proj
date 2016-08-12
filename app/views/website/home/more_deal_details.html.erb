@@ -121,7 +121,7 @@
           for (i=0; i<length; i++){
             var category_name = data['channels'][i]['category_name'];
             var div_id="data_"+parseInt((Math.random()*100)+Date.now());
-            $("#ajaxdata").append("<ul class='row channel-list' id='"+div_id+"'>"+"<h3>"+category_name+"</h3>"+"</ul>");
+            $("#ajaxdata").append("<ul class='row channel-list' id='"+div_id+"'>"+"<h3>"+category_name+"</h3>"+"</ul>"+"<hr />");
             for(j=0; j<data['channels'][i]['channel'].length;j++){
               $("#"+div_id).append("<li>"+data['channels'][i]['channel'][j]['channel_name']+"</li>");
             }

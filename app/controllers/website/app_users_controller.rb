@@ -182,11 +182,13 @@ class Website::AppUsersController < ApplicationController
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
-
+          # raise params[:business][:business_name]
           if user_type == AppUser::BUSINESS
             params[:business][:ssn]= encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]= encode_api_data(params[:business][:federal_number]) if  params[:business][:federal_number].present?
+            params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
             business_hash = {:business => params[:business] }
+            # raise business_hash.to_yaml
             business = Business.create_business(business_hash)
             if business.present?
               business_addresses = BusinessAddress.create_business_addresses(address_hash,business.id)

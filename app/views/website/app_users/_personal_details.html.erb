@@ -119,6 +119,7 @@
          business_type = @business.present? ? @business.business_type : ''
          federal_number = @business.present? ? @business.federal_number : ''
          ssn = @business.present? ? @business.ssn : ''
+         business_name=Base64.decode64(business_name) if business_name.present?
       %>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">

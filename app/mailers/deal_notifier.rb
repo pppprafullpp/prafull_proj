@@ -18,10 +18,10 @@ class DealNotifier < ApplicationMailer
       	@cellphone_deal = category_trending_deal(@deal_type,sp.service_category_id,@app_user.zip)
       elsif sp.service_category_id == 5
         @bundle_deal = category_trending_deal(@deal_type,sp.service_category_id,@app_user.zip)
-      end  
-    end 
+      end
+    end
     mail(to: recipient, subject: "Switch to the trending deals in your area and save $100s") rescue nil
-	end	
+	end
 
   def send_best_deal(app_user,best_deal)
     recipient = app_user.email
@@ -38,7 +38,7 @@ class DealNotifier < ApplicationMailer
     @deal_type=@app_user.user_type
 
     @service_preference=service_preference
-    
+
     @best_deal=category_best_deal(@deal_type,@service_preference,@app_user.zip,1,true)
 
     if @best_deal.present?

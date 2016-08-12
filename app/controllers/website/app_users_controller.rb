@@ -169,9 +169,20 @@ class Website::AppUsersController < ApplicationController
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
+
+          if user_type == AppUser::BUSINESS
+            params[:business_addresses][:address2]=params[:business_addresses][:address2]+","+params[:billing_state]
+            params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]+","+params[:shipping_state]
+            params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
+          else
+            params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]+","+params[:billing_state]
+            params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]+","+params[:shipping_state]
+            params[:service_addresses][:address2]=params[:service_addresses][:address2]+","+params[:service_state]
+          end
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
+
           if user_type == AppUser::BUSINESS
             params[:business][:ssn]= encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]= encode_api_data(params[:business][:federal_number]) if  params[:business][:federal_number].present?

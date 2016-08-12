@@ -92,7 +92,7 @@
       </div>
       <div class="col-md-12 padding15right">
         <label for="Name" class="control-label">Select State</label>
-        <select class="form-control" id="billing_state">
+        <select class="form-control" name="billing_state" id="billing_state">
           <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%= options_for_select(cities_array, :prompt=>"Select") %>
       </select>
@@ -125,7 +125,7 @@
           <label for="Name" class="control-label">Zipcode*</label>
           <%= text_field_tag('business_shipping_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip", maxlength: 6) %>
         </div>
-        <select class="form-control" id="service_state">
+        <select class="form-control" name="service_state" id="service_state">
           <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%= options_for_select(cities_array, :prompt=>"Select") %>
       </select>
@@ -156,7 +156,7 @@
           <label for="Name" class="control-label">Zipcode*</label>
           <%= text_field_tag('business_service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip", maxlength: 6) %>
         </div>
-        <select class="form-control" id="shipping_state">
+        <select class="form-control" name="shipping_state" id="shipping_state">
           <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%= options_for_select(cities_array, :prompt=>"Select") %>
       </select>

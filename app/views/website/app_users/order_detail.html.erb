@@ -199,7 +199,7 @@
               <ul>
                 <li>
                   <div class="col1">Business Name:</div>
-                  <div class="col2"><%= business.try(:business_name) %></div>
+                  <div class="col2"><%=decode_api_data(business.try(:business_name)) %></div>
                 </li>
                 <li>
                   <div class="col1">DBA : </div>
@@ -219,7 +219,7 @@
                <ul>
                 <li>
                   <div class="col1">Business Name:</div>
-                  <div class="col2"><%= business.try(:business_name) %></div>
+                  <div class="col2"><%= decode_api_data(business.try(:business_name)) %></div>
                 </li>
                 <li>
                   <div class="col1">SSN:</div>

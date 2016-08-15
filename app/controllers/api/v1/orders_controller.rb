@@ -22,7 +22,9 @@ class Api::V1::OrdersController < ApplicationController
 				else
 					app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
 					OrderMailer.delay.order_confirmation(app_user,order)
-					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:app_user_addresses => app_user_addresses.as_json}
+					UserGift.delay.create_user_gift(order.id)
+					gifts = Gift.all
+					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:app_user_addresses => app_user_addresses.as_json,:gifts => gifts.as_json(:methods => :gift_image_url, :except => :image)}
 				end
 			else
 				render :status => 401,

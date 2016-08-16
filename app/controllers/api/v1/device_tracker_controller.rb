@@ -1,6 +1,6 @@
 class Api::V1::DeviceTrackerController < ApplicationController
   def add_devise_details
-    session_token=SecureRandom.base64(5)
+    session_token=SecureRandom.hex(5)
     if !DeviceRegister.find_by_device_id(params[:device_id])
       # Device not yet registered
       save=DeviceRegister.create!(:device_id=>params[:device_id],:imei=>params[:imei], :token=>session_token)

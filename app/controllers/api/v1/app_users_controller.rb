@@ -37,7 +37,10 @@ class Api::V1::AppUsersController < ApplicationController
       @app_user.unhashed_password = params[:password]
       # @app_user.referral_code = rand(36**4).to_s(36).upcase
 
-      @app_user.referral_code = (params[:first_name].split(" ").first + rand(36**4).to_s(36)).upcase
+      @app_user.referral_code = (decode_api_data(params[:first_name]).split(" ").first + rand(36**4).to_s(36)).upcase
+      code=SecureRandom.hex(5)
+      @app_user.update_attributes(:email_verification_token=>code)
+      AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
       if @app_user.save
         render :status => 200,
                :json => { :success => true, :app_user_id => @app_user.id }
@@ -163,12 +166,20 @@ class Api::V1::AppUsersController < ApplicationController
       if app_user.service_preferences.present?
         service_preference_sum = app_user.service_preferences.collect(&:price).sum
         app_user.service_preferences.map do |sp|
-          allowed_best_deal_sum= allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.to_i
+          allowed_best_deal_sum= allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.to_f
         end
         puts "service_preference_sum=#{service_preference_sum}"
         puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
-        you_save = (12*(service_preference_sum - allowed_best_deal_sum))
-      
+        you_save = (12*(service_preference_sum - allowed_best_deal_sum.to_f))
+        yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
+          if yousaveprecision > 5
+            you_save=you_save.ceil.to_i
+          elsif yousaveprecision < 5
+            you_save=you_save.floor.to_i
+          elsif yousaveprecision == 5
+            you_save=you_save.floor.to_i
+          end
+
         render  :json => { :success => true, :you_save => you_save}
       else
         render  :json => { :success => false}
@@ -176,6 +187,19 @@ class Api::V1::AppUsersController < ApplicationController
     end
   end
 
+  def verify_email
+    email=params[:email]
+    data=AppUser.find_by_email(email)
+    if data.email_verified
+      render :json=>{
+        verified:true
+      }
+    else
+      render :json=>{
+        verified:false
+      }
+    end
+  end
   private
   def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?

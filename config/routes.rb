@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       match 'get_deal_channels' => 'deals#get_deal_channels', :via => :get
       match 'get_channel_details' => 'deals#get_channel_details', :via => :get
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
+      match 'verify_email'=>"app_users#verify_email", :via => :get
       resources :orders do
         collection do
           post :fetch_user_and_deal_details
@@ -85,6 +86,7 @@ Rails.application.routes.draw do
   get '/get_user_addresses'=> "website/app_users#user_addresses"
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
+  get "/verify_email"=>"website/app_users#verify_email"
   resources :deals do
     post 'import', on: :collection
   end
@@ -122,6 +124,7 @@ Rails.application.routes.draw do
 
   get 'service_dealz' => 'website/home#index'
   get 'service_deals' => 'website/home#index'
+  get 'website' => 'website/home#index'
   namespace :website do
     resources :home do
       collection do
@@ -160,57 +163,4 @@ Rails.application.routes.draw do
   end
   resources :deal_equipments
   resources :deal_attributes
-  #:path_names => { sign_in: 'login', sign_out: 'logout' },
-  #:controllers => { :sessions => "sessions",
-  #                  :registrations => 'registrations'
-  #                }
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end

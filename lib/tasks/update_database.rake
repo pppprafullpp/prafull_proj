@@ -126,15 +126,24 @@ puts "==========================================="
 end
 
 task encrypt_business_data: :environment do
-obj=ApplicationController.new
-@business_data=Business.all
-@business_data.each do |business|
-  business.update_attributes(:federal_number=>obj.encode_api_data(business.federal_number)) if business.federal_number.present?
-  business.update_attributes(:ssn=>obj.encode_api_data(business.ssn)) if business.ssn.present?
-  puts "business_id=#{business.id}"
-  puts "federal_number= #{business.federal_number}"
-  puts "ssn=#{business.ssn}"
-  puts "updated"
-end
-end
+  obj=ApplicationController.new
+  @business_data=Business.all
+    @business_data.each do |business|
+      business.update_attributes(:federal_number=>obj.encode_api_data(business.federal_number)) if business.federal_number.present?
+      business.update_attributes(:ssn=>obj.encode_api_data(business.ssn)) if business.ssn.present?
+      puts "business_id=#{business.id}"
+      puts "federal_number= #{business.federal_number}"
+      puts "ssn=#{business.ssn}"
+      puts "updated"
+    end
+  end
+  task encrypt_business_name: :environment do
+    obj=ApplicationController.new
+    @business_data=Business.all
+      @business_data.each do |business|
+        business.update_attributes(:business_name=>obj.encode_api_data(business.business_name)) if business.business_name.present?
+        puts "updated#{business.id}"
+      end
+    end
+
 end

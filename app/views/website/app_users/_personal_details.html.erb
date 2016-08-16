@@ -29,17 +29,20 @@
     </div>
 
     <div class="col-sm-9">
+        <%if !@app_user.email_verified%>
+        <p class="alert alert-danger text-center">Please Verify your email and start ordering!!</p>
+        <%end%>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <p class="alert alert-danger hidden text-center" id="error-msg"></p>
       <div class="col-lg-12 margin-top0"><h5>Basic Details</h5></div>
       <!-- Text input-->
       <div class="col-sm-6">
         <label class="control-label" for="Name">First Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:first_name,decode_api_data(@app_user.first_name).titleize ,:class => 'form-control input-md', :onkeyup=>"capitalise_first(this)",:placeholder => 'First Name', maxlength: 20) %>
+        <%= text_field_tag(:first_name,decode_api_data(@app_user.first_name).titleize ,:class => 'form-control input-md', :onblur=>"capitalise_first(this)",:placeholder => 'First Name', maxlength: 20) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Name">Last Name<span id="mandat">*</span></label>
-        <%= text_field_tag(:last_name,decode_api_data(@app_user.last_name).titleize,:class => 'form-control input-md',:onkeyup=>"capitalise_first(this)",:placeholder => 'Last Name',maxlength: 20) %>
+        <%= text_field_tag(:last_name,decode_api_data(@app_user.last_name).titleize,:class => 'form-control input-md',:onblur=>"capitalise_first(this)",:placeholder => 'Last Name',maxlength: 20) %>
       </div>
       <!-- Text input-->
       <div class="col-sm-6">
@@ -119,11 +122,12 @@
          business_type = @business.present? ? @business.business_type : ''
          federal_number = @business.present? ? @business.federal_number : ''
          ssn = @business.present? ? @business.ssn : ''
+         business_name=Base64.decode64(business_name) if business_name.present?
       %>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_name_div">
         <h5>Business Name<span id="mandat">*</span></h5>
-        <%= text_field_tag :business_name, business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+        <%= text_field_tag :business_name, business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag, :maxlength=>"30" %>
       </div>
 
       <div class="btn-group col-sm-12" style="display: none;" id="business_type_div">
@@ -155,9 +159,7 @@
   <% end %>
 </div>
 <script type="text/javascript">
-    $( document ).ready(function() {
-      $("checkbox8a").toggle();
-      $("checkbox8b").toggle();
+    $(document ).ready(function() {
       $("#spinner").hide();
       $("#save-spinner").hide();
         populate_user_type($('#user_type').val());
@@ -177,6 +179,7 @@
      $("#submit_button").click();
 
    });
+
 
     function populate_user_type(user_type) {
         if(user_type == 'business'){
@@ -261,6 +264,7 @@
         var business_name = $('#business_name').val();
         var federal_number = $('#federal_number').val();
         var ssn = $('#ssn').val();
+        var state = $("#state option:selected").val()
         var address_name = $('#address_name').val();
         var zip = $('#zip').val();
         var address1 = $('#address1').val();

@@ -1,6 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'roo' 
+require 'roo'
 require 'rails/all'
 require 'csv'
 require 'open-uri'

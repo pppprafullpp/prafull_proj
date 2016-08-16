@@ -1,4 +1,5 @@
 class AppUserMailer < ApplicationMailer
+  default from: "servicedeal@spa-systems.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -23,5 +24,12 @@ class AppUserMailer < ApplicationMailer
     recipient = "amit.pandey@spa-systems.com,apoorv@sp-assurance.com,ankit@spa-systems.com"
     @name = name;@email = email; @subject = subject.titleize; @message = message
     mail(:to => recipient, :cc => @email,:subject => "New Query: #{@subject}") rescue nil
+  end
+  def send_verification_mail(id,code)
+    @secure_token=code
+    puts @secure_token
+    @user_id=id
+    email=AppUser.find(id).email
+    mail(:to=>email,:subject=>"Service Dealz:Verification mail")
   end
 end

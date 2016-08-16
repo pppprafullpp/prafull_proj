@@ -17,7 +17,10 @@ class Website::AppUsersController < ApplicationController
       if @app_user.save!
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
-        flash[:notice] = 'SignUp Successfull'
+        code=SecureRandom.hex(5)
+        @app_user.update_attributes(:email_verification_token=>code)
+        AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email '
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
@@ -169,13 +172,27 @@ class Website::AppUsersController < ApplicationController
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
+
+          if user_type == AppUser::BUSINESS
+            params[:business_addresses][:address2]=params[:business_addresses][:address2]+","+params[:billing_state]
+            params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]+","+params[:shipping_state]
+            params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
+            # params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
+          else
+            params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]+","+params[:billing_state]
+            params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]+","+params[:shipping_state]
+            params[:service_addresses][:address2]=params[:service_addresses][:address2]+","+params[:service_state]
+          end
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
+          # raise params[:business][:business_name]
           if user_type == AppUser::BUSINESS
             params[:business][:ssn]= encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]= encode_api_data(params[:business][:federal_number]) if  params[:business][:federal_number].present?
+            params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
             business_hash = {:business => params[:business] }
+            # raise business_hash.to_yaml
             business = Business.create_business(business_hash)
             if business.present?
               business_addresses = BusinessAddress.create_business_addresses(address_hash,business.id)
@@ -293,6 +310,18 @@ class Website::AppUsersController < ApplicationController
     flash[:notice] = 'Your Request is forwarded to Service Dealz Team.'
     redirect_to request.referrer and return
   end
+
+  def verify_email
+    secure_token=params[:secure_token]
+    email_verification_token=AppUser.find(params[:user_id]).email_verification_token
+    if secure_token == email_verification_token
+      flash[:notice]="Email successfully verified"
+      AppUser.find(params[:user_id]).update_attributes(:email_verified=>true)
+      redirect_to website_home_index_path
+    end
+  end
+
+
 
   private
   def app_user_params

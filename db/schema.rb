@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804054945) do
+ActiveRecord::Schema.define(version: 20160816053937) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(version: 20160804054945) do
     t.string   "secondary_id",             limit: 255
     t.string   "primary_id_number",        limit: 255
     t.string   "secondary_id_number",      limit: 255
+    t.string   "email_verification_token", limit: 255
+    t.boolean  "email_verified"
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree

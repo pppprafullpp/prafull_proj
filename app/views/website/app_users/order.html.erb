@@ -321,17 +321,18 @@ $("#order_information_menu_tab").click(function(event){
   var app_user_service_zip = $('#app_user_service_zip').val();
 
   if ($('#user_type').val() == "business"){
-    billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/><b></b>"+billing_zip;
-      service_address=service_address_1+"<br/>"+service_address_2+"<br/><b></b>"+service_zip;
-      shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/><b></b>"+shipping_zip;
+    billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/>State:"+$("#billing_state option:selected").val()+"<br/>"+billing_zip;
+      service_address=service_address_1+"<br/>"+service_address_2+"<br/>State:"+$("#service_state option:selected").val()+"<br/>"+service_zip;
+      shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/>State:"+$("#shipping_state option:selected").val()+"<br/>"+shipping_zip;
       $(".service-address-innertxt").html(service_address);
       $(".shipping-address-innertxt").html(shipping_address);
       $(".billing-address-innertxt").html(billing_address);
     }
     else{
-      app_user_billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b></b>"+app_user_billing_zip;
-      app_user_service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b></b>"+app_user_service_zip;
-      app_user_shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b></b>"+app_user_shipping_zip;
+      console.log($("#billing_state option:selected").val());
+      app_user_billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b>State"+$("#billing_state option:selected").val()+"<br/>"+app_user_billing_zip;
+      app_user_service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b>State"+$("#service_state option:selected").val()+"<br/>"+app_user_service_zip;
+      app_user_shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b>State"+$("#shipping_state option:selected").val()+"<br/>"+app_user_shipping_zip;
       $(".service-address-innertxt").html(app_user_billing_address);
       $(".shipping-address-innertxt").html(app_user_service_address);
       $(".billing-address-innertxt").html(app_user_shipping_address);
@@ -351,6 +352,7 @@ $("#order_information_menu_tab").click(function(event){
     var primary_id = $('#primary_id').val();
     var secondary_id = $('#secondary_id').val();
     var business_manager_name = $('#business_manager_name').val();
+    var state = $('#business_state option:selected').val();
     var business_manager_contact = $('#business_manager_contact').val();
     if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
       alert("Please fill all the mandatory fields.");
@@ -478,27 +480,27 @@ $("#order_information_menu_tab").click(function(event){
 
   $("#order_submit_button").click(function(event){
     event.preventDefault();
-    var  first_name = $('#first_name').val();
-    var  mobile = $('#mobile').val();
-    var  last_name = $('#last_name').val();
+    var first_name = $('#first_name').val();
+    var mobile = $('#mobile').val();
+    var last_name = $('#last_name').val();
     var primary_id = $('#primary_id_number').val();
     var secondary_id = $('#secondary_id_number').val();
 
     var business_manager_name = $('#business_manager_name').val();
     var business_manager_contact = $('#business_manager_contact').val();
 
-    var billing_address_1 = app_user_shipping_address_1;
-    var billing_address_2 = app_user_shipping_address_2;
+    var billing_address_1 = app_user_billing_address_1+"State: "+$("#billing_state option:selected").val();;
+    var billing_address_2 = app_user_billing_address_2;
     var billing_zip = app_user_billing_zip;
 
-    var shipping_address_1 = app_user_shipping_address_1;
+    var shipping_address_1 = app_user_shipping_address_1+"State: "+$("#shipping_state option:selected").val();;
     var shipping_address_2 = app_user_shipping_address_2;
     var shipping_zip = app_user_shipping_zip;
 
-    var service_address_1 =app_user_service_address_1;
+    var service_address_1 =app_user_service_address_1+"State: "+$("#service_state option:selected").val();
     var service_address_2 =app_user_service_address_2;
     var service_zip = app_user_service_zip;
-
+    console.log("1111");
     if( primary_id == '' || secondary_id== '' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
       alert("Please fill all the mandatory fields.")
     }
@@ -687,7 +689,9 @@ $("#order_information_menu_tab").click(function(event){
       $('#app_user_service_address_1').val(app_user_billing_address_1);
       $('#app_user_service_address_2').val(app_user_billing_address_2);
       $('#app_user_service_zip').val(app_user_billing_zip);
-
+      index=$("#billing_state option:selected").index();
+      $("#service_state").prop("selectedIndex",index);
+      $("#shipping_state").prop("selectedIndex",index);
     }
   }
   function capitalise_first(object) {

@@ -51,10 +51,19 @@
             <li>Contract : <%= @deal.contract_period %> months</li>
           </ul>
         </div>
-        <a class="btn_2" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>"  id="<%=@deal.id%>">Order</a>
+        <%if  @current_user.present? %>
+          <%if @current_user.email_verified%>
+            <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+          <%else%>
+               <a class="order-btn" href="javascript:void(0)">Verify email</a>
+          <%end%>
+        <%else%>
+          <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+        <%end%>
         <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present?%>
          <a class="btn_2" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
          <% end %>
+
       </div>
 
     </div>

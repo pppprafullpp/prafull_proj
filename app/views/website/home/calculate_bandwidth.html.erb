@@ -97,7 +97,11 @@
 						<div id="result-innertxt" class="alert alert-success">
 
             </div>
+            <div id="dealsforyou">
+
+            </div>
 					</div>
+
       </div>
 
     </div>
@@ -210,6 +214,13 @@ $.ajax({
     console.log(data);
     $("#result-innertxt").html("<p> Bandwidth in MB =<b>"+bandwidth_in_mb+"</b></p><br /><p> Bandwidth in GB=<b>"+bandwidth_in_gb+"</b>");
     $(".result-bandwidth").show('slide');
+    deals=data["matching_deal_id"];
+    if(deals.length>0) {
+        $("#dealsforyou").append("<h5><b>Some Deals For you</b></h5> <br />");
+        for(i=0;i<deals.length;i++){
+          $("#dealsforyou").append("<a class='' href='/website/home/more_deal_details?deal_id="+deals[i]+"'>"+data["deal_name"][i]+"</a>, ")
+        }
+    }
   }
 })
 }

@@ -45,10 +45,14 @@
                         <h2 class="heading_price">$<%= data['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
                         <p>effective price</p>
                           <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+                          <%if  @current_user.present?%>
                         <%if @current_user.email_verified%>
                              <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
                              <%else%>
                              <a class="order-btn" href="javascript:void(0)">Verify email</a>
+                        <%end%>
+                        <%else%>
+                        <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
                         <%end%>
 
                         <div class="checkbox checkbox-info" id="deal-checkbox">

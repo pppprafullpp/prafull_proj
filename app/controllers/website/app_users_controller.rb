@@ -17,7 +17,7 @@ class Website::AppUsersController < ApplicationController
       if @app_user.save!
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
-        code=SecureRandom.base64(5)
+        code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code)
         AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
         flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email '

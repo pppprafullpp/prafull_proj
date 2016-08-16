@@ -86,14 +86,18 @@ module DashboardsHelper
 							you_save =  12*(app_user_current_plan - allowed_best_deal.effective_price.to_f)
 							puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 							puts "yousave value=#{you_save}"
-							yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
-							if yousaveprecision > 5
-								you_save=you_save.ceil.to_i
-							elsif yousaveprecision < 5
-								you_save=you_save.floor.to_i
-							elsif yousaveprecision == 5
-								you_save=you_save.floor.to_i
-							end
+							if you_save!=0
+			          yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
+			            if yousaveprecision > 5
+			              you_save=you_save.ceil.to_i
+			            elsif yousaveprecision < 5
+			              you_save=you_save.floor.to_i
+			            elsif yousaveprecision == 5
+			              you_save=you_save.floor.to_i
+			            end
+			          else
+			            you_save=0
+			        end
 						else
 							you_save =  12*(app_user_current_plan - allowed_best_deal.price)
 							yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i

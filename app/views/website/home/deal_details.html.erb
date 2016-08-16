@@ -45,7 +45,7 @@
                         <h2 class="heading_price">$<%= data['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
                         <p>effective price</p>
                           <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
-                          <%if  @current_user.present?%>
+                          <%if @current_user.present?%>
                         <%if @current_user.email_verified%>
                              <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
                              <%else%>

@@ -22,15 +22,11 @@ class ApplicationController < ActionController::Base
 		puts "params="+params.to_yaml
 		if params[:device_id].present? and (params[:token].present? or params[:session_token].present?)
 			saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
-			if params[:token].present? and saved_token!=params[:token]
+			mobile_token=params[:token].present? ? params[:token] : params[:session_token]
+			if mobile_token!=params[:token]
 				render :json=>{
 							 message:"invalid token"
 				}
-			elsif params[:session_token].present? and saved_token!=params[:session_token]
-				render :json=>{
-							 message:"invalid token"
-				}
-			end
 		else
 			render :json=>{
 				status:"token not issued"

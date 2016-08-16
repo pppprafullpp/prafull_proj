@@ -177,6 +177,7 @@ class Website::AppUsersController < ApplicationController
             params[:business_addresses][:address2]=params[:business_addresses][:address2]+","+params[:billing_state]
             params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]+","+params[:shipping_state]
             params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
+            # params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
           else
             params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]+","+params[:billing_state]
             params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]+","+params[:shipping_state]

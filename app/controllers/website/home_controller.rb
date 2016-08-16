@@ -70,7 +70,7 @@ class Website::HomeController < ApplicationController
     @deal_attributes = eval("@deal.#{@category_name}_deal_attributes.first")
     @deal_equipments = eval("@deal_attributes.#{@category_name}_equipments")
     if session[:user_id].present?
-    @current_user=AppUser.find(session[:user_id])
+     @current_user=AppUser.find(session[:user_id])
     end
   end
 

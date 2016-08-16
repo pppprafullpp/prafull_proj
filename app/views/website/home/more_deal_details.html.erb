@@ -51,9 +51,9 @@
             <li>Contract : <%= @deal.contract_period %> months</li>
           </ul>
         </div>
-        <%if @current_user.email_verified%>
+        <%if  @current_user.present? and @current_user.email_verified%>
              <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'])%>"  id=<%=data['id']%>>Order</a>
-             <%else%>
+        <%else%>
              <a class="order-btn" href="javascript:void(0)">Verify email</a>
         <%end%>
 

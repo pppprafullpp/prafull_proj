@@ -122,7 +122,9 @@ def update_effective_price
   self.effective_price = get_effective_price
 end
 
-def effective_price
+# previously we are calculating effective price on runtime
+# now effective price is calculated on deal creation itself so making this fucntion as deprecated
+def effective_price_bck
   effective_price = get_effective_price
   if effective_price != self.deal_price.to_f
     effective_price = effective_price.present? ? effective_price : 0

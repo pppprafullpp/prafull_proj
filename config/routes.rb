@@ -85,6 +85,7 @@ Rails.application.routes.draw do
   get '/get_user_addresses'=> "website/app_users#user_addresses"
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
+  get "/verify_email"=>"website/app_users#verify_email"
   resources :deals do
     post 'import', on: :collection
   end

@@ -47,6 +47,7 @@ class Website::HomeController < ApplicationController
 
 
   def deal_details
+
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
@@ -57,6 +58,10 @@ class Website::HomeController < ApplicationController
     deal_provider_ids =  ServiceProvider.get_deal_wise_provider_ids(@dashboard_data)
     @providers = ServiceProvider.get_provider_by_category(params[:category_id]).where(:id => deal_provider_ids)
     @category_name = ServiceCategory.find(params[:category_id]).name.titleize
+    if session[:user_id].present?
+    @current_user=AppUser.find(session[:user_id])
+    end
+
   end
 
   def more_deal_details
@@ -64,6 +69,9 @@ class Website::HomeController < ApplicationController
     @category_name = ServiceCategory.find(@deal.service_category_id).name.downcase
     @deal_attributes = eval("@deal.#{@category_name}_deal_attributes.first")
     @deal_equipments = eval("@deal_attributes.#{@category_name}_equipments")
+    if session[:user_id].present?
+    @current_user=AppUser.find(session[:user_id])
+    end
   end
 
   def compare_deals

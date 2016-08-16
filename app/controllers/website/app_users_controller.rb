@@ -17,7 +17,10 @@ class Website::AppUsersController < ApplicationController
       if @app_user.save!
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
-        flash[:notice] = 'SignUp Successfull'
+        code=SecureRandom.base64(5)
+        @app_user.update_attributes(:email_verification_token=>code)
+        AppUserMailer.send_verification_mail(@app_user.id,code).deliver
+        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email '
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
@@ -306,6 +309,18 @@ class Website::AppUsersController < ApplicationController
     flash[:notice] = 'Your Request is forwarded to Service Dealz Team.'
     redirect_to request.referrer and return
   end
+
+  def verify_email
+    secure_token=params[:secure_token]
+    email_verification_token=AppUser.find(params[:user_id]).email_verification_token
+    if secure_token == email_verification_token
+      flash[:notice]="Email successfully verified"
+      AppUser.find(params[:user_id]).update_attributes(:email_verified=>true)
+      redirect_to website_home_index_path
+    end
+  end
+
+
 
   private
   def app_user_params

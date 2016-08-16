@@ -2,7 +2,7 @@
   <td>
     <table width="100%" style="padding:30px;  border-bottom:solid 1px #ebebeb;">
       <tbody><tr>
-        <td style="text-align:left; color:#e9292a; font-size:20px;">Hi <%= @app_user.first_name %>,</td>
+        <td style="text-align:left; color:#e9292a; font-size:20px;">Hi <%= Base64.decode64(@app_user.first_name) %>,</td>
       </tr>
       <tr>
         <td style="text-align:left; color:#8f8f8f; font-size:14px; line-height:18px;">Thank You for your purchase from ServiceDeals.</td>

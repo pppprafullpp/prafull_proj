@@ -29,6 +29,9 @@
     </div>
 
     <div class="col-sm-9">
+        <%if !@app_user.email_verified%>
+        <p class="alert alert-danger text-center">Please Verify your email and start ordering!!</p>
+        <%end%>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <p class="alert alert-danger hidden text-center" id="error-msg"></p>
       <div class="col-lg-12 margin-top0"><h5>Basic Details</h5></div>

@@ -187,6 +187,19 @@ class Api::V1::AppUsersController < ApplicationController
     end
   end
 
+  def verify_email
+    email=params[:email]
+    data=AppUser.find_by_email(email)
+    if data.email_verified
+      render :json=>{
+        verified:true
+      }
+    else
+      render :json=>{
+        verified:false
+      }
+    end
+  end
   private
   def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?

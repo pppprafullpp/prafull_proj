@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
 				render :json=>{
 							 message:"invalid token"
 				}
+			end
 		else
 			render :json=>{
 				status:"token not issued"

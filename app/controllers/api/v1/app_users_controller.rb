@@ -166,13 +166,17 @@ class Api::V1::AppUsersController < ApplicationController
       if app_user.service_preferences.present?
         service_preference_sum = app_user.service_preferences.collect(&:price).sum
         app_user.service_preferences.map do |sp|
-          deal_data=category_best_deal(app_user.user_type,sp,app_user.zip,1,false)
-          if deal_data.present?
-            allowed_best_deal_sum= allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.to_f
-            puts "service_preference_sum=#{service_preference_sum}"
-            puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
-            you_save = (12*(service_preference_sum - allowed_best_deal_sum.to_f))
-            yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
+          if category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.present?
+            allowed_best_deal_sum=allowed_best_deal_sum  + category_best_deal(app_user.user_type,sp,app_user.zip,1,false).effective_price.to_f
+          else
+           allowed_best_deal_sum=allowed_best_deal_sum
+          end
+        end
+        puts "service_preference_sum=#{service_preference_sum}"
+        puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
+        you_save = (12*(service_preference_sum - allowed_best_deal_sum.to_f))
+        if you_save!=0
+          yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
             if yousaveprecision > 5
               you_save=you_save.ceil.to_i
             elsif yousaveprecision < 5
@@ -180,8 +184,8 @@ class Api::V1::AppUsersController < ApplicationController
             elsif yousaveprecision == 5
               you_save=you_save.floor.to_i
             end
-
-          end
+          else
+            you_save=0
         end
 
         render  :json => { :success => true, :you_save => you_save}

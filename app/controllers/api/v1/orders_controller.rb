@@ -12,13 +12,18 @@ class Api::V1::OrdersController < ApplicationController
 				app_user = AppUser.update_app_user(params,order.app_user_id,order)
 				order_addresses = OrderAddress.create_order_addresses(params,order.id)
 				if user_type == AppUser::BUSINESS
-					business = Business.create_business(params)
+					params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
+					params[:business][:ssn]= encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
+					params[:business][:federal_number]= encode_api_data(params[:business][:federal_number]) if  params[:business][:federal_number].present?
+					params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
 					if business.present?
 						business_addresses = BusinessAddress.create_business_addresses(params,business.id)
 						business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
 					end
 					OrderMailer.delay.order_confirmation(app_user,order)
-					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json}
+					UserGift.delay.create_user_gift(order.id)
+					gifts = Gift.all
+					render :status => 200,:json => {:success => true,:order => order.as_json,:order_items => order_items.as_json,:app_user => app_user.as_json,:business => business.as_json,:business_addresses => business_addresses.as_json,:gifts => gifts.as_json(:methods => :gift_image_url, :except => :image)}
 				else
 					app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
 					OrderMailer.delay.order_confirmation(app_user,order)

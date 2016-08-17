@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
 	end
 	def verify_token
 		puts "params="+params.to_yaml
-		if params[:device_id].present? and (params[:token].present? or params[:session_token].present?)
+		if params[:device_id].present? and params[:token].present?  
 			saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
-			mobile_token=params[:token].present? ? params[:token] : params[:session_token]
+			mobile_token=params[:token]
 			if mobile_token!=params[:token]
 				render :json=>{
 							 message:"invalid token"

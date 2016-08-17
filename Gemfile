@@ -76,3 +76,4 @@ group :development, :test do
   # For better error explanation during development
   gem "better_errors"
 end
+gem 'hirb'

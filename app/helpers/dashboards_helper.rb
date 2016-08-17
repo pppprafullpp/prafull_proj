@@ -3,7 +3,7 @@ module DashboardsHelper
 	def get_dashboard_deals(app_user_id,zip_code,deal_type)
 		if app_user_id.present?
 			app_user = AppUser.find_by_id(app_user_id)
-			zip_code = decode_api_data(app_user.zip)
+			zip_code = decode_api_data(app_user.zip) if zip_code.present?
 			if app_user.present? && zip_code.present?
 				deal_type=app_user.user_type
 

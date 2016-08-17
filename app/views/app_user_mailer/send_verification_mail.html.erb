@@ -14,8 +14,12 @@
   </tr>
   <tr><td>Just one last step to best deals</td></tr>
   <tr>
+    <% if Socket.gethostname=="servicedlz-Virtual-Machine" %>
     <td><a href="http://103.243.5.242:2123/verify_email?user_id=<%=@user_id%>&secure_token=<%=@secure_token%>">CLICK HERE TO VERIFY YOUR EMAIL ID</a> </td>
-  </tr>
+    <%else%>
+    <td><a href="http://localhost:3000/verify_email?user_id=<%=@user_id%>&secure_token=<%=@secure_token%>">CLICK HERE TO VERIFY YOUR EMAIL ID</a> </td>
+    <%end%>
+   </tr>
   <tr>
     <td>
       Thanks <br />

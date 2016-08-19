@@ -34,7 +34,7 @@ gem 'jquery-datetimepicker-rails'
 gem "rmagick"
 gem "carrierwave"
 gem 'cloudinary'
-gem 'rails_12factor', group: :production
+# gem 'rails_12factor', group: :production
 gem 'gcm'
 gem 'grocer'
 gem 'configurable_engine'

@@ -22,7 +22,8 @@ class AccountReferral < ActiveRecord::Base
 			return "You have used your one time referral."
 		elsif self.referral_id == user_id.to_i
 			referrer = AppUser.find_by_id(self.referrer_id)
-			return "for referring #{referrer.first_name.capitalize}."
+			referrer_name = Base64.decode64(referrer.first_name)
+			return "for referring #{referrer_name.capitalize}."
 			# You earned $10 as #{referrer.first_name.capitalize} joins ServiceDeals.
 		end
 	end

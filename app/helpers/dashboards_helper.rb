@@ -87,17 +87,17 @@ module DashboardsHelper
 							puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 							puts "yousave value=#{you_save}"
 							if you_save!=0
-			          yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
-			            if yousaveprecision > 5
-			              you_save=you_save.ceil.to_i
-			            elsif yousaveprecision < 5
-			              you_save=you_save.floor.to_i
-			            elsif yousaveprecision == 5
-			              you_save=you_save.floor.to_i
-			            end
-			          else
-			            you_save=0
-			        end
+								yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
+								if yousaveprecision > 5
+									you_save=you_save.ceil.to_i
+								elsif yousaveprecision < 5
+									you_save=you_save.floor.to_i
+								elsif yousaveprecision == 5
+									you_save=you_save.floor.to_i
+								end
+							else
+								you_save=0
+							end
 						else
 							you_save =  12*(app_user_current_plan - allowed_best_deal.price)
 							yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
@@ -543,8 +543,10 @@ module DashboardsHelper
 					current_t_plan = user_preference.cellphone_service_preference.domestic_call_unlimited
 					if current_t_plan == true
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
-						greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price > ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)", current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-						smaller_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price < ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)", current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						if best_deals.present?
+							greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price > ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)", current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							smaller_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price < ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)", current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						end
 					else
 						current_call_minutes = user_preference.cellphone_service_preference.domestic_call_minutes
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)

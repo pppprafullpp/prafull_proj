@@ -112,7 +112,7 @@ module DashboardsHelper
 					else
 						you_save = ""
 					end
-					best_deal_flag = allowed_best_deal.present? ? true : false
+					best_deal_flag = true 
 
 					if allowed_best_deal.present? && allowed_order_deal.present? && allowed_best_deal.id==allowed_order_deal.id
 						allowed_order_deal=allowed_order_deal

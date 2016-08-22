@@ -51,7 +51,7 @@
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="Phone">Mobile<span id="mandat">*</span></label>
-        <%= phone_field_tag(:mobile, @app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
+        <%= phone_field_tag(:mobile, decode_api_data(@app_user.mobile),:class => 'form-control input-md',:placeholder => 'Mobile',:maxlength => 10) %>
       </div>
       <div class="col-sm-6">
         <label class="control-label" for="PrimaryId">Primary Id<span id="mandat">*</span></label>

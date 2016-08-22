@@ -215,24 +215,24 @@ module DashboardsHelper
 
 		if sorting_key == 'download_speed' #For Internet and bundle
 			if [ServiceCategory::INTERNET_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
-				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.download DESC,deals.price ASC")
+				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.download DESC,deals.price ASC").group('deals.id')
 			end
 		elsif sorting_key == 'price' #For all on the basis of Price
 			if ServiceCategory::CATEGORIES.include?(category_name)
-				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("deals.price ASC")
+				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("deals.price ASC").group('deals.id')
 			else
-				deals = Deal.where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
+				deals = Deal.where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC").group('deals.id')
 			end
 		elsif sorting_key == 'free_channels' #For Cable
 			if [ServiceCategory::CABLE_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
-				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.free_channels DESC,deals.price ASC")
+				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.free_channels DESC,deals.price ASC").group('deals.id')
 			end
 		elsif sorting_key == 'call_minutes' #For CellPhone, Telephone & Bundle
 			if [ServiceCategory::CELLPHONE_CATEGORY,ServiceCategory::TELEPHONE_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
-				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
+				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.domestic_call_minutes DESC,deals.price ASC").group('deals.id')
 			end
 		else
-			deals = Deal.where(deal_validation_conditions).order("price ASC")
+			deals = Deal.where(deal_validation_conditions).order("price ASC").group('deals.id')
 		end
 
 		return deals

@@ -167,6 +167,7 @@ class Website::AppUsersController < ApplicationController
         order.order_id=rand(36**8).to_s(36).upcase
         params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
         params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
+        params[:app_user][:mobile]=encode_api_data(params[:app_user][:mobile])
         if order.save
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)

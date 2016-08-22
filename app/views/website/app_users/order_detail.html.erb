@@ -104,7 +104,7 @@
                 </li>
                 <li>
                   <div class="col1">Contact No:</div>
-                  <div class="col2"><%= app_user.try(:mobile) %></div>
+                  <div class="col2"><%= decode_api_data(app_user.mobile) %></div>
                 </li>
                 <li>
                   <div class="col1">Email:</div>

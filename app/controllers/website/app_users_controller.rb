@@ -167,6 +167,7 @@ class Website::AppUsersController < ApplicationController
         order.order_id=rand(36**8).to_s(36).upcase
         params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
         params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
+        params[:app_user][:mobile]=encode_api_data(params[:app_user][:mobile])
         if order.save
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
@@ -199,14 +200,14 @@ class Website::AppUsersController < ApplicationController
               business_user = BusinessAppUser.create_business_app_user(business.id,@app_user.id)
             end
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to "/website/app_users/profile?status=new_order"
+            redirect_to "/website/app_users/order_detail?order_id=#{order.id}"
           else
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to "/website/app_users/profile?status=new_order"
+            redirect_to "/website/app_users/order_detail?order_id=#{order.id}"
           end
         else
-          redirect_to "/website/app_users/profile?status=new_order"
+          redirect_to "/website/app_users/order_detail?order_id=#{order.id}"
         end
       else
         # redirect_to website_home_index_path

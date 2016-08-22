@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
   end
 
   create_table "app_users", force: :cascade do |t|
-    t.string   "user_type",                limit: 25,  default: "residence", null: false
+    t.string   "user_type",                limit: 255, default: "residence", null: false
     t.string   "business_name",            limit: 255, default: "",          null: false
     t.string   "first_name",               limit: 255, default: "",          null: false
     t.string   "last_name",                limit: 255, default: "",          null: false
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.integer  "bundle_deal_attribute_id", limit: 4
     t.string   "name",                     limit: 255
     t.string   "make",                     limit: 255
-    t.decimal  "price",                                  precision: 30, scale: 2, default: 0.0, null: false
+    t.decimal  "price",                                  precision: 30, scale: 2, default: 0.0
     t.text     "installation",             limit: 65535
     t.string   "activation",               limit: 255
     t.string   "offer",                    limit: 255
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.integer  "cable_deal_attribute_id", limit: 4
     t.string   "name",                    limit: 255
     t.string   "make",                    limit: 255
-    t.decimal  "price",                                 precision: 30, scale: 2, default: 0.0, null: false
+    t.decimal  "price",                                 precision: 30, scale: 2, default: 0.0
     t.text     "installation",            limit: 65535
     t.string   "activation",              limit: 255
     t.string   "offer",                   limit: 255
@@ -287,7 +287,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
 
   create_table "cellphone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                    limit: 4
-    t.integer  "no_of_lines",                limit: 4,                            default: 0,     null: false
+    t.integer  "no_of_lines",                limit: 4
     t.decimal  "price_per_line",                         precision: 5,  scale: 2, default: 0.0,   null: false
     t.string   "domestic_call_minutes",      limit: 255
     t.string   "domestic_text",              limit: 255
@@ -310,7 +310,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.string   "model",                       limit: 255
     t.string   "make",                        limit: 255
     t.integer  "memory",                      limit: 4
-    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0, null: false
+    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0
     t.text     "installation",                limit: 65535
     t.string   "activation",                  limit: 255
     t.string   "offer",                       limit: 255
@@ -404,14 +404,14 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.text     "short_description",   limit: 65535
     t.text     "detail_description",  limit: 65535
     t.float    "price",               limit: 24,                   default: 0.0,         null: false
-    t.boolean  "is_contract",                                      default: false,       null: false
-    t.integer  "contract_period",     limit: 4,                    default: 0,           null: false
+    t.boolean  "is_contract",                                      default: false
+    t.string   "contract_period",     limit: 255
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_nationwide",                                    default: false
-    t.string   "deal_type",           limit: 100,                  default: "residence", null: false
+    t.string   "deal_type",           limit: 255,                  default: "residence", null: false
     t.boolean  "is_active",                                        default: true
     t.datetime "created_at",                                                             null: false
     t.datetime "updated_at",                                                             null: false
@@ -500,7 +500,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.integer  "internet_deal_attribute_id", limit: 4
     t.string   "name",                       limit: 255
     t.string   "make",                       limit: 255
-    t.decimal  "price",                                    precision: 30, scale: 2, default: 0.0, null: false
+    t.decimal  "price",                                    precision: 30, scale: 2, default: 0.0
     t.text     "installation",               limit: 65535
     t.string   "activation",                 limit: 255
     t.string   "offer",                      limit: 255
@@ -700,10 +700,10 @@ ActiveRecord::Schema.define(version: 20160816053937) do
 
   create_table "telephone_deal_attributes", force: :cascade do |t|
     t.integer  "deal_id",                          limit: 4
-    t.string   "domestic_call_minutes",            limit: 25
+    t.string   "domestic_call_minutes",            limit: 255
     t.integer  "domestic_receive_minutes",         limit: 4
     t.integer  "domestic_additional_minutes",      limit: 4
-    t.string   "international_call_minutes",       limit: 25
+    t.string   "international_call_minutes",       limit: 255
     t.integer  "international_landline_minutes",   limit: 4
     t.integer  "international_mobile_minutes",     limit: 4
     t.integer  "international_additional_minutes", limit: 4
@@ -719,7 +719,7 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.integer  "telephone_deal_attribute_id", limit: 4
     t.string   "name",                        limit: 255
     t.string   "make",                        limit: 255
-    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0, null: false
+    t.decimal  "price",                                     precision: 30, scale: 2, default: 0.0
     t.text     "installation",                limit: 65535
     t.string   "activation",                  limit: 255
     t.string   "offer",                       limit: 255
@@ -793,7 +793,6 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "additional_offers", "deals"
   add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
@@ -801,7 +800,6 @@ ActiveRecord::Schema.define(version: 20160816053937) do
   add_foreign_key "comment_ratings", "app_users"
   add_foreign_key "comment_ratings", "deals"
   add_foreign_key "deals", "service_categories"
-  add_foreign_key "internet_deal_attributes", "deals"
   add_foreign_key "internet_service_preferences", "service_preferences"
   add_foreign_key "notifications", "app_users"
   add_foreign_key "service_preferences", "app_users"
@@ -809,7 +807,6 @@ ActiveRecord::Schema.define(version: 20160816053937) do
   add_foreign_key "service_providers", "service_categories"
   add_foreign_key "subscribe_deals", "app_users"
   add_foreign_key "subscribe_deals", "deals"
-  add_foreign_key "telephone_deal_attributes", "deals"
   add_foreign_key "telephone_service_preferences", "service_preferences"
   add_foreign_key "trending_deals", "deals"
 end

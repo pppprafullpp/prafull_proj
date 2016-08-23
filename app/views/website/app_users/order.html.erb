@@ -183,16 +183,18 @@
 <script>
 var errormsg="";
 $(document).ready(function(e) {
+  <%
+  if @app_user.user_type == "residence" %>
   var billing_address;
   var service_address;
-  var shipping_addres;
+  var shipping_address;
   $.ajax({
     url:"/get_user_addresses",
     type: "GET",
     data:{ id:<%=@app_user.id%>},
     success: function(data){
       console.log(data);
-      if (data!=""){
+      if (data["type"]!="residence_user_first_order"){
         billing_address=data.status[0];
         service_address=data.status[2];
         shipping_address=data.status[1];
@@ -218,8 +220,31 @@ $(document).ready(function(e) {
         $("#app_user_service_address_2").val(service_address.address2);
         $("#app_user_service_zip").val(service_address.zip);
       }
+      else {
+        if(data["type"]=="residence_user_first_order"){}
+        console.log(data["status"]);
+        $("#app_user_billing_address_1").val(data["status"]["address1"]);
+        $("#app_user_billing_address_2").val(data["status"]["address2"]);
+        $("#app_user_billing_zip").val(data["status"]["zip"]);
+        $("#app_user_billing_state_name").val(data["status"]["address_name"]);
+      }
     }
   });
+  <%else%>
+  $.ajax({
+    url:"/get_business_user_addresses",
+    type: "GET",
+    data:{ id:<%=@app_user.id%>},
+    success:function(data){
+      $("#billing_address_1").val(data["status"]["address1"]);
+      $("#billing_address_2").val(data["status"]["address2"]);
+      $("#billing_zip").val(data["status"]["zip"]);
+      $("#billing_name").val(data["status"]["address_name"]);
+    }
+  });
+
+
+  <%end%>
 
 });
 $(document).keydown(function(e){
@@ -248,7 +273,8 @@ $("#review-federal").text(federal_value);
   if @app_user.user_type == "business" %>
   var  business = $('#business_name').val();
   $('#getbusiness').val(business);
-  var business_value= $(getbusiness).val();
+  var business_value= $('#getbusiness').val();
+  console.log(business_value);
   f=business_value[0].toUpperCase();
   l=business_value.substr(1);
   $("#review-business").text(f+''+l);

@@ -66,9 +66,11 @@ Rails.application.routes.draw do
   #  collection { post :import }
   #end
 
-
+  if Socket.gethostname=="servicedlz-Virtual-Machine"
   root to: "home#index"
-
+  else
+  root to: "website/home#index"
+  end
   devise_for :users
   resources :users do
     member do
@@ -84,6 +86,8 @@ Rails.application.routes.draw do
   get "/calculate_bandwidth" => "website/home#calculate_bandwidth"
   get "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
   get '/get_user_addresses'=> "website/app_users#user_addresses"
+  get '/get_business_user_addresses'=> "website/app_users#business_user_addresses"
+
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
   get "/verify_email"=>"website/app_users#verify_email"

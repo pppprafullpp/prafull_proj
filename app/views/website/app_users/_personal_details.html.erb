@@ -32,7 +32,7 @@
         <!-- <%if !@app_user.email_verified%>
         <p class="alert alert-danger text-center">Please Verify your email and start ordering!!</p>
         <%end%> -->
-        <%if params[:status]=="new_user" and !@app_user.email_verified%>
+        <%if params[:new_user]=="new_user" and !@app_user.email_verified%>
         <p class="alert alert-danger text-center">Please fill in your profile and verify your email address</p>
         <%elsif !@app_user.email_verified%>
         <p class="alert alert-danger text-center">Please Verify your email and start ordering!!</p>

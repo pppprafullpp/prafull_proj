@@ -49,7 +49,7 @@ class Website::AppUsersController < ApplicationController
       # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
       @app_user.first_name = encode_api_data(params[:first_name])
       @app_user.last_name = encode_api_data(params[:last_name])
-      @app_user.mobile = params[:mobile]
+      @app_user.mobile =  encode_api_data(params[:mobile])
       @app_user.primary_id = params[:primary_id]
       @app_user.primary_id_number = params[:primary_id_number]
       @app_user.secondary_id = params[:secondary_id]
@@ -73,6 +73,7 @@ class Website::AppUsersController < ApplicationController
           else
             params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
+            params[:business][:business_name]=encode_api_data(params[:business][:business_name]) if params[:business][:business_name].present?
             @business = Business.create_business(params)
             if @business.present?
               address_hash = {:business_addresses => [params[:addresses]]}
@@ -225,9 +226,27 @@ class Website::AppUsersController < ApplicationController
       render :json=>{
         :status=>@addresses
       }
+    elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?
+      @addresses=AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last
+      render :json=>{
+        :type=>"residence_user_first_order",
+        :status=>@addresses
+      }
+
     else
       render :json=>{
-        :status=>"no addresses"
+        :status=>"first_order",
+        :status=>@addresses
+      }
+    end
+  end
+
+  def business_user_addresses
+    if BusinessAddress.exists?(AppUser.find(params[:id]).business_app_users.last.business_id)
+      @addresses=BusinessAddress.find(AppUser.find(params[:id]).business_app_users.last.business_id)
+      render :json=>{
+        :status=>"business_user_first_order",
+        :status=>@addresses
       }
     end
   end

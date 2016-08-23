@@ -36,6 +36,8 @@
         <p class="alert alert-danger text-center">Please fill in your profile and verify your email address</p>
         <%elsif !@app_user.email_verified%>
         <p class="alert alert-danger text-center">Please Verify your email and start ordering!!</p>
+        <%elsif  params[:message]=="fill_profile"%>
+        <p class="alert alert-danger text-center">Please complete and start ordering</p>
         <%end%>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <p class="alert alert-danger hidden text-center" id="error-msg"></p>

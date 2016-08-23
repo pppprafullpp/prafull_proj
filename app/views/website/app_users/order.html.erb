@@ -194,7 +194,7 @@ $(document).ready(function(e) {
     data:{ id:<%=@app_user.id%>},
     success: function(data){
       console.log(data);
-      if (data["type"]=="first_order"){
+      if (data["type"]=="residence_user_first_order"){
         billing_address=data.status[0];
         service_address=data.status[2];
         shipping_address=data.status[1];
@@ -221,7 +221,7 @@ $(document).ready(function(e) {
         $("#app_user_service_zip").val(service_address.zip);
       }
       else {
-        if(data["type"]!="first_order"){}
+        if(data["type"]!="residence_user_first_order"){}
         console.log(data["status"]);
         $("#app_user_billing_address_1").val(data["status"]["address1"]);
         $("#app_user_billing_address_2").val(data["status"]["address2"]);

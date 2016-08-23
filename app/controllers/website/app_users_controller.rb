@@ -224,6 +224,7 @@ class Website::AppUsersController < ApplicationController
     if params[:id].present? and AppUser.find(params[:id]).orders.present?
       @addresses=AppUser.find(params[:id]).orders.last.order_addresses
       render :json=>{
+          :type=>"residence_user_first_order",
         :status=>@addresses
       }
     elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?

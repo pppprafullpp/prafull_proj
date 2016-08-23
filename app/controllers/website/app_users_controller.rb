@@ -20,11 +20,11 @@ class Website::AppUsersController < ApplicationController
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code)
         AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
-        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email '
+        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
-          redirect_to request.referrer
+          redirect_to "/website/app_users/profile?new_user=new_user"
         end
       else
         flash[:warning] = @app_user.errors.full_messages

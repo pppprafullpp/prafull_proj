@@ -39,12 +39,14 @@ class Website::AppUsersController < ApplicationController
 
   def update
     if session[:user_id].present?
+      # raise params.to_s
       @app_user = AppUser.find(session[:user_id])
       address = params[:address].present? ? params[:address] : ''
       address1 = params[:address1].present? ? params[:address1] : ''
       address2 = params[:address2].present? ? params[:address2] : ''
       @app_user.address = address + '===' + address1 + '===' + address2
-      #@app_user.city = params[:city];@app_user.state = params[:state]
+      # @app_user.state = params[:city];
+      @app_user.state = params[:billing_state]
       # first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
       # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
       @app_user.first_name = encode_api_data(params[:first_name])
@@ -57,7 +59,7 @@ class Website::AppUsersController < ApplicationController
 
       @app_user.user_type = params[:user_type] if params[:user_type].present?
       @app_user.avatar=params[:avatar] if params[:avatar].present?
-
+    # raise @app_user.state.to_s
       if @app_user.save!
         if @app_user.user_type == AppUser::BUSINESS
           if  @app_user.business_app_users.present?

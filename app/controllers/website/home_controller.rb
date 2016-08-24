@@ -8,6 +8,7 @@ class Website::HomeController < ApplicationController
     session[:user_type] = AppUser::RESIDENCE unless session[:user_type].present?
     if session[:user_id].present? && session[:zip_code].present?
       @best_deal_data = get_dashboard_deals(session[:user_id],nil,nil)
+      @app_user=AppUser.find(session[:user_id])
     end
     if session[:zip_code].present? && session[:user_type].present?
       @trending_deal_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])

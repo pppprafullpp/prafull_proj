@@ -39,14 +39,13 @@ class Website::AppUsersController < ApplicationController
 
   def update
     if session[:user_id].present?
+      # raise params.to_s
       @app_user = AppUser.find(session[:user_id])
       address = params[:address].present? ? params[:address] : ''
       address1 = params[:address1].present? ? params[:address1] : ''
       address2 = params[:address2].present? ? params[:address2] : ''
       @app_user.address = address + '===' + address1 + '===' + address2
-      #@app_user.city = params[:city];@app_user.state = params[:state]
-      # first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
-      # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
+      @app_user.state = params[:billing_state]
       @app_user.first_name = encode_api_data(params[:first_name])
       @app_user.last_name = encode_api_data(params[:last_name])
       @app_user.mobile =  encode_api_data(params[:mobile])
@@ -54,10 +53,9 @@ class Website::AppUsersController < ApplicationController
       @app_user.primary_id_number = params[:primary_id_number]
       @app_user.secondary_id = params[:secondary_id]
       @app_user.secondary_id_number = params[:secondary_id_number]
-
       @app_user.user_type = params[:user_type] if params[:user_type].present?
       @app_user.avatar=params[:avatar] if params[:avatar].present?
-
+      # raise @app_user.state.to_s
       if @app_user.save!
         if @app_user.user_type == AppUser::BUSINESS
           if  @app_user.business_app_users.present?
@@ -65,7 +63,7 @@ class Website::AppUsersController < ApplicationController
             business_addresses = BusinessAddress.find_by_business_id(business_user_id)
             business_addresses.update_attributes(
                 :address_name=>params[:addresses][:address_name],
-                :address_type => params[:addresses][:address_type],
+                :address_type => params[:addresses][:address_type].to_i,
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
@@ -86,12 +84,13 @@ class Website::AppUsersController < ApplicationController
             app_user_address = @app_user.app_user_addresses.first
             app_user_address.update_attributes(
                 :address_name=>params[:addresses][:address_name],
-                :address_type => params[:addresses][:address_type],
+                :address_type => params[:addresses][:address_type].to_i,
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
                 :contact_number=>params[:addresses][:contact_number])
           else
+            params[:addresses][:address_type]=params[:addresses][:address_type].to_i
             address_hash = {:app_user_addresses => [params[:addresses]]}
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
           end
@@ -181,12 +180,13 @@ class Website::AppUsersController < ApplicationController
             params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
             # params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
           else
-            params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]+","+params[:billing_state]
-            params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]+","+params[:shipping_state]
-            params[:service_addresses][:address2]=params[:service_addresses][:address2]+","+params[:service_state]
+            params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]
+            params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]
+            params[:service_addresses][:address2]=params[:service_addresses][:address2]
           end
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
+          # raise address_hash.to_yaml
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
           # raise params[:business][:business_name]
           if user_type == AppUser::BUSINESS
@@ -233,7 +233,6 @@ class Website::AppUsersController < ApplicationController
         :type=>"residence_user_first_order",
         :status=>@addresses
       }
-
     else
       render :json=>{
         :status=>"first_order",

@@ -87,8 +87,9 @@
         <div class="row">
           <div class="col-sm-6">
             <label class="control-label" for="Address">Address Type</label>
-            <%= select_tag :address_type,options_for_select(BusinessAddress::ADDRESSES,address_type),:class => 'form-control input-md',:name => "addresses[address_type]"%>
-
+            <%=text_field_tag("Billing_Address_txt","Billing Address",:class=>"form-control", :disabled=>true)%>
+            <%#= select_tag :address_type,options_for_select(BusinessAddress::ADDRESSES,address_type),:class => 'form-control input-md',:name => "addresses[address_type]"%>
+            <%=hidden_field_tag(:address_type,2)%>
             <%#=text_field_tag(:address_type,2,:class=>"form-control", :disabled=>true)%>
           </div>
 
@@ -111,6 +112,13 @@
             <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
           </div>
 
+          <div class="col-md-12 padding15right">
+            <label for="Name" class="control-label">Select State</label>
+            <select class="form-control" name="billing_state" id="billing_state">
+              <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+              <%= options_for_select(cities_array, :prompt=>"Select") %>
+          </select>
+          </div>
 
           <!-- <div class="col-sm-6">
             <label class="control-label" for="Phone">Contact Number</label>

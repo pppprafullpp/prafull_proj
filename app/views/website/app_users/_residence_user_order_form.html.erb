@@ -1,7 +1,7 @@
-<%saved_billing_address=@app_user.app_user_addresses.where(:address_type=>2).last%>
-<%address1=saved_billing_address.address1%>
-<%address2=saved_billing_address.address2%>
-<%zip=saved_billing_address.zip%>
+<%#saved_billing_address=@app_user.app_user_addresses.where(:address_type=>2).last%>
+<%#address1=saved_billing_address.address1%>
+<%#address2=saved_billing_address.address2%>
+<%#zip=saved_billing_address.zip%>
 
  <div id="address-info" class="tab-pane">
   <div class="row">
@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address 1*</label>
-        <%= text_field_tag('app_user_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1",:value=>address1) %>
+        <%= text_field_tag('app_user_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
         <%= hidden_field_tag 'app_user_addresses[address_type]',2,:name => "app_user_addresses[address_type]" %>
       </div>
       <div class="col-md-6">

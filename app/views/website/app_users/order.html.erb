@@ -26,7 +26,7 @@
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Efective Price</td>
-                <td  align="left" class="bold">$<%= @deal.effective_price %></td>
+                <td  align="left" class="bold">$<%= @effective_price %></td>
               </tr>
             </table>
           </div>
@@ -154,7 +154,7 @@
           <%= hidden_field_tag :deal_id,@deal.id,{:name=> 'order_items[deal_id]'}%>
           <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
           <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
-          <%= hidden_field_tag :effective_price,@deal.effective_price,{:name=> 'order_items[effective_price]'}%>
+          <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
           <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
         </div>
       </div>

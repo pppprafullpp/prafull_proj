@@ -221,12 +221,15 @@ $(document).ready(function(e) {
         $("#app_user_service_zip").val(service_address.zip);
       }
       else {
-        if(data["type"]=="residence_user_first_order"){}
-        console.log(data["status"]);
-        $("#app_user_billing_address_1").val(data["status"]["address1"]);
-        $("#app_user_billing_address_2").val(data["status"]["address2"]);
-        $("#app_user_billing_zip").val(data["status"]["zip"]);
-        $("#app_user_billing_state_name").val(data["status"]["address_name"]);
+        if(data["type"]=="residence_user_first_order"){
+          console.log(data["status"]);
+          $("#app_user_billing_address_1").val("").val(data["status"]["address1"]);
+          $("#app_user_billing_address_2").val(data["status"]["address2"]);
+          $("#app_user_billing_zip").val(data["status"]["zip"]);
+          $("#app_user_billing_state_name").val(data["status"]["address_name"]);
+          console.log(data["status"]);
+        }
+
       }
     }
   });
@@ -242,9 +245,7 @@ $(document).ready(function(e) {
       $("#billing_name").val(data["status"]["address_name"]);
     }
   });
-
-
-  <%end%>
+  <% end%>
 
 });
 $(document).keydown(function(e){
@@ -274,7 +275,6 @@ $("#review-federal").text(federal_value);
   var  business = $('#business_name').val();
   $('#getbusiness').val(business);
   var business_value= $('#getbusiness').val();
-  console.log(business_value);
   f=business_value[0].toUpperCase();
   l=business_value.substr(1);
   $("#review-business").text(f+''+l);
@@ -314,11 +314,11 @@ $("#order_information_menu_tab").click(function(event){
    last_rest=lastname.substr(1);
    last_first_char=lastname[0].toUpperCase();
    finallastname=last_first_char+''+last_rest;
-  $('#review-name').text(finalfirstname+" "+finallastname);
-  $('#review-last-name').text($('#last_name').val());
-  $('#review-mobile').text($('#mobile').val());
-  $('#review-primary').text($('#primary_id_number').val());
-  $('#review-secondary').text($('#secondary_id_number').val());
+   $('#review-name').text(finalfirstname+" "+finallastname);
+   $('#review-last-name').text($('#last_name').val());
+   $('#review-mobile').text($('#mobile').val());
+   $('#review-primary').text($('#primary_id_number').val());
+   $('#review-secondary').text($('#secondary_id_number').val());
 
   var first_name = $('#first_name').val();
   var mobile = $('#mobile').val();
@@ -476,8 +476,7 @@ $("#order_information_menu_tab").click(function(event){
     var  last_name = $('#last_name').val();
     var primary_id = $('#primary_id_number').val();
     var secondary_id = $('#secondary_id_number').val();
-    console.log(primary_id)
-    if(primary_id==''|| secondary_id=='' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
+     if(primary_id==''|| secondary_id=='' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
       alert("Please fill all the mandatory fields.")
     }
     else if (mobile.length < 10){
@@ -526,7 +525,6 @@ $("#order_information_menu_tab").click(function(event){
     var service_address_1 =app_user_service_address_1+"State: "+$("#service_state option:selected").val();
     var service_address_2 =app_user_service_address_2;
     var service_zip = app_user_service_zip;
-    console.log("1111");
     if( primary_id == '' || secondary_id== '' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
       alert("Please fill all the mandatory fields.")
     }
@@ -704,22 +702,22 @@ $("#order_information_menu_tab").click(function(event){
       document.getElementById('app_user_shipping_zip').value = '';
     }
   }
-  function checkedifchanged(){
-    if ($("#checkbox7a").prop("checked")==true || $("#checkboxb").prop("checked")==true) {
-      app_user_billing_address_2 = $('#app_user_billing_address_2').val();
-      app_user_billing_address_1 = $('#app_user_billing_address_1').val();
-      app_user_billing_zip = $('#app_user_billing_zip').val();
-      $('#app_user_shipping_address_1').val(app_user_billing_address_1);
-      $('#app_user_shipping_address_2').val(app_user_billing_address_2);
-      $('#app_user_shipping_zip').val(app_user_billing_zip );
-      $('#app_user_service_address_1').val(app_user_billing_address_1);
-      $('#app_user_service_address_2').val(app_user_billing_address_2);
-      $('#app_user_service_zip').val(app_user_billing_zip);
-      index=$("#billing_state option:selected").index();
-      $("#service_state").prop("selectedIndex",index);
-      $("#shipping_state").prop("selectedIndex",index);
-    }
-  }
+  // function checkedifchanged(){
+  //   if ($("#checkbox7a").prop("checked")==true || $("#checkboxb").prop("checked")==true) {
+  //     app_user_billing_address_2 = $('#app_user_billing_address_2').val();
+  //     app_user_billing_address_1 = $('#app_user_billing_address_1').val();
+  //     app_user_billing_zip = $('#app_user_billing_zip').val();
+  //     $('#app_user_shipping_address_1').val(app_user_billing_address_1);
+  //     $('#app_user_shipping_address_2').val(app_user_billing_address_2);
+  //     $('#app_user_shipping_zip').val(app_user_billing_zip );
+  //     $('#app_user_service_address_1').val(app_user_billing_address_1);
+  //     $('#app_user_service_address_2').val(app_user_billing_address_2);
+  //     $('#app_user_service_zip').val(app_user_billing_zip);
+  //     index=$("#billing_state option:selected").index();
+  //     $("#service_state").prop("selectedIndex",index);
+  //     $("#shipping_state").prop("selectedIndex",index);
+  //   }
+  // }
   function capitalise_first(object) {
      value=$("#"+object.id).val();
      rest=value.substr(1);

@@ -259,6 +259,7 @@ class Website::AppUsersController < ApplicationController
         else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
+          @effective_price = params[:effective_price]
         end
       else
         session[:deal] = params[:deal_id]

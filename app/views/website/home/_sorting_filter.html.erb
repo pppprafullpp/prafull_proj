@@ -39,3 +39,38 @@
 
   </div>
 </div>
+<div class="modal fade text-left" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
+    <div class="modal-content">
+
+        <div class="modal-header">
+          <h3>Add Preferences for <%=ServiceCategory.get_category_name_by_id(params[:category_id])%></h3>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <%if params[:category_id].to_i == 1%>
+               <%=render :partial=>"internet_preferences.html.erb" %>
+              <%end%>
+              <%if params[:category_id].to_i == 2%>
+               <%=render :partial=>"telephone_preferences.html.erb" %>
+              <%end%>
+              <%if params[:category_id].to_i == 3%>
+               <%=render :partial=>"cable_preferences.html.erb" %>
+              <%end%>
+              <%if params[:category_id].to_i == 4%>
+               <%=render :partial=>"cellphone_preferences.html.erb" %>
+              <%end%>
+              <%if params[:category_id].to_i == 5%>
+               <%=render :partial=>"bundle_preferences.html.erb" %>
+              <%end%>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

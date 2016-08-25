@@ -9,9 +9,8 @@ module DashboardsHelper
 
 				excluded_categories="'Gas','Electricity','Home Security'"
 				service_preferences = app_user.service_preferences.order("created_at DESC")
-
 				servicelist = service_preferences.map do |sp|
-
+				 
 					app_user_current_plan = sp.price
 
 					if sp.service_category.name == 'Internet'
@@ -112,7 +111,7 @@ module DashboardsHelper
 					else
 						you_save = ""
 					end
-					best_deal_flag = true 
+					best_deal_flag = true
 
 					if allowed_best_deal.present? && allowed_order_deal.present? && allowed_best_deal.id==allowed_order_deal.id
 						allowed_order_deal=allowed_order_deal

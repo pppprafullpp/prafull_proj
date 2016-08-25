@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">Primary Id*</label>
-                      <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:orders).try(:last).try(:primary_id)),:class => 'form-control',:id => "primary_id") %>
+                      <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:primary_id)),:class => 'form-control',:id => "primary_id") %>
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Primary Id Number</label>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Secondary Id*</label>
-                      <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]),:class => 'form-control',:id => "secondary_id") %>
+                      <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ],selected: @app_user.try(:secondary_id)),:class => 'form-control',:id => "secondary_id") %>
                     </div>
                      <div class="col-md-6">
                       <label for="Name" class="control-label">Secondary Id Number</label>

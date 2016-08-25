@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       match 'get_channel_details' => 'deals#get_channel_details', :via => :get
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
       match 'verify_email'=>"app_users#verify_email", :via => :get
+      match 'deal_details'=>"deals#fetch_deal_details", :via => :get
       resources :orders do
         collection do
           post :fetch_user_and_deal_details

@@ -104,10 +104,10 @@ a, a:hover, a:focus {
 	color: #9b9b9b;
 }
 .fb-top:hover, .tw-top:hover, .gplus-top:hover, .in-top:hover {
-	color: #afafaf;
+	color: #0378d0;
 }
 .login-tab a {
-	color: #9b9b9b;
+	color: #c4c4c4;;
 	text-decoration: none;
 	outline: none;
 	font-size: 14px;
@@ -160,10 +160,10 @@ div.modal-open {
 .navbar-inverse .navbar-toggle .icon-bar {
 	background: #000 !important;
 }
-/*carousel*/
-/*.carousel-inner {
-    height: 600px;
-}*/
+
+.carousel-inner {
+    height: 400px;
+}
 .carousel-inner img {
 	width: 100%;
 }
@@ -192,12 +192,21 @@ div.modal-open {
 	font-family: 'open_sansregular';
 	border: 1px solid #fff;
 	border-radius: 2px;
-	background: url(../website/input-bg.png) repeat;
 	color: #fff !important;
 	height: 45px !important;
 	margin-bottom: 35px;
 	font-size: 16px;
 }
+.carousel-inner .formcontainer input {
+
+	background: #fafafa;
+	height: 42px !important;
+	border-radius: 4px;
+	padding: 6px 12px;
+	color: #555 !important;
+	font-size: 14px;
+}
+
 .formcontainer .btn-red {
 	padding: 10px 40px;
 	font-size: 20px;
@@ -1497,10 +1506,13 @@ color: #fff !important;
 color: #fff !important;
 }
  .formcontainer input::-moz-placeholder {  /* Firefox 19+ */
+color: #555 !important;
+}
+.formcontainer input:-ms-input-placeholder {
 color: #fff !important;
 }
- .formcontainer input:-ms-input-placeholder {
-color: #fff !important;
+.formcontainer input::-webkit-input-placeholder {
+   color: #555 !important;
 }
 .navbar-collapse {
 	padding-right: 0;
@@ -3252,4 +3264,7 @@ color:#555;
 .signin-page .form-control::-moz-placeholder 
 { 
     color:#000 !important;
+}
+.carousel-inner .form-control::-moz-placeholder 
+{ color: #555 !important;
 }

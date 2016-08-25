@@ -1,7 +1,8 @@
 require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
-#  root to: "home#index"
+  # root to: "home#index"
+
   namespace :api do
     namespace :v1 do
       devise_scope :app_user do
@@ -50,7 +51,7 @@ Rails.application.routes.draw do
       match 'get_deal_channels' => 'deals#get_deal_channels', :via => :get
       match 'get_channel_details' => 'deals#get_channel_details', :via => :get
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
-      match 'verify_email'=>"app_users#verify_email", :via => :get
+      match 'verify_user'=>"app_users#verify_user", :via => :get
       match 'deal_details'=>"deals#fetch_deal_details", :via => :get
       resources :orders do
         collection do
@@ -66,8 +67,12 @@ Rails.application.routes.draw do
   #resources :service_categories do
   #  collection { post :import }
   #end
+<<<<<<< HEAD
 
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
+=======
+   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
+>>>>>>> 8b945c6f246e0ada2a74bb762fcecc48dd1add43
   if Socket.gethostname=="servicedlz-Virtual-Machine"
   root to: "home#index"
   else

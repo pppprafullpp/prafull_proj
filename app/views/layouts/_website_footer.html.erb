@@ -23,6 +23,9 @@
         <li><a href="javascript:void(0)">Order Status</a></li>
         <li><a href="javascript:void(0)">Cellphone Facts Labels</a></li>
         <li><a href="javascript:void(0)">Sitemap</a></li>
+        <%if session[:user_id].present? and !AppUser.find(session[:user_id]).email_verified%>
+        <li><a href="/proxy_verify">Verify</a></li>
+        <%end%>
       </ul>
     </div>
 

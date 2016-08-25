@@ -198,9 +198,9 @@ service_preference_sum = service_preference_sum + sp.price
     end
   end
 
-  def verify_email
-    email=params[:email]
-    data=AppUser.find_by_email(email)
+  def verify_user
+
+    data=AppUser.find(params[:id])
     if data.email_verified
       render :json=>{
         verified:true

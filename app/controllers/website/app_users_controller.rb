@@ -63,7 +63,7 @@ class Website::AppUsersController < ApplicationController
             business_addresses = BusinessAddress.find_by_business_id(business_user_id)
             business_addresses.update_attributes(
                 :address_name=>params[:addresses][:address_name],
-                :address_type => params[:addresses][:address_type].to_i,
+                :address_type =>2,
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],

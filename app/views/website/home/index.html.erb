@@ -62,6 +62,11 @@
 <%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
 
 <!-- mid part -->
+
+
+<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
+
 <div class="container serviceCon">
   <!-- Example row of columns -->
   <div class="row">
@@ -114,8 +119,6 @@
     <p>ELECTRICITY</p> -->
   </div>
 </div>
-
-
 
 
 <!--Client-->

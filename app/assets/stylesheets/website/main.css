@@ -1929,29 +1929,29 @@ color: #fff !important;
 	padding: 50px 0px;
 }
 .more-details h3 {
-	font-family: 'open_sanslight';
-	font-size: 40px;
-	color: #000;
-	margin-bottom: 50px;
-	position: relative;
-	text-align: center;
+  color: #000;
+  font-family: "open_sanslight";
+  font-size: 30px;
+  margin-bottom: 30px;
+  position: relative;
+  text-align: center;
 }
-.more-details h3:before {
+/*.more-details h3:before {
 	content: "";
 	position: absolute;
 	top: 24px;
 	left: 15px;
 	right: 810px;
 	border-top: 1px solid #d8d8d8;
-}
-.more-details h3:after {
+}*/
+/*.more-details h3:after {
 	content: "";
 	position: absolute;
 	top: 24px;
 	left: 810px;
 	right: 15px;
 	border-top: 1px solid #d8d8d8;
-}
+}*/
 .more-details h5 {
 	font-family: "open_sanssemibold";
 	color: #000;

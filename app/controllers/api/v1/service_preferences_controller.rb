@@ -156,7 +156,95 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				:service_preference => @user_preference
 			}
 		else
-			render :json => { :success => false }
+			if params[:category] == '1'
+				service_preference_hash = {}
+				service_preference_hash['id'] = 0
+				service_preference_hash['app_user_id'] = params[:app_user_id]
+				service_preference_hash['service_category_id'] = 1
+				service_preference_hash['service_provider_id'] = 1
+				service_preference_hash['price'] = 95
+				service_preference_hash['is_contract'] = true
+				service_preference_hash['start_date'] = ""
+				service_preference_hash['end_date'] = ""
+				service_preference_hash['plan_name'] = ""
+				service_preference_hash['upload_speed'] = ""
+				service_preference_hash['download_speed'] = 20.00
+				service_preference_hash['online_storage'] = ""
+				service_preference_hash['wifi_hotspot'] = ""
+				
+			elsif  params[:category] == '2'
+				service_preference_hash = {}
+				service_preference_hash['id'] = 0
+				service_preference_hash['app_user_id'] = params[:app_user_id]
+				service_preference_hash['service_category_id'] = 2
+				service_preference_hash['service_provider_id'] = 30
+				service_preference_hash['price'] = 35
+				service_preference_hash['is_contract'] = true
+				service_preference_hash['start_date'] = ""
+				service_preference_hash['end_date'] = ""
+				service_preference_hash['plan_name'] = ""
+				service_preference_hash['domestic_call_minutes'] = ""
+				service_preference_hash['international_call_minutes'] = ""
+				service_preference_hash['domestic_call_unlimited'] = true
+				service_preference_hash['international_call_unlimited'] = ""
+
+			elsif  params[:category] == '3'
+				service_preference_hash = {}
+				service_preference_hash['id'] = 0
+				service_preference_hash['app_user_id'] = params[:app_user_id]
+				service_preference_hash['service_category_id'] = 3
+				service_preference_hash['service_provider_id'] = 6
+				service_preference_hash['price'] = 75
+				service_preference_hash['is_contract'] = true
+				service_preference_hash['start_date'] = ""
+				service_preference_hash['end_date'] = ""
+				service_preference_hash['plan_name'] = ""
+				service_preference_hash['free_channels'] = 150
+				service_preference_hash['premium_channels'] = ""
+						
+			elsif  params[:category] == '4'
+				service_preference_hash = {}
+				service_preference_hash['id'] = 0
+				service_preference_hash['app_user_id'] = params[:app_user_id]
+				service_preference_hash['service_category_id'] = 4
+				service_preference_hash['service_provider_id'] = 3
+				service_preference_hash['price'] = 120
+				service_preference_hash['is_contract'] = true
+				service_preference_hash['start_date'] = ""
+				service_preference_hash['end_date'] = ""
+				service_preference_hash['plan_name'] = ""
+				service_preference_hash['domestic_call_unlimited'] = true
+				service_preference_hash['international_call_unlimited'] = ""
+				service_preference_hash['no_of_lines'] = 1
+			
+			elsif params[:category] == '5'
+				service_preference_hash = {}
+				service_preference_hash['id'] = 0
+				service_preference_hash['app_user_id'] = params[:app_user_id]
+				service_preference_hash['service_category_id'] = 5
+				service_preference_hash['service_provider_id'] = 12
+				service_preference_hash['price'] = 100
+				service_preference_hash['is_contract'] = true
+				service_preference_hash['start_date'] = ""
+				service_preference_hash['end_date'] = ""
+				service_preference_hash['plan_name'] = ""
+				service_preference_hash['upload_speed'] = ""
+				service_preference_hash['download_speed'] = 50
+				service_preference_hash['data'] = ""
+				service_preference_hash['free_channels'] = ""
+				service_preference_hash['premium_channels'] = ""
+				service_preference_hash['domestic_call_minutes'] = ""
+				service_preference_hash['international_call_minutes'] = ""
+				service_preference_hash['data_plan'] = ""
+				service_preference_hash['data_speed'] = ""
+				service_preference_hash['domestic_call_unlimited'] = true
+				service_preference_hash['international_call_unlimited'] = ""
+				service_preference_hash['bundle_combo'] = ""
+			end
+				render :status => 200,:json => {
+					:success => true,
+					:service_preference => service_preference_hash
+				}
 		end	
 	end
 

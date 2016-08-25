@@ -104,10 +104,10 @@ a, a:hover, a:focus {
 	color: #9b9b9b;
 }
 .fb-top:hover, .tw-top:hover, .gplus-top:hover, .in-top:hover {
-	color: #afafaf;
+	color: #0378d0;
 }
 .login-tab a {
-	color: #9b9b9b;
+	color: #c4c4c4;;
 	text-decoration: none;
 	outline: none;
 	font-size: 14px;
@@ -160,10 +160,10 @@ div.modal-open {
 .navbar-inverse .navbar-toggle .icon-bar {
 	background: #000 !important;
 }
-/*carousel*/
-/*.carousel-inner {
-    height: 600px;
-}*/
+
+.carousel-inner {
+    height: 400px;
+}
 .carousel-inner img {
 	width: 100%;
 }
@@ -192,12 +192,21 @@ div.modal-open {
 	font-family: 'open_sansregular';
 	border: 1px solid #fff;
 	border-radius: 2px;
-	background: url(../website/input-bg.png) repeat;
 	color: #fff !important;
 	height: 45px !important;
 	margin-bottom: 35px;
 	font-size: 16px;
 }
+.carousel-inner .formcontainer input {
+
+	background: #fafafa;
+	height: 42px !important;
+	border-radius: 4px;
+	padding: 6px 12px;
+	color: #555 !important;
+	font-size: 14px;
+}
+
 .formcontainer .btn-red {
 	padding: 10px 40px;
 	font-size: 20px;
@@ -1497,10 +1506,13 @@ color: #fff !important;
 color: #fff !important;
 }
  .formcontainer input::-moz-placeholder {  /* Firefox 19+ */
+color: #555 !important;
+}
+.formcontainer input:-ms-input-placeholder {
 color: #fff !important;
 }
- .formcontainer input:-ms-input-placeholder {
-color: #fff !important;
+.formcontainer input::-webkit-input-placeholder {
+   color: #555 !important;
 }
 .navbar-collapse {
 	padding-right: 0;
@@ -1917,29 +1929,29 @@ color: #fff !important;
 	padding: 50px 0px;
 }
 .more-details h3 {
-	font-family: 'open_sanslight';
-	font-size: 40px;
-	color: #000;
-	margin-bottom: 50px;
-	position: relative;
-	text-align: center;
+  color: #000;
+  font-family: "open_sanslight";
+  font-size: 30px;
+  margin-bottom: 30px;
+  position: relative;
+  text-align: center;
 }
-.more-details h3:before {
+/*.more-details h3:before {
 	content: "";
 	position: absolute;
 	top: 24px;
 	left: 15px;
 	right: 810px;
 	border-top: 1px solid #d8d8d8;
-}
-.more-details h3:after {
+}*/
+/*.more-details h3:after {
 	content: "";
 	position: absolute;
 	top: 24px;
 	left: 810px;
 	right: 15px;
 	border-top: 1px solid #d8d8d8;
-}
+}*/
 .more-details h5 {
 	font-family: "open_sanssemibold";
 	color: #000;
@@ -3274,4 +3286,8 @@ color:#555;
 .prefrence-popup a {
   color: #000;
   text-decoration: underline;
+}
+
+.carousel-inner .form-control::-moz-placeholder
+{ color: #555 !important;
 }

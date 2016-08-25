@@ -12,7 +12,7 @@ test:
   encoding: utf8
   database: servicedeals
   username: root
-  password: root
+  password: password
   host: localhost
   pool: 5
 

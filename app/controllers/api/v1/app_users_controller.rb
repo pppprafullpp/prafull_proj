@@ -53,6 +53,30 @@ class Api::V1::AppUsersController < ApplicationController
   end
 
   def get_app_user
+      app_user = AppUser.find_by_id(params[:id]) if params[:id].present?
+      app_user = AppUser.find_by_email(params[:email]) if params[:email].present?
+      if app_user.present?
+        if app_user.user_type == AppUser::BUSINESS
+          app_user_addresses = app_user.business_app_users.first.business.business_addresses.where(address_type: 2).first rescue nil
+        else
+          app_user_addresses = app_user.app_user_addresses.where(address_type: 2).first rescue nil
+        end
+          user_preference = app_user.service_preferences.present? ? true :false
+          render :status => 200,
+                 :json => {
+                     :success => true,
+                     :app_user => app_user.as_json(:except => [:created_at, :updated_at, :avatar], :methods => [:avatar_url]),
+                     :user_preference => user_preference,
+                     :app_user_addresses => app_user_addresses.as_json,
+                     :business => app_user.business_app_users.first.try(:business).as_json(:except => [:is_service_address_same,:is_shipping_address_same])
+                 }
+      else
+        render :status => 404,
+               :json => { :success => false }
+      end
+  end
+
+  def get_app_user_bck
     if params[:id].present? && params[:email].blank?
       app_user = AppUser.find_by_id(params[:id])
       if app_user.present?

@@ -2,6 +2,7 @@ require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
   # root to: "home#index"
+
   namespace :api do
     namespace :v1 do
       devise_scope :app_user do
@@ -66,7 +67,10 @@ Rails.application.routes.draw do
   #resources :service_categories do
   #  collection { post :import }
   #end
-   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
+
+
+  match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
+
   if Socket.gethostname=="servicedlz-Virtual-Machine"
   root to: "home#index"
   else

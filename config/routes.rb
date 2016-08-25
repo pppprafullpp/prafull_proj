@@ -67,12 +67,10 @@ Rails.application.routes.draw do
   #resources :service_categories do
   #  collection { post :import }
   #end
-<<<<<<< HEAD
+
 
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
-=======
-   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
->>>>>>> 8b945c6f246e0ada2a74bb762fcecc48dd1add43
+
   if Socket.gethostname=="servicedlz-Virtual-Machine"
   root to: "home#index"
   else

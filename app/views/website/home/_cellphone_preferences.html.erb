@@ -1,0 +1,69 @@
+<div class="form-area">
+  <%=form_tag(:service_preferences, :url=>"add_service_preferences") do %>
+    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
+    <%=hidden_field_tag(:service_category_name,ServiceCategory.get_category_name_by_id(params[:category_id]))%>
+      <select class="form-control" name="vendor_name">
+        <%= options_for_select(@providers, :prompt=>"Select") %>
+      </select> <br />
+    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <p>Contract Date</p>
+    <input type="checkbox" name="no-contract" text="No Contract" id="nocontractcb" onchange="resetcontractdate()">No Contract
+    <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />
+    <%= date_field_tag(:end_date,"", :class=>"form-control")%><br />
+    <p>Calls</p>
+    <p>Domestic</p>
+    <div class="row">
+      <div class="col-md-6"><input type="checkbox" name="no-contract" text="No Contract" id="ul-domestic" onchange="resetdomestic()">Unlimited</div>
+      <div class="col-md-6">
+        <%=number_field_tag(:domestic_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6"><input type="checkbox" name="no-contract" text="No Contract" id="ul-int" onchange="resetinternat()">Unlimited</div>
+      <div class="col-md-6">
+        <%=number_field_tag(:international_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <select name="no_of_lines" class="form-control">
+          <%(1..5).each do |n| %>
+          <option value="<%=n%>" class="form-control"><%=n%></option>
+          <%end%>
+        </select>
+    </div>
+      <div class="col-md-6">
+        <%=number_field_tag(:data_plan, "", :class=>"form-control", :placeholder=>"Data Plan(GB)")%><br />
+      </div>
+    </div>
+    <%= submit_tag("Save", :class=>"btn btn-success")%>
+    <%end%>
+  </div>
+  <script>
+  function resetcontractdate(){
+    if( $("#nocontractcb").prop("checked")==true){
+      $("#start_date").attr("disabled",true);
+      $("#end_date").attr("disabled",true);
+    }
+    else {
+      $("#start_date").attr("disabled",false);
+      $("#end_date").attr("disabled",false);
+    }
+  }
+  function resetdomestic(){
+      if( $("#ul-domestic").prop("checked")==true){
+        $("#domestic_minutes").attr("disabled",true);
+      }
+      else {
+        $("#domestic_minutes").attr("disabled",false);
+      }
+  }
+  function resetinternat(){
+      if( $("#ul-int").prop("checked")==true){
+        $("#international_minutes").attr("disabled",true);
+      }
+      else {
+        $("#international_minutes").attr("disabled",false);
+      }
+  }
+  </script>

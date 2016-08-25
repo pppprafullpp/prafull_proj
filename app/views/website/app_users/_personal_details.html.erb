@@ -87,7 +87,7 @@
         <div class="row">
           <div class="col-sm-6">
             <label class="control-label" for="Address">Address Type</label>
-            <%=text_field_tag("Billing_Address_txt","Billing Address",:class=>"form-control", :disabled=>true)%>
+            <%#=text_field_tag("Billing_Address_txt","Billing Address",:class=>"form-control", :disabled=>true)%>
             <%= select_tag :address_type,options_for_select(BusinessAddress::ADDRESSES,address_type),:class => 'form-control input-md',:name => "addresses[address_type]"%>
             <%#=text_field_tag(:address_type,2,:class=>"form-control", :disabled=>true)%>
           </div>

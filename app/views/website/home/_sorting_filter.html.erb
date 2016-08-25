@@ -2,7 +2,7 @@
   <div class="border-radius-bg">
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <h6 class="heading-2">Sort By:</h6>
         <ul>
           <!--<li><a class="active" href="#">Relevance</a></li>-->
@@ -21,6 +21,9 @@
           <li><%= link_to 'Price Low to High',params.merge({:sort_by => 'price ASC'}),:class => active_class1 %></li>
           <li><%= link_to 'Price High to Low',params.merge({:sort_by => 'price DESC'}),:class => active_class2 %></li>
         </ul>
+        <%if session[:user_id].present?%>
+        <div style="float:right">  <a href="#" data-toggle="modal" data-target="#myModal" class="prefrence-popup">Add Preferences</a> </div>
+        <%end%>
       </div>
       <div class="col-md-4">
         <div class="input-group stylish-input-group">

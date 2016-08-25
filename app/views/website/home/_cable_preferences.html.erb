@@ -1,0 +1,37 @@
+<div class="form-area">
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+  <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
+  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
+  <%=hidden_field_tag("app_user_id",session[:user_id])%>
+  <%=hidden_field_tag("from_site","true")%>
+      <select class="form-control" name="service_provider_name">
+        <%= options_for_select(@providers, :prompt=>"Select") %>
+      </select> <br />
+    <%= number_field_tag("price","",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <p>Contract Date</p>
+    <%= check_box_tag "is_contract", false, :class=>"form-control"%>No Contract
+    <%= date_field_tag("start_date","", :class=>"form-control")%><br />
+    <%= date_field_tag("end_date","", :class=>"form-control")%><br />
+    <%= number_field_tag("channels", "", :class=>"form-control", :placeholder=>"Total channels")%><br />
+    <%= number_field_tag("premium_channels", "", :class=>"form-control", :placeholder=>"Premium channels")%><br />
+    <%=hidden_field_tag("plan_name","none")%>
+    <%= submit_tag("Save", :class=>"btn btn-success")%>
+    <%end%>
+  </div>
+  <script>
+  $(document).ready(function(){
+    $("#is_contract").prop("checked",false);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+      }
+      else {
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
+      }
+    })
+  })
+
+  </script>

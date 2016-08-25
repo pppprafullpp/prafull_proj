@@ -1,5 +1,5 @@
 class ServicePreferencesController < ApplicationController
-	
+
 	def index
 		@service_preferences = ServicePreference.all
     respond_to do |format|
@@ -8,8 +8,8 @@ class ServicePreferencesController < ApplicationController
       format.csv {
         csv_string = CSV.generate do |csv|
           # header row
-          csv << ["ID",   
-          "App User ID",           
+          csv << ["ID",
+          "App User ID",
           "ServiceCategory ID",
           "ServiceProvider ID",
           "ServiceCategory Name",
@@ -20,14 +20,14 @@ class ServicePreferencesController < ApplicationController
           "Price",
           "Plan Name",
           "Created At",
-          "Updated At",         
-          ]  
+          "Updated At",
+          ]
 
           # data rows
           ServicePreference.all.order("id ASC").each do |sp|
-            csv << 
-            [ sp.id, 
-              sp.app_user_id,                 
+            csv <<
+            [ sp.id,
+              sp.app_user_id,
               sp.service_category_id,
               sp.service_provider_id,
               sp.service_category.name,
@@ -40,12 +40,12 @@ class ServicePreferencesController < ApplicationController
               sp.created_at,
               sp.updated_at
             ]
-          end               
-        end 
+          end
+        end
         # send it to the browsah
-        send_data csv_string, 
-          :type => 'text/csv; charset=iso-8859-1; header=present', 
-          :disposition => "attachment; filename=service_preferences.csv" 
+        send_data csv_string,
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=service_preferences.csv"
       }
     end
 	end
@@ -59,8 +59,9 @@ class ServicePreferencesController < ApplicationController
   end
 
 	def create
-		@service_preference = ServicePreference.new(service_preference_params)   
-    #raise @service_preference.inspect 
+		
+ 		@service_preference = ServicePreference.new(service_preference_params)
+    #raise @service_preference.inspect
     	respond_to do |format|
       		if @service_preference.save
         		format.html { redirect_to service_preferences_path, :notice => 'You have successfully created a service preference' }
@@ -70,6 +71,7 @@ class ServicePreferencesController < ApplicationController
         		format.xml  { render :xml => @service_preference.errors, :status => :unprocessable_entity }
       		end
     	end
+
 	end
 
   def update
@@ -83,6 +85,7 @@ class ServicePreferencesController < ApplicationController
             format.json { render json: @service_preference.errors, status: :unprocessable_entity }
           end
       end
+
   end
 
 	def destroy
@@ -99,4 +102,4 @@ class ServicePreferencesController < ApplicationController
 	def service_preference_params
 		params.require(:service_preference).permit(:app_user_id, :service_category_name, :service_provider_name, :start_date, :end_date, :is_contract, :price, :plan_name)
 	end
-end	
+end

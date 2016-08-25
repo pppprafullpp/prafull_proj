@@ -3225,7 +3225,7 @@ color:#555;
 
 
 .no-float{
-    float: none !important; 
+    float: none !important;
     text-align:  left !important;
 }
 .btn_3{
@@ -3249,7 +3249,29 @@ color:#555;
     margin-top: 10px;
     font-size: 15px;
 }
-.signin-page .form-control::-moz-placeholder 
-{ 
+.signin-page .form-control::-moz-placeholder
+{
     color:#000 !important;
+}
+.reset-btn {
+  background: #44b758 none repeat scroll 0 0;
+	width: 100px;
+  float:left;
+}
+
+.search-btn {
+  background: #2890b7 none repeat scroll 0 0;
+	width: 100px;
+  margin-right: 10px;
+  float:left;
+}
+
+.prefrence-popup {
+  float: right;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.prefrence-popup a {
+  color: #000;
+  text-decoration: underline;
 }

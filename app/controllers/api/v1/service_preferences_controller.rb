@@ -5,8 +5,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	respond_to :json
 
 	def index
-		@service_preferences = ServicePreference.all
-	end
+ 		@service_preferences = ServicePreference.all
+ 	end
 
 	def send_ios_notification
 		@app_users=AppUser.all
@@ -43,6 +43,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 
 	def create
+		# raise params.to_yaml
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
 		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
@@ -54,62 +55,78 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			elsif params[:service_category_id] == '3'
 				@service_preference.cable_service_preference.update(cable_service_preference_params)
 			elsif params[:service_category_id] == '4'
-				@service_preference.cellphone_service_preference.update(cellphone_service_preference_params)	
+				@service_preference.cellphone_service_preference.update(cellphone_service_preference_params)
 			elsif params[:service_category_id] == '5'
 				@service_preference.bundle_service_preference.update(bundle_service_preference_params)
 			elsif params[:service_category_id] == '8'
-				@service_preference.update(service_preference_params)	
-			end	
+				@service_preference.update(service_preference_params)
+			end
       if @service_preference.update(service_preference_params)
       	if params[:is_contract] == "true"
         	send_notification_no_contract
-        elsif params[:is_contract] == "false"	
-        		send_notification_is_contract	
-		end
-        	render :status => 200,
-              	 :json => { :success => true }
+        elsif params[:is_contract] == "false"
+        		send_notification_is_contract
+	   	end
+				if params[:from_site].present?
+					redirect_to :back
+				else
+					render :status => 200,
+								 :json => { :success => true }
+				end
       else
         	render :status => 401,
-           		:json => { :success => false }	
+           		:json => { :success => false }
       end
 		else
-			@service_preference = ServicePreference.new(service_preference_params) 
+			@service_preference = ServicePreference.new(service_preference_params)
 			@service_preference.save!
 			if params[:service_category_id] == '1'
 				@internet_service_preference = InternetServicePreference.new(internet_service_preference_params)
 				@internet_service_preference.service_preference_id = @service_preference.id
 				@internet_service_preference.save!
-			elsif params[:service_category_id] == '2'	
+			elsif params[:service_category_id] == '2'
 				@internet_service_preference = TelephoneServicePreference.new(telephone_service_preference_params)
 				@internet_service_preference.service_preference_id = @service_preference.id
-				@internet_service_preference.save!	
-			elsif params[:service_category_id] == '3'	
+				@internet_service_preference.save!
+			elsif params[:service_category_id] == '3'
 				@internet_service_preference = CableServicePreference.new(cable_service_preference_params)
 				@internet_service_preference.service_preference_id = @service_preference.id
 				@internet_service_preference.save!
-			elsif params[:service_category_id] == '4'	
+			elsif params[:service_category_id] == '4'
 				@internet_service_preference = CellphoneServicePreference.new(cellphone_service_preference_params)
 				@internet_service_preference.service_preference_id = @service_preference.id
-				@internet_service_preference.save!	
-			elsif params[:service_category_id] == '5'	
+				@internet_service_preference.save!
+			elsif params[:service_category_id] == '5'
 				@internet_service_preference = BundleServicePreference.new(bundle_service_preference_params)
 				@internet_service_preference.service_preference_id = @service_preference.id
-				@internet_service_preference.save!	
-			elsif params[:service_category_id] == '8'	
+				@internet_service_preference.save!
+			elsif params[:service_category_id] == '8'
 				@internet_service_preference = @service_preference
-				@internet_service_preference.save!	
+				@internet_service_preference.save!
 				#@internet_service_preference = BundleServicePreference.new(bundle_service_preference_params)
 				#@internet_service_preference.service_preference_id = @service_preference.id
-				#@internet_service_preference.save!	
+				#@internet_service_preference.save!
 			end
-      if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
+			if params[:app_user_id].present?
+				id=params[:app_user_id]
+			elsif session[:user_id].present?
+				id=session[:user_id]
+			end
+
+       if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
         	if params[:is_contract] == "true"
+						@app_user=AppUser.find(id)
         		send_notification_no_contract
-        	elsif params[:is_contract] == "false"	
+        	elsif params[:is_contract] == "false"
+						@app_user=AppUser.find(id)
         		send_notification_is_contract
 					end
-					render :status => 200,
-              	 :json => { :success => true }
+					if params[:from_site].present?
+						redirect_to :back
+					else
+						render :status => 200,
+	              	 :json => { :success => true }
+					end
       else
         	render :status => 401,
            		:json => { :success => false }
@@ -126,16 +143,16 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			}
 		else
 			render :json => { :success => false }
-		end	
+		end
 	end
 
 	def fetch_service_preferences
 		@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_id = ?",params[:category]).take
-		if @service_preference.present?	
+		if @service_preference.present?
 			if params[:category] == '1'
 				@internet_preference = InternetServicePreference.where("service_preference_id = ?", @service_preference.id ).take
 			elsif params[:category] == '2'
-				@internet_preference = TelephoneServicePreference.where("service_preference_id = ?", @service_preference.id ).take				
+				@internet_preference = TelephoneServicePreference.where("service_preference_id = ?", @service_preference.id ).take
 			elsif params[:category] == '3'
 				@internet_preference = CableServicePreference.where("service_preference_id = ?", @service_preference.id ).take
 			elsif params[:category] == '4'
@@ -171,7 +188,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				service_preference_hash['download_speed'] = 20.00
 				service_preference_hash['online_storage'] = ""
 				service_preference_hash['wifi_hotspot'] = ""
-				
+
 			elsif  params[:category] == '2'
 				service_preference_hash = {}
 				service_preference_hash['id'] = 0
@@ -201,7 +218,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				service_preference_hash['plan_name'] = ""
 				service_preference_hash['free_channels'] = 150
 				service_preference_hash['premium_channels'] = ""
-						
+
 			elsif  params[:category] == '4'
 				service_preference_hash = {}
 				service_preference_hash['id'] = 0
@@ -216,7 +233,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				service_preference_hash['domestic_call_unlimited'] = true
 				service_preference_hash['international_call_unlimited'] = ""
 				service_preference_hash['no_of_lines'] = 1
-			
+
 			elsif params[:category] == '5'
 				service_preference_hash = {}
 				service_preference_hash['id'] = 0
@@ -245,7 +262,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					:success => true,
 					:service_preference => service_preference_hash
 				}
-		end	
+		end
 	end
 
 	def deselect_service_preference
@@ -255,7 +272,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			render :status => 200, :json => { :success => true }
 		else
 			render :status => 401, :json => { :success => false }
-		end	
+		end
 	end
 
 	def edit
@@ -275,17 +292,25 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	private
 	def send_notification_is_contract
-		@app_user = AppUser.find_by_id(params[:app_user_id])
+		if params[:app_user_id].present?
+			id=params[:app_user_id]
+		elsif session[:user_id].present?
+			id=session[:user_id]
+		end
+		# raise AppUser.find_by_id(id).to_yaml
+		@app_user = AppUser.find_by_id(id)
 		@deal_type=@app_user.user_type
 		@app_user_device = @app_user.device_flag
-		@user_notification_day = @app_user.notification.day
+		if @app_user.notification.present?
+			@user_notification_day = @app_user.notification.day
+		end
 		@user_contract_end_date = params[:end_date]
 		@user_preference = @app_user.service_preferences.where("service_category_id = ?",params[:service_category_id]).first
-		
+
 		if @user_contract_end_date.present? && @user_notification_day.present?
-			
+
 			best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
-			if best_deal.present?	
+			if best_deal.present?
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
 		      		DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
@@ -312,7 +337,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		        			#content_available: true                  																	# optional; any truthy value will set 'content-available' to 1
 		      			)
 		      			pusher.push(notification)
-		      		end    		
+		      		end
 				end
 		    end
     	end
@@ -349,7 +374,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		        	#content_available: true                  																	# optional; any truthy value will set 'content-available' to 1
 		      	)
 		      	pusher.push(notification)
-			end	
+			end
 		end
   	end
 	def service_preference_params
@@ -358,8 +383,14 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				params[:start_date] = Date.strptime(params[:start_date].to_s.strip, "%m/%d/%Y").strftime("%d/%m/%Y")
 				params[:end_date] = Date.strptime(params[:end_date].to_s.strip, "%m/%d/%Y").strftime("%d/%m/%Y")
 			rescue
-				params[:start_date] = Date.strptime(params[:start_date].to_s.strip, "%d/%m/%Y").strftime("%d/%m/%Y")
-				params[:end_date] = Date.strptime(params[:end_date].to_s.strip, "%d/%m/%Y").strftime("%d/%m/%Y")
+				if params[:from_site]
+					params[:start_date]=params[:start_date].to_date
+					params[:end_date]=params[:end_date].to_date
+				else
+					params[:start_date] = Date.strptime(params[:start_date].to_s.strip, "%d/%m/%Y").strftime("%d/%m/%Y")
+					params[:end_date] = Date.strptime(params[:end_date].to_s.strip, "%d/%m/%Y").strftime("%d/%m/%Y")
+				end
+
 			end
 		end
 		params.permit(:app_user_id, :service_category_id, :service_provider_id, :service_category_name, :service_provider_name, :is_contract, :start_date, :end_date, :price, :plan_name)
@@ -380,4 +411,4 @@ class Api::V1::ServicePreferencesController < ApplicationController
     params.permit(:service_preference_id, :upload_speed, :download_speed, :data, :free_channels, :premium_channels, :domestic_call_minutes, :international_call_minutes, :domestic_call_unlimited, :international_call_unlimited, :data_plan, :data_speed, :bundle_combo)
   end
 
-end	
+end

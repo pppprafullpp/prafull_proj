@@ -28,7 +28,7 @@
       </div>
       <div class="col-md-12 padding15right">
         <label for="Name" class="control-label">Select State</label>
-        <select class="form-control" name="billing_state" id="billing_state">
+        <select class="form-control" name="app_user_addresses[state]" id="billing_state">
           <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%= options_for_select(cities_array, :prompt=>"Select") %>
       </select>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-12 padding15right">
           <label for="Name" class="control-label">Select State</label>
-          <select class="form-control" name="shipping_state" id="shipping_state">
+          <select class="form-control" name="shipping_addresses[state]" id="shipping_state">
             <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
             <%= options_for_select(cities_array, :prompt=>"Select") %>
         </select>
@@ -96,7 +96,7 @@
           </div>
           <div class="col-md-12 padding15right">
             <label for="Name" class="control-label">Select State</label>
-            <select class="form-control" name="service_state" id="service_state">
+            <select class="form-control" name="service_addresses[state]" id="service_state">
               <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
               <%= options_for_select(cities_array, :prompt=>"Select") %>
           </select>

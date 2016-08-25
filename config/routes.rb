@@ -66,16 +66,14 @@ Rails.application.routes.draw do
   #resources :service_categories do
   #  collection { post :import }
   #end
-<<<<<<< HEAD
+
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
   if Socket.gethostname=="servicedlz-Virtual-Machine"
   root to: "home#index"
   else
   root to: "website/home#index"
   end
-=======
 
->>>>>>> 48a3f0fd3ce8cad7b96eaff6593881e0fd3d0b16
   devise_for :users
   resources :users do
     member do

@@ -253,14 +253,14 @@ class Website::AppUsersController < ApplicationController
 
   def order
       if session[:user_id].present?
-        current_user_data=AppUser.find(session[:user_id])
-        if !current_user_data.first_name.present? or !current_user_data.last_name.present? or !current_user_data.mobile.present? or !current_user_data.primary_id_number.present?
-          redirect_to "/website/app_users/profile?message=fill_profile"
-        else
+        # current_user_data=AppUser.find(session[:user_id])
+        # if !current_user_data.first_name.present? or !current_user_data.last_name.present? or !current_user_data.mobile.present? or !current_user_data.primary_id_number.present?
+        #   redirect_to "/website/app_users/profile?message=fill_profile"
+        # else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
           @effective_price = params[:effective_price]
-        end
+        # end
       else
         session[:deal] = params[:deal_id]
         redirect_to checkout_website_app_users_path

@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
       match 'verify_user'=>"app_users#verify_user", :via => :get
       match 'deal_details'=>"deals#fetch_deal_details", :via => :get
-      resources :orders do
+      resources :orders do 
         collection do
           post :fetch_user_and_deal_details
           post :my_order_details

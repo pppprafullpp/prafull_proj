@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-6 padding15right">
                       <label for="Name" class="control-label">Contact Number*</label>
-                      <%= phone_field_tag('app_user[mobile]',Base64.decode64(@app_user.mobile),:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10) %>
+                      <%= phone_field_tag('app_user[mobile]',@app_user.mobile.present? ? Base64.decode64(@app_user.mobile): @app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10)%>
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Email</label>

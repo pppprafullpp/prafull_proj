@@ -7,7 +7,7 @@
   <%=hidden_field_tag("from_site","true")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
       <select class="form-control" name="service_provider_name">
-        <%= options_for_select(@providers, :prompt=>"Select") %>
+        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> <br />
     <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
     <p>Contract Date</p>
@@ -71,7 +71,7 @@
     </div>
     </div>
     <%=hidden_field_tag("plan_name","none")%>
-    <%= submit_tag("Save", :class=>"btn btn-success")%>
+    <%= submit_tag("Save", :class=>"btn btn-success search-btn")%>
     <%end%>
   </div>
   <script>

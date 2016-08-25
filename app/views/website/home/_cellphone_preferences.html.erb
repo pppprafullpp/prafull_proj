@@ -1,69 +1,83 @@
 <div class="form-area">
-  <%=form_tag(:service_preferences, :url=>"add_service_preferences") do %>
-    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
-    <%=hidden_field_tag(:service_category_name,ServiceCategory.get_category_name_by_id(params[:category_id]))%>
-      <select class="form-control" name="vendor_name">
-        <%= options_for_select(@providers, :prompt=>"Select") %>
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+  <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
+  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+  <%=hidden_field_tag("app_user_id",session[:user_id])%>
+  <%=hidden_field_tag("from_site","true")%>
+      <select class="form-control" name="service_provider_id">
+        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> <br />
     <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
     <p>Contract Date</p>
-    <input type="checkbox" name="no-contract" text="No Contract" id="nocontractcb" onchange="resetcontractdate()">No Contract
+    <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>No Contract
     <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />
     <%= date_field_tag(:end_date,"", :class=>"form-control")%><br />
     <p>Calls</p>
     <p>Domestic</p>
     <div class="row">
-      <div class="col-md-6"><input type="checkbox" name="no-contract" text="No Contract" id="ul-domestic" onchange="resetdomestic()">Unlimited</div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+         <%= check_box_tag "domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6"><input type="checkbox" name="no-contract" text="No Contract" id="ul-int" onchange="resetinternat()">Unlimited</div>
       <div class="col-md-6">
-        <%=number_field_tag(:international_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:domestic_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <select name="no_of_lines" class="form-control">
-          <%(1..5).each do |n| %>
-          <option value="<%=n%>" class="form-control"><%=n%></option>
-          <%end%>
-        </select>
-    </div>
+           <%= check_box_tag "international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
+      </div>
       <div class="col-md-6">
-        <%=number_field_tag(:data_plan, "", :class=>"form-control", :placeholder=>"Data Plan(GB)")%><br />
+        <%=number_field_tag(:international_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
-    <%= submit_tag("Save", :class=>"btn btn-success")%>
+
+    <div class="row">
+      <div class="col-md-6">
+           <%= text_field_tag "data_plan", "", :class=>"form-control", :placeholder=>"Data plan"%>
+      </div>
+    </div>
+ <br />
+    <%= submit_tag("Save", :class=>"btn btn-success search-btn")%>
     <%end%>
   </div>
   <script>
-  function resetcontractdate(){
-    if( $("#nocontractcb").prop("checked")==true){
-      $("#start_date").attr("disabled",true);
-      $("#end_date").attr("disabled",true);
-    }
-    else {
-      $("#start_date").attr("disabled",false);
-      $("#end_date").attr("disabled",false);
-    }
-  }
-  function resetdomestic(){
-      if( $("#ul-domestic").prop("checked")==true){
-        $("#domestic_minutes").attr("disabled",true);
+   $(document).ready(function(){
+    $("#is_contract").prop("checked",false);
+    $("#domestic_call_unlimited").prop("checked",false);
+    $("#international_call_unlimited").prop("checked",false);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
       }
       else {
-        $("#domestic_minutes").attr("disabled",false);
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
       }
-  }
-  function resetinternat(){
-      if( $("#ul-int").prop("checked")==true){
-        $("#international_minutes").attr("disabled",true);
+    });
+
+    $("#domestic_call_unlimited").on("change",function(){
+      if($("#domestic_call_unlimited").prop("checked")==true){
+        $("#domestic_call_minutes").attr("disabled",true);
+        $("#domestic_call_unlimited").val("true");
       }
       else {
-        $("#international_minutes").attr("disabled",false);
+        $("#domestic_call_minutes").attr("disabled",false);
+        $("#domestic_call_unlimited").val("false");
       }
-  }
+    });
+
+    $("#international_call_unlimited").on("change",function(){
+      if($("#international_call_unlimited").prop("checked")==true){
+        $("#international_call_minutes").attr("disabled",true);
+        $("#domestic_call_unlimited").val("true");
+      }
+      else {
+        $("#international_call_minutes").attr("disabled",false);
+        $("#domestic_call_unlimited").val("false");
+      }
+    });
+  })
+
   </script>

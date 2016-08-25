@@ -337,7 +337,7 @@ class Website::AppUsersController < ApplicationController
     redirect_to request.referrer and return
   end
 
-  def verify_user
+  def verify_email
     secure_token=params[:secure_token]
     email_verification_token=AppUser.find(params[:user_id]).email_verification_token
     if secure_token == email_verification_token

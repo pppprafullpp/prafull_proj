@@ -6,7 +6,7 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
       <select class="form-control" name="service_provider_name">
-        <%= options_for_select(@providers, :prompt=>"Select", @providers) %>
+        <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> <br />
     <%= number_field_tag("price","",:class=>"form-control", :placeholder=>"Enter price")%><br />
     <p>Contract Date</p>

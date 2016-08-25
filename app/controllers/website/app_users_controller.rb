@@ -37,6 +37,14 @@ class Website::AppUsersController < ApplicationController
 
   end
 
+  def proxy_verify
+    if session[:user_id].present?
+      AppUser.find(session[:user_id]).update_attributes(:email_verified=>true)
+      flash[:notice] = 'proxy verified'
+      redirect_to :back
+    end
+  end
+
   def update
     if session[:user_id].present?
       # raise params.to_s

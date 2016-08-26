@@ -1,15 +1,16 @@
 <div class="form-area">
-  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post", :html=>{:id=>"bundle_form"}) do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
-      <select class="form-control" name="service_provider_name">
+  <%=hidden_field_tag("bundle_combo","")%>
+    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+      <select class="form-control" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> <br />
-    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
     <p>Contract Date</p>
     <%= check_box_tag "is_contract", false, :class=>"form-control"%>No Contract
     <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />
@@ -71,13 +72,27 @@
     </div>
     </div>
     <%=hidden_field_tag("plan_name","none")%>
-    <%= submit_tag("Save", :class=>"btn btn-success search-btn")%>
+    <div class="col-md-12"><%= submit_tag("Save", :class=>"btn btn-success search-btn", :onclick=>"check()")%></div><br /><br /><br />
+    <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
   </div>
   <script>
   $(document).ready(function(){
     $("#international_call_unlimited").prop("checked",false);
     $("#domestic_call_unlimited").prop("checked",false);
+
+    $("#is_contract").prop("checked",false);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+      }
+      else {
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
+      }
+    })
+
   })
 
   $("#domestic_call_unlimited").on("change",function(){
@@ -100,17 +115,8 @@
       $("#international_call_minutes").attr("disabled",false);
       $("#domestic_call_unlimited").val("false");
     }
-    $("#is_contract").prop("checked",false);
-    $("#is_contract").on("change",function(){
-      if($("#is_contract").prop("checked")==true){
-        $("#start_date").attr("disabled",true);
-        $("#end_date").attr("disabled",true);
-      }
-      else {
-        $("#start_date").attr("disabled",false);
-        $("#end_date").attr("disabled",false);
-      }
-    })
+
+
   });
 
 
@@ -174,5 +180,54 @@
          $("#telephone-div").addClass("hidden");
        }
     }
+ function check(){
+   var status=0;
+   if(($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true)  ||
+      ($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) ||
+      ($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) )
+     {
+     if ($("#internet-cb").prop("checked")==true && ($("#download_speed").val()=="" || $("#upload_speed").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if ($("#cable-cb").prop("checked")==true && ($("#free_channels").val()=="" || $("#premium_channels").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if ($("#internet-cb").prop("checked")==true && ($("#download_speed").val()=="" || $("#upload_speed").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if(status>=2 && $("#price").val()!=""){
+      if($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet and Cable");
+      }
+      if($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet and Telephone");
+      }
+      if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true){
+        $("#bundle_combo").val("Cable and Telephone");
+      }
+      if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true && $("#internet-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet,Telephone and Cable");
+      }
+      $("#bundle_form").submit();
+    }
+    else {
+      $("#msg").text("Please Enter Price").removeClass("hidden");
+    }
+  }
 
+   else {
+     console.log(" not ok");
+     event.preventDefault();
+     $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
+   }
+ }
   </script>

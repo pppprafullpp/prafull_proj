@@ -43,7 +43,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 
 	def create
-		# raise params.to_yaml
+	  #  raise params.to_yaml
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
 		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take

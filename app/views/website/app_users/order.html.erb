@@ -201,7 +201,7 @@ $(document).ready(function(e) {
       current_equipment = $('#drop_equipment_id option:selected').text().split('$')[1].split(')')[0];
       total_price = parseFloat(effective_price) + parseFloat(current_equipment) - parseFloat(current_equipment)
       $('#update_effective_price').html("$" + parseFloat(total_price));
-      $('#effective_price').val("$" + parseFloat(total_price));
+      $('#effective_price').val(parseFloat(total_price));
       $('#equipment_id').val(parseInt($('#drop_equipment_id').val()));
       $('#equipment_price').val(current_equipment);
     }
@@ -209,7 +209,7 @@ $(document).ready(function(e) {
       current_equipment = $('#drop_equipment_id option:selected').text().split('$')[1].split(')')[0];
       total_price = parseFloat(effective_price) + parseFloat(current_equipment) - parseFloat(first_price);
       $('#update_effective_price').html("$" + parseFloat(total_price));
-      $('#effective_price').val("$" + parseFloat(total_price));
+      $('#effective_price').val(parseFloat(total_price));
       $('#equipment_id').val(parseInt($('#drop_equipment_id').val()));
       $('#equipment_price').val(current_equipment);
     }

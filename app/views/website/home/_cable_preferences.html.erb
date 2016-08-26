@@ -8,13 +8,13 @@
       <select class="form-control" name="service_provider_name">
         <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> <br />
-    <%= number_field_tag("price","",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <%= number_field_tag("price","",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
     <p>Contract Date</p>
     <%= check_box_tag "is_contract", false, :class=>"form-control"%>No Contract
     <%= date_field_tag("start_date","", :class=>"form-control")%><br />
     <%= date_field_tag("end_date","", :class=>"form-control")%><br />
-    <%= number_field_tag("channels", "", :class=>"form-control", :placeholder=>"Total channels")%><br />
-    <%= number_field_tag("premium_channels", "", :class=>"form-control", :placeholder=>"Premium channels")%><br />
+    <%= number_field_tag("free_channels", "", :class=>"form-control", :placeholder=>"free channels", :required=>true)%><br />
+    <%= number_field_tag("premium_channels", "", :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%><br />
     <%=hidden_field_tag("plan_name","none")%>
     <%= submit_tag("Save", :class=>"btn btn-success")%>
     <%end%>

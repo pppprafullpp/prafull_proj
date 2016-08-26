@@ -8,7 +8,7 @@
       <select class="form-control" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> <br />
-    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
     <p>Contract Date</p>
     <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>No Contract
     <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />

@@ -14,8 +14,13 @@ class Api::V1::AppUsersController < ApplicationController
       if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
         app_user.update(app_user_params)
         app_user.update_attributes(:primary_id=>params[:primary_id], :secondary_id => params[:secondary_id])
-        business = Business.create_business(params)
-        business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id) if business.present?
+        if app_user.user_type == AppUser::BUSINESS
+          business = Business.create_business(params)
+          business_addresses = BusinessAddress.create_business_addresses(params,business.id)
+          business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id) if business.present?
+        else
+          app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
+        end
         render :status => 200,
                :json => { :success => true }
       else
@@ -238,7 +243,7 @@ service_preference_sum = service_preference_sum + sp.price
   private
   def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-    params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status,:primary_id,:secondary_id,:primary_id_number,:secondary_id_number)
+    params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status,:primary_id,:secondary_id,:primary_id_number,:secondary_id_number,:mobile)
   end
 
   def decode_picture_data(picture_data)

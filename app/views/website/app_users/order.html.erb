@@ -26,11 +26,19 @@
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Effective Price</td>
-                <td  align="left" class="bold">$<%= @effective_price %></td>
+                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price %></td>
               </tr>
             </table>
           </div>
+
         </div>
+        <% if @equipments.present? %>
+          </br>
+          <div>
+            <%= select_tag(:equipment_id, options_for_select(@equipments.collect { |p|
+              ["#{p.model}($#{p.price})", p.id] }),:class => 'form-control',:id => "drop_equipment_id") %>
+          </div>
+        <% end %>
       </div>
 
       <div class="col-lg-8">
@@ -155,6 +163,8 @@
           <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
           <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
           <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
+          <%= hidden_field_tag :equipment_id,'',{:name=> 'order_equipments[equipment_id]'}%>
+          <%= hidden_field_tag :equipment_price,'',{:name=> 'order_equipments[equipment_price]'}%>
           <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
         </div>
       </div>
@@ -183,6 +193,28 @@
 <script>
 var errormsg="";
 $(document).ready(function(e) {
+  var effective_price = $('#update_effective_price').html().split('$')[1];
+  var first_price = $("#drop_equipment_id option:selected").text().split('$')[1].split(')')[0];
+  $("#drop_equipment_id").change(function(e){
+    var first =$("#drop_equipment_id option:selected").text();
+    if(first ==  " iPhone® SE($16.66)"){
+      current_equipment = $('#drop_equipment_id option:selected').text().split('$')[1].split(')')[0];
+      total_price = parseFloat(effective_price) + parseFloat(current_equipment) - parseFloat(current_equipment)
+      $('#update_effective_price').html("$" + parseFloat(total_price));
+      $('#effective_price').val("$" + parseFloat(total_price));
+      $('#equipment_id').val(parseInt($('#drop_equipment_id').val()));
+      $('#equipment_price').val(current_equipment);
+    }
+    else{
+      current_equipment = $('#drop_equipment_id option:selected').text().split('$')[1].split(')')[0];
+      total_price = parseFloat(effective_price) + parseFloat(current_equipment) - parseFloat(first_price);
+      $('#update_effective_price').html("$" + parseFloat(total_price));
+      $('#effective_price').val("$" + parseFloat(total_price));
+      $('#equipment_id').val(parseInt($('#drop_equipment_id').val()));
+      $('#equipment_price').val(current_equipment);
+    }
+  });
+
   <%
   if @app_user.user_type == "residence" %>
   var billing_address;

@@ -6,6 +6,7 @@ class Api::V1::AccountReferralsController < ApplicationController
 	end
 
 	def create
+		# raise params.to_s
 		if params[:referral_code].present? && params[:referrer_id].present?
 			referral_code = params[:referral_code].upcase
 			app_user_id = AppUser.find_by_referral_code(referral_code).try(:id)
@@ -25,13 +26,18 @@ class Api::V1::AccountReferralsController < ApplicationController
 						app_user.refer_status = true
 						app_user.total_amount = app_user.total_amount + gift_received
 						app_user.save
-						message = "Congratulations!! You have earned $#{gift_received}" 
-						render 	:status => 200,
-			        		:json => {
-			                     	:success => true,
-			                     	:gift => gift_received,
-			                     	:message => message
-			                     }
+						message = "Congratulations!! You have earned $#{gift_received}"
+						if params[:from_site]
+							flash[:success]=message
+							redirect_to "/website/app_users/profile?goto=earnings"
+						else
+							render :status => 200,
+				        	   :json => {
+				                     	:success => true,
+				                     	:gift => gift_received,
+				                     	:message => message
+				                     }
+						end
 					else
 						render :json => { :success => false, :message => "Sorry! No Gifts Available for now." }
 					end
@@ -44,7 +50,12 @@ class Api::V1::AccountReferralsController < ApplicationController
 					end
 				end
 			else
+			if params[:from_site]
+				flash[:success]="Wrong Code! you cant use your own code"
+				redirect_to "/website/app_users/profile?goto=earnings&error=wrong_code"
+			else
 				render :json => { :success => false, message: "Invalid Code" }
+			end
 			end
 		end
 
@@ -56,4 +67,3 @@ class Api::V1::AccountReferralsController < ApplicationController
 	end
 
 end
-

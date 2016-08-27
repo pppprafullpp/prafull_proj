@@ -13,11 +13,13 @@
      zip = addresses.zip
      contact_number = addresses.contact_number
    end
+if @app_user.primary_id_number.present? && @app_user.secondary_id_number.present?
 
    primary_id_number = @app_user.primary_id_number.split('===').last
    primary_state = @app_user.primary_id_number.split('===').first
    secondary_id_number = @app_user.secondary_id_number.split('===').last
    secondary_state = @app_user.secondary_id_number.split('===').first
+end
 %>
 
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">

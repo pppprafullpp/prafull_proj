@@ -104,10 +104,10 @@ a, a:hover, a:focus {
 	color: #9b9b9b;
 }
 .fb-top:hover, .tw-top:hover, .gplus-top:hover, .in-top:hover {
-	color: #afafaf;
+	color: #0378d0;
 }
 .login-tab a {
-	color: #9b9b9b;
+	color: #c4c4c4;;
 	text-decoration: none;
 	outline: none;
 	font-size: 14px;
@@ -160,44 +160,53 @@ div.modal-open {
 .navbar-inverse .navbar-toggle .icon-bar {
 	background: #000 !important;
 }
-/*carousel*/
-/*.carousel-inner {
-    height: 600px;
-}*/
+
+.carousel-inner {
+    height: 400px;
+}
 .carousel-inner img {
 	width: 100%;
 }
 .carousel-caption {
 	bottom: 0;
-	top: 135px;
-	text-shadow: none;
-	font-size: 30px;
+  top: 7%;
+  text-shadow: none;
+  font-size: 30px;
 }
 .formcontainer {
-	top: 32%;
-	left: 20%;
-	padding-bottom: 30px;
-	right: 20%;
-	padding-top: 20px;
-	position: absolute;
-	text-align: center;
-	z-index: 999;
+	top: 22%;
+  left: 20%;
+  padding-bottom: 30px;
+  right: 20%;
+  padding-top: 20px;
+  position: absolute;
+  text-align: center;
+  z-index: 999;
 }
 .formcontainer h2 {
 	color: #fff;
-	padding: 10px 0;
-	margin-bottom: 40px;
+	 margin-bottom: 20px;
+	 padding: 10px 0;
 }
 .formcontainer input {
 	font-family: 'open_sansregular';
 	border: 1px solid #fff;
 	border-radius: 2px;
-	background: url(../website/input-bg.png) repeat;
 	color: #fff !important;
 	height: 45px !important;
 	margin-bottom: 35px;
 	font-size: 16px;
 }
+.carousel-inner .formcontainer input {
+
+	background: #fafafa;
+	height: 42px !important;
+	border-radius: 4px;
+	padding: 6px 12px;
+	color: #555 !important;
+	font-size: 14px;
+}
+
 .formcontainer .btn-red {
 	padding: 10px 40px;
 	font-size: 20px;
@@ -1497,10 +1506,13 @@ color: #fff !important;
 color: #fff !important;
 }
  .formcontainer input::-moz-placeholder {  /* Firefox 19+ */
+color: #555 !important;
+}
+.formcontainer input:-ms-input-placeholder {
 color: #fff !important;
 }
- .formcontainer input:-ms-input-placeholder {
-color: #fff !important;
+.formcontainer input::-webkit-input-placeholder {
+   color: #555 !important;
 }
 .navbar-collapse {
 	padding-right: 0;
@@ -1917,29 +1929,29 @@ color: #fff !important;
 	padding: 50px 0px;
 }
 .more-details h3 {
-	font-family: 'open_sanslight';
-	font-size: 40px;
-	color: #000;
-	margin-bottom: 50px;
-	position: relative;
-	text-align: center;
+  color: #000;
+  font-family: "open_sanslight";
+  font-size: 30px;
+  margin-bottom: 30px;
+  position: relative;
+  text-align: center;
 }
-.more-details h3:before {
+/*.more-details h3:before {
 	content: "";
 	position: absolute;
 	top: 24px;
 	left: 15px;
 	right: 810px;
 	border-top: 1px solid #d8d8d8;
-}
-.more-details h3:after {
+}*/
+/*.more-details h3:after {
 	content: "";
 	position: absolute;
 	top: 24px;
 	left: 810px;
 	right: 15px;
 	border-top: 1px solid #d8d8d8;
-}
+}*/
 .more-details h5 {
 	font-family: "open_sanssemibold";
 	color: #000;
@@ -3225,7 +3237,7 @@ color:#555;
 
 
 .no-float{
-    float: none !important; 
+    float: none !important;
     text-align:  left !important;
 }
 .btn_3{
@@ -3249,7 +3261,69 @@ color:#555;
     margin-top: 10px;
     font-size: 15px;
 }
-.signin-page .form-control::-moz-placeholder 
-{ 
+.signin-page .form-control::-moz-placeholder
+{
     color:#000 !important;
+}
+.reset-btn {
+  background: #44b758 none repeat scroll 0 0;
+	width: 100px;
+  float:left;
+}
+
+.search-btn {
+  background: #2890b7 none repeat scroll 0 0;
+	width: 100px;
+  margin-right: 10px;
+  float:left;
+}
+
+.prefrence-popup {
+  float: right;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.prefrence-popup a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.carousel-inner .form-control::-moz-placeholder
+{ color: #555 !important;
+}
+
+
+.pagin-sty {
+	 padding: 10px 20px;
+}
+.mg_bttom20 {
+	margin-bottom: 20px;
+}
+.no-contract-sty{
+
+float: left;
+width: 100%;
+margin-left: 16px;
+}
+
+
+.contract-margin-sty{
+
+float: left;
+width: 100%;
+margin-left: 16px;
+padding-top: 15px;
+font-size:18px;
+}
+
+.preference-btn{
+width: 200px;
+padding: 10px;
+margin-top: 10px;
+font-size: 18px;
+font-weight: bold;
+}
+
+.no-padding {
+	padding: 0px !important;
 }

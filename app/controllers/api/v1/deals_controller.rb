@@ -59,4 +59,17 @@ class Api::V1::DealsController < ApplicationController
 		end
 		render :json => { :bandwidth_in_mb => bandwidth_in_mb.to_s,:bandwidth_in_gb => bandwidth_in_gb.to_f.round, :matching_deal_id=>deals, :deal_name=>deal_name}
 	end
+
+	def fetch_deal_details
+		if params[:deal_id].present?
+			deal = Deal.find(params[:deal_id])
+			     render :status => 200,
+							 :json => {
+									 :success => true,
+									 :deals => deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments],:include => ['bundle_deal_attributes','bundle_equipments'])
+							 }
+		else
+			render :json => { :success => false}
+		end
+	end
 end

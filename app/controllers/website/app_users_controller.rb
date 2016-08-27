@@ -5,7 +5,6 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
-
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
@@ -19,12 +18,13 @@ class Website::AppUsersController < ApplicationController
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code)
-        AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
-        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email '
+        @app_user.update_attributes(:email_verified=>true)
+        # AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
-          redirect_to request.referrer
+          redirect_to "/website/app_users/profile?new_user=new_user"
         end
       else
         flash[:warning] = @app_user.errors.full_messages
@@ -37,27 +37,33 @@ class Website::AppUsersController < ApplicationController
 
   end
 
+  def proxy_verify
+    if session[:user_id].present?
+      AppUser.find(session[:user_id]).update_attributes(:email_verified=>true)
+      flash[:notice] = 'proxy verified'
+      redirect_to :back
+    end
+  end
+
   def update
     if session[:user_id].present?
+      # raise params.to_s
       @app_user = AppUser.find(session[:user_id])
       address = params[:address].present? ? params[:address] : ''
       address1 = params[:address1].present? ? params[:address1] : ''
       address2 = params[:address2].present? ? params[:address2] : ''
       @app_user.address = address + '===' + address1 + '===' + address2
-      #@app_user.city = params[:city];@app_user.state = params[:state]
-      # first_name = params[:first_name].present? ? params[:first_name].split(' ')[0] : @app_user.first_name
-      # last_name = params[:first_name].present? ? params[:first_name].split(' ')[1] : @app_user.last_name
+      @app_user.state = params[:billing_state]
       @app_user.first_name = encode_api_data(params[:first_name])
       @app_user.last_name = encode_api_data(params[:last_name])
-      @app_user.mobile = params[:mobile]
+      @app_user.mobile =  encode_api_data(params[:mobile])
       @app_user.primary_id = params[:primary_id]
       @app_user.primary_id_number = params[:primary_id_number]
       @app_user.secondary_id = params[:secondary_id]
       @app_user.secondary_id_number = params[:secondary_id_number]
-
       @app_user.user_type = params[:user_type] if params[:user_type].present?
       @app_user.avatar=params[:avatar] if params[:avatar].present?
-
+      # raise @app_user.state.to_s
       if @app_user.save!
         if @app_user.user_type == AppUser::BUSINESS
           if  @app_user.business_app_users.present?
@@ -65,7 +71,7 @@ class Website::AppUsersController < ApplicationController
             business_addresses = BusinessAddress.find_by_business_id(business_user_id)
             business_addresses.update_attributes(
                 :address_name=>params[:addresses][:address_name],
-                :address_type => params[:addresses][:address_type],
+                :address_type =>2,
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
@@ -73,6 +79,7 @@ class Website::AppUsersController < ApplicationController
           else
             params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
+            params[:business][:business_name]=encode_api_data(params[:business][:business_name]) if params[:business][:business_name].present?
             @business = Business.create_business(params)
             if @business.present?
               address_hash = {:business_addresses => [params[:addresses]]}
@@ -85,12 +92,13 @@ class Website::AppUsersController < ApplicationController
             app_user_address = @app_user.app_user_addresses.first
             app_user_address.update_attributes(
                 :address_name=>params[:addresses][:address_name],
-                :address_type => params[:addresses][:address_type],
+                :address_type => params[:addresses][:address_type].to_i,
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
                 :contact_number=>params[:addresses][:contact_number])
           else
+            params[:addresses][:address_type]=params[:addresses][:address_type].to_i
             address_hash = {:app_user_addresses => [params[:addresses]]}
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
           end
@@ -158,7 +166,6 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create_order
-
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
@@ -167,7 +174,10 @@ class Website::AppUsersController < ApplicationController
         order.order_id=rand(36**8).to_s(36).upcase
         params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
         params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
+        params[:app_user][:mobile]=encode_api_data(params[:app_user][:mobile])
         if order.save
+          order_equipment_hash = {:order_equipments => [params[:order_equipments]]}
+          order_equipment = OrderEquipment.create_order_equipments(order_equipment_hash,order.id)
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
@@ -179,12 +189,13 @@ class Website::AppUsersController < ApplicationController
             params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
             # params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
           else
-            params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]+","+params[:billing_state]
-            params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]+","+params[:shipping_state]
-            params[:service_addresses][:address2]=params[:service_addresses][:address2]+","+params[:service_state]
+            params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]
+            params[:shipping_addresses][:address2]=params[:shipping_addresses][:address2]
+            params[:service_addresses][:address2]=params[:service_addresses][:address2]
           end
           address_hash = {:app_user_addresses => [params[:shipping_addresses],params[:app_user_addresses],params[:service_addresses]] } if @app_user.user_type == "residence"
           address_hash = {:business_addresses => [params[:business_addresses],params[:business_shipping_addresses],params[:business_service_addresses]] } if @app_user.user_type == "business"
+          # raise address_hash.to_yaml
           order_addresses = OrderAddress.create_order_addresses(address_hash ,order.id)
           # raise params[:business][:business_name]
           if user_type == AppUser::BUSINESS
@@ -199,14 +210,14 @@ class Website::AppUsersController < ApplicationController
               business_user = BusinessAppUser.create_business_app_user(business.id,@app_user.id)
             end
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to "/website/app_users/profile?status=new_order"
+            redirect_to "/website/app_users/order_detail?order_id=#{order.id}"
           else
             app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
             OrderMailer.delay.order_confirmation(@app_user,order)
-            redirect_to "/website/app_users/profile?status=new_order"
+            redirect_to "/website/app_users/order_detail?order_id=#{order.id}"
           end
         else
-          redirect_to "/website/app_users/profile?status=new_order"
+          redirect_to "/website/app_users/order_detail?order_id=#{order.id}"
         end
       else
         # redirect_to website_home_index_path
@@ -222,23 +233,49 @@ class Website::AppUsersController < ApplicationController
     if params[:id].present? and AppUser.find(params[:id]).orders.present?
       @addresses=AppUser.find(params[:id]).orders.last.order_addresses
       render :json=>{
+          :type=>"residence_user",
+        :status=>@addresses
+      }
+    elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?
+      @addresses=AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last
+      render :json=>{
+        :type=>"residence_user_first_order",
         :status=>@addresses
       }
     else
       render :json=>{
-        :status=>"no addresses"
+        :status=>"first_order",
+        :status=>@addresses
+      }
+    end
+  end
+
+  def business_user_addresses
+    if BusinessAddress.exists?(AppUser.find(params[:id]).business_app_users.last.business_id)
+      @addresses=BusinessAddress.find(AppUser.find(params[:id]).business_app_users.last.business_id)
+      render :json=>{
+        :status=>"business_user_first_order",
+        :status=>@addresses
       }
     end
   end
 
   def order
-    if session[:user_id].present?
-      @app_user = AppUser.find(session[:user_id])
-      @deal = Deal.find_by_id(params[:deal_id])
-    else
-      session[:deal] = params[:deal_id]
-      redirect_to checkout_website_app_users_path
-    end
+      if session[:user_id].present?
+        # current_user_data=AppUser.find(session[:user_id])
+        # if !current_user_data.first_name.present? or !current_user_data.last_name.present? or !current_user_data.mobile.present? or !current_user_data.primary_id_number.present?
+        #   redirect_to "/website/app_users/profile?message=fill_profile"
+        # else
+          @app_user = AppUser.find(session[:user_id])
+          @deal = Deal.find_by_id(params[:deal_id])
+          @effective_price = params[:effective_price]
+          if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY
+            @equipments =@deal.cellphone_equipments
+          end
+      else
+        session[:deal] = params[:deal_id]
+        redirect_to checkout_website_app_users_path
+      end
   end
 
   def order_detail

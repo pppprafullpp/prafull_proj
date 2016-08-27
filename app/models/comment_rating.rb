@@ -3,7 +3,10 @@ class CommentRating < ActiveRecord::Base
 	belongs_to :deal
 
 	def app_user_name
-		self.app_user.first_name + ' ' + self.app_user.last_name
+	first_name = Base64.decode64(self.app_user.first_name) 
+	last_name = Base64.decode64(self.app_user.last_name)
+	full_name = first_name + " " + last_name
+	full_name = Base64.encode64(full_name)
 	end
 
 	def app_user_image_url

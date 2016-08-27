@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816053937) do
+ActiveRecord::Schema.define(version: 20160827055457) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -72,8 +72,9 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.string   "address2",       limit: 255
     t.integer  "address_type",   limit: 4
     t.string   "contact_number", limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.text     "state",          limit: 65535
   end
 
   create_table "app_users", force: :cascade do |t|
@@ -205,8 +206,9 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.string   "contact_number",  limit: 255
     t.string   "manager_name",    limit: 255
     t.string   "manager_contact", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.text     "state",           limit: 65535
   end
 
   create_table "business_app_users", force: :cascade do |t|
@@ -348,16 +350,17 @@ ActiveRecord::Schema.define(version: 20160816053937) do
   end
 
   create_table "channels", force: :cascade do |t|
-    t.string   "category_name", limit: 255
-    t.string   "channel_name",  limit: 255
-    t.string   "channel_code",  limit: 255
-    t.string   "channel_type",  limit: 255,   default: "normal"
-    t.text     "description",   limit: 65535
-    t.boolean  "is_hd",                       default: false
-    t.string   "image",         limit: 255
-    t.boolean  "status",                      default: true
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.string   "category_name",       limit: 255
+    t.string   "channel_name",        limit: 255
+    t.string   "channel_code",        limit: 255
+    t.string   "channel_type",        limit: 255,   default: "normal"
+    t.text     "description",         limit: 65535
+    t.boolean  "is_hd",                             default: false
+    t.string   "image",               limit: 255
+    t.boolean  "status",                            default: true
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "service_provider_id", limit: 4
   end
 
   create_table "checklists", force: :cascade do |t|
@@ -403,20 +406,20 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.string   "title",               limit: 255
     t.text     "short_description",   limit: 65535
     t.text     "detail_description",  limit: 65535
-    t.float    "price",               limit: 24,                   default: 0.0,         null: false
-    t.boolean  "is_contract",                                      default: false,       null: false
-    t.integer  "contract_period",     limit: 4,                    default: 0,           null: false
+    t.float    "price",               limit: 24,                            default: 0.0,         null: false
+    t.boolean  "is_contract",                                               default: false,       null: false
+    t.integer  "contract_period",     limit: 4,                             default: 0,           null: false
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_nationwide",                                    default: false
-    t.string   "deal_type",           limit: 100,                  default: "residence", null: false
-    t.boolean  "is_active",                                        default: true
-    t.datetime "created_at",                                                             null: false
-    t.datetime "updated_at",                                                             null: false
-    t.decimal  "effective_price",                   precision: 10
-    t.boolean  "is_sponsored",                                     default: false
+    t.boolean  "is_nationwide",                                             default: false
+    t.string   "deal_type",           limit: 100,                           default: "residence", null: false
+    t.boolean  "is_active",                                                 default: true
+    t.datetime "created_at",                                                                      null: false
+    t.datetime "updated_at",                                                                      null: false
+    t.boolean  "is_sponsored",                                              default: false
+    t.decimal  "effective_price",                   precision: 5, scale: 2
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -550,8 +553,17 @@ ActiveRecord::Schema.define(version: 20160816053937) do
     t.string   "contact_number",  limit: 255
     t.string   "manager_name",    limit: 255
     t.string   "manager_contact", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.text     "state",           limit: 65535
+  end
+
+  create_table "order_equipments", force: :cascade do |t|
+    t.integer  "order_id",        limit: 4
+    t.integer  "equipment_id",    limit: 4
+    t.decimal  "equipment_price",           precision: 5, scale: 2
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "order_items", force: :cascade do |t|

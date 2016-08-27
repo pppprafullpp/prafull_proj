@@ -1,0 +1,52 @@
+<div class="form-area">
+  <%
+
+  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
+    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
+   service_provider_name=@service_preferences_data[0].service_provider_name
+   price=@service_preferences_data[0].price
+   is_contract=@service_preferences_data[0].is_contract
+   start_date=@service_preferences_data[0].start_date
+   end_date=@service_preferences_data[0].end_date
+    @Cable_preferences=CableServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
+   free_channels=@Cable_preferences[0].free_channels
+   premium_channels=@Cable_preferences[0].premium_channels
+ end
+  %>
+
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+  <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
+  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name, :id)%>
+  <%=hidden_field_tag("app_user_id",session[:user_id])%>
+  <%=hidden_field_tag("from_site","true")%>
+      <select class="form-control" name="service_provider_id">
+        <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
+      </select> <br />
+    <%= number_field_tag("price",price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
+    <p>Contract Date</p>
+    <%= check_box_tag "is_contract", false, :class=>"form-control"%>No Contract
+    <%= date_field_tag("start_date",start_date, :class=>"form-control")%><br />
+    <%= date_field_tag("end_date", end_date, :class=>"form-control")%><br />
+    <%= number_field_tag("free_channels", free_channels, :class=>"form-control", :placeholder=>"free channels", :required=>true)%><br />
+    <%= number_field_tag("premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%><br />
+    <%=hidden_field_tag("plan_name","none")%>
+    <%= submit_tag("Save", :class=>"btn btn-success")%>
+    <%end%>
+  </div>
+  <script>
+  $(document).ready(function(){
+    $("#is_contract").prop("checked",false);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+      }
+      else {
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
+      }
+    })
+  })
+
+  </script>

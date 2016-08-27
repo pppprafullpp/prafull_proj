@@ -93,13 +93,15 @@
       </div>
       <div class="col-md-12 padding15right">
         <label for="Name" class="control-label">Select State</label>
-        <select class="form-control" name="billing_state" id="billing_state">
-          <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= options_for_select(cities_array, :prompt=>"Select") %>
-      </select>
+        <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+        <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"billing_state", :id=>"billing_state") %>
+       <!--  <select class="form-control" name="billing_state" id="billing_state">
+          <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+          <%#= options_for_select(cities_array, :prompt=>"Select") %>
+      </select> -->
       </div>
 
-      <div id="additional_data" class="hidden">
+      <div id="additional_data">
       <div class="col-md-12 address-sty">
         <h2 class="padding-bott">Shipping Address</h2>
         <div id="sameasbilling-1" class="checkbox checkbox-info">
@@ -126,10 +128,12 @@
           <label for="Name" class="control-label">Zipcode*</label>
           <%= text_field_tag('business_shipping_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "shipping_zip", maxlength: 6) %>
         </div>
-        <select class="form-control" name="service_state" id="service_state">
-          <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= options_for_select(cities_array, :prompt=>"Select") %>
-      </select>
+        <!-- <select class="form-control" name="service_state" id="service_state">
+          <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+          <%#= options_for_select(cities_array, :prompt=>"Select") %>
+      </select> -->
+        <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+        <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"service_state", :id=>"service_state") %>
       </div>
 
       <div class="col-md-12 address-sty">
@@ -157,10 +161,12 @@
           <label for="Name" class="control-label">Zipcode*</label>
           <%= text_field_tag('business_service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip", maxlength: 6) %>
         </div>
-        <select class="form-control" name="shipping_state" id="shipping_state">
-          <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= options_for_select(cities_array, :prompt=>"Select") %>
-      </select>
+        <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+        <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"shipping_state", :id=>"shipping_state") %>
+       <!--  <select class="form-control" name="shipping_state" id="shipping_state">
+          <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+          <%#= options_for_select(cities_array, :prompt=>"Select") %>
+      </select> -->
       </div>
     </div>
   </div>
@@ -180,7 +186,7 @@ $(document).ready(function(){
       $("#additional_data").removeClass("hidden");
   }
   else {
-    $("#additional_data").addClass("hidden")
+    // $("#additional_data").addClass("hidden")
   }
 });
 })

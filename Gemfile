@@ -77,3 +77,5 @@ group :development, :test do
   gem "better_errors"
 end
 gem 'hirb'
+gem 'compass-rails'
+gem 'chosen-rails'

@@ -35,19 +35,19 @@
           <div class="email-count">
             <label>Email</label>
             <p>How mainy emails do you send/received?</p>
-            <input id="emails" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14"/>
+            <input id="emails" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
             <span id="emails-limit">200 emails</span>
           </div>
           <div class="web-access">
             <label>Web Access</label>
             <p>How mainy web pages do you visit?</p>
-            <input id="web-access" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="14"/>
+            <input id="web-access" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="0"/>
             <span id="webpages-limit">500 pages</span>
           </div>
           <div class="video-calling">
             <label>Video Calling</label>
             <p>How mainy minutes do you spend on video calling?</p>
-            <input id="vc" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="90" data-slider-step="1" data-slider-value="14"/>
+            <input id="vc" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="90" data-slider-step="1" data-slider-value="0"/>
             <span id="vc-limit">90 mins</span>
           </div>
         </div>
@@ -56,7 +56,7 @@
           <div class="upload-downlaod">
             <label>Upload/Download</label>
             <p>How mainy photos do you upload/download?</p>
-            <input id="upload-photos" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14"/>
+            <input id="upload-photos" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
             <span id="photos-limit">100 photos</span>
           </div>
           <div class="usage-type">
@@ -75,7 +75,7 @@
             <div class="video-calling" style="margin-top: 13px;">
               <label>Video Streaming</label>
               <p>How mainy minutes do you spend on video calling?</p>
-              <input id="vs" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="14"/>
+              <input id="vs" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="0"/>
               <span  id="vs-limit">500 mins</span>
             </div>
         </div>
@@ -83,7 +83,7 @@
           <div class="video-calling">
             <label>Audio Calling</label>
             <p>How mainy minutes do you spend on audio calling?</p>
-            <input id="ac" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="14"/>
+            <input id="ac" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="0"/>
             <span  id="ac-limit">500 mins</span>
           </div>
         </div>
@@ -129,14 +129,20 @@ function update_slider(type){
     $("#ac-limit").text("500 calls");
     $("#photos-limit").text("50 photos");
     $("#vs-limit").text("50 videos");
-
     $("#emails").slider('setAttribute', 'max', 50);
     $("#web-access").slider('setAttribute', 'max', 250);
     $("#vc").slider('setAttribute', 'max', 50);
     $("#ac").slider('setAttribute', 'max', 500);
     $("#upload-photos").slider('setAttribute', 'max', 50);
     $("#vs").slider('setAttribute', 'max', 50);
-    resetslider();
+
+    $("#emails").slider().slider('setValue', 10)
+    $("#web-access").slider().slider('setValue', 100)
+    $("#vc").slider().slider('setValue', 10)
+    $("#ac").slider().slider('setValue', 100)
+    $("#upload-photos").slider().slider('setValue', 10)
+    $("#vs").slider().slider('setValue', 20)
+    /*Reset slider position */
   }
   if(type=="medium") {
     $("#emails-limit").text("100 mails");
@@ -152,7 +158,15 @@ function update_slider(type){
     $("#ac").slider('setAttribute', 'max', 100);
     $("#upload-photos").slider('setAttribute', 'max', 100);
     $("#vs").slider('setAttribute', 'max', 1000);
-    resetslider();
+
+
+    $("#emails").slider().slider('setValue', 25)
+    $("#web-access").slider().slider('setValue', 150)
+    $("#vc").slider().slider('setValue', 25)
+    $("#ac").slider().slider('setValue', 25)
+    $("#upload-photos").slider().slider('setValue', 25)
+    $("#vs").slider().slider('setValue', 250)
+    /*Reset slider position */
   }
   if(type=="high"){
     $("#emails-limit").text("200 mails");
@@ -168,7 +182,16 @@ function update_slider(type){
     $("#ac").slider('setAttribute', 'max', 2000);
     $("#upload-photos").slider('setAttribute', 'max', 200);
     $("#vs").slider('setAttribute', 'max', 2000);
-    resetslider();
+
+
+    $("#emails").slider().slider('setValue', 200)
+    $("#web-access").slider().slider('setValue', 1000)
+    $("#vc").slider().slider('setValue', 200)
+    $("#ac").slider().slider('setValue', 2000)
+    $("#upload-photos").slider().slider('setValue', 200)
+    $("#vs").slider().slider('setValue', 2000)
+
+    /*Reset slider position */
   }
 }
 
@@ -180,23 +203,25 @@ $('#emails, #vc, #web-access, #upload-photos, #vs, #ac').slider({
   $("#bandwidth-calc-result").click(function(){
     $(".result-bandwidth").show('slide');
 });
-function resetslider(){
-    $("#emails").slider().slider('setValue', 0)
-    $("#web-access").slider().slider('setValue', 0)
-    $("#vc").slider().slider('setValue', 0)
-    $("#ac").slider().slider('setValue', 0)
-    $("#upload-photos").slider().slider('setValue', 0)
-    $("#vs").slider().slider('setValue', 0)
-}
+// function resetslider(type){
+//   if (type=="low"){
+//     $("#emails").slider().slider('setValue', 10)
+//     $("#web-access").slider().slider('setValue', 100)
+//     $("#vc").slider().slider('setValue', 10)
+//     $("#ac").slider().slider('setValue', 10)
+//     $("#upload-photos").slider().slider('setValue', 10)
+//     $("#vs").slider().slider('setValue', 0)
+//   }
+// }
 function get_estimated_bandwidth(){
     $("#dealsforyou").html("");
-email=$("#emails").val();
-no_of_devices=$("#devices option:selected").val();
-web_page=$("#web-access").val();
-video_calling=$("#vc").val();
-audio_calling=$("#ac").val();
-photo_upload_download=$("#upload-photos").val();
-video_streaming=$("#vs").val();
+    email=$("#emails").val();
+    no_of_devices=$("#devices option:selected").val();
+    web_page=$("#web-access").val();
+    video_calling=$("#vc").val();
+    audio_calling=$("#ac").val();
+    photo_upload_download=$("#upload-photos").val();
+    video_streaming=$("#vs").val();
 $.ajax({
   url: "/api/v1/get_estimated_bandwidth",
   type: "POST",

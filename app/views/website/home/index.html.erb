@@ -1,6 +1,5 @@
 <%= stylesheet_link_tag 'website/owl.carousel' %>
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active"> <%= image_tag('website/banner1.png',:alt => 'banner 1') %>
@@ -16,11 +15,11 @@
 
     <!-- Controls -->
     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-      <span class="fa fa-chevron-left" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>
     </a>
     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-      <span class="fa fa-chevron-right" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
       <span class="sr-only">Next </span>
     </a>
     <div class="formcontainer">
@@ -58,7 +57,13 @@
 
 <!-- //banner -->
 
+<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
+<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+
 <!-- mid part -->
+
+
+
 <div class="container serviceCon">
   <!-- Example row of columns -->
   <div class="row">
@@ -112,8 +117,6 @@
   </div>
 </div>
 
-<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
-<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
 
 <!--Client-->
 <%= render :partial => "website/home/clients" %>
@@ -192,4 +195,4 @@
     });
 </script>
 
-<%= javascript_include_tag 'website/owl.carousel' %>
+<%#= javascript_include_tag 'website/owl.carousel' %>

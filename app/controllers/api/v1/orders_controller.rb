@@ -17,7 +17,7 @@ class Api::V1::OrdersController < ApplicationController
 					params[:business][:ssn]= encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
 					params[:business][:federal_number]= encode_api_data(params[:business][:federal_number]) if  params[:business][:federal_number].present?
 					params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
-					
+
 					if business.present?
 						business_addresses = BusinessAddress.create_business_addresses(params,business.id)
 						business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id)
@@ -198,7 +198,7 @@ class Api::V1::OrdersController < ApplicationController
 									 :app_users => app_user.as_json(:except => [:created_at, :updated_at]),
 									 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {},
 									 :business_addresses => business.present? ? business.business_addresses.as_json(:except => [:created_at, :updated_at]) : [],
-									 :deals => deals.as_json(:except => [:created_at, :updated_at])
+									 :deals => deals.as_json(:except => [:created_at, :updated_at],:methods => [:average_rating])
 							 }
 			else
 				render :status => 200,
@@ -206,7 +206,7 @@ class Api::V1::OrdersController < ApplicationController
 									 :success => true,
 									 :app_users => app_user.as_json(:except => [:created_at, :updated_at]),
 									 :app_user_addresses => app_user.app_user_addresses.as_json(:except => [:created_at, :updated_at]),
-									 :deals => deals.as_json(:except => [:created_at, :updated_at])
+									 :deals => deals.as_json(:except => [:created_at, :updated_at],:methods => [:average_rating])
 							 }
 			end
 		else

@@ -1,5 +1,5 @@
 class InternetServicePreferencesController < ApplicationController
-	
+
 	def index
 		@internet_service_preferences = InternetServicePreference.all
     respond_to do |format|
@@ -8,9 +8,9 @@ class InternetServicePreferencesController < ApplicationController
       format.csv {
         csv_string = CSV.generate do |csv|
           # header row
-          csv << 
-          [ "ID",   
-            "ServicePreference ID",          
+          csv <<
+          [ "ID",
+            "ServicePreference ID",
             "Upload Speed",
             "Download Speed",
             "Online Storage",
@@ -18,14 +18,14 @@ class InternetServicePreferencesController < ApplicationController
             "Email",
             "Data",
             "Created At",
-            "Updated At",         
-          ]  
+            "Updated At",
+          ]
 
           # data rows
           InternetServicePreference.all.order("id ASC").each do |isp|
-            csv << 
-            [ isp.id, 
-              isp.service_preference_id,                 
+            csv <<
+            [ isp.id,
+              isp.service_preference_id,
               isp.upload_speed,
               isp.download_speed,
               isp.online_storage,
@@ -35,12 +35,12 @@ class InternetServicePreferencesController < ApplicationController
               isp.created_at,
               isp.updated_at
             ]
-          end               
-        end 
+          end
+        end
         # send it to the browser
-        send_data csv_string, 
-          :type => 'text/csv; charset=iso-8859-1; header=present', 
-          :disposition => "attachment; filename=internet_service_preferences.csv" 
+        send_data csv_string,
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=internet_service_preferences.csv"
       }
     end
 	end
@@ -64,8 +64,8 @@ class InternetServicePreferencesController < ApplicationController
   #end
 
 	#def create
-	#	@service_preference = ServicePreference.new(service_preference_params)   
-  #  #raise @service_preference.inspect 
+	#	@service_preference = ServicePreference.new(service_preference_params)
+  #  #raise @service_preference.inspect
   #  	respond_to do |format|
   #    		if @service_preference.save
   #      		format.html { redirect_to service_preferences_path, :notice => 'You have successfully created a service preference' }
@@ -104,4 +104,4 @@ class InternetServicePreferencesController < ApplicationController
 	def internet_service_preference_params
 		params.require(:internet_service_preference).permit(:service_preference_id, :upload_speed, :download_speed, :data, :email, :online_storage, :wifi_hotspot)
 	end
-end	
+end

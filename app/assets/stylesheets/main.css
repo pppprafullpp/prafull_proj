@@ -2928,4 +2928,11 @@ color:#555;
 .overflow-hidden {
 	overflow:hidden;
 }
- 
+
+.reset-btn {
+  background: #44b758 none repeat scroll 0 0;
+}
+
+.search-btn {
+  background: #2890b7 none repeat scroll 0 0;
+}

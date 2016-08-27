@@ -5,7 +5,6 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
-
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
@@ -166,7 +165,6 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create_order
-
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
@@ -177,6 +175,8 @@ class Website::AppUsersController < ApplicationController
         params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
         params[:app_user][:mobile]=encode_api_data(params[:app_user][:mobile])
         if order.save
+          order_equipment_hash = {:order_equipments => [params[:order_equipments]]}
+          order_equipment = OrderEquipment.create_order_equipments(order_equipment_hash,order.id)
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
@@ -261,14 +261,16 @@ class Website::AppUsersController < ApplicationController
 
   def order
       if session[:user_id].present?
-        current_user_data=AppUser.find(session[:user_id])
-        if !current_user_data.first_name.present? or !current_user_data.last_name.present? or !current_user_data.mobile.present? or !current_user_data.primary_id_number.present?
-          redirect_to "/website/app_users/profile?message=fill_profile"
-        else
+        # current_user_data=AppUser.find(session[:user_id])
+        # if !current_user_data.first_name.present? or !current_user_data.last_name.present? or !current_user_data.mobile.present? or !current_user_data.primary_id_number.present?
+        #   redirect_to "/website/app_users/profile?message=fill_profile"
+        # else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
           @effective_price = params[:effective_price]
-        end
+          if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY
+            @equipments =@deal.cellphone_equipments
+          end
       else
         session[:deal] = params[:deal_id]
         redirect_to checkout_website_app_users_path

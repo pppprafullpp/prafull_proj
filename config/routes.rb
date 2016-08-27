@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => :delete
       match 'get_states' => 'orders#get_states', :via => :get
       match 'get_cities' => 'orders#get_cities', :via => :get
+      match 'primary_information' => "app_users#primary_information", :via => :get
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
       match 'verify_user'=>"app_users#verify_user", :via => :get
       match 'deal_details'=>"deals#fetch_deal_details", :via => :get
+      
       resources :orders do
         collection do
           post :fetch_user_and_deal_details

@@ -13,13 +13,17 @@
      zip = addresses.zip
      contact_number = addresses.contact_number
    end
-if @app_user.primary_id_number.present? && @app_user.secondary_id_number.present?
 
-   primary_id_number = @app_user.primary_id_number.split('===').last
-   primary_state = @app_user.primary_id_number.split('===').first
-   secondary_id_number = @app_user.secondary_id_number.split('===').last
-   secondary_state = @app_user.secondary_id_number.split('===').first
+
+if @app_user.primary_id_number.present? 
+  primary_id_number = @app_user.primary_id_number.split('===').last
+  primary_state = @app_user.primary_id_number.split('===').first
 end
+if @app_user.secondary_id_number.present?
+  secondary_id_number = @app_user.secondary_id_number.split('===').last
+  secondary_state = @app_user.secondary_id_number.split('===').first
+end
+
 %>
 
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
@@ -101,12 +105,12 @@ end
           </div>
 
           <div class="col-md-12 padding15right">
-            <label for="Name" class="control-label">Select State</label>
+            <label for="Name" class="control-label">Select State<span id="mandat">*</span></label></label>
             <!-- <select class="form-control" name="billing_state" id="billing_state"> -->
               <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
               <%#= options_for_select(cities_array, :prompt=>"Select") %>
           <!-- </select> -->
-          <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Select your User Type',:name=>"billing_state", :id=>"billing_state") %>
+          <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"billing_state", :id=>"billing_state") %>
           </div>
 
           <!-- <div class="col-sm-6">
@@ -270,17 +274,25 @@ end
         var business_name = $('#business_name').val();
         var federal_number = $('#federal_number').val();
         var ssn = $('#ssn').val();
-        var state = $("#state option:selected").val()
+        var state = $("#billing_state option:selected").val();
         var address_name = $('#address_name').val();
         var zip = $('#zip').val();
         var address1 = $('#address1').val();
         var user_type = $('#user_type').val();
-        var primary_id_number = $('#primary_id_number').val();
-        var secondary_id_number = $('#secondary_id_number').val();
-        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != '' && mobile.length >= 10 && primary_id_number != '' && secondary_id_number != ''){
+        
+        $("#primary_id_number").val($('#primary_state').val() + "===" + $('#primary_id_number1').val());
+        $("#secondary_id_number").val($('#secondary_state').val() + "===" + $('#secondary_id_number1').val());
+        var primary_id_number = $("#primary_id_number").val();
+        var secondary_id_number =  $("#secondary_id_number").val();
+
+        
+
+        // var primary_state = $('#primary_state').val();
+        // var secondary_state = $('#secondary_state').val();
+        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != '' && mobile.length >= 10 && primary_id_number != '' && secondary_id_number != '' && state != '' ){
             $('#update_user_form').submit();
         }
-        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != '' && primary_id_number != '' && secondary_id_number != '' && mobile.length >= 10){
+        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != '' && primary_id_number != '' && secondary_id_number != ''  && state != '' && mobile.length >= 10){
             $('#update_user_form').submit();
         }
         else {

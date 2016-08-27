@@ -3292,6 +3292,7 @@ color:#555;
 { color: #555 !important;
 }
 
+
 .pagin-sty {
 	 padding: 10px 20px;
 }
@@ -3321,4 +3322,8 @@ padding: 10px;
 margin-top: 10px;
 font-size: 18px;
 font-weight: bold;
+}
+
+.no-padding {
+	padding: 0px !important;
 }

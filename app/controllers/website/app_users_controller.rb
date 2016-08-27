@@ -57,7 +57,7 @@ class Website::AppUsersController < ApplicationController
       @app_user.last_name = encode_api_data(params[:last_name])
       @app_user.mobile =  encode_api_data(params[:mobile])
       @app_user.primary_id = params[:primary_id]
-      @app_user.primary_id_number = params[:primary_id_number]
+      @app_user.primary_id_number = params[:primary_id_number] 
       @app_user.secondary_id = params[:secondary_id]
       @app_user.secondary_id_number = params[:secondary_id_number]
       @app_user.user_type = params[:user_type] if params[:user_type].present?

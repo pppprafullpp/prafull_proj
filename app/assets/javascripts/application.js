@@ -15,6 +15,7 @@
 //= require foundation
 //= require turbolinks
 //= require_tree .
+//= require chosen-jquery
 
 
 $(function() {
@@ -93,7 +94,7 @@ function initPage() {
 
 			$("#cellphone-attributes").css("display","block");
 			$("#cellphone-telephone-domestic-call-minutes").prop("required",true);
-	
+
 		}else if($("#deal_service_category_id option:selected").text()=="Bundle"){
 			$("#internet-attributes").css("display","none");
 			$("#internet-download").prop("required",false);
@@ -119,36 +120,36 @@ function initPage() {
 		if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Internet and Telephone"){
 			$("#bundle-cable").css("display","none");
 			$("#bundle-cable-free-channels").prop("required",false);
-			
+
 			$("#bundle-telephone").css("display","block");
 			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
-			
+
 		}else if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Internet and Cable"){
 			$("#bundle-telephone").css("display","none");
 			$("#bundle-telephone-domestic-call-minutes").prop("required",false);
 
-			$("#bundle-cable").css("display","block");	
-			$("#bundle-cable-free-channels").prop("required",true);	
+			$("#bundle-cable").css("display","block");
+			$("#bundle-cable-free-channels").prop("required",true);
 
 		}else if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Internet,Telephone and Cable"){
 			$("#bundle-telephone").css("display","block");
 			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
-			
-			$("#bundle-cable").css("display","block");	
-			$("#bundle-cable-free-channels").prop("required",true);	
+
+			$("#bundle-cable").css("display","block");
+			$("#bundle-cable-free-channels").prop("required",true);
 		}else if($("#deal_bundle_deal_attributes_attributes_0_bundle_combo option:selected").text()=="Telephone and Cable"){
 			$("#bundle-internet").css("display","none");
 			$("#bundle-internet-download").prop("required",false);
 
 			$("#bundle-telephone").css("display","block");
 			$("#bundle-telephone-domestic-call-minutes").prop("required",true);
-			
-			$("#bundle-cable").css("display","block");	
-			$("#bundle-cable-free-channels").prop("required",true);	
+
+			$("#bundle-cable").css("display","block");
+			$("#bundle-cable-free-channels").prop("required",true);
 		}
 
-	});		
-		
+	});
+
 
 	$("#domestic_unlimited").click(function(){
 		if($(this).is(':checked')){
@@ -265,7 +266,7 @@ function populate_service_provider(obj)
     			option.text = data[i].name;
     			selectList.appendChild(option);
 			}
-		   	
+
 		}
 		var handleStateChange = function () {
 		   switch (xmlhttp.readyState) {
@@ -284,7 +285,7 @@ function populate_service_provider(obj)
 		xmlhttp.onreadystatechange=handleStateChange;
 		xmlhttp.open("GET", "/deals/get_service_providers/?category="+obj.value,true);
 		xmlhttp.send(null);
-		
+
 	}
 
 }
@@ -303,7 +304,7 @@ function populate_checklist_service_provider(obj)
     			option.text = data[i].name;
     			selectList.appendChild(option);
 			}
-		   	
+
 		}
 		var handleStateChange = function () {
 		   switch (xmlhttp.readyState) {
@@ -322,7 +323,7 @@ function populate_checklist_service_provider(obj)
 		xmlhttp.onreadystatechange=handleStateChange;
 		xmlhttp.open("GET", "/deals/get_service_providers/?category="+obj.value,true);
 		xmlhttp.send(null);
-		
+
 	}
 
 }

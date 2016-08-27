@@ -1,7 +1,7 @@
 require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
-  # root to: "home#index"
+  root to: "home#index"
 
   namespace :api do
     namespace :v1 do
@@ -70,12 +70,12 @@ Rails.application.routes.draw do
   get "/proxy_verify"=>"website/app_users#proxy_verify"
 
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
-
-  if Socket.gethostname=="servicedlz-Virtual-Machine"
-  root to: "home#index"
-  else
-  root to: "website/home#index"
-  end
+  # 
+  # if Socket.gethostname=="servicedlz-Virtual-Machine"
+  # root to: "home#index"
+  # else
+  # root to: "website/home#index"
+  # end
 
   devise_for :users
   resources :users do

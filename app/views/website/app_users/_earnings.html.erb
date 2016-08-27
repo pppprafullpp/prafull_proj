@@ -1,5 +1,7 @@
 <div id="earnings" class="order-tab tab-pane fade" role="tabpanel">
-  <h3>Referrals And Earnings</h3>
+  <div class="prefrence-tab">
+  <h5>Referrals And Earnings</h5>
+</div>
 <br />
 
   <div class="row">
@@ -56,6 +58,6 @@ $(document).ready(function(){
   });
 });
 <%if params["error"]=="wrong_code"%>
-<%flash[:notice]="You Cant use your own code"%>
+<%flash[:notice]="Wrong Code"%>
 <%end%>
 </script>

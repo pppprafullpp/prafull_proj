@@ -51,7 +51,7 @@ class Api::V1::AccountReferralsController < ApplicationController
 				end
 			else
 			if params[:from_site]
-				flash[:success]="Wrong Code! you cant use your own code"
+				flash[:success]="Wrong Code!"
 				redirect_to "/website/app_users/profile?goto=earnings&error=wrong_code"
 			else
 				render :json => { :success => false, message: "Invalid Code" }

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
 
-	helper_method :decode_api_data
+	helper_method :decode_api_data,:get_providers_by_category
 
 	before_filter do
 		resource = controller_name.singularize.to_sym
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 	end
 	def verify_token
 		puts "params="+params.to_yaml
-		if params[:device_id].present? and params[:token].present?  
+		if params[:device_id].present? and params[:token].present?
 			saved_token=DeviceRegister.find_by_device_id(params[:device_id]).token
 			mobile_token=params[:token]
 			if mobile_token!=params[:token]
@@ -44,5 +44,11 @@ class ApplicationController < ActionController::Base
 
 	def encode_api_data(data)
 		return Base64.encode64(data)
+	end
+
+	def get_providers_by_category(category_name)
+		 	service_category = ServiceCategory.where("name LIKE '%#{category_name}%'").first
+			providers = ServiceProvider.where(:service_category_id => service_category.id).pluck(:name, :id)
+			providers
 	end
 end

@@ -11,7 +11,7 @@ class DealAttributesController < ApplicationController
     deal = Deal.where(:id => params[:deal_id]).first
     @category_name = ServiceCategory.get_category_name_by_id(deal.service_category_id)
     @deal_attribute = eval("#{@category_name.camelcase}DealAttribute").new()
-  end
+   end
 
   def create
     @deal_attribute = eval("#{params[:category_name].camelcase}DealAttribute").new(deal_attributes_params)
@@ -69,7 +69,7 @@ class DealAttributesController < ApplicationController
   #    registration_id = ["#{a_user.gcm_id}"]
   #message = "New deal for zip #{params[:deal][:zip]}.Visit Url : #{params[:deal][:url]}"
   #    gcm.send(registration_id, {data: {message: "New deal for zip #{params[:deal][:zip]}.Visit Url : #{params[:deal][:url]}"}})
-  #  end  
+  #  end
   #end
 
   def deal_attributes_params

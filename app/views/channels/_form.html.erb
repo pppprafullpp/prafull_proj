@@ -14,6 +14,9 @@
     <%= f.label :category_name %>
     <%= f.select :category_name,options_for_select(Channel::CATEGORIES,@channel.category_name) %>
 
+    <%= f.label :service_provider_name %>
+    <%= f.select :service_provider_id,get_providers_by_category('cable')%>
+
     <%= f.label :channel_name %>
     <%= f.text_field :channel_name, :required=>'true' %>
 

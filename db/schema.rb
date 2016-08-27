@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825080939) do
+ActiveRecord::Schema.define(version: 20160826114433) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -349,16 +349,17 @@ ActiveRecord::Schema.define(version: 20160825080939) do
   end
 
   create_table "channels", force: :cascade do |t|
-    t.string   "category_name", limit: 255
-    t.string   "channel_name",  limit: 255
-    t.string   "channel_code",  limit: 255
-    t.string   "channel_type",  limit: 255,   default: "normal"
-    t.text     "description",   limit: 65535
-    t.boolean  "is_hd",                       default: false
-    t.string   "image",         limit: 255
-    t.boolean  "status",                      default: true
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.string   "category_name",       limit: 255
+    t.string   "channel_name",        limit: 255
+    t.string   "channel_code",        limit: 255
+    t.string   "channel_type",        limit: 255,   default: "normal"
+    t.text     "description",         limit: 65535
+    t.boolean  "is_hd",                             default: false
+    t.string   "image",               limit: 255
+    t.boolean  "status",                            default: true
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "service_provider_id", limit: 4
   end
 
   create_table "checklists", force: :cascade do |t|

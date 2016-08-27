@@ -239,6 +239,28 @@ service_preference_sum = service_preference_sum + sp.price
       }
     end
   end
+
+  def primary_information
+    if params[:app_user_id].present?
+      primary_ids = AppUser::PRIMARY_ID
+      render  :json => { :success => true, primary_ids: primary_ids}
+    else
+      render  :json => { :success => false}
+    end
+
+  end
+
+  def secondary_information
+    if params[:app_user_id].present?
+      secondary_ids = AppUser::SECONDARY_ID
+      render  :json => { :success => true, secondary_ids: secondary_ids}
+    else
+      render  :json => { :success => false}
+    end
+  end
+
+
+
   private
   def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?

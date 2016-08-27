@@ -181,7 +181,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 1
 					service_preference_hash['service_provider_id'] = 1
-					service_preference_hash['price'] = 95
+					service_preference_hash['price'] = 120
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -267,7 +267,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 1
 					service_preference_hash['service_provider_id'] = 1
-					service_preference_hash['price'] = 50
+					service_preference_hash['price'] = 70
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -283,7 +283,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 2
 					service_preference_hash['service_provider_id'] = 30
-					service_preference_hash['price'] = 30
+					service_preference_hash['price'] = 40
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -299,7 +299,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 3
 					service_preference_hash['service_provider_id'] = 6
-					service_preference_hash['price'] = 30
+					service_preference_hash['price'] = 50
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -313,7 +313,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 4
 					service_preference_hash['service_provider_id'] = 3
-					service_preference_hash['price'] = 30
+					service_preference_hash['price'] = 120
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""

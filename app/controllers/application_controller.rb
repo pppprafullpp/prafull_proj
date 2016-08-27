@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
 
-	helper_method :decode_api_data,:get_providers_by_category
+	helper_method :decode_api_data,:get_providers_by_category, :get_zipcodes
 
 	before_filter do
 		resource = controller_name.singularize.to_sym
@@ -51,4 +51,12 @@ class ApplicationController < ActionController::Base
 			providers = ServiceProvider.where(:service_category_id => service_category.id).pluck(:name, :id)
 			providers
 	end
+
+	def get_zipcodes
+		zipcodes = Rails.cache.fetch(:expire_in => 24.hours) do
+			Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] }
+		end
+		return zipcodes
+	end
+
 end

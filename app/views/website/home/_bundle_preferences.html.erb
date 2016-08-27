@@ -1,6 +1,6 @@
 <div class="form-area">
   <%
-  if @current.present?
+  if @current.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
     @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
    price=@service_preferences_data[0].price

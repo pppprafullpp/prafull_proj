@@ -23,7 +23,6 @@ Rails.application.routes.draw do
       match 'get_states' => 'orders#get_states', :via => :get
       match 'get_cities' => 'orders#get_cities', :via => :get
       match 'primary_information' => "app_users#primary_information", :via => :get
-      match 'secondary_information' => "app_users#secondary_information", :via => :get
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end

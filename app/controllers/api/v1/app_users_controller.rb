@@ -61,12 +61,11 @@ class Api::V1::AppUsersController < ApplicationController
       app_user = AppUser.find_by_id(params[:id]) if params[:id].present?
       app_user = AppUser.find_by_email(params[:email]) if params[:email].present?
       if app_user.present?
-        # if app_user.user_type == AppUser::BUSINESS
-          # app_user_addresses = app_user.business_app_users.first.business.business_addresses.where(address_type: 2).first rescue nil if app_user.business_app_users.present?
-          app_user_addresses = app_user.orders.last.order_addresses.where(address_type: 2).first if app_user.orders.present?
-        # else
-          # app_user_addresses = app_user.app_user_addresses.where(address_type: 2).first rescue nil
-        # end
+        if app_user.user_type == AppUser::BUSINESS
+          app_user_addresses = app_user.business_app_users.first.business.business_addresses.where(address_type: 2).order('updated_at DESC').first rescue nil if app_user.business_app_users.present?
+        else
+          app_user_addresses = app_user.app_user_addresses.where(address_type: 2).order('updated_at DESC').first rescue nil
+        end
           user_preference = app_user.service_preferences.present? ? true :false
           render :status => 200,
                  :json => {

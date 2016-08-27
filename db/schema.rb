@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826114433) do
+ActiveRecord::Schema.define(version: 20160827055457) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -206,8 +206,9 @@ ActiveRecord::Schema.define(version: 20160826114433) do
     t.string   "contact_number",  limit: 255
     t.string   "manager_name",    limit: 255
     t.string   "manager_contact", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.text     "state",           limit: 65535
   end
 
   create_table "business_app_users", force: :cascade do |t|
@@ -555,6 +556,14 @@ ActiveRecord::Schema.define(version: 20160826114433) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.text     "state",           limit: 65535
+  end
+
+  create_table "order_equipments", force: :cascade do |t|
+    t.integer  "order_id",        limit: 4
+    t.integer  "equipment_id",    limit: 4
+    t.decimal  "equipment_price",           precision: 5, scale: 2
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "order_items", force: :cascade do |t|

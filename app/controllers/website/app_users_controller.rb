@@ -165,6 +165,7 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+
   def create_order
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])

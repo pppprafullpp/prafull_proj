@@ -191,6 +191,8 @@ end
    });
 
 
+
+
     function populate_user_type(user_type) {
         if(user_type == 'business'){
             $('#business_type_div').show();
@@ -280,19 +282,19 @@ end
         var address1 = $('#address1').val();
         var user_type = $('#user_type').val();
         
-        $("#primary_id_number").val($('#primary_state').val() + "===" + $('#primary_id_number1').val());
-        $("#secondary_id_number").val($('#secondary_state').val() + "===" + $('#secondary_id_number1').val());
-        var primary_id_number = $("#primary_id_number").val();
-        var secondary_id_number =  $("#secondary_id_number").val();
+        // $("#primary_id_number").val($('#primary_state').val() + "===" + $('#primary_id_number1').val());
+        // $("#secondary_id_number").val($('#secondary_state').val() + "===" + $('#secondary_id_number1').val());
+        // var primary_id_number = $("#primary_id_number").val();
+        // var secondary_id_number =  $("#secondary_id_number").val('100');
 
         
 
         // var primary_state = $('#primary_state').val();
         // var secondary_state = $('#secondary_state').val();
-        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != '' && mobile.length >= 10 && primary_id_number != '' && secondary_id_number != '' && state != '' ){
+        if(user_type== "business" &&  address_name != '' && zip != '' && address1 != ''  && business_type != '' && business_name != '' && (federal_number != '' || ssn != '') && first_name != '' && last_name != '' && mobile != '' && mobile.length >= 10 &&  state != '' ){
             $('#update_user_form').submit();
         }
-        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != '' && primary_id_number != '' && secondary_id_number != ''  && state != '' && mobile.length >= 10){
+        else if(user_type== "residence" &&  address_name != '' && zip != '' && address1 != '' && first_name != '' && last_name != '' && mobile != ''  && state != '' && mobile.length >= 10){
             $('#update_user_form').submit();
         }
         else {

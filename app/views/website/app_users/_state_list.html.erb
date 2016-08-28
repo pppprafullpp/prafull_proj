@@ -6,61 +6,79 @@
 <script>
 $(document).ready(function(e) {
   $("#primary_state").change(function(e){
-  	var p_state	 = $('#primary_state option:selected').val();
-    var primary_number =    $('#primary_id_number1').val();
-    var primary_id_number = p_state  + "==="  + primary_number
-    $("#primary_id_number").val(primary_id_number);
+    $("#primary_id_number").val($('#primary_state option:selected').val() + "===" + $('#primary_id_number1').val());
   });
 
   $("#secondary_state").change(function(e){
-  	var s_state	 = $('#secondary_state').val();
-    var secondary_number =  $('#secondary_id_number1 option:selected').val();
-    var secondary_id_number = s_state  + "==="  + secondary_number
-    $("#secondary_id_number").val(secondary_id_number);
+    $("#secondary_id_number").val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number1').val());
   });
-    
-  secondary_name = $('#secondary_id').val();
-  if(secondary_name == "Driver License"){
-    $('#secondary_id_information').hide();
-    $('#d_license').show();
-  }
-  else{
-    $('#d_license').hide();
-    $('#secondary_id_information').show();
-  }
-        
+ 
+  $('#primary_id_number2').keyup(function(e){
+    $('#primary_id_number').val($('#primary_state option:selected').val() + "===" + $('#primary_id_number2').val());
+  });
+
+  $('#primary_id_number1').keyup(function(e){
+    $('#primary_id_number').val($('#primary_state option:selected').val() + "===" + $('#primary_id_number1').val());
+  });
+
   primary_name = $('#primary_id').val();
   if(primary_name == "Driver License"){
       $('#primary_id_information').hide();
       $('#primary_d_license').show();
+      $("#primary_id_number").val($('#primary_state option:selected').val() + "===" + $('#primary_id_number1').val());
   }
   else{
       $('#primary_d_license').hide();
           $('#primary_id_information').show();
+          $("#primary_id_number").val($('#primary_state option:selected').val() + "===" + $('#primary_id_number2').val());
+  }
+
+  $("#primary_id").change(function(e){
+    primary_name = $('#primary_id').val();
+    if(primary_name == "Driver License"){
+      $('#primary_id_information').hide();
+      $('#primary_d_license').show();
+      $("#primary_id_number").val($('#primary_state option:selected').val() + "===" + $('#primary_id_number1').val());
+    }
+    else{
+      $('#primary_d_license').hide();
+      $('#primary_id_information').show();
+      $("#primary_id_number").val($('#primary_state option:selected').val() + "===" + $('#primary_id_number2').val());
+    }
+  });
+
+  $('#secondary_id_number2').keyup(function(e){
+    $('#secondary_id_number').val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number2').val());
+  });
+
+  $('#secondary_id_number1').keyup(function(e){
+    $('#secondary_id_number').val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number1').val());
+  });
+
+  secondary_name = $('#secondary_id').val();
+  if(secondary_name == "Driver License"){
+      $('#secondary_id_information').hide();
+      $('#secondary_d_license').show();
+      $("#secondary_id_number").val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number1').val());
+  }
+  else{
+      $('#secondary_d_license').hide();
+          $('#secondary_id_information').show();
+          $("#secondary_id_number").val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number2').val());
   }
 
   $("#secondary_id").change(function(e){
-  	secondary_name = $('#secondary_id').val();
-  	if(secondary_name == "Driver License"){
-  		$('#secondary_id_information').hide();
-  		$('#d_license').show();
-  	}
-  	else{
-  		$('#d_license').hide();
-  			$('#secondary_id_information').show();
-  	}
-  });
-
-  $("#primary_id").change(function(e){
-  	primary_name = $('#primary_id').val();
-  	if(primary_name == "Driver License"){
-  		$('#primary_id_information').hide();
-  		$('#primary_d_license').show();
-  	}
-  	else{
-  		$('#primary_d_license').hide();
-  		$('#primary_id_information').show();
-  	}
+    secondary_name = $('#secondary_id').val();
+    if(secondary_name == "Driver License"){
+      $('#secondary_id_information').hide();
+      $('#secondary_d_license').show();
+      $("#secondary_id_number").val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number1').val());
+    }
+    else{
+      $('#secondary_d_license').hide();
+      $('#secondary_id_information').show();
+      $("#secondary_id_number").val($('#secondary_state option:selected').val() + "===" + $('#secondary_id_number2').val());
+    }
   });
 });
 </script>

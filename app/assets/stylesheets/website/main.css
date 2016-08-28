@@ -169,24 +169,24 @@ div.modal-open {
 }
 .carousel-caption {
 	bottom: 0;
-	top: 135px;
-	text-shadow: none;
-	font-size: 30px;
+  top: 7%;
+  text-shadow: none;
+  font-size: 30px;
 }
 .formcontainer {
-	top: 32%;
-	left: 20%;
-	padding-bottom: 30px;
-	right: 20%;
-	padding-top: 20px;
-	position: absolute;
-	text-align: center;
-	z-index: 999;
+	top: 22%;
+  left: 20%;
+  padding-bottom: 30px;
+  right: 20%;
+  padding-top: 20px;
+  position: absolute;
+  text-align: center;
+  z-index: 999;
 }
 .formcontainer h2 {
 	color: #fff;
-	padding: 10px 0;
-	margin-bottom: 40px;
+	 margin-bottom: 20px;
+	 padding: 10px 0;
 }
 .formcontainer input {
 	font-family: 'open_sansregular';
@@ -3290,4 +3290,40 @@ color:#555;
 
 .carousel-inner .form-control::-moz-placeholder
 { color: #555 !important;
+}
+
+
+.pagin-sty {
+	 padding: 10px 20px;
+}
+.mg_bttom20 {
+	margin-bottom: 20px;
+}
+.no-contract-sty{
+
+float: left;
+width: 100%;
+margin-left: 16px;
+}
+
+
+.contract-margin-sty{
+
+float: left;
+width: 100%;
+margin-left: 16px;
+padding-top: 15px;
+font-size:18px;
+}
+
+.preference-btn{
+width: 200px;
+padding: 10px;
+margin-top: 10px;
+font-size: 18px;
+font-weight: bold;
+}
+
+.no-padding {
+	padding: 0px !important;
 }

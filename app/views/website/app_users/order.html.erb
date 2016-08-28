@@ -1,3 +1,14 @@
+
+<%
+if @app_user.primary_id_number.present? 
+  primary_id_number = @app_user.primary_id_number.split('===').last
+  primary_state = @app_user.primary_id_number.split('===').first
+end
+if @app_user.secondary_id_number.present?
+  secondary_id_number = @app_user.secondary_id_number.split('===').last
+  secondary_state = @app_user.secondary_id_number.split('===').first
+end
+%>
 <script type="text/javascript" src="jquery.min.js"></script>
 <section class="account-banner">
   <div class="container">
@@ -26,11 +37,19 @@
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Effective Price</td>
-                <td  align="left" class="bold">$<%= @effective_price %></td>
+                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price %></td>
               </tr>
             </table>
           </div>
+
         </div>
+        <% if @equipments.present? %>
+          </br>
+          <div>
+            <%= select_tag(:equipment_id, options_for_select(@equipments.collect { |p|
+              ["#{p.model}($#{p.price})", p.id] }),:class => 'form-control',:id => "drop_equipment_id") %>
+          </div>
+        <% end %>
       </div>
 
       <div class="col-lg-8">
@@ -52,37 +71,22 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="col-md-6 padding15right">
-                      <label for="Name" class="control-label">First Name*</label>
+                      <label for="Name" class="control-label">First Name<span id="mandat">*</span></label></label>
                       <%= text_field_tag('app_user[first_name]',Base64.decode64(@app_user.first_name).titleize,:onkeyup=>"capitalise_first(this)",:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name',maxlength: 20) %>
                     </div>
                     <div class="col-md-6">
-                      <label for="Name" class="control-label">Last Name*</label>
+                      <label for="Name" class="control-label">Last Name<span id="mandat">*</span></label></label>
                       <%= text_field_tag('app_user[last_name]',Base64.decode64(@app_user.last_name).titleize,:onkeyup=>"capitalise_first(this)",:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name', maxlength: 20) %>
                     </div>
                     <div class="col-md-6 padding15right">
-                      <label for="Name" class="control-label">Contact Number*</label>
+                      <label for="Name" class="control-label">Contact Number<span id="mandat">*</span></label></label>
                       <%= phone_field_tag('app_user[mobile]',@app_user.mobile.present? ? Base64.decode64(@app_user.mobile): @app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10)%>
                     </div>
                     <div class="col-md-6">
                       <label for="Name" class="control-label">Email</label>
                       <%= email_field_tag('app_user[email]',@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address',:disabled => true) %>
                     </div>
-                    <div class="col-md-6 padding15right">
-                      <label for="Name" class="control-label">Primary Id*</label>
-                      <%= select_tag(:primary_id,options_for_select(["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ],selected: @app_user.try(:primary_id)),:class => 'form-control',:id => "primary_id") %>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="Name" class="control-label">Primary Id Number</label>
-                      <%= text_field_tag(:primary_id_number,@app_user.primary_id_number,:class => 'form-control input-md',:placeholder => 'Primary Id Number', :id=> 'primary_id_number', :maxlength=>"20") %>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="Name" class="control-label">Secondary Id*</label>
-                      <%= select_tag(:secondary_id,options_for_select(["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ],selected: @app_user.try(:secondary_id)),:class => 'form-control',:id => "secondary_id") %>
-                    </div>
-                     <div class="col-md-6">
-                      <label for="Name" class="control-label">Secondary Id Number</label>
-                      <%= text_field_tag(:secondary_id_number,@app_user.secondary_id_number,:class => 'form-control input-md',:placeholder => 'Secondary Id Number', :id=> 'secondary_id_number', :maxlength=>"20") %>
-                    </div>
+                    <%= render :partial=>"user_primary_information", :locals => {primary_id_number: primary_id_number, primary_state: primary_state,secondary_id_number: secondary_id_number, secondary_state: secondary_state} %>
                   </div>
                 </div>
                 <!-- Button group -->
@@ -155,6 +159,9 @@
           <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
           <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
           <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
+          <%= hidden_field_tag :equipment_id,'',{:name=> 'order_equipments[equipment_id]'}%>
+          <%= hidden_field_tag :equipment_price,'',{:name=> 'order_equipments[equipment_price]'}%>
+          <%= hidden_field_tag :primary_id_number,'',{:name => 'primary_id_number'}%>
           <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
         </div>
       </div>
@@ -183,6 +190,30 @@
 <script>
 var errormsg="";
 $(document).ready(function(e) {
+
+  <% if @equipments.present? %>
+  var effective_price = $('#update_effective_price').html().split('$')[1];
+  var first_price = $("#drop_equipment_id option:selected").text().split('$')[1].split(')')[0];
+  $("#drop_equipment_id").change(function(e){
+    var first =$("#drop_equipment_id option:selected").text();
+    if(first ==  " iPhone® SE($16.66)"){
+      current_equipment = $('#drop_equipment_id option:selected').text().split('$')[1].split(')')[0];
+      total_price = parseFloat(effective_price) + parseFloat(current_equipment) - parseFloat(current_equipment)
+      $('#update_effective_price').html("$" + parseFloat(total_price));
+      $('#effective_price').val(parseFloat(total_price));
+      $('#equipment_id').val(parseInt($('#drop_equipment_id').val()));
+      $('#equipment_price').val(current_equipment);
+    }
+    else{
+      current_equipment = $('#drop_equipment_id option:selected').text().split('$')[1].split(')')[0];
+      total_price = parseFloat(effective_price) + parseFloat(current_equipment) - parseFloat(first_price);
+      $('#update_effective_price').html("$" + parseFloat(total_price));
+      $('#effective_price').val(parseFloat(total_price));
+      $('#equipment_id').val(parseInt($('#drop_equipment_id').val()));
+      $('#equipment_price').val(current_equipment);
+    }
+  });
+<% end %>
   <%
   if @app_user.user_type == "residence" %>
   var billing_address;
@@ -295,12 +326,12 @@ $('#getmobilevalue').val(mobile_value);
 var get_mobile= $(getmobilevalue).val()
 $("#review-mobile").text(get_mobile);
 
-var primary_value = $('#primary_id_number').val();
+var primary_value = $('#primary_id_number').val().split('===')[1];
 $('#getprimaryvalue').val(primary_value);
 var get_primary= $(getprimaryvalue).val()
 $("#review-primary").text(get_primary);
 
-var secondary_value = $('#secondary_id_number').val();
+var secondary_value = $('#secondary_id_number').val().split('===')[1];
 $('#getsecondaryvalue').val(secondary_value);
 var get_secondary= $(getsecondaryvalue).val()
 $("#review-secondary").text(get_secondary);
@@ -317,8 +348,8 @@ $("#order_information_menu_tab").click(function(event){
    $('#review-name').text(finalfirstname+" "+finallastname);
    $('#review-last-name').text($('#last_name').val());
    $('#review-mobile').text($('#mobile').val());
-   $('#review-primary').text($('#primary_id_number').val());
-   $('#review-secondary').text($('#secondary_id_number').val());
+   $('#review-primary').text($('#primary_id_number').val().split('===')[1]);
+   $('#review-secondary').text($('#secondary_id_number').val().split('===')[1]);
 
   var first_name = $('#first_name').val();
   var mobile = $('#mobile').val();
@@ -415,7 +446,10 @@ $("#order_information_menu_tab").click(function(event){
     app_user_service_zip = $('#app_user_service_zip').val();
     app_user_shipping_address_1=$('#app_user_shipping_address_1').val();
     app_user_shipping_address_2=$('#app_user_shipping_address_2').val();
-    if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+    app_user_service_state =$('#service_state').val();
+    app_user_shipping_state =$('#shipping_state').val();
+    app_user_billing_state =$('#billing_state').val();
+    if(app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == ''  || app_user_billing_state == '' || app_user_shipping_state == '' || app_user_service_state == '') {
       alert("Please fill all the mandatory fields.")
     }
     else {
@@ -440,7 +474,10 @@ $("#order_information_menu_tab").click(function(event){
     var service_address_1 = $('#service_address_1').val();
     var service_address_2 = $('#service_address_2').val();
     var service_zip = $('#service_zip').val();
-    if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '') {
+    var service_state =$('#service_state').val();
+    var shipping_state =$('#shipping_state').val();
+    var billing_state =$('#billing_state').val();
+    if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || billing_state == '' || service_state == '' || shipping_state == '') {
       alert("Please fill all the mandatory fields.")
     }
     else {
@@ -474,9 +511,9 @@ $("#order_information_menu_tab").click(function(event){
     var  first_name = $('#first_name').val();
     var  mobile = $('#mobile').val();
     var  last_name = $('#last_name').val();
-    var primary_id = $('#primary_id_number').val();
-    var secondary_id = $('#secondary_id_number').val();
-     if(primary_id==''|| secondary_id=='' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
+    var primary_id = $('#primary_id').val();
+    var secondary_id = $('#secondary_id').val();
+     if(first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == ''  )  {
       alert("Please fill all the mandatory fields.")
     }
     else if (mobile.length < 10){
@@ -508,8 +545,9 @@ $("#order_information_menu_tab").click(function(event){
     var first_name = $('#first_name').val();
     var mobile = $('#mobile').val();
     var last_name = $('#last_name').val();
-    var primary_id = $('#primary_id_number').val();
-    var secondary_id = $('#secondary_id_number').val();
+    var primary_id = $('#primary_id').val();
+    var secondary_id = $('#secondary_id').val();
+    
 
     var business_manager_name = $('#business_manager_name').val();
     var business_manager_contact = $('#business_manager_contact').val();

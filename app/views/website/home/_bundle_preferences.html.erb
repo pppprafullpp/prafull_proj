@@ -1,15 +1,34 @@
 <div class="form-area">
-  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+  <%
+  if @current.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
+    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
+   service_provider_name=@service_preferences_data[0].service_provider_name
+   price=@service_preferences_data[0].price
+   is_contract=@service_preferences_data[0].is_contract
+   start_date=@service_preferences_data[0].start_date
+   end_date=@service_preferences_data[0].end_date
+   plan_name= @service_preferences_data[0].plan_name
+   @bundle_preferences=BundleServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
+   download_speed=@bundle_preferences[0].download_speed
+   upload_speed=@bundle_preferences[0].upload_speed
+   free_channels=@bundle_preferences[0].free_channels
+   premium_channels=@bundle_preferences[0].premium_channels
+   domestic_call_minutes=@bundle_preferences[0].domestic_call_minutes
+   international_call_minutes=@bundle_preferences[0].international_call_minutes
+   end
+  %>
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post", :html=>{:id=>"bundle_form"}) do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
-      <select class="form-control" name="service_provider_name">
+  <%=hidden_field_tag("bundle_combo","")%>
+    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+      <select class="form-control" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> <br />
-    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
     <p>Contract Date</p>
     <%= check_box_tag "is_contract", false, :class=>"form-control"%>No Contract
     <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />
@@ -30,10 +49,10 @@
         <p>Cable</p>
       <div class="row">
         <div class="col-md-6">
-          <%=text_field_tag "free_channels","",:class=>"form-control", :placeholder=>"free Channels"%>
+          <%=text_field_tag "free_channels",free_channels,:class=>"form-control", :placeholder=>"free Channels"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "premium_channels","",:class=>"form-control", :placeholder=>"premium Channels"%>
+        <%=text_field_tag "premium_channels",premium_channels,:class=>"form-control", :placeholder=>"premium Channels"%>
         </div>
       </div>
     </div>
@@ -42,10 +61,10 @@
         <p>Internet</p>
       <div class="row">
         <div class="col-md-6">
-          <%=text_field_tag "download_speed","",:class=>"form-control", :placeholder=>"Download (Mbps)"%>
+          <%=text_field_tag "download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "upload_speed","",:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
+        <%=text_field_tag "upload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
         </div>
       </div>
     </div>
@@ -57,7 +76,7 @@
            <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
         </div>
         <div class="col-md-6">
-          <%=number_field_tag(:domestic_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+          <%=number_field_tag(:domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
         </div>
       </div>
       <div class="row">
@@ -65,19 +84,33 @@
              <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
         </div>
         <div class="col-md-6">
-          <%=number_field_tag(:international_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+          <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
         </div>
       </div>
     </div>
     </div>
     <%=hidden_field_tag("plan_name","none")%>
-    <%= submit_tag("Save", :class=>"btn btn-success search-btn")%>
+    <div class="col-md-12"><%= submit_tag("Save", :class=>"btn btn-success search-btn", :onclick=>"check()")%></div><br /><br /><br />
+    <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
   </div>
   <script>
   $(document).ready(function(){
     $("#international_call_unlimited").prop("checked",false);
     $("#domestic_call_unlimited").prop("checked",false);
+
+    $("#is_contract").prop("checked",false);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+      }
+      else {
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
+      }
+    })
+
   })
 
   $("#domestic_call_unlimited").on("change",function(){
@@ -100,17 +133,8 @@
       $("#international_call_minutes").attr("disabled",false);
       $("#domestic_call_unlimited").val("false");
     }
-    $("#is_contract").prop("checked",false);
-    $("#is_contract").on("change",function(){
-      if($("#is_contract").prop("checked")==true){
-        $("#start_date").attr("disabled",true);
-        $("#end_date").attr("disabled",true);
-      }
-      else {
-        $("#start_date").attr("disabled",false);
-        $("#end_date").attr("disabled",false);
-      }
-    })
+
+
   });
 
 
@@ -174,5 +198,54 @@
          $("#telephone-div").addClass("hidden");
        }
     }
+ function check(){
+   var status=0;
+   if(($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true)  ||
+      ($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) ||
+      ($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) )
+     {
+     if ($("#internet-cb").prop("checked")==true && ($("#download_speed").val()=="" || $("#upload_speed").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if ($("#cable-cb").prop("checked")==true && ($("#free_channels").val()=="" || $("#premium_channels").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if ($("#internet-cb").prop("checked")==true && ($("#download_speed").val()=="" || $("#upload_speed").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if(status>=2 && $("#price").val()!=""){
+      if($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet and Cable");
+      }
+      if($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet and Telephone");
+      }
+      if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true){
+        $("#bundle_combo").val("Cable and Telephone");
+      }
+      if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true && $("#internet-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet,Telephone and Cable");
+      }
+      $("#bundle_form").submit();
+    }
+    else {
+      $("#msg").text("Please Enter Price").removeClass("hidden");
+    }
+  }
 
+   else {
+     console.log(" not ok");
+     event.preventDefault();
+     $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
+   }
+ }
   </script>

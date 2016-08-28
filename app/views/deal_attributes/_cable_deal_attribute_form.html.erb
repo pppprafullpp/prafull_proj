@@ -15,12 +15,14 @@
 
     <div><strong>Channel Lists:<span id="mandat">*</span> </strong><br />
       <% channel_ids = @deal_attribute.channel_ids.present? ? eval(@deal_attribute.channel_ids) : '' %>
-      <%= select_tag :channel_ids,options_for_select(get_channels,channel_ids),:class => 'chosen-select',:multiple => true,:name => 'deal_attributes[channel_ids][]' %>
+      <%service_provider_id=Deal.find(params[:deal_id]).service_provider_id%>
+      <%= select_tag :channel_ids,options_for_select(Channel.where(:service_provider_id=>service_provider_id).pluck(:channel_name)),:class => 'chosen-select', :style=>"width: 100%;",:multiple => true,:name => 'deal_attributes[channel_ids][]' %>
     </div>
 
     <div><strong>Free Channels:<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :free_channels,@deal_attribute.free_channels,:placeholder => 'Input free_channels',:name => 'deal_attributes[free_channels]' %>
     </div>
+    
     <div><strong>Free channels list (comma separated):<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :free_channels_list,@deal_attribute.free_channels_list,:placeholder => 'Input free_channels_list',:name => 'deal_attributes[free_channels_list]' %>
     </div>
@@ -38,3 +40,6 @@
     </div>
     <%= submit_tag 'Submit' %>
 <% end %>
+<script>
+$("#chosen-select").chosen();
+</script>

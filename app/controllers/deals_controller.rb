@@ -105,6 +105,7 @@ class DealsController < ApplicationController
   end
 
 	def create
+		raise params.to_yaml
     @deal = Deal.new(deal_params)
 
     respond_to do |format|

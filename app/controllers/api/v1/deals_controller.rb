@@ -61,12 +61,12 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def fetch_deal_details
-		if params[:deal_id].present? && params[:category_id].to_i== Deal::BUNDLE_CATEGORY
+		if params[:deal_id].present?
 			deal = Deal.find(params[:deal_id])
-				render :status => 200,
+			     render :status => 200,
 							 :json => {
 									 :success => true,
-									 :deals => deal.as_json(:except => [:created_at, :updated_at],:include => ['bundle_deal_attributes','bundle_equipments'])
+									 :deals => deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments],:include => ['bundle_deal_attributes','bundle_equipments'])
 							 }
 		else
 			render :json => { :success => false}

@@ -7,6 +7,15 @@
   shipping_address = @order.order_addresses.where(address_type: 1).first
   service_address = @order.order_addresses.where(address_type: 0).first
   business = app_user.try(:business_app_users).last.try(:business)
+
+  if @order.primary_id_number.present? 
+  primary_id_number = @order.primary_id_number.split('===').last
+  primary_state = @order.primary_id_number.split('===').first
+end
+if @order.secondary_id_number.present?
+  secondary_id_number = @order.secondary_id_number.split('===').last
+  secondary_state = @order.secondary_id_number.split('===').first
+end
   %>
 <!--//nav-->
 <section class="account-banner">
@@ -112,11 +121,11 @@
                 </li>
                 <li>
                   <div class="col1">Primary Id:</div>
-                  <div class="col2"><%= app_user.try(:primary_id_number).truncate(15) %></div>
+                  <div class="col2"><%= primary_id_number %></div>
                 </li>
                 <li>
                   <div class="col1">Secondary Id:</div>
-                  <div class="col2"><%= app_user.try(:secondary_id_number).truncate(15) %></div>
+                  <div class="col2"><%= secondary_id_number %></div>
                 </li>
               </ul>
             </div>
@@ -251,7 +260,7 @@
                     </tr>
                     <tr>
                       <td  align="right" class="bold effective-color">Effective Price</td>
-                      <td  align="left" class="bold">$<%= deal.effective_price %></td>
+                      <td  align="left" class="bold">$<%= @order.order_items.first.effective_price %></td>
                     </tr>
                   </table>
                 </div>

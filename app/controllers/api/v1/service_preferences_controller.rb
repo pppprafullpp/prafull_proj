@@ -43,7 +43,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 
 	def create
-		# raise params.to_yaml
+	  #  raise params.to_yaml
 		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
 		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
@@ -181,7 +181,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 1
 					service_preference_hash['service_provider_id'] = 1
-					service_preference_hash['price'] = 95
+					service_preference_hash['price'] = 120
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -231,6 +231,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
+service_preference_hash['data_plan']=2.0
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""
@@ -267,7 +268,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 1
 					service_preference_hash['service_provider_id'] = 1
-					service_preference_hash['price'] = 50
+					service_preference_hash['price'] = 70
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -283,7 +284,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 2
 					service_preference_hash['service_provider_id'] = 30
-					service_preference_hash['price'] = 30
+					service_preference_hash['price'] = 40
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -299,7 +300,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 3
 					service_preference_hash['service_provider_id'] = 6
-					service_preference_hash['price'] = 30
+					service_preference_hash['price'] = 50
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -313,7 +314,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['app_user_id'] = params[:app_user_id]
 					service_preference_hash['service_category_id'] = 4
 					service_preference_hash['service_provider_id'] = 3
-					service_preference_hash['price'] = 30
+					service_preference_hash['price'] = 120
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
@@ -332,6 +333,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
+service_preference_hash['data_plan']=2.0
+
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['upload_speed'] = ""
 					service_preference_hash['download_speed'] = 30

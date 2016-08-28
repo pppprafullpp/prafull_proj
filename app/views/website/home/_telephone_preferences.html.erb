@@ -1,4 +1,19 @@
 <div class="form-area">
+  <%
+  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
+   @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
+   service_provider_name=@service_preferences_data[0].service_provider_name
+   price=@service_preferences_data[0].price
+   is_contract=@service_preferences_data[0].is_contract
+   start_date=@service_preferences_data[0].start_date
+   end_date=@service_preferences_data[0].end_date
+   plan_name= @service_preferences_data[0].plan_name
+   @Telephone_preferences=TelephoneServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
+   domestic_call_minutes=@Telephone_preferences[0].domestic_call_minutes
+   international_call_minutes=@Telephone_preferences[0].international_call_minutes
+  end
+  %>
+
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
@@ -8,11 +23,11 @@
       <select class="form-control" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> <br />
-    <%= number_field_tag(:price,"",:class=>"form-control", :placeholder=>"Enter price")%><br />
+    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
     <p>Contract Date</p>
     <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>No Contract
-    <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />
-    <%= date_field_tag(:end_date,"", :class=>"form-control")%><br />
+    <%= date_field_tag(:start_date,start_date, :class=>"form-control")%><br />
+    <%= date_field_tag(:end_date,end_date, :class=>"form-control")%><br />
     <p>Calls</p>
     <p>Domestic</p>
     <div class="row">
@@ -20,7 +35,7 @@
          <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
     <div class="row">
@@ -28,7 +43,7 @@
            <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:international_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
     <%= submit_tag("Save", :class=>"btn btn-success search-btn")%>

@@ -11,7 +11,7 @@ $( document ).ready(function() {
     //     }
     // });
 
-    
+
 
     $(".btn1").click(function() {
         $("#box1").hide();
@@ -39,36 +39,7 @@ $( document ).ready(function() {
         }
       });
 
-/*
-    $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:10,
-        responsiveClass:true,
-        responsive:{
-            0:{
-                items:1,
-                nav:true
-            },
-            350:{
-                items:2,
-                nav:true
-            },
-            450:{
-                items:3,
-                nav:true
-            },
-            650:{
-                items:4,
-                nav:false
-            },
-            1000:{
-                items:6,
-                nav:true,
-                loop:false
-            }
-        }
-    })
-    */
+
 
 
 });

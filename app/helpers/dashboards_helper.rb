@@ -10,7 +10,7 @@ module DashboardsHelper
 				excluded_categories="'Gas','Electricity','Home Security'"
 				service_preferences = app_user.service_preferences.order("created_at DESC")
 				servicelist = service_preferences.map do |sp|
-				 
+
 					app_user_current_plan = sp.price
 
 					if sp.service_category.name == 'Internet'
@@ -207,7 +207,7 @@ module DashboardsHelper
 		select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
 		select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
 		select_fields_cable="deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list"
-		select_fields_cellphone="deals.*,cellphone_deal_attributes.no_of_lines,cellphone_deal_attributes.price_per_line,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.additional_data,cellphone_deal_attributes.rollover_data"
+		select_fields_cellphone="deals.*,cellphone_deal_attributes.effective_price,cellphone_deal_attributes.no_of_lines,cellphone_deal_attributes.price_per_line,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.additional_data,cellphone_deal_attributes.rollover_data"
 		select_fields_bundle="deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
 
 		select_data = eval("select_fields_#{category_name}")
@@ -462,7 +462,7 @@ module DashboardsHelper
 		select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
 		select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
 		select_fields_cable="deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list"
-		select_fields_cellphone="deals.*,cellphone_deal_attributes.no_of_lines,cellphone_deal_attributes.price_per_line,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.additional_data,cellphone_deal_attributes.rollover_data"
+		select_fields_cellphone="deals.*,cellphone_deal_attributes.effective_price,cellphone_deal_attributes.no_of_lines,cellphone_deal_attributes.price_per_line,cellphone_deal_attributes.domestic_call_minutes,cellphone_deal_attributes.international_call_minutes,cellphone_deal_attributes.domestic_text,cellphone_deal_attributes.international_text,cellphone_deal_attributes.data_plan,cellphone_deal_attributes.additional_data,cellphone_deal_attributes.rollover_data"
 		select_fields_bundle="deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
 		sort_by = options['sort_by'].present? ? options['sort_by'] : 'price ASC'
 		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''
@@ -504,8 +504,10 @@ module DashboardsHelper
 					else
 						current_call_minutes = user_preference.telephone_service_preference.domestic_call_minutes
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
-						greater_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-						smaller_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						if best_deals.present?
+							greater_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							smaller_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+					  end
 					end
 				else
 					deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
@@ -523,8 +525,10 @@ module DashboardsHelper
 					current_plan_price = user_preference.price
 					current_free_channels = user_preference.cable_service_preference.free_channels
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
-					greater_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", current_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-					smaller_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", current_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+					if best_deals.present?
+						greater_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", current_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						smaller_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", current_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+					end
 				else
 					deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order(sort_by).group('deals.id')
 

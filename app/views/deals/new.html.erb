@@ -1,3 +1,4 @@
+<%zipcodes = get_zipcodes%>
 <table cellpadding='0' cellspacing='0' class='tabbed' height='100%' width='100%' >
   <tr>
     <td class='main' id='main' valign='top'>
@@ -83,13 +84,14 @@
                 </div>
                 <div style="width:50%;display: inline-block;">
                   <%= f.fields_for :deal_include_zipcodes do |builder| %>
-                      <%= render 'include_zipcodes', f: builder %>
+                  <%= f.label 'Include Zipcodes:' %>
+                  <%= f.select :zipcode_ids, options_for_select(zipcodes),{},{id: "deal-include-zipcode",multiple: true,size: 10 } %>
                   <% end %>
                 </div>
               </td>
               <td>
                 <%= f.label 'Exclude Zipcodes:' %>
-                <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ id: "deal-exclude-zipcode",multiple: true,size: 10  } %>
+                <%= f.select :zipcode_ids, options_for_select(zipcodes),{},{ id: "deal-exclude-zipcode",multiple: true,size: 10  } %>
               </td>
             </tr>
             <tr>
@@ -140,7 +142,8 @@
           <%# end %>-->
 
           <%= f.fields_for :additional_offers do |builder| %>
-              <%= render 'additional_offer_fields', f: builder %>
+
+              <%= render :partial=>'additional_offer_fields', :locals => {:f => builder, :@zipcodes => zipcodes} %>
           <% end %>
           <%= link_to_add_fields "Add Additional Offer", f, :additional_offers %>
 

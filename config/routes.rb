@@ -1,7 +1,7 @@
 require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
-  # root to: "home#index"
+  root to: "home#index"
 
   namespace :api do
     namespace :v1 do
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => :delete
       match 'get_states' => 'orders#get_states', :via => :get
       match 'get_cities' => 'orders#get_cities', :via => :get
+      match 'primary_information' => "app_users#primary_information", :via => :get
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
       match 'verify_user'=>"app_users#verify_user", :via => :get
       match 'deal_details'=>"deals#fetch_deal_details", :via => :get
+      
       resources :orders do
         collection do
           post :fetch_user_and_deal_details
@@ -70,12 +72,12 @@ Rails.application.routes.draw do
   get "/proxy_verify"=>"website/app_users#proxy_verify"
 
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
-
-  if Socket.gethostname=="servicedlz-Virtual-Machine"
-  root to: "home#index"
-  else
-  root to: "website/home#index"
-  end
+  # 
+  # if Socket.gethostname=="servicedlz-Virtual-Machine"
+  # root to: "home#index"
+  # else
+  # root to: "website/home#index"
+  # end
 
   devise_for :users
   resources :users do

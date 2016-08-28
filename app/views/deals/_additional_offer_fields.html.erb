@@ -1,6 +1,7 @@
+<%#raise @zipcodes.to_yaml%>
 <fieldset id="additional-offer">
-  <h4>Additional Offer for zip areas</h4>
-  <table class="form-data">
+   <h4>Additional Offer for zip areas</h4>
+   <table class="form-data">
     <tr>
       <td valign="top">
         <%= f.label :title %>
@@ -20,7 +21,7 @@
         <br/>
         <div><%= f.check_box :is_nationwide,:class=>'additional-offer-nationwide', :checked=>'checked' %> Is Nationwide? </div>
         <%= f.label 'Select Allowed Zipcodes:' %>
-        <%= f.select :zipcode_ids, Zipcode.all.map { |r| [r.code+' - '+r.city, r.id] },{},{ class: "additional-offer-zipcode",multiple: true,size: 10 } %>
+        <%= f.select :zipcode_ids, options_for_select(@zipcodes),{},{id: "deal-include-zipcode",multiple: true,size: 10 } %>
       </td>
     </tr>
     <tr>
@@ -63,6 +64,6 @@ $(function() {
   $('.additional-offer-end-date').each(function() {
     $(this).datepicker({ dateFormat: 'dd-mm-yy' });
   });
-  
+
 });
 // </script>

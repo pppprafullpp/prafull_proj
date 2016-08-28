@@ -13,9 +13,17 @@ class Api::V1::AppUsersController < ApplicationController
     if app_user.present?
       if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
         app_user.update(app_user_params)
+        code=SecureRandom.hex(5)
+        app_user.update_attributes(:email_verification_token=>code)
+        app_user.update_attributes(:email_verified=>true)
         app_user.update_attributes(:primary_id=>params[:primary_id], :secondary_id => params[:secondary_id])
-        business = Business.create_business(params)
-        business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id) if business.present?
+        if app_user.user_type == AppUser::BUSINESS
+          business = Business.create_business(params)
+          business_addresses = BusinessAddress.create_business_addresses(params,business.id)
+          business_user = BusinessAppUser.create_business_app_user(business.id,app_user.id) if business.present?
+        else
+          app_user_addresses = AppUserAddress.create_app_user_addresses(params,app_user.id)
+        end
         render :status => 200,
                :json => { :success => true }
       else
@@ -56,12 +64,11 @@ class Api::V1::AppUsersController < ApplicationController
       app_user = AppUser.find_by_id(params[:id]) if params[:id].present?
       app_user = AppUser.find_by_email(params[:email]) if params[:email].present?
       if app_user.present?
-        # if app_user.user_type == AppUser::BUSINESS
-          # app_user_addresses = app_user.business_app_users.first.business.business_addresses.where(address_type: 2).first rescue nil if app_user.business_app_users.present?
-          app_user_addresses = app_user.orders.last.order_addresses.where(address_type: 2).first if app_user.orders.present?
-        # else
-          # app_user_addresses = app_user.app_user_addresses.where(address_type: 2).first rescue nil
-        # end
+        if app_user.user_type == AppUser::BUSINESS
+          app_user_addresses = app_user.business_app_users.first.business.business_addresses.where(address_type: 2).order('updated_at DESC').first rescue nil if app_user.business_app_users.present?
+        else
+          app_user_addresses = app_user.app_user_addresses.where(address_type: 2).order('updated_at DESC').first rescue nil
+        end
           user_preference = app_user.service_preferences.present? ? true :false
           render :status => 200,
                  :json => {
@@ -153,7 +160,6 @@ class Api::V1::AppUsersController < ApplicationController
       total_redeem_amount =  app_user.total_amount
       redeem_amount = (gift_amount + total_referral_amount) - total_redeem_amount
       render  :json => { :success => true, :account_referral => account_referral.as_json(:only=>[],:param_for_message => params[:app_user_id],:param_for_image =>params[:app_user_id]), :gifts=> gifts.as_json(:methods => :gift_image_url, :except => :image), total_referral_amount: total_referral_amount, gift_amount: gift_amount, total_amount: total_amount, redeem_amount: redeem_amount}
-
       # :include => {:deal => {:methods => :deal_image_url}}
     else
       render  :json => { :success => false }
@@ -236,10 +242,22 @@ service_preference_sum = service_preference_sum + sp.price
       }
     end
   end
+
+  def primary_information
+    if params[:app_user_id].present? 
+      primary_ids = AppUser::PRIMARY_ID
+       secondary_ids = AppUser::SECONDARY_ID
+      render  :json => { :success => true, primary_ids: primary_ids,secondary_ids: secondary_ids}
+    else
+      render  :json => { :success => false}
+    end
+
+  end
+
   private
   def app_user_params
     params[:avatar] = decode_picture_data(params[:picture_data]) if params[:picture_data].present?
-    params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status,:primary_id,:secondary_id,:primary_id_number,:secondary_id_number)
+    params.permit(:user_type,:business_name,:first_name, :last_name, :email, :state, :city, :zip, :password, :unhashed_password, :address, :active, :avatar, :gcm_id, :device_flag,:referral_code,:refer_status,:primary_id,:secondary_id,:primary_id_number,:secondary_id_number,:mobile)
   end
 
   def decode_picture_data(picture_data)

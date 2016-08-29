@@ -1,3 +1,4 @@
+
 # Preview all emails at http://localhost:3000/rails/mailers/app_user_mailer
 class AppUserMailerPreview < ActionMailer::Preview
 
@@ -5,5 +6,6 @@ class AppUserMailerPreview < ActionMailer::Preview
   def recover_password_email
     AppUserMailer.recover_password_email
   end
+
 
 end

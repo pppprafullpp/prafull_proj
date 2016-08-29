@@ -19,6 +19,7 @@ class Website::AppUsersController < ApplicationController
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
         # AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+        AppUserMailer.sign_up_mail(@app_user).deliver!
         flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])

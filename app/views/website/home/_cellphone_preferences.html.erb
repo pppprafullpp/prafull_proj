@@ -43,7 +43,6 @@
     </div>
   </div>
 
-
     <div class="col-md-6"><%= date_field_tag(:start_date,end_date,:class=>"form-control")%>  </div>
     <div class="col-md-6"><%= date_field_tag(:end_date,end_date,:class=>"form-control")%>  </div>
     <p class="contract-margin-sty"><b>Calls</b></p>
@@ -67,8 +66,9 @@
 
     <div class="row contract-margin-sty">
       <div class="col-md-6">
-           <%= number_field_tag "data_plan",data_plan, :class=>"form-control", :placeholder=>"Data plan"%>
-      </div>
+        <%@list= CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq%>
+         <%=select("data_plan","data_plan",options_for_select(@list), {:prompt => "Data plan in MB"}, :class=>"form-control")%>
+       </div>
       <div class="col-md-6">
         <select class="form-control" name="no_of_lines">
           <%(1..4).each do |n|%>
@@ -119,6 +119,7 @@
         $("#domestic_call_unlimited").val("false");
       }
     });
+    $("#data_plan_data_plan").attr("name","data_plan")
   })
 
   </script>

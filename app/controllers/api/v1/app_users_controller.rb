@@ -50,6 +50,7 @@ class Api::V1::AppUsersController < ApplicationController
       code=SecureRandom.hex(5)
       @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
       # AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+      AppUserMailer.sign_up_mail(@app_user).deliver!
       if @app_user.save
         render :status => 200,
                :json => { :success => true, :app_user_id => @app_user.id }

@@ -13,6 +13,9 @@ class Api::V1::AppUsersController < ApplicationController
     if app_user.present?
       if params[:user_type].present? || params[:first_name].present? || params[:last_name].present? || params[:address].present? || params[:state].present? || params[:city].present? || params[:zip].present? || params[:picture_data].present?
         app_user.update(app_user_params)
+        code=SecureRandom.hex(5)
+        app_user.update_attributes(:email_verification_token=>code)
+        app_user.update_attributes(:email_verified=>true)
         app_user.update_attributes(:primary_id=>params[:primary_id], :secondary_id => params[:secondary_id])
         if app_user.user_type == AppUser::BUSINESS
           business = Business.create_business(params)

@@ -6,9 +6,11 @@ class AppUserMailer < ApplicationMailer
   #
   #   en.app_user_mailer.recover_password_email.subject
   #
-  def recover_password_email(app_user)
+  def recover_password_email()
+    app_user=AppUser.find_by_email("apoorv@sp-assurance.com")
     recipient = app_user.email
     @secret_p = app_user.unhashed_password
+    @name=Base64.decode64(app_user.first_name) + " " + Base64.decode64(app_user.last_name)
     mail(:to => recipient, :subject => "Service-Deal recover password") rescue nil
   end
 

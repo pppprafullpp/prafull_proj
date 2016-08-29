@@ -231,6 +231,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
+service_preference_hash['data_plan']=2.0
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""
@@ -332,6 +333,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
+service_preference_hash['data_plan']=2.0
+
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['upload_speed'] = ""
 					service_preference_hash['download_speed'] = 30

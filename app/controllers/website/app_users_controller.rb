@@ -74,7 +74,7 @@ class Website::AppUsersController < ApplicationController
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
-                :contact_number=>params[:addresses][:contact_number])
+                :city=>params[:addresses][:city])
           else
             params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
@@ -95,7 +95,7 @@ class Website::AppUsersController < ApplicationController
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
-                :contact_number=>params[:addresses][:contact_number])
+                :city=>params[:addresses][:city])
           else
             params[:addresses][:address_type]=params[:addresses][:address_type].to_i
             address_hash = {:app_user_addresses => [params[:addresses]]}
@@ -289,14 +289,14 @@ class Website::AppUsersController < ApplicationController
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         session[:zip_code] = @app_user.zip
         session[:user_type] = @app_user.user_type
-        flash[:notice] = 'Signin Successfull'
+        # flash[:notice] = 'Signin Successfull'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
           redirect_to website_home_index_path
         end
       else
-        flash[:warning] = 'Incorrect Username or Password!'
+        # flash[:warning] = 'Incorrect Username or Password!'
         redirect_to request.referrer and return
       end
     else
@@ -318,6 +318,22 @@ class Website::AppUsersController < ApplicationController
       format.js { render :json => { :data => user, :layout => false}.to_json}
     end
   end
+
+  def check_user_credential
+    email = params[:email]
+    password = params[:password]
+    user = AppUser.find_by_email(params[:email])
+    if user.present? and user.unhashed_password == password 
+      if user.present?
+         render :json => { :status => true}
+       else
+         render :json => { :status=> false}
+      end
+    else
+     render :json => { :status => false}
+    end
+  end
+
 
   def profile
     if session[:user_id].present?

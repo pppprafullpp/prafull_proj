@@ -4,7 +4,7 @@ class AppUserAddress < ActiveRecord::Base
   def self.create_app_user_addresses(params,app_user_id)
     app_user_addresses = []
     params[:app_user_addresses].each do |address|
-      app_user_address = self.where(:address_name => address[:address_name],:app_user_id => app_user_id).first
+      app_user_address = self.where(:address_name => address[:address_name],:address_type => address[:address_type],:app_user_id => app_user_id).first
       unless app_user_address.present?
         app_user_address = self.new
       end

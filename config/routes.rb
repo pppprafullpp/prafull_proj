@@ -154,6 +154,7 @@ Rails.application.routes.draw do
     resources :app_users do
       collection do
         get :check_user_email_ajax
+        get :check_user_credential
         get :signout
         post :signin
         get :checkout

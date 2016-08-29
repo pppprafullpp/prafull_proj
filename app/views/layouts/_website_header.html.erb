@@ -54,15 +54,19 @@
                       </ul>
                     </div>
                     <div class="modal-body">
+
                       <div class="tab-content">
                         <div class="tab-pane active" id="login">
                           <div class="login-signup col-lg-12 col-xs-12">
 
                             <form class="form-horizontal" id="login_app_user" action="/website/app_users/signin" accept-charset="UTF-8" method="post">
+                                <span style="font-size: 16px;color: red;margin-left: 5px;display: none;" id="user_not_found">Incorrect Username or Password!</span>
                               <div class="form-group">
                                 <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
                                 <input type="text" class="form-control" placeholder="Email"  name="user[email]" id="user_email" required>
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-login-email-valid">Email does not Exists.</span>
+                                       
+
                               </div>
                               <div class="form-group">
                                 <input type="password" class="form-control" placeholder="Password" name="user[password]" required id="user_password" maxlength="10" >
@@ -77,7 +81,7 @@
                               </div>
                               <div class="form-group">
                                 <div class="col-md-12 text-center">
-                                  <input type="submit" name="commit" value="Login" class="btn  btn-login" id="login_user">
+                                  <input type="submit" name="commit" value="Login" class="btn  btn-login" onclick="checkcredentials()" id="login_user">
                                 </div>
                                 <strong></strong> </div>
                             </form>
@@ -94,11 +98,13 @@
                                   <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-email-valid">Email Already Exists.</span>
                                 </div>
                                 <div class="form-group">
-                                  <%= f.password_field :password,:class => "form-control",:placeholder => "Password", :maxlength=>10 %>
+                                  <%= f.password_field :password,:class => "form-control",:placeholder => "Password"%>
+                                  <span id="result"></span>
+
                                 </div>
 
                                 <div class="form-group">
-                                  <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password", :maxlength=>10 %>
+                                  <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" %>
                                 </div>
 
                                 <div class="form-group">
@@ -128,129 +134,206 @@
 </section>
 
 <script type="text/javascript">
-    $( document ).ready(function() {
-        $("#create_user").click(function(){
-            var check = true;
+  $( document ).ready(function() {
+    $('#app_user_password').keyup(function() {
+  $('#result').html(checkStrength($('#app_user_password').val()))
+  })
 
-            var a = $('#app_user_email').val().trim();
-            if (a == null || a == "") {
-                $('#app_user_email').addClass('custom-input-error')
-                check = false
-            }else{
-                $('#app_user_email').removeClass('custom-input-error')
-            }
-
-            var a = $('#app_user_password').val().trim();
-            var b = $('#app_user_password_confirmation').val().trim();
-            if (a == null || a == "" || b == null || b == "" || (a != b) ) {
-                $('#app_user_password').addClass('custom-input-error')
-                $('#app_user_password_confirmation').addClass('custom-input-error')
-                check = false
-            }else{
-                $('#app_user_password').removeClass('custom-input-error')
-                $('#app_user_password_confirmation').removeClass('custom-input-error')
-            }
-
-            if(check) {
-                $('#new_app_user').submit()
-            }else{
-                return false
-            }
-        });
-
-
-
-        $("#login_user").click(function(){
-            var check = true;
-
-            var a = $('#user_email').val().trim();
-            if (a == null || a == "") {
-                $('#user_email').addClass('custom-input-error')
-                check = false
-            }else{
-                $('#user_email').removeClass('custom-input-error')
-            }
-
-            var a = $('#user_password').val().trim();
-            if (a == null || a == "") {
-                $('#user_password').addClass('custom-input-error')
-                check = false
-            }else{
-                $('#user_password').removeClass('custom-input-error')
-            }
-
-            if(check) {
-                $('#login_app_user').submit()
-            }else{
-                return false
-            }
-        });
-
-        $("#forgot_password").click(function(){
-            var user_email = $('#user_email').val();
-            if(user_email != ''){
-                location.href = "<%= forget_password_website_app_users_path %>?email=" + user_email
-                alert("You will recieve an email for password");
-            }else{
-                alert('Please enter your email address')
-            }
-        });
-
-    });
-
-    $( "#app_user_email").focusout(function() {
-        checkEmail('signup',$(this).val());
-    });
-    $( "#user_email").focusout(function() {
-        checkEmail('signin',$(this).val());
-    });
-
-    function isEmail(email) {
-        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        return regex.test(email);
+  function checkStrength(password) {
+    var strength = 0
+    if (password.length < 8) {
+      $('#result').removeClass()
+      $('#result').addClass('short')
+      return 'Please Select One Special Character, Number and Alphabet'
     }
+    if (password.length > 8) strength += 1
+    // If password contains both lower and uppercase characters, increase strength value.
+    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+    // If it has numbers and characters, increase strength value.
+    if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+    // If it has one special character, increase strength value.
+    if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+    // If it has two special characters, increase strength value.
+    if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+    // Calculated strength value, we can return messages
+    // If value is less than 2
+    if (strength < 2) {
+      $('#result').removeClass()
+      $('#result').addClass('short')
+      return 'Please Select One Special Character, Number and Alphabet'
+    } else if (strength == 2) {
+      $('#result').removeClass()
+      $('#result').addClass('short')
+      return 'Please Select One Special Character, Number and Alphabet'
+    } else {
+      $('#result').removeClass()
+      $('#result').addClass('strong')
+      return ''
+    }
+  }
 
-    function checkEmail(action,email) {
-        if( !isEmail(email)) {
-            $('#app_user_email, #user_email').val('');
-            $('#app_user_email, #user_email').addClass('custom-input-error')
-        }else {
-            $.ajax({
-                type: "GET",
-                url: "<%= check_user_email_ajax_website_app_users_path %>?email=" + email,
-                dataType: "json",
-                success: function (data) {
-                    if(action == 'signup') {
-                        if (data['data'] && data['data']['email']) {
-                            $('#app_user_email').addClass('custom-input-error');
-                            $('#app_user_email').val('');
-                            $('#is-signup-email-valid').show();
-                        } else {
-                            $('#app_user_email').removeClass('custom-input-error');
-                            $('#is-signup-email-valid').hide();
-                        }
-                    }else{
-                        if (data['data'] && data['data']['email']) {
-                            $('#user_email').removeClass('custom-input-error');
-                            $('#is-login-email-valid').hide();
-                        } else {
-                            $('#user_email').addClass('custom-input-error');
-                            $('#user_email').val('');
-                            $('#is-login-email-valid').show();
-                        }
-                    }
-                },
-                error: function (data) {
-                    //alert(data)
-                }
-            });
+    $("#create_user").click(function(){
+      var check = true;
+      var a = $('#app_user_email').val().trim();
+      if (a == null || a == "") {
+        $('#app_user_email').addClass('custom-input-error')
+        check = false
+      }else{
+        $('#app_user_email').removeClass('custom-input-error')
+      }
+      var a = $('#app_user_password').val().trim();
+      var b = $('#app_user_password_confirmation').val().trim();
+      if (a == null || a == "" || b == null || b == "" || (a != b)  ) {
+        $('#app_user_password').addClass('custom-input-error')
+        $('#app_user_password_confirmation').addClass('custom-input-error')
+        check = false
+      }else{
+        $('#app_user_password').removeClass('custom-input-error')
+        $('#app_user_password_confirmation').removeClass('custom-input-error')
+      }
+      var a = $('#result').text();
+      if (a == "Weak" || a == "Too short" ){
+        $('#result').addClass('custom-input-error')
+        check = false
+      }
+      else{
+        $('#result').removeClass('custom-input-error')
+      }
+
+      if(check) {
+        $('#new_app_user').submit()
+      }else{
+        return false
+      }
+    });
+    
+    $("#forgot_password").click(function(){
+      var user_email = $('#user_email').val();
+      if(user_email != ''){
+        location.href = "<%= forget_password_website_app_users_path %>?email=" + user_email
+        alert("You will recieve an email for password");
+      }else{
+        alert('Please enter your email address')
+      }
+    });
+
+  });
+
+  $( "#app_user_email").focusout(function() {
+      checkEmail('signup',$(this).val());
+  });
+  $( "#user_email").focusout(function() {
+      checkEmail('signin',$(this).val());
+      
+  });
+   $( "#user_email,#user_password").focusin(function() {
+      $('#user_not_found').hide();
+  });
+
+  $("#login_user").click(function(){
+    var check = true;
+    var a = $('#user_email').val().trim();
+    if (a == null || a == "") {
+      $('#user_email').addClass('custom-input-error')
+      check = false
+    }else{
+      $('#user_email').removeClass('custom-input-error')
+    }
+    var a = $('#user_password').val().trim();
+    if (a == null || a == "") {
+      $('#user_password').addClass('custom-input-error')
+      check = false
+    }else{
+      $('#user_password').removeClass('custom-input-error')
+    }
+    if(check) {
+      $('#login_app_user').submit()
+    }else{
+      return false
+    }
+  });
+
+  function checkcredentials(){
+    var s=0;
+    email=$("#user_email").val();
+    password=$("#user_password").val();
+    if(email!="" && password!="") {
+      $.ajax({
+        type: "GET",
+        url: "<%=  check_user_credential_website_app_users_path %>",
+        data : {
+          email : email,
+          password : password
+        },
+        success: function (data) {
+          if (data["status"] == true)  {
+            allow_submit();
+          }
+          else {
+            s=0;
+            $('#user_not_found').show();
+          }
         }
+      });  
+      if (s == 0){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }             
     }
-</script>
-  <script>
-    $(window).load(function(){
-      $("#sticky-top").sticky({ topSpacing: 0 });
-    });
+  }
+  
+  function allow_submit(){
+    $("#login_app_user").submit();
+  }
+    
+  function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+  }
 
-    $('#zipcode_header').prop('disabled', true);
-  </script>
+  function checkEmail(action,email) {
+    if( !isEmail(email)) {
+      $('#app_user_email, #user_email').val('');
+      $('#app_user_email, #user_email').addClass('custom-input-error')
+    }else {
+      $.ajax({
+        type: "GET",
+        url: "<%= check_user_email_ajax_website_app_users_path %>?email=" + email,
+        dataType: "json",
+        success: function (data) {
+          if(action == 'signup') {
+            if (data['data'] && data['data']['email']) {
+              $('#app_user_email').addClass('custom-input-error');
+              $('#app_user_email').val('');
+              $('#is-signup-email-valid').show();
+            } else {
+              $('#app_user_email').removeClass('custom-input-error');
+              $('#is-signup-email-valid').hide();
+            }
+          }else{
+            if (data['data'] && data['data']['email']) {
+              $('#user_email').removeClass('custom-input-error');
+              $('#is-login-email-valid').hide();
+            } else {
+              $('#user_email').addClass('custom-input-error');
+              $('#user_email').val('');
+              $('#is-login-email-valid').show();
+            }
+          }
+        },
+        error: function (data) {
+            //alert(data)
+        }
+      });
+    }
+  }
+</script>
+<script>
+  $(window).load(function(){
+    $("#sticky-top").sticky({ topSpacing: 0 });
+  });
+  $('#zipcode_header').prop('disabled', true);
+</script>
+
+
+                

@@ -29,9 +29,10 @@ class AppUser < ActiveRecord::Base
   RESIDENCE = 'residence'
   BUSINESS = 'business'
 
-  PRIMARY_ID = ["Driver License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ]
-  SECONDARY_ID = ["Major credit card" , "Driver License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]
+  PRIMARY_ID = ["Driving License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ]
+  SECONDARY_ID = ["Major credit card" , "Driving License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]
   USER_TYPES = [RESIDENCE,BUSINESS]
+  STATES = Statelist.all.pluck(:state).uniq
 
   def encrypt_data
     ##self.zip = encode_data({'data' => self.zip}) if self.zip.present?

@@ -35,12 +35,12 @@ $(document).ready(function(){
     url:"/api/v1/my_earnings",
     type:"get",
     data: {
-      app_user_id : <%= session[:user_id]%>,
+      app_user_id : <%= session[:user_id] %>,
     },
     success: function(d){
        $("#earnings-txt").html("Total Earnings "+d["total_amount"]);
        if(d["total_amount"]>0){
-         $("#redeem-form").hide();
+         $("#redeem-form").css("display","none").html("Error!");
        }
     }
   });

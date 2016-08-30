@@ -20,33 +20,53 @@
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-      <select class="form-control" name="service_provider_id">
+
+      <div class = "col-md-6" ><select class="form-control" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-      </select> <br />
-    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
-    <p>Contract Date</p>
-    <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>No Contract
-    <%= date_field_tag(:start_date,start_date, :class=>"form-control")%><br />
-    <%= date_field_tag(:end_date,end_date, :class=>"form-control")%><br />
-    <p>Calls</p>
-    <p>Domestic</p>
+      </select>  </div>
+  <div class = "col-md-6" >  <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
+    <p class="contract-margin-sty">Contract Date</p>
+
+
+    <div class="checkbox checkbox-info no-contract-sty">
+  <input type="checkbox" name="is_contract" id="is_contract" value="false" checked="checked">
+  <label for="is_contract"> <span>No Contract </span> </label>
+</div>
+    <div class="col-md-6"><%= date_field_tag(:start_date,start_date, :class=>"form-control")%></div>
+    <div class="col-md-6"><%= date_field_tag(:end_date,end_date, :class=>"form-control")%></div>
+    <p class="contract-margin-sty">Calls</p>
+
     <div class="row">
+  <div class="col-md-12">  <p  class="set-call">Domestic</p></div>
       <div class="col-md-6">
-         <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
+
+        <div class="checkbox checkbox-info no-contract-sty">
+     <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+      <label for="domestic_call_unlimited"> <span>Unlimited</span> </label>
+      </div>
+
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
     </div>
     <div class="row">
+  <div class="col-md-12 "> <p class="set-call">international</p> </div>
       <div class="col-md-6">
-           <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
+
+
+           <div class="checkbox checkbox-info no-contract-sty">
+       <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+         <label for="international_call_unlimited"> <span>unlimited</span> </label>
+         </div>
+
+
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
     </div>
-    <%= submit_tag("Save", :class=>"btn btn-success search-btn")%>
+  <div class="col-md-12 text-center ">  <%= submit_tag("Save", :class=>"btn btn-success search-btn preference-btn")%> </div>
     <%end%>
   </div>
   <script>

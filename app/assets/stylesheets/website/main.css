@@ -3332,3 +3332,12 @@ font-weight:bold;
 color:#FF0000;
 font-size: 10px;
 }
+
+.contract-date {
+
+margin-top: 10px;
+
+}
+.contract-date p {font-size: 18px; }
+.mgt25 { margin-top: 25px;}
+.set-call { margin-left: 20px; font-size: 15px; font-weight: bold;}

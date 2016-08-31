@@ -324,7 +324,7 @@ class Website::AppUsersController < ApplicationController
     email = params[:email]
     password = params[:password]
     user = AppUser.find_by_email(params[:email])
-    if user.present? and user.unhashed_password == password 
+    if user.present? and user.unhashed_password == password
       if user.present?
          render :json => { :status => true}
        else

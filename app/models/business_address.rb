@@ -13,7 +13,7 @@ class BusinessAddress < ActiveRecord::Base
   def self.create_business_addresses(params,business_id)
     business_addresses = []
     params[:business_addresses].each do |address|
-      business_address = self.where(:address_name => address[:address_name],:business_id => business_id).first
+      business_address = self.where(:address_name => address[:address_name],:address_type => address[:address_type],:business_id => business_id).first
       unless business_address.present?
         business_address = self.new
       end

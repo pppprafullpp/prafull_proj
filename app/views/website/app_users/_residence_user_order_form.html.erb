@@ -9,24 +9,25 @@
       <div class="col-md-12">
         <h2>Billing Address</h2>
       </div>
-      <div class="col-md-6 padding15right">
+
+        <div class="col-md-6 padding15right">
+        <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
+        <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "app_user_billing_address_name") %>
+      </div>
+      <div class="col-md-6">
         <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
         <%= text_field_tag('app_user_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_billing_address_1") %>
         <%= hidden_field_tag 'app_user_addresses[address_type]',2,:name => "app_user_addresses[address_type]" %>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address 2</label>
         <%= text_field_tag('app_user_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_billing_address_2") %>
       </div>
-      <div class="col-md-6 padding15right">
+      <div class="col-md-6">
         <label for="Name" class="control-label">Town/City</label>
         <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',placeholder: "Town/City",:id => "app_user_billing_state_name") %>
       </div>
-      <div class="col-md-6">
-        <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
-        <%= text_field_tag('app_user_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip",maxlength: 6) %>
-      </div>
-      <div class="col-md-12 padding15right">
+       <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
         <!-- <select class="form-control" name="app_user_addresses[state]" id="billing_state">
           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
@@ -35,6 +36,11 @@
       <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
       <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"app_user_addresses[state]", :id=>"billing_state") %>
       </div>
+      <div class="col-md-6">
+        <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
+        <%= text_field_tag('app_user_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_billing_zip",maxlength: 6) %>
+      </div>
+
   <div id="additional_data">
       <div class="col-md-12 address-sty">
         <h2 class="padding-bott">Shipping Address</h2>
@@ -45,33 +51,38 @@
 
       </div>
       <div id="shipping_address">
-        <div class="col-md-6 padding15right">
+         <div class="col-md-6 padding15right">
+        <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
+        <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "app_user_billing_address_name") %>
+      </div>
+        <div class="col-md-6">
           <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
           <%= text_field_tag('shipping_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_shipping_address_1") %>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6  padding15right">
           <label for="Name" class="control-label">Address 2</label>
           <%= text_field_tag('shipping_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_shipping_address_2" ) %>
         </div>
         <%= hidden_field_tag 'shipping_addresses[address_type]',1,:name => "shipping_addresses[address_type]" %>
-        <div class="col-md-6 padding15right">
+        <div class="col-md-6">
           <label for="Name" class="control-label">Town/City</label>
           <%= text_field_tag('shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "cityname") %>
           <!-- <input type="text" class="form-control input-md" placeholder="Town/City" name="shipping_addresses[address_name]" id="Name"> -->
         </div>
-        <div class="col-md-6">
-          <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
-          <%= text_field_tag('shipping_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip",maxlength: 6 ) %>
-        </div>
-        <div class="col-md-12 padding15right">
+        <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
           <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"shipping_addresses[state]", :id=>"shipping_state") %>
+          <%= select_tag(":state",options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"shipping_addresses[state]", :id=>"app_user_shipping_state") %>
           <!-- <select class="form-control" name="shipping_addresses[state]" id="shipping_state">
             <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
             <%#= options_for_select(cities_array, :prompt=>"Select") %>
         </select> -->
         </div>
+        <div class="col-md-6">
+          <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
+          <%= text_field_tag('shipping_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_shipping_zip",maxlength: 6 ) %>
+        </div>
+
       </div>
       <div class="col-md-12 address-sty">
         <h2 class="padding-bott">Service Address</h2>
@@ -81,32 +92,37 @@
           <label for="checkboxb">Same as Billing Address </label>
         </div>
         <div id="service_address">
-          <div class="col-md-6 padding15right">
+            <div class="col-md-6 padding15right">
+        <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
+        <%= text_field_tag('app_user_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "app_user_billing_address_name") %>
+      </div>
+          <div class="col-md-6">
             <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
             <%= text_field_tag('service_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1',:id => "app_user_service_address_1") %>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6  padding15right">
             <label for="Name" class="control-label">Address 2</label>
             <%= text_field_tag('service_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2',:id => "app_user_service_address_2") %>
             <%= hidden_field_tag 'service_addresses[address_type]',0,:name => "service_addresses[address_type]" %>
           </div>
-          <div class="col-md-6 padding15right">
+          <div class="col-md-6 ">
             <label for="Name" class="control-label">Town/City</label>
             <%= text_field_tag('service_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "app_user_service_address_2") %>
           </div>
-          <div class="col-md-6">
-            <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
-            <%= text_field_tag('service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip",maxlength: 6) %>
-          </div>
-          <div class="col-md-12 padding15right">
+           <div class="col-md-6 padding15right">
             <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
            <!--  <select class="form-control" name="service_addresses[state]" id="service_state">
               <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
               <%#= options_for_select(cities_array, :prompt=>"Select") %>
           </select> -->
            <% cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"service_addresses[state]", :id=>"service_state") %>
+          <%= select_tag(:state,options_for_select(cities_array,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"service_addresses[state]", :id=>"app_user_service_state") %>
           </div>
+          <div class="col-md-6">
+            <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
+            <%= text_field_tag('service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip',:id => "app_user_service_zip",maxlength: 6) %>
+          </div>
+
         </div>
       </div>
     </div>
@@ -121,21 +137,5 @@
 </div>
 </div>
 <script>
-// $(document).ready(function(){
-//   $("#app_user_billing_address_1, #app_user_billing_address_2, #app_user_billing_zip").on("keyup",function(){
-//     if($("#app_user_billing_address_1").val().length>4 && $("#app_user_billing_address_2").val().length>4 && $("#app_user_billing_zip").val().length>4){
-//       $("#additional_data").removeClass("hidden");
-//   }
-//   else {
-//     $("#additional_data").addClass("hidden")
-//   }
-// });
-// });
-// $(document).ready(function(){
-//   if($("#app_user_billing_address_1").val().length>4 && $("#app_user_billing_address_2").val().length>4 && $("#app_user_billing_zip").val().length>4){
-//     $("#additional_data").removeClass("hidden");
-// }
-// else {
-//   $("#additional_data").addClass("hidden")
-// }});
+
 </script>

@@ -7,8 +7,10 @@ class OrderMailer < ApplicationMailer
   #
   def order_confirmation(app_user,order)
     recipient = app_user.email
+    @name=Base64.decode64(app_user.first_name) + " " + Base64.decode64(app_user.last_name)
     @app_user = app_user
     @order = order
+    @order_billing_address=order.order_addresses[1]
     mail(to: recipient, subject: "Service-Deal Order Confirmation# #{order.order_number}")
   end
 

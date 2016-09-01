@@ -76,8 +76,8 @@
             <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
             <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
             <div id="save_<%=id%>" class="col-md-3 hidden"><button id="<%=id%>" class="btn btn-primary" onclick="save(this)">Save</button></div>
-            <div class="col-md-4"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Set Default</button></div>
-            <div class="col-md-2"><button class="btn btn-danger" id="<%=id%>" onclick="editform(this)">Delete</button></div>
+            <div class="col-md-4"><button class="btn btn-primary" id="sd<%=id%>" onclick="sd(this)">Set Default</button></div>
+            <div class="col-md-2"><button class="btn btn-danger" id="del<%=id%>" onclick="del(this)">Delete</button></div>
           </div>
         </div>
       <%end%>

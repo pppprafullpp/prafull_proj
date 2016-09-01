@@ -41,7 +41,13 @@
                         <li><%= data['short_description'].truncate(30) %></li>
                         <li><%= data['detail_description'].truncate(30) %></li>
                       </ul>
+<<<<<<< HEAD
 
+=======
+                      <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+                        <h5>Lines:<%=data['no_of_lines'] %></h5>
+                        <% end %>
+>>>>>>> 96e7230c7f051747450e6ba5c3b03de65ba655e8
                       <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
 
                       <div class="box_down">

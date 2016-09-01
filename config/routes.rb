@@ -72,6 +72,8 @@ Rails.application.routes.draw do
   #end
   get "/proxy_verify"=>"website/app_users#proxy_verify"
   match "/edit_addresses" => "website/app_users#edit_addresses", :via => [:post]
+  match "/set_default_address" => "website/app_users#set_default_address", :via => [:post]
+  match "/delete_address" => "website/app_users#delete_address", :via => [:post]
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
   #
   # if Socket.gethostname=="servicedlz-Virtual-Machine"

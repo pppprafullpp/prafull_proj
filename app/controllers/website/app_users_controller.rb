@@ -374,6 +374,21 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+  def edit_addresses
+    if params[:user_type] == "residence"
+      row=AppUserAddress.find(params[:row_id])
+      row.update_attributes(
+      :address_name => params[:address_name],
+      :address1 => params[:address1],
+      :address2 => params[:address2],
+      :zip => params[:zip]
+      )
+      flash[:success] == "address updated"
+      render :json => {
+        status:"saved"
+      }
+    end
+  end
 
 
   private

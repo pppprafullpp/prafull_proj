@@ -381,7 +381,8 @@ class Website::AppUsersController < ApplicationController
       :address_name => params[:address_name],
       :address1 => params[:address1],
       :address2 => params[:address2],
-      :zip => params[:zip]
+      :zip => params[:zip],
+      :state => params[:state]
       )
       flash[:success] == "address updated"
       render :json => {

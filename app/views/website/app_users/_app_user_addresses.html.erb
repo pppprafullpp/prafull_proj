@@ -108,7 +108,7 @@ function save(obj){
       success: function(data) {
         if(data["status"] == "saved")
         {
-          location.reload();
+          window.open("/website/app_users/profile?saved_address=true", "_self")
         }
       }
     });

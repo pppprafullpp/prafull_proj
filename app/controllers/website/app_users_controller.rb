@@ -387,6 +387,21 @@ class Website::AppUsersController < ApplicationController
       render :json => {
         status:"saved"
       }
+    else
+      row=BusinessAddress.find(params[:row_id])
+      row.update_attributes(
+      :address_name => params[:address_name],
+      :address1 => params[:address1],
+      :address2 => params[:address2],
+      :zip => params[:zip],
+      :state => params[:state],
+      :city=> params[:city]
+      )
+      flash[:success] == "address updated"
+      render :json => {
+        status:"saved"
+      }
+
     end
   end
 

@@ -22,6 +22,16 @@
             <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:address2, address[:address2],:id=>"address_address2_#{id}" ,:disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
+
+
+            <p>
+              <select class="form-control" id="address_state_<%=id%>" name="service_provider_id" disabled="true" class="form-control">
+                <%= options_for_select( Statelist.pluck(:state).uniq, :prompt=>"Select", :value=> @providers) %>
+              </select>
+            </p>
+
+
+
             <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
             <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
             <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
@@ -84,6 +94,7 @@ console.log(id);
             $("#address_city_"+id).attr("disabled",false);
             $("#address_state_"+id).attr("disabled",false);
             $("#address_zip_"+id).attr("disabled",false);
+            $("#address_state_"+id).attr("disabled",false);
             $("#save_"+id).removeClass("hidden");
             $("#edit_"+id).addClass("hidden");
       }
@@ -95,6 +106,7 @@ console.log(id);
             $("#address_city_"+id).attr("disabled","disabled");
             $("#address_state_"+id).attr("disabled","disabled");
             $("#address_zip_"+id).attr("disabled","disabled");
+            $("#address_state_"+id).attr("disabled","disabled");
             $("#save_"+id).addClass("hidden");
             $("#edit_"+id).removeClass("hidden");
     }
@@ -109,6 +121,7 @@ function save(obj){
     $("#address_city_"+id).attr("disabled","disabled");
     $("#address_state_"+id).attr("disabled","disabled");
     $("#address_zip_"+id).attr("disabled","disabled");
+    $("#address_state_"+id).attr("disabled","disabled");
     $("#save_"+id).addClass("hidden");
     $("#edit_"+id).removeClass("hidden");
     address_name = $("#address_name_"+id).val();
@@ -119,6 +132,8 @@ function save(obj){
     zip = $("#address_zip_"+id).val();
     row_id=$("#row_id_"+id).val();
     user_type=$("#user_type_"+id).val();
+    state=$("#address_state_"+id+" option:selected").val();
+    console.log(state);
     $.ajax({
       url: "/edit_addresses",
       type: "POST",
@@ -130,7 +145,8 @@ function save(obj){
         state : state,
         city : city,
         user_type: user_type,
-        zip: zip
+        zip: zip,
+        state:state
       },
       success: function(data) {
         if(data["status"] == "saved")

@@ -41,9 +41,42 @@
         </div>
        </div>
     <%elsif AppUser.find(session[:user_id]).user_type == "business"%>
-    <!-- prafull write code here-->
-        <p>Business user</p>
-     <%end%>
+      <p>Business user</p>
+      <%addresses=AppUser.find(session[:user_id]).business_app_users.first.business.business_addresses%>
+      <%addresses.each do |address|%>
+        <%id=SecureRandom.hex(5)%>
+        <div class="col-md-4">
+          <div class="border-address">
+            <%if address[:address_type] == 0%>
+              <p><b>Branch Address</p></b>
+            <%end%>
+            <%if address[:address_type] == 1%>
+              <p><b>Shipping Address</p></b>
+            <%end%>
+            <%if address[:address_type] == 2%>
+              <p><b>Billing Address</p></b>
+            <%end%>
+            <%if address[:address_type] == 3%>
+              <p><b>Business Address</p></b>
+            <%end%>
+            <%=hidden_field_tag(:address_type,address, :id=>"user_type_#{id}")%>
+            <p><%= text_field_tag(:address_name, address[:address_name], :id=>"address_name_#{id}", :disabled=>true, :class=>"form-control")%></p>
+            <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
+            <p><%= text_field_tag(:address2, address[:address2],:id=>"address_address2_#{id}" ,:disabled=>true, :class=>"form-control")%></p>
+            <p><%= text_field_tag(:city, address[:city],:id=>"address_city_#{id}",:disabled=>true, :class=>"form-control")%></p>
+            <p><%#= text_field_tag(:state, address[:state],:id=>"address_state_#{id}",:disabled=>true, :class=>"form-control")%>
+             <%= select_tag(:state,options_for_select(AppUser::STATES,address[:state]),:id=>"address_state_#{id}",:disabled=>true, :class=>"form-control",:prompt => 'Select State') %></p>
+            <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
+            <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
+            <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
+            <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
+            <div id="save_<%=id%>" class="col-md-3 hidden"><button id="<%=id%>" class="btn btn-primary" onclick="save(this)">Save</button></div>
+            <div class="col-md-4"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Set Default</button></div>
+            <div class="col-md-2"><button class="btn btn-danger" id="<%=id%>" onclick="editform(this)">Delete</button></div>
+          </div>
+        </div>
+      <%end%>
+      <% end %>
 </div>
 <script>
 function editform(obj) {
@@ -54,6 +87,8 @@ console.log(id);
             $("#address_name_"+id).attr("disabled",false);
             $("#address_address1_"+id).attr("disabled",false);
             $("#address_address2_"+id).attr("disabled",false);
+            $("#address_city_"+id).attr("disabled",false);
+            $("#address_state_"+id).attr("disabled",false);
             $("#address_zip_"+id).attr("disabled",false);
             $("#address_state_"+id).attr("disabled",false);
             $("#save_"+id).removeClass("hidden");
@@ -64,6 +99,8 @@ console.log(id);
             $("#address_name_"+id).attr("disabled","disabled");
             $("#address_address1_"+id).attr("disabled","disabled");
             $("#address_address2_"+id).attr("disabled","disabled");
+            $("#address_city_"+id).attr("disabled","disabled");
+            $("#address_state_"+id).attr("disabled","disabled");
             $("#address_zip_"+id).attr("disabled","disabled");
             $("#address_state_"+id).attr("disabled","disabled");
             $("#save_"+id).addClass("hidden");
@@ -77,6 +114,8 @@ function save(obj){
     $("#address_name_"+id).attr("disabled","disabled");
     $("#address_address1_"+id).attr("disabled","disabled");
     $("#address_address2_"+id).attr("disabled","disabled");
+    $("#address_city_"+id).attr("disabled","disabled");
+    $("#address_state_"+id).attr("disabled","disabled");
     $("#address_zip_"+id).attr("disabled","disabled");
     $("#address_state_"+id).attr("disabled","disabled");
     $("#save_"+id).addClass("hidden");
@@ -84,6 +123,8 @@ function save(obj){
     address_name = $("#address_name_"+id).val();
     address1 = $("#address_address1_"+id).val();
     address2 = $("#address_address2_"+id).val();
+    city = $("#address_city_"+id).val();
+    state = $("#address_state_"+id).val();
     zip = $("#address_zip_"+id).val();
     row_id=$("#row_id_"+id).val();
     user_type=$("#user_type_"+id).val();
@@ -97,6 +138,8 @@ function save(obj){
         address_name : address_name,
         address1 : address1,
         address2 : address2,
+        state : state,
+        city : city,
         user_type: user_type,
         zip: zip,
         state:state

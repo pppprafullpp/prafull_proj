@@ -72,4 +72,19 @@ class Api::V1::DealsController < ApplicationController
 			render :json => { :success => false}
 		end
 	end
+
+	def cellphone_equipments
+		app_user = AppUser.find_by_id(params[:app_user_id]) 
+		deal = Deal.find_by_id(params[:deal_id])
+		if app_user.present? && deal.present? && deal.service_category_id == Deal::CELLPHONE_CATEGORY
+      if deal.cellphone_equipments.present? 
+        equipments =deal.cellphone_equipments.select('id,model, price')
+       	render :json => { :success => true, equipments: equipments.as_json(:except=>[:id])}
+      else
+        render :json => { :success => false}
+      end
+    else
+    	render :json => { :success => false}
+    end
+	end
 end

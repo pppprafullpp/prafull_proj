@@ -4,7 +4,7 @@
        <%addresses=AppUser.find(session[:user_id]).app_user_addresses%>
        <%addresses.each do |address|%>
        <%id=SecureRandom.hex(5)%>
-       <div class="col-md-4">
+       <div class="col-md-6">
          <div class="border-address">
            <%if address[:address_type] == 0%>
             <p><b>Branch Address</p></b>

@@ -69,7 +69,7 @@
                         <%else%>
                         <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'],:effective_price=> data['effective_price'])%>"  id=<%=data['id']%>>Order</a>
                         <%end%>
-
+ 
                         <div class="checkbox checkbox-info" id="deal-checkbox">
                           <input class="comparebox-display" value="<%=data.first.last%>" onclick='showcomparebox(<%=data['id']%>)' deal_id="<%=data['id']%>" logo_url=<%=data['deal_image_url']%> id="checkbox<%=data.first.last%>" type="checkbox">
                           <label for="checkbox<%=data.first.last%>"> Add to compare </label>

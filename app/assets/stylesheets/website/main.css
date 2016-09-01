@@ -3341,3 +3341,11 @@ margin-top: 10px;
 .contract-date p {font-size: 18px; }
 .mgt25 { margin-top: 25px;}
 .set-call { margin-left: 20px; font-size: 15px; font-weight: bold;}
+.address-box{
+	border: 1px solid;
+	width: 287px;
+	height: 171px;
+	margin: auto 34%;
+	padding: 26px;
+
+}

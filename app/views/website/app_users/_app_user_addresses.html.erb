@@ -64,13 +64,16 @@
             <%if address[:address_type] == 3%>
               <p><b>Business Address</p></b>
             <%end%>
+            <%if address[:is_default]%>
+            <h3>Default Address</h3> <br />
+            <%end%>
             <%=hidden_field_tag(:address_type,address, :id=>"user_type_#{id}")%>
             <p><%= text_field_tag(:address_name, address[:address_name], :id=>"address_name_#{id}", :disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:address2, address[:address2],:id=>"address_address2_#{id}" ,:disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:city, address[:city],:id=>"address_city_#{id}",:disabled=>true, :class=>"form-control")%></p>
-            <p><%#= text_field_tag(:state, address[:state],:id=>"address_state_#{id}",:disabled=>true, :class=>"form-control")%>
-             <%= select_tag(:state,options_for_select(AppUser::STATES,address[:state]),:id=>"address_state_#{id}",:disabled=>true, :class=>"form-control",:prompt => 'Select State') %></p>
+             <p>State: <%=address[:state]%></p>
+            <p><%= select_tag(:state,options_for_select(AppUser::STATES,address[:state]),:id=>"address_state_#{id}",:disabled=>true, :class=>"form-control",:prompt => 'Select State') %></p>
             <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
             <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
             <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>

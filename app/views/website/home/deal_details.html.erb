@@ -13,13 +13,13 @@
           <%= render :partial => 'website/home/sorting_filter' %>
 
           <div class="col-sm-12">
-            <div id="compare_box" class="compare_box border-radius-bg affix" style="display: block;position: relative;">
+            <div id="compare_box" class="compare_box border-radius-bg affix" >
              <p><i onclick="resetcomparebox()"class="fa fa-times-circle close2" aria-hidden="true"></i></p>
               <div class="row">
                   <div id="compare-box-deal-1" class="col-md-3 hidden"></div>
                   <div id="compare-box-deal-2" class="col-md-3 hidden"></div>
                  <div class="col-md-3 text-right" style="position: absolute;right: 34px;">
-                   <a id="compare-deal" style="margin: 2px auto;padding: 14px;height:50px;cursor:pointer;margin-top:9px;float:right;width:113px;"class="btn_2" onclick="comparedeals()">COMPARE</a>
+                   <a id="compare-deal" style="margin: 2px auto;padding: 14px;height:50px;cursor:pointer;margin-top:9px;float:right;width:200px;"class="btn_2" onclick="comparedeals()">COMPARE</a>
                  </div>
                </div>
             </div>
@@ -31,22 +31,37 @@
 
                   <div class="col-xs-6 col-sm-6 col-md-4">
                     <div class="border-radius-bg auto-height">
-                      <div class="vertical_middle" style="overflow: hidden;">
-                        <img src="<%= data['deal_image_url'] %>"  height="70" width="155" alt="">
+                      <div class="vertical_middle" style="overflow: hidden;width:215px">
+                        <img src="<%= data['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
                       </div>
-                      <h5><%= data['title'].truncate(20) %></h5>
+                      <h5><%= data['title'].truncate(25) %></h5>
                       <ul class="description-height">
                         <!-- $<%#= data['deal_price'] %>  -->
                         <!-- <li><%#= data['download_speed'] %> Mbps Download Speed</li> -->
-                        <li><%= data['short_description'].truncate(15) %></li>
+                        <li><%= data['short_description'].truncate(30) %></li>
+                        <li><%= data['detail_description'].truncate(30) %></li>
                       </ul>
+<<<<<<< HEAD
+
+=======
+                      <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+                        <h5>Lines:<%=data['no_of_lines'] %></h5>
+                        <% end %>
+>>>>>>> 96e7230c7f051747450e6ba5c3b03de65ba655e8
                       <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
+
                       <div class="box_down">
                         <span class="separator_2"></span>
-                        <p>price</p>
-                        <h2 class="heading_price">$<%= data['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
-                        <p>effective price</p>
-                          <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+                        <div style="float:left; width:100%">
+                          <div style="float:left; display:inline-block">
+                            <p>Price</p>
+                            <h2 class="heading_price">$<%= data['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+                          </div>
+                          <div style="float:right; display:inline-block">
+                              <p>Effective price</p>
+                              <h2>$<%= data['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+                            </div>
+                        </div>
                           <%if @current_user.present?%>
                         <%if @current_user.email_verified%>
                              <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'],:effective_price=> data['effective_price'])%>"  id=<%=data['id']%>>Order</a>
@@ -131,14 +146,14 @@ function showcomparebox(deal_id) {
       console.log(1);
       $("#compare-box-deal-1").removeClass("hidden");
      logo_url=$("#checkbox"+deal_id).attr("logo_url");
-          $("#compare-box-deal-1").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+          $("#compare-box-deal-1").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
           $("#compare-box-deal-1").removeClass("hidden");
           $("#compare_box").show();
      }
      else if($("#compare_box").is(":visible")==true && $("#compare-box-deal-1").is(":visible")==true){
        console.log(2);
        logo_url=$("#checkbox"+deal_id).attr("logo_url");
-            $("#compare-box-deal-2").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+            $("#compare-box-deal-2").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
             $("#compare-box-deal-2").removeClass("hidden");
             $("#compare-box-deal-2").show();
      }

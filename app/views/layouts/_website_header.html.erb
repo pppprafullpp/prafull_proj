@@ -144,9 +144,9 @@
     if (password.length < 8) {
       $('#result').removeClass()
       $('#result').addClass('short')
-      return 'Please Select One Special Character, Number and Alphabet'
+      return '8 characters or longer.<br/> Atleast one number, one alphabet and one symbol (like @#$%*).'
     }
-    if (password.length > 8) strength += 1
+    if (password.length > 7) strength += 1
     // If password contains both lower and uppercase characters, increase strength value.
     if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
     // If it has numbers and characters, increase strength value.
@@ -160,11 +160,11 @@
     if (strength < 2) {
       $('#result').removeClass()
       $('#result').addClass('short')
-      return 'Please Select One Special Character, Number and Alphabet'
+      return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
     } else if (strength == 2) {
       $('#result').removeClass()
       $('#result').addClass('short')
-      return 'Please Select One Special Character, Number and Alphabet'
+      return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
     } else {
       $('#result').removeClass()
       $('#result').addClass('strong')

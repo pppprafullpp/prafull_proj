@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829062423) do
+ActiveRecord::Schema.define(version: 20160901113344) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -72,10 +72,11 @@ ActiveRecord::Schema.define(version: 20160829062423) do
     t.string   "address2",       limit: 255
     t.integer  "address_type",   limit: 4
     t.string   "contact_number", limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.text     "state",          limit: 65535
     t.string   "city",           limit: 255
+    t.boolean  "is_default",                   default: false
   end
 
   create_table "app_users", force: :cascade do |t|
@@ -207,10 +208,11 @@ ActiveRecord::Schema.define(version: 20160829062423) do
     t.string   "contact_number",  limit: 255
     t.string   "manager_name",    limit: 255
     t.string   "manager_contact", limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.text     "state",           limit: 65535
     t.string   "city",            limit: 255
+    t.boolean  "is_default",                    default: false
   end
 
   create_table "business_app_users", force: :cascade do |t|

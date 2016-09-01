@@ -5,28 +5,30 @@
        <%addresses.each do |address|%>
        <%id=SecureRandom.hex(5)%>
        <div class="col-md-4">
-         <%if address[:address_type] == 0%>
-          <p><b>Branch Address</p></b>
-         <%end%>
-         <%if address[:address_type] == 1%>
-          <p><b>Shipping Address</p></b>
-         <%end%>
-         <%if address[:address_type] == 2%>
-          <p><b>Billing Address</p></b>
-         <%end%>
-         <%if address[:address_type] == 3%>
-          <p><b>Business Address</p></b>
-         <%end%>
-          <p><%= text_field_tag(:address_name, address[:address_name], :id=>"address_name_#{id}", :disabled=>true, :class=>"form-control")%></p>
-          <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
-          <p><%= text_field_tag(:address2, address[:address2],:id=>"address_address2_#{id}" ,:disabled=>true, :class=>"form-control")%></p>
-          <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
-          <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
-          <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
-          <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
-          <div id="save_<%=id%>" class="col-md-3 hidden"><button id="<%=id%>" class="btn btn-primary" onclick="save(this)">Save</button></div>
-          <div class="col-md-4"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Set Default</button></div>
-          <div class="col-md-2"><button class="btn btn-danger" id="<%=id%>" onclick="editform(this)">Delete</button></div>
+         <div class="border-address">
+           <%if address[:address_type] == 0%>
+            <p><b>Branch Address</p></b>
+           <%end%>
+           <%if address[:address_type] == 1%>
+            <p><b>Shipping Address</p></b>
+           <%end%>
+           <%if address[:address_type] == 2%>
+            <p><b>Billing Address</p></b>
+           <%end%>
+           <%if address[:address_type] == 3%>
+            <p><b>Business Address</p></b>
+           <%end%>
+            <p><%= text_field_tag(:address_name, address[:address_name], :id=>"address_name_#{id}", :disabled=>true, :class=>"form-control")%></p>
+            <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
+            <p><%= text_field_tag(:address2, address[:address2],:id=>"address_address2_#{id}" ,:disabled=>true, :class=>"form-control")%></p>
+            <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
+            <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
+            <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
+            <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
+            <div id="save_<%=id%>" class="col-md-3 hidden"><button id="<%=id%>" class="btn btn-primary" onclick="save(this)">Save</button></div>
+            <div class="col-md-4"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Set Default</button></div>
+            <div class="col-md-2"><button class="btn btn-danger" id="<%=id%>" onclick="editform(this)">Delete</button></div>
+          </div>
          </div>
      <%end%>
         <div class="col-md-12 text-center">

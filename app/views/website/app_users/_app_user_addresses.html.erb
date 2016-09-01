@@ -22,16 +22,12 @@
             <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:address2, address[:address2],:id=>"address_address2_#{id}" ,:disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
-
-
+            <p>State: <%=address[:state]%></p>
             <p>
               <select class="form-control" id="address_state_<%=id%>" name="service_provider_id" disabled="true" class="form-control">
-                <%= options_for_select( Statelist.pluck(:state).uniq, :prompt=>"Select", :value=> @providers) %>
+                <%= options_for_select(Statelist.pluck(:state).uniq, :prompt=>"Select") %>
               </select>
             </p>
-
-
-
             <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
             <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
             <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
@@ -106,8 +102,7 @@ function save(obj){
         state:state
       },
       success: function(data) {
-        if(data["status"] == "saved")
-        {
+        if(data["status"] == "saved") {
           window.open("/website/app_users/profile?saved_address=true", "_self")
         }
       }

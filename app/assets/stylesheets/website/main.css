@@ -3347,5 +3347,11 @@ margin-top: 10px;
 	height: 171px;
 	margin: auto 34%;
 	padding: 26px;
-
+}
+.border-address {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 24px;
 }

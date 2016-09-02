@@ -1,6 +1,6 @@
 <div class="form-area">
   <%
-  if @current.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
+  if session[:user_id].present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
     @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
    price=@service_preferences_data[0].price
@@ -25,27 +25,47 @@
   <%=hidden_field_tag("from_site","true")%>
   <%=hidden_field_tag("bundle_combo","")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+    <div class="col-md-6">
       <select class="form-control" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-      </select> <br />
-    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%><br />
-    <p>Contract Date</p>
-    <%= check_box_tag "is_contract", false, :class=>"form-control"%>No Contract
-    <%= date_field_tag(:start_date,"", :class=>"form-control")%><br />
-    <%= date_field_tag(:end_date,"", :class=>"form-control")%><br />
+      </select> </div>
+      <div class="col-md-6">
+    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+  </div>
+    <p class="contract-margin-sty">Contract Date</p>
+    <div class="checkbox checkbox-info no-contract-sty">
+      <%= check_box_tag "is_contract",true, :class=>"form-control"%>
+        <label for="is_contract"> <span>No Contract </span> </label>
+
+
+    </div>
+    <div class = "col-md-6"><%= date_field_tag(:start_date,"", :class=>"form-control")%></div>
+    <div class = "col-md-6"><%= date_field_tag(:end_date,"", :class=>"form-control")%></div>
     <div class="row">
       <div class="col-md-4">
-        <input type="checkbox" id="cable-cb" text="Cable" value="Cable" onchange="showcable()" />Cable
+        <div class="checkbox checkbox-info no-contract-sty mgt25">
+            <input type="checkbox" id="cable-cb" text="Cable" value="Cable" onchange="showcable()" />
+          <label for="cable-cb"> <span>Cable </span> </label>
+          </div>
       </div>
       <div class="col-md-4">
-        <input type="checkbox" id="internet-cb" value="internet" onchange="showinternet()" />Internet
+        <div class="checkbox checkbox-info no-contract-sty mgt25">
+          <input type="checkbox" id="internet-cb" value="internet" onchange="showinternet()" />
+          <label for="internet-cb"> <span>Internet </span> </label>
+        </div>
       </div>
       <div class="col-md-4">
-        <input type="checkbox" id="telephone-cb" value="telephone"  onchange="showtelephone()" />telephone
+
+      <div class="checkbox checkbox-info no-contract-sty mgt25">
+        <input type="checkbox" id="telephone-cb" value="telephone"  onchange="showtelephone()" />
+        <label for="telephone-cb"> <span>telephone </span> </label>
+      </div>
+
       </div>
     </div>
-    <hr />
-    <div id="cable-div" class="cable-div hidden">
+
+    <div id="cable-div" class="cable-div hidden col-md-12">
+      <hr />
         <p>Cable</p>
       <div class="row">
         <div class="col-md-6">
@@ -56,8 +76,9 @@
         </div>
       </div>
     </div>
-    <hr />
-    <div id="internet-div" class="internet-div hidden">
+
+    <div id="internet-div" class="internet-div hidden col-md-12">
+      <hr />
         <p>Internet</p>
       <div class="row">
         <div class="col-md-6">
@@ -68,20 +89,27 @@
         </div>
       </div>
     </div>
-    <hr />
-    <div id="telephone-div" class="telephone-div hidden">
+
+    <div id="telephone-div" class="telephone-div hidden col-md-12">
+        <hr />
       <p>Telephone</p>
       <div class="row">
         <div class="col-md-6">
-           <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
-        </div>
-        <div class="col-md-6">
-          <%=number_field_tag(:domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
-        </div>
+         <div class="checkbox checkbox-info no-contract-sty mgt25">
+           <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+           <label for="domestic_call_unlimited"> <span>Unlimited </span> </label>
+         </div>
+      </div>
+      <div class="col-md-6">
+        <%=number_field_tag(:domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+      </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-             <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
+             <div class="checkbox checkbox-info no-contract-sty mgt25">
+               <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+               <label for="international_call_unlimited"> <span>Unlimited </span> </label>
+               </div>
         </div>
         <div class="col-md-6">
           <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
@@ -90,7 +118,11 @@
     </div>
     </div>
     <%=hidden_field_tag("plan_name","none")%>
-    <div class="col-md-12"><%= submit_tag("Save", :class=>"btn btn-success search-btn", :onclick=>"check()")%></div><br /><br /><br />
+
+
+    <div class="col-md-12 text-center">
+  <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check()")%>
+    </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
   </div>
@@ -104,10 +136,12 @@
       if($("#is_contract").prop("checked")==true){
         $("#start_date").attr("disabled",true);
         $("#end_date").attr("disabled",true);
+        $("#is_contract").val(false);
       }
       else {
         $("#start_date").attr("disabled",false);
         $("#end_date").attr("disabled",false);
+        $("#is_contract").val(true);
       }
     })
 

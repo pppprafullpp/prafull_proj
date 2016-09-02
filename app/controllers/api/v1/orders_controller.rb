@@ -257,7 +257,8 @@ class Api::V1::OrdersController < ApplicationController
 	end
 
 	def get_states
-  states=Statelist.all.pluck(:state).uniq
+	states=Statelist.all.order('state ASC').pluck(:state).uniq
+  states.unshift "Select State"
 	render :json=>{
 	 :states=>states
    }

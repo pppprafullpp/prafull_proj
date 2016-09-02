@@ -17,9 +17,9 @@ class Website::AppUsersController < ApplicationController
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         code=SecureRandom.hex(5)
-        @app_user.update_attributes(:email_verification_token=>code)
-@app_user.update_attributes(:email_verified=>true)
-         AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+        @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
+        # AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+        AppUserMailer.sign_up_mail(@app_user).deliver!
         flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
@@ -75,7 +75,7 @@ class Website::AppUsersController < ApplicationController
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
-                :contact_number=>params[:addresses][:contact_number])
+                :city=>params[:addresses][:city])
           else
             params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
             params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
@@ -96,7 +96,7 @@ class Website::AppUsersController < ApplicationController
                 :zip=>params[:addresses][:zip],
                 :address1 =>params[:addresses][:address1],
                 :address2=>params[:addresses][:address2],
-                :contact_number=>params[:addresses][:contact_number])
+                :city=>params[:addresses][:city])
           else
             params[:addresses][:address_type]=params[:addresses][:address_type].to_i
             address_hash = {:app_user_addresses => [params[:addresses]]}
@@ -183,11 +183,10 @@ class Website::AppUsersController < ApplicationController
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
-
           if user_type == AppUser::BUSINESS
-            params[:business_addresses][:address2]=params[:business_addresses][:address2]+","+params[:billing_state]
-            params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]+","+params[:shipping_state]
-            params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
+            params[:business_addresses][:address2]=params[:business_addresses][:address2]
+            params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]
+            params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]
             # params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
           else
             params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]
@@ -291,14 +290,14 @@ class Website::AppUsersController < ApplicationController
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         session[:zip_code] = @app_user.zip
         session[:user_type] = @app_user.user_type
-        flash[:notice] = 'Signin Successfull'
+        # flash[:notice] = 'Signin Successfull'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
           redirect_to website_home_index_path
         end
       else
-        flash[:warning] = 'Incorrect Username or Password!'
+        # flash[:warning] = 'Incorrect Username or Password!'
         redirect_to request.referrer and return
       end
     else
@@ -320,6 +319,22 @@ class Website::AppUsersController < ApplicationController
       format.js { render :json => { :data => user, :layout => false}.to_json}
     end
   end
+
+  def check_user_credential
+    email = params[:email]
+    password = params[:password]
+    user = AppUser.find_by_email(params[:email])
+    if user.present? and user.unhashed_password == password
+      if user.present?
+         render :json => { :status => true}
+       else
+         render :json => { :status=> false}
+      end
+    else
+     render :json => { :status => false}
+    end
+  end
+
 
   def profile
     if session[:user_id].present?
@@ -359,7 +374,69 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+  def edit_addresses
+    if params[:user_type] == "residence"
+      row=AppUserAddress.find(params[:row_id])
+      row.update_attributes(
+      :address_name => params[:address_name],
+      :address1 => params[:address1],
+      :address2 => params[:address2],
+      :zip => params[:zip],
+      :state => params[:state],
+      :city=> params[:city]
+      )
+      flash[:success] == "address updated"
+      render :json => {
+        status:"saved"
+      }
+    else
+      row=BusinessAddress.find(params[:row_id])
+      row.update_attributes(
+      :address_name => params[:address_name],
+      :address1 => params[:address1],
+      :address2 => params[:address2],
+      :zip => params[:zip],
+      :state => params[:state],
+      :city=> params[:city]
+      )
+      flash[:success] == "address updated"
+      render :json => {
+        status:"saved"
+      }
 
+    end
+  end
+
+  def set_default_address
+    if params[:user_type] == "residence"
+      row = AppUserAddress.find(params[:row_id])
+      row.update_attributes(:is_default=>true)
+      render :json => {
+        status:"updated"
+      }
+    else
+      row = BusinessAddress.find(params[:row_id])
+      row.update_attributes(:is_default=>true)
+      render :json => {
+        status:"updated"
+      }
+    end
+
+  end
+
+  def delete_address
+    if params[:user_type] == "residence"
+      AppUserAddress.find(params[:row_id]).destroy
+      render :json => {
+        status:"updated"
+      }
+    else
+      BusinessAddress.find(params[:row_id]).destroy
+      render :json => {
+        status:"updated"
+      }
+    end
+  end
 
   private
   def app_user_params

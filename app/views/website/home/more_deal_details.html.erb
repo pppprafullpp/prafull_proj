@@ -21,7 +21,7 @@
 
         <p><%= @deal.short_description %></p>
         <p><%= @deal.detail_description %></p>
-        <%= render :partial => "#{@category_name}_deal_form" if @deal_equipments.present? && @category_name != "cellphone"  %>
+        <%= render :partial => "#{@category_name}_deal_form"  %>
          <% if @deal.try(:additional_offers).present? %>
             <h5 class="margin_bot20">Additional Offer</h5>
             <% @deal.try(:additional_offers).each do |additional_offer| %>

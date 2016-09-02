@@ -101,6 +101,9 @@ end
 #	# Put your callbacks here, e.g.
 #	self.moderated = false
 #end
+def bundle_combo
+  self.bundle_deal_attributes.present? ? self.bundle_deal_attributes.first.bundle_combo : ""
+end
 
 def average_rating
   if self.comment_ratings.present?

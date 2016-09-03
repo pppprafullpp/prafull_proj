@@ -713,6 +713,8 @@ color:#fff;
 }
 .pagination_sec ul li a.active {
 	color: #105679;
+	border-bottom:2px solid;
+	padding-bottom: 4px;
 }
 .heading-2 {
 	font-family: 'open_sanssemibold';
@@ -1681,7 +1683,7 @@ color: #fff !important;
 	border: 1px solid #008bf1;
 }
 .height_popup {
-	height: 384px;
+	height: 399px;
 	overflow: hidden;
 }
 .popup_left {
@@ -3380,4 +3382,7 @@ margin-top: 10px;
     margin-bottom: 20px;
     padding: 24px;
 		width: 100%;
+}
+.filter-focus {
+    border-bottom: 2px solid;
 }

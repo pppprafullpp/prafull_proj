@@ -52,7 +52,6 @@ $(document).ready(function(){
       app_user_id : <%= session[:user_id]%>,
     },
     success: function(d){
-      console.log(d);
        $("#myrefercode").html("Your refer code <b>"+d["app_user_code"]+"</b>")
     }
   });

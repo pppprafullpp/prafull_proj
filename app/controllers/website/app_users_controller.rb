@@ -9,6 +9,8 @@ class Website::AppUsersController < ApplicationController
     if @app_user.present?
       redirect_to website_home_index_path
     else
+      params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
+      params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
@@ -164,6 +166,7 @@ class Website::AppUsersController < ApplicationController
       end
     end
   end
+
 
   def create_order
     if session[:user_id].present?

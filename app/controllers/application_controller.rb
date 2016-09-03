@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
 
-	helper_method :decode_api_data,:get_providers_by_category, :get_zipcodes
+	helper_method :decode_api_data,:get_providers_by_category, :get_zipcodes, :get_deal_rating
 
 	before_filter do
 		resource = controller_name.singularize.to_sym
@@ -58,5 +58,8 @@ class ApplicationController < ActionController::Base
 		end
 		return zipcodes
 	end
-
+	def get_deal_rating(deal_id,app_user_id)
+		response = JSON.parse(URI.parse("http://localhost:3000/api/v1/comment_ratings?deal_id=#{deal_id}&app_user_id=#{app_user_id}").read)
+		response
+	end
 end

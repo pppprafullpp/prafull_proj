@@ -48,6 +48,15 @@
 
                       <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
 
+                      <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
+                        <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
+                          <b>Rating:
+                           <%rating.times do%>
+                            <i class="glyphicon glyphicon-star"></i>
+                           <%end%>
+                         </b>
+                        </p>
+
                       <div class="box_down">
                         <span class="separator_2"></span>
                         <div style="float:left; width:100%">
@@ -69,7 +78,7 @@
                         <%else%>
                         <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'],:effective_price=> data['effective_price'])%>"  id=<%=data['id']%>>Order</a>
                         <%end%>
- 
+
                         <div class="checkbox checkbox-info" id="deal-checkbox">
                           <input class="comparebox-display" value="<%=data.first.last%>" onclick='showcomparebox(<%=data['id']%>)' deal_id="<%=data['id']%>" logo_url=<%=data['deal_image_url']%> id="checkbox<%=data.first.last%>" type="checkbox">
                           <label for="checkbox<%=data.first.last%>"> Add to compare </label>

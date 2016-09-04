@@ -25,7 +25,8 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
 
-      <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
+      <div class = "col-md-6" >
+        <select class="form-control"  id="telephone_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
       </select>  </div>
   <div class = "col-md-6" >  <%= number_field_tag(:telephone_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
@@ -94,6 +95,24 @@
       }
     });
 
+    $.ajax({
+      url :"/api/v1/get_preferences?app_user_id="+<%=session[:user_id]%>+"&category=2",
+      type: "GET",
+      success: function(data){
+        console.log("telephone"+data);
+        console.log(data["service_preference"]);
+        $("#telephone_price").val(data["service_preference"]["price"]);
+        if(data["service_preference"]["is_contract"] == true) {
+          $("#telephone_start_date").attr("disabled",true);
+          $("#telephone_end_date").attr("disabled",true);
+          $("#telephone_is_contract").prop("checked","checked");
+        }
+        $("#telephone_domestic_call_minutes").val("400");
+        $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
+        $("#telephone_price").val(data["service_preference"]["price"]);
+      }
+    });
+
     $("#telephone_domestic_call_unlimited").on("change",function(){
       if($("#telephone_domestic_call_unlimited").prop("checked")==true){
         $("#telephone_domestic_call_minutes").attr("disabled",true);
@@ -118,7 +137,8 @@
     <%if service_provider_id.present?%>
       set_service_provider("<%=service_provider_id%>")
       <%end%>
-  })
+  });
+
   function set_service_provider(id) {
     $("#service_provider_id option[value="+id+"]").attr('selected','selected');
   }
@@ -137,7 +157,7 @@
       url:"/edit_or_change_service_preferences",
       type: "POST",
       data: {
-        service_category_id:$("#service_category_id").val(),
+        service_category_id:2,
         app_user_id:$("#app_user_id").val(),
         domestic_call_minutes:$("#telephone_domestic_call_minutes").val(),
         international_call_minutes:$("#telephone_international_call_minutes").val(),
@@ -145,7 +165,8 @@
         end_date:$("#telephone_end_date").val(),
         data_plan:$("#telephone_data_plan").val(),
         price:$("#telephone_price").val(),
-        is_contract:is_contract
+        is_contract:is_contract,
+        service_provider_id:$("#telephone_service_provider_id option:selected").val()
       },
       success: function(data){
         if (data["success"] == true) {

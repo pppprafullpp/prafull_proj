@@ -1,8 +1,8 @@
 <%
    if @business.present?
-     addresses = @business.business_addresses.first
+     addresses = @business.business_addresses.where(address_type: 2).order('updated_at DESC').first
    else
-     addresses = @app_user.app_user_addresses.first
+     addresses = @app_user.app_user_addresses.last
    end
 
     if addresses.present?
@@ -10,6 +10,9 @@
      address_name = addresses.address_name
      address_1 = addresses.address1
      address_2 = addresses.address2
+     city = addresses.city
+     state = addresses.state
+
      zip = addresses.zip
      contact_number = addresses.contact_number
    end
@@ -25,6 +28,15 @@ if @app_user.secondary_id_number.present?
 end
 
 %>
+<%
+   business_name = @business.present? ? @business.business_name : ''
+   business_type = @business.present? ? @business.business_type : ''
+   federal_number = @business.present? ? @business.federal_number : ''
+   ssn = @business.present? ? @business.ssn : ''
+   business_name=Base64.decode64(business_name) if business_name.present?
+%>
+
+
 
 <div id="Profile" class="profile-tab tab-pane fade active in" role="tabpanel">
   <%= form_tag website_app_user_path(@app_user), method: :put,:class => 'form-horizontal',:id => 'update_user_form', multipart: true do %>
@@ -77,7 +89,15 @@ end
       <div class="  col-lg-12 margin_top">
         <h5>Billing Address</h5>
 
+        
+
         <div class="row">
+
+          <div class="col-sm-6 mg_bottom15 ">
+            <label class="control-label" for="Address">Address Name<span id="mandat">*</span></label>
+            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Address Name',:name => "addresses[address_name]",:maxlength => 50) %>
+          </div>
+
           <div class="col-sm-6 mg_bottom15 ">
             <label class="control-label" for="Address">Address Type</label>
             <%#=text_field_tag("Billing_Address_txt","Billing Address",:class=>"form-control", :disabled=>true)%>
@@ -95,9 +115,9 @@ end
             <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2',:name => "addresses[address2]") %>
           </div>
 
-          <div class="col-sm-6 mg_bottom15 ">
+          <div class="col-sm-6">
             <label class="control-label" for="Address">Town/City<span id="mandat">*</span></label>
-            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[address_name]",:maxlength => 50) %>
+            <%= text_field_tag(:city,city,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[city]",:maxlength => 50) %>
           </div>
 
           <div class="col-md-6 padding15right">
@@ -105,7 +125,7 @@ end
             <!-- <select class="form-control" name="billing_state" id="billing_state"> -->
               <%#= options_for_select(cities_array, :prompt=>"Select") %>
           <!-- </select> -->
-          <%= select_tag(:state,options_for_select( AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"billing_state", :id=>"billing_state") %>
+          <%= select_tag(:state,options_for_select( AppUser::STATES,state),:class => 'form-control',:prompt => 'Please Select State',:name=>"addresses[state]", :id=>"billing_state") %>
           </div>
 
 
@@ -114,7 +134,7 @@ end
             <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
           </div>
 
-          
+
           <!-- <div class="col-sm-6">
             <label class="control-label" for="Phone">Contact Number</label>
             <%#= phone_field_tag(:contact_number,contact_number,:class => 'form-control input-md',:placeholder => 'Contact Number',:name => "addresses[contact_number]",:maxlength => 10) %>
@@ -129,13 +149,6 @@ end
         <%= select_tag(:user_type,options_for_select([[AppUser::USER_TYPES.first.titleize, AppUser::USER_TYPES.first], [AppUser::USER_TYPES.last.titleize, AppUser::USER_TYPES.last]],@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
       </div>
 
-      <%
-         business_name = @business.present? ? @business.business_name : ''
-         business_type = @business.present? ? @business.business_type : ''
-         federal_number = @business.present? ? @business.federal_number : ''
-         ssn = @business.present? ? @business.ssn : ''
-         business_name=Base64.decode64(business_name) if business_name.present?
-      %>
 
       <div class="col-sm-6 mg_bottom15" style="display: none;" id="business_name_div">
           <label class="control-label">Business Name<span id="mandat">*</span></label>
@@ -154,12 +167,22 @@ end
 
       <div class="col-sm-6 mg_bottom15" style="display: none;" id="federal_number_div">
           <label class="control-label">Federal Number<span id="mandat">*</span></label>
-        <%= text_field_tag :federal_number,decode_api_data(federal_number),:name => "business[federal_number]",:class => 'form-control',:onblur=>"format_federal_number_on_blur(this)",:onkeyup=>"format_federal_number(this)",:maxlength => 11,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+          <%if federal_number.present?%>
+            <%= text_field_tag :federal_number,decode_api_data(federal_number),:name => "business[federal_number]",:class => 'form-control',:onblur=>"format_federal_number_on_blur(this)",:onkeyup=>"format_federal_number(this)",:maxlength => 11,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+          <%else%>
+            <%= text_field_tag :federal_number,"",:name => "business[federal_number]",:class => 'form-control',:onblur=>"format_federal_number_on_blur(this)",:onkeyup=>"format_federal_number(this)",:maxlength => 11,:placeholder => 'Please enter your Federal Number'%>
+          <%end%>
       </div>
 
       <div class="col-sm-6" style="display: none;" id="ssn_div">
           <label class="control-label">SSN<span id="mandat">*</span></label>
-        <%= text_field_tag :ssn,decode_api_data(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+          <%if ssn.present?%>
+            <%= text_field_tag :ssn,decode_api_data(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+          <%else%>
+            <%= text_field_tag :ssn,"",:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN'%>
+          <%end%>
+
+
       </div>
       <div class="col-sm-12 text-center margin40">
         <%= submit_tag('Save',:class => 'btn theme-btn',:id => 'submit_button', :data => { :disable_with => "Updating" } ) %>

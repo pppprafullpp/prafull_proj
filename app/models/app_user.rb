@@ -32,7 +32,9 @@ class AppUser < ActiveRecord::Base
   PRIMARY_ID = ["Driving License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ]
   SECONDARY_ID = ["Major credit card" , "Driving License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]
   USER_TYPES = [RESIDENCE,BUSINESS]
-  STATES = Statelist.all.pluck(:state).uniq
+  # STATES = Statelist.all.pluck(:state).uniq
+  STATES =Statelist.all.order('state ASC').pluck(:state).uniq
+  
 
   def encrypt_data
     ##self.zip = encode_data({'data' => self.zip}) if self.zip.present?
@@ -59,6 +61,18 @@ class AppUser < ActiveRecord::Base
       nil
     end
   end
+
+
+  def self.get_addresses(params)
+    app_user = AppUser.find_by_id(params[:id])
+    addresses_array = []
+    addresses = app_user.business_app_users.last.business.business_addresses if app_user.user_type == AppUser::BUSINESS
+    addresses = app_user.app_user_addresses if app_user.user_type == AppUser::RESIDENCE
+    addresses_array << addresses.where(address_type: BusinessAddress::BILLING_ADDRESS).order('updated_at DESC').first
+    addresses_array << addresses.where(address_type: BusinessAddress::SHIPPING_ADDRESS).order('updated_at DESC').first
+    addresses_array << addresses.where(address_type: BusinessAddress::BRANCH_ADDRESS).order('updated_at DESC').first
+  end
+
 
   def self.update_app_user(params,app_user_id,order = nil)
     app_user = self.where(:id => app_user_id).first

@@ -30,13 +30,13 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" id="service_provider_id"  name="service_provider_id">
+      <select class="form-control" id="cellphone_service_provider_id"  name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select>
   </div>
 
   <div class="col-md-6">
-    <%= number_field_tag(price,price,:class=>"form-control", :placeholder=>"Enter price")%>
+    <%= number_field_tag("cellphone_price",price,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
   <div class="row contract-margin-sty">
     <div class="col-md-6">
@@ -51,7 +51,7 @@
     <div class="col-md-6"><%= date_field_tag(:cellphone_start_date,end_date,:class=>"form-control")%>  </div>
     <div class="col-md-6"><%= date_field_tag(:cellphone_end_date,end_date,:class=>"form-control")%>  </div>
     <p class="contract-margin-sty"><b>Calls</b></p>
-    <p class="contract-margin-sty">Domestic</p>
+    <p class="contract-margin-sty">Domestic calls</p>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
          <%= check_box_tag "checkbox_domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
@@ -60,6 +60,7 @@
         <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
+    <p class="contract-margin-sty">international calls</p>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
            <%= check_box_tag "checkbox_international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
@@ -97,8 +98,8 @@
     $("#cellphone_contract").prop("checked",false);
     $("#cellphone_domestic_call_unlimited").prop("checked",false);
     $("#cellphone_international_call_unlimited").prop("checked",false);
-    $("#cellphone_contract").on("change",function(){
-      if($("#cellphone_contract").prop("checked")==true){
+    $("#cellphone_is_contract").on("change",function(){
+      if($("#cellphone_is_contract").prop("checked")==true){
         $("#cellphone_start_date").attr("disabled",true);
         $("#cellphone_end_date").attr("disabled",true);
       }
@@ -107,6 +108,25 @@
         $("#cellphone_end_date").attr("disabled",false);
       }
     });
+    $.ajax({
+      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=+<%=session[:user_id]%>+&category=4",
+      type: "GET",
+      success: function(data){
+        console.log(data["service_preference"]);
+        $("#cellphone_price").val(data["service_preference"]["price"]);
+        if(data["service_preference"]["is_contract"] == true) {
+          $("#cellphone_start_date").attr("disabled",true);
+          $("#cellphone_end_date").attr("disabled",true);
+          $("#cellphone_is_contract").prop("checked","checked");
+        }
+        $("#telephone_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
+        $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
+        $("#cellphone_price").val(data["service_preference"]["price"]);
+        $("#cellphone_data_plan option[value='"+'2.0'+"']").attr('selected','selected');
+
+      }
+    });
+
 
     $("#cellphone_domestic_call_unlimited").on("change",function(){
       if($("#cellphone_domestic_call_unlimited").prop("checked")==true){
@@ -162,7 +182,7 @@
       url:"/edit_or_change_service_preferences",
       type: "POST",
       data: {
-        service_category_id:$("#service_category_id").val(),
+        service_category_id:4,
         app_user_id:$("#app_user_id").val(),
         domestic_call_minutes:$("#cellphone_domestic_call_minutes").val(),
         international_call_minutes:$("#cellphone_international_call_minutes").val(),
@@ -171,7 +191,8 @@
         data_plan:$("#cellphone_data_plan").val(),
         no_of_lines:$("#cellphone_no_of_lines").val(),
         price:$("#cellphone_price").val(),
-        is_contract:is_contract
+        is_contract:is_contract,
+        service_provider_id:$("#cellphone_service_provider_id option:selected").val()
       },
       success: function(data){
         if (data["success"] == true) {

@@ -99,10 +99,6 @@ end
             <label class="control-label" for="Address">Town/City<span id="mandat">*</span></label>
             <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[address_name]",:maxlength => 50) %>
           </div>
-          <div class="col-sm-6 mg_bottom15 ">
-            <label class="control-label" for="Address">Zip<span id="mandat">*</span></label>
-            <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
-          </div>
 
           <div class="col-md-6 padding15right">
             <label for="Name" class="control-label">Select State<span id="mandat">*</span></label></label>
@@ -112,6 +108,13 @@ end
           <%= select_tag(:state,options_for_select( AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"billing_state", :id=>"billing_state") %>
           </div>
 
+
+          <div class="col-sm-6 mg_bottom15 ">
+            <label class="control-label" for="Address">Zip<span id="mandat">*</span></label>
+            <%= text_field_tag(:zip,zip,:class => 'form-control input-md',:placeholder => 'Zip Code',:name => "addresses[zip]", :maxlength => 6) %>
+          </div>
+
+          
           <!-- <div class="col-sm-6">
             <label class="control-label" for="Phone">Contact Number</label>
             <%#= phone_field_tag(:contact_number,contact_number,:class => 'form-control input-md',:placeholder => 'Contact Number',:name => "addresses[contact_number]",:maxlength => 10) %>

@@ -3,6 +3,7 @@
   if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
     @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
    price=@service_preferences_data[0].price
    is_contract=@service_preferences_data[0].is_contract
    start_date=@service_preferences_data[0].start_date
@@ -13,6 +14,8 @@
    upload_speed=@internet_preferences[0].upload_speed
    end
   %>
+ 
+
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
@@ -20,7 +23,7 @@
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
-      <select class="form-control" name="service_provider_id">
+      <select class="form-control" id="service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select>
     </div>
@@ -55,6 +58,11 @@
         $("#start_date").attr("disabled",false);
         $("#end_date").attr("disabled",false);
       }
-    })
-  })
+    });
+      set_service_provider("<%=service_provider_id%>")
+  });
+
+    function set_service_provider(id) {
+      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+    }
   </script>

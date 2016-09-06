@@ -3,6 +3,8 @@
   if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
+
    price=@service_preferences_data[0].price
    is_contract=@service_preferences_data[0].is_contract
    start_date=@service_preferences_data[0].start_date
@@ -21,8 +23,8 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
 
-      <div class = "col-md-6" ><select class="form-control" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+      <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
+        <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
       </select>  </div>
   <div class = "col-md-6" >  <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
     <p class="contract-margin-sty">Contract Date</p>
@@ -106,6 +108,9 @@
         $("#domestic_call_unlimited").val("false");
       }
     });
+      set_service_provider("<%=service_provider_id%>")
   })
-
+  function set_service_provider(id) {
+    $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+  }
   </script>

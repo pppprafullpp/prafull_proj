@@ -151,7 +151,7 @@ end
 
       <div class="col-sm-6 mg_bottom15" style="display: none;" id="federal_number_div">
           <label class="control-label">Federal Number<span id="mandat">*</span></label>
-        <%= text_field_tag :federal_number,decode_api_data(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+        <%= text_field_tag :federal_number,decode_api_data(federal_number),:name => "business[federal_number]",:class => 'form-control',:onblur=>"format_federal_number_on_blur(this)",:onkeyup=>"format_federal_number(this)",:maxlength => 11,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
       </div>
 
       <div class="col-sm-6" style="display: none;" id="ssn_div">
@@ -167,6 +167,22 @@ end
   <% end %>
 </div>
 <script type="text/javascript">
+    function format_federal_number(obj) {
+      if($("#"+obj.id).val().length==2){
+      $("#"+obj.id).val($("#"+obj.id).val().toUpperCase()+"-")
+      }
+      if($("#"+obj.id).val().length==6){
+      $("#"+obj.id).val($("#"+obj.id).val().toUpperCase()+"-")
+      }
+      if($("#"+obj.id).val().length>1){
+      $("#"+obj.id).val($("#"+obj.id).val().toUpperCase())
+      }
+    }
+    function format_federal_number_on_blur(obj) {
+    val=obj.value;
+    formatted_str=val.substr(0,2)+"-"+val.substr(3,3)+"-"+val.substr(7)
+    $("#"+obj.id).val(formatted_str);
+    }
     $(document ).ready(function() {
       $("#spinner").hide();
       $("#save-spinner").hide();

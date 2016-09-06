@@ -9,6 +9,8 @@ class Website::AppUsersController < ApplicationController
     if @app_user.present?
       redirect_to website_home_index_path
     else
+      params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
+      params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
@@ -165,6 +167,7 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+
   def create_order
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
@@ -182,11 +185,10 @@ class Website::AppUsersController < ApplicationController
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
-
           if user_type == AppUser::BUSINESS
-            params[:business_addresses][:address2]=params[:business_addresses][:address2]+","+params[:billing_state]
-            params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]+","+params[:shipping_state]
-            params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]+","+params[:service_state]
+            params[:business_addresses][:address2]=params[:business_addresses][:address2]
+            params[:business_shipping_addresses][:address2]=params[:business_shipping_addresses][:address2]
+            params[:business_service_addresses][:address2]=params[:business_service_addresses][:address2]
             # params[:business][:business_name]= encode_api_data(params[:business][:business_name]) if  params[:business][:business_name].present?
           else
             params[:app_user_addresses][:address2]=params[:app_user_addresses][:address2]
@@ -374,7 +376,69 @@ class Website::AppUsersController < ApplicationController
     end
   end
 
+  def edit_addresses
+    if params[:user_type] == "residence"
+      row=AppUserAddress.find(params[:row_id])
+      row.update_attributes(
+      :address_name => params[:address_name],
+      :address1 => params[:address1],
+      :address2 => params[:address2],
+      :zip => params[:zip],
+      :state => params[:state],
+      :city=> params[:city]
+      )
+      flash[:success] == "address updated"
+      render :json => {
+        status:"saved"
+      }
+    else
+      row=BusinessAddress.find(params[:row_id])
+      row.update_attributes(
+      :address_name => params[:address_name],
+      :address1 => params[:address1],
+      :address2 => params[:address2],
+      :zip => params[:zip],
+      :state => params[:state],
+      :city=> params[:city]
+      )
+      flash[:success] == "address updated"
+      render :json => {
+        status:"saved"
+      }
 
+    end
+  end
+
+  def set_default_address
+    if params[:user_type] == "residence"
+      row = AppUserAddress.find(params[:row_id])
+      row.update_attributes(:is_default=>true)
+      render :json => {
+        status:"updated"
+      }
+    else
+      row = BusinessAddress.find(params[:row_id])
+      row.update_attributes(:is_default=>true)
+      render :json => {
+        status:"updated"
+      }
+    end
+
+  end
+
+  def delete_address
+    if params[:user_type] == "residence"
+      AppUserAddress.find(params[:row_id]).destroy
+      render :json => {
+        status:"updated"
+      }
+    else
+      BusinessAddress.find(params[:row_id]).destroy
+      render :json => {
+        status:"updated"
+      }
+    end
+  end
 
   private
   def app_user_params

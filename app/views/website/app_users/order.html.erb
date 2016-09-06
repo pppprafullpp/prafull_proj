@@ -161,7 +161,6 @@ end
           <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
           <%= hidden_field_tag :equipment_id,'',{:name=> 'order_equipments[equipment_id]'}%>
           <%= hidden_field_tag :equipment_price,'',{:name=> 'order_equipments[equipment_price]'}%>
-          <%= hidden_field_tag :primary_id_number,'',{:name => 'primary_id_number'}%>
           <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
         </div>
       </div>
@@ -270,6 +269,7 @@ $(document).ready(function(e) {
     type: "GET",
     data:{ id:<%=@app_user.id%>},
     success:function(data){
+      console.log(data);
       $("#billing_address_1").val(data["status"]["address1"]);
       $("#billing_address_2").val(data["status"]["address2"]);
       $("#billing_zip").val(data["status"]["zip"]);
@@ -360,21 +360,39 @@ $("#order_information_menu_tab").click(function(event){
   var billing_address_1 = $('#billing_address_1').val();
   var billing_address_2 = $('#billing_address_2').val();
   var billing_zip = $('#billing_zip').val();
+  var billing_state = $('#billing_state').val();
+  var billing_city = $('#billing_city').val();
+  var billing_address_name = $('#billing_address_name').val();
   var shipping_address_1 = $('#shipping_address_1').val();
   var shipping_address_2 = $('#shipping_address_2').val();
   var shipping_zip = $('#shipping_zip').val();
+  var shipping_state = $('#shipping_state').val();
+  var shipping_city = $('#shipping_city').val();
+  var shipping_address_name = $('#shipping_address_name').val();
   var service_address_1 = $('#service_address_1').val();
   var service_address_2 = $('#service_address_2').val();
   var service_zip = $('#service_zip').val();
+  var service_address_name = $('#service_address_name').val();
+  var service_state = $('#service_state').val();
+  var service_city = $('#service_city').val();
   var app_user_billing_address_1 = $('#app_user_billing_address_1').val();
   var app_user_billing_address_2 = $('#app_user_billing_address_2').val();
   var app_user_billing_zip = $('#app_user_billing_zip').val();
+  var app_user_billing_address_name = $('#app_user_billing_address_name').val();
+  var app_user_billing_state = $('#app_user_billing_state').val();
+  var app_user_billing_city = $('#app_user_billing_city').val();
   var app_user_shipping_address_1 = $('#app_user_shipping_address_1').val();
   var app_user_shipping_address_2 = $('#app_user_shipping_address_2').val();
   var app_user_shipping_zip = $('#app_user_shipping_zip').val();
+  var app_user_shipping_address_name = $('#app_user_shipping_address_name').val();
+  var app_user_shipping_state = $('#app_user_state').val();
+  var app_user_shipping_city = $('#app_user_shipping_city').val();
   var app_user_service_address_1 = $('#app_user_service_address_1').val();
   var app_user_service_address_2 = $('#app_user_service_address_2').val();
   var app_user_service_zip = $('#app_user_service_zip').val();
+  var app_user_service_address_name = $('#app_user_service_address_name').val();
+  var app_user_service_state = $('#app_user_service_state').val();
+  var app_user_service_city = $('#app_user_service_city').val();
 
   if ($('#user_type').val() == "business"){
     billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/>State:"+$("#billing_state option:selected").val()+"<br/>"+billing_zip;
@@ -394,7 +412,7 @@ $("#order_information_menu_tab").click(function(event){
       $(".billing-address-innertxt").html(app_user_shipping_address);
     }
 
-  if( primary_id=='' || secondary_id=='' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == '' ) {
+  if( primary_id=='' || secondary_id=='' || first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || app_user_billing_address_1 == '' || app_user_billing_zip == '' || app_user_shipping_address_1  == '' || app_user_shipping_zip  == '' || app_user_service_address_1 == '' || app_user_service_zip == ''  || billing_address_name == '' || billing_state == '' || shipping_address_name == '' || shipping_state == '' || service_address_name == '' || service_city == '' ) {
     alert("Please fill all the mandatory fields.");
     console.log(1);
     event.stopImmediatePropagation();
@@ -476,7 +494,10 @@ $("#order_information_menu_tab").click(function(event){
     var service_state =$('#service_state').val();
     var shipping_state =$('#shipping_state').val();
     var billing_state =$('#billing_state').val();
-    if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || billing_state == '' || service_state == '' || shipping_state == '') {
+    var billing_address_name = $('#billing_address_name').val();
+    var shipping_address_name = $('#shipping_address_name').val();
+    var service_address_name = $('#service_address_name').val();
+    if(billing_address_1 == '' || billing_zip == '' || shipping_address_1 == '' || shipping_zip == '' || service_address_1 == '' || service_zip == '' || billing_state == '' || service_state == '' || shipping_state == '' || billing_address_name  == '' || shipping_address_name == '' || service_address_name == '' ) {
       alert("Please fill all the mandatory fields.")
     }
     else {
@@ -691,8 +712,13 @@ $("#order_information_menu_tab").click(function(event){
   function SetService(checked) {
     if (checked) {
       document.getElementById('service_address_1').value = document.getElementById('billing_address_1').value;
+      document.getElementById('service_address_name').value = document.getElementById('billing_address_name').value;
+      document.getElementById('service_city').value = document.getElementById('billing_city').value;
       document.getElementById('service_address_2').value = document.getElementById('billing_address_2').value;
       document.getElementById('service_zip').value = document.getElementById('billing_zip').value;
+      index=$("#billing_state option:selected").index();
+      console.log(index);
+      $("#service_state option:eq("+index+")").prop("selected", true);
     }
     else {
       document.getElementById('service_address_1').value = '';
@@ -704,8 +730,13 @@ $("#order_information_menu_tab").click(function(event){
   function SetShipping(checked) {
     if (checked) {
       document.getElementById('shipping_address_1').value = document.getElementById('billing_address_1').value;
+      document.getElementById('shipping_address_name').value = document.getElementById('billing_address_name').value;
+      document.getElementById('shipping_city').value = document.getElementById('billing_city').value;
       document.getElementById('shipping_address_2').value = document.getElementById('billing_address_2').value;
       document.getElementById('shipping_zip').value = document.getElementById('billing_zip').value;
+      index=$("#billing_state option:selected").index();
+      console.log(index);
+      $("#shipping_state option:eq("+index+")").prop("selected", true);
     }
     else {
       document.getElementById('shipping_address_1').value = '';
@@ -717,7 +748,9 @@ $("#order_information_menu_tab").click(function(event){
   function SetAppUserService(checked) {
     if (checked) {
       document.getElementById('app_user_service_address_1').value = document.getElementById('app_user_billing_address_1').value;
+      document.getElementById('app_user_service_address_name').value = document.getElementById('app_user_billing_address_name').value;
       document.getElementById('app_user_service_address_2').value = document.getElementById('app_user_billing_address_2').value;
+      document.getElementById('app_user_service_city').value = document.getElementById('app_user_billing_city').value;
       document.getElementById('app_user_service_zip').value = document.getElementById('app_user_billing_zip').value;
       index=$("#billing_state option:selected").index();
       console.log(index);
@@ -736,6 +769,8 @@ $("#order_information_menu_tab").click(function(event){
       document.getElementById('app_user_shipping_address_1').value = document.getElementById('app_user_billing_address_1').value;
       document.getElementById('app_user_shipping_address_2').value = document.getElementById('app_user_billing_address_2').value;
       document.getElementById('app_user_shipping_zip').value = document.getElementById('app_user_billing_zip').value;
+      document.getElementById('app_user_shipping_city').value = document.getElementById('app_user_billing_city').value;
+      document.getElementById('app_user_shipping_address_name').value = document.getElementById('app_user_billing_address_name').value;
       index=$("#billing_state option:selected").index()
       $("#app_user_shipping_state option:eq("+index+")").prop("selected", true);
 

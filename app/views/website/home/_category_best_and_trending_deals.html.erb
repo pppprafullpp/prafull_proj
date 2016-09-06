@@ -1,0 +1,107 @@
+<% @best_deal_data.each do |data| %>
+  <%if data[:service_category_id] == params[:category_id].to_i %>
+    <% if data[:best_deal].present? %>
+      <% best_deal = data[:best_deal] %>
+      <div class="col-xs-6 col-sm-6 col-md-4">
+        <div class="border-radius-bg auto-height">
+          <span class="bestdeal-icon">Best Deal</span>
+          <div class="vertical_middle" style="overflow: hidden;width:215px">
+          <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
+        </div>
+        <h5><%= best_deal['title'].truncate(25) %></h5>
+        <ul class="description-height">
+          <li><%= best_deal['short_description'].truncate(30) %></li>
+          <li><%= best_deal['detail_description'].truncate(30) %></li>
+        </ul>
+        <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+          <h5>Lines:<%=data['no_of_lines'] %></h5>
+        <% end %>
+        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a> 
+        <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
+        <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
+          <b>Rating:
+            <%rating.times do%>
+              <i class="glyphicon glyphicon-star"></i>
+            <%end%>
+          </b>
+        </p>
+        <div class="box_down">
+          <span class="separator_2"></span>
+          <div style="float:left; width:100%">
+            <div style="float:left; display:inline-block">
+              <p>Price</p>
+              <h2 class="heading_price">$<%= best_deal['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+            </div>
+            <div style="float:right; display:inline-block">
+              <p>Effective price</p>
+              <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+            </div>
+          </div>
+          <div>
+            <b>You Save</b> <%= data[:you_save_text] %>   
+          </div>
+          <%if @current_user.present?%>
+            <%if @current_user.email_verified%>
+              <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+            <%else%>
+              <a class="order-btn" href="javascript:void(0)">Verify email</a>
+            <%end%>
+          <%else%>
+            <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  <%end %>
+  <% if data[:trending_deal].present? %>
+    <% best_deal = data[:trending_deal] %>
+    <div class="col-xs-6 col-sm-6 col-md-4">
+      <div class="border-radius-bg auto-height">
+        <span class="trendingdeal-icon">Trending Deal</span>
+        <div class="vertical_middle" style="overflow: hidden;width:215px">
+          <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
+        </div>
+        <h5><%= best_deal['title'].truncate(25) %></h5>
+        <ul class="description-height">
+          <li><%= best_deal['short_description'].truncate(30) %></li>
+          <li><%= best_deal['detail_description'].truncate(30) %></li>
+        </ul>
+        <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+          <h5>Lines:<%=data['no_of_lines'] %></h5>
+        <% end %>
+        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a> 
+        <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
+        <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
+          <b>Rating:
+            <%rating.times do%>
+              <i class="glyphicon glyphicon-star"></i>
+            <%end%>
+          </b>
+        </p>
+        <div class="box_down">
+          <span class="separator_2"></span>
+          <div style="float:left; width:100%">
+            <div style="float:left; display:inline-block">
+              <p>Price</p>
+              <h2 class="heading_price">$<%= best_deal['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+          </div>
+          <div style="float:right; display:inline-block">
+            <p>Effective price</p>
+            <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+          </div>
+        </div>
+        <%if @current_user.present?%>
+          <%if @current_user.email_verified%>
+            <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+          <%else%>
+            <a class="order-btn" href="javascript:void(0)">Verify email</a>
+          <%end%>
+        <%else%>
+          <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+        <%end%>
+      </div>
+    </div>
+  </div>
+<%end %>
+<% end %>
+<% end %>

@@ -65,7 +65,7 @@
                                 <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
                                 <input type="text" class="form-control" placeholder="Email"  name="user[email]" id="user_email" required>
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-login-email-valid">Email does not Exists.</span>
-                                       
+
 
                               </div>
                               <div class="form-group">
@@ -93,6 +93,14 @@
                           <div class="login-signup col-lg-12 col-xs-12">
                             <% @user = AppUser.new() %>
                             <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
+                            <div class="form-group">
+                              <div class="col-md-6" style="padding-left:0px">
+                                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name" %>
+                              </div>
+                              <div class="col-md-6" style="padding-left:0px">
+                                <%= f.text_field :last_name,:class => "form-control",:placeholder => "last name" %>
+                              </div>
+                            </div>
                                 <div class="form-group">
                                   <%= f.text_field :email,:class => "form-control",:placeholder => "Email" %>
                                   <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-email-valid">Email Already Exists.</span>
@@ -144,9 +152,9 @@
     if (password.length < 8) {
       $('#result').removeClass()
       $('#result').addClass('short')
-      return 'Please Select One Special Character, Number and Alphabet'
+      return '8 characters or longer.<br/> Atleast one number, one alphabet and one symbol (like @#$%*).'
     }
-    if (password.length > 8) strength += 1
+    if (password.length > 7) strength += 1
     // If password contains both lower and uppercase characters, increase strength value.
     if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
     // If it has numbers and characters, increase strength value.
@@ -160,11 +168,11 @@
     if (strength < 2) {
       $('#result').removeClass()
       $('#result').addClass('short')
-      return 'Please Select One Special Character, Number and Alphabet'
+      return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
     } else if (strength == 2) {
       $('#result').removeClass()
       $('#result').addClass('short')
-      return 'Please Select One Special Character, Number and Alphabet'
+      return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
     } else {
       $('#result').removeClass()
       $('#result').addClass('strong')
@@ -206,7 +214,7 @@
         return false
       }
     });
-    
+
     $("#forgot_password").click(function(){
       var user_email = $('#user_email').val();
       if(user_email != ''){
@@ -224,7 +232,7 @@
   });
   $( "#user_email").focusout(function() {
       checkEmail('signin',$(this).val());
-      
+
   });
    $( "#user_email,#user_password").focusin(function() {
       $('#user_not_found').hide();
@@ -274,18 +282,18 @@
             $('#user_not_found').show();
           }
         }
-      });  
+      });
       if (s == 0){
         event.preventDefault();
         event.stopImmediatePropagation();
-      }             
+      }
     }
   }
-  
+
   function allow_submit(){
     $("#login_app_user").submit();
   }
-    
+
   function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -334,6 +342,3 @@
   });
   $('#zipcode_header').prop('disabled', true);
 </script>
-
-
-                

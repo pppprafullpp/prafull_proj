@@ -1,12 +1,4 @@
 
-
-<!-- banner -->
-<!-- <section class="inner internet-banner bundle">
-  <div class="container text-center">
-    <h3><%= @category_name.capitalize%></h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-  </div>
-</section> -->
 <%= render :partial => 'website/home/internet_banner',  locals: { :category_name => @category_name.capitalize }%>
 
 <!--More Details section-->
@@ -16,12 +8,13 @@
       <h3 class="col-sm-12 text-center"> Deal Details </h3>
       <div class="col-sm-12 text-center alert alert-success"><b><%= @deal.title %></b></div>
       <div class="col-sm-8 about-offer">
+        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
 
         <h5>About the offer</h5>
 
         <p><%= @deal.short_description %></p>
         <p><%= @deal.detail_description %></p>
-        <%= render :partial => "#{@category_name}_deal_form" if @deal_equipments.present? && @category_name != "cellphone"  %>
+        <%= render :partial => "#{@category_name}_deal_form"  %>
          <% if @deal.try(:additional_offers).present? %>
             <h5 class="margin_bot20">Additional Offer</h5>
             <% @deal.try(:additional_offers).each do |additional_offer| %>
@@ -142,4 +135,41 @@
 
 
 
+</script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1667446600239604',
+      xfbml      : true,
+      version    : 'v2.7'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+function postLike(){
+  FB.ui({
+  method: 'share',
+  href: 'http://52.39.217.10/website/home/more_deal_details?deal_id=<%=@deal.id %>',
+}, function(response) {
+         if (!response) {
+           // alert('Error occurred.');
+         } else if (response.error) {
+           document.getElementById('result').innerHTML =
+             'Error: ' + response.error.message;
+         } else {
+           document.getElementById('result').innerHTML =
+             '<a href=\"https://www.facebook.com/me/activity/' +
+             response.id + '\">' +
+             'Story created.  ID is ' +
+             response.id + '</a>';
+         }
+       });
+}
 </script>

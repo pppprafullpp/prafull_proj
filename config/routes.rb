@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       match 'get_cities' => 'orders#get_cities', :via => :get
       match 'primary_information' => "app_users#primary_information", :via => :get
       match 'cellphone_equipments' => "deals#cellphone_equipments", :via => :get
+      match 'customisable_deals' => "deals#customisable_deals", :via => :get
+      match 'deal_extra_services' => "deals#deal_extra_services", :via => :get
+      
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end

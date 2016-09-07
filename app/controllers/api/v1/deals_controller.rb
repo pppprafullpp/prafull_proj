@@ -87,4 +87,18 @@ class Api::V1::DealsController < ApplicationController
     	render :json => { :success => false}
     end
 	end
+
+	def customisable_deals
+		deals = Deal.where("is_customisable = ?",true)
+		render :json => { :success => true, deals: deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])}
+	end
+
+	def deal_extra_services
+		if params[:deal_id].present?
+			deal_extra_service = DealExtraService.where("deal_id = ?", params[:deal_id])
+			render :json => { :success => true, deal_extra_service: deal_extra_service}
+		else
+			render :json => { :success => false}
+		end
+	end
 end

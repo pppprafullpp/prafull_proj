@@ -2855,7 +2855,7 @@ color:#555;
 	height: 43px;
 }
 .auto-height {
-	min-height: 544px;
+	min-height: 510px;
 }
 .description-height {
 	height: 40px;
@@ -3385,4 +3385,42 @@ margin-top: 10px;
 }
 .filter-focus {
     border-bottom: 2px solid;
+}
+#comparePopup .modal-dialog {
+    width: 600px;
+}
+.compare-popsty {
+    padding: 30px 20px;
+}
+.info_listing {
+    padding: 0 10px;
+}
+.info_listing li {
+    color: #504f4f;
+    list-style: none;
+    display: flex;
+    padding-bottom: 10px;
+}
+.info_listing li span {
+    color: #fff;
+    background: #0775d0;
+    border-radius: 20px;
+    font-weight: 600;
+    width: 22px;
+    height: 20px;
+    line-height: 19px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    float: left;
+}
+.compare-btn {
+    background: #ed1c24;
+    color: #fff;
+    padding: 10px 20px;
+}
+.compare-btn:hover {
+    color: #fff;
+    background: #d5181f;
 }

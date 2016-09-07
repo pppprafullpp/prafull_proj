@@ -10,11 +10,13 @@
    end_date=@service_preferences_data[0].end_date
    plan_name= @service_preferences_data[0].plan_name
    @internet_preferences=InternetServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
-   download_speed=@internet_preferences[0].download_speed
-   upload_speed=@internet_preferences[0].upload_speed
+   if @internet_preferences.present?
+     download_speed=@internet_preferences[0].download_speed
+     upload_speed=@internet_preferences[0].upload_speed
+   end
    end
   %>
- 
+  <%= "Add Preferences for internet" if params[:new_user]%>
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
@@ -43,6 +45,7 @@
     <%=hidden_field_tag("plan_name","none")%>
     <div class="col-md-12 text-center">
     <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
+
     </div>
     <%end%>
   </div>
@@ -59,10 +62,13 @@
         $("#end_date").attr("disabled",false);
       }
     });
-      set_service_provider("<%=service_provider_id%>")
+      <%
+      if service_provider_id.present?%>
+        set_service_provider("<%=service_provider_id%>")
+      <%end%>
   });
 
     function set_service_provider(id) {
-      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+        $("#service_provider_id option[value='"+id+"']").attr('selected','selected');
     }
   </script>

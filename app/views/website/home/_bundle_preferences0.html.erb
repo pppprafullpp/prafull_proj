@@ -36,17 +36,17 @@
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> </div>
       <div class="col-md-6">
-    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag(:bundle_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
     <p class="contract-margin-sty">Contract Date</p>
     <div class="checkbox checkbox-info no-contract-sty">
-      <%= check_box_tag "is_contract",true, :class=>"form-control"%>
-        <label for="is_contract"> <span>No Contract </span> </label>
+      <%= check_box_tag "bundle_is_contract",true, :class=>"form-control"%>
+        <label for="bundle_is_contract"> <span>No Contract </span> </label>
 
 
     </div>
-    <div class = "col-md-6"><%= date_field_tag(:start_date,"", :class=>"form-control")%></div>
-    <div class = "col-md-6"><%= date_field_tag(:end_date,"", :class=>"form-control")%></div>
+    <div class = "col-md-6"><%= date_field_tag(:bundle_start_date,"", :class=>"form-control")%></div>
+    <div class = "col-md-6"><%= date_field_tag(:bundle_end_date,"", :class=>"form-control")%></div>
     <div class="row">
       <div class="col-md-4">
         <div class="checkbox checkbox-info no-contract-sty mgt25">
@@ -75,10 +75,10 @@
         <p>Cable</p>
       <div class="row">
         <div class="col-md-6">
-          <%=text_field_tag "free_channels",free_channels,:class=>"form-control", :placeholder=>"free Channels"%>
+          <%=text_field_tag "bundle_free_channels",free_channels,:class=>"form-control", :placeholder=>"free Channels"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "premium_channels",premium_channels,:class=>"form-control", :placeholder=>"premium Channels"%>
+        <%=text_field_tag "bundle_premium_channels",premium_channels,:class=>"form-control", :placeholder=>"premium Channels"%>
         </div>
       </div>
     </div>
@@ -88,10 +88,10 @@
         <p>Internet</p>
       <div class="row">
         <div class="col-md-6">
-          <%=text_field_tag "download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
+          <%=text_field_tag "bundle_download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "upload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
+        <%=text_field_tag "bundle_pload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
         </div>
       </div>
     </div>
@@ -102,8 +102,8 @@
       <div class="row">
         <div class="col-md-6">
          <div class="checkbox checkbox-info no-contract-sty mgt25">
-           <%= check_box_tag "domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
-           <label for="domestic_call_unlimited"> <span>Unlimited </span> </label>
+           <%= check_box_tag "bundle_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+           <label for="bundle_domestic_call_unlimited"> <span>Unlimited </span> </label>
          </div>
       </div>
       <div class="col-md-6">
@@ -113,12 +113,12 @@
       <div class="row">
         <div class="col-md-6">
              <div class="checkbox checkbox-info no-contract-sty mgt25">
-               <%= check_box_tag "international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
-               <label for="international_call_unlimited"> <span>Unlimited </span> </label>
+               <%= check_box_tag "bundle_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+               <label for="bundle_international_call_unlimited"> <span>Unlimited </span> </label>
                </div>
         </div>
         <div class="col-md-6">
-          <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+          <%=number_field_tag(:bundle_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
         </div>
       </div>
     </div>
@@ -134,20 +134,20 @@
   </div>
   <script>
   $(document).ready(function(){
-    $("#international_call_unlimited").prop("checked",false);
-    $("#domestic_call_unlimited").prop("checked",false);
+    $("#bundle_international_call_unlimited").prop("checked",false);
+    $("#bundle_domestic_call_unlimited").prop("checked",false);
 
-    $("#is_contract").prop("checked",false);
-    $("#is_contract").on("change",function(){
-      if($("#is_contract").prop("checked")==true){
-        $("#start_date").attr("disabled",true);
-        $("#end_date").attr("disabled",true);
-        $("#is_contract").val(false);
+    $("#bundle_is_contract").prop("checked",false);
+    $("#bundle_is_contract").on("change",function(){
+      if($("#bundle_is_contract").prop("checked")==true){
+        $("#bundle_start_date").attr("disabled",true);
+        $("#bundle_end_date").attr("disabled",true);
+        $("#bundle_is_contract").val(false);
       }
       else {
-        $("#start_date").attr("disabled",false);
-        $("#end_date").attr("disabled",false);
-        $("#is_contract").val(true);
+        $("#bundle_start_date").attr("disabled",false);
+        $("#bundle_end_date").attr("disabled",false);
+        $("#bundle_is_contract").val(true);
       }
     });
     <%if service_provider_id.present?%>
@@ -160,25 +160,25 @@
     <%end%>
   })
 
-  $("#domestic_call_unlimited").on("change",function(){
-    if($("#domestic_call_unlimited").prop("checked")==true){
-      $("#domestic_call_minutes").attr("disabled",true);
-      $("#domestic_call_unlimited").val("true");
+  $("#bundle_domestic_call_unlimited").on("change",function(){
+    if($("#bundle_domestic_call_unlimited").prop("checked")==true){
+      $("#bundle_domestic_call_minutes").attr("disabled",true);
+      $("bundle_#domestic_call_unlimited").val("true");
     }
     else {
-      $("#domestic_call_minutes").attr("disabled",false);
-      $("#domestic_call_unlimited").val("false");
+      $("#bundle_domestic_call_minutes").attr("disabled",false);
+      $("#bundle_domestic_call_unlimited").val("false");
     }
   });
 
-  $("#international_call_unlimited").on("change",function(){
-    if($("#international_call_unlimited").prop("checked")==true){
-      $("#international_call_minutes").attr("disabled",true);
-      $("#domestic_call_unlimited").val("true");
+  $("#bundle_international_call_unlimited").on("change",function(){
+    if($("#bundle_international_call_unlimited").prop("checked")==true){
+      $("#bundle_international_call_minutes").attr("disabled",true);
+      $("#bundle_domestic_call_unlimited").val("true");
     }
     else {
-      $("#international_call_minutes").attr("disabled",false);
-      $("#domestic_call_unlimited").val("false");
+      $("#bundle_international_call_minutes").attr("disabled",false);
+      $("#bundle_domestic_call_unlimited").val("false");
     }
 
 
@@ -246,6 +246,7 @@
        }
     }
  function check(){
+   event.preventDefault();
    var status=0;
    if(($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true)  ||
       ($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) ||
@@ -282,7 +283,41 @@
       if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true && $("#internet-cb").prop("checked")==true){
         $("#bundle_combo").val("Internet,Telephone and Cable");
       }
-      $("#bundle_form").submit();
+      // $("#bundle_form").submit();
+
+            if($("#bundle_start_date").prop("disabled") == true && $("#bundle_end_date").prop("disabled") == true) {
+            is_contract = false
+          }
+          else
+          {
+            is_contract=true
+          }
+          console.log("is contract="+is_contract);
+          $.ajax({
+            url:"/edit_or_change_service_preferences",
+            type: "POST",
+            data: {
+              service_category_id:$("#service_category_id").val(),
+              app_user_id:$("#app_user_id").val(),
+              domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
+              international_call_minutes:$("#bundle_international_call_minutes").val(),
+              start_date:$("#bundle_start_date").val(),
+              end_date:$("#bundle_end_date").val(),
+              data_plan:$("#bundle_data_plan").val(),
+              no_of_lines:$("#bundle_no_of_lines").val(),
+              price:$("#bundle_price").val(),
+              download_speed:$("#bundle_download_speed").val(),
+              upload_speed:$("#bundle_upload_speed").val(),
+              bundle_combo:$("#bundle_combo").val(),
+              is_contract:is_contract
+            },
+            success: function(data){
+              if (data["success"] == true) {
+                $("#comparePopup").modal("hide");
+                calculate_you_save();
+              }
+            }
+          });
     }
     else {
       $("#msg").text("Please Enter Price").removeClass("hidden");
@@ -294,5 +329,17 @@
      event.preventDefault();
      $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
    }
+ }
+ function calculate_you_save(){
+   $.ajax({
+     url:"/api/v1/you_save",
+     type: "GET",
+     data: {
+      id:<%=session[:user_id]%>
+     },
+     success: function(data){
+        alert("you save:"+data["you_save"])
+     }
+   });
  }
   </script>

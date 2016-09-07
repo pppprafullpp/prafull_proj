@@ -72,6 +72,7 @@ class Website::HomeController < ApplicationController
     if session[:user_id].present?
      @current_user=AppUser.find(session[:user_id])
     end
+    # @rating=JSON.parse(URI.parse("http://localhost:3000/api/v1/comment_ratings?deal_id=#{params[:deal_id]}").read)
   end
 
   def compare_deals

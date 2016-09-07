@@ -29,11 +29,6 @@
       </div>
        <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
-        <!-- <select class="form-control" name="app_user_addresses[state]" id="billing_state">
-          <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%#= options_for_select(cities_array, :prompt=>"Select") %>
-      </select> -->
-      <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
       <%= select_tag(:state,options_for_select(AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"app_user_addresses[state]", :id=>"billing_state") %>
       </div>
       <div class="col-md-6">
@@ -67,16 +62,11 @@
         <div class="col-md-6">
           <label for="Name" class="control-label">Town/City</label>
           <%= text_field_tag('shipping_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "app_user_shipping_city") %>
-          <!-- <input type="text" class="form-control input-md" placeholder="Town/City" name="shipping_addresses[address_name]" id="Name"> -->
         </div>
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
-          <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%= select_tag(":state",options_for_select(AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"shipping_addresses[state]", :id=>"app_user_shipping_state") %>
-          <!-- <select class="form-control" name="shipping_addresses[state]" id="shipping_state">
-            <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-            <%#= options_for_select(cities_array, :prompt=>"Select") %>
-        </select> -->
+
         </div>
         <div class="col-md-6">
           <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
@@ -111,11 +101,7 @@
           </div>
            <div class="col-md-6 padding15right">
             <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
-           <!--  <select class="form-control" name="service_addresses[state]" id="service_state">
-              <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-              <%#= options_for_select(cities_array, :prompt=>"Select") %>
-          </select> -->
-           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
+ 
           <%= select_tag(:state,options_for_select(AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"service_addresses[state]", :id=>"app_user_service_state") %>
           </div>
           <div class="col-md-6">

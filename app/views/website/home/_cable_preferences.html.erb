@@ -4,15 +4,19 @@
   if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
     @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
    price=@service_preferences_data[0].price
    is_contract=@service_preferences_data[0].is_contract
    start_date=@service_preferences_data[0].start_date
    end_date=@service_preferences_data[0].end_date
-    @Cable_preferences=CableServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
-   free_channels=@Cable_preferences[0].free_channels
-   premium_channels=@Cable_preferences[0].premium_channels
+   @Cable_preferences=CableServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
+   if @Cable_preferences.present?
+     free_channels=@Cable_preferences[0].free_channels
+     premium_channels=@Cable_preferences[0].premium_channels
+   end
  end
   %>
+  <%= "Add Preferences for Cable" if params[:new_user]%>
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
@@ -21,7 +25,7 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" name="service_provider_id">
+      <select class="form-control" id="service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> </div>
         <div class="col-md-6">
@@ -38,7 +42,11 @@
     <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("free_channels", free_channels, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
   <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
-  <div class="col-md-12 text-center">  <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%></div>
+   <div class="col-md-12 text-center">
+     <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
+     
+   </div>
+
     <%end%>
   </div>
   <script>
@@ -53,7 +61,13 @@
         $("#start_date").attr("disabled",false);
         $("#end_date").attr("disabled",false);
       }
-    })
+    });
+    <%if service_provider_id.present?%>
+      set_service_provider("<%=service_provider_id%>")
+      function set_service_provider(id) {
+      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+    }
+    <%end%>
   })
 
   </script>

@@ -44,12 +44,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	def create
 	  #  raise params.to_yaml
-		#@service_preference = ServicePreference.find(:conditions =>["app_user_id=? and service_name=?", params[:app_user_id], params[:service_name]])
-		#@service_preference = ServicePreference.find_by_app_user_id_and_service_category_id(params[:app_user_id], params[:category]).take
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
 			if params[:service_category_id] == '1'
-				@service_preference.internet_service_preference.update(internet_service_preference_params)
+ 				@service_preference.internet_service_preference.update(internet_service_preference_params)
 			elsif params[:service_category_id] == '2'
 				@service_preference.telephone_service_preference.update(telephone_service_preference_params)
 			elsif params[:service_category_id] == '3'
@@ -148,8 +146,8 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	def fetch_service_preferences
 		@service_preference = ServicePreference.where("app_user_id = ?", params[:app_user_id]).where("service_category_id = ?",params[:category]).take
-		user_type = AppUser.find(params[:app_user_id]).user_type 
-		if @service_preference.present?	
+		user_type = AppUser.find(params[:app_user_id]).user_type
+		if @service_preference.present?
 			if params[:category] == '1'
 				@internet_preference = InternetServicePreference.where("service_preference_id = ?", @service_preference.id ).take
 			elsif params[:category] == '2'
@@ -190,7 +188,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['download_speed'] = 20.00
 					service_preference_hash['online_storage'] = ""
 					service_preference_hash['wifi_hotspot'] = ""
-					
+
 				elsif  params[:category] == '2'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0
@@ -220,7 +218,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['free_channels'] = 150
 					service_preference_hash['premium_channels'] = ""
-							
+
 				elsif  params[:category] == '4'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0
@@ -236,7 +234,7 @@ service_preference_hash['data_plan']=2.0
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""
 					service_preference_hash['no_of_lines'] = 1
-				
+
 				elsif params[:category] == '5'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0
@@ -277,7 +275,7 @@ service_preference_hash['data_plan']=2.0
 					service_preference_hash['download_speed'] = 30.00
 					service_preference_hash['online_storage'] = ""
 					service_preference_hash['wifi_hotspot'] = ""
-					
+
 				elsif  params[:category] == '2'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0
@@ -307,7 +305,7 @@ service_preference_hash['data_plan']=2.0
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['free_channels'] = 100
 					service_preference_hash['premium_channels'] = ""
-							
+
 				elsif  params[:category] == '4'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0
@@ -322,7 +320,7 @@ service_preference_hash['data_plan']=2.0
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""
 					service_preference_hash['no_of_lines'] = 1
-				
+
 				elsif params[:category] == '5'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0

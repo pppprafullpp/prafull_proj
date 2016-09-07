@@ -2857,7 +2857,7 @@ color:#555;
 	height: 43px;
 }
 .auto-height {
-	min-height: 544px;
+	min-height: 510px;
 }
 .description-height {
 	height: 40px;
@@ -3388,6 +3388,46 @@ margin-top: 10px;
 .filter-focus {
     border-bottom: 2px solid;
 }
+
+#comparePopup .modal-dialog {
+    width: 600px;
+}
+.compare-popsty {
+    padding: 30px 20px;
+}
+.info_listing {
+    padding: 0 10px;
+}
+.info_listing li {
+    color: #504f4f;
+    list-style: none;
+    display: flex;
+    padding-bottom: 10px;
+}
+.info_listing li span {
+    color: #fff;
+    background: #0775d0;
+    border-radius: 20px;
+    font-weight: 600;
+    width: 22px;
+    height: 20px;
+    line-height: 19px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    float: left;
+}
+.compare-btn {
+    background: #ed1c24;
+    color: #fff;
+    padding: 10px 20px;
+}
+.compare-btn:hover {
+    color: #fff;
+    background: #d5181f;
+}
+
 .bestdeal-icon::before {
     background: #fff none repeat scroll 0 0;
     border-radius: 50%;
@@ -3410,7 +3450,7 @@ margin-top: 10px;
     z-index: 1;
 }
 .bestdeal-icon::after, .bestdeal-icon::before {
-   
+
     content: "";
     position: absolute;
 }
@@ -3452,7 +3492,7 @@ margin-top: 10px;
     z-index: 1;
 }
 .trendingdeal-icon::after, .trendingdeal-icon::before {
-   
+
     content: "";
     position: absolute;
 }
@@ -3472,4 +3512,3 @@ margin-top: 10px;
 .shareon-fb { background:#3b5999; color:#fff; padding:5px; font-size:14px;}
 .shareon-fb i { margin-right:10px;}
 .shareon-fb:hover, .shareon-fb:focus{ color:#fff; background:#2e4e73;}
-

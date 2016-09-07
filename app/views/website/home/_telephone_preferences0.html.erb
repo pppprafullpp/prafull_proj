@@ -1,0 +1,158 @@
+<div class="form-area">
+  <%
+  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
+   @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
+   service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
+
+   price=@service_preferences_data[0].price
+   is_contract=@service_preferences_data[0].is_contract
+   start_date=@service_preferences_data[0].start_date
+   end_date=@service_preferences_data[0].end_date
+   plan_name= @service_preferences_data[0].plan_name
+   @Telephone_preferences=TelephoneServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
+   if @Telephone_preferences.present?
+     domestic_call_minutes=@Telephone_preferences[0].domestic_call_minutes
+     international_call_minutes=@Telephone_preferences[0].international_call_minutes
+   end
+  end
+  %>
+  <%= "Add Preferences for Telephone" if params[:new_user]%>
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+  <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
+  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+  <%=hidden_field_tag("app_user_id",session[:user_id])%>
+  <%=hidden_field_tag("from_site","true")%>
+
+      <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
+        <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
+      </select>  </div>
+  <div class = "col-md-6" >  <%= number_field_tag(:telephone_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
+    <p class="contract-margin-sty">Contract Date</p>
+
+
+    <div class="checkbox checkbox-info no-contract-sty">
+  <input type="checkbox" name="telephone_is_contract" id="telephone_is_contract" value="false" checked="checked">
+  <label for="telephone_is_contract"> <span>No Contract </span> </label>
+</div>
+    <div class="col-md-6"><%= date_field_tag(:telephone_start_date,start_date, :class=>"form-control")%></div>
+    <div class="col-md-6"><%= date_field_tag(:telephone_end_date,end_date, :class=>"form-control")%></div>
+    <p class="contract-margin-sty">Calls</p>
+
+    <div class="row">
+  <div class="col-md-12">  <p  class="set-call">Domestic</p></div>
+      <div class="col-md-6">
+
+        <div class="checkbox checkbox-info no-contract-sty">
+     <%= check_box_tag "telephone_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+      <label for="telephone_domestic_call_unlimited"> <span>Unlimited</span> </label>
+      </div>
+
+      </div>
+      <div class="col-md-6">
+        <%=number_field_tag(:telephone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
+      </div>
+    </div>
+    <div class="row">
+  <div class="col-md-12 "> <p class="set-call">international</p> </div>
+      <div class="col-md-6">
+
+
+           <div class="checkbox checkbox-info no-contract-sty">
+       <%= check_box_tag "telephone_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+         <label for="telephone_international_call_unlimited"> <span>unlimited</span> </label>
+         </div>
+
+
+      </div>
+      <div class="col-md-6">
+        <%=number_field_tag(:telephone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
+      </div>
+    </div>
+    <div class="col-md-12 text-center ">
+    <%= submit_tag("Save", :class=>"btn btn-success search-btn preference-btn",:onclick=>"submit_telephone()")%>
+      <%if params[:new_user]%>
+        <%= button_tag("skip", :class=>"btn btn-success preference-btn", :onclick=>"show_bundle()")%>
+      <%end%>
+    </div>
+    <%end%>
+  </div>
+  <script>
+   $(document).ready(function(){
+    $("#telephone_is_contract").prop("checked",false);
+    $("#telephone_domestic_call_unlimited").prop("checked",false);
+    $("#telephone_international_call_unlimited").prop("checked",false);
+    $("#telephone_is_contract").on("change",function(){
+      if($("#telephone_is_contract").prop("checked")==true){
+        $("#telephone_start_date").attr("disabled",true);
+        $("#telephone_end_date").attr("disabled",true);
+      }
+      else {
+        $("#telephone_start_date").attr("disabled",false);
+        $("#telephone_end_date").attr("disabled",false);
+      }
+    });
+
+    $("#telephone_domestic_call_unlimited").on("change",function(){
+      if($("#telephone_domestic_call_unlimited").prop("checked")==true){
+        $("#telephone_domestic_call_minutes").attr("disabled",true);
+        $("#telephone_domestic_call_unlimited").val("true");
+      }
+      else {
+        $("#telephone_domestic_call_minutes").attr("disabled",false);
+        $("#telephone_domestic_call_unlimited").val("false");
+      }
+    });
+
+    $("#telephone_international_call_unlimited").on("change",function(){
+      if($("#telephone_international_call_unlimited").prop("checked")==true){
+        $("#telephone_international_call_minutes").attr("disabled",true);
+        $("#telephone_domestic_call_unlimited").val("true");
+      }
+      else {
+        $("#telephone_international_call_minutes").attr("disabled",false);
+        $("#telephone_domestic_call_unlimited").val("false");
+      }
+    });
+    <%if service_provider_id.present?%>
+      set_service_provider("<%=service_provider_id%>")
+      <%end%>
+  })
+  function set_service_provider(id) {
+    $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+  }
+
+  function submit_telephone(){
+    event.preventDefault();
+     if($("#cellphone_start_date").prop("disabled") == true && $("#cellphone_end_date").prop("disabled") == true) {
+      is_contract = false
+    }
+    else
+    {
+      is_contract=true
+    }
+    console.log("is contract="+is_contract);
+    $.ajax({
+      url:"/edit_or_change_service_preferences",
+      type: "POST",
+      data: {
+        service_category_id:$("#service_category_id").val(),
+        app_user_id:$("#app_user_id").val(),
+        domestic_call_minutes:$("#telephone_domestic_call_minutes").val(),
+        international_call_minutes:$("#telephone_international_call_minutes").val(),
+        start_date:$("#telephone_start_date").val(),
+        end_date:$("#telephone_end_date").val(),
+        data_plan:$("#telephone_data_plan").val(),
+        price:$("#telephone_price").val(),
+        is_contract:is_contract
+      },
+      success: function(data){
+        if (data["success"] == true) {
+          $("#telephone_pref").hide();
+          $("#bundle_pref").show().css("height","500px");
+        }
+      }
+    });
+  }
+  </script>

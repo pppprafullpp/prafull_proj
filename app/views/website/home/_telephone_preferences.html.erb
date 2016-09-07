@@ -3,17 +3,21 @@
   if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
+
    price=@service_preferences_data[0].price
    is_contract=@service_preferences_data[0].is_contract
    start_date=@service_preferences_data[0].start_date
    end_date=@service_preferences_data[0].end_date
    plan_name= @service_preferences_data[0].plan_name
    @Telephone_preferences=TelephoneServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
-   domestic_call_minutes=@Telephone_preferences[0].domestic_call_minutes
-   international_call_minutes=@Telephone_preferences[0].international_call_minutes
+   if @Telephone_preferences.present?
+     domestic_call_minutes=@Telephone_preferences[0].domestic_call_minutes
+     international_call_minutes=@Telephone_preferences[0].international_call_minutes
+   end
   end
   %>
-
+  <%= "Add Preferences for Telephone" if params[:new_user]%>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
@@ -21,8 +25,8 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
 
-      <div class = "col-md-6" ><select class="form-control" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+      <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
+        <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
       </select>  </div>
   <div class = "col-md-6" >  <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
     <p class="contract-margin-sty">Contract Date</p>
@@ -66,7 +70,10 @@
         <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
     </div>
-  <div class="col-md-12 text-center ">  <%= submit_tag("Save", :class=>"btn btn-success search-btn preference-btn")%> </div>
+    <div class="col-md-12 text-center ">
+    <%= submit_tag("Save", :class=>"btn btn-success search-btn preference-btn")%>
+    
+    </div>
     <%end%>
   </div>
   <script>
@@ -106,6 +113,11 @@
         $("#domestic_call_unlimited").val("false");
       }
     });
+    <%if service_provider_id.present?%>
+      set_service_provider("<%=service_provider_id%>")
+      <%end%>
   })
-
+  function set_service_provider(id) {
+    $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+  }
   </script>

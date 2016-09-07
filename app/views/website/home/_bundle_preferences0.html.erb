@@ -25,7 +25,7 @@
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post", :html=>{:id=>"bundle_form"}) do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
-  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <%=hidden_field_tag("service_category_id",5)%>
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
@@ -50,27 +50,27 @@
     <div class="row">
       <div class="col-md-4">
         <div class="checkbox checkbox-info no-contract-sty mgt25">
-            <input type="checkbox" id="cable-cb" text="Cable" value="Cable" onchange="showcable()" />
-          <label for="cable-cb"> <span>Cable </span> </label>
+            <input type="checkbox" id="bundle_cable-cb" text="Cable" value="Cable" onchange="showcable()" />
+          <label for="bundle_cable-cb"> <span>Cable </span> </label>
           </div>
       </div>
       <div class="col-md-4">
         <div class="checkbox checkbox-info no-contract-sty mgt25">
-          <input type="checkbox" id="internet-cb" value="internet" onchange="showinternet()" />
-          <label for="internet-cb"> <span>Internet </span> </label>
+          <input type="checkbox" id="bundle_internet-cb" value="internet" onchange="showinternet()" />
+          <label for="bundle_internet-cb"> <span>Internet </span> </label>
         </div>
       </div>
       <div class="col-md-4">
 
       <div class="checkbox checkbox-info no-contract-sty mgt25">
-        <input type="checkbox" id="telephone-cb" value="telephone"  onchange="showtelephone()" />
-        <label for="telephone-cb"> <span>telephone </span> </label>
+        <input type="checkbox" id="bundle_telephone-cb" value="telephone"  onchange="showtelephone()" />
+        <label for="bundle_telephone-cb"> <span>telephone </span> </label>
       </div>
 
       </div>
     </div>
 
-    <div id="cable-div" class="cable-div hidden col-md-12">
+    <div id="bundle_cable-div" class="cable-div hidden col-md-12">
       <hr />
         <p>Cable</p>
       <div class="row">
@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div id="internet-div" class="internet-div hidden col-md-12">
+    <div id="bundle_internet-div" class="internet-div hidden col-md-12">
       <hr />
         <p>Internet</p>
       <div class="row">
@@ -91,12 +91,12 @@
           <%=text_field_tag "bundle_download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "bundle_pload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
+        <%=text_field_tag "bundle_upload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
         </div>
       </div>
     </div>
 
-    <div id="telephone-div" class="telephone-div hidden col-md-12">
+    <div id="bundle_telephone-div" class="telephone-div hidden col-md-12">
         <hr />
       <p>Telephone</p>
       <div class="row">
@@ -107,7 +107,7 @@
          </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:bundle_domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
       </div>
       <div class="row">
@@ -197,90 +197,91 @@
   }
   function resetdomestic(){
     console.log("Sss");
-      if( $("#ul-domestic").prop("checked")==true){
+      if( $("#bundle_ul-domestic").prop("checked")==true){
         $("#domestic_minutes").attr("disabled",true);
       }
       else {
-        $("#domestic_minutes").attr("disabled",false);
+        $("#bundle_domestic_minutes").attr("disabled",false);
       }
   }
   function resetinternat(){
     console.log("sSss");
       if( $("#ul-domestic").prop("checked")==true){
-        $("#international_minutes").attr("disabled",true);
+        $("#bundle_international_minutes").attr("disabled",true);
       }
       else {
-        $("#international_minutes").attr("disabled",false);
+        $("#bundle_international_minutes").attr("disabled",false);
       }
   }
 
   function showcable(){
-     if($("#cable-cb").prop("checked")==true)
+    console.log("cable")
+     if($("#bundle_cable-cb").prop("checked")==true)
      {
-       $("#cable-div").removeClass("hidden");
+       $("#bundle_cable-div").removeClass("hidden");
      }
      else {
-       $("#cable-div").addClass("hidden");
+       $("bundle_cable-div").addClass("hidden");
      }
   }
 
     function showinternet(){
 
-     if($("#internet-cb").prop("checked")==true)
+     if($("#bundle_internet-cb").prop("checked")==true)
      {
-       $("#internet-div").removeClass("hidden");
+       $("#bundle_internet-div").removeClass("hidden");
      }
      else {
-       $("#internet-div").addClass("hidden");
+       $("#bundle_internet-div").addClass("hidden");
      }
 
     }
 
     function showtelephone(){
-       if($("#telephone-cb").prop("checked")==true)
+       if($("#bundle_telephone-cb").prop("checked")==true)
        {
-         $("#telephone-div").removeClass("hidden");
+         $("#bundle_telephone-div").removeClass("hidden");
        }
        else {
-         $("#telephone-div").addClass("hidden");
+         $("#bundle_telephone-div").addClass("hidden");
        }
     }
  function check(){
    event.preventDefault();
    var status=0;
-   if(($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true)  ||
-      ($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) ||
-      ($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) )
+   if(($("#bundle_internet-cb").prop("checked")==true && $("#bundle_cable-cb").prop("checked")==true)  ||
+      ($("#bundle_internet-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true) ||
+      ($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true) )
      {
-     if ($("#internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
+     if ($("#bundle_internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
-     if ($("#cable-cb").prop("checked")==true && ($("#bundle_free_channels").val()=="" || $("#bundle_premium_channels").val()=="")) {
+     if ($("#bundle_cable-cb").prop("checked")==true && ($("#bundle_free_channels").val()=="" || $("#bundle_premium_channels").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
-     if ($("#internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
+     if ($("#ibundle_nternet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
      if(status>=2 && $("#bundle_price").val()!=""){
-      if($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true){
+      if($("#bundle_internet-cb").prop("checked")==true && $("#bundle_cable-cb").prop("checked")==true){
         $("#bundle_combo").val("Internet and Cable");
       }
-      if($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true){
+      if($("#bundle_internet-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true){
         $("#bundle_combo").val("Internet and Telephone");
       }
-      if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true){
+      if($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true){
         $("#bundle_combo").val("Cable and Telephone");
       }
-      if($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true && $("#internet-cb").prop("checked")==true){
+      if($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true && $("#bundle_internet-cb").prop("checked")==true){
         $("#bundle_combo").val("Internet,Telephone and Cable");
       }
       // $("#bundle_form").submit();

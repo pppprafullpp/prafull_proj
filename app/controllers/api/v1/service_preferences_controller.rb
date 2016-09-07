@@ -74,7 +74,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
       else
         	render :status => 401,
            		:json => { :success => false }
-      end
+      end 
 		else
 			@service_preference = ServicePreference.new(service_preference_params)
 			@service_preference.save!

@@ -13,14 +13,15 @@
      if @internet_preferences.present?
        download_speed=@internet_preferences[0].download_speed
        upload_speed=@internet_preferences[0].upload_speed
+
      end
    end
   %>
+  <%=  @internet_preferences%>
   <%= "Add Preferences for internet" if params[:new_user]%>
-
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
-  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <%=hidden_field_tag("service_category_id",1)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">

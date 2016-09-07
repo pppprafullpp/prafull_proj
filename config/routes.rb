@@ -179,4 +179,5 @@ Rails.application.routes.draw do
   end
   resources :deal_equipments
   resources :deal_attributes
+  resources :deal_extra_services
 end

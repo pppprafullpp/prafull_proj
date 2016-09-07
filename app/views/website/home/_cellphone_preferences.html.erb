@@ -3,20 +3,25 @@
   if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
    service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
+
    price=@service_preferences_data[0].price
    is_contract=@service_preferences_data[0].is_contract
    start_date=@service_preferences_data[0].start_date
    end_date=@service_preferences_data[0].end_date
    plan_name= @service_preferences_data[0].plan_name
    @cellphone_preferences=CellphoneServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
-   domestic_call_minutes=@cellphone_preferences[0].domestic_call_minutes
-   international_call_minutes=@cellphone_preferences[0].international_call_minutes
-   data_plan=@cellphone_preferences[0].data_plan
-   no_of_lines=@cellphone_preferences[0].no_of_lines
+   if @cellphone_preferences.present?
+     domestic_call_minutes=@cellphone_preferences[0].domestic_call_minutes
+     international_call_minutes=@cellphone_preferences[0].international_call_minutes
+     data_plan=@cellphone_preferences[0].data_plan
+     no_of_lines=@cellphone_preferences[0].no_of_lines
+   end
  else
 
   end
   %>
+  <%= "Add Preferences for Cellphone" if params[:new_user]%>
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
@@ -25,7 +30,7 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" name="service_provider_id">
+      <select class="form-control" id="service_provider_id"  name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select>
   </div>
@@ -66,11 +71,13 @@
 
     <div class="row contract-margin-sty">
       <div class="col-md-6">
-        <%@list= CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq%>
-         <%=select("data_plan","data_plan",options_for_select(@list), {:prompt => "Data plan in MB"}, :class=>"form-control")%>
-       </div>
+        <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq.push("Select data plan").reverse%>
+        <select class="form-control" id="data_plan"  name="data_plan">
+          <%= options_for_select(@list, :prompt=>"Select", :value=>@list) %>
+        </select>
+         </div>
       <div class="col-md-6">
-        <select class="form-control" name="no_of_lines">
+        <select class="form-control" id="no_of_lines" name="no_of_lines">
           <%(1..4).each do |n|%>
           <option value="<%=n%>"><%=n%></option>
           <%end%>
@@ -79,6 +86,7 @@
     </div>
     <div class="col-md-12 text-center">
      <%= submit_tag("Save", :class=>"btn btn-success preference-btn ")%>
+     
    </div>
     <%end%>
   </div>
@@ -119,7 +127,23 @@
         $("#domestic_call_unlimited").val("false");
       }
     });
-    $("#data_plan_data_plan").attr("name","data_plan")
-  })
+    $("#data_plan_data_plan").attr("name","data_plan");
+    <%if  @service_preferences_data.present?%>
+      set_service_provider("<%=service_provider_id%>");
+      set_data_plan("<%=data_plan%>");
+      set_no_of_lines("<%=no_of_lines%>");
+      <%end%>
 
+   })
+  function set_service_provider(id) {
+    if (id!="" && id!=null) {
+      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+    }
+  }
+  function set_data_plan(id) {
+    $("#data_plan option[value='"+id+"']").attr('selected','selected');
+  }
+  function set_no_of_lines(id) {
+    $("#no_of_lines option[value='"+id+"']").attr('selected','selected');
+  }
   </script>

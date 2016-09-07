@@ -231,7 +231,9 @@ $(document).ready(function(e) {
         $("#billing_address_1").val(billing_address.address1);
         $("#billing_address_2").val(billing_address.address2);
         $("#billing_zip").val(billing_address.zip);
+        $("#app_user_billing_city").val(billing_address.city);
         $("billing-name").val(billing_address.address_name);
+        $("#app_user_billing_address_name").val(billing_address.address_name);
         $("#shipping_address_1").val(shipping_address.address1);
         $("#shipping_address_2").val(shipping_address.address2);
         $("#shipping_zip").val(shipping_address.zip);
@@ -240,6 +242,8 @@ $(document).ready(function(e) {
         $("#service_address_2").val(service_address.address2);
         $("#service_zip").val(service_address.zip);
         $("service-name").val(service_address.address_name);
+        $("#app_user_service_address_name").val(service_address.address_name);
+        $("#app_user_service_city").val(service_address.city);
         $("#app_user_billing_address_1").val(billing_address.address1);
         $("#app_user_billing_address_2").val(billing_address.address2);
         $("#app_user_billing_zip").val(billing_address.zip);
@@ -249,6 +253,8 @@ $(document).ready(function(e) {
         $("#app_user_service_address_1").val(service_address.address1);
         $("#app_user_service_address_2").val(service_address.address2);
         $("#app_user_service_zip").val(service_address.zip);
+        $("#app_user_shipping_city").val(shipping_address.city);
+        $("#app_user_shipping_address_name").val(shipping_address.address_name);
       }
       else {
         if(data["type"]=="residence_user_first_order"){

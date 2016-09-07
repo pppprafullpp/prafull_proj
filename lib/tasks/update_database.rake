@@ -145,5 +145,19 @@ task encrypt_business_data: :environment do
         puts "updated#{business.id}"
       end
     end
-
+    task verify_all_users: :environment do
+      allusers=AppUser.find_by_email_verified(false)
+      if allusers.present?
+      puts "Verifying Unverified Users"
+        allusers.each do |user|
+          puts "============================================="
+          puts "verifying #{Base64.decode64(user.first_name)}"
+          user.update_attributes(:email_verified => true)
+          puts "#{Base64.decode64(user.first_name)} Verified"
+          puts "============================================="
+        end
+      else
+        puts "All users Verified"
+      end
+    end
 end

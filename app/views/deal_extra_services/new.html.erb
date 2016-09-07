@@ -25,14 +25,14 @@
 					<% end %>
 				  <br/>
 					<div><span style="color:#4285F4"><strong><i>Fields marked * are mandatory</i></strong></span></div><br/>
-					
-					<div><strong>Extra Service ID: </strong><span id="mandat">*</span><br />
-				  <%= f.text_field :extra_service_id %></div>
+				  <div><strong>Select an Extra Service :</strong><br />
+				  <%= f.select :extra_service_id, ExtraService.all.map { |r| [r.service_name, r.id]}, {:include_blank => "Select an extra category"}%>
+				</div>
 				  <div><strong>Deal ID: </strong><br />
 				  <%= f.text_field :deal_id %></div>
-				  <div><strong>Price:</strong><span id="mandat">*</span><br />
+				  <div><strong>Price:</strong><br />
 				  <%= f.text_field :price %></div>
-				  <div><strong>Service Term:</strong><span id="mandat">*</span><br />
+				  <div><strong>Service Term:</strong><br />
 				  <%= f.text_field :service_term %></div>
 				  <div><%= f.check_box :status %><strong>Status</strong></div>
 				  <div><%= f.submit "Create" %></div>

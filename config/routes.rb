@@ -180,4 +180,7 @@ Rails.application.routes.draw do
   resources :deal_equipments
   resources :deal_attributes
   resources :deal_extra_services
+  resources :equipment_colors
+  resources :cellphone_details
+  resources :extra_services
 end

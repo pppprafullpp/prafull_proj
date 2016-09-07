@@ -252,25 +252,25 @@
       ($("#internet-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) ||
       ($("#cable-cb").prop("checked")==true && $("#telephone-cb").prop("checked")==true) )
      {
-     if ($("#internet-cb").prop("checked")==true && ($("#download_speed").val()=="" || $("#upload_speed").val()=="")) {
+     if ($("#internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
-     if ($("#cable-cb").prop("checked")==true && ($("#free_channels").val()=="" || $("#premium_channels").val()=="")) {
+     if ($("#cable-cb").prop("checked")==true && ($("#bundle_free_channels").val()=="" || $("#bundle_premium_channels").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
-     if ($("#internet-cb").prop("checked")==true && ($("#download_speed").val()=="" || $("#upload_speed").val()=="")) {
+     if ($("#internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
-     if(status>=2 && $("#price").val()!=""){
+     if(status>=2 && $("#bundle_price").val()!=""){
       if($("#internet-cb").prop("checked")==true && $("#cable-cb").prop("checked")==true){
         $("#bundle_combo").val("Internet and Cable");
       }
@@ -298,6 +298,7 @@
             type: "POST",
             data: {
               service_category_id:$("#service_category_id").val(),
+              service_provider_id: $("#service_provider_id option:selected").val(),
               app_user_id:$("#app_user_id").val(),
               domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
               international_call_minutes:$("#bundle_international_call_minutes").val(),

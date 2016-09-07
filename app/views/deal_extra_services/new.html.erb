@@ -26,10 +26,11 @@
 				  <br/>
 					<div><span style="color:#4285F4"><strong><i>Fields marked * are mandatory</i></strong></span></div><br/>
 				  <div><strong>Select an Extra Service :</strong><br />
-				  <%= f.select :extra_service_id, ExtraService.all.map { |r| [r.service_name, r.id]}, {:include_blank => "Select an extra category"}%>
-				</div>
-				  <div><strong>Deal ID: </strong><br />
-				  <%= f.text_field :deal_id %></div>
+				  	<%= f.select :extra_service_id, ExtraService.all.map { |r| [r.service_name, r.id]}, {:include_blank => "Select an extra category"}%>
+					</div>
+					<div><strong>Deal:</strong><br />
+	     			<%= f.select :deal_id, []%>
+	     		</div>
 				  <div><strong>Price:</strong><br />
 				  <%= f.text_field :price %></div>
 				  <div><strong>Service Term:</strong><br />
@@ -41,4 +42,25 @@
     </td>
 	</tr>
 </table>
+<script>
+$("#deal_extra_service_extra_service_id").click(function(){
+	 $('#deal_extra_service_deal_id').empty();
+  extra_service_id = $("#deal_extra_service_extra_service_id").val();
+  if(extra_service_id != ""){
+    $.ajax({
+	    url:"/extra_service_deal",
+	    type:"get",
+	    data: {
+	      id : extra_service_id ,
+	    },
+	    success: function(d){
+	    	deals = d["deals"]
+		   	for (var i=0;i<deals.length;i++){
+		   		$('<option/>').val(deals[i]['id']).html(deals[i]['title']).appendTo('#deal_extra_service_deal_id');
+				}	
+	    }
+  	});
+  }
+});
+</script>
 

@@ -46,6 +46,16 @@ class ExtraServicesController < ApplicationController
       
    end
 
+   def extra_service_deal
+    if params[:id].present?
+      service_category_id =  ExtraService.find(params[:id]).service_category_id
+      deals = Deal.select("id, title").where(service_category_id: service_category_id) if service_category_id.present?
+       render :json=>{
+          :deals=>deals
+        }
+      end
+   end
+
   private
   def extra_service_params
    params.require(:extra_service).permit( :service_name, :service_category_id, :status, :service_description)

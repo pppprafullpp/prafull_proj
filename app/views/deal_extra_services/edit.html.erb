@@ -10,10 +10,15 @@
       </div>
 			<div class="small-6 large-centered columns">
 				<%= form_for(@deal_extra_service) do |f| %><br/>
-				<div><strong>Extra Service Id: </strong><span id="mandat">*</span><br />
-				  <%= f.text_field :extra_service_id %></div>
+				<!-- <div><strong>Extra Service Id: </strong><span id="mandat">*</span><br />
+				  <%#= f.text_field :extra_service_id %></div> -->
+				 <!--  <div><strong>Deal Id : </strong><br />
+				  <%#= f.text_field :deal_id %></div> -->
+				  <div><strong>Select an Extra Service :</strong><br />
+				  	<%= f.select :extra_service_id, ExtraService.all.map { |r| [r.service_name, r.id]}, {:include_blank => "Select an extra category"}%>
+				  </div>
 				  <div><strong>Deal Id : </strong><br />
-				  <%= f.text_field :deal_id %></div>
+				  <%= f.text_field :deal_id %></div> 
 				  <div><strong>Price: </strong><span id="mandat">*</span><br />
 				  <%= f.text_field :price %></div>
 				  <div><strong>Status:</strong><span id="mandat">*</span><br />
@@ -28,4 +33,3 @@
 	</tr>
 </table>
 
- 

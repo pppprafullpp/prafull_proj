@@ -1,3 +1,3 @@
 class DealExtraService < ActiveRecord::Base
-  has_many :extra_services
+  belongs_to :extra_service
 end

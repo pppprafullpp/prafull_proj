@@ -16,7 +16,7 @@
         <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
           <h5>Lines:<%=data['no_of_lines'] %></h5>
         <% end %>
-        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a> 
+        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
         <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
         <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
           <b>Rating:
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div>
-            <b>You Save</b> <%= data[:you_save_text] %>   
+            <b>You save:</b> <%= data[:you_save_text] %>   
           </div>
           <%if @current_user.present?%>
             <%if @current_user.email_verified%>
@@ -69,7 +69,7 @@
         <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
           <h5>Lines:<%=data['no_of_lines'] %></h5>
         <% end %>
-        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a> 
+        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
         <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
         <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
           <b>Rating:

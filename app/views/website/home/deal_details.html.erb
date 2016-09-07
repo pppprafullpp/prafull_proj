@@ -41,8 +41,7 @@
                       <ul class="description-height">
                         <!-- $<%#= data['deal_price'] %>  -->
                         <!-- <li><%#= data['download_speed'] %> Mbps Download Speed</li> -->
-                        <li><%= data['short_description'].truncate(30) %></li>
-                        <li><%= data['detail_description'].truncate(30) %></li>
+                        <li><%= data['short_description'].truncate(50) %></li>
                       </ul>
 
                       <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>

@@ -2022,11 +2022,18 @@ color: #fff !important;
 	-webkit-border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
 }
+.about-offer h4 {
+	font-size: 20px;
+	position: relative;
+	margin-bottom: 20px;
+ font-family: 'open_sanssemibold';
+}
 .about-offer h5 {
 	font-size: 20px;
 	position: relative;
 	margin-bottom: 20px;
-	display: inline-block;
+		font-family: 'open_sansregular';
+
 }
 .more-details .table-bordered thead tr th, .more-details .table-bordered tbody tr th {
 	font-family: 'open_sanssemibold';

@@ -47,7 +47,8 @@
        </div>
     <%elsif AppUser.find(session[:user_id]).user_type == "business"%>
       <p>Business user</p>
-      <%addresses=AppUser.find(session[:user_id]).business_app_users.first.business.business_addresses%>
+      <%addresses=AppUser.find(session[:user_id]).business_app_users.first.business.business_addresses rescue nil%>
+<% if addresses.present? %>
       <%addresses.each do |address|%>
         <%id=SecureRandom.hex(5)%>
         <div class="col-md-4">
@@ -84,6 +85,7 @@
           </div>
         </div>
       <%end%>
+<% end %>
       <% end %>
 </div>
 <script>

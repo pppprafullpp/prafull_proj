@@ -32,6 +32,13 @@
       <%= text_field_tag :activation,@deal_equipment.activation,:placeholder => 'Input activation',:name => 'deal_equipments[activation]' %>
     </div>
 
-
+    <div><strong>Equipment Color:<span id="mandat">*</span> </strong><br />
+      <%list=options_for_select(EquipmentColor.pluck(:color_name,:id))%>
+      <%= select_tag :available_colors,list,:class => 'chosen-select', :style=>"width: 100%;",:multiple => true,:name =>'deal_equipments[available_colors][]' %>
+    </div>
     <%= submit_tag 'Submit' %>
 <% end %>
+
+<script>
+$("#chosen-select").chosen();
+</script>

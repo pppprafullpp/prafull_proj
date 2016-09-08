@@ -13,6 +13,10 @@
     <%= hidden_field_tag :deal_id,@deal_id,:name => 'deal_attributes[deal_id]' %>
     <%= hidden_field_tag :category_name,@category_name %>
 
+    <div><strong>Description:</strong><br />
+      <%= text_field_tag :description,@deal_attribute.try(:description),:placeholder => 'Input description',:name => 'deal_attributes[description]' %>
+    </div>
+
     <div><strong>Domestic Call Mins:<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :domestic_call_minutes,@deal_attribute.domestic_call_minutes,:placeholder => 'Input domestic_call_minutes',:name => 'deal_attributes[domestic_call_minutes]' %>
     </div>

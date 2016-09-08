@@ -8,8 +8,8 @@ class DealAttributesController < ApplicationController
 
   def new
     @deal_id = params[:deal_id]
-    deal = Deal.where(:id => params[:deal_id]).first
-    @category_name = ServiceCategory.get_category_name_by_id(deal.service_category_id)
+    @deal = Deal.where(:id => params[:deal_id]).first
+    @category_name = ServiceCategory.get_category_name_by_id(@deal.service_category_id)
     @deal_attribute = eval("#{@category_name.camelcase}DealAttribute").new()
    end
 
@@ -32,6 +32,7 @@ class DealAttributesController < ApplicationController
   def edit
     @category_name = params[:category_name]
     @deal_id = params[:deal_id]
+    @deal = Deal.find_by(:id => params[:deal_id])
     @deal_attribute = eval("#{@category_name.camelcase}DealAttribute").where(:id => params[:id]).first
   end
 

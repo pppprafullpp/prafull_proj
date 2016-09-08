@@ -13,6 +13,9 @@
     <%= hidden_field_tag :deal_id,@deal_id,:name => 'deal_attributes[deal_id]' %>
     <%= hidden_field_tag :category_name,@category_name %>
 
+    <div><strong>Description: </strong><br />
+      <%= text_field_tag :description,@deal_attribute.try(:description),:placeholder => 'Input description',:name => 'deal_attributes[description]' %>
+    </div>
     <div><strong>Download(mbps):<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :download,@deal_attribute.download,:placeholder => 'Input download',:name => 'deal_attributes[download]' %>
     </div>

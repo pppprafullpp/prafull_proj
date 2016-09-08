@@ -16,6 +16,9 @@
     <div><strong>Bundle Combo:<span id="mandat">*</span> </strong><br />
       <%= select_tag :bundle_combo, options_for_select(['Internet,Telephone and Cable','Internet and Telephone','Internet and Cable','Telephone and Cable'].map{|o| [o,o] },@deal_attribute.bundle_combo),:name => 'deal_attributes[bundle_combo]' %>
     </div>
+    <div><strong>Description:</strong><br />
+      <%= text_field_tag :description,@deal_attribute.try(:description),:placeholder => 'Input description',:name => 'deal_attributes[description]' %>
+    </div>
     <div><strong>Download(mbps):<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :download,@deal_attribute.download,:placeholder => 'Input download',:name => 'deal_attributes[download]' %>
     </div>

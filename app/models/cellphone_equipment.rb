@@ -2,6 +2,7 @@ class CellphoneEquipment < ActiveRecord::Base
 	belongs_to :cellphone_deal_attribute
 	belongs_to :deal
 	before_save :update_effective_price
+	has_many :equipment_colors
 
 	def update_effective_price
 		deal_id = self.deal.present? ? self.deal.id : 0
@@ -13,5 +14,11 @@ class CellphoneEquipment < ActiveRecord::Base
 			end
 		end
 	end
+
+	def available_color
+		# EquipmentColor.select('color_name').where(id: eval(self.available_colors))
+		EquipmentColor.where(id: eval(self.available_colors)).pluck(:color_name)
+	end
+
 
 end

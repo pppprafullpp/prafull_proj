@@ -17,7 +17,6 @@
 //= require_tree .
 //= require chosen-jquery
 
-
 $(function() {
   initPage();
 });

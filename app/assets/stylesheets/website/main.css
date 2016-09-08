@@ -808,7 +808,7 @@ color:#fff;
 }
 .box_down {
 	width: 100%;
-	margin: auto;
+  float:left;
 }
 .btn_2 {
 	font-family: "open_sanssemibold";
@@ -2864,7 +2864,7 @@ color:#555;
 	height: 43px;
 }
 .auto-height {
-	min-height: 510px;
+	min-height: 524px;
 }
 .description-height {
 	height: 40px;
@@ -3470,9 +3470,11 @@ margin-top: 10px;
     font-size: 10px;
     max-width: 150px;
     padding: 3px 11px 3px 5px;
-    position: relative;
+    position: absolute;;
     white-space: nowrap;
     z-index: 1;
+		left:22px;
+		top:5px;
 }
 
 
@@ -3512,10 +3514,79 @@ margin-top: 10px;
     font-size: 10px;
     max-width: 150px;
     padding: 3px 11px 3px 5px;
-    position: relative;
+    position: absolute;;
     white-space: nowrap;
     z-index: 1;
+		left:22px;
+		top:5px;
 }
 .shareon-fb { background:#3b5999; color:#fff; padding:5px; font-size:14px;}
 .shareon-fb i { margin-right:10px;}
 .shareon-fb:hover, .shareon-fb:focus{ color:#fff; background:#2e4e73;}
+
+.bundle-deal {
+    background: #fff;
+    margin-top: 20px !important;
+    padding: 20px !important;
+}
+.bundle-deal .owl-next, .bundle-deal .owl-prev {
+    display: none !important;
+}
+.bundle-det .caption-title, .bundle-det .caption-price, .bundle-det .caption-des {
+    text-align: center;
+    float: left;
+    width: 100%;
+    padding: 0 10px;
+}
+.bundle-det .caption-des {
+    background: #eee;
+    margin-bottom: 0 !important;
+    border-radius: 0 0 5px 5px;
+    padding: 5px;
+    color: #000;
+    font-size: 14px;
+}
+.bundle-det a {
+    float: left;
+    border-radius: 5px;
+    margin: 3px;
+    border: 1px solid #eee;
+}
+.bundle-det a:hover {
+    border-radius: 5px;
+    box-shadow: 0 0 5px #dedede !important;
+}
+.bundle-det b {
+    color: #12b5bb;
+    text-align: center;
+    width: 100%;
+    float: left;
+    margin-top: 17px;
+}
+.bundle-det .bx-img {
+    padding: 20px !important;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.bundle-det .bx-img img {
+    width: 140px !important;
+    display: inline !important;
+}
+.bundle-det .caption-price strong {
+    color: #009904
+}
+.bundle-det .caption-title {
+    font-family: 'open_sanssemibold';
+}
+.cellphone-lines {
+	float: left;
+font-size: 14px;
+width: 100%;
+}
+.pricing-text
+{
+	float:left;
+	width:100%;
+	min-height:80px
+}

@@ -20,9 +20,13 @@
  else
 
   end
+
   %>
   <%= "Add Preferences for Cellphone" if params[:new_user]%>
-
+  <script>
+  console.log("<%= data_plan%>");
+  console.log("<%=no_of_lines%>");
+  </script>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
@@ -68,11 +72,17 @@
         <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-6 text-left" style="padding-left:6%">Data Plan</div>
+      <div class="col-md-6 text-left" style="padding-left:6%">No. of lines</div>
+    </div>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
-        <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq.push("Select data plan").reverse%>
+        <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq%>
         <select class="form-control" id="data_plan"  name="data_plan">
+          <%@list.each_with_index do |l,index|%>
+          <%@list[index]=@list[index].to_i%>
+          <%end%>
           <%= options_for_select(@list, :prompt=>"Select", :value=>@list) %>
         </select>
          </div>
@@ -86,7 +96,7 @@
     </div>
     <div class="col-md-12 text-center">
      <%= submit_tag("Save", :class=>"btn btn-success preference-btn ")%>
-     
+
    </div>
     <%end%>
   </div>
@@ -128,22 +138,13 @@
       }
     });
     $("#data_plan_data_plan").attr("name","data_plan");
-    <%if  @service_preferences_data.present?%>
-      set_service_provider("<%=service_provider_id%>");
-      set_data_plan("<%=data_plan%>");
-      set_no_of_lines("<%=no_of_lines%>");
-      <%end%>
+  });
 
-   })
-  function set_service_provider(id) {
-    if (id!="" && id!=null) {
-      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
-    }
-  }
-  function set_data_plan(id) {
-    $("#data_plan option[value='"+id+"']").attr('selected','selected');
-  }
-  function set_no_of_lines(id) {
-    $("#no_of_lines option[value='"+id+"']").attr('selected','selected');
-  }
+  $(document).ready(function(){
+      $("#service_provider_id option[value="+<%=service_provider_id.to_i%>+"]").attr('selected','selected');
+      console.log("<%=data_plan.to_i%>");
+      $("#data_plan option[value="+<%=data_plan.to_f%>+"]").attr('selected','selected');
+      $("#no_of_lines option[value='"+<%=no_of_lines%>+"']").attr('selected','selected');
+  })
+
   </script>

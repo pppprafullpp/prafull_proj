@@ -1,8 +1,8 @@
 <div class="form-area">
   <%
 
-  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
-    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
+  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>3).present?
+    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>3)
    service_provider_name=@service_preferences_data[0].service_provider_name
    service_provider_id=@service_preferences_data[0].service_provider_id
    price=@service_preferences_data[0].price
@@ -20,7 +20,7 @@
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
-  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <%=hidden_field_tag("service_category_id",3)%>
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name, :id)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
@@ -95,7 +95,7 @@
       success: function(data){
         if (data["success"] == true) {
           $("#cable_pref").hide();
-          $("#cellphone_pref").show();
+          $("#cellphone_pref").show().css("height","500px");
         }
       }
     });

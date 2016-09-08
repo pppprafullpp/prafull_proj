@@ -1,7 +1,7 @@
 <div class="form-area">
   <%
-  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id]).present?
-    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>params[:category_id])
+  if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>1).present?
+    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>1)
      service_provider_name=@service_preferences_data[0].service_provider_name
      service_provider_id=@service_preferences_data[0].service_provider_id
      price=@service_preferences_data[0].price
@@ -13,14 +13,14 @@
      if @internet_preferences.present?
        download_speed=@internet_preferences[0].download_speed
        upload_speed=@internet_preferences[0].upload_speed
+
      end
    end
   %>
-  <%= "Add Preferences for internet" if params[:new_user]%>
-
+    <%= "Add Preferences for internet" if params[:new_user]%>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
-  <%=hidden_field_tag("service_category_id",params[:category_id])%>
+  <%=hidden_field_tag("service_category_id",1)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
@@ -87,7 +87,7 @@
         url:"/edit_or_change_service_preferences",
         type: "POST",
         data: {
-          service_category_id:$("#service_category_id").val(),
+          service_category_id:1,
           app_user_id:$("#app_user_id").val(),
           upload_speed:$("#internet_upload_speed").val(),
           download_speed:$("#internet_download_speed").val(),

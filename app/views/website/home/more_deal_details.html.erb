@@ -5,15 +5,37 @@
 <section class="more-details">
   <div class="container">
     <div class="row">
-      <h3 class="col-sm-12 text-center"> Deal Details </h3>
-      <div class="col-sm-12 text-center alert alert-success"><b><%= @deal.title %></b></div>
-      <div class="col-sm-8 about-offer">
-        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
+             <div class="col-sm-4 right-offer">
+               <div class="border-radius-bg">
+                 <img src="<%= @deal.image.url %>" width="100">
+                 <ul>
+                   <li>Base Monthly Price $<%= @deal.price %></li>
+                   <li>Base Installation $0.00</li>
+                   <li>Contract : <%= @deal.contract_period %> months</li>
+                 </ul>
+               </div>
+               <%if  @current_user.present? %>
+                 <%if @current_user.email_verified%>
+                   <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+                 <%else%>
+                      <a class="order-btn" href="javascript:void(0)">Verify email</a>
+                 <%end%>
+               <%else%>
+                 <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+               <%end%>
+               <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present?%>
+                <a class="order-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
+                <% end %>
 
+             </div>
+             <div class="col-sm-8 about-offer">
+
+        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
+        <h4><%= @deal.title %></h4>
         <h5>About the offer</h5>
 
-        <p><%= @deal.short_description %></p>
-        <p><%= @deal.detail_description %></p>
+        <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>
+        <p></i><%=@deal.detail_description.to_s.gsub(/\n/,"<br>").html_safe%></p>
         <%= render :partial => "#{@category_name}_deal_form"  %>
          <% if @deal.try(:additional_offers).present? %>
             <h5 class="margin_bot20">Additional Offer</h5>
@@ -35,29 +57,6 @@
         <% end %>
       </div>
 
-      <div class="col-sm-3 col-sm-offset-1  right-offer">
-        <div class="border-radius-bg">
-          <img src="<%= @deal.image.url %>" width="100">
-          <ul>
-            <li>Base Monthly Price $<%= @deal.price %></li>
-            <li>Base Installation $0.00</li>
-            <li>Contract : <%= @deal.contract_period %> months</li>
-          </ul>
-        </div>
-        <%if  @current_user.present? %>
-          <%if @current_user.email_verified%>
-            <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
-          <%else%>
-               <a class="order-btn" href="javascript:void(0)">Verify email</a>
-          <%end%>
-        <%else%>
-          <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
-        <%end%>
-        <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present?%>
-         <a class="btn_2" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
-         <% end %>
-
-      </div>
 
     </div>
     <div id="reviews-section" class="">

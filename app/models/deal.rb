@@ -13,6 +13,7 @@ class Deal < ActiveRecord::Base
   has_many  :deal_include_zipcodes, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :order_items, dependent: :destroy
+  has_many :deal_extra_services, dependent: :destroy
 
   has_many :cable_equipments, dependent: :destroy
   has_many :cellphone_equipments, dependent: :destroy
@@ -230,6 +231,16 @@ def deal_equipments
     []
   end
 end
+
+def deal_attributes
+  category_name = ServiceCategory.get_category_name_by_id(self.service_category_id)
+  if category_name.present?
+    eval("#{category_name}_deal_attributes".tableize).where(:deal_id => self.id)
+  else
+    []
+  end
+end
+
 
 ## commenting this function as now equipments are linked with deals
 def deal_equipments_bck

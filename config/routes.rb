@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       match 'get_cities' => 'orders#get_cities', :via => :get
       match 'primary_information' => "app_users#primary_information", :via => :get
       match 'cellphone_equipments' => "deals#cellphone_equipments", :via => :get
+      match 'customisable_deals' => "deals#customisable_deals", :via => :get
+      match 'customisable_deal_deatail' => "deals#customisable_deal_deatail", :via => :get
+      
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end
@@ -75,6 +78,8 @@ Rails.application.routes.draw do
   match "/set_default_address" => "website/app_users#set_default_address", :via => [:post]
   match "/delete_address" => "website/app_users#delete_address", :via => [:post]
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
+ 
+  
   #
   # if Socket.gethostname=="servicedlz-Virtual-Machine"
   # root to: "home#index"
@@ -98,6 +103,7 @@ Rails.application.routes.draw do
   get "/get_deals_from_first_page" =>"website/home#get_deals_from_first_page"
   get '/get_user_addresses'=> "website/app_users#user_addresses"
   get '/get_business_user_addresses'=> "website/app_users#business_user_addresses"
+  get "/extra_service_deal" => 'extra_services#extra_service_deal'
 
   get 'deals/get_service_providers'=>'deals#get_service_providers'
   get "/searchzip" => "deals#searchzip"
@@ -179,4 +185,8 @@ Rails.application.routes.draw do
   end
   resources :deal_equipments
   resources :deal_attributes
+  resources :deal_extra_services
+  resources :equipment_colors
+  resources :cellphone_details
+  resources :extra_services
 end

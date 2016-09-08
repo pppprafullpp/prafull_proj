@@ -41,8 +41,7 @@
                       <ul class="description-height">
                         <!-- $<%#= data['deal_price'] %>  -->
                         <!-- <li><%#= data['download_speed'] %> Mbps Download Speed</li> -->
-                        <li><%= data['short_description'].truncate(30) %></li>
-                        <li><%= data['detail_description'].truncate(30) %></li>
+                        <li><%= data['short_description'].truncate(50) %></li>
                       </ul>
 
                       <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
@@ -98,8 +97,73 @@
     </div>
   </div>
 </section>
+<div class="modal fade" id="comparePopup" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
+      <div class="modal-content compare-popsty">
+        <div id="welcome-popup">
+        <div class="text-center">
+        <img src="/assets/website/welcome1.png" alt="" width="150">
+        </div>
+        <p class=" text-center">Most of our users <span style="color:#2c9d12; font-weight:400;">$ave </span>$1,000 - $2,000 when they switch <span style="color:#e50005; font-weight:600;">Internet, Telephone, TV,</span> and <span  style="color:#e50005; font-weight:600;">Mobile Phone</span>
+        services using ServiceDeals. </p>
+          <p class=" text-center">We can start to find out how much you can <span style="color:#2c9d12; font-weight:400;">$ave </span> by comparing your current services with the best deals in your area. Just give us 5 min and we will show you $1000s of saving:</p>
+          <ul class="info_listing">
+            <li><span>1</span>Enter your Internet, Telephone, TV, and Mobile service information</li>
+            <li><span>2</span>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</li>
+            <li><span>3</span>Review potential saving and switch</li>
+          </ul>
+          <div class=" text-center">
+            <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
+          </div>
+      </div>
+
+      <div id="internet_pref" style="display:none">
+        <%=render :partial => "internet_preferences0.html.erb"%>
+      </div>
+      <div id="cable_pref" style="display:none">
+        <%=render :partial => "cable_preferences0.html.erb"%>
+      </div>
+      <div id="cellphone_pref" style="display:none">
+        <%=render :partial => "cellphone_preferences0.html.erb"%>
+      </div>
+      <div id="telephone_pref" style="display:none">
+        <%=render :partial => "telephone_preferences0.html.erb"%>
+      </div>
+      <div id="bundle_pref" style="display:none">
+        <%=render :partial => "bundle_preferences0.html.erb"%>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
+  function move_next() {
+    $("#welcome-popup").hide();
+    $("#internet_pref").show().css("height","322px");
+  }
+  function show_cable(){
+    event.preventDefault();
+    $("#internet_pref").hide();
+    $("#cable_pref").show().css("height","500px");
+  }
+  function show_cellphone() {
+    event.preventDefault();
+    $("#cable_pref").hide();
+    $("#cellphone_pref").show().css("height","504px");
+  }
+  function show_telephone() {
+    event.preventDefault();
+    $("#cellphone_pref").hide();
+    $("#telephone_pref").show().css("height","504px");
+  }
+  function show_bundle() {
+    event.preventDefault();
+    $("#telephone_pref").hide();
+    $("#bundle_pref").show().css("height","550px");
+  }
     var checkedValues,dealids;
     $("#compare_box").hide();
     $( document ).ready(function() {
@@ -203,3 +267,8 @@ function resetcomparebox() {
     $("#compare-box-deal-2").addClass("hidden");
 };
 </script>
+  <%if params[:new_user].present?%>
+  <script>
+  $("#comparePopup").modal("show");
+  </script>
+<%end%>

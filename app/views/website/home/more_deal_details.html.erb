@@ -5,15 +5,37 @@
 <section class="more-details">
   <div class="container">
     <div class="row">
-      <h3 class="col-sm-12 text-center"> Deal Details </h3>
-      <div class="col-sm-12 text-center alert alert-success"><b><%= @deal.title %></b></div>
-      <div class="col-sm-8 about-offer">
-        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
+             <div class="col-sm-4 right-offer">
+               <div class="border-radius-bg">
+                 <img src="<%= @deal.image.url %>" width="100">
+                 <ul>
+                   <li>Base Monthly Price $<%= @deal.price %></li>
+                   <li>Base Installation $0.00</li>
+                   <li>Contract : <%= @deal.contract_period %> months</li>
+                 </ul>
+               </div>
+               <%if  @current_user.present? %>
+                 <%if @current_user.email_verified%>
+                   <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+                 <%else%>
+                      <a class="order-btn" href="javascript:void(0)">Verify email</a>
+                 <%end%>
+               <%else%>
+                 <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+               <%end%>
+               <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present?%>
+                <a class="order-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
+                <% end %>
 
+             </div>
+             <div class="col-sm-8 about-offer">
+
+        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
+        <h4><%= @deal.title %></h4>
         <h5>About the offer</h5>
 
-        <p><%= @deal.short_description %></p>
-        <p><%= @deal.detail_description %></p>
+        <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>
+        <p></i><%=@deal.detail_description.to_s.gsub(/\n/,"<br>").html_safe%></p>
         <%= render :partial => "#{@category_name}_deal_form"  %>
          <% if @deal.try(:additional_offers).present? %>
             <h5 class="margin_bot20">Additional Offer</h5>
@@ -35,32 +57,12 @@
         <% end %>
       </div>
 
-      <div class="col-sm-3 col-sm-offset-1  right-offer">
-        <div class="border-radius-bg">
-          <img src="<%= @deal.image.url %>" width="100">
-          <ul>
-            <li>Base Monthly Price $<%= @deal.price %></li>
-            <li>Base Installation $0.00</li>
-            <li>Contract : <%= @deal.contract_period %> months</li>
-          </ul>
-        </div>
-        <%if  @current_user.present? %>
-          <%if @current_user.email_verified%>
-            <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
-          <%else%>
-               <a class="order-btn" href="javascript:void(0)">Verify email</a>
-          <%end%>
-        <%else%>
-          <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
-        <%end%>
-        <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present?%>
-         <a class="btn_2" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
-         <% end %>
-
-      </div>
 
     </div>
-
+    <div id="reviews-section" class="">
+      <h3 id="reviews-header"></h3>
+        <div id="reviews-inner-area"></div>
+    </div>
   </div>
 </section>
 <!--End of More Details section-->
@@ -78,17 +80,8 @@
               <div class="channel_heading">
                 <h1>Channel List</h1>
               </div>
-
               <div class="col-md-12" id="ajaxdata">
-
-                <!-- <h4 id="channel_category_name"></h4>
-                <ul>
-                  <li id="channel_name"><a href="#"></a></li>
-
-                </ul> -->
               </div>
-
-
             </table>
           </div>
         </div>
@@ -131,6 +124,27 @@
         }
        });
     <% end %>
+    var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+    $.ajax({
+      url:"/api/v1/comment_ratings",
+      type:"GET",
+      data: {
+        deal_id:<%=params[:deal_id]%>,
+        request_type:"site"
+      },
+      success: function(data){
+        if(data["success"] == true) {
+        $("#reviews-header").html("Reviews ("+data["comment_count"]+")");
+        for(i=0;i<data["comment_count"];i++) {
+          name=Base64.decode(data["comment"][i]["app_user_name"])
+          $("#reviews-inner-area").append("<h2>"+name+"</h2><p>Rating point :"+data["comment"][i]["rating_point"]+"</p><p>"+data["comment"][i]["comment_title"]+"</p>");
+          console.log(name)
+        }
+      }
+    }
+    })
+
+
   });
 
 

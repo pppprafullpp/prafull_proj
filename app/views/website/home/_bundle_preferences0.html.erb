@@ -1,0 +1,347 @@
+<div class="form-area">
+  <%
+  if session[:user_id].present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>5).present?
+    @service_preferences_data=ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>5)
+   service_provider_name=@service_preferences_data[0].service_provider_name
+   service_provider_id=@service_preferences_data[0].service_provider_id
+
+   price=@service_preferences_data[0].price
+   is_contract=@service_preferences_data[0].is_contract
+   start_date=@service_preferences_data[0].start_date
+   end_date=@service_preferences_data[0].end_date
+   plan_name= @service_preferences_data[0].plan_name
+   @bundle_preferences=BundleServicePreference.where(:service_preference_id=>@service_preferences_data[0].id)
+   if @bundle_preferences.present?
+     download_speed=@bundle_preferences[0].download_speed
+     upload_speed=@bundle_preferences[0].upload_speed
+     free_channels=@bundle_preferences[0].free_channels
+     premium_channels=@bundle_preferences[0].premium_channels
+     domestic_call_minutes=@bundle_preferences[0].domestic_call_minutes
+     international_call_minutes=@bundle_preferences[0].international_call_minutes
+   end
+   end
+  %>
+  <%= "Add Preferences for Bundles" if params[:new_user]%>
+
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post", :html=>{:id=>"bundle_form"}) do %>
+  <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
+  <%=hidden_field_tag("service_category_id",5)%>
+  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
+  <%=hidden_field_tag("app_user_id",session[:user_id])%>
+  <%=hidden_field_tag("from_site","true")%>
+  <%=hidden_field_tag("bundle_combo","")%>
+    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+    <div class="col-md-6">
+      <select class="form-control" id="service_provider_id" name="service_provider_id">
+        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+      </select> </div>
+      <div class="col-md-6">
+    <%= number_field_tag(:bundle_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+  </div>
+    <p class="contract-margin-sty">Contract Date</p>
+    <div class="checkbox checkbox-info no-contract-sty">
+      <%= check_box_tag "bundle_is_contract",true, :class=>"form-control"%>
+        <label for="bundle_is_contract"> <span>No Contract </span> </label>
+
+
+    </div>
+    <div class = "col-md-6"><%= date_field_tag(:bundle_start_date,"", :class=>"form-control")%></div>
+    <div class = "col-md-6"><%= date_field_tag(:bundle_end_date,"", :class=>"form-control")%></div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="checkbox checkbox-info no-contract-sty mgt25">
+            <input type="checkbox" id="bundle_cable-cb" text="Cable" value="Cable" onchange="showcable()" />
+          <label for="bundle_cable-cb"> <span>Cable </span> </label>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="checkbox checkbox-info no-contract-sty mgt25">
+          <input type="checkbox" id="bundle_internet-cb" value="internet" onchange="showinternet()" />
+          <label for="bundle_internet-cb"> <span>Internet </span> </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+
+      <div class="checkbox checkbox-info no-contract-sty mgt25">
+        <input type="checkbox" id="bundle_telephone-cb" value="telephone"  onchange="showtelephone()" />
+        <label for="bundle_telephone-cb"> <span>telephone </span> </label>
+      </div>
+
+      </div>
+    </div>
+
+    <div id="bundle_cable-div" class="cable-div hidden col-md-12">
+      <hr />
+        <p>Cable</p>
+      <div class="row">
+        <div class="col-md-6">
+          <%=text_field_tag "bundle_free_channels",free_channels,:class=>"form-control", :placeholder=>"free Channels"%>
+        </div>
+        <div class="col-md-6">
+        <%=text_field_tag "bundle_premium_channels",premium_channels,:class=>"form-control", :placeholder=>"premium Channels"%>
+        </div>
+      </div>
+    </div>
+
+    <div id="bundle_internet-div" class="internet-div hidden col-md-12">
+      <hr />
+        <p>Internet</p>
+      <div class="row">
+        <div class="col-md-6">
+          <%=text_field_tag "bundle_download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
+        </div>
+        <div class="col-md-6">
+        <%=text_field_tag "bundle_upload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
+        </div>
+      </div>
+    </div>
+
+    <div id="bundle_telephone-div" class="telephone-div hidden col-md-12">
+        <hr />
+      <p>Telephone</p>
+      <div class="row">
+        <div class="col-md-6">
+         <div class="checkbox checkbox-info no-contract-sty mgt25">
+           <%= check_box_tag "bundle_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+           <label for="bundle_domestic_call_unlimited"> <span>Unlimited </span> </label>
+         </div>
+      </div>
+      <div class="col-md-6">
+        <%=number_field_tag(:bundle_domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+             <div class="checkbox checkbox-info no-contract-sty mgt25">
+               <%= check_box_tag "bundle_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+               <label for="bundle_international_call_unlimited"> <span>Unlimited </span> </label>
+               </div>
+        </div>
+        <div class="col-md-6">
+          <%=number_field_tag(:bundle_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        </div>
+      </div>
+    </div>
+    </div>
+    <%=hidden_field_tag("plan_name","none")%>
+
+
+    <div class="col-md-12 text-center">
+      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check()")%>
+    </div>
+    <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
+    <%end%>
+  </div>
+  <script>
+  $(document).ready(function(){
+    $("#bundle_international_call_unlimited").prop("checked",false);
+    $("#bundle_domestic_call_unlimited").prop("checked",false);
+
+    $("#bundle_is_contract").prop("checked",false);
+    $("#bundle_is_contract").on("change",function(){
+      if($("#bundle_is_contract").prop("checked")==true){
+        $("#bundle_start_date").attr("disabled",true);
+        $("#bundle_end_date").attr("disabled",true);
+        $("#bundle_is_contract").val(false);
+      }
+      else {
+        $("#bundle_start_date").attr("disabled",false);
+        $("#bundle_end_date").attr("disabled",false);
+        $("#bundle_is_contract").val(true);
+      }
+    });
+    <%if service_provider_id.present?%>
+    set_service_provider("<%=service_provider_id%>");
+    function set_service_provider(id) {
+      if (id!=null && id!=""){
+      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
+    }
+    }
+    <%end%>
+  })
+
+  $("#bundle_domestic_call_unlimited").on("change",function(){
+    if($("#bundle_domestic_call_unlimited").prop("checked")==true){
+      $("#bundle_domestic_call_minutes").attr("disabled",true);
+      $("bundle_#domestic_call_unlimited").val("true");
+    }
+    else {
+      $("#bundle_domestic_call_minutes").attr("disabled",false);
+      $("#bundle_domestic_call_unlimited").val("false");
+    }
+  });
+
+  $("#bundle_international_call_unlimited").on("change",function(){
+    if($("#bundle_international_call_unlimited").prop("checked")==true){
+      $("#bundle_international_call_minutes").attr("disabled",true);
+      $("#bundle_domestic_call_unlimited").val("true");
+    }
+    else {
+      $("#bundle_international_call_minutes").attr("disabled",false);
+      $("#bundle_domestic_call_unlimited").val("false");
+    }
+
+
+  });
+
+
+  function resetcontractdate(){
+    if($("#nocontractcb").prop("checked")==true){
+      $("#start_date").attr("disabled",true);
+      $("#end_date").attr("disabled",true);
+    }
+    else {
+      $("#start_date").attr("disabled",false);
+      $("#end_date").attr("disabled",false);
+    }
+  }
+  function resetdomestic(){
+    console.log("Sss");
+      if( $("#bundle_ul-domestic").prop("checked")==true){
+        $("#domestic_minutes").attr("disabled",true);
+      }
+      else {
+        $("#bundle_domestic_minutes").attr("disabled",false);
+      }
+  }
+  function resetinternat(){
+    console.log("sSss");
+      if( $("#ul-domestic").prop("checked")==true){
+        $("#bundle_international_minutes").attr("disabled",true);
+      }
+      else {
+        $("#bundle_international_minutes").attr("disabled",false);
+      }
+  }
+
+  function showcable(){
+    console.log("cable")
+     if($("#bundle_cable-cb").prop("checked")==true)
+     {
+       $("#bundle_cable-div").removeClass("hidden");
+     }
+     else {
+       $("bundle_cable-div").addClass("hidden");
+     }
+  }
+
+    function showinternet(){
+
+     if($("#bundle_internet-cb").prop("checked")==true)
+     {
+       $("#bundle_internet-div").removeClass("hidden");
+     }
+     else {
+       $("#bundle_internet-div").addClass("hidden");
+     }
+
+    }
+
+    function showtelephone(){
+       if($("#bundle_telephone-cb").prop("checked")==true)
+       {
+         $("#bundle_telephone-div").removeClass("hidden");
+       }
+       else {
+         $("#bundle_telephone-div").addClass("hidden");
+       }
+    }
+ function check(){
+   event.preventDefault();
+   var status=0;
+   if(($("#bundle_internet-cb").prop("checked")==true && $("#bundle_cable-cb").prop("checked")==true)  ||
+      ($("#bundle_internet-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true) ||
+      ($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true) )
+     {
+     if ($("#bundle_internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if ($("#bundle_cable-cb").prop("checked")==true && ($("#bundle_free_channels").val()=="" || $("#bundle_premium_channels").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if ($("#ibundle_nternet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
+        $("#msg").text("Please Fill in all fields").removeClass("hidden");
+     }
+     else {
+       status+=1;
+     }
+     if(status>=2 && $("#bundle_price").val()!=""){
+      if($("#bundle_internet-cb").prop("checked")==true && $("#bundle_cable-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet and Cable");
+      }
+      if($("#bundle_internet-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet and Telephone");
+      }
+      if($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true){
+        $("#bundle_combo").val("Cable and Telephone");
+      }
+      if($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true && $("#bundle_internet-cb").prop("checked")==true){
+        $("#bundle_combo").val("Internet,Telephone and Cable");
+      }
+      // $("#bundle_form").submit();
+
+            if($("#bundle_start_date").prop("disabled") == true && $("#bundle_end_date").prop("disabled") == true) {
+            is_contract = false
+          }
+          else
+          {
+            is_contract=true
+          }
+          console.log("is contract="+is_contract);
+          $.ajax({
+            url:"/edit_or_change_service_preferences",
+            type: "POST",
+            data: {
+              service_category_id:$("#service_category_id").val(),
+              service_provider_id: $("#service_provider_id option:selected").val(),
+              app_user_id:$("#app_user_id").val(),
+              domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
+              international_call_minutes:$("#bundle_international_call_minutes").val(),
+              start_date:$("#bundle_start_date").val(),
+              end_date:$("#bundle_end_date").val(),
+              data_plan:$("#bundle_data_plan").val(),
+              no_of_lines:$("#bundle_no_of_lines").val(),
+              price:$("#bundle_price").val(),
+              download_speed:$("#bundle_download_speed").val(),
+              upload_speed:$("#bundle_upload_speed").val(),
+              bundle_combo:$("#bundle_combo").val(),
+              is_contract:is_contract
+            },
+            success: function(data){
+              if (data["success"] == true) {
+                $("#comparePopup").modal("hide");
+                calculate_you_save();
+              }
+            }
+          });
+    }
+    else {
+      $("#msg").text("Please Enter Price").removeClass("hidden");
+    }
+  }
+
+   else {
+     console.log(" not ok");
+     event.preventDefault();
+     $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
+   }
+ }
+ function calculate_you_save(){
+   $.ajax({
+     url:"/api/v1/you_save",
+     type: "GET",
+     data: {
+      id:<%=session[:user_id]%>
+     },
+     success: function(data){
+        alert("you save:"+data["you_save"])
+     }
+   });
+ }
+  </script>

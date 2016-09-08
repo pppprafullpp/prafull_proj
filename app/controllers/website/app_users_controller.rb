@@ -20,13 +20,12 @@ class Website::AppUsersController < ApplicationController
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
-        # AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
         AppUserMailer.sign_up_mail(@app_user).deliver!
         flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
-          redirect_to "/website/app_users/profile?new_user=new_user"
+          redirect_to "/website/home/deal_details?category_id=1&zip_code=NzUwMjQ=&deal_type=#{@app_user.user_type}&new_user=true"
         end
       else
         flash[:warning] = @app_user.errors.full_messages

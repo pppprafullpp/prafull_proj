@@ -16,8 +16,6 @@
 //= require turbolinks
 //= require_tree .
 //= require chosen-jquery
-//= require owl.carousel
-
 
 $(function() {
   initPage();

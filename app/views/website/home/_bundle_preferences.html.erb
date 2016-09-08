@@ -126,7 +126,7 @@
 
 
     <div class="col-md-12 text-center">
-      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check()")%>
+      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check0()")%>
     </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
@@ -239,7 +239,7 @@
          $("#telephone-div0").addClass("hidden");
        }
     }
- function check(){
+ function check0(){
    var status=0;
    if(($("#internet-cb0").prop("checked")==true && $("#cable-cb0").prop("checked")==true)  ||
       ($("#internet-cb0").prop("checked")==true && $("#telephone-cb0").prop("checked")==true) ||
@@ -282,9 +282,8 @@
       $("#msg").text("Please Enter Price").removeClass("hidden");
     }
   }
-
    else {
-     console.log(" not ok");
+     console.log(" not ok status="+status);
      event.preventDefault();
      $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
    }

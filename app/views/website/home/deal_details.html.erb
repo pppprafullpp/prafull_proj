@@ -26,7 +26,7 @@
           <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id])%>
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
            <div class="col-sm-12">
-            <div class="owl-carousel bundle-deal border-radius-bg hidden" style="height: 309px;width: 100%;display: inline-block;overflow: scroll;">
+            <div class="owl-carousel bundle-deal border-radius-bg" style="height: 309px;width: 100%;display: inline-block;overflow: scroll;">
             <%bundle_deals.each do |bd|%>
               <div  class="bundle-det" >
                   <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
@@ -43,7 +43,7 @@
           </div>
         <%end%>
 
-        <div class="owl-carousel bundle-deal  border-radius-bg">
+        <div class="owl-carousel bundle-deal  border-radius-bg hidden">
 <div  class="bundle-det">
 
 <a href="#">

@@ -79,3 +79,4 @@ end
 gem 'hirb'
 gem 'compass-rails'
 gem 'chosen-rails'
+gem 'owlcarousel-rails'

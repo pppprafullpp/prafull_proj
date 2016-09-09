@@ -10,6 +10,7 @@ class Api::V1::OrdersController < ApplicationController
 			if order.save
 				order_items = OrderItem.create_order_items(params,order.id)
 				if  order_items.first.deal.is_customisable == true
+					order_equipment = OrderEquipment.create_order_equipments(params,order.id)
           order_extra_services = OrderExtraService.create_order_extra_services(params,order.id)
         end
 				app_user = AppUser.update_app_user(params,order.app_user_id,order)

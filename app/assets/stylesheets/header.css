@@ -92,3 +92,13 @@
 #mandat,.mandat{
   color: red;
 }
+
+.menu li {
+    float: left;
+    width: 200px;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+    line-height: 33px;
+    padding: 0 0.9375rem;
+}

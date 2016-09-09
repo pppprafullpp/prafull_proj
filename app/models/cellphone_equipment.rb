@@ -18,8 +18,7 @@ class CellphoneEquipment < ActiveRecord::Base
 
 	def available_color
 		EquipmentColor.select('id,color_name').where(id: eval(self.available_colors))
-		# EquipmentColor.where(id: eval(self.available_colors))
-		# .pluck(:color_name,:id)
+		# EquipmentColor.where(id: eval(self.available_colors)).pluck(:color_name,:id)
 	end
 
 

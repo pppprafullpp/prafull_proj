@@ -36,12 +36,20 @@
     <%if Business::BUSINESS_TYPES.key(business.business_type)=="Sole Proprietor"%>
     <div class="btn-group col-sm-6" id="ssn_div">
       <label for="Name" class="control-label">SSN</label>
+      <%if ssn.present?%>
       <%= text_field_tag :ssn,Base64.decode64(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+      <%else%>
+      <%= text_field_tag :ssn,"",:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
+      <%end%>
     </div>
     <%elsif Business::BUSINESS_TYPES.key(business.business_type)=="Registered" %>
     <div class="btn-group col-sm-6" id="federal_number_div">
       <label for="Name" class="control-label">Federal Number</label>
+      <%if federal_number.present?%>
       <%= text_field_tag :federal_number,Base64.decode64(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+      <%else%>
+      <%= text_field_tag :federal_number,"",:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
+      <%end%>
     </div>
     <%end%>
 

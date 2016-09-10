@@ -25,12 +25,12 @@
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
+      <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select>
     </div>
     <div class="col-md-6">
-    <%= number_field_tag("price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag("internet_price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
 
   <div class="checkbox checkbox-info no-contract-sty">
@@ -93,8 +93,9 @@
           download_speed:$("#internet_download_speed").val(),
           start_date:$("#internet_start_date").val(),
           end_date:$("#internet_end_date").val(),
-          price:$("#price").val(),
-          is_contract:is_contract
+          price:$("#internet_price").val(),
+          is_contract:is_contract,
+          service_provider_id:$("#internet_service_provider_id option:selected").val()
         },
         success: function(data){
           if (data["success"] == true) {

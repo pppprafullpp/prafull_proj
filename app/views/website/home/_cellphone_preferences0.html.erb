@@ -30,13 +30,13 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" id="service_provider_id"  name="service_provider_id">
+      <select class="form-control" id="cellphone_service_provider_id"  name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select>
   </div>
 
   <div class="col-md-6">
-    <%= number_field_tag(price,price,:class=>"form-control", :placeholder=>"Enter price")%>
+    <%= number_field_tag("cellphone_price",price,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
   <div class="row contract-margin-sty">
     <div class="col-md-6">
@@ -97,8 +97,8 @@
     $("#cellphone_contract").prop("checked",false);
     $("#cellphone_domestic_call_unlimited").prop("checked",false);
     $("#cellphone_international_call_unlimited").prop("checked",false);
-    $("#cellphone_contract").on("change",function(){
-      if($("#cellphone_contract").prop("checked")==true){
+    $("#cellphone_is_contract").on("change",function(){
+      if($("#cellphone_is_contract").prop("checked")==true){
         $("#cellphone_start_date").attr("disabled",true);
         $("#cellphone_end_date").attr("disabled",true);
       }
@@ -162,7 +162,7 @@
       url:"/edit_or_change_service_preferences",
       type: "POST",
       data: {
-        service_category_id:$("#service_category_id").val(),
+        service_category_id:4,
         app_user_id:$("#app_user_id").val(),
         domestic_call_minutes:$("#cellphone_domestic_call_minutes").val(),
         international_call_minutes:$("#cellphone_international_call_minutes").val(),
@@ -171,7 +171,8 @@
         data_plan:$("#cellphone_data_plan").val(),
         no_of_lines:$("#cellphone_no_of_lines").val(),
         price:$("#cellphone_price").val(),
-        is_contract:is_contract
+        is_contract:is_contract,
+        service_provider_id:$("#cellphone_service_provider_id option:selected").val()
       },
       success: function(data){
         if (data["success"] == true) {

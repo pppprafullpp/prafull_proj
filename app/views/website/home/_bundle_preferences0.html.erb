@@ -32,7 +32,7 @@
   <%=hidden_field_tag("bundle_combo","")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
     <div class="col-md-6">
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
+      <select class="form-control" id="bundle_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> </div>
       <div class="col-md-6">
@@ -298,7 +298,7 @@
             url:"/edit_or_change_service_preferences",
             type: "POST",
             data: {
-              service_category_id:$("#service_category_id").val(),
+              service_category_id:5,
               service_provider_id: $("#service_provider_id option:selected").val(),
               app_user_id:$("#app_user_id").val(),
               domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
@@ -311,7 +311,8 @@
               download_speed:$("#bundle_download_speed").val(),
               upload_speed:$("#bundle_upload_speed").val(),
               bundle_combo:$("#bundle_combo").val(),
-              is_contract:is_contract
+              is_contract:is_contract,
+              service_provider_id:$("#bundle_service_provider_id option:selected").val()
             },
             success: function(data){
               if (data["success"] == true) {

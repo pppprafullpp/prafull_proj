@@ -25,7 +25,7 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
+      <select class="form-control" id="cable_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> </div>
         <div class="col-md-6">
@@ -83,14 +83,15 @@
       url:"/edit_or_change_service_preferences",
       type: "POST",
       data: {
-        service_category_id:$("#service_category_id").val(),
+        service_category_id:3,
         app_user_id:$("#app_user_id").val(),
         free_channels:$("#cable_free_channels").val(),
         premium_channels:$("#cable_premium_channels").val(),
         start_date:$("#cable_start_date").val(),
         end_date:$("#cable_end_date").val(),
-        price:$("#price").val(),
-        is_contract:is_contract
+        price:$("#cable_price").val(),
+        is_contract:is_contract,
+        service_provider_id:$("#cable_service_provider_id option:selected").val()
       },
       success: function(data){
         if (data["success"] == true) {

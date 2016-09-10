@@ -5,16 +5,30 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
+  #  raise params.to_yaml
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
     else
       params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
       params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
+      params[:business][:business_name]=encode_api_data(params[:business][:business_name])
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
       @app_user.zip = params[:app_user][:zip_code].present? ? encode_api_data(params[:app_user][:zip_code]) : encode_api_data("75024")
+
+      if @app_user.user_type == AppUser::BUSINESS
+        if params[:business][:business_type] == "Sole Proprietor"
+          params[:business][:business_type] = 0
+        elsif params[:business][:business_type] == "Registered"
+          params[:business][:business_type] = 1
+        end
+         @business = Business.create_business(params)
+         business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
+        # raise business_user.to_yaml
+      end
+
       if @app_user.save!
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]

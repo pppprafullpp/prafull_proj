@@ -27,11 +27,6 @@ class Business < ActiveRecord::Base
 
   def self.create_business(params)
     # raise params.to_yaml
-    params[:ssn]=params[:ssn] if params[:ssn].present?
-    params[:federal_number]=params[:federal_number]  if params[:federal_number].present?
-    params[:dba]=params[:dba]  if params[:dba].present?
-    params[:manager_contact]=params[:manager_contact]  if params[:manager_contact].present?
-    params[:business_name]=params[:business_name]  if params[:business_name].present?
     if params[:business].present?
       business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
       if business_type.present?

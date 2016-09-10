@@ -43,7 +43,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 
 	def create
-	  #  raise params.to_yaml
+	  # raise params.to_yaml
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
 			if params[:service_category_id] == '1'

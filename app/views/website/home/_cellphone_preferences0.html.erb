@@ -107,6 +107,25 @@
         $("#cellphone_end_date").attr("disabled",false);
       }
     });
+    $.ajax({
+      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=497&category=4",
+      type: "GET",
+      success: function(data){
+        console.log(data["service_preference"]);
+        $("#cellphone_price").val(data["service_preference"]["price"]);
+        if(data["service_preference"]["is_contract"] == true) {
+          $("#cellphone_start_date").attr("disabled",true);
+          $("#cellphone_end_date").attr("disabled",true);
+          $("#cellphone_is_contract").prop("checked","checked");
+        }
+        $("#telephone_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
+        $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
+        $("#cellphone_price").val(data["service_preference"]["price"]);
+        $("#cellphone_data_plan option[value='"+'2.0'+"']").attr('selected','selected');
+
+      }
+    });
+
 
     $("#cellphone_domestic_call_unlimited").on("change",function(){
       if($("#cellphone_domestic_call_unlimited").prop("checked")==true){

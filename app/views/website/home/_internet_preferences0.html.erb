@@ -13,7 +13,6 @@
      if @internet_preferences.present?
        download_speed=@internet_preferences[0].download_speed
        upload_speed=@internet_preferences[0].upload_speed
-
      end
    end
   %>
@@ -69,6 +68,22 @@
         set_service_provider("<%=service_provider_id%>")
       <%end%>
   });
+
+  $.ajax({
+    url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=497&category=1",
+    type: "GET",
+    success: function(data){
+      console.log(data["service_preference"]);
+      $("#internet_price").val(data["service_preference"]["price"]);
+      if(data["service_preference"]["is_contract"] == true) {
+        $("#internet_start_date").attr("disabled",true);
+        $("#internet_end_date").attr("disabled",true);
+        $("#internet_contract").prop("checked","checked");
+      }
+      $("#internet_download_speed").val(data["service_preference"]["download_speed"])
+    }
+  });
+
 
     function set_service_provider(id) {
         $("#service_provider_id option[value='"+id+"']").attr('selected','selected');

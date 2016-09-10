@@ -95,6 +95,27 @@
       }
     });
 
+    $.ajax({
+      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=497&category=2",
+      type: "GET",
+      success: function(data){
+        console.log(data["service_preference"]);
+        $("#telephone_price").val(data["service_preference"]["price"]);
+        if(data["service_preference"]["is_contract"] == true) {
+          $("#telephone_start_date").attr("disabled",true);
+          $("#telephone_end_date").attr("disabled",true);
+          $("#telephone_is_contract").prop("checked","checked");
+        }
+        $("#telephone_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
+        $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
+        $("#telephone_price").val(data["service_preference"]["price"]);
+
+      }
+    });
+
+
+
+
     $("#telephone_domestic_call_unlimited").on("change",function(){
       if($("#telephone_domestic_call_unlimited").prop("checked")==true){
         $("#telephone_domestic_call_minutes").attr("disabled",true);

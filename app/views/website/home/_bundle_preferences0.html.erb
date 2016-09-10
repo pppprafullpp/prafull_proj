@@ -29,7 +29,7 @@
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-  <%=hidden_field_tag("bundle_combo","")%>
+  <%=hidden_field_tag("bundle_combo1","")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
     <div class="col-md-6">
       <select class="form-control" id="bundle_service_provider_id" name="service_provider_id">
@@ -152,7 +152,7 @@
     });
 
     $.ajax({
-      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=5",
+      url :"/api/v1/get_preferences?app_user_id="+<%=session[:user_id]%>+"&category=5",
       type: "GET",
       success: function(data){
          $("#bundle_price").val(data["service_preference"]["price"]);
@@ -172,10 +172,9 @@
         $("#bundle_upload_speed").val("1");
         $("#bundle_free_channels").val("20");
         $("#bundle_premium_channels").val("5");
+        $("#bundle_combo1").val("Internet and Cable")
       }
     });
-
-
 
     <%if service_provider_id.present?%>
     set_service_provider("<%=service_provider_id%>");
@@ -297,16 +296,16 @@
      }
      if(status>=2 && $("#bundle_price").val()!=""){
       if($("#bundle_internet-cb").prop("checked")==true && $("#bundle_cable-cb").prop("checked")==true){
-        $("#bundle_combo").val("Internet and Cable");
+        $("#").val("Internet and Cable");
       }
       if($("#bundle_internet-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true){
-        $("#bundle_combo").val("Internet and Telephone");
+        $("#bundle_combo1").val("Internet and Telephone");
       }
       if($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true){
-        $("#bundle_combo").val("Cable and Telephone");
+        $("#bundle_combo1").val("Cable and Telephone");
       }
       if($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true && $("#bundle_internet-cb").prop("checked")==true){
-        $("#bundle_combo").val("Internet,Telephone and Cable");
+        $("#bundle_combo1").val("Internet,Telephone and Cable");
       }
       // $("#bundle_form").submit();
 
@@ -317,7 +316,7 @@
           {
             is_contract=true
           }
-          console.log("is contract="+is_contract);
+
           $.ajax({
             url:"/edit_or_change_service_preferences",
             type: "POST",
@@ -332,11 +331,13 @@
               data_plan:$("#bundle_data_plan").val(),
               no_of_lines:$("#bundle_no_of_lines").val(),
               price:$("#bundle_price").val(),
-              download_speed:$("#bundle_download_speed").val(),
-              upload_speed:$("#bundle_upload_speed").val(),
-              bundle_combo:$("#bundle_combo").val(),
+              download:$("#bundle_download_speed").val(),
+              upload:$("#bundle_upload_speed").val(),
+              bundle_combo:$("#bundle_combo1").val(),
               is_contract:is_contract,
-              service_provider_id:$("#bundle_service_provider_id option:selected").val()
+              service_provider_id:$("#bundle_service_provider_id option:selected").val(),
+              free_channels:$("#bundle_free_channels").val(),
+              premium_channels:$("#bundle_premium_channels").val(),
             },
             success: function(data){
               if (data["success"] == true) {

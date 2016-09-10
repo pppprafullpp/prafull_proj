@@ -96,9 +96,10 @@
     });
 
     $.ajax({
-      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=497&category=2",
+      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=2",
       type: "GET",
       success: function(data){
+        console.log("telephone"+data);
         console.log(data["service_preference"]);
         $("#telephone_price").val(data["service_preference"]["price"]);
         if(data["service_preference"]["is_contract"] == true) {
@@ -109,12 +110,8 @@
         $("#telephone_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
         $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
         $("#telephone_price").val(data["service_preference"]["price"]);
-
       }
     });
-
-
-
 
     $("#telephone_domestic_call_unlimited").on("change",function(){
       if($("#telephone_domestic_call_unlimited").prop("checked")==true){
@@ -140,7 +137,8 @@
     <%if service_provider_id.present?%>
       set_service_provider("<%=service_provider_id%>")
       <%end%>
-  })
+  });
+
   function set_service_provider(id) {
     $("#service_provider_id option[value="+id+"]").attr('selected','selected');
   }

@@ -108,7 +108,7 @@
       }
     });
     $.ajax({
-      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=497&category=4",
+      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=+<%=session[:user_id]%>+&category=4",
       type: "GET",
       success: function(data){
         console.log(data["service_preference"]);

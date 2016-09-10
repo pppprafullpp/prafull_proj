@@ -1,7 +1,7 @@
 <div id="business-info" class="tab-pane">
   <div class="row">
     <div class="col-lg-12">
-    <% business = @app_user.business_app_users.first.business %>
+    <% business = @app_user.business_app_users.last.business %>
     <% disable_flag = business.present? ? true : false  %>
     <div class="btn-group col-sm-6 padding15right">
 
@@ -104,7 +104,7 @@
         <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
         <%= text_field_tag('business_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id => "billing_zip", maxlength: 6) %>
       </div>
-     
+
 
       <div id="additional_data">
       <div class="col-md-12 address-sty">
@@ -146,7 +146,7 @@
           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%#= options_for_select(cities_array, :prompt=>"Select") %>
       </select> -->
-        
+
       </div>
 
       <div class="col-md-12 address-sty">
@@ -183,7 +183,7 @@
           <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
           <%= text_field_tag('business_service_addresses[zip]',"",:class => 'form-control input-md',:placeholder => 'Zip', :id=> "service_zip", maxlength: 6) %>
         </div>
-        
+
        <!--  <select class="form-control" name="shipping_state" id="shipping_state">
           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%#= options_for_select(cities_array, :prompt=>"Select") %>

@@ -64,7 +64,7 @@ class Website::AppUsersController < ApplicationController
 
   def update
     if session[:user_id].present?
-      # raise params.to_s
+      # raise params.to_yaml
       @app_user = AppUser.find(session[:user_id])
       address = params[:address].present? ? params[:address] : ''
       address1 = params[:address1].present? ? params[:address1] : ''
@@ -82,56 +82,15 @@ class Website::AppUsersController < ApplicationController
       @app_user.avatar=params[:avatar] if params[:avatar].present?
       # raise @app_user.state.to_s
       if @app_user.save!
-        # if @app_user.user_type == AppUser::BUSINESS
-        #   # if  @app_user.business_app_users.present?
-        #   #   business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
-        #   #   business_addresses = BusinessAddress.find_by_business_id(business_user_id)
-        #   #   business_addresses.update_attributes(
-        #   #       :address_name=>params[:addresses][:address_name],
-        #   #       :address_type =>2,
-        #   #       :zip=>params[:addresses][:zip],
-        #   #       :address1 =>params[:addresses][:address1],
-        #   #       :address2=>params[:addresses][:address2],
-        #   #       :city=>params[:addresses][:city])
-        #   # else
-        #   #   params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
-        #   #   params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
-        #   #   params[:business][:business_name]=encode_api_data(params[:business][:business_name]) if params[:business][:business_name].present?
-        #   #   @business = Business.create_business(params)
-        #   #   if @business.present?
-        #   #     address_hash = {:business_addresses => [params[:addresses]]}
-        #   #     business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
-        #   #     business_addresses = BusinessAddress.create_business_addresses(address_hash,@business.id)
-        #   #   end
-        #   # end
-        #
-        #
-        #
-        # else
-        #   # if  @app_user.app_user_addresses.present?
-        #   #   app_user_address = @app_user.app_user_addresses.first
-        #   #   app_user_address.update_attributes(
-        #   #       :address_name=>params[:addresses][:address_name],
-        #   #       :address_type => params[:addresses][:address_type].to_i,
-        #   #       :zip=>params[:addresses][:zip],
-        #   #       :address1 =>params[:addresses][:address1],
-        #   #       :address2=>params[:addresses][:address2],
-        #   #       :city=>params[:addresses][:city])
-        #   # else
-        #   #   params[:addresses][:address_type]=params[:addresses][:address_type].to_i
-        #   #   address_hash = {:app_user_addresses => [params[:addresses]]}
-        #   #   app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
-        #   # end
-        # end
         if @app_user.user_type == AppUser::BUSINESS
           params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
           params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
           params[:business][:business_name]=encode_api_data(params[:business][:business_name]) if params[:business][:business_name].present?
           @business = Business.create_business(params)
+          # raise @business.to_yaml
           if @business.present?
             address_hash = {:business_addresses => [params[:addresses]]}
             business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
-
             business_addresses = BusinessAddress.create_business_addresses(address_hash,@business.id)
           end
         else

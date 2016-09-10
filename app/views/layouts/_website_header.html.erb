@@ -239,14 +239,24 @@
       }
 
       if(check) {
-        if($("#business_type option:selected").val()!=0 && $("#app_user_user_type option:selected").val()!="Select User type" && $("#business_name").val()!="") {
-          $("#new_app_user").submit();
-        }
-        else {
-          event.preventDefault();
-          alert("Enter all values");
-        }
-      }else{
+         if($("#app_user_user_type option:selected").val()=="business" && $("#business_name").val()!="" && $("#business_type").val()!="0") {
+           console.log("oK");
+           $("#new_app_user").submit();
+         }
+         else {
+           if($("#app_user_user_type option:selected").val()=="residence" && check) {
+              console.log("residence user OK");
+              $("#new_app_user").submit();
+           }
+           else {
+             alert("Please enter all fields")
+             event.preventDefault();
+           }
+
+         }
+
+      }
+      else{
         return false
       }
     });

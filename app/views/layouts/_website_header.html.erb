@@ -107,15 +107,21 @@
                                 </div>
 
                                 <div class="form-group">
-                                  <%= f.select(:user_type,["residence","business"])%>
+                                  <!-- <select name="user_type" class="form-control" name="app_user[user_type]" id="app_user_user_type" required>
+                                    <option value="0">Select User type</option>
+                                    <option value="residence">Residence</option>
+                                    <option value="business">business</option>
+                                  </select> -->
+                                  <%=f.select :user_type,["Select User type", "residence", "business"], :class=>"form-control", :prompt=>"Select"%>
                                 </div>
 
                                 <div id="business_name_div" class="form-group hidden">
                                   <%= text_field_tag(:business_name,"",:class => "form-control",:placeholder => "Business name", :name=>"business[business_name]") %>
                                   <br />
-                                  <select name="business[business_type]" class="form-control"  >
-                                    <option val="SOLE_PROPRIETOR">Sole Proprietor</option>
-                                    <option val="REGISTERED">Registered</option>
+                                   <select id="business_type" name="business[business_type]" class="form-control">
+                                    <option value="0">Select Business type</option>
+                                    <option value="SOLE_PROPRIETOR">Sole Proprietor</option>
+                                    <option value="REGISTERED">Registered</option>
                                   </select>
                                 </div>
 
@@ -156,6 +162,7 @@
 <script type="text/javascript">
   $( document ).ready(function() {
       $("#app_user_user_type").addClass("form-control");
+
        $('#app_user_password').keyup(function() {
       $('#result').html(checkStrength($('#app_user_password').val()));
 
@@ -163,12 +170,13 @@
   $("#app_user_user_type").change(function(){
   if (  $("#app_user_user_type option:selected").val() == "business") {
     $("#business_name_div").removeClass("hidden");
-    $(".height_popup").css("height", "582px")
+    $(".height_popup").css("height", "700px")
   }
   else {
     $("#business_name_div").addClass("hidden");
   }
   });
+
   function checkStrength(password) {
     var strength = 0
     if (password.length < 8) {
@@ -231,7 +239,13 @@
       }
 
       if(check) {
-        $('#new_app_user').submit()
+        if($("#business_type option:selected").val()!=0 && $("#app_user_user_type option:selected").val()!="Select User type" && $("#business_name").val()!="") {
+          $("#new_app_user").submit();
+        }
+        else {
+          event.preventDefault();
+          alert("Enter all values");
+        }
       }else{
         return false
       }

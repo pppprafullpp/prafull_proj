@@ -29,7 +29,7 @@
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-  <%=hidden_field_tag("bundle_combo","")%>
+  <%hidden_field_tag("bundle_combo","")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
     <div class="col-md-6">
       <select class="form-control" id="service_provider_id" name="service_provider_id">

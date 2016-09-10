@@ -588,12 +588,12 @@ color:#fff;
 	top: 22px;
 }
 .img-circle {
-	background: #eeeded;
-	display: inline-block;
-	height: 140px;
-	padding: 50px 0 0;
-	text-align: center;
-	width: 140px;
+  background: #e10409 none repeat scroll 0 0;
+  display: inline-block;
+  height: 100px;
+  padding: 27px 0 0;
+  text-align: center;
+  width: 100px;
 }
 .serviceRow1 {
 	margin-top: 0px;
@@ -1601,9 +1601,10 @@ color: #fff !important;
 	border: 1px solid #c5c5c5 !important;
 }
 .serviceCon .row .serviceRow {
-	float: none;
 	display: inline-block;
-	width: 33%;
+    float: none;
+    padding: 2%;
+    width: 18%;
 }
 .serviceCon .row {
 	text-align: center;

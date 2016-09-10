@@ -89,13 +89,25 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def customisable_deals
-		deals = Deal.where('is_customisable =?', true)
+		deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CELLPHONE_CATEGORY)
 		render :json => { :success => true, deals: deals}
 	end
 
+	def channel_customisable_deals
+		deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CABLE_CATEGORY)
+		# deals = Deal.find(171)
+		if deals.present?
+		render :json => { :success => true, deals: deals.as_json(:include =>{:channel_packages => {:methods=>[:channel_name]},:deal_attributes => {:methods => [:channel_name]},:deal_extra_services => {:methods => [:service_name,:service_description]}},:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])}
+		else
+			render :json => { :success => false}
+		end
+	end
+
 	def customisable_deal_deatail
+
 		if params[:deal_id].present?
 			deal = Deal.find(params[:deal_id])
+		
 			 render :json => { :success => true, deals: deal.as_json(:include =>{:deal_equipments =>{:except=>[:available_colors],:methods => [:available_color,:cellphone_name,:brand,:description]},:deal_extra_services => {:methods => [:service_name,:service_description]} },:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_attributes])}
 		else
 			render :json => { :success => false}

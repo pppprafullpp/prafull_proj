@@ -5,6 +5,7 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
+    byebug
   #  raise params.to_yaml
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
@@ -12,7 +13,7 @@ class Website::AppUsersController < ApplicationController
     else
       params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
       params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
-      params[:business][:business_name]=encode_api_data(params[:business][:business_name])
+      
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
@@ -25,6 +26,7 @@ class Website::AppUsersController < ApplicationController
         AppUserMailer.sign_up_mail(@app_user).deliver!
 
         if @app_user.user_type == AppUser::BUSINESS
+          params[:business][:business_name]=encode_api_data(params[:business][:business_name])
           if params[:business][:business_type] == "SOLE_PROPRIETOR"
             params[:business][:business_type] = 0
           elsif params[:business][:business_type] == "REGISTERED"

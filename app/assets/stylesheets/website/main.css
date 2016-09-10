@@ -1,6 +1,22 @@
  /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+   /*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+* or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any styles
+* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+* file per style scope.
+*
+
+//= require owl.carousel
+*= require owl.theme
+*/
 @font-face {
 	font-family: 'open_sanslight';
 	src: url('../fonts/opensans-light-webfont.eot');
@@ -265,9 +281,10 @@ div.modal-open {
 }
 .clientCon img {
 	margin-right: 2%;
-	padding: 34px 0;
+	padding:24px 0 5px;
 	width: 74%;
 }
+.clientCon .owl-pagination{ display: none;;}
 .logo-place > li {
 	float: left;
 	width: 11%;
@@ -1486,31 +1503,8 @@ color:#555 !important;
 	top: 0px;
 	right: 4px;
 }
-/*----------------------------------------Vishal css-------------------*/
 
-.owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-dot {
-	display: inline-block;
-	font-size: 2.5em;
-	margin: auto;
-	top: 0px;
-	bottom: 0px;
-	position: absolute;
-	width: 30px;
-	height: 45px;
-}
-.owl-nav .owl-next {
-	right: -45px;
-}
-.owl-nav .owl-prev {
-	left: -45px;
-}
-.owl-nav {
-	color: #a8a5a5;
-	display: block;
-}
-.clientCon .owl-carousel {
-	margin-top: 5px;
-}
+
  .formcontainer input::-webkit-input-placeholder {
 color: #fff !important;
 }
@@ -2689,11 +2683,7 @@ color:#555;
 .best-deals-con h1 {
 	padding-bottom: 25px;
 }
-.best-deals-con .owl-carousel a {
-	border: 1px solid #e3e3e3;
-	float: left;
-	padding: 20px;
-}
+
 .bx-img {
 	padding: 24px;
 }
@@ -3530,9 +3520,7 @@ margin-top: 10px;
     margin-top: 20px !important;
     padding: 20px !important;
 }
-.bundle-deal .owl-next, .bundle-deal .owl-prev {
-    display: none !important;
-}
+
 .bundle-det .caption-title, .bundle-det .caption-price, .bundle-det .caption-des {
     text-align: center;
     float: left;
@@ -3701,4 +3689,14 @@ span.seperator {
     float: left;
     padding: 20px;
     width:100%;
+}
+.bundle-det > a {
+    margin-right: 10px !important;
+    width: 96% !important;
+}
+
+.best-deals-con .owl-carousel a {
+    border: 1px solid #e3e3e3;
+    float: left;
+    padding: 20px;
 }

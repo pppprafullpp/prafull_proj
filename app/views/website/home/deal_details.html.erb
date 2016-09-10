@@ -25,109 +25,93 @@
           </div>
           <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id])%>
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
-           <div class="col-sm-12">
-            <div class="owl-carousel bundle-deal border-radius-bg" style="height: 309px;width: 100%;display: inline-block;overflow: scroll;">
-            <%bundle_deals.each do |bd|%>
-              <div  class="bundle-det" >
-                  <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
-                  <div class="bx-img text-center">
-                    <img src="<%=bd.image%>" alt="" width="140" height="74">
+            <div class="col-sm-12">
+              <div class="owl-carousel bundle-deal border-radius-bg" >
+                <%bundle_deals.each do |bd|%>
+                  <div  class="bundle-det" >
+                    <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
+                      <div class="bx-img text-center">
+                        <img src="<%=bd.image%>" alt="" width="140" height="74">
+                      </div>
+                      <p class="caption-title"><%=bd.title.truncate(20)%></p>
+                      <p class="caption-price">Price:<strong> <%=bd.price%></strong></p>
+                      <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
+                    </a>
                   </div>
-                  <p class="caption-title"><%=bd.title.truncate(20)%></p>
-                  <p class="caption-price">Price:<strong> <%=bd.price%></strong></p>
-                  <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
-                  </a>
+                <%end%>
+                 <%bundle_deals.each do |bd|%>
+                  <div  class="bundle-det" >
+                    <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
+                      <div class="bx-img text-center">
+                        <img src="<%=bd.image%>" alt="" width="140" height="74">
+                      </div>
+                      <p class="caption-title"><%=bd.title.truncate(20)%></p>
+                      <p class="caption-price">Price:<strong> <%=bd.price%></strong></p>
+                      <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
+                    </a>
+                  </div>
+                <%end%>
               </div>
-              <%end%>
             </div>
+          <%end%>
+
+        <!-- <div class="owl-carousel bundle-deal  border-radius-bg">
+          <div  class="bundle-det">
+            <a href="#">
+              <b>Internet and Telephone</b>
+              <div class="bx-img text-center">
+                <img src="img/AT&T_logo_2005.png" alt="">
+              </div>
+              <p class="caption-title">Get Windstream Internet + Phone </p>
+              <p class="caption-price">Price:<strong> $29.99</strong></p>
+              <p class="caption-des">Up to 25 Mbps</p>
+            </a>
           </div>
-        <%end%>
-
-        <div class="owl-carousel bundle-deal  border-radius-bg hidden">
-<div  class="bundle-det">
-
-<a href="#">
-<b>Internet and Telephone</b>
-<div class="bx-img text-center">
-
-<img src="img/AT&T_logo_2005.png" alt="">
-</div>
-<p class="caption-title">Get Windstream Internet + Phone </p>
-<p class="caption-price">Price:<strong> $29.99</strong></p>
-<p class="caption-des">Up to 25 Mbps</p>
-
-</a>
-
-
-
-</div>
-<div  class="bundle-det">
-
-<a href="#">
-<b>Internet and Telephone</b>
-<div class="bx-img text-center">
-
-<img src="img/AT&T_logo_2005.png" alt="">
-</div>
-<p class="caption-title">Get Windstream Internet + Phone </p>
-<p class="caption-price">Price:<strong> $29.99</strong></p>
-<p class="caption-des">Up to 25 Mbps</p>
-
-</a>
-
-
-
-</div><div  class="bundle-det">
-
-<a href="#">
-<b>Internet and Telephone</b>
-<div class="bx-img text-center">
-
-<img src="img/AT&T_logo_2005.png" alt="">
-</div>
-<p class="caption-title">Get Windstream Internet + Phone </p>
-<p class="caption-price">Price:<strong> $29.99</strong></p>
-<p class="caption-des">Up to 25 Mbps</p>
-
-</a>
-
-
-
-</div><div  class="bundle-det">
-
-<a href="#">
-<b>Internet and Telephone</b>
-<div class="bx-img text-center">
-
-<img src="img/AT&T_logo_2005.png" alt="">
-</div>
-<p class="caption-title">Get Windstream Internet + Phone </p>
-<p class="caption-price">Price:<strong> $29.99</strong></p>
-<p class="caption-des">Up to 25 Mbps</p>
-
-</a>
-
-
-
-</div><div  class="bundle-det">
-
-<a href="#">
-<b>Internet and Telephone</b>
-<div class="bx-img text-center">
-
-<img src="img/AT&T_logo_2005.png" alt="">
-</div>
-<p class="caption-title">Get Windstream Internet + Phone </p>
-<p class="caption-price">Price:<strong> $29.99</strong></p>
-<p class="caption-des">Up to 25 Mbps</p>
-
-</a>
-
-
-
-</div>
-
-</div>
+          <div  class="bundle-det">
+            <a href="#">
+              <b>Internet and Telephone</b>
+              <div class="bx-img text-center">
+                <img src="img/AT&T_logo_2005.png" alt="">
+              </div>
+              <p class="caption-title">Get Windstream Internet + Phone </p>
+              <p class="caption-price">Price:<strong> $29.99</strong></p>
+              <p class="caption-des">Up to 25 Mbps</p>
+            </a>
+          </div>
+          <div  class="bundle-det">
+            <a href="#">
+              <b>Internet and Telephone</b>
+              <div class="bx-img text-center">
+                <img src="img/AT&T_logo_2005.png" alt="">
+              </div>
+              <p class="caption-title">Get Windstream Internet + Phone </p>
+              <p class="caption-price">Price:<strong> $29.99</strong></p>
+              <p class="caption-des">Up to 25 Mbps</p>
+            </a>
+          </div>
+          <div  class="bundle-det">
+            <a href="#">
+              <b>Internet and Telephone</b>
+              <div class="bx-img text-center">
+                <img src="img/AT&T_logo_2005.png" alt="">
+              </div>
+              <p class="caption-title">Get Windstream Internet + Phone </p>
+              <p class="caption-price">Price:<strong> $29.99</strong></p>
+              <p class="caption-des">Up to 25 Mbps</p>
+            </a>
+          </div>
+          <div  class="bundle-det">
+            <a href="#">
+              <b>Internet and Telephone</b>
+              <div class="bx-img text-center">
+                <img src="img/AT&T_logo_2005.png" alt="">
+              </div>
+              <p class="caption-title">Get Windstream Internet + Phone </p>
+              <p class="caption-price">Price:<strong> $29.99</strong></p>
+              <p class="caption-des">Up to 25 Mbps</p>
+            </a>
+          </div>
+        </div> -->
 
 
 
@@ -245,6 +229,34 @@
     </div>
   </div>
 </div>
+<script>
+// $('.hello_p').owlCarousel({
+//     loop:true,
+//     margin:10,
+//     nav:true,
+//     responsive:{
+//         0:{
+//             items:1
+//         },
+//         600:{
+//             items:2
+//         },
+//         1000:{
+//             items:3
+//         }
+//     }
+// });
+
+
+ $('.owl-carousel').owlCarousel({
+        
+    loop:true,
+    margin:10,
+    responsiveClass:true,
+   items:3,
+    
+  });
+</script>
 
 
 <script type="text/javascript">

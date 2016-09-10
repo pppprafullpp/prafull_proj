@@ -1,6 +1,8 @@
 /**
  * Created by pandey on 5/29/16.
  */
+//= require owl.carousel
+ 
 $( document ).ready(function() {
     $(".btn1").click(function() {
         $("#box1").hide();

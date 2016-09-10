@@ -12,6 +12,8 @@
 
     <%
     business_name = business.present? ? business.business_name : ''
+    manager_name = business.present? ? business.manager_name : ''
+    manager_contact = business.present? ? business.manager_contact : ''
     business_type = business.present? ? business.business_type : ''
     federal_number = business.present? ? business.federal_number : ''
     ssn = business.present? ? business.ssn : ''
@@ -55,12 +57,12 @@
 
     <div class="col-sm-6  padding15right">
       <label for="Name" class="control-label">Manager Name<span id="mandat">*</span></label>
-      <%= text_field_tag('business[manager_name]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_name),:class=>'form-control input-md',:placeholder=>'Manager Name',:maxlength=>'30') %>
+      <%= text_field_tag('business[manager_name]',manager_name,:class=>'form-control input-md',:placeholder=>'Manager Name',:maxlength=>'30') %>
     </div>
 
     <div class="col-sm-6">
       <label for="Name" class="control-label">Main Telephone Number<span id="mandat">*</span></label>
-      <%= phone_field_tag('business[manager_contact]',@app_user.try(:business_app_users).try(:first).try(:business).try(:manager_contact),:class => 'form-control input-md',:placeholder => 'Telephone', :maxlength => 11) %>
+      <%= phone_field_tag('business[manager_contact]',manager_contact,:class => 'form-control input-md',:placeholder => 'Telephone', :maxlength => 11) %>
     </div>
 
 
@@ -102,7 +104,7 @@
        <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
         <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-        <%= select_tag(:state,options_for_select(AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"billing_state", :id=>"billing_state") %>
+        <%= select_tag(:state,options_for_select(AppUser::STATES,''),:class => 'form-control',:prompt => 'Please Select State',:name=>"business_addresses[state]", :id=>"billing_state") %>
        <!--  <select class="form-control" name="billing_state" id="billing_state">
           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
           <%#= options_for_select(cities_array, :prompt=>"Select") %>
@@ -144,7 +146,7 @@
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= select_tag(:state,options_for_select(AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"shipping_state", :id=>"shipping_state") %>
+          <%= select_tag(:state,options_for_select(AppUser::STATES,''),:class => 'form-control',:prompt => 'Please Select State',:name=>"business_shipping_addresses[state]", :id=>"shipping_state") %>
         </div>
         <div class="col-md-6">
           <label for="Name" class="control-label">Zipcode*</label>
@@ -185,7 +187,7 @@
         <div class="col-md-6 ">
           <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
           <%# cities_array = Statelist.all.pluck(:state).uniq.map { |city| city } %>
-          <%= select_tag(:state,options_for_select(AppUser::STATES,@app_user.state),:class => 'form-control',:prompt => 'Please Select State',:name=>"service_state", :id=>"service_state") %>
+          <%= select_tag(:state,options_for_select(AppUser::STATES,''),:class => 'form-control',:prompt => 'Please Select State',:name=>"business_service_addresses[state]", :id=>"service_state") %>
       </div>
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Zipcode<span id="mandat">*</span></label>
@@ -209,14 +211,14 @@
   </div>
 </div>
 <script>
-$(document).ready(function(){
-  $("#billing_address_1, #billing_address_2, #billing_zip").on("keyup",function(){
-    if($("#billing_address_1").val().length>4 && $("#billing_address_2").val().length>4 && $("#billing_zip").val().length>4){
-      $("#additional_data").removeClass("hidden");
-  }
-  else {
-    // $("#additional_data").addClass("hidden")
-  }
-});
-})
+// $(document).ready(function(){
+//   $("#billing_address_1, #billing_address_2, #billing_zip").on("keyup",function(){
+//     if($("#billing_address_1").val().length>4 && $("#billing_address_2").val().length>4 && $("#billing_zip").val().length>4){
+//       $("#additional_data").removeClass("hidden");
+//   }
+//   else {
+//     // $("#additional_data").addClass("hidden")
+//   }
+// });
+// })
 </script>

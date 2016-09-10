@@ -37,7 +37,7 @@ end
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Effective Price</td>
-                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price %></td>
+                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price.present? ? @effective_price : @deal.effective_price %></td>
               </tr>
             </table>
           </div>
@@ -224,49 +224,74 @@ $(document).ready(function(e) {
     data:{ id:<%=@app_user.id%>},
     success: function(data){
       console.log(data);
-      if (data["type"]!="residence_user_first_order"){
+      // if (data["type"]!="residence_user_first_order"){
         billing_address=data.status[0];
         service_address=data.status[2];
         shipping_address=data.status[1];
-        $("#billing_address_1").val(billing_address.address1);
-        $("#billing_address_2").val(billing_address.address2);
-        $("#billing_zip").val(billing_address.zip);
-        $("#app_user_billing_city").val(billing_address.city);
-        $("billing-name").val(billing_address.address_name);
-        $("#app_user_billing_address_name").val(billing_address.address_name);
-        $("#shipping_address_1").val(shipping_address.address1);
-        $("#shipping_address_2").val(shipping_address.address2);
-        $("#shipping_zip").val(shipping_address.zip);
-        $("shipping-name").val(shipping_address.address_name);
-        $("#service_address_1").val(service_address.address1);
-        $("#service_address_2").val(service_address.address2);
-        $("#service_zip").val(service_address.zip);
-        $("service-name").val(service_address.address_name);
-        $("#app_user_service_address_name").val(service_address.address_name);
-        $("#app_user_service_city").val(service_address.city);
-        $("#app_user_billing_address_1").val(billing_address.address1);
-        $("#app_user_billing_address_2").val(billing_address.address2);
-        $("#app_user_billing_zip").val(billing_address.zip);
-        $("#app_user_shipping_address_1").val(shipping_address.address1);
-        $("#app_user_shipping_address_2").val(shipping_address.address2);
-        $("#app_user_shipping_zip").val(shipping_address.zip);
-        $("#app_user_service_address_1").val(service_address.address1);
-        $("#app_user_service_address_2").val(service_address.address2);
-        $("#app_user_service_zip").val(service_address.zip);
-        $("#app_user_shipping_city").val(shipping_address.city);
-        $("#app_user_shipping_address_name").val(shipping_address.address_name);
-      }
-      else {
-        if(data["type"]=="residence_user_first_order"){
-          console.log(data["status"]);
-          $("#app_user_billing_address_1").val("").val(data["status"]["address1"]);
-          $("#app_user_billing_address_2").val(data["status"]["address2"]);
-          $("#app_user_billing_zip").val(data["status"]["zip"]);
-          $("#app_user_billing_state_name").val(data["status"]["address_name"]);
-          console.log(data["status"]);
+        if(billing_address != ''){
+          $("#app_user_billing_address_1").val(billing_address.address1);
+          $("#app_user_billing_address_2").val(billing_address.address2);
+          $("#app_user_billing_zip").val(billing_address.zip);
+          $("#app_user_billing_address_name").val(billing_address.address_name);
+          $("#app_user_billing_city").val(billing_address.city);
+          value = billing_address["state"]
+          $('#billing_state option[value="' + value + '"]').prop('selected', true);
         }
+         if(shipping_address != ''){
+          $("#app_user_shipping_address_1").val(shipping_address.address1);
+          $("#app_user_shipping_address_2").val(shipping_address.address2);
+          $("#app_user_shipping_zip").val(shipping_address.zip);
+          $("#app_user_shipping_address_name").val(shipping_address.address_name);
+          $("#app_user_shipping_city").val(shipping_address.city);
+          value = shipping_address["state"]
+          $('#app_user_shipping_state option[value="' + value + '"]').prop('selected', true);
+        }
+         if(service_address != ''){
+          $("#app_user_service_address_1").val(service_address.address1);
+          $("#app_user_service_address_2").val(service_address.address2);
+          $("#app_user_service_zip").val(service_address.zip);
+          $("#app_user_service_address_name").val(service_address.address_name);
+          $("#app_user_service_city").val(service_address.city);
+          value = service_address["state"]
+          $('#app_user_service_state option[value="' + value + '"]').prop('selected', true);
+        }
+        // $("#billing_address_1").val(billing_address.address1);
+        // $("#billing_address_2").val(billing_address.address2);
+        // $("#billing_zip").val(billing_address.zip);
+        
+        // $("billing-name").val(billing_address.address_name);
+        
+        // $("#shipping_address_1").val(shipping_address.address1);
+        // $("#shipping_address_2").val(shipping_address.address2);
+        // $("#shipping_zip").val(shipping_address.zip);
+        // $("shipping-name").val(shipping_address.address_name);
+        // $("#service_address_1").val(service_address.address1);
+        // $("#service_address_2").val(service_address.address2);
+        // $("#service_zip").val(service_address.zip);
+        // $("service-name").val(service_address.address_name);
+        // $("#app_user_service_address_name").val(service_address.address_name);
+        // $("#app_user_service_city").val(service_address.city);
+        
+        // $("#app_user_shipping_address_1").val(shipping_address.address1);
+        // $("#app_user_shipping_address_2").val(shipping_address.address2);
+        // $("#app_user_shipping_zip").val(shipping_address.zip);
+        // $("#app_user_service_address_1").val(service_address.address1);
+        // $("#app_user_service_address_2").val(service_address.address2);
+        // $("#app_user_service_zip").val(service_address.zip);
+        // $("#app_user_shipping_city").val(shipping_address.city);
+        // $("#app_user_shipping_address_name").val(shipping_address.address_name);
+      // }
+      // else {
+      //   if(data["type"]=="residence_user_first_order"){
+      //     console.log(data["status"]);
+      //     $("#app_user_billing_address_1").val("").val(data["status"]["address1"]);
+      //     $("#app_user_billing_address_2").val(data["status"]["address2"]);
+      //     $("#app_user_billing_zip").val(data["status"]["zip"]);
+      //     $("#app_user_billing_state_name").val(data["status"]["address_name"]);
+      //     console.log(data["status"]);
+      //   }
 
-      }
+      // }
     }
   });
   <%else%>
@@ -276,10 +301,36 @@ $(document).ready(function(e) {
     data:{ id:<%=@app_user.id%>},
     success:function(data){
       console.log(data);
-      $("#billing_address_1").val(data["status"]["address1"]);
-      $("#billing_address_2").val(data["status"]["address2"]);
-      $("#billing_zip").val(data["status"]["zip"]);
-      $("#billing_name").val(data["status"]["address_name"]);
+      billing_address=data.status[0];
+      service_address=data.status[2];
+      shipping_address=data.status[1];
+      if(billing_address != ''){
+        $("#billing_address_1").val(billing_address["address1"]);
+        $("#billing_address_2").val(billing_address["address2"]);
+        $("#billing_zip").val(billing_address["zip"]);
+        $("#billing_address_name").val(billing_address["address_name"]);
+        $("#billing_city").val(billing_address["city"]);
+        value = billing_address["state"]
+        $('#billing_state option[value="' + value + '"]').prop('selected', true);
+      }
+      if(shipping_address != ''){
+        $("#shipping_address_1").val(shipping_address["address1"]);
+        $("#shipping_address_2").val(shipping_address["address2"]);
+        $("#shipping_zip").val(shipping_address["zip"]);
+        $("#shipping_address_name").val(shipping_address["address_name"]);
+        $("#shipping_city").val(shipping_address["city"]);
+        value = shipping_address["state"]
+        $('#shipping_state option[value="' + value + '"]').prop('selected', true);
+      }
+      if(service_address != ''){
+        $("#service_address_1").val(service_address["address1"]);
+        $("#service_address_2").val(service_address["address2"]);
+        $("#service_zip").val(service_address["zip"]);
+        $("#service_address_name").val(service_address["address_name"]);
+        $("#service_city").val(service_address["city"]);
+        value = service_address["state"]
+        $('#service_state option[value="' + value + '"]').prop('selected', true);
+      }
     }
   });
   <% end%>
@@ -729,6 +780,7 @@ $("#order_information_menu_tab").click(function(event){
       index=$("#billing_state option:selected").index();
       console.log(index);
       $("#service_state option:eq("+index+")").prop("selected", true);
+
     }
     else {
       document.getElementById('service_address_1').value = '';

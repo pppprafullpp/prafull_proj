@@ -1,6 +1,6 @@
 <%
    if @business.present?
-     addresses = @business.business_addresses.last
+     addresses = @business.business_addresses.where(address_type: 2).order('updated_at DESC').first
    else
      addresses = @app_user.app_user_addresses.last
    end

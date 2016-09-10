@@ -14,9 +14,9 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
+//= require owl.carousel
 //= require_tree .
 //= require chosen-jquery
-
 
 $(function() {
   initPage();

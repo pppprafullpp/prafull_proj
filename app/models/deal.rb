@@ -97,6 +97,11 @@ def deal_image_url
   image.url
 end
 
+def channel_packages
+  channel_packages = ChannelPackage.where(service_provider_id: self.service_provider_id)
+  return channel_packages
+end
+
 #def deal_image=(obj)
 #	super(obj)
 #	# Put your callbacks here, e.g.

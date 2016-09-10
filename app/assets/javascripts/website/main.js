@@ -1,18 +1,9 @@
 /**
  * Created by pandey on 5/29/16.
  */
+//= require owl.carousel
+ 
 $( document ).ready(function() {
-    // $(".comparebox-display").click(function() {
-    //     if ($(".comparebox-display:checkbox:checked").length == 2){
-    //         $("#compare_box").show();
-    //     }
-    //     else if ($(".comparebox-display:checkbox:checked").length != 2){
-    //         $("#compare_box").hide();
-    //     }
-    // });
-
-
-
     $(".btn1").click(function() {
         $("#box1").hide();
     });
@@ -39,7 +30,4 @@ $( document ).ready(function() {
         }
       });
 
-
-
-
-});
+      });

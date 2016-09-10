@@ -1,6 +1,22 @@
  /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+   /*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+* or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any styles
+* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+* file per style scope.
+*
+
+//= require owl.carousel
+*= require owl.theme
+*/
 @font-face {
 	font-family: 'open_sanslight';
 	src: url('../fonts/opensans-light-webfont.eot');
@@ -265,9 +281,10 @@ div.modal-open {
 }
 .clientCon img {
 	margin-right: 2%;
-	padding: 34px 0;
+	padding:24px 0 5px;
 	width: 74%;
 }
+.clientCon .owl-pagination{ display: none;;}
 .logo-place > li {
 	float: left;
 	width: 11%;
@@ -571,12 +588,12 @@ color:#fff;
 	top: 22px;
 }
 .img-circle {
-	background: #eeeded;
-	display: inline-block;
-	height: 140px;
-	padding: 50px 0 0;
-	text-align: center;
-	width: 140px;
+  background: #e10409 none repeat scroll 0 0;
+  display: inline-block;
+  height: 100px;
+  padding: 27px 0 0;
+  text-align: center;
+  width: 100px;
 }
 .serviceRow1 {
 	margin-top: 0px;
@@ -808,7 +825,7 @@ color:#fff;
 }
 .box_down {
 	width: 100%;
-	margin: auto;
+  float:left;
 }
 .btn_2 {
 	font-family: "open_sanssemibold";
@@ -1486,31 +1503,8 @@ color:#555 !important;
 	top: 0px;
 	right: 4px;
 }
-/*----------------------------------------Vishal css-------------------*/
 
-.owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-dot {
-	display: inline-block;
-	font-size: 2.5em;
-	margin: auto;
-	top: 0px;
-	bottom: 0px;
-	position: absolute;
-	width: 30px;
-	height: 45px;
-}
-.owl-nav .owl-next {
-	right: -45px;
-}
-.owl-nav .owl-prev {
-	left: -45px;
-}
-.owl-nav {
-	color: #a8a5a5;
-	display: block;
-}
-.clientCon .owl-carousel {
-	margin-top: 5px;
-}
+
  .formcontainer input::-webkit-input-placeholder {
 color: #fff !important;
 }
@@ -1607,9 +1601,10 @@ color: #fff !important;
 	border: 1px solid #c5c5c5 !important;
 }
 .serviceCon .row .serviceRow {
-	float: none;
 	display: inline-block;
-	width: 33%;
+    float: none;
+    padding: 2%;
+    width: 18%;
 }
 .serviceCon .row {
 	text-align: center;
@@ -1851,6 +1846,7 @@ color: #fff !important;
 	border-color: #69d3ed;
 }
 .navbar-inverse {
+	border-bottom: 1px solid #eaeaea;
 	box-shadow: none;
 	border-radius: 0px;
 	position: relative;
@@ -2688,11 +2684,7 @@ color:#555;
 .best-deals-con h1 {
 	padding-bottom: 25px;
 }
-.best-deals-con .owl-carousel a {
-	border: 1px solid #e3e3e3;
-	float: left;
-	padding: 20px;
-}
+
 .bx-img {
 	padding: 24px;
 }
@@ -2864,7 +2856,7 @@ color:#555;
 	height: 43px;
 }
 .auto-height {
-	min-height: 510px;
+	min-height: 524px;
 }
 .description-height {
 	height: 40px;
@@ -3470,9 +3462,11 @@ margin-top: 10px;
     font-size: 10px;
     max-width: 150px;
     padding: 3px 11px 3px 5px;
-    position: relative;
+    position: absolute;;
     white-space: nowrap;
     z-index: 1;
+		left:22px;
+		top:5px;
 }
 
 
@@ -3512,10 +3506,198 @@ margin-top: 10px;
     font-size: 10px;
     max-width: 150px;
     padding: 3px 11px 3px 5px;
-    position: relative;
+    position: absolute;;
     white-space: nowrap;
     z-index: 1;
+		left:22px;
+		top:5px;
 }
 .shareon-fb { background:#3b5999; color:#fff; padding:5px; font-size:14px;}
 .shareon-fb i { margin-right:10px;}
 .shareon-fb:hover, .shareon-fb:focus{ color:#fff; background:#2e4e73;}
+
+.bundle-deal {
+    background: #fff;
+    margin-top: 20px !important;
+    padding: 20px !important;
+}
+
+.bundle-det .caption-title, .bundle-det .caption-price, .bundle-det .caption-des {
+    text-align: center;
+    float: left;
+    width: 100%;
+    padding: 0 10px;
+}
+.bundle-det .caption-des {
+    background: #eee;
+    margin-bottom: 0 !important;
+    border-radius: 0 0 5px 5px;
+    padding: 5px;
+    color: #000;
+    font-size: 14px;
+}
+.bundle-det a {
+    float: left;
+    border-radius: 5px;
+    margin: 3px;
+    border: 1px solid #eee;
+}
+.bundle-det a:hover {
+    border-radius: 5px;
+    box-shadow: 0 0 5px #dedede !important;
+}
+.bundle-det b {
+    color: #12b5bb;
+    text-align: center;
+    width: 100%;
+    float: left;
+    margin-top: 17px;
+}
+.bundle-det .bx-img {
+    padding: 20px !important;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.bundle-det .bx-img img {
+    width: 140px !important;
+    display: inline !important;
+}
+.bundle-det .caption-price strong {
+    color: #009904
+}
+.bundle-det .caption-title {
+    font-family: 'open_sanssemibold';
+}
+.cellphone-lines {
+	float: left;
+font-size: 14px;
+width: 100%;
+}
+.pricing-text
+{
+	float:left;
+	width:100%;
+	min-height:80px
+}
+.service-edit h4 {
+    font-family: 'open_sanssemibold';
+    font-size: 25px;
+    color: #000;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+.login-container {
+    margin: 60px 0;
+}
+.login-container h4 {
+    color: #272727;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+}
+.login-container .form-control::-moz-placeholder {
+color:#000;
+}
+.inner-logindt {
+    margin: 10px 0;
+    padding: 0;
+    border-right: 1px solid #e5e5e5;
+    min-height: 130px;
+    padding: 0 50px 0 0;
+    position: relative;
+}
+.inner-signdt {
+    margin: 10px 0;
+    padding: 0;
+    
+    min-height: 130px;
+    padding: 0 50px 0 0;
+    position: relative;
+}
+.inner-logindt .btn-login {
+    width: 180px;
+}
+.login-container .forgot-pasw {
+    float: right;
+    font-size: 14px;
+    margin-top: 10px;
+    text-decoration:underline;
+}
+.login-container .sign-up-btn {
+    float: right;
+    font-size: 16px;
+    margin-top: 10px;
+    color:#000;
+    font-family: 'open_sanssemibold';
+}
+.login-container .checkbox  { display:inline-block;}
+.login-socialmedia {
+    margin-top: 35px;
+    padding-left: 35px;
+}
+.login-socialmedia a {
+    float: left;
+    width: 100%;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.login-socialmedia a i {
+    margin-right: 20px;
+}
+.login-wd-fb {
+    background: #48629b;
+}
+.login-wd-fb:hover {
+    background: #375085;
+}
+.login-wd-gp {
+    background: #dc4b38;
+}
+.login-wd-gp:hover {
+    background: #c23a28;
+}
+span.seperator {
+    background: #fff none repeat scroll 0 0;
+    color: #434343;
+    height: 28px;
+    left: 100%;
+    margin: -20px 0 0 -9px;
+    padding-top: 5px;
+    position: absolute;
+    top: 50%;
+    width: 32px;
+}
+.orderprocess {
+    background: #f9f9f9;
+}
+.orderprocess h5 {
+    font-family: 'open_sanssemibold';
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    text-align: center;
+}
+.checkout-login {
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 5px;
+    float: left;
+    padding: 20px;
+    width:100%;
+}
+.bundle-det > a {
+    margin-right: 10px !important;
+    width: 96% !important;
+}
+
+.best-deals-con .owl-carousel a {
+    border: 1px solid #e3e3e3;
+    float: left;
+    padding: 20px;
+}

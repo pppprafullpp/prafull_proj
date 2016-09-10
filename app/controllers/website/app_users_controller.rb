@@ -228,6 +228,7 @@ class Website::AppUsersController < ApplicationController
   end
 
   def checkout
+    @deal_details=Deal.find(params[:deal_id])
   end
 
   def user_addresses
@@ -275,7 +276,7 @@ class Website::AppUsersController < ApplicationController
           end
       else
         session[:deal] = params[:deal_id]
-        redirect_to checkout_website_app_users_path
+        redirect_to checkout_website_app_users_path(deal_id:params[:deal_id])
       end
   end
 

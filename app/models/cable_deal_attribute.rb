@@ -4,6 +4,12 @@ class CableDealAttribute < ActiveRecord::Base
 	accepts_nested_attributes_for :cable_equipments,:reject_if => :reject_equipment, allow_destroy: true
 	before_save :update_channel_count
 
+
+	def channel_name
+    Channel.select('id,channel_name').where(id: eval(self.channel_ids))
+  end
+	
+
 	def reject_equipment(attributes)
 		if attributes[:name].blank?
 			if attributes[:id].present?

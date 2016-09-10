@@ -433,8 +433,10 @@ $("#order_information_menu_tab").click(function(event){
     var secondary_id = $('#secondary_id').val();
     var business_manager_name = $('#business_manager_name').val();
     var state = $('#business_state option:selected').val();
+    var ssn = $('#ssn').val();
+    var federal = $('#federal_number').val();
     var business_manager_contact = $('#business_manager_contact').val();
-    if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' ) {
+    if( first_name == '' || mobile == '' || last_name == '' || primary_id == '' || secondary_id == '' || business_manager_name == '' || business_manager_contact == '' || ssn == '' || federal == '') {
       alert("Please fill all the mandatory fields.");
       console.log(2);
       event.stopImmediatePropagation();
@@ -520,8 +522,10 @@ $("#order_information_menu_tab").click(function(event){
   $("#business_information_tab").click(function(event){
     event.preventDefault();
     var business_manager_name = $('#business_manager_name').val();
+    var ssn = $('#ssn').val();
+    var federal = $('#federal_number').val();
     var business_manager_contact = $('#business_manager_contact').val();
-    if( business_manager_name == '' || business_manager_contact == '' ) {
+    if( ssn == '' || business_manager_name == '' || business_manager_contact == ''  ) {
       alert("Please fill all the mandatory fields.")
     }
     else if (business_manager_contact.length < 10 ) {

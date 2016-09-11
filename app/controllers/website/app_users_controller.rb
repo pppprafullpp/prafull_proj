@@ -5,7 +5,6 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
-    byebug
   #  raise params.to_yaml
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?

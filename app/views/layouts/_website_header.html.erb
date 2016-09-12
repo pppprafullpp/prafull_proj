@@ -10,13 +10,14 @@
       <div class="col-md-6 pull-right text-right login-tab">
 
         <% if session[:user_id].present? %>
-        <% if AppUser.find(session[:user_id]).first_name.present? %>
-        <%headername= Base64.decode64(AppUser.find(session[:user_id]).first_name)%>
-        <%else%>
-        <%headername=session[:user_name]%>
-        <%end%>
+        <% session[:business].present? ? headername = session[:business].titleize : headername = Base64.decode64(AppUser.find(session[:user_id]).first_name).titleize %>
+        <%# if AppUser.find(session[:user_id]).first_name.present? %>
+        <%#headername= Base64.decode64(AppUser.find(session[:user_id]).first_name)%>
+        <%#else%>
+        <%#headername=session[:user_name]%>
+        <%#end%>
             <a href="<%= profile_website_app_users_path %>">Welcome <%= headername %></a> |
-
+            <a href="/website/app_users/profile?status=true">My Orders</a> |
             <a href="<%= signout_website_app_users_path %>">SignOut</a> |
             <%if session[:zip_code].present?%>
             <a id="zipcode_header" href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%= Base64.decode64(AppUser.find(session[:user_id]).zip).to_i %></a>
@@ -95,20 +96,41 @@
                             <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
                             <div class="form-group">
                               <div class="col-md-6" style="padding-left:0px">
-                                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name" %>
+                                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",:onkeyup=>"titleize_text(this)" %>
+                                <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-fname-valid">Email Already Exists.</span>
                               </div>
                               <div class="col-md-6" style="padding-left:0px">
-                                <%= f.text_field :last_name,:class => "form-control",:placeholder => "last name" %>
+                                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name",:onkeyup=>"titleize_text(this)" %>
+                                <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-lname-valid">Email Already Exists.</span>
                               </div>
                             </div>
                                 <div class="form-group">
                                   <%= f.text_field :email,:class => "form-control",:placeholder => "Email" %>
                                   <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-email-valid">Email Already Exists.</span>
                                 </div>
+
+                                <div class="form-group">
+                                  <!-- <select name="user_type" class="form-control" name="app_user[user_type]" id="app_user_user_type" required>
+                                    <option value="0">Select User type</option>
+                                    <option value="residence">Residence</option>
+                                    <option value="business">business</option>
+                                  </select> -->
+                                  <%=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]], :class=>"form-control"%>
+                                </div>
+
+                                <div id="business_name_div" class="form-group hidden">
+                                  <%= text_field_tag(:business_name,"",:class => "form-control",:placeholder => "Business name", :name=>"business[business_name]",:onkeyup=>"titleize_text(this)") %>
+                                  <br />
+                                   <select id="business_type" name="business[business_type]" class="form-control">
+                                    <option value="0">Select Business type</option>
+                                    <option value="SOLE_PROPRIETOR">Sole Proprietor</option>
+                                    <option value="REGISTERED">Registered</option>
+                                  </select>
+                                </div>
+
                                 <div class="form-group">
                                   <%= f.password_field :password,:class => "form-control",:placeholder => "Password"%>
                                   <span id="result"></span>
-
                                 </div>
 
                                 <div class="form-group">
@@ -119,7 +141,6 @@
                                   <div class="col-md-12 text-center">
                                     <%= f.submit "Signup", :class => "btn  btn-login",:id => 'create_user' %>
                                   </div>
-                                  <strong></strong>
                                 </div>
                             <% end %>
 
@@ -142,10 +163,27 @@
 </section>
 
 <script type="text/javascript">
+function titleize_text(object) {
+  value=$("#"+object.id).val();
+  rest=value.substr(1);
+  object.value=value[0].toUpperCase()+""+rest
+}
   $( document ).ready(function() {
-    $('#app_user_password').keyup(function() {
-  $('#result').html(checkStrength($('#app_user_password').val()))
+      $("#app_user_user_type").addClass("form-control");
+      $("#app_user_user_type option[value='Select User type']").prop("selected","selected")
+       $('#app_user_password').keyup(function() {
+      $('#result').html(checkStrength($('#app_user_password').val()));
+
   })
+  $("#app_user_user_type").change(function(){
+  if (  $("#app_user_user_type option:selected").val() == "business") {
+    $("#business_name_div").removeClass("hidden");
+    $(".height_popup").css("height", "700px")
+  }
+  else {
+    $("#business_name_div").addClass("hidden");
+  }
+  });
 
   function checkStrength(password) {
     var strength = 0
@@ -208,9 +246,49 @@
         $('#result').removeClass('custom-input-error')
       }
 
+      if ($("#app_user_first_name").val()!=""){
+        $('#app_user_first_name').removeClass('custom-input-error')
+      }
+      else{
+        $('#app_user_first_name').addClass('custom-input-error')
+        check = false
+      }
+
+      if ($("#app_user_last_name").val()!=""){
+        $('#app_user_last_name').removeClass('custom-input-error')
+      }
+      else{
+        $('#app_user_last_name').addClass('custom-input-error')
+        check = false
+      }
+
+      if ($("#app_user_user_type").val()!="Select User type"){
+        $('#app_user_user_type').removeClass('custom-input-error')
+      }
+      else{
+        $('#app_user_user_type').addClass('custom-input-error')
+        check = false
+      }
+
       if(check) {
-        $('#new_app_user').submit()
-      }else{
+         if($("#app_user_user_type option:selected").val()=="business" && $("#business_name").val()!="" && $("#business_type").val()!="0") {
+           console.log("oK");
+           $("#new_app_user").submit();
+         }
+         else {
+           if($("#app_user_user_type option:selected").val()=="residence" && check) {
+              console.log("residence user OK");
+              $("#new_app_user").submit();
+           }
+           else {
+             alert("Please enter all fields")
+             event.preventDefault();
+           }
+
+         }
+
+      }
+      else{
         return false
       }
     });

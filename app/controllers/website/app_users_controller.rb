@@ -5,22 +5,41 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
+  #  raise params.to_yaml
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
     else
       params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
       params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
+
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
       @app_user.zip = params[:app_user][:zip_code].present? ? encode_api_data(params[:app_user][:zip_code]) : encode_api_data("75024")
       if @app_user.save!
         session[:user_id] = @app_user.id
-        session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
+        session[:user_name] = @app_user.first_name.present? ? Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
+        session[:user_type] = @app_user.user_type
+
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
         AppUserMailer.sign_up_mail(@app_user).deliver!
+
+        if @app_user.user_type == AppUser::BUSINESS
+          params[:business][:business_name]=encode_api_data(params[:business][:business_name])
+          if params[:business][:business_type] == "SOLE_PROPRIETOR"
+            params[:business][:business_type] = 0
+          elsif params[:business][:business_type] == "REGISTERED"
+            params[:business][:business_type] = 1
+          end
+           @business = Business.create_business(params)
+           business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
+             session[:business] = Base64.decode64(@business.business_name)
+          #  raise business_user.to_yaml
+
+        end
+
         flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
@@ -48,13 +67,13 @@ class Website::AppUsersController < ApplicationController
 
   def update
     if session[:user_id].present?
-      # raise params.to_s
+      # raise params.to_yaml
       @app_user = AppUser.find(session[:user_id])
-      address = params[:address].present? ? params[:address] : ''
-      address1 = params[:address1].present? ? params[:address1] : ''
-      address2 = params[:address2].present? ? params[:address2] : ''
-      @app_user.address = address + '===' + address1 + '===' + address2
-      @app_user.state = params[:billing_state]
+      # address = params[:address].present? ? params[:address] : ''
+      # address1 = params[:address1].present? ? params[:address1] : ''
+      # address2 = params[:address2].present? ? params[:address2] : ''
+      # @app_user.address = address + '===' + address1 + '===' + address2
+      # @app_user.state = params[:billing_state]
       @app_user.first_name = encode_api_data(params[:first_name])
       @app_user.last_name = encode_api_data(params[:last_name])
       @app_user.mobile =  encode_api_data(params[:mobile])
@@ -67,43 +86,21 @@ class Website::AppUsersController < ApplicationController
       # raise @app_user.state.to_s
       if @app_user.save!
         if @app_user.user_type == AppUser::BUSINESS
-          if  @app_user.business_app_users.present?
-            business_user_id = BusinessAppUser.find_by_app_user_id(@app_user.id).business_id
-            business_addresses = BusinessAddress.find_by_business_id(business_user_id)
-            business_addresses.update_attributes(
-                :address_name=>params[:addresses][:address_name],
-                :address_type =>2,
-                :zip=>params[:addresses][:zip],
-                :address1 =>params[:addresses][:address1],
-                :address2=>params[:addresses][:address2],
-                :city=>params[:addresses][:city])
-          else
-            params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
-            params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
-            params[:business][:business_name]=encode_api_data(params[:business][:business_name]) if params[:business][:business_name].present?
-            @business = Business.create_business(params)
-            if @business.present?
-              address_hash = {:business_addresses => [params[:addresses]]}
-              business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
-              business_addresses = BusinessAddress.create_business_addresses(address_hash,@business.id)
-            end
+          params[:business][:federal_number]=encode_api_data(params[:business][:federal_number]) if params[:business][:federal_number].present?
+          params[:business][:ssn]=encode_api_data(params[:business][:ssn]) if params[:business][:ssn].present?
+          params[:business][:business_name]=encode_api_data(params[:business][:business_name]) if params[:business][:business_name].present?
+          @business = Business.create_business(params)
+          # raise @business.to_yaml
+          if @business.present?
+            address_hash = {:business_addresses => [params[:addresses]]}
+            business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
+            business_addresses = BusinessAddress.create_business_addresses(address_hash,@business.id)
           end
         else
-          if  @app_user.app_user_addresses.present?
-            app_user_address = @app_user.app_user_addresses.first
-            app_user_address.update_attributes(
-                :address_name=>params[:addresses][:address_name],
-                :address_type => params[:addresses][:address_type].to_i,
-                :zip=>params[:addresses][:zip],
-                :address1 =>params[:addresses][:address1],
-                :address2=>params[:addresses][:address2],
-                :city=>params[:addresses][:city])
-          else
-            params[:addresses][:address_type]=params[:addresses][:address_type].to_i
-            address_hash = {:app_user_addresses => [params[:addresses]]}
-            app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
-          end
+          address_hash = {:app_user_addresses => [params[:addresses]]}
+          app_user_addresses = AppUserAddress.create_app_user_addresses(address_hash,@app_user.id)
         end
+
         flash[:notice] = 'User Updated successfully'
         redirect_to profile_website_app_users_path
       else
@@ -228,32 +225,42 @@ class Website::AppUsersController < ApplicationController
   end
 
   def checkout
+    @deal_details=Deal.find(params[:deal_id])
   end
 
   def user_addresses
-    if params[:id].present? and AppUser.find(params[:id]).orders.present?
-      @addresses=AppUser.find(params[:id]).orders.last.order_addresses
-      render :json=>{
-          :type=>"residence_user",
-        :status=>@addresses
-      }
-    elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?
-      @addresses=AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last
-      render :json=>{
-        :type=>"residence_user_first_order",
-        :status=>@addresses
-      }
-    else
-      render :json=>{
-        :status=>"first_order",
+    if params[:id].present?
+    @addresses = AppUser.get_addresses(params)
+    render :json=>{
         :status=>@addresses
       }
     end
+    # if params[:id].present? and AppUser.find(params[:id]).orders.present?
+    #   @addresses=AppUser.find(params[:id]).orders.last.order_addresses
+    #   render :json=>{
+    #       :type=>"residence_user",
+    #     :status=>@addresses
+    #   }
+    # elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?
+    #   @addresses=AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last
+    #   render :json=>{
+    #     :type=>"residence_user_first_order",
+    #     :status=>@addresses
+    #   }
+    # else
+    #   render :json=>{
+    #     :status=>"first_order",
+    #     :status=>@addresses
+    #   }
+    # end
   end
 
   def business_user_addresses
-    if BusinessAddress.exists?(AppUser.find(params[:id]).business_app_users.last.business_id)
-      @addresses=BusinessAddress.find(AppUser.find(params[:id]).business_app_users.last.business_id)
+    if params[:id].present?
+      @addresses = AppUser.get_addresses(params)
+    # @addresses =app_user.business_app_users.last.business.business_addresses.first
+    # if BusinessAddress.exists?(AppUser.find(params[:id]).business_app_users.last.business_id)
+    #   @addresses=BusinessAddress.find(AppUser.find(params[:id]).business_app_users.last.business_id)
       render :json=>{
         :status=>"business_user_first_order",
         :status=>@addresses
@@ -275,7 +282,7 @@ class Website::AppUsersController < ApplicationController
           end
       else
         session[:deal] = params[:deal_id]
-        redirect_to checkout_website_app_users_path
+        redirect_to checkout_website_app_users_path(deal_id:params[:deal_id])
       end
   end
 
@@ -288,9 +295,12 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?
         session[:user_id] = @app_user.id
-        session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
+        session[:user_name] = @app_user.first_name.present? ?  Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
         session[:zip_code] = @app_user.zip
         session[:user_type] = @app_user.user_type
+        if session[:user_type] == AppUser::BUSINESS
+          session[:business] = Base64.decode64(@app_user.business_app_users.last.business.business_name)
+        end
         # flash[:notice] = 'Signin Successfull'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
@@ -340,7 +350,8 @@ class Website::AppUsersController < ApplicationController
   def profile
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
-      @business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",@app_user.id).first
+      @business = Business.select('businesses.*').joins(:business_app_users).where("business_app_users.app_user_id = ?",@app_user.id).last
+      # raise "text"
     else
       redirect_to website_home_index_path
     end

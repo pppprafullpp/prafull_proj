@@ -2,6 +2,7 @@ class ServiceProvider < ActiveRecord::Base
   belongs_to :service_category
   has_many :deals, :dependent => :destroy
   has_many :service_provider_checklists, :dependent => :destroy
+  has_many :channel_packages
 
   mount_uploader :logo, ImageUploader
   validates_presence_of :service_category_id, :name

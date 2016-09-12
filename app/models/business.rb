@@ -27,18 +27,13 @@ class Business < ActiveRecord::Base
 
   def self.create_business(params)
     # raise params.to_yaml
-    params[:ssn]=params[:ssn] if params[:ssn].present?
-    params[:federal_number]=params[:federal_number]  if params[:federal_number].present?
-    params[:dba]=params[:dba]  if params[:dba].present?
-    params[:manager_contact]=params[:manager_contact]  if params[:manager_contact].present?
-    params[:business_name]=params[:business_name]  if params[:business_name].present?
     if params[:business].present?
       business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
       if business_type.present?
         if business_type == SOLE_PROPRIETOR
-          business = self.where(:ssn => params[:business][:ssn]).first if params[:business][:ssn].present?
+          business = self.where("ssn = ? OR business_name = ? ",params[:business][:ssn], params[:business][:business_name]).first if params[:business][:ssn].present? or params[:business][:business_name].present?
         elsif business_type == REGISTERED
-          business = self.where(:federal_number => params[:business][:federal_number]).first if params[:business][:federal_number].present?
+          business = self.where("federal_number = ? OR business_name = ? ",params[:business][:federal_number], params[:business][:business_name]).first if params[:business][:federal_number].present? or params[:business][:business_name].present?
         end
         business = self.where(:id => params[:business][:id]).first if params[:business][:id].present? and !business.present?
         unless business.present?

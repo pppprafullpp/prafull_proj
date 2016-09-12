@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       match 'cellphone_equipments' => "deals#cellphone_equipments", :via => :get
       match 'customisable_deals' => "deals#customisable_deals", :via => :get
       match 'customisable_deal_deatail' => "deals#customisable_deal_deatail", :via => :get
+      match 'channel_customisable_deals' => "deals#channel_customisable_deals", :via => :get
       
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'

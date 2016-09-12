@@ -45,9 +45,10 @@
         <div class="col-md-12 text-center">
         </div>
        </div>
+
     <%elsif AppUser.find(session[:user_id]).user_type == "business"%>
       <p>Business user</p>
-      <%addresses=AppUser.find(session[:user_id]).business_app_users.first.business.business_addresses rescue nil%>
+      <%addresses=AppUser.find(session[:user_id]).business_app_users.last.business.business_addresses rescue nil%>
 <% if addresses.present? %>
       <%addresses.each do |address|%>
         <%id=SecureRandom.hex(5)%>

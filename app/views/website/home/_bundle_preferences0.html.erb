@@ -32,7 +32,7 @@
   <%=hidden_field_tag("bundle_combo","")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
     <div class="col-md-6">
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
+      <select class="form-control" id="bundle_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> </div>
       <div class="col-md-6">
@@ -50,20 +50,20 @@
     <div class="row">
       <div class="col-md-4">
         <div class="checkbox checkbox-info no-contract-sty mgt25">
-            <input type="checkbox" id="bundle_cable-cb" text="Cable" value="Cable" onchange="showcable()" />
+            <input type="checkbox" id="bundle_cable-cb" text="Cable" value="Cable" onchange="showcable1()" />
           <label for="bundle_cable-cb"> <span>Cable </span> </label>
           </div>
       </div>
       <div class="col-md-4">
         <div class="checkbox checkbox-info no-contract-sty mgt25">
-          <input type="checkbox" id="bundle_internet-cb" value="internet" onchange="showinternet()" />
+          <input type="checkbox" id="bundle_internet-cb" value="internet" onchange="showinternet1()" />
           <label for="bundle_internet-cb"> <span>Internet </span> </label>
         </div>
       </div>
       <div class="col-md-4">
 
       <div class="checkbox checkbox-info no-contract-sty mgt25">
-        <input type="checkbox" id="bundle_telephone-cb" value="telephone"  onchange="showtelephone()" />
+        <input type="checkbox" id="bundle_telephone-cb" value="telephone"  onchange="showtelephone1()" />
         <label for="bundle_telephone-cb"> <span>telephone </span> </label>
       </div>
 
@@ -150,6 +150,34 @@
         $("#bundle_is_contract").val(true);
       }
     });
+
+    $.ajax({
+      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=5",
+      type: "GET",
+      success: function(data){
+         $("#bundle_price").val(data["service_preference"]["price"]);
+        if(data["service_preference"]["is_contract"] == true) {
+          $("#bundle_start_date").attr("disabled",true);
+          $("#bundle_end_date").attr("disabled",true);
+          $("#bundle_is_contract").prop("checked","checked");
+        }
+        $("#bundle_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
+        $("#bundle_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
+        $("#bundle_price").val(data["service_preference"]["price"]);
+        $("#bundle_cable-cb").prop("checked","checked");
+        $("#bundle_internet-cb").prop("checked","checked")
+        $("#bundle_cable-div").removeClass("hidden");
+        $("#bundle_internet-div").removeClass("hidden");
+        $("#bundle_download_speed").val("3");
+        $("#bundle_upload_speed").val("1");
+        $("#bundle_free_channels").val("20");
+        $("#bundle_premium_channels").val("5");
+        $("#bundle_combo").val("Internet and Cable")
+      }
+    });
+
+
+
     <%if service_provider_id.present?%>
     set_service_provider("<%=service_provider_id%>");
     function set_service_provider(id) {
@@ -180,8 +208,6 @@
       $("#bundle_international_call_minutes").attr("disabled",false);
       $("#bundle_domestic_call_unlimited").val("false");
     }
-
-
   });
 
 
@@ -214,18 +240,17 @@
       }
   }
 
-  function showcable(){
-    console.log("cable")
-     if($("#bundle_cable-cb").prop("checked")==true)
+  function showcable1(){
+      if($("#bundle_cable-cb").prop("checked")==true)
      {
        $("#bundle_cable-div").removeClass("hidden");
      }
      else {
-       $("bundle_cable-div").addClass("hidden");
+       $("#bundle_cable-div").addClass("hidden");
      }
   }
 
-    function showinternet(){
+    function showinternet1(){
 
      if($("#bundle_internet-cb").prop("checked")==true)
      {
@@ -237,7 +262,7 @@
 
     }
 
-    function showtelephone(){
+    function showtelephone1(){
        if($("#bundle_telephone-cb").prop("checked")==true)
        {
          $("#bundle_telephone-div").removeClass("hidden");
@@ -285,20 +310,17 @@
         $("#bundle_combo").val("Internet,Telephone and Cable");
       }
       // $("#bundle_form").submit();
-
-            if($("#bundle_start_date").prop("disabled") == true && $("#bundle_end_date").prop("disabled") == true) {
+          if($("#bundle_start_date").prop("disabled") == true && $("#bundle_end_date").prop("disabled") == true) {
             is_contract = false
           }
-          else
-          {
+          else{
             is_contract=true
           }
-          console.log("is contract="+is_contract);
           $.ajax({
             url:"/edit_or_change_service_preferences",
             type: "POST",
             data: {
-              service_category_id:$("#service_category_id").val(),
+              service_category_id:5,
               service_provider_id: $("#service_provider_id option:selected").val(),
               app_user_id:$("#app_user_id").val(),
               domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
@@ -310,8 +332,11 @@
               price:$("#bundle_price").val(),
               download_speed:$("#bundle_download_speed").val(),
               upload_speed:$("#bundle_upload_speed").val(),
-              bundle_combo:$("#bundle_combo").val(),
-              is_contract:is_contract
+              // bundle_combo:$("#bundle_combo").val(),
+              is_contract:is_contract,
+              service_provider_id:$("#bundle_service_provider_id option:selected").val(),
+              free_channels:$("#bundle_free_channels").val(),
+              premium_channels:$("#bundle_premium_channels").val(),
             },
             success: function(data){
               if (data["success"] == true) {
@@ -332,16 +357,5 @@
      $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
    }
  }
- function calculate_you_save(){
-   $.ajax({
-     url:"/api/v1/you_save",
-     type: "GET",
-     data: {
-      id:<%=session[:user_id]%>
-     },
-     success: function(data){
-        alert("you save:"+data["you_save"])
-     }
-   });
- }
+
   </script>

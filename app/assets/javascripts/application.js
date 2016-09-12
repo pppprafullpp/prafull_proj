@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
+//= require owl.carousel
 //= require_tree .
 //= require chosen-jquery
 
@@ -326,4 +327,5 @@ function populate_checklist_service_provider(obj)
 	}
 
 }
+
 //$(function(){ $(document).foundation(); });

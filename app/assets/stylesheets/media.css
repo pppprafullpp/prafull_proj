@@ -70,12 +70,7 @@
 	.serviceCon .row .serviceRow {
     width: 32.9%;
 	}
-	.owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-dot {
-    font-size: 2em;
-	}
-	.owl-carousel {
-    	width: 85% !important;
-	}
+	
 	.serviceCon1 h1::before,
 	.serviceCon1 h1::after {
     width: 30%;
@@ -465,9 +460,7 @@ footer .col-xs-6 ul {
 	border-top: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0px -1px 0px #000;
 }
-.owl-carousel {
-    width: 80% !important;
-}
+
 .serviceCon1 h1::before, .serviceCon1 h1::after {
 	display: none;
 }
@@ -509,15 +502,7 @@ footer .col-xs-6 ul {
 }
 
 
-@media (max-width: 400px) {
-.owl-carousel {
-    width: 75% !important;
-}
-.details .bor_sec_left ,
-.pagination_sec .col-sm-12 ,
-.box-sec .col-xs-6 {
-    width: 100%;
-}
+
 .login-tab .modal-dialog {
     width: 250px;
 }

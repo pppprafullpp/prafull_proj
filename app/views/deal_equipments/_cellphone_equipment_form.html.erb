@@ -13,6 +13,10 @@
 <%= form_tag url, method: method.to_sym do %>
     <%= hidden_field_tag :deal_id,@deal_id,:name => 'deal_equipments[deal_id]' %>
     <%= hidden_field_tag :category_name,@category_name %>
+    <div><strong>Cellphone Name:<span id="mandat">*</span> </strong><br />
+      <%list=options_for_select(CellphoneDetail.pluck(:cellphone_name,:id))%>
+      <%= select_tag :cellphone_detail_id,list,:class => '', :style=>"width: 100%;",:name =>'deal_equipments[cellphone_detail_id]' %>
+    </div>
     <div><strong>Model:<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :model,@deal_equipment.try(:model),:placeholder => 'Input model',:name => 'deal_equipments[model]'  %>
     </div>

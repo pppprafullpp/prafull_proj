@@ -43,15 +43,15 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 
 	def create
-	  #  raise params.to_yaml
+	  # raise params.to_yaml
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
 			if params[:service_category_id] == '1'
- 				@service_preference.internet_service_preference.update(internet_service_preference_params)
+ 				@service_preference.internet_service_preference.update_attributes(:upload_speed=>params[:upload_speed],:download_speed => params[:download_speed])
 			elsif params[:service_category_id] == '2'
 				@service_preference.telephone_service_preference.update(telephone_service_preference_params)
 			elsif params[:service_category_id] == '3'
-				@service_preference.cable_service_preference.update(cable_service_preference_params)
+				@service_preference.cable_service_preference.update(:free_channels=>params[:free_channels],:premium_channels => params[:premium_channels])
 			elsif params[:service_category_id] == '4'
 				@service_preference.cellphone_service_preference.update(cellphone_service_preference_params)
 			elsif params[:service_category_id] == '5'
@@ -229,7 +229,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['is_contract'] = true
 					service_preference_hash['start_date'] = ""
 					service_preference_hash['end_date'] = ""
-service_preference_hash['data_plan']=2.0
+					service_preference_hash['data_plan']=2.0
 					service_preference_hash['plan_name'] = ""
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""

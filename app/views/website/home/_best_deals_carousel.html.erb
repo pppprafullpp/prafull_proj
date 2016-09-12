@@ -1,83 +1,90 @@
-<%if @best_deal_data.present?%>
+
+<% (0...@best_deal_data.count).each do |c|%>
+  <%if @best_deal_data[c][:best_deal].present?%>
+    <%@show_best_deal = true%>
+  <%end%>
+<%end%>
+
+<%if @best_deal_data.present?  and @show_best_deal%>
  <section class="best-deals-con">
   <div class="container">
     <div class="row">
       <h1 class="text-center">Best Deals </h1>
 
-      <div class="owl-carousel owl-loaded owl-drag">
-
-        <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: 0.25s; width: 2557px;">
-
-          <% @best_deal_data.each do |dashboard_data| %>
-              <% if dashboard_data[:best_deal].present? %>
-                  <% best_deal = dashboard_data[:best_deal] %>
-                  <div class="owl-item active" style="width: 220px; margin-right: 10px;">
-                    <div>
-                      <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>">
-                        <div class="bx-img">
-                          <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px">
-                        </div>
-                        <p class="caption-title" title="<%= best_deal['title'] %>"><%= best_deal['title'].present? ? best_deal['title'].truncate(25) : ''  %></p>
-                        <p class="caption-price">Deal Price : <span style="color: #105679;">$ <%= best_deal['deal_price']  %></span></p>
-                        <p class="caption-price">Effective Price : <span style="color: #009904;font-weight: bold;">$ <%= best_deal['effective_price']  %></span></p>
-                      </a>
-                    </div>
+      <div class="col-md-12">
+      <div id="bd" class="owl-carousel bundle-deal">
+      <% @best_deal_data.each do |dashboard_data| %>
+        <% if dashboard_data[:best_deal].present? %>
+            <% best_deal = dashboard_data[:best_deal] %>
+              <div class="bundle-det">
+                <a href="<%= deal_details_website_home_index_path %>?category_id=<%= dashboard_data[:service_category_id] %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">
+                  <div><%= dashboard_data[:service_category_name] %></div>
+                  <div class="bx-img">
+                    <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px">
                   </div>
-
-              <% end %>
-          <% end %>
-
+                  <p class="caption-title" title="<%= best_deal['title'] %>"><%= best_deal['title'].present? ? best_deal['title'].truncate(25) : ''  %></p>
+                  <p class="caption-price">Deal Price : <span style="color: #105679;">$ <%= best_deal['deal_price']  %></span></p>
+                  <p class="caption-price">Effective Price : <span style="color: #009904;font-weight: bold;">$ <%= best_deal['effective_price']  %></span></p>
+                </a>
+              </div>
+        <% end %>
+      <% end %>
         </div>
         </div>
 
-        <div class="owl-dots"><div class="owl-dot active"><span></span></div>
+          <div class="owl-dots"><div class="owl-dot active"><span></span></div>
           <div class="owl-dot"><span></span></div>
           <div class="owl-dot"><span></span>
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
 </section>
-<%= javascript_include_tag 'website/owl.carousel' %>
+<%end%>
+
+<section class="best-deals-con">
+  <div class="container">
+    <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Ordered Deals</h1>
+     <div id="od" class="owl-carousel bundle-deal">
+      <%@best_deal_data.each do |d|%>
+         <% if d[:order_deal].present? %>
+          <% order_deal = d[:order_deal]%>
+            <div class="bundle-det">
+               <a href="<%=  order_detail_website_app_users_path(order_id: order_deal['order_id']) %>">
+                   <div><%= d[:service_category_name] %></div>
+                <div class="bx-img">
+                  <img src="<%= order_deal['deal_image_url']  %>" alt="" height="80px" width="80px">
+                </div>
+                <p class="caption-title" title="<%= order_deal['title'] %>"><%= order_deal['title'].present? ? order_deal['title'].truncate(25) : ''  %></p>
+                <p class="caption-price">Deal Price : <span style="color: #105679;">$ <%= order_deal['deal_price']  %></span></p>
+                <p class="caption-price">Effective Price : <span style="color: #009904;font-weight: bold;">$ <%= order_deal['effective_price']  %></span></p>
+              </a>
+            </div>
+           <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+ </div>
+</section>
 
 <script>
 
-    $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:'auto',
-        responsiveClass:true,
-        responsive:{
-            0:{
-                items:1,
-                nav:true
-            },
-            350:{
-                items:2,
-                nav:true
-            },
-            450:{
-                items:3,
-                nav:true
-            },
-            650:{
-                items:4,
-                nav:false
-            },
-            1000:{
-                items:6,
-                nav:true,
-                loop:false
-            },
-            2000:{
-                items:6,
-                nav:true,
-                loop:false
-            }
-        }
-    })
+$('#bd').owlCarousel({
+   loop:true,
+   margin:10,
+   responsiveClass:true,
+  items:4,
+ });
 
+
+ $('#od').owlCarousel({
+    loop:true,
+    margin:10,
+    responsiveClass:true,
+   items:4,
+  });
 </script>
-<%end%>

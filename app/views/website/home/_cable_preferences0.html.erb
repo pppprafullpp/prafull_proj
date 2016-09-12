@@ -25,7 +25,7 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
+      <select class="form-control" id="cable_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> </div>
         <div class="col-md-6">
@@ -64,6 +64,24 @@
         $("#cable_end_date").attr("disabled",false);
       }
     });
+
+
+      $.ajax({
+        url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=3",
+        type: "GET",
+        success: function(data){
+          console.log(data["service_preference"]);
+          $("#cable_price").val(data["service_preference"]["price"]);
+          if(data["service_preference"]["is_contract"] == true) {
+            $("#cable_start_date").attr("disabled",true);
+            $("#cable_end_date").attr("disabled",true);
+            $("#cable_is_contract").prop("checked","checked");
+          }
+          $("#cable_free_channels").val(data["service_preference"]["free_channels"])
+        }
+      });
+
+
     <%if service_provider_id.present?%>
       set_service_provider("<%=service_provider_id%>")
       function set_service_provider(id) {
@@ -83,14 +101,15 @@
       url:"/edit_or_change_service_preferences",
       type: "POST",
       data: {
-        service_category_id:$("#service_category_id").val(),
+        service_category_id:3,
         app_user_id:$("#app_user_id").val(),
         free_channels:$("#cable_free_channels").val(),
         premium_channels:$("#cable_premium_channels").val(),
         start_date:$("#cable_start_date").val(),
         end_date:$("#cable_end_date").val(),
-        price:$("#price").val(),
-        is_contract:is_contract
+        price:$("#cable_price").val(),
+        is_contract:is_contract,
+        service_provider_id:$("#cable_service_provider_id option:selected").val()
       },
       success: function(data){
         if (data["success"] == true) {

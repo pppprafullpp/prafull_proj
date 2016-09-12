@@ -40,7 +40,9 @@
               <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
             </div>
             <div style="float:left; width:100%">
-              <b>You save:</b> <span style="color:#e0b03c"><i><%= data[:you_save_text] %></i></span>
+              <%if data["you_save"].to_i > 0%>
+              <b>You save:</b> <span style="color:#e0b03c"><i> $ <%= data[:you_save_text] %></i></span>
+              <%end%>
             </div>
           </div>
 

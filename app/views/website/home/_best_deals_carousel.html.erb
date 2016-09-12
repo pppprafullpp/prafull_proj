@@ -17,7 +17,7 @@
         <% if dashboard_data[:best_deal].present? %>
             <% best_deal = dashboard_data[:best_deal] %>
               <div class="bundle-det">
-                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>">
+                <a href="<%= deal_details_website_home_index_path %>?category_id=<%= dashboard_data[:service_category_id] %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">
                   <div><%= dashboard_data[:service_category_name] %></div>
                   <div class="bx-img">
                     <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px">

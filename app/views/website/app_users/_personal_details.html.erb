@@ -89,13 +89,13 @@ end
       <div class="  col-lg-12 margin_top">
         <h5>Billing Address</h5>
 
-        
+
 
         <div class="row">
 
           <div class="col-sm-6 mg_bottom15 ">
             <label class="control-label" for="Address">Address Name<span id="mandat">*</span></label>
-            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Address Name',:name => "addresses[address_name]",:maxlength => 50) %>
+            <%= text_field_tag(:address_name,address_name,:class => 'form-control input-md',:placeholder => 'Address Name',:name => "addresses[address_name]",:maxlength => 50, :onkeyup => "capitalise_first(this)") %>
           </div>
 
           <div class="col-sm-6 mg_bottom15 ">
@@ -107,17 +107,17 @@ end
 
           <div class="col-sm-6 mg_bottom15 ">
             <label class="control-label" for="Address">Address 1<span id="mandat">*</span></label>
-            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1',:name => "addresses[address1]") %>
+            <%= text_field_tag(:address1,address_1,:class => 'form-control input-md',:placeholder => 'Address 1',:name => "addresses[address1]", :onkeyup => "capitalise_first(this)") %>
           </div>
 
           <div class="col-sm-6 mg_bottom15 ">
             <label class="control-label" for="Address 2">Address 2</label>
-            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2',:name => "addresses[address2]") %>
+            <%= text_field_tag(:address2,address_2,:class => 'form-control input-md',:placeholder => 'Address 2',:name => "addresses[address2]", :onkeyup => "capitalise_first(this)") %>
           </div>
 
           <div class="col-sm-6">
             <label class="control-label" for="Address">Town/City<span id="mandat">*</span></label>
-            <%= text_field_tag(:city,city,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[city]",:maxlength => 50) %>
+            <%= text_field_tag(:city,city,:class => 'form-control input-md',:placeholder => 'Town/City',:name => "addresses[city]",:maxlength => 50, :onkeyup => "capitalise_first(this)") %>
           </div>
 
           <div class="col-md-6 padding15right">

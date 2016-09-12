@@ -16,7 +16,7 @@
    end
  end
   %>
-  <%= "Add Preferences for Cable" if params[:new_user]%>
+  <%= "Add Services for Cable" if params[:new_user]%>
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>

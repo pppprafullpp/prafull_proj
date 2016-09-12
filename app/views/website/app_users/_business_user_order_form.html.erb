@@ -51,7 +51,7 @@
       <%if federal_number.present?%>
       <%= text_field_tag :federal_number,Base64.decode64(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
       <%else%>
-       <%= text_field_tag :federal_number,"",:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number' %>
+       <%= text_field_tag :federal_number,"",:name => "business[federal_number]",:class => 'form-control',:onblur=>"format_federal_number_on_blur(this)",:onkeyup=>"format_federal_number(this)",:maxlength => 11,:placeholder => 'Please enter your Federal Number' %>
 
       <%end%>
     </div>
@@ -223,4 +223,20 @@
 //   }
 // });
 // })
+function format_federal_number(obj) {
+  if($("#"+obj.id).val().length==2){
+  $("#"+obj.id).val($("#"+obj.id).val().toUpperCase()+"-")
+  }
+  if($("#"+obj.id).val().length==6){
+  $("#"+obj.id).val($("#"+obj.id).val().toUpperCase()+"-")
+  }
+  if($("#"+obj.id).val().length>1){
+  $("#"+obj.id).val($("#"+obj.id).val().toUpperCase())
+  }
+}
+function format_federal_number_on_blur(obj) {
+val=obj.value;
+formatted_str=val.substr(0,2)+"-"+val.substr(3,3)+"-"+val.substr(7)
+$("#"+obj.id).val(formatted_str);
+}
 </script>

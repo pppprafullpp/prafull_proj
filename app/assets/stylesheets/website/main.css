@@ -75,7 +75,7 @@ a, a:hover, a:focus {
 	background: #e50005;
 	color: #fff;
 	font-family: 'open_sansregular';
-	border-bottom: 5px solid #bf0d11;
+	border: none;
 	text-transform: uppercase;
 	border-left: 0;
 	border-right: 0;
@@ -2683,14 +2683,18 @@ color:#555;
 }
 .best-deals-con h1 {
 	padding-bottom: 25px;
+	padding-top: 15px;
 }
 
 .bx-img {
-	padding: 24px;
+	height: 125px;
+  width: 100%;
 }
 .caption-title {
 	color: #000;
-}
+  font-size: 15px;
+  font-weight: bold;
+	 }
 .caption-price {
 	color: #000;
 }
@@ -3701,3 +3705,35 @@ span.seperator {
     float: left;
     padding: 20px;
 }
+.formcontainer .btn-blue {
+ padding: 10px 40px;
+ font-size: 20px;
+}
+
+.btn-blue {
+ background: #0091fe;
+ color: #fff;
+ font-family: 'open_sansregular';
+ border-bottom:none;
+ text-transform: uppercase;
+ border-left: 0;
+ border-right: 0;
+ border-top: none;}
+Sent on:
+1:06 pm
+From:
+sonal kandhway
+.btn-blue:hover, .btn-blue:focus{
+	color: #000 !important;
+ background-color: #fff !important;
+ border-color: #fff;
+ -webkit-transition: all 0.5s ease-in 0s;
+ -moz-transition: all 0.5s ease-in 0s;
+ -ms-transition: all 0.5s ease-in 0s;
+ -o-transition: all 0.5s ease-in 0s;
+ transition: all 0.5s ease-in 0s;
+}
+ .logo-place .owl-item {
+     padding-bottom: 20px;
+     width: 120px !important;
+ }

@@ -585,6 +585,7 @@ module DashboardsHelper
 					elsif app_user_bundle_combo=="Internet and Cable"
 						app_user_download_speed = user_preference.bundle_service_preference.download_speed
 						app_user_free_channels = user_preference.bundle_service_preference.free_channels
+						# raise user_preference.bundle_service_preference.to_yaml
 						greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 						smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 					elsif app_user_bundle_combo=="Telephone and Cable"

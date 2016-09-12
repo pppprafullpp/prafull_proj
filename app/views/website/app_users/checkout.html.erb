@@ -32,7 +32,7 @@
                   <!--  </span> <span class="pull-right"><a class="help-block" href="javascript:void(0)" id="checkout_forgot_password">Forgot Your Password?</a></span>  -->
                   <a href="javascript:void(0)" id="checkout_forgot_password" class="forgot-pasw">Forgot password</a>
                 </div>
-                <span class="seperator">OR</span> 
+                <span class="seperator">OR</span>
               </div>
               <div class="col-md-5 login-socialmedia"> <a href="#" class="login-wd-fb"><i class="fa fa-2x fa-facebook"></i> Login with facebook</a> <a href="#" class="login-wd-gp"><i class="fa fa-2x fa-google-plus"></i>Login with googleplus</a> </div>
             </form>
@@ -41,10 +41,10 @@
             <div class="col-md-12 inner-signdt">
               <h4> Signup</h4>
               <div class="form-group col-md-6">
-                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name" %>
+                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",required: true %>
               </div>
               <div class="form-group col-md-6">
-                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name" %>
+                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name" , required: true%>
               </div>
               <div class="form-group col-md-6">
                 <%= f.text_field :email,:class => "form-control",:placeholder => "Email", :id => "checkout_signup_user_email" %>
@@ -55,7 +55,7 @@
               <div class="form-group col-md-6">
                 <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" , :id => "checkout_signup_user_cpassword"%>
               </div>
-              
+
               <div class="form-group col-md-12">
                 <!-- <button type="button" class="btn  btn-login">Signup to continue</button> -->
                 <%= f.submit "Signup to continue", :class => "btn  btn-login",:id => 'checkout_create_user' %>
@@ -71,11 +71,11 @@
               <strong><%=d.price%></strong>
               <h2 class="text-center"><%=d.title%></h2>
               <div class="text-center"> <small><%=d.short_description.truncate(20)%></small><br>
-                <small>  </small> 
+                <small>  </small>
               </div>
               <a class="btn_2" href="#">Place Order</a>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
     $("#sign_up_checkout").hide();
       $("#checkout_create_user").click(function(){
           var check = true;
-  
+
           var a = $('#checkout_signup_user_email').val().trim();
           if (a == null || a == "") {
               $('#checkout_signup_user_email').addClass('custom-input-error')
@@ -95,7 +95,7 @@
           }else{
               $('#checkout_signup_user_email').removeClass('custom-input-error')
           }
-  
+
           var a = $('#checkout_signup_user_password').val().trim();
           var b = $('#checkout_signup_user_cpassword').val().trim();
           if (a == null || a == "" || b == null || b == "" || (a != b) ) {
@@ -106,36 +106,36 @@
               $('#checkout_signup_user_password').removeClass('custom-input-error')
               $('#checkout_signup_user_cpassword').removeClass('custom-input-error')
           }
-  
+
           if(check) {
               $('#new_app_user').submit()
           }else{
               return false
           }
       });
-  
+
   $("#sign_up_btn").click(function(){
-  
+
   $("#order_login_app_user").hide();
-  
+
   $("#sign_up_checkout").show();
-  
+
   });
-  
+
   $("#login_btn").click(function(){
   $("#sign_up_checkout").hide();
   $("#order_login_app_user").show();
-  
+
   });
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
       $("#checkout_login_user").click(function(){
           var check = true;
-  
+
           var a = $('#checkout_user_email').val().trim();
           if (a == null || a == "") {
               $('#checkout_user_email').addClass('custom-input-error')
@@ -143,7 +143,7 @@
           }else{
               $('#checkout_user_email').removeClass('custom-input-error')
           }
-  
+
           var a = $('#checkout_user_password').val().trim();
           if (a == null || a == "") {
               $('#checkout_user_password').addClass('custom-input-error')
@@ -151,14 +151,14 @@
           }else{
               $('#checkout_user_password').removeClass('custom-input-error')
           }
-  
+
           if(check) {
               $('#checkout_login_app_user').submit()
           }else{
               return false
           }
       });
-  
+
       $("#checkout_forgot_password").click(function(){
           var user_email = $('#checkout_user_email').val();
           if(user_email != ''){
@@ -167,21 +167,21 @@
               alert('Please enter your email address')
           }
       });
-  
+
   });
-  
+
   $( "#checkout_signup_user_email").focusout(function() {
       checkEmail('signup',$(this).val());
   });
   $( "#checkout_user_email").focusout(function() {
       checkEmail('signin',$(this).val());
   });
-  
+
   function isEmail(email) {
       var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       return regex.test(email);
   }
-  
+
   function checkEmail(action,email) {
       if( !isEmail(email)) {
           $('#checkout_signup_user_email, #checkout_user_email').val('');

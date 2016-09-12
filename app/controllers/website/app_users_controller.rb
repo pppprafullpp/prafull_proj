@@ -12,14 +12,16 @@ class Website::AppUsersController < ApplicationController
     else
       params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
       params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
-      
+
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
       @app_user.zip = params[:app_user][:zip_code].present? ? encode_api_data(params[:app_user][:zip_code]) : encode_api_data("75024")
       if @app_user.save!
         session[:user_id] = @app_user.id
-        session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
+        session[:user_name] = @app_user.first_name.present? ? Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
+        session[:user_type] = @app_user.user_type
+
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
         AppUserMailer.sign_up_mail(@app_user).deliver!
@@ -33,6 +35,7 @@ class Website::AppUsersController < ApplicationController
           end
            @business = Business.create_business(params)
            business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
+             session[:business] = Base64.decode64(@business.business_name)
           #  raise business_user.to_yaml
 
         end
@@ -292,9 +295,12 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?
         session[:user_id] = @app_user.id
-        session[:user_name] = @app_user.first_name.present? ? @app_user.first_name : @app_user.email.split('@')[0]
+        session[:user_name] = @app_user.first_name.present? ?  Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
         session[:zip_code] = @app_user.zip
         session[:user_type] = @app_user.user_type
+        if session[:user_type] == AppUser::BUSINESS
+          session[:business] = Base64.decode64(@app_user.business_app_users.last.business.business_name)
+        end
         # flash[:notice] = 'Signin Successfull'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])

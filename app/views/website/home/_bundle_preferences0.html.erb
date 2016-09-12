@@ -172,6 +172,7 @@
         $("#bundle_upload_speed").val("1");
         $("#bundle_free_channels").val("20");
         $("#bundle_premium_channels").val("5");
+        $("#bundle_combo").val("Internet and Cable")
       }
     });
 
@@ -309,15 +310,12 @@
         $("#bundle_combo").val("Internet,Telephone and Cable");
       }
       // $("#bundle_form").submit();
-
-            if($("#bundle_start_date").prop("disabled") == true && $("#bundle_end_date").prop("disabled") == true) {
+          if($("#bundle_start_date").prop("disabled") == true && $("#bundle_end_date").prop("disabled") == true) {
             is_contract = false
           }
-          else
-          {
+          else{
             is_contract=true
           }
-          console.log("is contract="+is_contract);
           $.ajax({
             url:"/edit_or_change_service_preferences",
             type: "POST",
@@ -336,7 +334,9 @@
               upload_speed:$("#bundle_upload_speed").val(),
               // bundle_combo:$("#bundle_combo").val(),
               is_contract:is_contract,
-              service_provider_id:$("#bundle_service_provider_id option:selected").val()
+              service_provider_id:$("#bundle_service_provider_id option:selected").val(),
+              free_channels:$("#bundle_free_channels").val(),
+              premium_channels:$("#bundle_premium_channels").val(),
             },
             success: function(data){
               if (data["success"] == true) {
@@ -357,16 +357,5 @@
      $("#msg").text("Please Select Atleast 2 services").removeClass("hidden");
    }
  }
- function calculate_you_save(){
-   $.ajax({
-     url:"/api/v1/you_save",
-     type: "GET",
-     data: {
-      id:<%=session[:user_id]%>
-     },
-     success: function(data){
-        alert("you save: $"+data["you_save"])
-     }
-   });
- }
+
   </script>

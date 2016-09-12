@@ -58,9 +58,6 @@ class ApplicationController < ActionController::Base
 		end
 		return zipcodes
 	end
-	def get_deal_rating(deal_id,app_user_id)
-		response = JSON.parse(URI.parse("http://localhost:3000/api/v1/comment_ratings?deal_id=#{deal_id}&app_user_id=#{app_user_id}").read)
-		response
-	end
- 
+	
+
 end

@@ -42,7 +42,7 @@
             <span class="pos-rel error-msg" id="deal-type-error">Please choose User Type from the list.</span>
         </div>
       </div><br />
-        <button type="submit" class="btn btn-default btn-red">Enter Now</button>
+        <button type="submit" class="btn btn-default btn-blue">Enter Now</button>
       <%end%>
     </div>
   </div>
@@ -65,13 +65,8 @@
 
 
 <div class="container serviceCon">
-  <!-- Example row of columns -->
   <div class="row">
     <h1 class="text-center">Your One Stop Shop for Telecom Servers and Utilities</h1>
-    <!-- <a href="#" class="col-md-4 text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal"> -->
-     <!--  <div class="img-circle"><%#= image_tag('website/tv.png',:alt => 'tv') %></div>
-      <p>CABLE AND SATELLITE TV</p> -->
-    <!-- </a>  -->
     <div class="col-sm-4 col-xs-6 text-center serviceRow">
       <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::BUNDLE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
       <div class="img-circle"><%= image_tag('website/bundel.png',:alt => 'bundle') %></div>
@@ -93,9 +88,6 @@
     </a>
     </div>
 
-
-
-
     <div class="col-sm-4 col-xs-6 text-center serviceRow">
       <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::TELEPHONE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
       <div class="img-circle"><%= image_tag('website/phone.png',:alt => 'telephone') %></div>
@@ -103,17 +95,12 @@
     </a>
     </div>
 
-
-
   <div class="col-sm-4 col-xs-6 text-center serviceRow">
   <a href="<%= deal_details_website_home_index_path %>?category_id=<%= Deal::CELLPHONE_CATEGORY %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>" >
     <div class="img-circle"><%= image_tag('website/cellphone.png',:alt => 'cellphone') %></div>
     <p>Cellphone</p>
   </a>
   </div>
- <!--  </a> <a href="#" class="col-md-4 text-center serviceRow">
-    <div class="img-circle"><%#= image_tag('website/electric.png',:alt => 'electricity') %></div>
-    <p>ELECTRICITY</p> -->
   </div>
 </div>
 

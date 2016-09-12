@@ -96,6 +96,6 @@ Rails.application.configure do
                         :email => {
                             :email_prefix => "Production: Service-Deals-Exception",
                             :sender_address => %w{servicedeal@spa-systems.com},
-                            :exception_recipients => %w{amit.pandey@spa-systems.com,prafull@spa-systems.com,narendray@sp-assurance.com,amit.rana@sp-assurance.com}
+                            :exception_recipients => %w{amit.pandey@spa-systems.com,prafull@spa-systems.com,amit.rana@sp-assurance.com}
                         }
 end

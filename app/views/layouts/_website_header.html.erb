@@ -112,7 +112,7 @@
                                     <option value="residence">Residence</option>
                                     <option value="business">business</option>
                                   </select> -->
-                                  <%=f.select :user_type,["Select User type", "residence", "business"], :class=>"form-control", :prompt=>"Select"%>
+                                  <%=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]], :class=>"form-control", :prompt=>"Select"%>
                                 </div>
 
                                 <div id="business_name_div" class="form-group hidden">

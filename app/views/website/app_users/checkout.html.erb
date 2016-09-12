@@ -44,7 +44,10 @@
                 <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name" %>
               </div>
               <div class="form-group col-md-6">
-                <%= f.text_field :last_name,:class => "form-control",:placeholder => "last name" %>
+                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name" %>
+              </div>
+              <div class="form-group col-md-6">
+                <%= f.text_field :email,:class => "form-control",:placeholder => "Email", :id => "checkout_signup_user_email" %>
               </div>
               <div class="form-group col-md-6">
                 <%= f.password_field :password,:class => "form-control",:placeholder => "Password", :id => "checkout_signup_user_password" %>
@@ -52,9 +55,7 @@
               <div class="form-group col-md-6">
                 <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" , :id => "checkout_signup_user_cpassword"%>
               </div>
-              <div class="form-group col-md-6">
-                <%= f.text_field :email,:class => "form-control",:placeholder => "Email", :id => "checkout_signup_user_email" %>
-              </div>
+              
               <div class="form-group col-md-12">
                 <!-- <button type="button" class="btn  btn-login">Signup to continue</button> -->
                 <%= f.submit "Signup to continue", :class => "btn  btn-login",:id => 'checkout_create_user' %>

@@ -12,7 +12,7 @@ class Website::AppUsersController < ApplicationController
     else
       params[:app_user][:first_name]=encode_api_data(params[:app_user][:first_name])
       params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
-      params[:business][:business_name]=encode_api_data(params[:business][:business_name])
+      
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
@@ -25,12 +25,12 @@ class Website::AppUsersController < ApplicationController
         AppUserMailer.sign_up_mail(@app_user).deliver!
 
         if @app_user.user_type == AppUser::BUSINESS
+          params[:business][:business_name]=encode_api_data(params[:business][:business_name])
           if params[:business][:business_type] == "SOLE_PROPRIETOR"
             params[:business][:business_type] = 0
           elsif params[:business][:business_type] == "REGISTERED"
             params[:business][:business_type] = 1
           end
-
            @business = Business.create_business(params)
            business_user = BusinessAppUser.create_business_app_user(@business.id,@app_user.id)
           #  raise business_user.to_yaml
@@ -66,11 +66,11 @@ class Website::AppUsersController < ApplicationController
     if session[:user_id].present?
       # raise params.to_yaml
       @app_user = AppUser.find(session[:user_id])
-      address = params[:address].present? ? params[:address] : ''
-      address1 = params[:address1].present? ? params[:address1] : ''
-      address2 = params[:address2].present? ? params[:address2] : ''
-      @app_user.address = address + '===' + address1 + '===' + address2
-      @app_user.state = params[:billing_state]
+      # address = params[:address].present? ? params[:address] : ''
+      # address1 = params[:address1].present? ? params[:address1] : ''
+      # address2 = params[:address2].present? ? params[:address2] : ''
+      # @app_user.address = address + '===' + address1 + '===' + address2
+      # @app_user.state = params[:billing_state]
       @app_user.first_name = encode_api_data(params[:first_name])
       @app_user.last_name = encode_api_data(params[:last_name])
       @app_user.mobile =  encode_api_data(params[:mobile])
@@ -226,29 +226,38 @@ class Website::AppUsersController < ApplicationController
   end
 
   def user_addresses
-    if params[:id].present? and AppUser.find(params[:id]).orders.present?
-      @addresses=AppUser.find(params[:id]).orders.last.order_addresses
-      render :json=>{
-          :type=>"residence_user",
-        :status=>@addresses
-      }
-    elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?
-      @addresses=AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last
-      render :json=>{
-        :type=>"residence_user_first_order",
-        :status=>@addresses
-      }
-    else
-      render :json=>{
-        :status=>"first_order",
+    if params[:id].present?
+    @addresses = AppUser.get_addresses(params)
+    render :json=>{
         :status=>@addresses
       }
     end
+    # if params[:id].present? and AppUser.find(params[:id]).orders.present?
+    #   @addresses=AppUser.find(params[:id]).orders.last.order_addresses
+    #   render :json=>{
+    #       :type=>"residence_user",
+    #     :status=>@addresses
+    #   }
+    # elsif params[:id].present? and AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last.present?
+    #   @addresses=AppUser.find(params[:id]).app_user_addresses.where(:address_type=>2).last
+    #   render :json=>{
+    #     :type=>"residence_user_first_order",
+    #     :status=>@addresses
+    #   }
+    # else
+    #   render :json=>{
+    #     :status=>"first_order",
+    #     :status=>@addresses
+    #   }
+    # end
   end
 
   def business_user_addresses
-    if BusinessAddress.exists?(AppUser.find(params[:id]).business_app_users.last.business_id)
-      @addresses=BusinessAddress.find(AppUser.find(params[:id]).business_app_users.last.business_id)
+    if params[:id].present?
+      @addresses = AppUser.get_addresses(params)
+    # @addresses =app_user.business_app_users.last.business.business_addresses.first
+    # if BusinessAddress.exists?(AppUser.find(params[:id]).business_app_users.last.business_id)
+    #   @addresses=BusinessAddress.find(AppUser.find(params[:id]).business_app_users.last.business_id)
       render :json=>{
         :status=>"business_user_first_order",
         :status=>@addresses

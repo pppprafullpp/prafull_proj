@@ -51,7 +51,7 @@
     <div class="col-md-6"><%= date_field_tag(:cellphone_start_date,end_date,:class=>"form-control")%>  </div>
     <div class="col-md-6"><%= date_field_tag(:cellphone_end_date,end_date,:class=>"form-control")%>  </div>
     <p class="contract-margin-sty"><b>Calls</b></p>
-    <p class="contract-margin-sty">Domestic</p>
+    <p class="contract-margin-sty">Domestic calls</p>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
          <%= check_box_tag "checkbox_domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
@@ -60,6 +60,7 @@
         <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
+    <p class="contract-margin-sty">international calls</p>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
            <%= check_box_tag "checkbox_international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited

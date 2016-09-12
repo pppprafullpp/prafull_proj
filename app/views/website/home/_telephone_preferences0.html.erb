@@ -96,7 +96,7 @@
     });
 
     $.ajax({
-      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=2",
+      url :"/api/v1/get_preferences?app_user_id="+<%=session[:user_id]%>+"&category=2",
       type: "GET",
       success: function(data){
         console.log("telephone"+data);
@@ -107,7 +107,7 @@
           $("#telephone_end_date").attr("disabled",true);
           $("#telephone_is_contract").prop("checked","checked");
         }
-        $("#telephone_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
+        $("#telephone_domestic_call_minutes").val("400");
         $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
         $("#telephone_price").val(data["service_preference"]["price"]);
       }

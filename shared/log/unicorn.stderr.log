@@ -9935,3 +9935,24 @@ I, [2016-09-10T11:35:42.819786 #6579]  INFO -- : worker=1 ready
 I, [2016-09-10T11:36:27.075254 #6567]  INFO -- : reaped #<Process::Status: pid 6576 exit 0> worker=0
 I, [2016-09-10T11:36:27.075534 #6567]  INFO -- : reaped #<Process::Status: pid 6579 exit 0> worker=1
 I, [2016-09-10T11:36:27.076063 #6567]  INFO -- : master complete
+I, [2016-09-12T11:00:39.982331 #6605]  INFO -- : Refreshing Gem list
+I, [2016-09-12T11:00:43.210211 #6605]  INFO -- : unlinking existing socket=/home/apoorvmittal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock
+I, [2016-09-12T11:00:43.210387 #6605]  INFO -- : listening on addr=/home/apoorvmittal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock fd=15
+I, [2016-09-12T11:00:43.210495 #6605]  INFO -- : worker=0 spawning...
+I, [2016-09-12T11:00:43.212385 #6605]  INFO -- : worker=1 spawning...
+I, [2016-09-12T11:00:43.213450 #6609]  INFO -- : worker=0 spawned pid=6609
+I, [2016-09-12T11:00:43.213831 #6609]  INFO -- : worker=0 ready
+I, [2016-09-12T11:00:43.216241 #6605]  INFO -- : master process ready
+I, [2016-09-12T11:00:43.217119 #6612]  INFO -- : worker=1 spawned pid=6612
+I, [2016-09-12T11:00:43.217499 #6612]  INFO -- : worker=1 ready
+I, [2016-09-12T11:00:52.311165 #6628]  INFO -- : executing ["/home/apoorvmittal/.rvm/gems/ruby-2.3.1/bin/unicorn", "-c", "config/unicorn.rb", "-E", "development", "-D", {15=>#<Kgio::UNIXServer:/home/apoorvmittal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock>}] (in /home/apoorvmittal/Desktop/Service-Deals-Rails)
+I, [2016-09-12T11:00:52.311329 #6628]  INFO -- : forked child re-executing...
+I, [2016-09-12T11:00:52.800843 #6628]  INFO -- : inherited addr=/home/apoorvmittal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock fd=15
+I, [2016-09-12T11:00:52.801148 #6628]  INFO -- : Refreshing Gem list
+I, [2016-09-12T11:00:56.037512 #6628]  INFO -- : worker=0 spawning...
+I, [2016-09-12T11:00:56.039538 #6628]  INFO -- : worker=1 spawning...
+I, [2016-09-12T11:00:56.040692 #6633]  INFO -- : worker=0 spawned pid=6633
+I, [2016-09-12T11:00:56.041098 #6633]  INFO -- : worker=0 ready
+I, [2016-09-12T11:00:56.043192 #6628]  INFO -- : master process ready
+I, [2016-09-12T11:00:56.044216 #6636]  INFO -- : worker=1 spawned pid=6636
+I, [2016-09-12T11:00:56.044619 #6636]  INFO -- : worker=1 ready

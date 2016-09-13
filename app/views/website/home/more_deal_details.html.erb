@@ -56,19 +56,21 @@
         <% end %>
         <div id="reviews-section" class="">
           <h3 id="reviews-header"></h3>
-          <div class="add-reviews-div">
-            <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
-            <p>Select rating point</p>
-            <input id="comment_rating_rating_point" class="rating rating-loading" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
-            <%=f.text_field:comment_title, :class => "form-control", :placeholder => "Add Comment title", :required => true%><br />
-            <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />
-            <%=f.hidden_field:deal_id, :value=>params[:deal_id]%>
-              <%if session[:user_id].present?%>
-                <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
+          <%if session[:user_id].present?%>
+            <div class="add-reviews-div">
+              <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
+              <p>Select rating point</p>
+              <input id="comment_rating_rating_point" class="rating rating-loading" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
+              <%=f.text_field:comment_title, :class => "form-control", :placeholder => "Add Comment title", :required => true%><br />
+              <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />
+              <%=f.hidden_field:deal_id, :value=>params[:deal_id]%>
+                <%if session[:user_id].present?%>
+                  <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
+                <%end%>
+                <%=f.submit("Save", :class=>"btn btn-success", :onclick=>"add_comments()")%>
               <%end%>
-              <%=f.submit("Save", :class=>"btn btn-success", :onclick=>"add_comments()")%>
-            <%end%>
-          </div>
+            </div>
+          <%end%>
             <div id="reviews-inner-area"></div>
         </div>
 

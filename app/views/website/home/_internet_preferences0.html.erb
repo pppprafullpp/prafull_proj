@@ -16,14 +16,16 @@
      end
    end
   %>
-    <%= "Add Services for internet" if params[:new_user]%>
+
+  <h4>Current Internet Service</h4>
+
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",1)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-    <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+    <% @providers=ServiceProvider.where(:service_category_id=>1).pluck(:name,:id)%>
       <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select>
@@ -45,7 +47,7 @@
     <div class="col-md-12 text-center">
     <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"submit_internet_preference()")%>
     <%if params[:new_user]%>
-    <%= button_tag("skip", :class=>"btn btn-success preference-btn", :onclick=>"show_cable()")%>
+    <%= button_tag("Skip", :class=>"btn skip-btn", :onclick=>"show_cable()")%>
     <%end%>
     </div>
     <%end%>
@@ -73,8 +75,7 @@
     url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=1",
     type: "GET",
     success: function(data){
-      console.log(data["service_preference"]);
-      $("#internet_price").val(data["service_preference"]["price"]);
+       $("#internet_price").val(data["service_preference"]["price"]);
       if(data["service_preference"]["is_contract"] == true) {
         $("#internet_start_date").attr("disabled",true);
         $("#internet_end_date").attr("disabled",true);
@@ -115,7 +116,7 @@
         success: function(data){
           if (data["success"] == true) {
             $("#internet_pref").hide();
-            $("#cable_pref").show().css("height","500px");
+            $("#telephone_pref").show();
           }
         }
       });

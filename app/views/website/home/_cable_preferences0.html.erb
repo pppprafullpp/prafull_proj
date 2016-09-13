@@ -16,12 +16,13 @@
    end
  end
   %>
-  <%= "Add Services for Cable" if params[:new_user]%>
+
+  <h4>Current Cable Service </h4>
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",3)%>
-  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name, :id)%>
+  <% @providers=ServiceProvider.where(:service_category_id=>3).pluck(:name, :id)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
@@ -45,7 +46,7 @@
    <div class="col-md-12 text-center">
      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick =>"cable_submit()")%>
      <%if params[:new_user]%>
-     <%= button_tag("skip", :class=>"btn btn-success preference-btn", :onclick=>"show_cellphone()")%>
+   <%= button_tag("Skip", :class=>"btn skip-btn", :onclick=>"show_cellphone()")%>
      <%end%>
    </div>
 
@@ -70,8 +71,7 @@
         url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=3",
         type: "GET",
         success: function(data){
-          console.log(data["service_preference"]);
-          $("#cable_price").val(data["service_preference"]["price"]);
+           $("#cable_price").val(data["service_preference"]["price"]);
           if(data["service_preference"]["is_contract"] == true) {
             $("#cable_start_date").attr("disabled",true);
             $("#cable_end_date").attr("disabled",true);
@@ -114,7 +114,7 @@
       success: function(data){
         if (data["success"] == true) {
           $("#cable_pref").hide();
-          $("#cellphone_pref").show().css("height","500px");
+          $("#cellphone_pref").show();
         }
       }
     });

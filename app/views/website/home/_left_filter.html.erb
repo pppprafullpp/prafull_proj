@@ -50,9 +50,9 @@
         $.each($(".provider_checkbox:checked"), function(){
             provider_ids. push($(this).attr('id'));
         });
-        document.location.href = "<%= deal_details_website_home_index_path %>?category_id=<%= params[:category_id] %>&zip_code=<%= params[:zip_code] %>&deal_type=<%= params[:deal_type] %>&sort_by=<%= params[:sort_by] %>&provider_ids="+provider_ids+"&new_user=false"
+        document.location.href = "<%= deal_details_website_home_index_path %>?category_id=<%= params[:category_id] %>&zip_code=<%= params[:zip_code] %>&deal_type=<%= params[:deal_type] %>&sort_by=<%= params[:sort_by] %>&provider_ids="+provider_ids;
     });
     $("#reset_search_filter").click(function(){
-        document.location.href = "<%= deal_details_website_home_index_path %>?category_id=<%= params[:category_id] %>&zip_code=<%= params[:zip_code] %>&deal_type=<%= params[:deal_type] %>&sort_by=<%= params[:sort_by] %>"
+        document.location.href = "<%= deal_details_website_home_index_path %>?category_id=<%= params[:category_id] %>&zip_code=<%= params[:zip_code] %>&deal_type=<%= params[:deal_type] %>&sort_by=<%= params[:sort_by] %>";
     });
 </script>

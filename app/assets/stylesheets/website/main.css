@@ -352,7 +352,7 @@ footer p {
 	font-weight: bold;
 }
 .login-signup .form-control {
-	padding-left: 30px;
+	padding-left: 14px;
 	color: #000 !important;
 }
 .social-media {
@@ -380,6 +380,10 @@ footer p {
 	width: 250px;
 	text-transform: uppercase;
 }
+.btn-login:hover {
+	background: #0778d0;
+	color: #fff !important;
+}
 .btn-signup {
 	color: #fff;
 	background: #0082ff;
@@ -388,7 +392,7 @@ footer p {
 	padding: 10px 12px !important;
 }
 .btn-signup:hover {
-	background: #006bc8;
+	background: #0778d0;
 	color: #fff !important;
 }
 a.fb {
@@ -1678,8 +1682,8 @@ color: #fff !important;
 	border: 1px solid #008bf1;
 }
 .height_popup {
-	height: 455px;
-	overflow: hidden;
+	height: 400px;
+	overflow-y:scroll;
 }
 .popup_left {
 	width: 40%;
@@ -3340,21 +3344,36 @@ margin-left: 16px;
 
 
 .contract-margin-sty{
-
 float: left;
 width: 100%;
 margin-left: 16px;
 padding-top: 15px;
 font-size:18px;
+margin-bottom: 0px;
 }
 
 .preference-btn{
 width: 200px;
-padding: 10px;
 margin-top: 10px;
 font-size: 18px;
 font-weight: bold;
+padding:7px 10px;
 }
+
+.skip-btn{
+width: 200px;
+margin-top: 10px;
+font-size: 18px;
+font-weight: bold;
+padding:7px 10px;
+background-color: #008fff;
+color:#fff;
+}
+.skip-btn:hover {
+	background-color:  #0f60bb;
+	color:#fff;
+}
+
 
 .no-padding {
 	padding: 0px !important;
@@ -3362,7 +3381,8 @@ font-weight: bold;
 .short{
 font-weight:bold;
 color:#FF0000;
-font-size: 10px;
+font-size: 11px;
+font-weight: normal;
 }
 
 .contract-date {
@@ -3396,7 +3416,9 @@ margin-top: 10px;
     width: 600px;
 }
 .compare-popsty {
-    padding: 30px 20px;
+    padding: 30px 20px 50px;
+		/*height: 400px;*/
+		/*overflow-y: scroll;*/
 }
 .info_listing {
     padding: 0 10px;
@@ -3425,6 +3447,9 @@ margin-top: 10px;
     background: #ed1c24;
     color: #fff;
     padding: 10px 20px;
+		width: 250px;
+		font-family: 'open_sanssemibold';
+		margin-top: 10px;
 }
 .compare-btn:hover {
     color: #fff;
@@ -3737,3 +3762,34 @@ sonal kandhway
      padding-bottom: 20px;
      width: 120px !important;
  }
+#comparePopup {
+	z-index: 999999;
+	}
+
+#comparePopup .modal-dialog{
+	margin-top: 100px;
+}
+#comparePopup h4 {
+	color:#0f60bb;
+	margin:10px 0px 10px 14px;
+	display: inline block;
+
+}
+#cable-pref {
+	height:400px;
+}
+.bundle-det .caption-title, .bundle-det .caption-price, .bundle-det .caption-des {
+  float: left;
+  font-size: 13px;
+  margin: 4px 0;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+.bundle-det .caption-title {
+  color: #494949;
+  font-size: 14px;
+  font-weight: normal;
+}
+.bundle-deal {background:#fff}
+.best-trending-sty{position: absolute; top: 10px; right: 27px;}

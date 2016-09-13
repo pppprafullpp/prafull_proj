@@ -26,18 +26,20 @@
 
           <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id])%>
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
+
             <div class="col-sm-12" style="overflow: hidden">
-              <div class="owl-carousel bundle-deal border-radius-bg"  >
+              <span style="position:absolute;position: absolute;margin: 32px;z-index: 99;"><b>Bundled Deals with <%= ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></b></span>
+              <div class="owl-carousel bundle-deal border-radius-bg">
                  <%bundle_deals.each do |bd|%>
-                  <div  class="bundle-det" >
+                  <div class="bundle-det" style="margin: 16px auto;">
                     <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
+                      <p class="caption-des text-left"><%=bd.bundle_combo%></p>
                       <div class="bx-img text-center">
                         <img src="<%=bd.image%>" alt="" width="140" height="74">
                       </div>
                       <p class="caption-title"><%=bd.title.truncate(20)%></p>
                       <p class="caption-price">Price:<strong>$ <%=bd.price%></strong></p>
                       <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
-                      <h4 class="caption-des text-left"><%=bd.bundle_combo%></h4>
                     </a>
                   </div>
                   <%end%>
@@ -118,46 +120,7 @@
     </div>
   </div>
 </section>
-<div class="modal fade" id="comparePopup" role="dialog"  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="calculate_you_save()">×</button>
-      <div class="modal-content compare-popsty">
-        <div id="welcome-popup">
-        <div class="text-center">
-        <img src="/assets/website/welcome1.png" alt="" width="150">
-        </div>
-        <p class=" text-center">Most of our users <span style="color:#2c9d12; font-weight:400;">$ave </span>$1,000 - $2,000 when they switch <span style="color:#e50005; font-weight:600;">Internet, Telephone, TV,</span> and <span  style="color:#e50005; font-weight:600;">Mobile Phone</span>
-        services using ServiceDeals. </p>
-          <p class=" text-center">We can start to find out how much you can <span style="color:#2c9d12; font-weight:400;">$ave </span> by comparing your current services with the best deals in your area. Just give us 5 min and we will show you $1000s of saving:</p>
-          <ul class="info_listing">
-            <li><span>1</span>Enter your Internet, Telephone, TV, and Mobile service information</li>
-            <li><span>2</span>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</li>
-            <li><span>3</span>Review potential saving and switch</li>
-          </ul>
-          <div class=" text-center">
-            <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
-          </div>
-      </div>
 
-      <div id="internet_pref" style="display:none">
-        <%=render :partial => "internet_preferences0.html.erb"%>
-      </div>
-      <div id="cable_pref" style="display:none">
-        <%=render :partial => "cable_preferences0.html.erb"%>
-      </div>
-      <div id="cellphone_pref" style="display:none">
-        <%=render :partial => "cellphone_preferences0.html.erb"%>
-      </div>
-      <div id="telephone_pref" style="display:none">
-        <%=render :partial => "telephone_preferences0.html.erb"%>
-      </div>
-      <div id="bundle_pref" style="display:none">
-        <%=render :partial => "bundle_preferences0.html.erb"%>
-      </div>
-    </div>
-  </div>
-</div>
 <script>
  $('.owl-carousel').owlCarousel({
     loop:true,
@@ -165,46 +128,13 @@
     responsiveClass:true,
    items:3,
   });
-</script>
-
-
-<script type="text/javascript">
-  function move_next() {
-    $("#welcome-popup").hide();
-    $("#internet_pref").show().css("height","322px");
-  }
-  function show_cable(){
-    event.preventDefault();
-    $("#internet_pref").hide();
-    $("#cable_pref").show().css("height","500px");
-  }
-  function show_cellphone() {
-    event.preventDefault();
-    $("#cable_pref").hide();
-    $("#cellphone_pref").show().css("height","504px");
-  }
-  function show_telephone() {
-    event.preventDefault();
-    $("#cellphone_pref").hide();
-    $("#telephone_pref").show().css("height","504px");
-  }
-  function show_bundle() {
-    event.preventDefault();
-    $("#telephone_pref").hide();
-    $("#bundle_pref").show().css("height","550px");
-  }
     var checkedValues,dealids;
     $("#compare_box").hide();
     $( document ).ready(function() {
-      console.log("params="+"<%=params%>")
-        dealids = [
-            <%
-            if @deal_ids.present?%>
-            <%=
-            @deal_ids.map(&:to_s).join(", ")
-            %>
-            <%end
-            %>
+         dealids = [
+            <%if @deal_ids.present?%>
+            <%=@deal_ids.map(&:to_s).join(", ")%>
+            <%end%>
         ];
         for(i=0;i<dealids.length;i++){
             $("#"+dealids[i]).addClass("btn_3");
@@ -245,7 +175,7 @@
      });
 
 function showcomparebox(deal_id) {
-  if ($("#checkbox"+deal_id).is(":checked")==true){
+  if ($("#checkbox"+deal_id).is(":checked")==true) {
     if($("#compare_box").is(":visible")==false && $("#compare-box-deal-1").is(":visible")==false){
       console.log(1);
       $("#compare-box-deal-1").removeClass("hidden");
@@ -295,23 +225,5 @@ function resetcomparebox() {
     $(".comparebox-display:checkbox").attr("checked", false);
     $("#compare-box-deal-1").addClass("hidden");
     $("#compare-box-deal-2").addClass("hidden");
-};
-function calculate_you_save(){
-  $.ajax({
-    url:"/api/v1/you_save",
-    type: "GET",
-    data: {
-     id:<%=session[:user_id]%>
-    },
-    success: function(data){
-       alert("you save: $"+data["you_save"])
-    }
-  });
 }
-
 </script>
-  <%if params[:new_user] == "true"%>
-  <script>
-    $("#comparePopup").modal("show");
-  </script>
-<%end%>

@@ -195,7 +195,7 @@ class Api::V1::AppUsersController < ApplicationController
   def you_save
     if params[:id].present?
       allowed_best_deal_sum = 0
-service_preference_sum = 0
+       service_preference_sum = 0
       app_user = AppUser.find_by_id(params[:id])
       if app_user.service_preferences.present?
        # service_preference_sum = app_user.service_preferences.collect(&:price).sum
@@ -210,6 +210,9 @@ service_preference_sum = 0
         puts "service_preference_sum=#{service_preference_sum}"
         puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
         you_save = (12*(service_preference_sum - allowed_best_deal_sum.to_f))
+        if session[:new_user] == true
+          session[:new_user] = false 
+        end
         if you_save!=0
           yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i
             if yousaveprecision > 5

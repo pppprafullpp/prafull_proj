@@ -72,7 +72,7 @@
     </div>
     <div class="col-md-12 text-center ">
     <%= submit_tag("Save", :class=>"btn btn-success search-btn preference-btn")%>
-    
+
     </div>
     <%end%>
   </div>
@@ -94,23 +94,27 @@
 
     $("#domestic_call_unlimited").on("change",function(){
       if($("#domestic_call_unlimited").prop("checked")==true){
-        $("#domestic_call_minutes").attr("disabled",true);
+        $("#domestic_call_minutes").attr("readonly",true);
         $("#domestic_call_unlimited").val("true");
+        $("#domestic_call_minutes").val(0);
       }
       else {
         $("#domestic_call_minutes").attr("disabled",false);
+        $("#domestic_call_minutes").attr("readonly",false);
         $("#domestic_call_unlimited").val("false");
       }
     });
 
     $("#international_call_unlimited").on("change",function(){
       if($("#international_call_unlimited").prop("checked")==true){
-        $("#international_call_minutes").attr("disabled",true);
+        $("#international_call_minutes").attr("readonly",true);
+        $("#international_call_minutes").val(0);
         $("#domestic_call_unlimited").val("true");
       }
       else {
         $("#international_call_minutes").attr("disabled",false);
         $("#domestic_call_unlimited").val("false");
+        $("#international_call_minutes").attr("readonly",false);
       }
     });
     <%if service_provider_id.present?%>

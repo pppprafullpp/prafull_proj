@@ -21,7 +21,7 @@
 
   end
   %>
-  <%= "Add Preferences for Cellphone" if params[:new_user]%>
+  <h4>Current Cellphone service </h4>
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
@@ -38,32 +38,46 @@
   <div class="col-md-6">
     <%= number_field_tag("cellphone_price",price,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
-  <div class="row contract-margin-sty">
-    <div class="col-md-6">
-      <p>Contract Date</p>
-    </div>
 
-    <div class="col-md-6">
-      <%= check_box_tag "cellphone_is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%><b>No Contract</b>
-    </div>
+  <div class="row">
+      <p class="contract-margin-sty">Contract Date</p>
+      <div class="checkbox checkbox-info no-contract-sty">
+        <%= check_box_tag "cellphone_is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
+        <label for="cellphone_is_contract"> <span>Is Contract</span> </label>
+      </div>
   </div>
 
     <div class="col-md-6"><%= date_field_tag(:cellphone_start_date,end_date,:class=>"form-control")%>  </div>
     <div class="col-md-6"><%= date_field_tag(:cellphone_end_date,end_date,:class=>"form-control")%>  </div>
-    <p class="contract-margin-sty"><b>Calls</b></p>
-    <p class="contract-margin-sty">Domestic calls</p>
-    <div class="row contract-margin-sty">
-      <div class="col-md-6">
-         <%= check_box_tag "checkbox_domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
+
+    <div class="row">
+      <div class="col-md-12">
+      <h4>Calls</h4>
       </div>
+
+      <div class="col-md-12">
+      <p class="set-call">Domestic calls</p>
+      </div>
+
+      <div class="col-md-6 ">
+      <div class="checkbox checkbox-info no-contract-sty">
+      <%= check_box_tag "checkbox_domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
+      <label for="checkbox_domestic_call_unlimited" ><span>Unlimited<span></label>
+      </div>
+      </div>
+      
       <div class="col-md-6">
-        <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+      <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
+
     <p class="contract-margin-sty">international calls</p>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
-           <%= check_box_tag "checkbox_international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
+        <div class="checkbox checkbox-info no-contract-sty">
+           <%= check_box_tag "checkbox_international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
+           <label for="checkbox_international_call_unlimited"><span></span>Unlimited</label>
+        </div>
       </div>
       <div class="col-md-6">
         <%=number_field_tag(:cellphone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
@@ -88,7 +102,7 @@
     <div class="col-md-12 text-center">
      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"submit_cellphone()")%>
      <%if params[:new_user]%>
-     <%= button_tag("skip", :class=>"btn btn-success preference-btn", :onclick=>"show_telephone()")%>
+     <%= button_tag("Skip", :class=>"btn btn-success skip-btn", :onclick=>"show_telephone()")%>
      <%end%>
    </div>
     <%end%>
@@ -197,7 +211,7 @@
       success: function(data){
         if (data["success"] == true) {
           $("#cellphone_pref").hide();
-          $("#telephone_pref").show().css("height","500px");
+          $("#bundle_pref").show().css("height","500px");
         }
       }
     });

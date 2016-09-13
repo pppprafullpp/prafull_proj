@@ -21,10 +21,10 @@ class Website::AppUsersController < ApplicationController
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
         session[:user_type] = @app_user.user_type
-
+        session[:new_user] = true
         code=SecureRandom.hex(5)
         @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
-        AppUserMailer.sign_up_mail(@app_user).deliver!
+        # AppUserMailer.sign_up_mail(@app_user).deliver!
 
         if @app_user.user_type == AppUser::BUSINESS
           params[:business][:business_name]=encode_api_data(params[:business][:business_name])
@@ -40,7 +40,7 @@ class Website::AppUsersController < ApplicationController
 
         end
 
-        flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
+        # flash[:notice] = 'SignUp Successfull! Please Verify your email by clicking link in your email'
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else

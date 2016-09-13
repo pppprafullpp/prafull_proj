@@ -7,14 +7,14 @@
           <tbody>
             <tr>
             <td scope="row" class="nobdr"></td>
-           
+
             <td align="center" class="col-spacing"><a href="#"><%= @deal_first.try(:short_description)%></a><br>
               <%= image_tag("#{@deal_first.try(:image)}", :size => "100x100") %>  <br>
-              <span class="price-com"> <b><%= @deal_first.try(:price) %> / month</b></span></td>
+              <span class="price-com">$ <b><%= @deal_first.try(:price) %> / month</b></span></td>
 
               <td align="center" class="col-spacing"><a href="#"><%= @deal_second.try(:short_description)%></a> <br>
               <%= image_tag("#{@deal_second.try(:image)}", :size => "100x100") %> <br>
-              <span class="price-com"> <b><%= @deal_second.try(:price) %> / month</b></span></td>
+              <span class="price-com">$ <b><%= @deal_second.try(:price) %> / month</b></span></td>
 
            </tr>
 

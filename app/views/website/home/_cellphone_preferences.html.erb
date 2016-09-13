@@ -23,10 +23,6 @@
 
   %>
   <%= "Add Preferences for Cellphone" if params[:new_user]%>
-  <script>
-  console.log("<%= data_plan%>");
-  console.log("<%=no_of_lines%>");
-  </script>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
@@ -42,36 +38,52 @@
   <div class="col-md-6">
     <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
-  <div class="row contract-margin-sty">
-    <div class="col-md-6">
-      <p>Contract Date</p>
-    </div>
-
-    <div class="col-md-6">
-      <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%><b>No Contract</b>
-    </div>
+  <div class="row">
+    <p class="contract-margin-sty">Contract Date</p>
+      <div class="checkbox checkbox-info no-contract-sty">
+      <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
+      <label for="is_contract"> <span>Is Contract</span> </label>
+      </div>
   </div>
 
     <div class="col-md-6"><%= date_field_tag(:start_date,end_date,:class=>"form-control")%>  </div>
     <div class="col-md-6"><%= date_field_tag(:end_date,end_date,:class=>"form-control")%>  </div>
-    <p class="contract-margin-sty"><b>Calls</b></p>
-    <p class="contract-margin-sty">Domestic</p>
-    <div class="row contract-margin-sty">
+
+      <div class="row">
+        <div class="col-md-12">
+        <h4>Calls</h4>
+        </div>
+
+        <div class="col-md-12">
+        <p class="set-call">Domestic calls</p>
+        </div>
+
       <div class="col-md-6">
-         <%= check_box_tag "domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>Unlimited
+        <div class="checkbox checkbox-info no-contract-sty">
+        <%= check_box_tag "domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
+        <label for="domestic_call_unlimited" ><span>Unlimited<span></label>
+        </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+      <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
-    </div>
+     </div>
+
+    <p class="contract-margin-sty">international calls</p>
     <div class="row contract-margin-sty">
       <div class="col-md-6">
-           <%= check_box_tag "international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>unlimited
+        <div class="checkbox checkbox-info no-contract-sty">
+          <%= check_box_tag "international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
+          <label for="international_call_unlimited" ><span>Unlimited<span></label>
+
+        </div>
       </div>
       <div class="col-md-6">
         <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
+
+
     <div class="row">
       <div class="col-md-6 text-left" style="padding-left:6%">Data Plan</div>
       <div class="col-md-6 text-left" style="padding-left:6%">No. of lines</div>
@@ -118,22 +130,26 @@
 
     $("#domestic_call_unlimited").on("change",function(){
       if($("#domestic_call_unlimited").prop("checked")==true){
-        $("#domestic_call_minutes").attr("disabled",true);
+        $("#domestic_call_minutes").val("0",true);
+        $("#domestic_call_minutes").attr("readonly",true);
         $("#domestic_call_unlimited").val("true");
       }
       else {
         $("#domestic_call_minutes").attr("disabled",false);
+        $("#domestic_call_minutes").attr("readonly",false);
         $("#domestic_call_unlimited").val("false");
       }
     });
 
     $("#international_call_unlimited").on("change",function(){
       if($("#international_call_unlimited").prop("checked")==true){
-        $("#international_call_minutes").attr("disabled",true);
+        $("#international_call_minutes").attr("readonly",true);
+        $("#international_call_minutes").val(0);
         $("#domestic_call_unlimited").val("true");
       }
       else {
         $("#international_call_minutes").attr("disabled",false);
+        $("#international_call_minutes").attr("readonly",false);
         $("#domestic_call_unlimited").val("false");
       }
     });
@@ -142,9 +158,8 @@
 
   $(document).ready(function(){
       $("#service_provider_id option[value="+<%=service_provider_id.to_i%>+"]").attr('selected','selected');
-      console.log("<%=data_plan.to_i%>");
-      $("#data_plan option[value="+<%=data_plan.to_f%>+"]").attr('selected','selected');
-      $("#no_of_lines option[value='"+<%=no_of_lines%>+"']").attr('selected','selected');
+      $("#data_plan option[value="+<%=data_plan.to_f.present? ? data_plan.to_f : 0 %>+"]").attr('selected','selected');
+      $("#no_of_lines option[value='"+<%=no_of_lines.present? ? no_of_lines : 1%>+"']").attr('selected','selected');
   })
 
   </script>

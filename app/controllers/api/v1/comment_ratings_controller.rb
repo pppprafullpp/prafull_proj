@@ -46,7 +46,7 @@ class Api::V1::CommentRatingsController < ApplicationController
 	end
 
 	def create
-		if params[:deal_id].present? && params[:app_user_id].present?
+ 		if params[:deal_id].present? && params[:app_user_id].present?
 			@comment_rating = CommentRating.find_by_deal_id_and_app_user_id(params[:deal_id], params[:app_user_id])
 			if @comment_rating.present?
 				@comment_rating.update(comment_rating_params)

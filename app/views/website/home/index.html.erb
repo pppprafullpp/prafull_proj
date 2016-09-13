@@ -125,51 +125,31 @@
             <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
           </div>
       </div>
-
-      <div id="internet_pref" style="display:none">
+      <div id="internet_pref" style="display:none;">
         <%=render :partial => "internet_preferences0.html.erb"%>
       </div>
-      <div id="cable_pref" style="display:none">
+      <div id="cable_pref" style="display:none;height:320px">
         <%=render :partial => "cable_preferences0.html.erb"%>
       </div>
-      <div id="cellphone_pref" style="display:none">
+      <div id="cellphone_pref" style="display:none;height:400px;overflow-y:scroll;overflow-x:hidden">
         <%=render :partial => "cellphone_preferences0.html.erb"%>
       </div>
-      <div id="telephone_pref" style="display:none">
+      <div id="telephone_pref" style="display:none;height:440px;overflow-y:scroll;overflow-x:hidden">
         <%=render :partial => "telephone_preferences0.html.erb"%>
       </div>
-      <div id="bundle_pref" style="display:none">
+      <div id="bundle_pref" style="display:none;height:400px;overflow-y:scroll;overflow-x:hidden">
         <%=render :partial => "bundle_preferences0.html.erb"%>
       </div>
     </div>
   </div>
 </div>
-
+<!-- Internet, Telephone, cable, Cellphone, Bundle. -->
 <script type="text/javascript">
   function move_next() {
     $("#welcome-popup").hide();
     $("#internet_pref").show().css("height","322px");
   }
-  function show_cable(){
-    event.preventDefault();
-    $("#internet_pref").hide();
-    $("#cable_pref").show().css("height","500px");
-  }
-  function show_cellphone() {
-    event.preventDefault();
-    $("#cable_pref").hide();
-    $("#cellphone_pref").show().css("height","504px");
-  }
-  function show_telephone() {
-    event.preventDefault();
-    $("#cellphone_pref").hide();
-    $("#telephone_pref").show().css("height","504px");
-  }
-  function show_bundle() {
-    event.preventDefault();
-    $("#telephone_pref").hide();
-    $("#bundle_pref").show().css("height","550px");
-  }
+
   function calculate_you_save(){
     $.ajax({
       url:"/api/v1/you_save",
@@ -178,7 +158,8 @@
        id:<%=session[:user_id]%>
       },
       success: function(data){
-         alert("you save: $"+data["you_save"])
+         alert("you save: $"+data["you_save"]);
+         window.open("/website/home", "_self");
       }
     });
   }

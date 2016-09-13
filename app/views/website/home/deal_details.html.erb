@@ -26,18 +26,20 @@
 
           <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id])%>
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
+
             <div class="col-sm-12" style="overflow: hidden">
-              <div class="owl-carousel bundle-deal border-radius-bg"  >
+              <span style="position:absolute;position: absolute;margin: 32px;z-index: 99;"><b>Bundled Deals with <%= ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></b></span>
+              <div class="owl-carousel bundle-deal border-radius-bg">
                  <%bundle_deals.each do |bd|%>
-                  <div  class="bundle-det" >
+                  <div class="bundle-det" style="margin: 16px auto;">
                     <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
+                      <p class="caption-des text-left"><%=bd.bundle_combo%></p>
                       <div class="bx-img text-center">
                         <img src="<%=bd.image%>" alt="" width="140" height="74">
                       </div>
                       <p class="caption-title"><%=bd.title.truncate(20)%></p>
                       <p class="caption-price">Price:<strong>$ <%=bd.price%></strong></p>
                       <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
-                      <h4 class="caption-des text-left"><%=bd.bundle_combo%></h4>
                     </a>
                   </div>
                   <%end%>
@@ -126,23 +128,13 @@
     responsiveClass:true,
    items:3,
   });
-</script>
-
-
-<script type="text/javascript">
-
     var checkedValues,dealids;
     $("#compare_box").hide();
     $( document ).ready(function() {
-      console.log("params="+"<%=params%>")
-        dealids = [
-            <%
-            if @deal_ids.present?%>
-            <%=
-            @deal_ids.map(&:to_s).join(", ")
-            %>
-            <%end
-            %>
+         dealids = [
+            <%if @deal_ids.present?%>
+            <%=@deal_ids.map(&:to_s).join(", ")%>
+            <%end%>
         ];
         for(i=0;i<dealids.length;i++){
             $("#"+dealids[i]).addClass("btn_3");
@@ -183,7 +175,7 @@
      });
 
 function showcomparebox(deal_id) {
-  if ($("#checkbox"+deal_id).is(":checked")==true){
+  if ($("#checkbox"+deal_id).is(":checked")==true) {
     if($("#compare_box").is(":visible")==false && $("#compare-box-deal-1").is(":visible")==false){
       console.log(1);
       $("#compare-box-deal-1").removeClass("hidden");
@@ -233,4 +225,5 @@ function resetcomparebox() {
     $(".comparebox-display:checkbox").attr("checked", false);
     $("#compare-box-deal-1").addClass("hidden");
     $("#compare-box-deal-2").addClass("hidden");
-};
+}
+</script>

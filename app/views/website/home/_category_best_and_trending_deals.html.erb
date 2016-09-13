@@ -4,7 +4,7 @@
       <% best_deal = data[:best_deal] %>
       <div class="col-xs-6 col-sm-6 col-md-4">
         <div class="border-radius-bg auto-height">
-          <span class="bestdeal-icon">Best Deal</span>
+          <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
           <div class="vertical_middle" style="overflow: hidden;width:215px">
           <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
         </div>
@@ -63,7 +63,7 @@
     <% best_deal = data[:trending_deal] %>
     <div class="col-xs-6 col-sm-6 col-md-4">
       <div class="border-radius-bg auto-height">
-        <span class="trendingdeal-icon">Trending Deal</span>
+        <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt=""></div>
         <div class="vertical_middle" style="overflow: hidden;width:215px">
           <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
         </div>

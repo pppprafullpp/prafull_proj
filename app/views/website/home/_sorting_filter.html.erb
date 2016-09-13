@@ -18,13 +18,13 @@
                active_class2 = ''
              end
           %>
-          <li><%= link_to 'Price Low to High',params.merge({:sort_by => 'price ASC', :new_user => "false"}),:class => active_class1 %></li>
-          <li><%= link_to 'Price High to Low',params.merge({:sort_by => 'price DESC', :new_user => "false"}),:class => active_class2 %></li>
+          <li><%= link_to 'Price Low to High',params.merge({:sort_by => 'price ASC'}),:class => active_class1 %></li>
+          <li><%= link_to 'Price High to Low',params.merge({:sort_by => 'price DESC'}),:class => active_class2 %></li>
         </ul>
         <%if session[:user_id].present? and ServicePreference.where(:app_user_id=>session[:user_id], :service_category_id=>params[:category_id]).present?%>
-         <div style="float:right">  <a href="#" data-toggle="modal" data-target="#myModal" class="prefrence-popup">Edit Services for <%=ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></a> </div>
+         <div style="float:right">  <a href="#" data-toggle="modal" data-target="#myModal" class="prefrence-popup">Edit Services</a> </div>
          <%elsif session[:user_id].present?%>
-         <div style="float:right">  <a href="#" data-toggle="modal" data-target="#myModal" class="prefrence-popup">Add Services for <%=ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></a> </div>
+         <div style="float:right">  <a href="#" data-toggle="modal" data-target="#myModal" class="prefrence-popup">Add Services </a> </div>
         <%end%>
       </div>
       <div class="col-md-4">

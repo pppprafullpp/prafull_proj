@@ -61,7 +61,7 @@
                           <div class="login-signup col-lg-12 col-xs-12">
 
                             <form class="form-horizontal" id="login_app_user" action="/website/app_users/signin" accept-charset="UTF-8" method="post">
-                                <span style="font-size: 16px;color: red;margin-left: 5px;display: none;" id="user_not_found">Incorrect Username or Password!</span>
+                                <span style="font-size: 12px;color: red;margin-left: -14px;display: none;" id="user_not_found">Incorrect Username or Password!</span>
                               <div class="form-group">
                                 <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
                                 <input type="text" class="form-control" placeholder="Email"  name="user[email]" id="user_email" required>
@@ -178,7 +178,7 @@ function titleize_text(object) {
   $("#app_user_user_type").change(function(){
   if (  $("#app_user_user_type option:selected").val() == "business") {
     $("#business_name_div").removeClass("hidden");
-    $(".height_popup").css("height", "700px")
+    // $(".height_popup").css("height", "700px")
   }
   else {
     $("#business_name_div").addClass("hidden");

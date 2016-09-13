@@ -17,11 +17,11 @@
    end
   end
   %>
-  <%= "Add Preferences for Telephone" if params[:new_user]%>
+  <h4>Current Telephone Service </h4>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",2)%>
-  <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
+  <% @providers=ServiceProvider.where(:service_category_id=>2).pluck(:name,:id)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
 
@@ -39,22 +39,21 @@
 </div>
     <div class="col-md-6"><%= date_field_tag(:telephone_start_date,start_date, :class=>"form-control")%></div>
     <div class="col-md-6"><%= date_field_tag(:telephone_end_date,end_date, :class=>"form-control")%></div>
-    <p class="contract-margin-sty">Calls</p>
 
     <div class="row">
-  <div class="col-md-12">  <p  class="set-call">Domestic</p></div>
+     <div class="col-md-12"><h4>Calls</h4></div>
+     <div class="col-md-12">
+       <p  class="set-call">Domestic</p></div>
       <div class="col-md-6">
-
-        <div class="checkbox checkbox-info no-contract-sty">
-     <%= check_box_tag "telephone_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+      <div class="checkbox checkbox-info no-contract-sty">
+      <%= check_box_tag "telephone_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
       <label for="telephone_domestic_call_unlimited"> <span>Unlimited</span> </label>
       </div>
-
       </div>
       <div class="col-md-6">
         <%=number_field_tag(:telephone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
-    </div>
+     </div>
     <div class="row">
   <div class="col-md-12 "> <p class="set-call">international</p> </div>
       <div class="col-md-6">
@@ -71,10 +70,11 @@
         <%=number_field_tag(:telephone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
     </div>
+
     <div class="col-md-12 text-center ">
-    <%= submit_tag("Save", :class=>"btn btn-success search-btn preference-btn",:onclick=>"submit_telephone()")%>
+    <%= submit_tag("Save", :class=>"btn btn-success preference-btn",:onclick=>"submit_telephone()")%>
       <%if params[:new_user]%>
-        <%= button_tag("skip", :class=>"btn btn-success preference-btn", :onclick=>"show_bundle()")%>
+        <%= button_tag("Skip", :class=>"btn skip-btn", :onclick=>"show_bundle()")%>
       <%end%>
     </div>
     <%end%>
@@ -99,8 +99,6 @@
       url :"/api/v1/get_preferences?app_user_id="+<%=session[:user_id]%>+"&category=2",
       type: "GET",
       success: function(data){
-        console.log("telephone"+data);
-        console.log(data["service_preference"]);
         $("#telephone_price").val(data["service_preference"]["price"]);
         if(data["service_preference"]["is_contract"] == true) {
           $("#telephone_start_date").attr("disabled",true);
@@ -171,7 +169,7 @@
       success: function(data){
         if (data["success"] == true) {
           $("#telephone_pref").hide();
-          $("#bundle_pref").show().css("height","500px");
+          $("#cable_pref").show();
         }
       }
     });

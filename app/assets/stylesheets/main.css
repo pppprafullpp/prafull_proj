@@ -1569,8 +1569,8 @@ color: #fff !important;
 	border: 1px solid #008bf1;
 }
 .height_popup {
-	height: 384px;
-	overflow: hidden;
+	/*height: 384px;*/
+	overflow:scroll;
 }
 .popup_left {
 	width: 40%;

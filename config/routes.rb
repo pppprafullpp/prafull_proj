@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       match 'customisable_deals' => "deals#customisable_deals", :via => :get
       match 'customisable_deal_deatail' => "deals#customisable_deal_deatail", :via => :get
       match 'channel_customisable_deals' => "deals#channel_customisable_deals", :via => :get
-      
+
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
       end
@@ -79,8 +79,7 @@ Rails.application.routes.draw do
   match "/set_default_address" => "website/app_users#set_default_address", :via => [:post]
   match "/delete_address" => "website/app_users#delete_address", :via => [:post]
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
- 
-  
+
   #
   # if Socket.gethostname=="servicedlz-Virtual-Machine"
   # root to: "home#index"

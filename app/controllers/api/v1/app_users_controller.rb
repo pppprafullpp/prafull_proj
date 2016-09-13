@@ -49,7 +49,7 @@ class Api::V1::AppUsersController < ApplicationController
       @app_user.referral_code = (decode_api_data(params[:first_name]).split(" ").first + rand(36**4).to_s(36)).upcase
       code=SecureRandom.hex(5)
       @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
-      # AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
+      AppUserMailer.send_verification_mail(@app_user.id,code).deliver!
       AppUserMailer.sign_up_mail(@app_user).deliver!
       if @app_user.save
         render :status => 200,
@@ -211,7 +211,7 @@ class Api::V1::AppUsersController < ApplicationController
         puts "allowed_best_deal_sum=#{allowed_best_deal_sum}"
         you_save = (12*(service_preference_sum - allowed_best_deal_sum.to_f))
         if session[:new_user] == true
-          session[:new_user] = false 
+          session[:new_user] = false
         end
         if you_save!=0
           yousaveprecision=you_save.round(1).to_s.split(".")[1].to_i

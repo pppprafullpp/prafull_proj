@@ -65,7 +65,7 @@
       <label for="checkbox_domestic_call_unlimited" ><span>Unlimited<span></label>
       </div>
       </div>
-      
+
       <div class="col-md-6">
       <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
@@ -145,6 +145,7 @@
     $("#cellphone_domestic_call_unlimited").on("change",function(){
       if($("#cellphone_domestic_call_unlimited").prop("checked")==true){
         $("#cellphone_domestic_call_minutes").attr("disabled",true);
+        $("#cellphone_domestic_call_minutes").val(0);
         $("#cellphone_domestic_call_unlimited").val("true");
       }
       else {
@@ -156,6 +157,7 @@
     $("#international_call_unlimited").on("change",function(){
       if($("#cellphone_international_call_unlimited").prop("checked")==true){
         $("#cellphone_international_call_minutes").attr("disabled",true);
+        $("#cellphone_international_call_minutes").val(0);
         $("#cellphone_domestic_call_unlimited").val("true");
       }
       else {

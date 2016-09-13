@@ -11,7 +11,7 @@
     </div>
 
     <%
-    business_name = business.present? ? business.business_name : ''
+    business_name = business.present? ? business.business_name.titleize : ''
     manager_name = business.present? ? business.manager_name : ''
     manager_contact = business.present? ? business.manager_contact : ''
     business_type = business.present? ? business.business_type : ''

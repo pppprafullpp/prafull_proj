@@ -29,14 +29,14 @@
         <select class="form-control"  id="telephone_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
       </select>  </div>
-  <div class = "col-md-6" >  <%= number_field_tag(:telephone_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
+      <div class = "col-md-6" >  <%= number_field_tag(:telephone_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
     <p class="contract-margin-sty">Contract Date</p>
 
 
     <div class="checkbox checkbox-info no-contract-sty">
-  <input type="checkbox" name="telephone_is_contract" id="telephone_is_contract" value="false" checked="checked">
-  <label for="telephone_is_contract"> <span>No Contract </span> </label>
-</div>
+      <input type="checkbox" name="telephone_is_contract" id="telephone_is_contract" value="false" checked="checked">
+      <label for="telephone_is_contract"> <span>No Contract </span> </label>
+    </div>
     <div class="col-md-6"><%= date_field_tag(:telephone_start_date,start_date, :class=>"form-control")%></div>
     <div class="col-md-6"><%= date_field_tag(:telephone_end_date,end_date, :class=>"form-control")%></div>
 
@@ -55,15 +55,13 @@
       </div>
      </div>
     <div class="row">
-  <div class="col-md-12 "> <p class="set-call">international</p> </div>
+      <div class="col-md-12 "> <p class="set-call">international</p> </div>
       <div class="col-md-6">
 
-
-           <div class="checkbox checkbox-info no-contract-sty">
-       <%= check_box_tag "telephone_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+         <div class="checkbox checkbox-info no-contract-sty">
+         <%= check_box_tag "telephone_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
          <label for="telephone_international_call_unlimited"> <span>unlimited</span> </label>
          </div>
-
 
       </div>
       <div class="col-md-6">
@@ -114,6 +112,8 @@
     $("#telephone_domestic_call_unlimited").on("change",function(){
       if($("#telephone_domestic_call_unlimited").prop("checked")==true){
         $("#telephone_domestic_call_minutes").attr("disabled",true);
+        $("#telephone_domestic_call_minutes").val(0);
+
         $("#telephone_domestic_call_unlimited").val("true");
       }
       else {
@@ -125,6 +125,7 @@
     $("#telephone_international_call_unlimited").on("change",function(){
       if($("#telephone_international_call_unlimited").prop("checked")==true){
         $("#telephone_international_call_minutes").attr("disabled",true);
+        $("#telephone_international_call_minutes").val(0);
         $("#telephone_domestic_call_unlimited").val("true");
       }
       else {

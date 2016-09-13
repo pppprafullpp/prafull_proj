@@ -44,7 +44,7 @@ class Website::AppUsersController < ApplicationController
         if session[:deal].present?
           redirect_to order_website_app_users_path(:deal_id=> session[:deal])
         else
-          redirect_to "/website/home/deal_details?category_id=1&zip_code=NzUwMjQ=&deal_type=#{@app_user.user_type}&new_user=true"
+          redirect_to "/website/home?new_user=true"
         end
       else
         flash[:warning] = @app_user.errors.full_messages

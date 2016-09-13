@@ -11733,3 +11733,6 @@ I, [2016-09-12T12:42:09.142786 #6628]  INFO -- : reaped #<Process::Status: pid 6
 I, [2016-09-12T12:42:09.143062 #6628]  INFO -- : reaped #<Process::Status: pid 6636 exit 0> worker=1
 I, [2016-09-12T12:42:09.143539 #6628]  INFO -- : master complete
 E, [2016-09-12T12:42:09.190579 #6605] ERROR -- : reaped #<Process::Status: pid 6628 exit 0> exec()-ed
+I, [2016-09-12T20:17:00.397729 #6605]  INFO -- : reaped #<Process::Status: pid 6609 exit 0> worker=0
+I, [2016-09-12T20:17:00.397976 #6605]  INFO -- : reaped #<Process::Status: pid 6612 exit 0> worker=1
+I, [2016-09-12T20:17:00.398390 #6605]  INFO -- : master complete

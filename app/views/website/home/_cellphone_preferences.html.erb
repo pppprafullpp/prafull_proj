@@ -36,7 +36,7 @@
   </div>
 
   <div class="col-md-6">
-    <%= number_field_tag(:price,price,:class=>"form-control", :placeholder=>"Enter price")%>
+    <%= number_field_tag(:price,price.present? ? price : 100,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
   <div class="row">
     <p class="contract-margin-sty">Contract Date</p>
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="col-md-6">
-      <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+      <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes.present? ? domestic_call_minutes : 500, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
      </div>
 
@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :300, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
 
@@ -107,12 +107,37 @@
       </div>
     </div>
     <div class="col-md-12 text-center">
-     <%= submit_tag("Save", :class=>"btn btn-success preference-btn ")%>
+    <div class="col-md-6">
+      <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
+    </div>
+    <div class="col-md-6">
+      <%if @service_preferences_data.present?%>
+      <%= button_tag("Unsubscribe", :class=>"btn btn-success preference-btn", :onclick=>"Unsubscribe()")%>
+      <%end%>
+    </div>
+    </div>
 
-   </div>
     <%end%>
   </div>
   <script>
+  function Unsubscribe()
+  {
+    event.preventDefault();
+    $.ajax({
+      url:"/api/v1/deselect_prference",
+      type:"POST",
+      data: {
+        app_user_id:<%=session[:user_id]%>,
+        category:<%=params[:category_id]%>
+      },
+      success: function(d){
+        console.log(d);
+        if(d["success"] == true){
+          location.reload();
+        }
+      }
+    });
+  }
    $(document).ready(function(){
     $("#is_contract").prop("checked",false);
     $("#domestic_call_unlimited").prop("checked",false);

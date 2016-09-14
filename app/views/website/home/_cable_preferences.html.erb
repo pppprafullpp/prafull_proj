@@ -16,9 +16,7 @@
    end
  end
   %>
-  <%= "Add Preferences for Cable" if params[:new_user]%>
-
-  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
   <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name, :id)%>

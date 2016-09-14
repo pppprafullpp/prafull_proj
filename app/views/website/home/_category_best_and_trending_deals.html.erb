@@ -8,7 +8,7 @@
           <div class="vertical_middle" style="overflow: hidden;width:215px">
           <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
         </div>
-        <div class="sonal-test">
+        <div class="main-external-div1">
           <h5><%= best_deal['title'].truncate(25) %></h5>
           <ul class="description-height">
             <li><%= best_deal['short_description'].truncate(30) %></li>
@@ -19,13 +19,23 @@
           <% end %>
           <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
 
-          <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
-            <b>Rating:
+          <%if rating.present?%>
+           <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
+             <b>Rating:
               <%rating.times do%>
-                <i  style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+               <i style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+              <%end%>
+              <%rev=5-rating%>
+              <%rev.times do%>
+              <i style="color:#db9e03" class="glyphicon glyphicon-star-empty"></i>
+              <%end%>
+              <%else%>
+              <%5.times do%>
+              <i style="color:#db9e03" class="glyphicon glyphicon glyphicon-star-empty"></i>
               <%end%>
             </b>
-          </p>
+           </p>
+          <%end%><br />
           <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
       </div>
         <div class="box_down">
@@ -67,7 +77,7 @@
         <div class="vertical_middle" style="overflow: hidden;width:215px">
           <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
         </div>
-        <div class="sonal-test">
+        <div class="main-external-div1">
         <h5><%= best_deal['title'].truncate(25) %></h5>
         <ul class="description-height">
           <li><%= best_deal['short_description'].truncate(30) %></li>
@@ -77,13 +87,23 @@
           <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
         <% end %>
         <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
-        <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
-          <b>Rating:
+        <%if rating.present?%>
+         <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
+           <b>Rating:
             <%rating.times do%>
-              <i  style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+             <i style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+            <%end%>
+            <%rev=5-rating%>
+            <%rev.times do%>
+            <i style="color:#db9e03" class="glyphicon glyphicon-star-empty"></i>
+            <%end%>
+            <%else%>
+            <%5.times do%>
+            <i style="color:#db9e03" class="glyphicon glyphicon glyphicon-star-empty"></i>
             <%end%>
           </b>
-        </p>
+         </p>
+       <%end%><br />
         <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
       </div>
         <div class="box_down">

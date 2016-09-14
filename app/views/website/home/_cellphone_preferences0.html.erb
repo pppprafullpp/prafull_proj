@@ -137,7 +137,6 @@
         $("#telephone_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
         $("#cellphone_price").val(data["service_preference"]["price"]);
         $("#cellphone_data_plan option[value='"+'2.0'+"']").attr('selected','selected');
-
       }
     });
 
@@ -154,7 +153,7 @@
       }
     });
 
-    $("#international_call_unlimited").on("change",function(){
+    $("#cellphone_international_call_unlimited").on("change",function(){
       if($("#cellphone_international_call_unlimited").prop("checked")==true){
         $("#cellphone_international_call_minutes").attr("disabled",true);
         $("#cellphone_international_call_minutes").val(0);
@@ -193,29 +192,34 @@
     {
       is_contract=true
     }
-    console.log("is contract="+is_contract);
-    $.ajax({
-      url:"/edit_or_change_service_preferences",
-      type: "POST",
-      data: {
-        service_category_id:4,
-        app_user_id:$("#app_user_id").val(),
-        domestic_call_minutes:$("#cellphone_domestic_call_minutes").val(),
-        international_call_minutes:$("#cellphone_international_call_minutes").val(),
-        start_date:$("#cellphone_start_date").val(),
-        end_date:$("#cellphone_end_date").val(),
-        data_plan:$("#cellphone_data_plan").val(),
-        no_of_lines:$("#cellphone_no_of_lines").val(),
-        price:$("#cellphone_price").val(),
-        is_contract:is_contract,
-        service_provider_id:$("#cellphone_service_provider_id option:selected").val()
-      },
-      success: function(data){
-        if (data["success"] == true) {
-          $("#cellphone_pref").hide();
-          $("#bundle_pref").show().css("height","500px");
+    if($("#cellphone_price").val()!= "") {
+      $.ajax({
+        url:"/edit_or_change_service_preferences",
+        type: "POST",
+        data: {
+          service_category_id:4,
+          app_user_id:$("#app_user_id").val(),
+          domestic_call_minutes:$("#cellphone_domestic_call_minutes").val(),
+          international_call_minutes:$("#cellphone_international_call_minutes").val(),
+          start_date:$("#cellphone_start_date").val(),
+          end_date:$("#cellphone_end_date").val(),
+          data_plan:$("#cellphone_data_plan").val(),
+          no_of_lines:$("#cellphone_no_of_lines").val(),
+          price:$("#cellphone_price").val(),
+          is_contract:is_contract,
+          service_provider_id:$("#cellphone_service_provider_id option:selected").val()
+        },
+        success: function(data){
+          if (data["success"] == true) {
+            $("#cellphone_pref").hide();
+            $("#bundle_pref").show().css("height","500px");
+          }
         }
-      }
-    });
+      });
+    }
+    else {
+      alert("enter price");
+    }
+
   }
   </script>

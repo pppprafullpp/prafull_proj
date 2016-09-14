@@ -96,26 +96,33 @@
     else {
       is_contract=true
     }
-    $.ajax({
-      url:"/edit_or_change_service_preferences",
-      type: "POST",
-      data: {
-        service_category_id:3,
-        app_user_id:$("#app_user_id").val(),
-        free_channels:$("#cable_free_channels").val(),
-        premium_channels:$("#cable_premium_channels").val(),
-        start_date:$("#cable_start_date").val(),
-        end_date:$("#cable_end_date").val(),
-        price:$("#cable_price").val(),
-        is_contract:is_contract,
-        service_provider_id:$("#cable_service_provider_id option:selected").val()
-      },
-      success: function(data){
-        if (data["success"] == true) {
-          $("#cable_pref").hide();
-          $("#cellphone_pref").show();
+    if($("#cable_price").val()!= "") {
+      $.ajax({
+        url:"/edit_or_change_service_preferences",
+        type: "POST",
+        data: {
+          service_category_id:3,
+          app_user_id:$("#app_user_id").val(),
+          free_channels:$("#cable_free_channels").val(),
+          premium_channels:$("#cable_premium_channels").val(),
+          start_date:$("#cable_start_date").val(),
+          end_date:$("#cable_end_date").val(),
+          price:$("#cable_price").val(),
+          is_contract:is_contract,
+          service_provider_id:$("#cable_service_provider_id option:selected").val()
+        },
+        success: function(data){
+          if (data["success"] == true) {
+            $("#cable_pref").hide();
+            $("#cellphone_pref").show();
+          }
         }
-      }
-    });
+      });
+    }
+    else
+    {
+      alert("enter price");
+    }
+
   }
   </script>

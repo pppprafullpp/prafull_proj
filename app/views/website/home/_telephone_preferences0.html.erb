@@ -151,28 +151,33 @@
     {
       is_contract=true
     }
-    console.log("is contract="+is_contract);
-    $.ajax({
-      url:"/edit_or_change_service_preferences",
-      type: "POST",
-      data: {
-        service_category_id:2,
-        app_user_id:$("#app_user_id").val(),
-        domestic_call_minutes:$("#telephone_domestic_call_minutes").val(),
-        international_call_minutes:$("#telephone_international_call_minutes").val(),
-        start_date:$("#telephone_start_date").val(),
-        end_date:$("#telephone_end_date").val(),
-        data_plan:$("#telephone_data_plan").val(),
-        price:$("#telephone_price").val(),
-        is_contract:is_contract,
-        service_provider_id:$("#telephone_service_provider_id option:selected").val()
-      },
-      success: function(data){
-        if (data["success"] == true) {
-          $("#telephone_pref").hide();
-          $("#cable_pref").show();
-        }
-      }
-    });
+    if( $("#telephone_price").val()!= ""){
+      $.ajax({
+       url:"/edit_or_change_service_preferences",
+       type: "POST",
+       data: {
+         service_category_id:2,
+         app_user_id:$("#app_user_id").val(),
+         domestic_call_minutes:$("#telephone_domestic_call_minutes").val(),
+         international_call_minutes:$("#telephone_international_call_minutes").val(),
+         start_date:$("#telephone_start_date").val(),
+         end_date:$("#telephone_end_date").val(),
+         data_plan:$("#telephone_data_plan").val(),
+         price:$("#telephone_price").val(),
+         is_contract:is_contract,
+         service_provider_id:$("#telephone_service_provider_id option:selected").val()
+       },
+       success: function(data){
+         if (data["success"] == true) {
+           $("#telephone_pref").hide();
+           $("#cable_pref").show();
+         }
+       }
+     });
+    }
+    else
+    {
+      alert("Enter price");
+    }
   }
   </script>

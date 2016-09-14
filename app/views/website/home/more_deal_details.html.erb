@@ -56,7 +56,6 @@
         <% end %>
         <div id="reviews-section" class="">
           <h3 id="reviews-header"></h3>
-          <%if session[:user_id].present?%>
             <div class="add-reviews-div">
               <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
               <p>Select rating point</p>
@@ -64,13 +63,10 @@
               <%=f.text_field:comment_title, :class => "form-control", :placeholder => "Add Comment title", :required => true%><br />
               <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />
               <%=f.hidden_field:deal_id, :value=>params[:deal_id]%>
-                <%if session[:user_id].present?%>
-                  <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
-                <%end%>
+                <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
                 <%=f.submit("Save", :class=>"btn btn-success", :onclick=>"add_comments()")%>
               <%end%>
             </div>
-          <%end%>
             <div id="reviews-inner-area"></div>
         </div>
 
@@ -81,20 +77,24 @@
   <script>
   function add_comments(){
     event.preventDefault();
-    $.ajax({
-      url:"/api/v1/comment_ratings",
-      type:"post",
-      data: {
-        app_user_id:$("#comment_rating_app_user_id").val(),
-        deal_id:$("#comment_rating_deal_id").val(),
-        rating_point:$("#comment_rating_rating_point").val(),
-        comment_title:$("#comment_rating_comment_title").val(),
-        comment_text:$("#comment_rating_comment_text").val()
-      },
-      success: function(d){
-        location.reload();
-      }
-    })
+    if($("#comment_rating_app_user_id").val()!=""){
+      $.ajax({
+        url:"/api/v1/comment_ratings",
+        type:"post",
+        data: {
+          app_user_id:$("#comment_rating_app_user_id").val(),
+          deal_id:$("#comment_rating_deal_id").val(),
+          rating_point:$("#comment_rating_rating_point").val(),
+          comment_title:$("#comment_rating_comment_title").val(),
+          comment_text:$("#comment_rating_comment_text").val()
+        },
+        success: function(d){
+          location.reload();
+        }
+      });
+    }
+    else
+    alert("Please login to comment!");
   }
   $(document).ready(
     function(){
@@ -104,7 +104,6 @@
   </script>
 </section>
 <!--End of More Details section-->
-
 
 
 <div class="modal fade text-left" id="myModal2" role="dialog">

@@ -96,27 +96,32 @@
       {
         is_contract=true
       }
-      console.log("is contract="+is_contract);
-      $.ajax({
-        url:"/edit_or_change_service_preferences",
-        type: "POST",
-        data: {
-          service_category_id:1,
-          app_user_id:$("#app_user_id").val(),
-          upload_speed:$("#internet_upload_speed").val(),
-          download_speed:$("#internet_download_speed").val(),
-          start_date:$("#internet_start_date").val(),
-          end_date:$("#internet_end_date").val(),
-          price:$("#internet_price").val(),
-          is_contract:is_contract,
-          service_provider_id:$("#internet_service_provider_id option:selected").val()
-        },
-        success: function(data){
-          if (data["success"] == true) {
-            $("#internet_pref").hide();
-            $("#telephone_pref").show();
-          }
-        }
-      });
+       if ($("#internet_price").val()!= "") {
+         $.ajax({
+           url:"/edit_or_change_service_preferences",
+           type: "POST",
+           data: {
+             service_category_id:1,
+             app_user_id:$("#app_user_id").val(),
+             upload_speed:$("#internet_upload_speed").val(),
+             download_speed:$("#internet_download_speed").val(),
+             start_date:$("#internet_start_date").val(),
+             end_date:$("#internet_end_date").val(),
+             price:$("#internet_price").val(),
+             is_contract:is_contract,
+             service_provider_id:$("#internet_service_provider_id option:selected").val()
+           },
+           success: function(data){
+             if (data["success"] == true) {
+               $("#internet_pref").hide();
+               $("#telephone_pref").show();
+             }
+           }
+         });
+       }
+       else {
+         alert("Enter price")
+       }
+
       }
   </script>

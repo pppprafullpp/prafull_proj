@@ -316,35 +316,41 @@
           else{
             is_contract=true
           }
-          $.ajax({
-            url:"/edit_or_change_service_preferences",
-            type: "POST",
-            data: {
-              service_category_id:5,
-              service_provider_id: $("#service_provider_id option:selected").val(),
-              app_user_id:$("#app_user_id").val(),
-              domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
-              international_call_minutes:$("#bundle_international_call_minutes").val(),
-              start_date:$("#bundle_start_date").val(),
-              end_date:$("#bundle_end_date").val(),
-              data_plan:$("#bundle_data_plan").val(),
-              no_of_lines:$("#bundle_no_of_lines").val(),
-              price:$("#bundle_price").val(),
-              download_speed:$("#bundle_download_speed").val(),
-              upload_speed:$("#bundle_upload_speed").val(),
-              // bundle_combo:$("#bundle_combo").val(),
-              is_contract:is_contract,
-              service_provider_id:$("#bundle_service_provider_id option:selected").val(),
-              free_channels:$("#bundle_free_channels").val(),
-              premium_channels:$("#bundle_premium_channels").val(),
-            },
-            success: function(data){
-              if (data["success"] == true) {
-                $("#comparePopup").modal("hide");
-                calculate_you_save();
+          if($("#bundle_price").val()!="") {
+            $.ajax({
+              url:"/edit_or_change_service_preferences",
+              type: "POST",
+              data: {
+                service_category_id:5,
+                service_provider_id: $("#service_provider_id option:selected").val(),
+                app_user_id:$("#app_user_id").val(),
+                domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
+                international_call_minutes:$("#bundle_international_call_minutes").val(),
+                start_date:$("#bundle_start_date").val(),
+                end_date:$("#bundle_end_date").val(),
+                data_plan:$("#bundle_data_plan").val(),
+                no_of_lines:$("#bundle_no_of_lines").val(),
+                price:$("#bundle_price").val(),
+                download_speed:$("#bundle_download_speed").val(),
+                upload_speed:$("#bundle_upload_speed").val(),
+                // bundle_combo:$("#bundle_combo").val(),
+                is_contract:is_contract,
+                service_provider_id:$("#bundle_service_provider_id option:selected").val(),
+                free_channels:$("#bundle_free_channels").val(),
+                premium_channels:$("#bundle_premium_channels").val(),
+              },
+              success: function(data){
+                if (data["success"] == true) {
+                  $("#comparePopup").modal("hide");
+                  calculate_you_save();
+                }
               }
-            }
-          });
+            });
+          }
+          else {
+            alert("Enter Price")
+          }
+
     }
     else {
       $("#msg").text("Please Enter Price").removeClass("hidden");

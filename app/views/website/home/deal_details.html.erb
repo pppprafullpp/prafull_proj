@@ -28,12 +28,12 @@
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
 
             <div class="col-sm-12" style="overflow: hidden">
-              <span style="position:absolute;position: absolute;margin: 32px;z-index: 99;"><b>Bundled Deals with <%= ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></b></span>
+              <h5 style="position:absolute;position: absolute;margin: 32px;z-index: 99;"><b>Bundled Deals with <%= ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></b></h5>
               <div class="owl-carousel bundle-deal border-radius-bg">
                  <%bundle_deals.each do |bd|%>
                   <div class="bundle-det" style="margin: 16px auto;">
                     <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
-                      <p class="caption-des text-left"><%=bd.bundle_combo%></p>
+                      <p class="bundled-data-header "><%=bd.bundle_combo%></p>
                       <div class="bx-img text-center">
                         <img src="<%=bd.image%>" alt="" width="140" height="74">
                       </div>
@@ -60,7 +60,7 @@
                         <img src="<%= data['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
                       </div>
 
-                      <div class="sonal-test">
+                      <div class="main-external-div1">
                         <h5><%= data['title'].truncate(25) %></h5>
                         <ul class="description-height">
                           <li><%= data['short_description'].truncate(50) %></li>
@@ -71,14 +71,24 @@
                           <% end %>
 
                         <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
-
-                          <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
+                         <%if rating.present?%>
+                          <p id="rating" style="color: #000;font-size: 16px;margin-top:5px">
                             <b>Rating:
                              <%rating.times do%>
                               <i style="color:#fdc722" class="glyphicon glyphicon-star"></i>
                              <%end%>
+                             <%rev=5-rating%>
+                             <%rev.times do%>
+                             <i style="color:#db9e03" class="glyphicon glyphicon-star-empty"></i>
+                             <%end%>
+                             <%else%>
+                             <%5.times do%>
+                             <i style="color:#db9e03" class="glyphicon glyphicon glyphicon-star-empty"></i>
+                             <%end%>
                            </b>
                           </p>
+                             <%end%>
+                             <br />
                           <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> More Details</a>
                       </div>
 

@@ -566,6 +566,7 @@ $("#order_information_menu_tab").click(function(event){
       $(".service-address-innertxt").html(service_address);
       $(".shipping-address-innertxt").html(shipping_address);
       $(".billing-address-innertxt").html(billing_address);
+      $("#review-ssn").text($('#ssn').val());
       $('.nav-tabs > .active').next('li').find('a').trigger('click');
     }
   });

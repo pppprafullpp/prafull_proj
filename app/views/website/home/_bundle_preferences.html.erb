@@ -34,7 +34,7 @@
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> </div>
       <div class="col-md-6">
-    <%= number_field_tag(:price,price.present? ? price : 700,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag(:price,price.present? ? "%.2f" % price : 100,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
     <p class="contract-margin-sty">Contract Date</p>
     <div class="checkbox checkbox-info no-contract-sty">
@@ -73,10 +73,10 @@
         <p>Cable</p>
       <div class="row">
         <div class="col-md-6">
-          <%=text_field_tag "free_channels",free_channels.present? ? free_channels : 30,:class=>"form-control", :placeholder=>"free Channels"%>
+          <%=text_field_tag "free_channels",free_channels,:class=>"form-control", :placeholder=>"free Channels"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "premium_channels",premium_channels.present? ? premium_channels : 10,:class=>"form-control", :placeholder=>"premium Channels"%>
+        <%=text_field_tag "premium_channels",premium_channels,:class=>"form-control", :placeholder=>"premium Channels"%>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
         <p>Internet</p>
       <div class="row">
         <div class="col-md-6">
-          <%=text_field_tag "download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
+          <%=text_field_tag "download_speed",download_speed.present? ? download_speed: 50,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
         </div>
         <div class="col-md-6">
         <%=text_field_tag "upload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
@@ -174,7 +174,7 @@
       }
     });
     <%if service_provider_id.present?%>
-    set_service_provider("<%=service_provider_id%>");
+    set_service_provider("<%=service_provider_id.present? ? service_provider_id : 12%>");
     function set_service_provider(id) {
       if (id!=null && id!=""){
       $("#service_provider_id option[value="+id+"]").attr('selected','selected');

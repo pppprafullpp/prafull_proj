@@ -9,7 +9,7 @@
            <div class="border-radius-bg">
              <img src="<%= @deal.image.url %>" width="100">
              <ul>
-               <li>Base Monthly Price $<%= @deal.price %></li>
+               <li>Base Monthly Price $<%= "%.2f" % @deal.price %></li>
                <li>Base Installation $0.00</li>
                <li>Contract : <%= @deal.contract_period %> months</li>
              </ul>
@@ -48,7 +48,7 @@
                   <tbody>
                   <tr>
                     <td width="20%">Price</td>
-                    <td width="80%" colspan="2">$<%= additional_offer.try(:price) %></td>
+                    <td width="80%" colspan="2">$<%= "%.2f" % additional_offer.try(:price) %></td>
                   </tr>
                   </tbody>
                 </table>

@@ -35,7 +35,7 @@
   </div>
 
   <div class="col-md-6">
-    <%= number_field_tag(:price,price.present? ? price : 100,:class=>"form-control", :placeholder=>"Enter price")%>
+    <%= number_field_tag(:price,price.present? ? "%.2f" % price : 120.00,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
   <div class="row">
     <p class="contract-margin-sty">Contract Date</p>
@@ -181,8 +181,8 @@
   });
 
   $(document).ready(function(){
-      $("#service_provider_id option[value="+<%=service_provider_id.to_i%>+"]").attr('selected','selected');
-      $("#data_plan option[value="+<%=data_plan.to_f.present? ? data_plan.to_f : 0 %>+"]").attr('selected','selected');
+      $("#service_provider_id option[value="+<%=service_provider_id.present? ?service_provider_id.to_i : 3%>+"]").attr('selected','selected');
+      $("#data_plan option[value="+<%=data_plan.to_f.present? ? data_plan.to_f : 2.0 %>+"]").attr('selected','selected');
       $("#no_of_lines option[value='"+<%=no_of_lines.present? ? no_of_lines : 1%>+"']").attr('selected','selected');
   })
 

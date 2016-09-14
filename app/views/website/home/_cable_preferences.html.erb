@@ -27,7 +27,7 @@
         <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> </div>
         <div class="col-md-6">
-    <%= number_field_tag("price",price.present? ? price : 300,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag("price",price.present? ? "%.2f" % price : 75,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
     <p class="contract-margin-sty">Contract Date</p>
     <div class="checkbox checkbox-info no-contract-sty">
@@ -37,8 +37,8 @@
 
   <div class="col-md-6">  <%= date_field_tag("start_date",start_date, :class=>"form-control")%></div>
     <div class="col-md-6 ">    <%= date_field_tag("end_date", end_date, :class=>"form-control")%></div>
-    <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("free_channels", free_channels.present? ? free_channels : 10, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
-  <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("premium_channels",premium_channels.present? ? premium_channels : 5, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
+    <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("free_channels", free_channels.present? ? free_channels : 150, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
+  <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("premium_channels",premium_channels.present? ? premium_channels : 0, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
 
     <div class="col-md-12 text-center">

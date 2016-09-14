@@ -37,8 +37,8 @@
       <input type="checkbox" name="telephone_is_contract" id="telephone_is_contract" value="false" checked="checked">
       <label for="telephone_is_contract"> <span>No Contract </span> </label>
     </div>
-    <div class="col-md-6"><%= date_field_tag(:telephone_start_date,start_date, :class=>"form-control")%></div>
-    <div class="col-md-6"><%= date_field_tag(:telephone_end_date,end_date, :class=>"form-control")%></div>
+    <div class="col-md-6"><%= text_field_tag(:telephone_start_date,start_date, :class=>"form-control", :placeholder=>"Start Date")%></div>
+    <div class="col-md-6"><%= text_field_tag(:telephone_end_date,end_date, :class=>"form-control", :placeholder=>"End Date")%></div>
 
     <div class="row">
      <div class="col-md-12"><h4>Calls</h4></div>

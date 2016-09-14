@@ -37,8 +37,8 @@
   <label for="cable_is_contract"> <span>No Contract </span> </label>
   </div>
 
-  <div class="col-md-6">  <%= date_field_tag("cable_start_date",start_date, :class=>"form-control")%></div>
-    <div class="col-md-6 ">    <%= date_field_tag("cable_end_date", end_date, :class=>"form-control")%></div>
+  <div class="col-md-6">  <%= text_field_tag("cable_start_date",start_date, :class=>"form-control", :placeholder =>"Start Date")%></div>
+    <div class="col-md-6 ">    <%= text_field_tag("cable_end_date", end_date, :class=>"form-control", :placeholder =>"End Date")%></div>
     <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("cable_free_channels", free_channels, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
   <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("cable_premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>

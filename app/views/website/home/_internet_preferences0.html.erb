@@ -37,8 +37,8 @@
   <label for="internet_contract"> <span>No Contract </span> </label>
   </div>
     <p class="contract-margin-sty">Contract Date</p>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("internet_start_date","#{start_date}", :class=>"form-control")%> </div>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("internet_end_date","#{end_date}", :class=>"form-control")%> </div><br />
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_start_date","#{start_date}", :class=>"form-control", :placeholder =>"Start Date")%> </div>
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_end_date","#{end_date}", :class=>"form-control", :placeholder =>"End Date")%> </div><br />
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>

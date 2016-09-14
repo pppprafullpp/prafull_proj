@@ -223,6 +223,11 @@
 //   }
 // });
 // })
+  $(document).ready(function(){
+    value=$("#user_type option:selected").val();
+    rest=value.substr(1);
+    $("#user_type option:selected").text(value[0].toUpperCase()+""+rest);
+  });
 function format_federal_number(obj) {
   if($("#"+obj.id).val().length==2){
   $("#"+obj.id).val($("#"+obj.id).val().toUpperCase()+"-")

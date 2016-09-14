@@ -17,7 +17,7 @@
    end
   end
   %>
- 
+
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
@@ -28,7 +28,7 @@
       <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
       </select>  </div>
-  <div class = "col-md-6" >  <%= number_field_tag(:price,price.present? ? price : 400,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
+  <div class = "col-md-6" >  <%= number_field_tag(:price,price.present? ? "%.2f" % price : 35.00,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
     <p class="contract-margin-sty">Contract Date</p>
 
 
@@ -51,7 +51,7 @@
 
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes.present? ? domestic_call_minutes : 500, :class=>"form-control", :placeholder=>"minutes")%>
+        <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes.present? ? domestic_call_minutes : 0, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
     </div>
     <div class="row">
@@ -65,7 +65,7 @@
 
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :300, :class=>"form-control", :placeholder=>"minutes")%>
+        <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :0, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
     </div>
     <div class="col-md-12 text-center">
@@ -141,7 +141,7 @@
       }
     });
     <%if service_provider_id.present?%>
-      set_service_provider("<%=service_provider_id%>")
+      set_service_provider("<%=service_provider_id.present? ? service_provider_id : 2%>")
       <%end%>
   })
   function set_service_provider(id) {

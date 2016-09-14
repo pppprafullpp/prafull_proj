@@ -96,11 +96,11 @@
                             <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
                             <div class="form-group">
                               <div class="col-md-6" style="padding-left:0px">
-                                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",:onkeyup=>"titleize_text(this)" %>
+                                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-fname-valid">Email Already Exists.</span>
                               </div>
                               <div class="col-md-6" style="padding-left:0px">
-                                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name",:onkeyup=>"titleize_text(this)" %>
+                                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-lname-valid">Email Already Exists.</span>
                               </div>
                             </div>

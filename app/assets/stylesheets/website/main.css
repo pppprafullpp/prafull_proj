@@ -655,12 +655,7 @@ color:#fff;
 	font-size: 18px;
 	color: #009904;
 }
-.box-sec p {
-	font-family: "open_sanssemibold";
-	font-size: 16px;
-	color: #939393;
-	margin-bottom: 0px;
-}
+
 .san_light {
 	font-family: 'open_sanslight';
 }
@@ -808,8 +803,7 @@ color:#fff;
 	margin-top: 25px;
 }
 .box-sec p {
-	font-family: "open_sanssemibold";
-	font-size: 16px;
+ 	font-size: 16px;
 	color: #939393;
 	margin-bottom: 0px;
 }

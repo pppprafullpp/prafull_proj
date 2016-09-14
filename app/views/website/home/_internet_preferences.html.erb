@@ -28,7 +28,7 @@
       </select>
     </div>
     <div class="col-md-6">
-    <%= number_field_tag("price","#{price.present? ? price : 300}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag("price","#{price.present? ? "%.2f" %  price.to_f : 120.00}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
 
   <div class="checkbox checkbox-info no-contract-sty">
@@ -38,7 +38,7 @@
     <p class="contract-margin-sty">Contract Date</p>
     <div class="col-md-6 mg_bttom20"><%= date_field_tag("start_date","#{start_date.to_date if start_date.present?}", :class=>"form-control")%> </div>
     <div class="col-md-6 mg_bttom20"><%= date_field_tag("end_date","#{end_date.to_date if end_date.present?}", :class=>"form-control")%> </div><br />
-    <div class="col-md-6 mg_bttom20"><%= number_field_tag("download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
+    <div class="col-md-6 mg_bttom20"><%= number_field_tag("download_speed",download_speed.present? ? download_speed : 20.00, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)")%></div>
     <%=hidden_field_tag("plan_name","none")%>
 

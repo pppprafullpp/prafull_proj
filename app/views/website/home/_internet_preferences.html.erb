@@ -29,7 +29,7 @@
       </select>
     </div>
     <div class="col-md-6">
-    <%= number_field_tag("price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag("price","#{price.present? ? price : 300}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
 
   <div class="checkbox checkbox-info no-contract-sty">
@@ -42,13 +42,39 @@
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)")%></div>
     <%=hidden_field_tag("plan_name","none")%>
-    <div class="col-md-12 text-center">
-    <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
 
+    <div class="col-md-12 text-center">
+    <div class="col-md-6">
+      <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
     </div>
+    <div class="col-md-6">
+      <%if @service_preferences_data.present?%>
+      <%= button_tag("Unsubscribe", :class=>"btn btn-success preference-btn", :onclick=>"Unsubscribe()")%>
+      <%end%>
+    </div>
+    </div>
+
     <%end%>
   </div>
   <script>
+  function Unsubscribe()
+  {
+    event.preventDefault();
+    $.ajax({
+      url:"/api/v1/deselect_prference",
+      type:"POST",
+      data: {
+        app_user_id:<%=session[:user_id]%>,
+        category:<%=params[:category_id]%>
+      },
+      success: function(d){
+        console.log(d);
+        if(d["success"] == true){
+          location.reload();
+        }
+      }
+    });
+  }
   $(document).ready(function(){
     $("#no_contract").prop("checked",false);
     $("#no_contract").on("change",function(){

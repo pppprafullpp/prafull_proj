@@ -15113,3 +15113,6 @@ E, [2016-09-13T13:09:29.910570 #5764] ERROR -- : reaped #<Process::Status: pid 5
 	from /home/apoorvmittal/.rvm/gems/ruby-2.3.1/gems/railties-4.2.6/lib/rails/commands.rb:17:in `<top (required)>'
 	from bin/rails:4:in `require'
 	from bin/rails:4:in `<main>'
+I, [2016-09-13T21:23:38.212383 #5764]  INFO -- : reaped #<Process::Status: pid 5771 exit 0> worker=1
+I, [2016-09-13T21:23:38.313284 #5764]  INFO -- : reaped #<Process::Status: pid 5768 exit 0> worker=0
+I, [2016-09-13T21:23:38.313826 #5764]  INFO -- : master complete

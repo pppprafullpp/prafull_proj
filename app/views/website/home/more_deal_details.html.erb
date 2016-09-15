@@ -29,7 +29,7 @@
 
          </div>
         <div class="col-sm-8 about-offer">
-        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
+        <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;Share on Facebook</i></a>
         <h4><%= @deal.title %></h4>
         <h5>About the offer</h5>
 
@@ -56,7 +56,7 @@
         <% end %>
         <div id="reviews-section" class="">
           <h3 id="reviews-header"></h3>
-            <div class="add-reviews-div">
+            <div class="add-reviews-div" style="border-bottom: 3px solid #fafafa;padding-bottom: 11px;height:340px">
               <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
               <p>Select rating point</p>
               <input id="comment_rating_rating_point" class="rating rating-loading" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
@@ -64,7 +64,7 @@
               <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />
               <%=f.hidden_field:deal_id, :value=>params[:deal_id]%>
                 <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
-                <%=f.submit("Save", :class=>"btn btn-success", :onclick=>"add_comments()")%>
+                <%=f.submit("Save", :class=>"order-btn",:style=>"width: 50%;margin: auto 29%;background-color: green;",:onclick=>"add_comments()")%>
               <%end%>
             </div>
             <div id="reviews-inner-area"></div>

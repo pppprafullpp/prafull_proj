@@ -45,8 +45,8 @@
       </div>
   </div>
 
-    <div class="col-md-6"><%= date_field_tag(:start_date,end_date,:class=>"form-control")%>  </div>
-    <div class="col-md-6"><%= date_field_tag(:end_date,end_date,:class=>"form-control")%>  </div>
+    <div class="col-md-6"><%= text_field_tag(:start_date,end_date,:class=>"form-control", :placeholder =>"Start Date")%>  </div>
+    <div class="col-md-6"><%= text_field_tag(:end_date,end_date,:class=>"form-control", :placeholder =>"End Date")%>  </div>
 
       <div class="row">
         <div class="col-md-12">
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="col-md-6">
-      <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes.present? ? domestic_call_minutes : 500, :class=>"form-control", :placeholder=>"minutes")%><br />
+      <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes.present? ? domestic_call_minutes : 500, :class=>"form-control", :placeholder=>"Minutes")%><br />
       </div>
      </div>
 
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :300, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :300, :class=>"form-control", :placeholder=>"Minutes")%><br />
       </div>
     </div>
 

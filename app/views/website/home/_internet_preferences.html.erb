@@ -36,8 +36,8 @@
   <label for="no_contract"> <span>No Contract </span> </label>
   </div>
     <p class="contract-margin-sty">Contract Date</p>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("start_date","#{start_date.to_date if start_date.present?}", :class=>"form-control")%> </div>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("end_date","#{end_date.to_date if end_date.present?}", :class=>"form-control")%> </div><br />
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("start_date","#{start_date.to_date if start_date.present?}", :class=>"form-control",:placeholder =>"Start Date")%> </div>
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("end_date","#{end_date.to_date if end_date.present?}", :class=>"form-control",:placeholder =>"End Date")%> </div><br />
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("download_speed",download_speed.present? ? download_speed : 20.00, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)")%></div>
     <%=hidden_field_tag("plan_name","none")%>

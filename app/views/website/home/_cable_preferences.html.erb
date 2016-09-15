@@ -35,8 +35,8 @@
   <label for="is_contract"> <span>No Contract </span> </label>
   </div>
 
-  <div class="col-md-6">  <%= date_field_tag("start_date",start_date, :class=>"form-control")%></div>
-    <div class="col-md-6 ">    <%= date_field_tag("end_date", end_date, :class=>"form-control")%></div>
+  <div class="col-md-6">  <%= text_field_tag("start_date",start_date, :class=>"form-control", :placeholder=>"Start Date")%></div>
+    <div class="col-md-6 ">    <%= text_field_tag("end_date", end_date, :class=>"form-control", :placeholder=>"End Date")%></div>
     <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("free_channels", free_channels.present? ? free_channels : 150, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
   <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("premium_channels",premium_channels.present? ? premium_channels : 0, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>

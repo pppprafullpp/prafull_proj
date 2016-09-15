@@ -48,7 +48,7 @@
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center btn-group-sty">
     <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference()")%>
     <input type="button" value="Skip" class="skip-button" onclick="show_telephone()" />
     </div>
@@ -57,7 +57,7 @@
   <script>
   function show_telephone() {
     $("#internet_pref").hide();
-    $("#telephone_pref").show();
+    $("#telephone_pref").show().css("height","490px");
   }
   $(document).ready(function(){
       $("#internet_start_date").datepicker();

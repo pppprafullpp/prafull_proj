@@ -46,7 +46,7 @@
     <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("cable_free_channels", free_channels, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
     <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("cable_premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center btn-group-sty">
      <%= submit_tag("Save", :class=>"btn save-button", :onclick =>"cable_submit()")%>
      <%if params[:new_user]%>
    <%= button_tag("Skip", :class=>"btn skip-button", :onclick=>"show_cellphone()")%>
@@ -58,7 +58,7 @@
   <script>
   function show_cellphone(){
       $("#cable_pref").hide();
-      $("#cellphone_pref").show();
+      $("#cellphone_pref").show().css("height","574px");
   }
   $(document).ready(function(){
     $("#cable_start_date").datepicker();

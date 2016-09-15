@@ -102,12 +102,16 @@
     <div class="col-md-12 text-center">
      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"submit_cellphone()")%>
      <%if params[:new_user]%>
-     <%= button_tag("Skip", :class=>"btn btn-success skip-btn", :onclick=>"show_telephone()")%>
+      <input type="button" class="btn btn-success skip-btn" value="Skip" onclick="show_bundle()" />
      <%end%>
    </div>
     <%end%>
   </div>
   <script>
+  function show_bundle() {
+      $("#cellphone_pref").hide();
+      $("#bundle_pref").show();
+  }
    $(document).ready(function(){
     $("#cellphone_contract").prop("checked",false);
     $("#cellphone_domestic_call_unlimited").prop("checked",false);

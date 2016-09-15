@@ -107,11 +107,11 @@
     </div>
     <div class="col-md-12 text-center">
     <div class="col-md-6">
-      <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
+      <%= submit_tag("Save", :class=>"btn save-button")%>
     </div>
     <div class="col-md-6">
       <%if @service_preferences_data.present?%>
-      <%= button_tag("Unsubscribe", :class=>"btn btn-success preference-btn", :onclick=>"Unsubscribe()")%>
+      <%= button_tag("Unsubscribe", :class=>"btn skip-button", :onclick=>"Unsubscribe()")%>
       <%end%>
     </div>
     </div>

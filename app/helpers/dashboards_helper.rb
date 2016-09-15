@@ -472,6 +472,7 @@ module DashboardsHelper
 			deal_type=app_user.user_type
 
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
+			# raise filter_by_provider.to_s
 			deal_validation_conditions="#{filter_by_provider} deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "
 
 			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
@@ -488,7 +489,6 @@ module DashboardsHelper
 					if deals.present?
 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
-
 					if json.present?
 						matched_deal = json
 					end

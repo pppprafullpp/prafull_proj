@@ -9,8 +9,8 @@
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <link href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" rel="stylesheet" />
-    
+    <%=stylesheet_link_tag "http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"%>
+
    </head>
 
   <body>
@@ -29,7 +29,8 @@
     <%= render :partial =>"/layouts/footer" %>
     <!--Start of Zopim Live Chat Script-->
     <!--Start of Zopim Live Chat Script-->
-    <script> -->
-     </script>
+    <script type="text/JavaScript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/JavaScript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" rel="stylesheet" />
   </body>
 </html>

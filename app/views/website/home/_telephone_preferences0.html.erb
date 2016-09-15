@@ -30,21 +30,21 @@
         <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
       </select>  </div>
       <div class = "col-md-6" >  <%= number_field_tag(:telephone_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
-    <p class="contract-margin-sty">Contract Date</p>
 
+      <div class="col-md-6">
+        <p class="contract-margin-sty">Contract Date</p>
+      </div>
 
-    <div class="checkbox checkbox-info no-contract-sty">
-      <input type="checkbox" name="telephone_is_contract" id="telephone_is_contract" value="false" checked="checked">
-      <label for="telephone_is_contract"> <span>No Contract </span> </label>
+      <div class="col-md-6">
+      <div class="checkbox checkbox-info no-contract-sty">
+        <input type="checkbox" name="telephone_is_contract" id="telephone_is_contract" value="false" checked="checked">
+        <label for="telephone_is_contract"> <span>No Contract </span> </label>
+      </div>
     </div>
     <div class="col-md-6"><%= text_field_tag(:telephone_start_date,start_date, :class=>"form-control", :placeholder=>"Start Date")%></div>
     <div class="col-md-6"><%= text_field_tag(:telephone_end_date,end_date, :class=>"form-control", :placeholder=>"End Date")%></div>
-
-    <div class="row">
-     <div class="col-md-12"><h4>Calls</h4></div>
-     <div class="col-md-12">
-       <p  class="set-call">Domestic</p></div>
-      <div class="col-md-6">
+     <div class="col-md-12"><p class="set-call">Domestic</p></div>
+      <div class="col-md-6 unlimited-call ">
       <div class="checkbox checkbox-info no-contract-sty">
       <%= check_box_tag "telephone_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
       <label for="telephone_domestic_call_unlimited"> <span>Unlimited</span> </label>
@@ -53,26 +53,23 @@
       <div class="col-md-6">
         <%=number_field_tag(:telephone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
-     </div>
-    <div class="row">
-      <div class="col-md-12 "> <p class="set-call">international</p> </div>
-      <div class="col-md-6">
+      <div class="col-md-12 "> <p class="set-call">International</p> </div>
+      <div class="col-md-6 unlimited-call ">
 
          <div class="checkbox checkbox-info no-contract-sty">
          <%= check_box_tag "telephone_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
-         <label for="telephone_international_call_unlimited"> <span>unlimited</span> </label>
+         <label for="telephone_international_call_unlimited"> <span>Unlimited</span> </label>
          </div>
 
       </div>
       <div class="col-md-6">
         <%=number_field_tag(:telephone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
       </div>
-    </div>
 
-    <div class="col-md-12 text-center ">
-    <%= submit_tag("Save", :class=>"btn btn-success preference-btn",:onclick=>"submit_telephone()")%>
+    <div class="col-md-12 text-center btn-group-sty">
+    <%= submit_tag("Save", :class=>"btn save-button",:onclick=>"submit_telephone()")%>
       <%if params[:new_user]%>
-        <input type="button" value="Skip" class="btn skip-btn" onclick="show_cable()" />
+        <input type="button" value="Skip" class="btn skip-button" onclick="show_cable()" />
       <%end%>
     </div>
     <%end%>
@@ -84,6 +81,8 @@
     $("#cable_pref").show();
   }
    $(document).ready(function(){
+     $("#telephone_start_date").datepicker();
+     $("#telephone_end_date").datepicker();
     $("#telephone_is_contract").prop("checked",false);
     $("#telephone_domestic_call_unlimited").prop("checked",false);
     $("#telephone_international_call_unlimited").prop("checked",false);

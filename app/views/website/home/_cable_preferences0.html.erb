@@ -31,21 +31,25 @@
         <div class="col-md-6">
     <%= number_field_tag("cable_price",price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
+  <Div class="col-md-6">
     <p class="contract-margin-sty">Contract Date</p>
+  </div>
+  <div class="col-md-6">
     <div class="checkbox checkbox-info no-contract-sty">
       <%= check_box_tag "cable_is_contract", false, :class=>"form-control"%>
-  <label for="cable_is_contract"> <span>No Contract </span> </label>
+      <label for="cable_is_contract"> <span>No Contract </span> </label>
+   </div>
   </div>
 
-  <div class="col-md-6">  <%= text_field_tag("cable_start_date",start_date, :class=>"form-control", :placeholder =>"Start Date")%></div>
+    <div class="col-md-6">  <%= text_field_tag("cable_start_date",start_date, :class=>"form-control", :placeholder =>"Start Date")%></div>
     <div class="col-md-6 ">    <%= text_field_tag("cable_end_date", end_date, :class=>"form-control", :placeholder =>"End Date")%></div>
     <div class="col-md-6 mgt20 mg_bttom20"><%= number_field_tag("cable_free_channels", free_channels, :class=>"form-control", :placeholder=>"free channels", :required=>true)%></div>
-  <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("cable_premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
+    <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("cable_premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
-   <div class="col-md-12 text-center">
-     <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick =>"cable_submit()")%>
+    <div class="col-md-12 text-center">
+     <%= submit_tag("Save", :class=>"btn save-button", :onclick =>"cable_submit()")%>
      <%if params[:new_user]%>
-   <%= button_tag("Skip", :class=>"btn skip-btn", :onclick=>"show_cellphone()")%>
+   <%= button_tag("Skip", :class=>"btn skip-button", :onclick=>"show_cellphone()")%>
      <%end%>
    </div>
 
@@ -57,6 +61,8 @@
       $("#cellphone_pref").show();
   }
   $(document).ready(function(){
+    $("#cable_start_date").datepicker();
+    $("#cable_end_date").datepicker();
     $("#cable_is_contract").prop("checked",false);
     $("#cable_is_contract").on("change",function(){
       if($("#cable_is_contract").prop("checked")==true){

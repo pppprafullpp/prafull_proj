@@ -14,9 +14,11 @@
    if @Telephone_preferences.present?
      domestic_call_minutes=@Telephone_preferences[0].domestic_call_minutes
      international_call_minutes=@Telephone_preferences[0].international_call_minutes
+
    end
   end
   %>
+  
   <h4>Current Telephone Service </h4>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>

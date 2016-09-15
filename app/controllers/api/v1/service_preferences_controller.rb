@@ -49,10 +49,28 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			if params[:service_category_id] == '1'
  				@service_preference.internet_service_preference.update_attributes(:upload_speed=>params[:upload_speed],:download_speed => params[:download_speed])
 			elsif params[:service_category_id] == '2'
+
+				if params[:from_site]
+					if !params[:domestic_call_unlimited].present?
+						params[:domestic_call_unlimited] = false
+				  end
+					if !params[:international_call_unlimited].present?
+						params[:international_call_unlimited] = false
+				  end
+			 end
 				@service_preference.telephone_service_preference.update(telephone_service_preference_params)
 			elsif params[:service_category_id] == '3'
 				@service_preference.cable_service_preference.update(:free_channels=>params[:free_channels],:premium_channels => params[:premium_channels])
 			elsif params[:service_category_id] == '4'
+				if params[:from_site]
+					if !params[:domestic_call_unlimited].present?
+						params[:domestic_call_unlimited] = false
+					end
+					if !params[:international_call_unlimited].present?
+						params[:international_call_unlimited] = false
+					end
+			 end
+			#  raise params.to_yaml
 				@service_preference.cellphone_service_preference.update(cellphone_service_preference_params)
 			elsif params[:service_category_id] == '5'
 				@service_preference.bundle_service_preference.update(bundle_service_preference_params)

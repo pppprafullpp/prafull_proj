@@ -83,7 +83,7 @@
         <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq.push("Select data plan").reverse%>
         <select class="form-control" id="cellphone_data_plan"  name="data_plan">
           <%= options_for_select(@list, :prompt=>"Select", :value=>@list) %>
-        </select>
+        </select> 
          </div>
       <div class="col-md-6">
         <select class="form-control" id="cellphone_no_of_lines" name="no_of_lines">

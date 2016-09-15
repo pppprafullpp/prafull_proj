@@ -110,18 +110,18 @@
     <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="calculate_you_save()">×</button>
       <div class="modal-content compare-popsty">
         <div id="welcome-popup">
-        <div class="text-center">
+        <div class="text-center mg-bt25">
         <img src="/assets/website/welcome1.png" alt="" width="150">
         </div>
-        <p class=" text-center">Most of our users <span style="color:#2c9d12; font-weight:400;">$ave </span>$1,000 - $2,000 when they switch <span style="color:#e50005; font-weight:600;">Internet, Telephone, TV,</span> and <span  style="color:#e50005; font-weight:600;">Mobile Phone</span>
+        <p class="mg-bt25 text-center">Most of our users <span style="color:#2c9d12; font-weight:400;">$ave </span>$1,000 - $2,000 when they switch <span style="color:#e50005; font-weight:600;">Internet, Telephone, TV,</span> and <span  style="color:#e50005; font-weight:600;">Mobile Phone</span>
         services using ServiceDeals. </p>
-          <p class=" text-center">We can start to find out how much you can <span style="color:#2c9d12; font-weight:400;">$ave </span> by comparing your current services with the best deals in your area. Just give us 5 min and we will show you $1000s of saving:</p>
+          <p class="mg-bt25 text-center">We can start to find out how much you can <span style="color:#2c9d12; font-weight:400;">$ave </span> by comparing your current services with the best deals in your area. Just give us 5 min and we will show you $1000s of saving:</p>
           <ul class="info_listing">
-            <li><span>1</span>Enter your Internet, Telephone, TV, and Mobile service information</li>
-            <li><span>2</span>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</li>
-            <li><span>3</span>Review potential saving and switch</li>
+            <li><span>1</span><p>Enter your Internet, Telephone, TV, and Mobile service information</p></li>
+            <li><span>2</span><p>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</p></li>
+            <li><span>3</span><p>Review potential saving and switch</p></li>
           </ul>
-          <div class=" text-center">
+          <div class="mg-bt25 text-center">
             <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
           </div>
       </div>
@@ -183,6 +183,7 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
+    
         //$("#zipcode-modal").dialog({modal: true});
         //$( "#zipcode-modal" ).dialog({modal: true});
         //toggleDialog('show');
@@ -267,3 +268,4 @@
 </script>
 
 <%#= javascript_include_tag 'website/owl.carousel' %>
+ <%=javascript_include_tag "https://code.jquery.com/ui/1.12.0/jquery-ui.js"%>

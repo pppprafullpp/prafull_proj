@@ -39,27 +39,23 @@
     <%= number_field_tag("cellphone_price",price,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
 
-  <div class="row">
-      <p class="contract-margin-sty">Contract Date</p>
-      <div class="checkbox checkbox-info no-contract-sty">
+    <div class="col-md-6">  <p class="contract-margin-sty">Contract Date</p>
+    </div>
+    <div class="col-md-6">  <div class="checkbox checkbox-info no-contract-sty">
         <%= check_box_tag "cellphone_is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
         <label for="cellphone_is_contract"> <span>Is Contract</span> </label>
       </div>
-  </div>
+    </div>
 
     <div class="col-md-6"><%= text_field_tag(:cellphone_start_date,end_date,:class=>"form-control", :placeholder =>"Start Date")%>  </div>
     <div class="col-md-6"><%= text_field_tag(:cellphone_end_date,end_date,:class=>"form-control", :placeholder =>"End Date")%>  </div>
 
     <div class="row">
       <div class="col-md-12">
-      <h4>Calls</h4>
-      </div>
-
-      <div class="col-md-12">
       <p class="set-call">Domestic calls</p>
       </div>
 
-      <div class="col-md-6 ">
+      <div class="col-md-6 unlimited-call ">
       <div class="checkbox checkbox-info no-contract-sty">
       <%= check_box_tag "checkbox_domestic_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
       <label for="checkbox_domestic_call_unlimited" ><span>Unlimited<span></label>
@@ -70,21 +66,23 @@
       <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+      <p class="set-call">International calls</p>
+      </div>
 
-    <p class="contract-margin-sty">international calls</p>
-    <div class="row contract-margin-sty">
-      <div class="col-md-6">
+
+      <div class="col-md-6 unlimited-call ">
         <div class="checkbox checkbox-info no-contract-sty">
            <%= check_box_tag "checkbox_international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
            <label for="checkbox_international_call_unlimited"><span></span>Unlimited</label>
         </div>
       </div>
+
       <div class="col-md-6">
         <%=number_field_tag(:cellphone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
-    </div>
 
-    <div class="row contract-margin-sty">
       <div class="col-md-6">
         <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq.push("Select data plan").reverse%>
         <select class="form-control" id="cellphone_data_plan"  name="data_plan">
@@ -98,21 +96,24 @@
           <%end%>
         </select>
       </div>
-    </div>
+
     <div class="col-md-12 text-center">
-     <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"submit_cellphone()")%>
+     <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_cellphone()")%>
      <%if params[:new_user]%>
-      <input type="button" class="btn btn-success skip-btn" value="Skip" onclick="show_bundle()" />
+      <input type="button" class="btn skip-button" value="Skip" onclick="show_bundle()" />
      <%end%>
    </div>
     <%end%>
   </div>
+</div>
   <script>
   function show_bundle() {
       $("#cellphone_pref").hide();
       $("#bundle_pref").show();
   }
    $(document).ready(function(){
+     $("#cellphone_start_date").datepicker();
+     $("#cellphone_end_date").datepicker();
     $("#cellphone_contract").prop("checked",false);
     $("#cellphone_domestic_call_unlimited").prop("checked",false);
     $("#cellphone_international_call_unlimited").prop("checked",false);
@@ -145,26 +146,26 @@
     });
 
 
-    $("#cellphone_domestic_call_unlimited").on("change",function(){
-      if($("#cellphone_domestic_call_unlimited").prop("checked")==true){
-        $("#cellphone_domestic_call_minutes").attr("disabled",true);
+    $("#checkbox_domestic_call_unlimited").on("change",function(){
+      if($("#checkbox_domestic_call_unlimited").prop("checked")==true){
+        $("#cellphone_domestic_call_minutes").attr("readonly",true);
         $("#cellphone_domestic_call_minutes").val(0);
         $("#cellphone_domestic_call_unlimited").val("true");
       }
       else {
-        $("#cellphone_domestic_call_minutes").attr("disabled",false);
+        $("#cellphone_domestic_call_minutes").attr("readonly",false);
         $("#cellphone_domestic_call_unlimited").val("false");
       }
     });
 
-    $("#cellphone_international_call_unlimited").on("change",function(){
-      if($("#cellphone_international_call_unlimited").prop("checked")==true){
-        $("#cellphone_international_call_minutes").attr("disabled",true);
+    $("#checkbox_international_call_unlimited").on("change",function(){
+      if($("#checkbox_international_call_unlimited").prop("checked")==true){
+        $("#cellphone_international_call_minutes").attr("readonly",true);
         $("#cellphone_international_call_minutes").val(0);
         $("#cellphone_domestic_call_unlimited").val("true");
       }
       else {
-        $("#cellphone_international_call_minutes").attr("disabled",false);
+        $("#cellphone_international_call_minutes").attr("readonly",false);
         $("#cellphone_domestic_call_unlimited").val("false");
       }
     });

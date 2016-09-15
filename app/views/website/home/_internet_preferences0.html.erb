@@ -32,25 +32,33 @@
     <%= number_field_tag("internet_price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
 
-  <div class="checkbox checkbox-info no-contract-sty">
-  <%= check_box_tag "internet_contract", false, :class=>"form-control"%>
-  <label for="internet_contract"> <span>No Contract </span> </label>
-  </div>
+  <div class="col-md-6">
     <p class="contract-margin-sty">Contract Date</p>
+  </div>
+
+  <div class="col-md-6">
+    <div class="checkbox checkbox-info no-contract-sty">
+      <label for="internet_contract"> <span>No Contract </span> </label>
+      <%= check_box_tag "internet_contract", false, :class=>"form-control"%>
+    </div>
+  </div>
+
     <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_start_date","#{start_date}", :class=>"form-control", :placeholder =>"Start Date")%> </div>
     <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_end_date","#{end_date}", :class=>"form-control", :placeholder =>"End Date")%> </div><br />
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
     <div class="col-md-12 text-center">
-    <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"submit_internet_preference()")%>
-    <%if params[:new_user]%>
-    <%= button_tag("Skip", :class=>"btn skip-btn", :onclick=>"show_cable()")%>
-    <%end%>
+    <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference()")%>
+    <input type="button" value="Skip" class="skip-button" onclick="show_telephone()" />
     </div>
     <%end%>
   </div>
   <script>
+  function show_telephone() {
+    $("#internet_pref").hide();
+    $("#telephone_pref").show();
+  }
   $(document).ready(function(){
     $("#internet_contract").prop("checked",false);
     $("#internet_contract").on("change",function(){

@@ -52,6 +52,10 @@
     <%end%>
   </div>
   <script>
+  function show_cellphone(){
+      $("#cable_pref").hide();
+      $("#cellphone_pref").show();
+  }
   $(document).ready(function(){
     $("#cable_is_contract").prop("checked",false);
     $("#cable_is_contract").on("change",function(){

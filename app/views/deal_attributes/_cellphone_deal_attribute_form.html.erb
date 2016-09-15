@@ -20,6 +20,9 @@
     <div><strong>Price per Line:<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :price_per_line,@deal_attribute.price_per_line,:placeholder => 'Input price_per_line',:name => 'deal_attributes[price_per_line]' %>
     </div>
+    <div><strong>Title:</strong><br />
+      <%= text_field_tag :title,@deal_attribute.try(:title),:placeholder => 'Input title',:name => 'deal_attributes[title]' %>
+    </div>
     <div><strong>Description:</strong><br />
       <%= text_field_tag :description,@deal_attribute.try(:description),:placeholder => 'Input description',:name => 'deal_attributes[description]' %>
     </div>

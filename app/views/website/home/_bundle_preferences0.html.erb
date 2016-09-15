@@ -127,12 +127,16 @@
 
 
     <div class="col-md-12 text-center">
-      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check()")%>
+      <div class="col-md-6"><%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check()")%></div>
+      <div class="col-md-6"><input type="button" class="btn skip-btn" value="Skip" onclick="hide_modal()"/></div>
     </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
   </div>
   <script>
+  function hide_modal() {
+    $("#comparePopup").modal("hide");
+  }
   $(document).ready(function(){
     $("#bundle_international_call_unlimited").prop("checked",false);
     $("#bundle_domestic_call_unlimited").prop("checked",false);

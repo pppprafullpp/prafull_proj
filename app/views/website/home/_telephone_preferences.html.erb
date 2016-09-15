@@ -14,6 +14,8 @@
    if @Telephone_preferences.present?
      domestic_call_minutes=@Telephone_preferences[0].domestic_call_minutes
      international_call_minutes=@Telephone_preferences[0].international_call_minutes
+     domestic_call_unlimited=@Telephone_preferences[0].domestic_call_unlimited
+     international_call_unlimited=@Telephone_preferences[0].international_call_unlimited
    end
   end
   %>
@@ -101,30 +103,30 @@
     });
   }
    $(document).ready(function(){
-    $("#is_contract").prop("checked",false);
-    $("#domestic_call_unlimited").prop("checked",false);
-    $("#international_call_unlimited").prop("checked",false);
-    $("#is_contract").on("change",function(){
-      if($("#is_contract").prop("checked")==true){
-        $("#start_date").attr("disabled",true);
-        $("#end_date").attr("disabled",true);
-      }
-      else {
-        $("#start_date").attr("disabled",false);
-        $("#end_date").attr("disabled",false);
-      }
-    });
+    // $("#is_contract").prop("checked",false);
+    // $("#domestic_call_unlimited").prop("checked",false);
+    // $("#international_call_unlimited").prop("checked",false);
+    // $("#is_contract").on("change",function(){
+    //   if($("#is_contract").prop("checked")==true){
+    //     $("#start_date").attr("disabled",true);
+    //     $("#end_date").attr("disabled",true);
+    //   }
+    //   else {
+    //     $("#start_date").attr("disabled",false);
+    //     $("#end_date").attr("disabled",false);
+    //   }
+    // });
 
     $("#domestic_call_unlimited").on("change",function(){
       if($("#domestic_call_unlimited").prop("checked")==true){
         $("#domestic_call_minutes").attr("readonly",true);
-        $("#domestic_call_unlimited").val("true");
+        $("#domestic_call_unlimited").val(true);
         $("#domestic_call_minutes").val(0);
       }
       else {
         $("#domestic_call_minutes").attr("disabled",false);
         $("#domestic_call_minutes").attr("readonly",false);
-        $("#domestic_call_unlimited").val("false");
+        $("#domestic_call_unlimited").val(false);
       }
     });
 
@@ -132,11 +134,11 @@
       if($("#international_call_unlimited").prop("checked")==true){
         $("#international_call_minutes").attr("readonly",true);
         $("#international_call_minutes").val(0);
-        $("#domestic_call_unlimited").val("true");
+        $("#international_call_unlimited").val(true);
       }
       else {
         $("#international_call_minutes").attr("disabled",false);
-        $("#domestic_call_unlimited").val("false");
+        $("#international_call_unlimited").val(false);
         $("#international_call_minutes").attr("readonly",false);
       }
     });
@@ -147,4 +149,35 @@
   function set_service_provider(id) {
     $("#service_provider_id option[value="+id+"]").attr('selected','selected');
   }
+
   </script>
+  <%if domestic_call_unlimited %>
+  <script>
+  console.log("sss");
+  $("#domestic_call_minutes").prop("disabled","true");
+  $("#domestic_call_minutes").val("0");
+  $("#domestic_call_unlimited").prop("checked",true);
+  </script>
+  <%else%>
+  <script>
+  console.log("sss");
+  $("#domestic_call_minutes").prop("disabled",false);
+  $("#domestic_call_minutes").val(<%=domestic_call_minutes%>);
+  $("#domestic_call_unlimited").prop("checked",false);
+  </script>
+  <%end%>
+  <%if international_call_unlimited == true%>
+  <script>
+  console.log("sss");
+  $("#international_call_minutes").prop("disabled",true);
+  $("#international_call_minutes").val("0");
+  $("#international_call_unlimited").prop("checked",true);
+  </script>
+  <%else%>
+  <script>
+  console.log("sss");
+  $("#international_call_minutes").prop("disabled",false);
+  $("#international_call_minutes").val(<%=international_call_minutes%>);
+  $("#international_call_unlimited").prop("checked",false);
+  </script>
+  <%end%>

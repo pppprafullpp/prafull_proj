@@ -18,7 +18,7 @@
    end
   end
   %>
-  
+
   <h4>Current Telephone Service </h4>
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
@@ -53,7 +53,7 @@
       </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:telephone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
+        <%=number_field_tag(:telephone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"Minutes")%>
       </div>
       <div class="col-md-12 "> <p class="set-call">International</p> </div>
       <div class="col-md-6 unlimited-call ">
@@ -65,7 +65,7 @@
 
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:telephone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%>
+        <%=number_field_tag(:telephone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"Minutes")%>
       </div>
 
     <div class="col-md-12 text-center btn-group-sty">
@@ -88,6 +88,12 @@
     $("#telephone_is_contract").prop("checked",false);
     $("#telephone_domestic_call_unlimited").prop("checked",false);
     $("#telephone_international_call_unlimited").prop("checked",false);
+    $("#telephone_is_contract").prop("checked","true");
+    $("#telephone_start_date").attr("disabled",true);
+    $("#telephone_end_date").attr("disabled",true);
+    $("#telephone_domestic_call_unlimited").prop("checked", "true");
+    $("#telephone_domestic_call_minutes").attr("disabled",true);
+    $("#telephone_domestic_call_minutes").val(0);
     $("#telephone_is_contract").on("change",function(){
       if($("#telephone_is_contract").prop("checked")==true){
         $("#telephone_start_date").attr("disabled",true);

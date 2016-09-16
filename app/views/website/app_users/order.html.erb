@@ -33,11 +33,11 @@ end
             <table class="table table-condensed">
               <tr>
                 <td align="right" width="50%">Price</td>
-                <td align="left"  width="50%" class="bold">$<%= @deal.price %></td>
+                <td align="left"  width="50%" class="bold">$<%= "%.2f" % @deal.price %></td>
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Effective Price</td>
-                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price.present? ? @effective_price : @deal.effective_price %></td>
+                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price.present? ? "%.2f" % @effective_price : "%.2f" % @deal.effective_price %></td>
               </tr>
             </table>
           </div>

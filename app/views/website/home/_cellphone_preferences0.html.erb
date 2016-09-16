@@ -61,7 +61,7 @@
       </div>
 
       <div class="col-md-6">
-      <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+      <%=number_field_tag(:cellphone_domestic_call_minutes,domestic_call_minutes, :class=>"form-control", :placeholder=>"Minutes")%><br />
       </div>
       </div>
       <div class="col-md-12">
@@ -71,12 +71,12 @@
       <div class="col-md-6 unlimited-call ">
         <div class="checkbox checkbox-info no-contract-sty">
            <%= check_box_tag "checkbox_international_call_unlimited", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
-           <label for="checkbox_international_call_unlimited"><span></span>Unlimited</label>
+           <label for="checkbox_international_call_unlimited"><span>Unlimited</span></label>
         </div>
       </div>
 
       <div class="col-md-6">
-        <%=number_field_tag(:cellphone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:cellphone_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"Minutes")%><br />
       </div>
 
       <div class="col-md-6">
@@ -105,24 +105,28 @@
   <script>
   function show_bundle() {
       $("#cellphone_pref").hide();
-      $("#bundle_pref").show().css("height","640px");
+      $("#bundle_pref").show().css("height","586px");
   }
    $(document).ready(function(){
      $("#cellphone_start_date").datepicker();
      $("#cellphone_end_date").datepicker();
-    $("#cellphone_contract").prop("checked",false);
-    $("#cellphone_domestic_call_unlimited").prop("checked",false);
-    $("#cellphone_international_call_unlimited").prop("checked",false);
-    $("#cellphone_is_contract").on("change",function(){
-      if($("#cellphone_is_contract").prop("checked")==true){
-        $("#cellphone_start_date").attr("disabled",true);
-        $("#cellphone_end_date").attr("disabled",true);
-      }
-      else {
-        $("#cellphone_start_date").attr("disabled",false);
-        $("#cellphone_end_date").attr("disabled",false);
-      }
-    });
+     $("#cellphone_domestic_call_unlimited").prop("checked",false);
+     $("#cellphone_international_call_unlimited").prop("checked",false);
+     $("#cellphone_is_contract").prop("checked","true");
+     $("#cellphone_start_date").attr("disabled",true);
+     $("#cellphone_end_date").attr("disabled",true);
+     $("#cellphone_domestic_call_minutes").attr("readonly",true);
+     $("#cellphone_international_call_minutes").attr("readonly",true);
+    // $("#cellphone_is_contract").on("change",function(){
+    //   if($("#cellphone_is_contract").prop("checked")==true){
+    //     $("#cellphone_start_date").attr("disabled",true);
+    //     $("#cellphone_end_date").attr("disabled",true);
+    //   }
+    //   else {
+    //     $("#cellphone_start_date").attr("disabled",false);
+    //     $("#cellphone_end_date").attr("disabled",false);
+    //   }
+    // });
     $.ajax({
       url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=+<%=session[:user_id]%>+&category=4",
       type: "GET",
@@ -213,7 +217,7 @@
         success: function(data){
           if (data["success"] == true) {
             $("#cellphone_pref").hide();
-            $("#bundle_pref").show().css("height","500px");
+            $("#bundle_pref").show().css("height","540px");
           }
         }
       });

@@ -38,13 +38,16 @@
       <div class="col-md-6">
     <%= number_field_tag(:bundle_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
+  <div class="col-md-6">
     <p class="contract-margin-sty">Contract Date</p>
+  </div>
+  <div class="col-md-6">
     <div class="checkbox checkbox-info no-contract-sty">
       <%= check_box_tag "bundle_is_contract",true, :class=>"form-control"%>
         <label for="bundle_is_contract"> <span>No Contract </span> </label>
-
-
     </div>
+  </div>
+
     <div class = "col-md-6"><%= text_field_tag(:bundle_start_date,"", :class=>"form-control", :placeholder =>"Start Date")%></div>
     <div class = "col-md-6"><%= text_field_tag(:bundle_end_date,"", :class=>"form-control", :placeholder =>"End Date")%></div>
     <div class="row">
@@ -64,7 +67,7 @@
 
       <div class="checkbox checkbox-info no-contract-sty mgt25">
         <input type="checkbox" id="bundle_telephone-cb" value="telephone"  onchange="showtelephone1()" />
-        <label for="bundle_telephone-cb"> <span>telephone </span> </label>
+        <label for="bundle_telephone-cb"> <span>Telephone </span> </label>
       </div>
 
       </div>
@@ -125,10 +128,9 @@
     </div>
     <%=hidden_field_tag("plan_name","none")%>
 
-
+    <br />
     <div class="col-md-12 text-center btn-group-sty">
-      <div class="col-md-6"><%= submit_tag("Save", :class=>"btn save-button", :onclick=>"check()")%></div>
-      <div class="col-md-6"><input type="button" class="btn skip-button" value="Skip" onclick="hide_modal()"/></div>
+      <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"check()")%>
     </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
@@ -142,8 +144,9 @@
     $("#bundle_end_date").datepicker();
     $("#bundle_international_call_unlimited").prop("checked",false);
     $("#bundle_domestic_call_unlimited").prop("checked",false);
-
-    $("#bundle_is_contract").prop("checked",false);
+    $("#bunlde_is_contract").prop("checked","true");
+    $("#bundle_start_date").attr("disabled",true);
+    $("#bundle_end_date").attr("disabled",true);
     $("#bundle_is_contract").on("change",function(){
       if($("#bundle_is_contract").prop("checked")==true){
         $("#bundle_start_date").attr("disabled",true);

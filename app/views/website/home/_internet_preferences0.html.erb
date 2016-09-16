@@ -22,26 +22,29 @@
   <%=hidden_field_tag("service_category_id",1)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-  <div class="col-md-6">
+
+    <div class="col-md-6">
     <% @providers=ServiceProvider.where(:service_category_id=>1).pluck(:name,:id)%>
-      <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-      </select>
+    <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
+    <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+    </select>
     </div>
+
     <div class="col-md-6">
     <%= number_field_tag("internet_price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
-  </div>
-
-  <div class="col-md-6">
-    <p class="contract-margin-sty">Contract Date</p>
-  </div>
-
-  <div class="col-md-6">
-    <div class="checkbox checkbox-info no-contract-sty">
-      <%= check_box_tag "internet_contract", false, :class=>"form-control"%>
-      <label for="internet_contract"> <span>No Contract </span> </label>
     </div>
-  </div>
+
+
+    <div class="col-md-6">
+    <div class="checkbox checkbox-info no-contract-sty">
+    <%= check_box_tag "internet_contract", false, :class=>"form-control"%>
+    <label for="internet_contract"> <span>No Contract </span> </label>
+    </div>
+    </div>
+
+    <div class="col-md-6">
+    <p class="contract-margin-sty">Contract Date</p>
+    </div>
 
     <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_start_date","#{start_date}", :class=>"form-control", :placeholder =>"Start Date")%></div>
     <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_end_date","#{end_date}", :class=>"form-control", :placeholder =>"End Date")%> </div><br />
@@ -52,6 +55,7 @@
     <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference()")%>
     <input type="button" value="Skip" class="skip-button" onclick="show_telephone()" />
     </div>
+
     <%end%>
   </div>
   <script>
@@ -62,17 +66,19 @@
   $(document).ready(function(){
       $("#internet_start_date").datepicker();
       $("#internet_end_date").datepicker();
-    $("#internet_contract").prop("checked",false);
-    $("#internet_contract").on("change",function(){
-      if($("#internet_contract").prop("checked")==true){
-        $("#internet_start_date").attr("disabled",true);
-        $("#internet_end_date").attr("disabled",true);
-      }
-      else {
-        $("#internet_start_date").attr("disabled",false);
-        $("#internet_end_date").attr("disabled",false);
-      }
-    });
+      $("#internet_contract").prop("checked","true");
+      $("#internet_start_date").attr("disabled",true);
+      $("#internet_end_date").attr("disabled",true);
+    // $("#internet_contract").on("change",function(){
+    //   if($("#internet_contract").prop("checked")==true){
+    //     $("#internet_start_date").attr("disabled",true);
+    //     $("#internet_end_date").attr("disabled",true);
+    //   }
+    //   else {
+    //     $("#internet_start_date").attr("disabled",false);
+    //     $("#internet_end_date").attr("disabled",false);
+    //   }
+    // });
       <%
       if service_provider_id.present?%>
         set_service_provider("<%=service_provider_id%>")

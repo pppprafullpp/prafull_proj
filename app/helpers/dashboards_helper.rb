@@ -468,14 +468,11 @@ module DashboardsHelper
 		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''
 		if app_user_id.present?
 			app_user = AppUser.find_by_id(app_user_id)
-			zip_code = app_user.zip
+			zip_code =  decode_api_data(app_user.zip)
 			deal_type=app_user.user_type
-
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
-			# raise filter_by_provider.to_s
 			deal_validation_conditions="#{filter_by_provider} deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "
-
-			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
+ 			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
 			matched_deal = []
 			if category_id == Deal::INTERNET_CATEGORY
 				if user_preference.present?
@@ -483,16 +480,18 @@ module DashboardsHelper
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
 					greater_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 					smaller_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download < ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+
 				else
 					deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+ " AND deals.id not in (?)",restricted_deals).order(sort_by).group('deals.id')
-
 					if deals.present?
-						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+ 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 					if json.present?
 						matched_deal = json
 					end
+
 				end
+
 			elsif category_id == Deal::TELEPHONE_CATEGORY
 				if user_preference.present?
 					current_plan_price = user_preference.price
@@ -614,7 +613,7 @@ module DashboardsHelper
 			elsif best_deals.blank? && greater_deals.present?
 				merged_deals = greater_deals
 			end
-
+	 
 			if merged_deals.present?
 				json_1 = merged_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 			end
@@ -628,6 +627,7 @@ module DashboardsHelper
 			elsif json_1.present? && json_2.blank?
 				matched_deal = json_1
 			end
+
 		else
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 			deal_validation_conditions="#{filter_by_provider} deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "

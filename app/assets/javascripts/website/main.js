@@ -3,16 +3,16 @@
  */
 //= require owl.carousel
 
-// $( document ).ready(function() {
-//     $(".btn1").click(function() {
-//         $("#box1").hide();
-//     });
-//
-//     $(".btn2").click(function() {
-//         $("#box2").hide();
-//     });
-//
-//
+$( document ).ready(function() {
+    $(".btn1").click(function() {
+        $("#box1").hide();
+    });
+
+    $(".btn2").click(function() {
+        $("#box2").hide();
+    });
+
+
 //     $('#compare_box').affix({
 //         offset: {
 //             top: 500
@@ -30,4 +30,4 @@
 //         }
 //       });
 //
-//       });
+      });

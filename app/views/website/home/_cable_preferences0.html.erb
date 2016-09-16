@@ -63,17 +63,19 @@
   $(document).ready(function(){
     $("#cable_start_date").datepicker();
     $("#cable_end_date").datepicker();
-    $("#cable_is_contract").prop("checked",false);
-    $("#cable_is_contract").on("change",function(){
-      if($("#cable_is_contract").prop("checked")==true){
-        $("#cable_start_date").attr("disabled",true);
-        $("#cable_end_date").attr("disabled",true);
-      }
-      else {
-        $("#cable_start_date").attr("disabled",false);
-        $("#cable_end_date").attr("disabled",false);
-      }
-    });
+    $("#cable_is_contract").prop("checked","true");
+    $("#cable_start_date").attr("disabled",true);
+    $("#cable_end_date").attr("disabled",true);
+    // $("#cable_is_contract").on("change",function(){
+    //   if($("#cable_is_contract").prop("checked")==true){
+    //     $("#cable_start_date").attr("disabled",true);
+    //     $("#cable_end_date").attr("disabled",true);
+    //   }
+    //   else {
+    //     $("#cable_start_date").attr("disabled",false);
+    //     $("#cable_end_date").attr("disabled",false);
+    //   }
+    // });
 
 
       $.ajax({

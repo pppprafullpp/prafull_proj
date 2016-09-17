@@ -467,16 +467,16 @@
       <div id="internet_pref" style="display:none">
         <%=render :partial => "internet_preferences0.html.erb"%>
       </div>
-      <div id="telephone_pref" style="display:none;height:440px">
+      <div id="telephone_pref" style="display:none;height:469px">
         <%=render :partial => "telephone_preferences0.html.erb"%>
       </div>
       <div id="cable_pref" style="display:none;height:351px">
         <%=render :partial => "cable_preferences0.html.erb"%>
       </div>
-      <div id="cellphone_pref" style="display:none;height:400px">
+      <div id="cellphone_pref" style="display:none;height:546px">
         <%=render :partial => "cellphone_preferences0.html.erb"%>
       </div>
-      <div id="bundle_pref" style="display:none;height:400px">
+      <div id="bundle_pref" style="display:none;height:556px">
         <%=render :partial => "bundle_preferences0.html.erb"%>
       </div>
       <div id="onwait" style="background-color: #000;    height: 586px; position: absolute;    top: 1px;    width: 100%;    opacity: 0.3;">
@@ -487,24 +487,26 @@
 </div>
 
 
-
-<div class="modal fade" id="wowPopup" role="dialog"  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="refresh()">×</button>
-      <div class="modal-content compare-popsty">
-        <div id="welcome-popup">
-        <div class="text-center mg-bt25">
-        <img src="/assets/website/welcome1.png" alt="" width="150">
-        </div>
-        <h5 id="you_save_value"></h5>
-        <button onclick = "refresh()" value="Save and switch" >Save and switch</button>
+      <div class="modal fade" id="wowPopup" role="dialog"  data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog  user-motivation">
+      <!-- Modal content-->
+      <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="refresh()">×</button>
+      <div class="modal-content">
+      <div id="welcome-popup">
+      <div class="text-center mg-bt25">
+      <div><img src="/assets/website/user-motivational.png" alt=""></div>
+      <div> <img src="/assets/website/wow.png" alt=""></div>
+      <div class="potential-saving">Your Potential $aving are
+      <span id="you_save_value">$900 - $1,200</span></div>
       </div>
-    </div>
-  </div>
-</div>
-
-
+      <p class="text-center">Review Best Match Deals & Switch</p>
+      <div class="mg-bt25 text-center">
+      <button type="button" onclick = "refresh()" value="Save and switch"  class="btn compare-btn">Save and switch</button>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
 
 
 <!-- Internet, Telephone, cable, Cellphone, Bundle. -->
@@ -522,8 +524,14 @@
        id:<%=session[:user_id]%>
       },
       success: function(data){
+        console.log(data);
          $("#wowPopup").modal("show");
-         $("#you_save_value").html("You save:"+data["you_save"])
+         if (data["you_save"] !="" && data["you_save"]!=null){
+           $("#you_save_value").html("You save: $"+data["you_save"])
+         }
+         else {
+           $("#you_save_value").html("You save: $"+0)
+         }
       }
     });
   }

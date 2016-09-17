@@ -30,7 +30,7 @@
     </select>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 mg_bttom20">
     <%= number_field_tag("internet_price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
     </div>
 
@@ -42,7 +42,7 @@
     </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 mg_bttom20">
     <p class="contract-margin-sty">Contract Date</p>
     </div>
 
@@ -51,7 +51,7 @@
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
-    <div class="col-md-12 text-center btn-group-sty">
+    <div class="col-md-12 text-center">
     <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference()")%>
     <input type="button" value="Skip" class="skip-button" onclick="show_telephone()" />
     </div>

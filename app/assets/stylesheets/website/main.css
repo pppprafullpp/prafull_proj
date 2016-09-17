@@ -5346,3 +5346,7 @@ ul.caption-dealdet li::before {
     width: 100%;
     margin-top: 30px;
   }
+  .user-motivation{ width:450px;}
+  .user-motivation #welcome-popup { padding-top:30px;}
+  .potential-saving {font-family: "open_sanssemibold";  color:#000; font-size:20px; font-weight:bold; margin-top:20px;}
+  .potential-saving span { display:block; color:#209fce;}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910075343) do
+ActiveRecord::Schema.define(version: 20160910111756) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -358,16 +358,17 @@ ActiveRecord::Schema.define(version: 20160910075343) do
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
 
   create_table "channel_packages", force: :cascade do |t|
-    t.string   "package_name",  limit: 255
-    t.string   "package_code",  limit: 255
-    t.integer  "channel_count", limit: 4
-    t.text     "channel_ids",   limit: 65535
-    t.text     "description",   limit: 65535
-    t.string   "image",         limit: 255
-    t.boolean  "status",                                              default: true
-    t.datetime "created_at",                                                         null: false
-    t.datetime "updated_at",                                                         null: false
-    t.decimal  "price",                       precision: 5, scale: 2
+    t.string   "package_name",        limit: 255
+    t.string   "package_code",        limit: 255
+    t.integer  "channel_count",       limit: 4
+    t.text     "channel_ids",         limit: 65535
+    t.text     "description",         limit: 65535
+    t.string   "image",               limit: 255
+    t.boolean  "status",                                                    default: true
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+    t.decimal  "price",                             precision: 5, scale: 2
+    t.integer  "service_provider_id", limit: 4
   end
 
   create_table "channels", force: :cascade do |t|

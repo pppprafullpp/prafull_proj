@@ -875,6 +875,8 @@ ActiveRecord::Schema.define(version: 20160910075343) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "additional_offers", "deals"
+  add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
   add_foreign_key "cellphone_service_preferences", "service_preferences"

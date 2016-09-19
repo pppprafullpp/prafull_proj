@@ -107,22 +107,19 @@
           <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Internet"%>
           <% trending_deal = dashboard_data[:trending_deal] %>
 
-              <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
-                <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt=""></div>
-                <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
-                <div class="sd-box-des">
-                  <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
-                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
-                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
-                  <p><b><button class="show_details_dashboard" onclick="javascript:void(0)">+Show Details</button></b></p>
-                  <ul class="caption-dealdet">
-                    <li><%=trending_deal["short_description"].truncate(30)%></li>
-                    <li><%=trending_deal["detail_description"].truncate(30)%></li>
-
-                  </ul>
-                </div>
-                </a>
-              </div>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=trending_deal["short_description"].truncate(30)%></li>
+                <li><%=trending_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
 
           <% end %>
           <% end %>

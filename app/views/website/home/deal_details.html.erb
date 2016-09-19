@@ -69,8 +69,7 @@
                         <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
                           <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
                           <% end %>
-
-                        <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
+                         <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
                          <%if rating.present?%>
                           <p id="rating" style="color: #000;font-size: 16px;margin-top:5px">
                             <b>Rating:

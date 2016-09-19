@@ -84,6 +84,7 @@
     <%end%>
   </div>
   <script>
+  <%if session[:user_id].present?%>
   function Unsubscribe()
   {
     event.preventDefault();
@@ -102,6 +103,7 @@
       }
     });
   }
+  <%end%>
    $(document).ready(function(){
     // $("#is_contract").prop("checked",false);
     // $("#domestic_call_unlimited").prop("checked",false);

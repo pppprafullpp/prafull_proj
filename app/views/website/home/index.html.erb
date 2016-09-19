@@ -350,6 +350,7 @@
                 </div>
                 </a>
               </div>
+
           <% end %>
           <% end %>
           <% end %>
@@ -357,7 +358,7 @@
           <% @trending_deal_data.each do |dashboard_data| %>
           <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Bundle"%>
           <% trending_deal = dashboard_data[:trending_deal] %>
-          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=5&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
             <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
             <div class="sd-box-des">

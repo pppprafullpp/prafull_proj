@@ -6,7 +6,7 @@
         <div class="border-radius-bg auto-height">
           <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
           <div class="vertical_middle" style="overflow: hidden;width:215px">
-          <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
+          <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt="">
         </div>
         <div class="main-external-div1">
           <h5><%= best_deal['title'].truncate(25) %></h5>
@@ -75,7 +75,7 @@
       <div class="border-radius-bg auto-height">
         <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt=""></div>
         <div class="vertical_middle" style="overflow: hidden;width:215px">
-          <img src="<%= best_deal['deal_image_url'] %>" height="100px" width="100px" alt="" style="width:100%">
+          <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive">
         </div>
         <div class="main-external-div1">
         <h5><%= best_deal['title'].truncate(25) %></h5>

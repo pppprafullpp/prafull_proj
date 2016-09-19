@@ -1,5 +1,5 @@
-<div id="user_addresses" class="order-tab tab-pane fade" role="tabpanel">
-    <h4>Saved Addresses</h4> <br />
+<div id="user_addresses" class="address-tab tab-pane fade" role="tabpanel">
+    <h4>Saved Addresses</h4>
      <%if AppUser.find(session[:user_id]).user_type == "residence"%>
        <%addresses=AppUser.find(session[:user_id]).app_user_addresses%>
        <%addresses.each do |address|%>
@@ -19,7 +19,7 @@
             <p><b>Business Address</p></b>
            <%end%>
            <%if address[:is_default]%>
-           <h3>Default Address</h3> <br />
+           <h3 class="default-address-txt">Default Address</h3> <br />
            <%end%>
             <p><%= text_field_tag(:address_name, address[:address_name], :id=>"address_name_#{id}", :disabled=>true, :class=>"form-control")%></p>
             <p><%= text_field_tag(:address1, address[:address1],:id=>"address_address1_#{id}",:disabled=>true, :class=>"form-control")%></p>
@@ -52,7 +52,7 @@
 <% if addresses.present? %>
       <%addresses.each do |address|%>
         <%id=SecureRandom.hex(5)%>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="border-address">
             <%if address[:address_type] == 0%>
               <p><b>Branch Address</p></b>
@@ -67,7 +67,7 @@
               <p><b>Business Address</p></b>
             <%end%>
             <%if address[:is_default]%>
-            <h3>Default Address</h3> <br />
+            <h3 class="default-address-txt">Default Address</h3> <br />
             <%end%>
             <%=hidden_field_tag(:address_type,address, :id=>"user_type_#{id}")%>
             <p><%= text_field_tag(:address_name, address[:address_name], :id=>"address_name_#{id}", :disabled=>true, :class=>"form-control")%></p>
@@ -79,10 +79,10 @@
             <p><%= text_field_tag(:zip, address[:zip],:id=>"address_zip_#{id}", :disabled=>true, :class=>"form-control")%></p>
             <%=hidden_field_tag(:app_user_address_id,address.id, :id=>"row_id_#{id}")%>
             <%=hidden_field_tag(:app_user_type,AppUser.find(session[:user_id]).user_type, :id=>"user_type_#{id}")%>
-            <div class="col-md-3" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button></div>
+            <div class=" text-left" id="edit_<%=id%>"><button class="btn btn-primary" id="<%=id%>" onclick="editform(this)">Edit</button>
             <div id="save_<%=id%>" class="col-md-3 hidden"><button id="<%=id%>" class="btn btn-primary" onclick="save(this)">Save</button></div>
-            <div class="col-md-4"><button class="btn btn-primary" id="sd<%=id%>" onclick="sd(this)">Set Default</button></div>
-            <div class="col-md-2"><button class="btn btn-danger" id="del<%=id%>" onclick="del(this)">Delete</button></div>
+            <button class="btn btn-primary set-default-btn" id="sd<%=id%>" onclick="sd(this)">Set Default</button>
+          <button class="btn btn-danger" id="del<%=id%>" onclick="del(this)">Delete</button></div>
           </div>
         </div>
       <%end%>

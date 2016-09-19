@@ -159,7 +159,7 @@
         $("#bundle_is_contract").val(true);
       }
     });
-
+    <%if session[:user_id].present?%>
     $.ajax({
       url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=5",
       type: "GET",
@@ -184,7 +184,7 @@
         $("#bundle_combo").val("Internet and Cable")
       }
     });
-
+    <%end%>
 
 
     <%if service_provider_id.present?%>

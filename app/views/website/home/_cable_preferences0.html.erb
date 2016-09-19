@@ -77,7 +77,7 @@
     //   }
     // });
 
-
+    <%if session[:user_id].present?%>
       $.ajax({
         url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=3",
         type: "GET",
@@ -91,7 +91,7 @@
           $("#cable_free_channels").val(data["service_preference"]["free_channels"])
         }
       });
-
+      <%end%>
 
     <%if service_provider_id.present?%>
       set_service_provider("<%=service_provider_id%>")

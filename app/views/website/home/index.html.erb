@@ -52,13 +52,353 @@
 
 
 <!--<banner form small device>-->
-
 <%= render :partial => "website/home/small_banner" %>
 
 <!-- //banner -->
 
-<%= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
-<%= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+<%#= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
+<%#= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
+
+<%if @best_deal_data.present? or @trending_deal_data.present?%>
+<section class="sd-services">
+  <div class="container ">
+    <div>
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#internet"  role="tab" data-toggle="tab">Internet</a></li>
+        <li role="presentation"><a href="#telephone" aria-controls="profile" role="tab" data-toggle="tab">Telephone</a></li>
+        <li role="presentation"><a href="#cable" aria-controls="messages" role="tab" data-toggle="tab">Cable</a></li>
+        <li role="presentation"><a href="#cellphone" aria-controls="settings" role="tab" data-toggle="tab">Cellphone</a></li>
+        <li role="presentation"><a href="#bundle" aria-controls="settings" role="tab" data-toggle="tab">Bundle</a></li>
+
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content sd-services-deals">
+         <!-- internet tab -->
+        <div role="tabpanel" class="tab-pane text-center active" id="internet">
+          <%if @best_deal_data.present?%>
+          <% @best_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:best_deal].present?  and dashboard_data[:service_category_name] == "Internet" %>
+              <% best_deal = dashboard_data[:best_deal] %>
+
+              <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
+                <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+                <div class="sd-box-des">
+                  <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
+                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
+                  <ul class="caption-dealdet">
+                    <li><%=best_deal["short_description"].truncate(30)%></li>
+                    <li><%=best_deal["detail_description"].truncate(30)%></li>
+                  </ul>
+                </div>
+                </a>
+              </div>
+
+
+
+          <% end %>
+          <% end %>
+          <% end %>
+          <%if @trending_deal_data.present?%>
+          <% @trending_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Internet"%>
+          <% trending_deal = dashboard_data[:trending_deal] %>
+
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=trending_deal["short_description"].truncate(30)%></li>
+                <li><%=trending_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+
+          <% end %>
+          <% end %>
+          <% end %>
+          <% if @best_deal_data.present? %>
+          <%@best_deal_data.each do |d|%>
+          <% if d[:order_deal].present? and d[:service_category_name] == "Internet" %>
+          <% order_deal = d[:order_deal]%>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=order_deal["short_description"].truncate(30)%></li>
+                <li><%=order_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+           <% end %>
+          <% end %>
+          <% end %>
+
+        </div>
+        <!-- Telephone tab -->
+        <div role="tabpanel" class="tab-pane  text-center" id="telephone">
+          <%if @best_deal_data.present?%>
+          <% @best_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:best_deal].present?  and dashboard_data[:service_category_name] == "Telephone" %>
+              <% best_deal = dashboard_data[:best_deal] %>
+              <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=2&amp;zip_code=75024&amp;deal_type=residence">
+                <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+                <div class="sd-box-des">
+                  <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
+                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
+                  <ul class="caption-dealdet">
+                    <li><%=best_deal["short_description"].truncate(30)%></li>
+                    <li><%=best_deal["detail_description"].truncate(30)%></li>
+                  </ul>
+                </div>
+                </a>
+              </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <%if @trending_deal_data.present?%>
+          <% @trending_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Telephone"%>
+          <% trending_deal = dashboard_data[:trending_deal] %>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=2&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=trending_deal["short_description"].truncate(30)%></li>
+                <li><%=trending_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <% if @best_deal_data.present? %>
+          <%@best_deal_data.each do |d|%>
+          <% if d[:order_deal].present? and d[:service_category_name] == "Telephone" %>
+          <% order_deal = d[:order_deal]%>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=2&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=order_deal["short_description"].truncate(30)%></li>
+                <li><%=order_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+           <% end %>
+          <% end %>
+          <% end %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane  text-center" id="cable">
+          <%if @best_deal_data.present?%>
+          <% @best_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:best_deal].present?  and dashboard_data[:service_category_name] == "Cable" %>
+              <% best_deal = dashboard_data[:best_deal] %>
+              <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=3&amp;zip_code=75024&amp;deal_type=residence">
+                <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+                <div class="sd-box-des">
+                  <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
+                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
+                  <ul class="caption-dealdet">
+                    <li><%=best_deal["short_description"].truncate(30)%></li>
+                    <li><%=best_deal["detail_description"].truncate(30)%></li>
+                  </ul>
+                </div>
+                </a>
+              </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <%if @trending_deal_data.present?%>
+          <% @trending_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Cable"%>
+          <% trending_deal = dashboard_data[:trending_deal] %>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=3&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=trending_deal["short_description"].truncate(30)%></li>
+                <li><%=trending_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <% if @best_deal_data.present? %>
+          <%@best_deal_data.each do |d|%>
+          <% if d[:order_deal].present? and d[:service_category_name] == "Cable" %>
+          <% order_deal = d[:order_deal]%>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=3&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=order_deal["short_description"].truncate(30)%></li>
+                <li><%=order_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+           <% end %>
+          <% end %>
+          <% end %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane  text-center" id="cellphone">
+          <%if @best_deal_data.present?%>
+          <% @best_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:best_deal].present?  and dashboard_data[:service_category_name] == "Cellphone" %>
+              <% best_deal = dashboard_data[:best_deal] %>
+              <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=4&amp;zip_code=75024&amp;deal_type=residence">
+                <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+                <div class="sd-box-des">
+                  <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
+                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
+                  <ul class="caption-dealdet">
+                    <li><%=best_deal["short_description"].truncate(30)%></li>
+                    <li><%=best_deal["detail_description"].truncate(30)%></li>
+                  </ul>
+                </div>
+                </a>
+              </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <%if @trending_deal_data.present?%>
+          <% @trending_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Cellphone"%>
+          <% trending_deal = dashboard_data[:trending_deal] %>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=4&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=trending_deal["short_description"].truncate(30)%></li>
+                <li><%=trending_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <% if @best_deal_data.present? %>
+          <%@best_deal_data.each do |d|%>
+          <% if d[:order_deal].present? and d[:service_category_name] == "Cellphone" %>
+          <% order_deal = d[:order_deal]%>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=4&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=order_deal["short_description"].truncate(30)%></li>
+                <li><%=order_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+           <% end %>
+          <% end %>
+          <% end %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane  text-center" id="bundle">
+          <%if @best_deal_data.present?%>
+          <% @best_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:best_deal].present?  and dashboard_data[:service_category_name] == "Bundle" %>
+              <% best_deal = dashboard_data[:best_deal] %>
+              <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
+                <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+                <div class="sd-box-des">
+                  <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
+                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
+                  <ul class="caption-dealdet">
+                    <li><%=best_deal["short_description"].truncate(30)%></li>
+                    <li><%=best_deal["detail_description"].truncate(30)%></li>
+                  </ul>
+                </div>
+                </a>
+              </div>
+
+          <% end %>
+          <% end %>
+          <% end %>
+          <%if @trending_deal_data.present?%>
+          <% @trending_deal_data.each do |dashboard_data| %>
+          <% if dashboard_data[:trending_deal].present? and dashboard_data[:service_category_name] == "Bundle"%>
+          <% trending_deal = dashboard_data[:trending_deal] %>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=5&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=trending_deal["short_description"].truncate(30)%></li>
+                <li><%=trending_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+            </a>
+          </div>
+          <% end %>
+          <% end %>
+          <% end %>
+          <% if @best_deal_data.present? %>
+          <%@best_deal_data.each do |d|%>
+          <% if d[:order_deal].present? and d[:service_category_name] == "Bundle" %>
+          <% order_deal = d[:order_deal]%>
+          <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=5&amp;zip_code=75024&amp;deal_type=residence">
+            <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
+            <div class="sd-box-des">
+              <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
+              <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
+              <ul class="caption-dealdet">
+                <li><%=order_deal["short_description"].truncate(30)%></li>
+                <li><%=order_deal["detail_description"].truncate(30)%></li>
+              </ul>
+            </div>
+           <% end %>
+          <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<%end%>
+
 
 <!-- mid part -->
 
@@ -128,16 +468,16 @@
       <div id="internet_pref" style="display:none">
         <%=render :partial => "internet_preferences0.html.erb"%>
       </div>
-      <div id="telephone_pref" style="display:none;height:440px">
+      <div id="telephone_pref" style="display:none;height:469px">
         <%=render :partial => "telephone_preferences0.html.erb"%>
       </div>
       <div id="cable_pref" style="display:none;height:351px">
         <%=render :partial => "cable_preferences0.html.erb"%>
       </div>
-      <div id="cellphone_pref" style="display:none;height:400px">
+      <div id="cellphone_pref" style="display:none;height:546px">
         <%=render :partial => "cellphone_preferences0.html.erb"%>
       </div>
-      <div id="bundle_pref" style="display:none;height:400px">
+      <div id="bundle_pref" style="display:none;height:560px">
         <%=render :partial => "bundle_preferences0.html.erb"%>
       </div>
       <div id="onwait" style="background-color: #000;    height: 586px; position: absolute;    top: 1px;    width: 100%;    opacity: 0.3;">
@@ -146,13 +486,36 @@
     </div>
   </div>
 </div>
+
+
+      <div class="modal fade" id="wowPopup" role="dialog"  data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog  user-motivation">
+      <!-- Modal content-->
+      <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="refresh()">×</button>
+      <div class="modal-content">
+      <div id="welcome-popup">
+      <div class="text-center mg-bt25">
+      <div><img src="/assets/website/user-motivational.png" alt=""></div>
+      <div> <img src="/assets/website/wow.png" alt=""></div>
+      <div class="potential-saving">Your Potential $aving are
+      <span id="you_save_value">$900 - $1,200</span></div>
+      </div>
+      <div class="mg-bt25 text-center">
+      <button type="button" onclick = "refresh()" value="Save and switch"  class="btn compare-btn">Review Deals & Switch</button>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
+
 <!-- Internet, Telephone, cable, Cellphone, Bundle. -->
 <script type="text/javascript">
   function move_next() {
     $("#welcome-popup").hide();
     $("#internet_pref").show().css("height","370px");
   }
-
+<%if session[:user_id].present?%>
   function calculate_you_save(){
     $.ajax({
       url:"/api/v1/you_save",
@@ -161,10 +524,20 @@
        id:<%=session[:user_id]%>
       },
       success: function(data){
-         alert("you save: $"+data["you_save"]);
-         window.open("/website/home", "_self");
+        console.log(data);
+         $("#wowPopup").modal("show");
+         if (data["you_save"] !="" && data["you_save"]!=null){
+           $("#you_save_value").html("You save: $"+data["you_save"]+" per annum")
+         }
+         else {
+           $("#you_save_value").html("You save: $"+0)
+         }
       }
     });
+  }
+  <%end%>
+  function refresh() {
+    window.open("/website/home","_self");
   }
   </script>
 

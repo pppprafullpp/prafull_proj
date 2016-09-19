@@ -64,6 +64,7 @@
     <%end%>
   </div>
   <script>
+  <%if session[:user_id].present?%>
   function Unsubscribe()
   {
     event.preventDefault();
@@ -82,6 +83,7 @@
       }
     });
   }
+  <%end%>
   $(document).ready(function(){
     $("#is_contract").prop("checked",false);
     $("#is_contract").on("change",function(){

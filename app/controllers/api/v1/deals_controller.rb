@@ -90,7 +90,7 @@ class Api::V1::DealsController < ApplicationController
 
 	def customisable_deals
 		deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CELLPHONE_CATEGORY)
-		render :json => { :success => true, deals: deals}
+		render :json => { :success => true, deals: deals.as_json(:methods => [:service_category_name, :service_provider_name])}
 	end
 
 	def channel_customisable_deals

@@ -71,6 +71,7 @@
         <li role="presentation"><a href="#cable" aria-controls="messages" role="tab" data-toggle="tab">Cable</a></li>
         <li role="presentation"><a href="#cellphone" aria-controls="settings" role="tab" data-toggle="tab">Cellphone</a></li>
         <li role="presentation"><a href="#bundle" aria-controls="settings" role="tab" data-toggle="tab">Bundle</a></li>
+
       </ul>
 
       <!-- Tab panes -->
@@ -85,7 +86,7 @@
 
               <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
                 <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
-                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
                 <div class="sd-box-des">
                   <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
                   <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
@@ -109,7 +110,7 @@
 
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
-            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
@@ -130,7 +131,7 @@
           <% order_deal = d[:order_deal]%>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
-            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
@@ -154,7 +155,7 @@
               <% best_deal = dashboard_data[:best_deal] %>
               <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=2&amp;zip_code=75024&amp;deal_type=residence">
                 <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
-                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
                 <div class="sd-box-des">
                   <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
                   <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
@@ -174,7 +175,7 @@
           <% trending_deal = dashboard_data[:trending_deal] %>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=2&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
-            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
@@ -194,7 +195,7 @@
           <% order_deal = d[:order_deal]%>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=2&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
-            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
@@ -217,7 +218,7 @@
               <% best_deal = dashboard_data[:best_deal] %>
               <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=3&amp;zip_code=75024&amp;deal_type=residence">
                 <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
-                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
                 <div class="sd-box-des">
                   <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
                   <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
@@ -237,7 +238,7 @@
           <% trending_deal = dashboard_data[:trending_deal] %>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=3&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
-            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
@@ -257,7 +258,7 @@
           <% order_deal = d[:order_deal]%>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=3&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
-            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
@@ -278,7 +279,7 @@
               <% best_deal = dashboard_data[:best_deal] %>
               <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=4&amp;zip_code=75024&amp;deal_type=residence">
                 <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
-                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
                 <div class="sd-box-des">
                   <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
                   <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
@@ -298,7 +299,7 @@
           <% trending_deal = dashboard_data[:trending_deal] %>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=4&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
-            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
@@ -318,7 +319,7 @@
           <% order_deal = d[:order_deal]%>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=4&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
-            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>
@@ -339,7 +340,7 @@
               <% best_deal = dashboard_data[:best_deal] %>
               <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=1&amp;zip_code=75024&amp;deal_type=residence">
                 <div class="best-trending-sty"><img src="/assets/website/best_deal" alt=""></div>
-                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+                <div class="bx-img"> <img src="<%= best_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
                 <div class="sd-box-des">
                   <p class="caption-price best-deal-price">Deal Price : <span>$ <%= best_deal['deal_price']  %></span></p>
                   <p class="caption-price effcetive-price">Effective Price : <span>$  <%= best_deal['effective_price']  %></span></p>
@@ -360,7 +361,7 @@
           <% trending_deal = dashboard_data[:trending_deal] %>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=5&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/trending_deal" alt=""></div>
-            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= trending_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
@@ -380,7 +381,7 @@
           <% order_deal = d[:order_deal]%>
           <div class="sd-deals-sty"> <a href="/website/home/deal_details?category_id=5&amp;zip_code=75024&amp;deal_type=residence">
             <div class="best-trending-sty"><img src="/assets/website/new-order" alt=""></div>
-            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" height="80px" width="80px"></div>
+            <div class="bx-img"> <img src="<%= order_deal['deal_image_url']  %>" alt="" class="img-responsive"></div>
             <div class="sd-box-des">
               <p class="caption-price best-deal-price">Deal Price : <span>$ <%= order_deal['deal_price']  %></span></p>
               <p class="caption-price effcetive-price">Effective Price : <span>$  <%= order_deal['effective_price']  %></span></p>

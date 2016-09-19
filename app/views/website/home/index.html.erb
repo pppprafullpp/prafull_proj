@@ -113,9 +113,12 @@
                 <div class="sd-box-des">
                   <p class="caption-price best-deal-price">Deal Price : <span>$ <%= trending_deal['deal_price']  %></span></p>
                   <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+                  <p class="caption-price effcetive-price">Effective Price : <span>$  <%= trending_deal['effective_price']  %></span></p>
+                  <p><b><button class="show_details_dashboard" onclick="javascript:void(0)">+Show Details</button></b></p>
                   <ul class="caption-dealdet">
                     <li><%=trending_deal["short_description"].truncate(30)%></li>
                     <li><%=trending_deal["detail_description"].truncate(30)%></li>
+
                   </ul>
                 </div>
                 </a>
@@ -477,7 +480,7 @@
       <div id="cellphone_pref" style="display:none;height:546px">
         <%=render :partial => "cellphone_preferences0.html.erb"%>
       </div>
-      <div id="bundle_pref" style="display:none;height:556px">
+      <div id="bundle_pref" style="display:none;height:560px">
         <%=render :partial => "bundle_preferences0.html.erb"%>
       </div>
       <div id="onwait" style="background-color: #000;    height: 586px; position: absolute;    top: 1px;    width: 100%;    opacity: 0.3;">
@@ -516,7 +519,7 @@
     $("#welcome-popup").hide();
     $("#internet_pref").show().css("height","370px");
   }
-
+<%if session[:user_id].present?%>
   function calculate_you_save(){
     $.ajax({
       url:"/api/v1/you_save",
@@ -528,7 +531,7 @@
         console.log(data);
          $("#wowPopup").modal("show");
          if (data["you_save"] !="" && data["you_save"]!=null){
-           $("#you_save_value").html("You save: $"+data["you_save"])
+           $("#you_save_value").html("You save: $"+data["you_save"]+" per annum")
          }
          else {
            $("#you_save_value").html("You save: $"+0)
@@ -536,6 +539,7 @@
       }
     });
   }
+  <%end%>
   function refresh() {
     window.open("/website/home","_self");
   }

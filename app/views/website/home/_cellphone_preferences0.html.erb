@@ -105,7 +105,7 @@
   <script>
   function show_bundle() {
       $("#cellphone_pref").hide();
-      $("#bundle_pref").show().css("height","586px");
+      $("#bundle_pref").show().css("height","571px");
   }
    $(document).ready(function(){
      $("#cellphone_start_date").datepicker();
@@ -127,6 +127,7 @@
     //     $("#cellphone_end_date").attr("disabled",false);
     //   }
     // });
+    <%if session[:user_id].present?%>
     $.ajax({
       url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id=+<%=session[:user_id]%>+&category=4",
       type: "GET",
@@ -145,7 +146,7 @@
       }
     });
 
-
+<%end%>
     $("#checkbox_domestic_call_unlimited").on("change",function(){
       if($("#checkbox_domestic_call_unlimited").prop("checked")==true){
         $("#cellphone_domestic_call_minutes").attr("readonly",true);

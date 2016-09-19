@@ -104,7 +104,7 @@
         $("#telephone_end_date").attr("disabled",false);
       }
     });
-
+    <%if session[:user_id].present?%>
     $.ajax({
       url :"/api/v1/get_preferences?app_user_id="+<%=session[:user_id]%>+"&category=2",
       type: "GET",
@@ -120,7 +120,7 @@
         $("#telephone_price").val(data["service_preference"]["price"]);
       }
     });
-
+    <%end%>
     $("#telephone_domestic_call_unlimited").on("change",function(){
       if($("#telephone_domestic_call_unlimited").prop("checked")==true){
         $("#telephone_domestic_call_minutes").attr("disabled",true);

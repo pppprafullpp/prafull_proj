@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20160910111756) do
     t.integer "zipcode_id",          limit: 4, null: false
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
+    t.string   "password",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "advertisements", force: :cascade do |t|
     t.integer  "service_category_id",   limit: 4
     t.string   "service_category_name", limit: 255
@@ -575,6 +583,13 @@ ActiveRecord::Schema.define(version: 20160910111756) do
 
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
 
+  create_table "login_details", force: :cascade do |t|
+    t.string   "partnerable_type", limit: 255
+    t.integer  "partnerable_id",   limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "app_user_id",                   limit: 4
     t.boolean  "recieve_notification"
@@ -667,6 +682,17 @@ ActiveRecord::Schema.define(version: 20160910111756) do
     t.string   "secondary_id",        limit: 255
     t.string   "primary_id_number",   limit: 255
     t.string   "secondary_id_number", limit: 255
+  end
+
+  create_table "pending_actions", force: :cascade do |t|
+    t.integer  "action_by",       limit: 4
+    t.integer  "pending_with",    limit: 4
+    t.integer  "action_type",     limit: 4
+    t.integer  "key",             limit: 4
+    t.integer  "status",          limit: 4
+    t.text     "additional_info", limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "refer_contact_details", force: :cascade do |t|
@@ -876,8 +902,6 @@ ActiveRecord::Schema.define(version: 20160910111756) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "additional_offers", "deals"
-  add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
   add_foreign_key "cellphone_service_preferences", "service_preferences"

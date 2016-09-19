@@ -5346,3 +5346,8 @@ ul.caption-dealdet li::before {
 .set-default-btn:hover {background: #339e45;}
 .default-address-txt { color: #e10409; font-size:13px;}
 .address-tab .form-control{ background: none;}
+#deal-form .img-responsive{display: inline-block;
+    max-width: 70%;
+    padding: 0 5%;
+    height: auto;
+    background: #f7f7f7;}

@@ -9,7 +9,7 @@
            <div class="border-radius-bg">
              <img src="<%= @deal.image.url %>" width="100">
              <ul>
-               <li>Base Monthly Price $<%= @deal.price %></li>
+               <li>Base Monthly Price $<%= "%.2f" % @deal.price %></li>
                <li>Base Installation $0.00</li>
                <li>Contract : <%= @deal.contract_period %> months</li>
              </ul>
@@ -29,7 +29,7 @@
 
          </div>
         <div class="col-sm-8 about-offer">
-        <a class="shareon-fb pull-right" href="#" onclick="postLike();"><i class="fa fa-facebook"></i>Share on Facebook</a>
+        <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;Share on Facebook</i></a>
         <h4><%= @deal.title %></h4>
         <h5>About the offer</h5>
 
@@ -48,7 +48,7 @@
                   <tbody>
                   <tr>
                     <td width="20%">Price</td>
-                    <td width="80%" colspan="2">$<%= additional_offer.try(:price) %></td>
+                    <td width="80%" colspan="2">$<%= "%.2f" % additional_offer.try(:price) %></td>
                   </tr>
                   </tbody>
                 </table>
@@ -56,21 +56,17 @@
         <% end %>
         <div id="reviews-section" class="">
           <h3 id="reviews-header"></h3>
-          <%if session[:user_id].present?%>
-            <div class="add-reviews-div">
+            <div class="add-reviews-div" style="border-bottom: 3px solid #fafafa;padding-bottom: 11px;height:340px">
               <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
               <p>Select rating point</p>
               <input id="comment_rating_rating_point" class="rating rating-loading" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
               <%=f.text_field:comment_title, :class => "form-control", :placeholder => "Add Comment title", :required => true%><br />
               <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />
               <%=f.hidden_field:deal_id, :value=>params[:deal_id]%>
-                <%if session[:user_id].present?%>
-                  <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
-                <%end%>
-                <%=f.submit("Save", :class=>"btn btn-success", :onclick=>"add_comments()")%>
+                <%=f.hidden_field:app_user_id, :value=>session[:user_id]%>
+                <%=f.submit("Save", :class=>"order-btn",:style=>"width: 50%;margin: auto 29%;background-color: green;",:onclick=>"add_comments()")%>
               <%end%>
             </div>
-          <%end%>
             <div id="reviews-inner-area"></div>
         </div>
 
@@ -81,20 +77,24 @@
   <script>
   function add_comments(){
     event.preventDefault();
-    $.ajax({
-      url:"/api/v1/comment_ratings",
-      type:"post",
-      data: {
-        app_user_id:$("#comment_rating_app_user_id").val(),
-        deal_id:$("#comment_rating_deal_id").val(),
-        rating_point:$("#comment_rating_rating_point").val(),
-        comment_title:$("#comment_rating_comment_title").val(),
-        comment_text:$("#comment_rating_comment_text").val()
-      },
-      success: function(d){
-        location.reload();
-      }
-    })
+    if($("#comment_rating_app_user_id").val()!=""){
+      $.ajax({
+        url:"/api/v1/comment_ratings",
+        type:"post",
+        data: {
+          app_user_id:$("#comment_rating_app_user_id").val(),
+          deal_id:$("#comment_rating_deal_id").val(),
+          rating_point:$("#comment_rating_rating_point").val(),
+          comment_title:$("#comment_rating_comment_title").val(),
+          comment_text:$("#comment_rating_comment_text").val()
+        },
+        success: function(d){
+          location.reload();
+        }
+      });
+    }
+    else
+    alert("Please login to comment!");
   }
   $(document).ready(
     function(){
@@ -104,7 +104,6 @@
   </script>
 </section>
 <!--End of More Details section-->
-
 
 
 <div class="modal fade text-left" id="myModal2" role="dialog">

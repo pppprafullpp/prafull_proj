@@ -56,7 +56,7 @@ class ServiceProvider < ActiveRecord::Base
   #  	#product.attributes = row.to_hash.slice(*accessible_attributes)
   #  	service_category.save!
   #	end
-  #end	
+  #end
 
   #def self.open_spreadsheet(file)
   #	case File.extname(file.original_filename)

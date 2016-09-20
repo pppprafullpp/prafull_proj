@@ -24,53 +24,69 @@
   <%=hidden_field_tag("service_category_id",1)%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-  <div class="col-md-6">
-    <% @providers=ServiceProvider.where(:service_category_id=>1).pluck(:name,:id)%>
-      <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-      </select>
-    </div>
-    <div class="col-md-6">
-    <%= number_field_tag("internet_price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
-  </div>
 
-  <div class="checkbox checkbox-info no-contract-sty">
-  <%= check_box_tag "internet_contract", false, :class=>"form-control"%>
-  <label for="internet_contract"> <span>No Contract </span> </label>
-  </div>
+    <div class="col-md-6">
+    <% @providers=ServiceProvider.where(:service_category_id=>1).pluck(:name,:id)%>
+    <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
+    <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+    </select>
+    </div>
+
+    <div class="col-md-6 mg_bttom20">
+    <%= number_field_tag("internet_price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    </div>
+
+
+    <div class="col-md-6">
+    <div class="checkbox checkbox-info no-contract-sty">
+    <%= check_box_tag "internet_contract", false, :class=>"form-control"%>
+    <label for="internet_contract"> <span>No Contract </span> </label>
+    </div>
+    </div>
+
+    <div class="col-md-6 mg_bttom20">
     <p class="contract-margin-sty">Contract Date</p>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("internet_start_date","#{start_date}", :class=>"form-control")%> </div>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("internet_end_date","#{end_date}", :class=>"form-control")%> </div><br />
+    </div>
+
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_start_date","#{start_date}", :class=>"form-control", :placeholder =>"Start Date")%></div>
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("internet_end_date","#{end_date}", :class=>"form-control", :placeholder =>"End Date")%> </div><br />
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
     <div class="col-md-12 text-center">
-    <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"submit_internet_preference()")%>
-    <%if params[:new_user]%>
-    <%= button_tag("Skip", :class=>"btn skip-btn", :onclick=>"show_cable()")%>
-    <%end%>
+    <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference()")%>
+    <input type="button" value="Skip" class="skip-button" onclick="show_telephone()" />
     </div>
+
     <%end%>
   </div>
   <script>
+  function show_telephone() {
+    $("#internet_pref").hide();
+    $("#telephone_pref").show().css("height","490px");
+  }
   $(document).ready(function(){
-    $("#internet_contract").prop("checked",false);
-    $("#internet_contract").on("change",function(){
-      if($("#internet_contract").prop("checked")==true){
-        $("#internet_start_date").attr("disabled",true);
-        $("#internet_end_date").attr("disabled",true);
-      }
-      else {
-        $("#internet_start_date").attr("disabled",false);
-        $("#internet_end_date").attr("disabled",false);
-      }
-    });
+      $("#internet_start_date").datepicker();
+      $("#internet_end_date").datepicker();
+      $("#internet_contract").prop("checked","true");
+      $("#internet_start_date").attr("disabled",true);
+      $("#internet_end_date").attr("disabled",true);
+    // $("#internet_contract").on("change",function(){
+    //   if($("#internet_contract").prop("checked")==true){
+    //     $("#internet_start_date").attr("disabled",true);
+    //     $("#internet_end_date").attr("disabled",true);
+    //   }
+    //   else {
+    //     $("#internet_start_date").attr("disabled",false);
+    //     $("#internet_end_date").attr("disabled",false);
+    //   }
+    // });
       <%
       if service_provider_id.present?%>
         set_service_provider("<%=service_provider_id%>")
       <%end%>
   });
-
+  <%if session[:user_id].present?%>
   $.ajax({
     url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=1",
     type: "GET",
@@ -84,6 +100,7 @@
       $("#internet_download_speed").val(data["service_preference"]["download_speed"])
     }
   });
+  <%end%>
 
 
     function set_service_provider(id) {
@@ -98,27 +115,32 @@
       {
         is_contract=true
       }
-      console.log("is contract="+is_contract);
-      $.ajax({
-        url:"/edit_or_change_service_preferences",
-        type: "POST",
-        data: {
-          service_category_id:1,
-          app_user_id:$("#app_user_id").val(),
-          upload_speed:$("#internet_upload_speed").val(),
-          download_speed:$("#internet_download_speed").val(),
-          start_date:$("#internet_start_date").val(),
-          end_date:$("#internet_end_date").val(),
-          price:$("#internet_price").val(),
-          is_contract:is_contract,
-          service_provider_id:$("#internet_service_provider_id option:selected").val()
-        },
-        success: function(data){
-          if (data["success"] == true) {
-            $("#internet_pref").hide();
-            $("#telephone_pref").show();
-          }
-        }
-      });
+       if ($("#internet_price").val()!= "") {
+         $.ajax({
+           url:"/edit_or_change_service_preferences",
+           type: "POST",
+           data: {
+             service_category_id:1,
+             app_user_id:$("#app_user_id").val(),
+             upload_speed:$("#internet_upload_speed").val(),
+             download_speed:$("#internet_download_speed").val(),
+             start_date:$("#internet_start_date").val(),
+             end_date:$("#internet_end_date").val(),
+             price:$("#internet_price").val(),
+             is_contract:is_contract,
+             service_provider_id:$("#internet_service_provider_id option:selected").val()
+           },
+           success: function(data){
+             if (data["success"] == true) {
+               $("#internet_pref").hide();
+               $("#telephone_pref").show();
+             }
+           }
+         });
+       }
+       else {
+         alert("Enter price")
+       }
+
       }
   </script>

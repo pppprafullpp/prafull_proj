@@ -2,8 +2,8 @@
 
 <div class="row">
 <div class="col-lg-12">
-  
-  
+
+
   <% if @deal_equipments.present? %>
   <h5 class="margin_bot20">Equipments & Installation</h5>
   <% @deal_equipments.each do |deal_equipment| %>
@@ -20,13 +20,13 @@
       </tr>
       <tr>
         <td width="20%">Price</td>
-        <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
+        <td width="80%" colspan="2">$<%= "%.2f" % deal_equipment.try(:price) %></td>
       </tr>
     </tbody>
   </table>
   <% end %>
   <% end %>
- 
+
 </div>
 
 </div>

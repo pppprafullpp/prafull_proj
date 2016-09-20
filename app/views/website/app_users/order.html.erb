@@ -33,11 +33,11 @@ end
             <table class="table table-condensed">
               <tr>
                 <td align="right" width="50%">Price</td>
-                <td align="left"  width="50%" class="bold">$<%= @deal.price %></td>
+                <td align="left"  width="50%" class="bold">$<%= "%.2f" % @deal.price %></td>
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Effective Price</td>
-                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price.present? ? @effective_price : @deal.effective_price %></td>
+                <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price.present? ? "%.2f" % @effective_price : "%.2f" % @deal.effective_price %></td>
               </tr>
             </table>
           </div>
@@ -370,7 +370,7 @@ $("#review-federal").text(federal_value);
 var  ssn = $('#ssn').val();
 $('#getssn').val(ssn);
 var ssn_value= $(getssn).val()
-$("#review-ssn").text(ssn_value);
+$("#review-ssn").text($('#ssn').val());
 
 var  last_name = $('#last_name').val();
 $('#getlastnamevalue').val(last_name);
@@ -566,6 +566,7 @@ $("#order_information_menu_tab").click(function(event){
       $(".service-address-innertxt").html(service_address);
       $(".shipping-address-innertxt").html(shipping_address);
       $(".billing-address-innertxt").html(billing_address);
+      $("#review-ssn").text($('#ssn').val());
       $('.nav-tabs > .active').next('li').find('a').trigger('click');
     }
   });

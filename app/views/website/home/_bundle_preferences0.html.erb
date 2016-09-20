@@ -39,15 +39,18 @@
       <div class="col-md-6">
     <%= number_field_tag(:bundle_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
+  <div class="col-md-6">
     <p class="contract-margin-sty">Contract Date</p>
+  </div>
+  <div class="col-md-6">
     <div class="checkbox checkbox-info no-contract-sty">
       <%= check_box_tag "bundle_is_contract",true, :class=>"form-control"%>
         <label for="bundle_is_contract"> <span>No Contract </span> </label>
-
-
     </div>
-    <div class = "col-md-6"><%= date_field_tag(:bundle_start_date,"", :class=>"form-control")%></div>
-    <div class = "col-md-6"><%= date_field_tag(:bundle_end_date,"", :class=>"form-control")%></div>
+  </div>
+
+    <div class = "col-md-6"><%= text_field_tag(:bundle_start_date,"", :class=>"form-control", :placeholder =>"Start Date")%></div>
+    <div class = "col-md-6"><%= text_field_tag(:bundle_end_date,"", :class=>"form-control", :placeholder =>"End Date")%></div>
     <div class="row">
       <div class="col-md-4">
         <div class="checkbox checkbox-info no-contract-sty mgt25">
@@ -65,7 +68,7 @@
 
       <div class="checkbox checkbox-info no-contract-sty mgt25">
         <input type="checkbox" id="bundle_telephone-cb" value="telephone"  onchange="showtelephone1()" />
-        <label for="bundle_telephone-cb"> <span>telephone </span> </label>
+        <label for="bundle_telephone-cb"> <span>Telephone </span> </label>
       </div>
 
       </div>
@@ -126,19 +129,25 @@
     </div>
     <%=hidden_field_tag("plan_name","none")%>
 
-
-    <div class="col-md-12 text-center">
-      <%= submit_tag("Save", :class=>"btn btn-success preference-btn", :onclick=>"check()")%>
+    <br />
+    <div class="col-md-12 text-center btn-group-sty">
+      <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"check()")%>
     </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
   </div>
   <script>
+  function hide_modal() {
+    $("#comparePopup").modal("hide");
+  }
   $(document).ready(function(){
+    $("#bundle_start_date").datepicker();
+    $("#bundle_end_date").datepicker();
     $("#bundle_international_call_unlimited").prop("checked",false);
     $("#bundle_domestic_call_unlimited").prop("checked",false);
-
-    $("#bundle_is_contract").prop("checked",false);
+    $("#bunlde_is_contract").prop("checked","true");
+    $("#bundle_start_date").attr("disabled",true);
+    $("#bundle_end_date").attr("disabled",true);
     $("#bundle_is_contract").on("change",function(){
       if($("#bundle_is_contract").prop("checked")==true){
         $("#bundle_start_date").attr("disabled",true);
@@ -151,7 +160,7 @@
         $("#bundle_is_contract").val(true);
       }
     });
-
+    <%if session[:user_id].present?%>
     $.ajax({
       url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=5",
       type: "GET",
@@ -176,7 +185,7 @@
         $("#bundle_combo").val("Internet and Cable")
       }
     });
-
+    <%end%>
 
 
     <%if service_provider_id.present?%>
@@ -317,35 +326,41 @@
           else{
             is_contract=true
           }
-          $.ajax({
-            url:"/edit_or_change_service_preferences",
-            type: "POST",
-            data: {
-              service_category_id:5,
-              service_provider_id: $("#service_provider_id option:selected").val(),
-              app_user_id:$("#app_user_id").val(),
-              domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
-              international_call_minutes:$("#bundle_international_call_minutes").val(),
-              start_date:$("#bundle_start_date").val(),
-              end_date:$("#bundle_end_date").val(),
-              data_plan:$("#bundle_data_plan").val(),
-              no_of_lines:$("#bundle_no_of_lines").val(),
-              price:$("#bundle_price").val(),
-              download_speed:$("#bundle_download_speed").val(),
-              upload_speed:$("#bundle_upload_speed").val(),
-              // bundle_combo:$("#bundle_combo").val(),
-              is_contract:is_contract,
-              service_provider_id:$("#bundle_service_provider_id option:selected").val(),
-              free_channels:$("#bundle_free_channels").val(),
-              premium_channels:$("#bundle_premium_channels").val(),
-            },
-            success: function(data){
-              if (data["success"] == true) {
-                $("#comparePopup").modal("hide");
-                calculate_you_save();
+          if($("#bundle_price").val()!="") {
+            $.ajax({
+              url:"/edit_or_change_service_preferences",
+              type: "POST",
+              data: {
+                service_category_id:5,
+                service_provider_id: $("#service_provider_id option:selected").val(),
+                app_user_id:$("#app_user_id").val(),
+                domestic_call_minutes:$("#bundle_domestic_call_minutes").val(),
+                international_call_minutes:$("#bundle_international_call_minutes").val(),
+                start_date:$("#bundle_start_date").val(),
+                end_date:$("#bundle_end_date").val(),
+                data_plan:$("#bundle_data_plan").val(),
+                no_of_lines:$("#bundle_no_of_lines").val(),
+                price:$("#bundle_price").val(),
+                download_speed:$("#bundle_download_speed").val(),
+                upload_speed:$("#bundle_upload_speed").val(),
+                // bundle_combo:$("#bundle_combo").val(),
+                is_contract:is_contract,
+                service_provider_id:$("#bundle_service_provider_id option:selected").val(),
+                free_channels:$("#bundle_free_channels").val(),
+                premium_channels:$("#bundle_premium_channels").val(),
+              },
+              success: function(data){
+                if (data["success"] == true) {
+                  $("#comparePopup").modal("hide");
+                  calculate_you_save();
+                }
               }
-            }
-          });
+            });
+          }
+          else {
+            alert("Enter Price")
+          }
+
     }
     else {
       $("#msg").text("Please Enter Price").removeClass("hidden");

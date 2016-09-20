@@ -16,39 +16,77 @@
    end
    end
   %>
-  <%= "Add Services for internet" if params[:new_user]%>
-   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+
+  <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
+
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
   <%=hidden_field_tag("service_category_id",params[:category_id])%>
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
-  <div class="col-md-6">
+
+    <div class="col-md-6">
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-      </select>
+    <select class="form-control" id="service_provider_id" name="service_provider_id">
+    <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+    </select>
+    </div>
+
+    <div class="col-md-6 mg_bttom20">
+    <%= number_field_tag("price","#{price.present? ? "%.2f" %  price.to_f : 120.00}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    </div>
+
+
+    <div class="col-md-6">
+    <div class="checkbox checkbox-info no-contract-sty">
+    <%= check_box_tag "no_contract",nil,:class=>"form-control"%>
+    <label for="no_contract"> <span>No Contract </span> </label>
+    </div>
+    </div>
+
+    <div class="col-md-6 mg_bttom20">
+    <p class="contract-margin-sty">Contract Date</p>
+    </div>
+
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("start_date","#{start_date.to_date if start_date.present?}", :class=>"form-control",:placeholder =>"Start Date")%> </div>
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag("end_date","#{end_date.to_date if end_date.present?}", :class=>"form-control",:placeholder =>"End Date")%> </div>
+    <div class="col-md-6 mg_bttom20"><%= number_field_tag("download_speed",download_speed.present? ? download_speed : 20.00, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
+    <div class="col-md-6 mg_bttom20"><%= number_field_tag("upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)")%></div>
+    <%=hidden_field_tag("plan_name","none")%>
+
+    <div class="col-md-12 text-center">
+    <div class="col-md-6">
+    <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
     </div>
     <div class="col-md-6">
-    <%= number_field_tag("price","#{price}",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
-  </div>
-
-  <div class="checkbox checkbox-info no-contract-sty">
-  <%= check_box_tag "no_contract",nil,:class=>"form-control"%>
-  <label for="no_contract"> <span>No Contract </span> </label>
-  </div>
-    <p class="contract-margin-sty">Contract Date</p>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("start_date","#{start_date.to_date if start_date.present?}", :class=>"form-control")%> </div>
-    <div class="col-md-6 mg_bttom20"><%= date_field_tag("end_date","#{end_date.to_date if end_date.present?}", :class=>"form-control")%> </div><br />
-    <div class="col-md-6 mg_bttom20"><%= number_field_tag("download_speed",download_speed, :class=>"form-control", :placeholder=>"Download(Mbps)", :required=>true)%></div>
-    <div class="col-md-6 mg_bttom20"><%= number_field_tag("upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
-    <%=hidden_field_tag("plan_name","none")%>
-    <div class="col-md-12 text-center">
-    <%= submit_tag("Save", :class=>"btn btn-success preference-btn")%>
-
+    <%if @service_preferences_data.present?%>
+    <%= button_tag("Unsubscribe", :class=>"btn btn-success preference-btn", :onclick=>"Unsubscribe()")%>
+    <%end%>
     </div>
+    </div>
+
     <%end%>
   </div>
   <script>
+  <%if session[:user_id].present?%>
+  function Unsubscribe()
+  {
+    event.preventDefault();
+    $.ajax({
+      url:"/api/v1/deselect_prference",
+      type:"POST",
+      data: {
+        app_user_id:<%=session[:user_id]%>,
+        category:<%=params[:category_id]%>
+      },
+      success: function(d){
+        console.log(d);
+        if(d["success"] == true){
+          location.reload();
+        }
+      }
+    });
+  }
+  <%end%>
   $(document).ready(function(){
     $("#no_contract").prop("checked",false);
     $("#no_contract").on("change",function(){

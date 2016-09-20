@@ -22,12 +22,14 @@
             <a id="zipcode_header" href="#" class="text-center serviceRow">ZIP : <%= Base64.decode64(AppUser.find(session[:user_id]).zip).to_i %></a>
 
         <% else %>
+
             <% if controller.controller_name=="app_users" and controller.action_name=="checkout" %>
-                <a href="#" class="hidden" data-toggle="modal" data-target="#myModal">Login / SignUp</a> |
+                <a href="#" class="hidden" data-toggle="modal" data-target="#myModal">Signin / SignUp</a> |
             <%else%>
-                <a href="#" data-toggle="modal" data-target="#myModal">Login / SignUp</a> |
+                <a href="#" data-toggle="modal" data-target="#myModal">Signin / SignUp</a> |
             <%end%>
             <a id="zipcode_header" href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%=  session[:zip_code] %></a>
+
             <div class="modal fade text-left" id="myModal" role="dialog">
               <div class="modal-dialog">
                 <!-- Modal content-->
@@ -47,8 +49,8 @@
                     <div class="modal-header">
                       <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
                       <ul class="nav nav-tabs">
-                        <li class="active"><a href="#login" role="tab" data-toggle="tab">Login</a></li>
-                        <li><a href="#signup" role="tab" data-toggle="tab">SignUp</a></li>
+                        <li class="active"><a href="#login" role="tab" data-toggle="tab">SIGN IN</a></li>
+                        <li><a href="#signup" role="tab" data-toggle="tab">SIGN UP</a></li>
                       </ul>
                     </div>
                     <div class="modal-body">
@@ -80,7 +82,7 @@
                               </div>
                               <div class="form-group">
                                 <div class="col-md-12 text-center">
-                                  <input type="submit" name="commit" value="Login" class="btn  btn-login" onclick="checkcredentials()" id="login_user">
+                                  <input type="submit" name="commit" value="SIGN IN" class="btn  btn-login" onclick="checkcredentials()" id="login_user">
                                 </div>
                                 <strong></strong> </div>
                             </form>
@@ -92,19 +94,20 @@
                           <div class="login-signup col-lg-12 col-xs-12">
                             <% @user = AppUser.new() %>
                             <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
-                                <div class="form-group">
-                                  <div class="col-md-6" style="padding-left:0px">
-                                    <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",:onkeyup=>"titleize_text(this)" %>
-                                    <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-fname-valid">Email Already Exists.</span>
-                                  </div>
-                                  <div class="col-md-6" style="padding-left:0px">
-                                    <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name",:onkeyup=>"titleize_text(this)" %>
-                                    <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-lname-valid">Email Already Exists.</span>
-                                  </div>
-                                </div>
-                                <div class="form-group">
+
+                            <div class="form-group">
+                              <div class="col-md-6" style="padding-left:0px">
+                                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
+                                <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-fname-valid">Email Already Exists.</span>
+                              </div>
+                              <div class="col-md-6" style="padding-left:0px">
+                                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
+                                <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-lname-valid">Email Already Exists.</span>
+                              </div>
+                            </div>
+                           <div class="form-group">
                                   <%= f.text_field :email,:class => "form-control",:placeholder => "Email" %>
-                                  <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-email-valid">Email Already Exists.</span>
+                                  <span style="font-size: 12px;color: red;margin-left: 5px;display: none;position:absolute" id="is-signup-email-valid">Email Already Exists.</span>
                                 </div>
 
                                 <div class="form-group">
@@ -137,7 +140,7 @@
 
                                 <div class="form-group">
                                   <div class="col-md-12 text-center">
-                                    <%= f.submit "Signup", :class => "btn  btn-login",:id => 'create_user' %>
+                                    <%= f.submit "SIGN UP", :class => "btn  btn-login",:id => 'create_user' %>
                                   </div>
                                 </div>
                             <% end %>

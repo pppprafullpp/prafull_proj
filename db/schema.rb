@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910075343) do
+ActiveRecord::Schema.define(version: 20160910111756) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20160910075343) do
   create_table "additional_offers_zipcodes", id: false, force: :cascade do |t|
     t.integer "additional_offer_id", limit: 4, null: false
     t.integer "zipcode_id",          limit: 4, null: false
+  end
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
+    t.string   "password",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "advertisements", force: :cascade do |t|
@@ -358,16 +366,17 @@ ActiveRecord::Schema.define(version: 20160910075343) do
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
 
   create_table "channel_packages", force: :cascade do |t|
-    t.string   "package_name",  limit: 255
-    t.string   "package_code",  limit: 255
-    t.integer  "channel_count", limit: 4
-    t.text     "channel_ids",   limit: 65535
-    t.text     "description",   limit: 65535
-    t.string   "image",         limit: 255
-    t.boolean  "status",                                              default: true
-    t.datetime "created_at",                                                         null: false
-    t.datetime "updated_at",                                                         null: false
-    t.decimal  "price",                       precision: 5, scale: 2
+    t.string   "package_name",        limit: 255
+    t.string   "package_code",        limit: 255
+    t.integer  "channel_count",       limit: 4
+    t.text     "channel_ids",         limit: 65535
+    t.text     "description",         limit: 65535
+    t.string   "image",               limit: 255
+    t.boolean  "status",                                                    default: true
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+    t.decimal  "price",                             precision: 5, scale: 2
+    t.integer  "service_provider_id", limit: 4
   end
 
   create_table "channels", force: :cascade do |t|
@@ -574,6 +583,13 @@ ActiveRecord::Schema.define(version: 20160910075343) do
 
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
 
+  create_table "login_details", force: :cascade do |t|
+    t.string   "partnerable_type", limit: 255
+    t.integer  "partnerable_id",   limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "app_user_id",                   limit: 4
     t.boolean  "recieve_notification"
@@ -666,6 +682,17 @@ ActiveRecord::Schema.define(version: 20160910075343) do
     t.string   "secondary_id",        limit: 255
     t.string   "primary_id_number",   limit: 255
     t.string   "secondary_id_number", limit: 255
+  end
+
+  create_table "pending_actions", force: :cascade do |t|
+    t.integer  "action_by",       limit: 4
+    t.integer  "pending_with",    limit: 4
+    t.integer  "action_type",     limit: 4
+    t.integer  "key",             limit: 4
+    t.integer  "status",          limit: 4
+    t.text     "additional_info", limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "refer_contact_details", force: :cascade do |t|

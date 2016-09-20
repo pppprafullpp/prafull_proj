@@ -11,7 +11,7 @@
     </div>
 
     <%
-    business_name = business.present? ? business.business_name.titleize : ''
+    business_name = business.present? ? business.business_name : ''
     manager_name = business.present? ? business.manager_name : ''
     manager_contact = business.present? ? business.manager_contact : ''
     business_type = business.present? ? business.business_type : ''
@@ -22,7 +22,7 @@
 
     <div class="btn-group col-sm-6" id="business_name_div">
       <label for="Name" class="control-label"> Business Name </label>
-      <%= text_field_tag :business_name, business_name,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
+      <%= text_field_tag :business_name, business_name.titleize,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
     </div>
 
     <div class="btn-group col-sm-6 padding15right"  id="business_type_div">
@@ -223,6 +223,11 @@
 //   }
 // });
 // })
+  $(document).ready(function(){
+    value=$("#user_type option:selected").val();
+    rest=value.substr(1);
+    $("#user_type option:selected").text(value[0].toUpperCase()+""+rest);
+  });
 function format_federal_number(obj) {
   if($("#"+obj.id).val().length==2){
   $("#"+obj.id).val($("#"+obj.id).val().toUpperCase()+"-")

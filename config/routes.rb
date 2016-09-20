@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       match 'device_details' => 'device_tracker#add_devise_details', :via => :post
       match 'destroy_session' => 'device_tracker#destroy_session', :via => :post
       match 'get_preferences' => 'service_preferences#fetch_service_preferences', :via => :get
-      match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => :delete
+      match 'deselect_prference' => 'service_preferences#deselect_service_preference', :via => [:delete,:post]
       match 'get_states' => 'orders#get_states', :via => :get
       match 'get_cities' => 'orders#get_cities', :via => :get
       match 'primary_information' => "app_users#primary_information", :via => :get

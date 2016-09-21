@@ -2199,17 +2199,21 @@ color: #fff;
 .order-form {
 margin-top: 50px;
 }
-.order-form .tabber .nav-tabs {
-background: #e5e5e5 none repeat scroll 0 0;
-border: 1px solid #dfdfdf;
+.order-form .nav-tabs {    border-bottom: 1px solid #ddd;}
+.order-form .nav-tabs li {
+    float: left;
+    margin-bottom: -1px;
 }
+.order-form .nav-tabs > li.active > a, .order-form .nav-tabs > li.active > a:hover, .order-form .nav-tabs > li.active > a:focus {    background: none;
+    border: none;
+    color: #e10409;
+    font-family: 'open_sanssemibold';
+    font-size: 20px;
+    border-bottom: 4px solid #e10409;}
 .order-form .tabber .tab-wrapper {
 border-radius: 5px;
 margin-bottom: 20px;
 overflow: hidden;
-}
-.order-form .tab-wrapper a {
-color: #000;
 }
 .order-form .form-control::-moz-placeholder {
 color:#555;
@@ -2222,12 +2226,13 @@ padding: 0px;
 padding-top: 15px;
 }
 .order-form .tab-content .control-label {
-color: #000;
-font-family: "open_sansregular";
-font-size: 14px;
-font-weight: normal;
-margin-bottom: 5px;
+  color: #949494;
+      font-family: "open_sansregular";
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 5px;
 }
+.order-form  .form-control { background:none}
 .order-form .details-zip {
 padding-top: 0;
 margin: 0
@@ -5351,3 +5356,20 @@ ul.caption-dealdet li::before {
     padding: 0 5%;
     height: auto;
     background: #f7f7f7;}
+.bundle-deals-details {
+  margin-top:25px;
+}
+.bundle-deals-details h5 {
+  margin-bottom: 0px !important;
+  color:#e10409
+  }
+.bundle-deals-details .bundle-deal {
+  margin-top:0px !important;
+}
+.order-form .nav-tabs li a {
+    font-size: 20px;
+    font-family: 'open_sanssemibold';
+    color: #4c4c4c;
+    border: none;
+  }
+.order-form .nav-tabs li a { background:none !important}

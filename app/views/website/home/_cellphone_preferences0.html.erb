@@ -21,7 +21,9 @@
 
   end
   %>
+
   <h4>Current Cellphone service </h4>
+
 
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>

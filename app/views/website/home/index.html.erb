@@ -59,6 +59,39 @@
 <%#= render :partial => "website/home/trending_deals_carousel"  if @trending_deal_data.present? %>
 <%#= render :partial => "website/home/best_deals_carousel"  if @best_deal_data.present? %>
 
+<section class="customaized-deal">
+  <%bundle_deals = Deal.where('is_customisable =? ', true)%>
+    <%if bundle_deals.present? and bundle_deals.count > 0 %>
+  <div class="container">
+    <div class="row">
+
+      <h1 class="text-center">Customized Cellphone And Cable Deals</h1>
+      <div id="dashboad-sm-deals" class="owl-carousel">
+        <%bundle_deals.each do |bd|%>
+         
+            <div>
+              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> bd.id) %>">
+                 <h6><%= bd.service_category.name%></h6>
+                <div class="bx-img">
+                  <img src="<%= bd.image %>" alt=""  class="img-responsive">
+                </div>
+                <p class="caption-title" title="<%= bd.title.truncate(20)%>"><%= bd.title.present? ? bd.title.truncate(25) : ''  %></p>
+                <p class="caption-price">$ <%= bd.price  %></p>
+                <p class="caption-des">$ <%= bd.short_description.truncate(20)  %></span></p>
+              </a>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+   <%end%>
+</section>
+
+
+
+
+
+
 <%if @best_deal_data.present? or @trending_deal_data.present?%>
 <section class="sd-services">
   <div class="container ">
@@ -511,11 +544,19 @@
 
 <!-- Internet, Telephone, cable, Cellphone, Bundle. -->
 <script type="text/javascript">
+ $('#dashboad-sm-deals').owlCarousel({
+    loop:true,
+    margin:10,
+    responsiveClass:true,
+   items:4,
+  });
+
   function move_next() {
     $("#welcome-popup").hide();
     $("#internet_pref").show().css("height","370px");
   }
-<%if session[:user_id].present?%>
+
+ <%if session[:user_id].present?%>
   function calculate_you_save(){
     $.ajax({
       url:"/api/v1/you_save",

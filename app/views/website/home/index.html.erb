@@ -24,7 +24,7 @@
     </a>
     <div class="formcontainer">
       <%=form_tag("/website/home/deal_details", method: :get, :id=>"firstpageform") do%>
-        <h2>Please enter valid ZIP Code & Choose Category and Type.</h2>
+        <h3>Please enter valid ZIP Code & Choose Category and Type.</h3>
         <div class="col-md-12">
           <div class="col-md-5 col-xs-offset-1">
             <%=text_field(:zip_code,nil, :class=>"form-control", :placeholder=>"Enter Zip*",:id=>"zip-code", maxlength: 6)%>

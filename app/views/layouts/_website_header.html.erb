@@ -16,9 +16,22 @@
         <%#else%>
         <%#headername=session[:user_name]%>
         <%#end%>
-            <a href="<%= profile_website_app_users_path %>">Welcome <%= headername %></a> |
-            <a href="/website/app_users/profile?status=true">My Orders</a> |
-            <a href="<%= signout_website_app_users_path %>">SignOut</a> |
+
+        <div class="dropdown">
+          <% unless session[:user_id].present? %>
+          <button class="dropbtn">Dropdown</button>
+          <% else %>
+          <a class="dropbtn" href="<%= profile_website_app_users_path %>">Welcome <%= headername %></a>
+          <% end %>
+          <div class="dropdown-content">
+            <!-- <a href="<%#= profile_website_app_users_path %>">Welcome <%= headername %></a> | -->
+            <a href="/website/app_users/profile?status=true">My Orders</a>
+            <a href="<%= signout_website_app_users_path %>">SignOut</a>
+          </div>
+        </div>
+
+
+
             <%if session[:zip_code].present?%>
             <a id="zipcode_header" href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%= Base64.decode64(AppUser.find(session[:user_id]).zip).to_i %></a>
             <%else%>
@@ -37,7 +50,7 @@
                 <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
                 <div class="modal-content height_popup">
                   <div class="popup_left">
-                    <h5>Welcome to service dealz</h5>
+                    <h4>Welcome to service dealz</h4>
                     <p>Save Hundred’s Of $ Month On Month &amp; Pick The Best Deals</p>
                     <ul>
                       <li>Unlimited internet plans</li>
@@ -73,7 +86,10 @@
                                 <input type="password" class="form-control" placeholder="Password" name="user[password]" required id="user_password" maxlength="10" >
                               </div>
                               <div class="form-group">
-                                <div class="col-md-12"> <span class="pull-left">
+                                <div class="col-md-12">
+                                  <span class="pull-left">
+
+
                                 <label class="checkbox-inline" >
                                   <input type="checkbox" value="" id="" name="" >
                                   Remember Me</label>
@@ -99,7 +115,7 @@
                                 <%= f.text_field :first_name,:class => "form-control",:placeholder => "First Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-fname-valid">Email Already Exists.</span>
                               </div>
-                              <div class="col-md-6" style="padding-left:0px">
+                              <div class="col-md-6" style="padding-left:0px; padding-right:0;">
                                 <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
                                 <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-lname-valid">Email Already Exists.</span>
                               </div>

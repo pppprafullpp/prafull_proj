@@ -5,6 +5,8 @@ class ChannelPackagesController < ApplicationController
   #   @channel_packages = ChannelPackage.all
   # end
 
+  before_filter :service_provider_list, only: [:new,:edit]
+
   def index
     @channel_packages = ChannelPackage.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
@@ -20,6 +22,7 @@ class ChannelPackagesController < ApplicationController
 
   # GET /ChannelPackages/new
   def new
+
     @channel_package = ChannelPackage.new
   end
 
@@ -74,5 +77,9 @@ class ChannelPackagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def channel_package_params
       params.require(:channel_package).permit!
+    end
+
+    def service_provider_list
+      @service_providers = ServiceProvider.where(service_category: Deal::CABLE_CATEGORY).select('name,id')
     end
 end

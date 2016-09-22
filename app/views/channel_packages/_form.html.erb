@@ -11,11 +11,22 @@
         </div>
     <% end %>
 
+    <label>Service Providers</label>
+    <%# channel_ids = @channel_package.channel_ids.present? ? eval(@channel_package.channel_ids) : '' %>
+    <%#= f.select :service_provider_id,options_for_select('',''),{},:class => 'chosen-select' %>
+    <%= f.select :service_provider_id, @service_providers.map { |r| [r.name, r.id]}, {:include_blank => "Select a service provider"}%>
+
+    <%= f.label :package_name %>
+    <%= f.text_field :package_name, :required=>'true' %>
+
     <%= f.label :package_name %>
     <%= f.text_field :package_name, :required=>'true' %>
 
     <%= f.label :package_code %>
     <%= f.text_field :package_code, :required=>'true' %>
+
+    <%= f.label :price %>
+    <%= f.text_field :price %>
 
     <label for="channel_channel_ids">Channels</label>
     <% channel_ids = @channel_package.channel_ids.present? ? eval(@channel_package.channel_ids) : '' %>

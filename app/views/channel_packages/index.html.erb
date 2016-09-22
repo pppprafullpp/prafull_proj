@@ -18,6 +18,8 @@
         <tr>
           <th>Name</th>
           <th>Code</th>
+          <th>Service Provider</th>
+          <th>Price</th>
           <th>Channel Count</th>
           <th>Status</th>
           <th>Actions</th>
@@ -31,6 +33,8 @@
             <tr>
               <td class="best_in"><%= channel_package.package_name %></td>
               <td class="best_in"><%= channel_package.package_code %></td>
+              <td><%= channel_package.service_provider.name %></td>
+              <td><%= channel_package.price %></td>
               <td><%= channel_package.channel_count %></td>
               <td><%= channel_package.status %></td>
               <td>

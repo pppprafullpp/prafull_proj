@@ -54,7 +54,7 @@
     <div class="col-md-6 mg_bttom20"><%= number_field_tag("internet_upload_speed",upload_speed, :class=>"form-control", :placeholder=>"Upload(Mbps)", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
     <div class="col-md-12 text-center">
-    <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference()")%>
+    <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_internet_preference();return false")%>
     <input type="button" value="Skip" class="skip-button" onclick="show_telephone()" />
     </div>
 
@@ -107,8 +107,10 @@
         $("#service_provider_id option[value='"+id+"']").attr('selected','selected');
     }
     function submit_internet_preference(){
-      event.preventDefault();
-       if($("#internet_start_date").prop("disabled") == true && $("#internet_end_date").prop("disabled") == true) {
+         if (!window.XMLHttpRequest) {
+              event.preventDefault();
+         }
+        if($("#internet_start_date").prop("disabled") == true && $("#internet_end_date").prop("disabled") == true) {
         is_contract = false
       }
       else
@@ -116,31 +118,36 @@
         is_contract=true
       }
        if ($("#internet_price").val()!= "") {
-         $.ajax({
-           url:"/edit_or_change_service_preferences",
-           type: "POST",
-           data: {
-             service_category_id:1,
-             app_user_id:$("#app_user_id").val(),
-             upload_speed:$("#internet_upload_speed").val(),
-             download_speed:$("#internet_download_speed").val(),
-             start_date:$("#internet_start_date").val(),
-             end_date:$("#internet_end_date").val(),
-             price:$("#internet_price").val(),
-             is_contract:is_contract,
-             service_provider_id:$("#internet_service_provider_id option:selected").val()
-           },
-           success: function(data){
-             if (data["success"] == true) {
-               $("#internet_pref").hide();
-               $("#telephone_pref").show();
+
+         if (!window.XMLHttpRequest) {
+           console.log("ff")
+         }
+         else {
+           $.ajax({
+             url:"/edit_or_change_service_preferences",
+             type: "POST",
+             data: {
+               service_category_id:1,
+               app_user_id:$("#app_user_id").val(),
+               upload_speed:$("#internet_upload_speed").val(),
+               download_speed:$("#internet_download_speed").val(),
+               start_date:$("#internet_start_date").val(),
+               end_date:$("#internet_end_date").val(),
+               price:$("#internet_price").val(),
+               is_contract:is_contract,
+               service_provider_id:$("#internet_service_provider_id option:selected").val()
+             },
+             success: function(data){
+               if (data["success"] == true) {
+                 $("#internet_pref").hide();
+                 $("#telephone_pref").show();
+               }
              }
-           }
-         });
+           });
+         }
        }
        else {
          alert("Enter price")
        }
-
       }
   </script>

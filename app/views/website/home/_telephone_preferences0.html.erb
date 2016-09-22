@@ -69,9 +69,9 @@
       </div>
 
     <div class="col-md-12 text-center btn-group-sty">
-    <%= submit_tag("Save", :class=>"btn save-button",:onclick=>"submit_telephone()")%>
+    <%= submit_tag("Save", :class=>"btn save-button",:onclick=>"submit_telephone();return false")%>
       <%if params[:new_user]%>
-        <input type="button" value="Skip" class="btn skip-button" onclick="show_cable()" />
+        <input type="button" value="Skip" class="btn skip-button" onclick="show_cable();return false" />
       <%end%>
     </div>
     <%end%>
@@ -155,7 +155,9 @@
   }
 
   function submit_telephone(){
-    event.preventDefault();
+    if (!window.XMLHttpRequest) {
+         event.preventDefault();
+    }
      if($("#cellphone_start_date").prop("disabled") == true && $("#cellphone_end_date").prop("disabled") == true) {
       is_contract = false
     }
@@ -164,6 +166,10 @@
       is_contract=true
     }
     if( $("#telephone_price").val()!= ""){
+      if (!window.XMLHttpRequest) {
+        event.preventDefault();
+      }
+      else {
       $.ajax({
        url:"/edit_or_change_service_preferences",
        type: "POST",
@@ -186,6 +192,7 @@
          }
        }
      });
+   }
     }
     else
     {

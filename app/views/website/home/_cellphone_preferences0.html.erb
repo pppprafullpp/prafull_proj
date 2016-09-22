@@ -96,9 +96,9 @@
       </div>
 
     <div class="col-md-12 text-center btn-group-sty">
-     <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_cellphone()")%>
+     <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_cellphone();return false")%>
      <%if params[:new_user]%>
-      <input type="button" class="btn skip-button" value="Skip" onclick="show_bundle()" />
+      <input type="button" class="btn skip-button" value="Skip" onclick="show_bundle();return false" />
      <%end%>
    </div>
     <%end%>
@@ -192,8 +192,10 @@
     $("#no_of_lines1 option[value='"+id+"']").attr('selected','selected');
   }
   function submit_cellphone(){
-    event.preventDefault();
-     if($("#cellphone_start_date").prop("disabled") == true && $("#cellphone_end_date").prop("disabled") == true) {
+
+             if (!window.XMLHttpRequest) {
+               console.log("ff")
+             }     if($("#cellphone_start_date").prop("disabled") == true && $("#cellphone_end_date").prop("disabled") == true) {
       is_contract = false
     }
     else
@@ -201,6 +203,10 @@
       is_contract=true
     }
     if($("#cellphone_price").val()!= "") {
+      if (!window.XMLHttpRequest) {
+        event.preventDefault();
+      }
+      else {
       $.ajax({
         url:"/edit_or_change_service_preferences",
         type: "POST",
@@ -224,6 +230,7 @@
           }
         }
       });
+    }
     }
     else {
       alert("enter price");

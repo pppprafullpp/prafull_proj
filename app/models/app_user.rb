@@ -34,7 +34,7 @@ class AppUser < ActiveRecord::Base
   USER_TYPES = [RESIDENCE,BUSINESS]
   # STATES = Statelist.all.pluck(:state).uniq
   STATES =Statelist.all.order('state ASC').pluck(:state).uniq
-  
+
 
   def encrypt_data
     ##self.zip = encode_data({'data' => self.zip}) if self.zip.present?

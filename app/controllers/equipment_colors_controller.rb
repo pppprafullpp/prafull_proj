@@ -48,7 +48,7 @@ class EquipmentColorsController < ApplicationController
 
 	private
   def equipment_colors_params
-   params.require(:equipment_color).permit(:color_name, :status)
+   params.require(:equipment_color).permit(:color_name, :status,:image)
   end
 end
  

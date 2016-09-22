@@ -1,5 +1,6 @@
 class ChannelPackage < ActiveRecord::Base
   validates_uniqueness_of :package_code
+  belongs_to :service_provider
   before_save :update_channel_count
 
   def channel_name

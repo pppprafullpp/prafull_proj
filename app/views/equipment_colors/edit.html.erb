@@ -10,11 +10,18 @@
       </div>
 			<div class="small-6 large-centered columns">
 				<%= form_for(@equipment_color) do |f| %><br/>
-				<div><strong>Color Name: </strong><br />
-				  <%= f.text_field :color_name %></div>
-				  <div><%= f.check_box :status %><strong>Status</strong></div>
-				  <div><%= f.submit "Update" %></div>
-				<% end %>
+					<div><strong>Color Name: </strong><br />
+					  <%= f.text_field :color_name %>
+					</div>
+					<div><strong>Color Code: </strong><br />
+	          <%= f.text_field :color_code %>
+	        </div>
+	        <div><strong>Color Image: </strong><br />
+	          <%= f.file_field :image %>
+	        </div>
+					<div><%= f.check_box :status %><strong>Status</strong></div>
+						<div><%= f.submit "Update" %></div>
+					<% end %>
 			</div>
     </td>
 	</tr>

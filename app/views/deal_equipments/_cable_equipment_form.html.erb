@@ -16,6 +16,10 @@
     <div><strong>Name:<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :name,@deal_equipment.name,:placeholder => 'Input Name',:name => 'deal_equipments[name]' %>
     </div>
+
+     <div><strong>Description:</strong><br />
+      <%= text_field_tag :description,@deal_equipment.try(:description),:placeholder => 'Input description',:name => 'deal_equipments[description]' %>
+    </div>
     <div><strong>Make:<span id="mandat">*</span> </strong><br />
       <%= text_field_tag :make,@deal_equipment.make,:placeholder => 'Input make',:name => 'deal_equipments[make]' %>
     </div>

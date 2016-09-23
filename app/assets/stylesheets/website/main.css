@@ -1992,7 +1992,10 @@ margin-top: 10px;
 margin-bottom: 20px;
 }
 .right-offer img {
-margin-bottom: 20px;
+ background: none repeat scroll 0 0 #EFF1F1;
+}
+.right-offer ul {
+    margin-top: 20px;
 }
 .right-offer ul li {
 display: inline-block;
@@ -2199,17 +2202,21 @@ color: #fff;
 .order-form {
 margin-top: 50px;
 }
-.order-form .tabber .nav-tabs {
-background: #e5e5e5 none repeat scroll 0 0;
-border: 1px solid #dfdfdf;
+.order-form .nav-tabs {    border-bottom: 1px solid #ddd;}
+.order-form .nav-tabs li {
+    float: left;
+    margin-bottom: -1px;
 }
+.order-form .nav-tabs > li.active > a, .order-form .nav-tabs > li.active > a:hover, .order-form .nav-tabs > li.active > a:focus {    background: none;
+    border: none;
+    color: #e10409;
+    font-family: 'open_sanssemibold';
+    font-size: 16px;
+    border-bottom: 4px solid #e10409;}
 .order-form .tabber .tab-wrapper {
 border-radius: 5px;
 margin-bottom: 20px;
 overflow: hidden;
-}
-.order-form .tab-wrapper a {
-color: #000;
 }
 .order-form .form-control::-moz-placeholder {
 color:#555;
@@ -2222,12 +2229,13 @@ padding: 0px;
 padding-top: 15px;
 }
 .order-form .tab-content .control-label {
-color: #000;
-font-family: "open_sansregular";
-font-size: 14px;
-font-weight: normal;
-margin-bottom: 5px;
+  color: #949494;
+      font-family: "open_sansregular";
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 5px;
 }
+.order-form  .form-control { background:none}
 .order-form .details-zip {
 padding-top: 0;
 margin: 0
@@ -5235,11 +5243,11 @@ box-shadow: 0px 0px 5px #666666;
   margin-top: 17px;
 }
 .sd-deals-sty .bx-img {
-  padding: 20px !important;
-  float: left;
-  text-align: center;
-  width: 100%;
-  margin-top: 20px;
+  display: inline-block;
+    max-width: 70%;
+  
+    height: auto;
+    padding: 0 5%;}
 }
 .sd-deals-sty .bx-img img {
   width: 140px !important;
@@ -5348,3 +5356,164 @@ ul.caption-dealdet li::before {
     padding: 0 5%;
     height: auto;
     background: #f7f7f7;}
+.bundle-deals-details {
+  margin-top:25px;
+}
+.bundle-deals-details h5 {
+  margin-bottom: 0px !important;
+  color:#e10409
+  }
+.bundle-deals-details .bundle-deal {
+  margin-top:0px !important;
+}
+.order-form .nav-tabs li a {
+    font-size: 16px;
+    font-family: 'open_sanssemibold';
+    color: #4c4c4c;
+    border: none;
+  }
+.order-form .nav-tabs li a { background:none !important}
+    color: #000;
+    float: left;
+    width: 100%;
+    margin-top: 30px;
+  }
+  .user-motivation{ width:450px;}
+  .user-motivation #welcome-popup { padding-top:30px;}
+  .potential-saving {font-family: "open_sanssemibold";  color:#000; font-size:20px; font-weight:bold; margin-top:20px;}
+  .potential-saving span { display:block; color:#209fce;}
+
+.about-offer-details {
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    padding: 20px;
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.about-offer-details p {
+    font-family: 'open_sansregular';
+    font-size: 14px;
+    color: #686868;
+    margin-top: 10px;
+}
+.equipments-details {
+    padding: 0;
+    margin-top:20px;
+}
+.equipments-details h5 {
+    color: #e50005;
+    font-size: 20px;
+    font-family: "open_sanssemibold";
+    padding: 20px 0 5px;
+    border-top: 1px solid #eee;}
+}
+.sd-eq-sty {
+    background: #f4f4f4;
+    padding: 10px;
+}
+.sd-eq-sty h6 {
+    font-size: 20px;
+    font-family: "open_sanssemibold";
+    color: #000;
+        line-height: 28px;
+}
+.sd-eq-sty span {
+    display: block;
+    color: #cd040b;
+    font-size:18px
+}
+
+
+
+.sd-deal-sty h6 {
+   display: block;
+    color: #cd040b;
+    font-size: 20px;
+    font-family: "open_sanssemibold";
+    line-height: 28px;
+}
+.sd-deal-sty p{ color: #999999;
+    font-size: 14px;
+    line-height: 15px;}
+
+.color-wrapper {
+    margin: 10px 0;
+    display:inline-block;
+}
+.color-wrapper .colorSelector_label {
+    height: 36px;
+    width: 36px;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 6px 6px 0;
+    text-indent: -3000px;
+    border:none;
+    border-radius: 50px;
+}
+.color-wrapper .colorSelector {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+.colorSelector:checked+.colorSelector_label.colorSelector_checkShadow {
+    background-position: 5px 4px;
+}
+.colorSelector:checked+.colorSelector_label {
+    background:url(../website/tick-check.png) no-repeat;
+    
+}
+
+.equip-price span{ font-size:18px;     font-family: "open_sanssemibold"; color:#000; background:#fff; display:inline-block; border-radius:6px; padding:5px 10px; border:1px solid #e7e7e7;}
+
+.about-offer-details {
+  border: 1px solid #DEDEDE;
+  border-radius: 5px;
+  float: left;
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 100%;
+}
+.sd-deal-sty {
+    background: #f4f4f4;
+    padding: 10px;
+    margin-right: 15px;
+}
+#reviews-inner-area { float: left; width: 100%;}
+.customaized-deal{  background: ##fafafa; float: left; width: 100%; padding: 30px 0}
+.customaized-deal.owl-carousel a{ width: 280px;}
+.customaized-deal .owl-carousel {    background: #fff;   margin-top: 20px;  padding: 20px; -webkit-box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);
+-moz-box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);
+box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);} 
+.customaized-deal .bx-img{ width: 215px; height: 132px;}
+.customaized-deal .bx-img img{display: inline-block;
+    max-width: 70%;
+    background: #f7f7f7;
+    height: auto;
+    padding: 0 5%;}
+
+  .customaized-deal  .owl-item a  {border: 1px solid #eee;
+    float: left;
+    padding: 10px;
+    text-align: center;}
+
+    .customaized-deal  a .caption-title {color:#e10409 !important; padding-top: 20px;}
+    .customaized-deal a  .caption-price {font-size: 18px;
+    font-family: "open_sanssemibold";
+    color: #000;
+    background: #fff;
+    display: inline-block;
+    border-radius: 6px;
+    padding: 3px 10px;
+    border: 1px solid #e7e7e7;}
+   .customaized-deal a .caption-des {color: #000;
+    font-size: 14px;}
+    .customaized-deal h6 {font-size: 18px;
+    color: #000; font-family: 'open_sanssemibold';}

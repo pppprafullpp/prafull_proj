@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910111756) do
+ActiveRecord::Schema.define(version: 20160921063837) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -257,13 +257,14 @@ ActiveRecord::Schema.define(version: 20160910111756) do
     t.text     "premium_channels_list", limit: 65535
     t.integer  "hd_channels",           limit: 4
     t.text     "hd_channels_list",      limit: 65535
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
     t.text     "channel_ids",           limit: 65535
     t.text     "channel_package_ids",   limit: 65535
     t.integer  "channel_count",         limit: 4
     t.text     "description",           limit: 65535
     t.string   "title",                 limit: 255
+    t.decimal  "amount",                              precision: 5, scale: 2
   end
 
   add_index "cable_deal_attributes", ["deal_id"], name: "index_cable_deal_attributes_on_deal_id", using: :btree
@@ -902,6 +903,8 @@ ActiveRecord::Schema.define(version: 20160910111756) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "additional_offers", "deals"
+  add_foreign_key "advertisements", "service_categories"
   add_foreign_key "bundle_service_preferences", "service_preferences"
   add_foreign_key "cable_service_preferences", "service_preferences"
   add_foreign_key "cellphone_service_preferences", "service_preferences"

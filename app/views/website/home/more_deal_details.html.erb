@@ -7,36 +7,43 @@
     <div class="row">
          <div class="col-sm-4 right-offer">
            <div class="border-radius-bg">
-             <img src="<%= @deal.image.url %>" width="100">
+             <img src="<%= @deal.image.url %>" class="img-responsive">
              <ul>
                <li>Base Monthly Price $<%= "%.2f" % @deal.price %></li>
                <li>Base Installation $0.00</li>
                <li>Contract : <%= @deal.contract_period %> months</li>
+                <li>Effective Price : $<span id= "effective_price">0.00</span></li>
              </ul>
            </div>
            <%if  @current_user.present? %>
              <%if @current_user.email_verified%>
-               <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+               <a onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
              <%else%>
                   <a class="order-btn" href="javascript:void(0)">Verify email</a>
              <%end%>
            <%else%>
-             <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> @deal.id)%>" id=<%=@deal.id%>>Order</a>
+             <a  onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
            <%end%>
-           <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present?%>
+           <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>
             <a class="order-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
             <% end %>
 
          </div>
+
         <div class="col-sm-8 about-offer">
+           <div class="about-offer-details ">
         <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;Share on Facebook</i></a>
         <h4><%= @deal.title %></h4>
         <h5>About the offer</h5>
 
         <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>
         <p></i><%=@deal.detail_description.to_s.gsub(/\n/,"<br>").html_safe%></p>
-        <%= render :partial => "#{@category_name}_deal_form"  %>
-         <% if @deal.try(:additional_offers).present? %>
+        <%if @customized_deals.present?%>
+         <%= render :partial => "#{@customized_deals["service_category_name"].downcase}_customize_deal", :locals =>{:customized_deals =>@customized_deals }  %>
+         <%else%>
+         <%= render :partial => "#{@category_name}_deal_form" %>
+         <%end%>
+          <% if @deal.try(:additional_offers).present? %>
             <h5 class="margin_bot20">Additional Offer</h5>
             <% @deal.try(:additional_offers).each do |additional_offer| %>
                 <table class="table table-bordered">
@@ -55,8 +62,8 @@
             <% end %>
         <% end %>
         <div id="reviews-section" class="">
-          <h3 id="reviews-header"></h3>
-            <div class="add-reviews-div" style="border-bottom: 3px solid #fafafa;padding-bottom: 11px;height:340px">
+          <h3 id="reviews-header" style="width: 100%; float: left"></h3>
+            <div class="add-reviews-div" style="padding-bottom: 11px;height:340px">
               <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
               <p>Select rating point</p>
               <input id="comment_rating_rating_point" class="rating rating-loading" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
@@ -67,13 +74,13 @@
                 <%=f.submit("Save", :class=>"order-btn",:style=>"width: 50%;margin: auto 29%;background-color: green;",:onclick=>"add_comments()")%>
               <%end%>
             </div>
+            <div></div>
             <div id="reviews-inner-area"></div>
         </div>
 
       </div>
     </div>
-
-  </div>
+   </div> </div>
   <script>
   function add_comments(){
     event.preventDefault();
@@ -180,9 +187,83 @@
       }
     }
     })
-
-
   });
+  $(document).ready(function(){
+Array.prototype.contains = function(v) {
+    for(var i = 0; i < this.length; i++) {
+        if(this[i] === v) return true;
+    }
+    return false;
+};
+
+Array.prototype.unique = function() {
+    var arr = [];
+    for(var i = 0; i < this.length; i++) {
+        if(!arr.contains(this[i])) {
+            arr.push(this[i]);
+        }
+    }
+    return arr; 
+}
+});
+
+function check_for_options(){
+   // event.preventDefault();
+    deal_equipments =[];
+    $("input[type='radio']:checked").each(function(){ 
+    value=this.value;
+    console.log("value");
+    if(value!="option1" ) {
+        value=this.value.split("_");
+        jsonObj1 = {};
+        jsonObj1["equipment_id"] = value[0];
+        jsonObj1["color"] = value[1];
+        // jsonObj1["equipment_price"] = value[2];
+        deal_equipments.push(jsonObj1);
+      }
+    });
+
+   deal_attributes=[];
+    $("input[name='deal_attributes']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj3 ={};
+    jsonObj3["ref_id"]=value.split("_")[0];
+    jsonObj3["ref_type"]=value.split("_")[1];
+    deal_attributes.push(jsonObj3)
+    });
+    $("input[name='deal_channel_packages']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj4 ={};
+    jsonObj4["equipment_id"]=value.split("_")[0];
+    jsonObj3["ref_type"]=value.split("_")[1];
+    deal_attributes.push(jsonObj3)
+    });
+
+    cable_deal_equipments=[];
+    $("input[name='cable_deal_equipments']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj3 ={};
+    jsonObj3["equipment_id"]=value.split("_")[0];
+    // jsonObj3["ref_type"]=value.split("_")[1];
+    cable_deal_equipments.push(jsonObj3)
+    });
+
+    deal_extra_services=[];
+    $("input[name='deal_extra_services']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj2 ={};
+    jsonObj2["deal_extra_service_id"]=value.split("_")[0];
+    deal_extra_services.push(jsonObj2)
+    });
+
+    console.log(deal_attributes)
+    console.log(deal_extra_services);
+    console.log(deal_equipments);
+    localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
+    localStorage["deal_extra_services"] = JSON.stringify(deal_extra_services);
+    localStorage["deal_equipments"] = JSON.stringify(deal_equipments);
+    localStorage["cable_deal_equipments"] = JSON.stringify(cable_deal_equipments);
+}
 
 
 
@@ -224,3 +305,48 @@ function postLike(){
        });
 }
 </script>
+<script>
+$(document).ready(function() {
+  var effective_price = parseFloat($('#effective_price').text());
+  var chkId = 0;
+  $('input[type=checkbox]').on('change', function() {
+    $(this).each ( function() {
+      effective_price = parseFloat($('#effective_price').text());
+      if($(this).prop('checked') == true){
+        effective_price = parseFloat($('#effective_price').text());
+        chkId =$(this).attr("val").split("_")[1];
+        effective_value = effective_price + parseFloat(chkId); 
+        $('#effective_price').text(effective_value);
+      }
+      else{
+        effective_price = parseFloat($('#effective_price').text());
+        chkId =$(this).attr("val").split("_")[1];
+        effective_value = effective_price - parseFloat(chkId);
+        $('#effective_price').text(effective_value );
+      }
+      localStorage["effective_price"] = JSON.stringify(effective_value);
+    });
+  });
+    
+  var ids=new Array();
+
+  $('input[type=radio]').on('change', function() {
+    var price = [];
+    var eff_price =parseFloat($("#effective_price").text());
+    var sum=0;
+  
+     id=this.value.split("_")[0];
+     console.log(id);
+     if (ids.contains(id) == false){
+      ids.push(id);
+      $("#effective_price").text( parseFloat($("#effective_price").text())+parseFloat(this.value.split("_")[1]))
+     }
+     console.log(ids)
+  });
+});
+
+
+   
+
+</script>
+

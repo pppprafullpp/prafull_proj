@@ -27,9 +27,10 @@
           <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id])%>
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
 
-            <div class="col-sm-12" style="overflow: hidden">
-              <h5 style="position:absolute;position: absolute;margin: 32px;z-index: 99;"><b>Bundled Deals with <%= ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></b></h5>
-              <div class="owl-carousel bundle-deal border-radius-bg">
+            <div class="col-sm-12 bundle-deals-details" style="overflow: hidden">
+              <div class="border-radius-bg">
+              <h5>Bundled Deals with <%= ServiceCategory.get_category_name_by_id(params[:category_id]).titleize%></h5>
+              <div class="owl-carousel bundle-deal ">
                  <%bundle_deals.each do |bd|%>
                   <div class="bundle-det" style="margin: 16px auto;">
                     <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
@@ -44,6 +45,7 @@
                   </div>
                   <%end%>
               </div>
+            </div>
             </div>
           <%end%>
 
@@ -74,15 +76,15 @@
                           <p id="rating" style="color: #000;font-size: 16px;margin-top:5px">
                             <b>Rating:
                              <%rating.times do%>
-                              <i style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+                              <i style="color:#fdc722;font-size: 12px" class="glyphicon glyphicon-star"></i>
                              <%end%>
                              <%rev=5-rating%>
                              <%rev.times do%>
-                             <i style="color:#db9e03" class="glyphicon glyphicon-star-empty"></i>
+                             <i style="color:#db9e03;font-size: 12px" class="glyphicon glyphicon-star-empty"></i>
                              <%end%>
                              <%else%>
                              <%5.times do%>
-                             <i style="color:#db9e03" style="font-size: 16px;" class="glyphicon glyphicon glyphicon-star-empty"></i>
+                             <i style="color:#db9e03;font-size: 12px;" class="glyphicon glyphicon glyphicon-star-empty"></i>
                              <%end%>
                            </b>
                           </p>

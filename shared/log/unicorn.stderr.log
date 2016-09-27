@@ -295,3 +295,15 @@ I, [2016-09-22T14:13:34.622845 #11429]  INFO -- : worker=1 ready
 127.0.0.1 - - [22/Sep/2016:14:43:48 +0530] "GET /website/home/deal_details?category_id=1&zip_code=75024&deal_type=residence HTTP/1.0" 200 92044 0.7923
 127.0.0.1 - - [22/Sep/2016:14:43:49 +0530] "GET /website/internet-banner.png HTTP/1.0" 304 - 0.0447
 127.0.0.1 - - [22/Sep/2016:14:43:49 +0530] "GET /fonts/glyphicons-halflings-regular.woff HTTP/1.0" 304 - 0.0298
+I, [2016-09-27T11:12:33.046686 #4841]  INFO -- : unlinking existing socket=/home/sonal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock
+I, [2016-09-27T11:12:33.047067 #4841]  INFO -- : listening on addr=/home/sonal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock fd=15
+I, [2016-09-27T11:12:33.047301 #4841]  INFO -- : worker=0 spawning...
+I, [2016-09-27T11:12:33.052290 #4841]  INFO -- : worker=1 spawning...
+I, [2016-09-27T11:12:33.053441 #4853]  INFO -- : worker=0 spawned pid=4853
+I, [2016-09-27T11:12:33.053888 #4853]  INFO -- : worker=0 ready
+I, [2016-09-27T11:12:33.057707 #4841]  INFO -- : master process ready
+I, [2016-09-27T11:12:33.058718 #4856]  INFO -- : worker=1 spawned pid=4856
+I, [2016-09-27T11:12:33.059070 #4856]  INFO -- : worker=1 ready
+I, [2016-09-27T11:12:35.049348 #4841]  INFO -- : reaped #<Process::Status: pid 4853 exit 0> worker=0
+I, [2016-09-27T11:12:35.049570 #4841]  INFO -- : reaped #<Process::Status: pid 4856 exit 0> worker=1
+I, [2016-09-27T11:12:35.050186 #4841]  INFO -- : master complete

@@ -1,4 +1,3 @@
-
     <div class="col-md-12 sd-box-con">
       <h1><%=deal_data[:service_category_name] %></h1>
       <div class="col-md-6">
@@ -36,38 +35,84 @@
       
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="sd-two-deal-block">
-          <div class="sd-dealblock-two-img col-md-5">
-<div class="sddeal-imgbox"><img src="<%= deal_2['deal_image_url'] %>" alt=""> </div>
-
-
-           </div>
-          <div class="sd-dealtwoblock-info col-md-7">
-            <%if key == "trending-best"%> 
-            <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
-            <% else %>
-            <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
-            <% end %>
-            <h4><%= deal_2['title'].truncate(18) %></h4>
-            <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
-           <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
-            <div class="sd-dealprices">
-              <div class="sd-best-price">Deal Price <span>$<%= deal_2['effective_price']%></span></div>
-              <div class="sd-effective-price">Effective Price <span>$<%= deal_2['effective_price']%></span></div>
-              
+    <% if deal_2.present? %>
+        <div class="col-md-6">
+          <div class="sd-two-deal-block">
+            <div class="sd-dealblock-two-img col-md-5">
+              <div class="sddeal-imgbox"><img src="<%= deal_2['deal_image_url'] %>" alt=""> </div>
             </div>
-             <%if key == "trending-best"%> 
-            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
-            <% else %>
-            <a href="<%= order_detail_website_app_users_path(order_id: deal_2['order_id'])%>" class="sd-more-details">+ Order Details</a>
-            <% end %>
-             </div>
-         <!--  <div class="col-md-12 sd-deal-saving text-center">
-            <p> You save <span> $70.01/ mo</span></p>
-          </div> -->
+            <div class="sd-dealtwoblock-info col-md-7">
+              <%if key == "trending-best"%> 
+                <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+              <% else %>
+                <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
+              <% end %>
+              <h4><%= deal_2['title'].truncate(18) %></h4>
+              <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+              <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
+              <div class="sd-dealprices">
+                <div class="sd-best-price">Deal Price <span>$<%= deal_2['deal_price']%></span></div>
+                <div class="sd-effective-price">Effective Price <span>$<%= deal_2['effective_price']%></span></div>
+              </div>
+              <%if key == "trending-best"%> 
+                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
+              <% else %>
+                <a href="<%= order_detail_website_app_users_path(order_id: deal_2['order_id'])%>" class="sd-more-details">+ Order Details</a>
+              <% end %>
+            </div>
+          </div>
         </div>
-      </div>
+<% end %>
+
+
+   <% if deal_data[:service_category_id] == Deal::CABLE_CATEGORY &&  @cable_customized_deals.present?%>
+          <%  @cable_customized_deals.each do |customized_deal| %>
+          <div class="col-md-6">
+            <div class="sd-two-deal-block">
+              <div class="sd-dealblock-two-img col-md-5">
+                <div class="sddeal-imgbox"><img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
+              </div>
+              <div class="sd-dealtwoblock-info col-md-7">
+               
+                <h4><%= customized_deal['title'].truncate(18) %></h4>
+                <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+                <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
+                <div class="sd-dealprices">
+                  <div class="sd-best-price">Deal Price <span>$<%= customized_deal['deal_price']%></span></div>
+                  <div class="sd-effective-price">Effective Price <span>$<%= customized_deal['effective_price']%></span></div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+
+
+   <% if deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY && @cellphone_customized_deals.present?%>
+          <% @cellphone_customized_deals.each do |customized_deal| %>
+          <div class="col-md-6">
+            <div class="sd-two-deal-block">
+              <div class="sd-dealblock-two-img col-md-5">
+                <div class="sddeal-imgbox"><img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
+              </div>
+              <div class="sd-dealtwoblock-info col-md-7">
+               
+                <h4><%= customized_deal['title'].truncate(18) %></h4>
+                <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+                <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
+                <div class="sd-dealprices">
+                  <div class="sd-best-price">Deal Price <span>$<%= customized_deal['deal_price']%></span></div>
+                  <div class="sd-effective-price">Effective Price <span>$<%= customized_deal['effective_price']%></span></div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+     
     </div>
     
   

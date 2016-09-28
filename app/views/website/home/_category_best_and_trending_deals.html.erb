@@ -20,34 +20,37 @@
           <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
 
           <%if rating.present?%>
-           <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
-             <b>Rating:
+           <p id="rating" class="sd-rating">
+
               <%rating.times do%>
-               <i style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+               <i class="fa fa-star"></i>
               <%end%>
               <%rev=5-rating%>
               <%rev.times do%>
-              <i style="color:#db9e03" class="glyphicon glyphicon-star-empty"></i>
+              <i class="fa fa-star-o"></i>
               <%end%>
               <%else%>
               <%5.times do%>
-              <i style="color:#db9e03" class="glyphicon glyphicon glyphicon-star-empty"></i>
+              <i class="fa fa-star-o"></i>
               <%end%>
-            </b>
+
            </p>
-          <%end%><br />
-          <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
+
+
+
+          <%end%><br /><a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
+
       </div>
         <div class="box_down">
           <span class="separator_2"></span>
-          <div  class="pricing-text">
-            <div style="float:left; display:inline-block">
-              <p>Price</p>
-              <h2 class="heading_price">$<%= best_deal['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+           <div class="sd-dealprices">
+                 <div class="sd-best-price">
+              Price
+              <span>$<%= best_deal['deal_price'] %>/mo</span>
             </div>
-            <div style="float:right; display:inline-block">
-              <p>Effective price</p>
-              <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+             <div class="sd-effective-price">
+              Effective price
+              <span>$<%= best_deal['effective_price'] %>/mo</span>
             </div>
             <div style="float:left; width:100%">
               <%if data["you_save"].to_i > 0%>
@@ -88,34 +91,39 @@
         <% end %>
         <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
         <%if rating.present?%>
-         <p id="rating" style="color: #000;font-size: 11px;margin-top:5px">
-           <b>Rating:
+         <p id="rating"  class="sd-rating">
+
             <%rating.times do%>
-             <i style="color:#fdc722" class="glyphicon glyphicon-star"></i>
+             <i class="fa fa-star"></i>
             <%end%>
             <%rev=5-rating%>
             <%rev.times do%>
-            <i style="color:#db9e03" class="glyphicon glyphicon-star-empty"></i>
+            <i class="fa fa-star-o"></i>
             <%end%>
             <%else%>
             <%5.times do%>
-            <i style="color:#db9e03" class="glyphicon glyphicon glyphicon-star-empty"></i>
+          <i class="fa fa-star-o"></i>
             <%end%>
-          </b>
+
          </p>
+
+
+
+
+      </p>
        <%end%><br />
-        <a class="btn_more" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
+        <a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> More Details</a>
       </div>
         <div class="box_down">
           <span class="separator_2"></span>
-          <div   <div class="pricing-text">
-            <div style="float:left; display:inline-block">
-              <p>Price</p>
-              <h2 class="heading_price">$<%= best_deal['deal_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+          <div   <div class="sd-dealprices">
+            <div class="sd-best-price">
+              Price
+              <span>$<%= best_deal['deal_price'] %>/mo</span>
           </div>
-          <div style="float:right; display:inline-block">
-            <p>Effective price</p>
-            <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+          <div class="sd-effective-price">
+          Effective price
+            <span>$<%= best_deal['effective_price'] %>mo</span>
           </div>
         </div>
         <%if @current_user.present?%>

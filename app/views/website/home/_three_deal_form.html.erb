@@ -9,7 +9,7 @@
             </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
-              <h2><%= best_deal['title'] %></h2>
+              <h4><%= best_deal['title'].truncate(20) %></h4>
               <p><%=best_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: best_deal}%>
               <div class="sd-dealprices">
@@ -29,7 +29,7 @@
             <div class="sd-dealblock-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt=""> </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-trendingdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
-              <h2><%= trending_deal['title'] %></h2>
+              <h4><%= trending_deal['title'].truncate(20) %></h4>
               <p><%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
               <div class="sd-dealprices">
@@ -45,7 +45,7 @@
             <div class="sd-dealblock-img"> <img src="<%= order_deal['deal_image_url'] %>" alt=""> </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-orderdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
-              <h2><%= order_deal['title'] %></h2>
+              <h4><%= order_deal['title'].truncate(20) %></h4>
               <p><%=order_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: order_deal}%>
               <div class="sd-dealprices">
@@ -63,7 +63,7 @@
                 <div class="sd-dealblock-img"> <img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
                 <div class="sd-dealblock-info">
                   <div class="sd-dealblock-orderdeal"><img src="" alt="CD"></div>
-                  <h2><%= customized_deal['title'] %></h2>
+                  <h4><%= customized_deal['title'].truncate(20) %></h4>
                   <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
                   <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
                   <div class="sd-dealprices">

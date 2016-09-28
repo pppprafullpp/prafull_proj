@@ -120,11 +120,14 @@
 
     <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? %> 
       <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
+
+   
     <% end %>
   <% end %>
-<% end %>
-</div>
+  </div>
 </section>
+<% end %>
+
 
 
 <div class="modal fade" id="comparePopup" role="dialog"  data-backdrop="static" data-keyboard="false">

@@ -1,5 +1,4 @@
 
-  <div class="container sd-deal-dashboard">
     <div class="col-md-12 sd-box-con">
       <h1><%=deal_data[:service_category_name] %></h1>
       <div class="col-md-6">
@@ -21,12 +20,13 @@
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
             <% end %>
-            <h2><%= deal_1['title'] %></h2>
+            <h4><%= deal_1['title'].truncate(18) %></h4>
             <p><%=deal_1['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
            <%= render :partial => "rating_form" ,locals: {deal: deal_1}%>
             <div class="sd-dealprices">
+              <div class="sd-best-price">Deal Price <span>$<%= deal_1['deal_price']%></span></div>
               <div class="sd-effective-price">Effective Price <span>$<%= deal_1['effective_price']%></span></div>
-              <div class="sd-best-price">Best Price <span>$<%= deal_1['deal_price']%></span></div>
+              
             </div>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id']) %>" class="sd-more-details">+ More Details</a> </div>
              
@@ -49,12 +49,13 @@
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
             <% end %>
-            <h2><%= deal_2['title'] %></h2>
+            <h4><%= deal_2['title'].truncate(18) %></h4>
             <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
            <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
             <div class="sd-dealprices">
+              <div class="sd-best-price">Deal Price <span>$<%= deal_2['effective_price']%></span></div>
               <div class="sd-effective-price">Effective Price <span>$<%= deal_2['effective_price']%></span></div>
-              <div class="sd-best-price">Best Price <span>$<%= deal_2['effective_price']%></span></div>
+              
             </div>
              <%if key == "trending-best"%> 
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
@@ -70,4 +71,3 @@
     </div>
     
   
-  </div>

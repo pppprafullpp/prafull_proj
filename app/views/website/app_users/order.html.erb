@@ -10,17 +10,11 @@ if @app_user.secondary_id_number.present?
 end
 %>
 <script type="text/javascript" src="jquery.min.js"></script>
-<section class="account-banner">
-  <div class="container">
-        <div class="row">
-          <h3 class="text-center"> Order Form</h3>
-        </div>
-    </div>
-</section>
+
 
 <section class="order-form">
   <div class="container">
-    <div class="row">
+    <div class="row sd-order-con">
       <div class="col-lg-4">
         <div class="order-info text-center">
           <div class="thumb"><img src="<%= @deal.image.present? ? @deal.image.url : '' %>" alt="<%= @deal.title %>" height="70" width="155"></div>
@@ -52,7 +46,7 @@ end
         <% end %>
       </div>
 
-      <div class="col-lg-8">
+      <div class="col-lg-8 border-radius-bg">
         <div class="tabber">
           <div class="tab-wrapper tab-primary">
             <ul class="nav nav-tabs">
@@ -88,15 +82,15 @@ end
                     </div>
                     <%= render :partial=>"user_primary_information", :locals => {primary_id_number: primary_id_number, primary_state: primary_state,secondary_id_number: secondary_id_number, secondary_state: secondary_state} %>
                   </div>
-                </div>
+
                 <!-- Button group -->
-                <div class="btn-group btnBox">
-                  <div class="col-sm-12 btn-con">
-                  <button class="btn save-btn" type="button" id="personal_information_tab">
+<div class="btn-group btnBox">
+                  <div class="col-sm-12">
+                <button class="btn save-btn" type="button" id="personal_information_tab">
                     Next
                   </button>
-                </div>
-              </div>
+                </div></div></div>
+
             </div>
 
             <!-- Body -->
@@ -113,7 +107,7 @@ end
   <div id="order-review" class="tab-pane">
     <div class="row">
       <div class="col-lg-12">
-        <div class="col-md-6"><h2><b>Personal details</b></h2>
+        <div class="col-md-6"><h4>Personal details</h4>
           <span class="style3">Name:</span> <span id="review-name" class="style5"></span><br />
           <!-- <span class="style3">Last Name:</span> <span id="review-last-name" class="style5"></span><br /> -->
           <span class="style3">Mobile:</span> <span id="review-mobile" class="style5"></span><br />
@@ -123,30 +117,30 @@ end
 
         <% if (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
 
-        <div class="col-md-6"> <h2><b>Registered</b></h2>
+        <div class="col-md-6"> <h4>Registered</h4>
           <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
           <span class="style3">Federal Tax ID:</span> <span id="review-federal" class="style5"></span><br />
           <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
         </div>
         <% elsif (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::SOLE_PROPRIETOR) %>
-        <div class="col-md-6"> <h2><b>SOLE PROPRIETOR</b></h2>
+        <div class="col-md-6"> <h4>SOLE PROPRIETOR</h4>
           <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
           <span class="style3">SSN:</span> <span id="review-ssn" class="style5"></span><br />
           <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
         </div>
         <% end %>
-        <div class="col-md-12"> <h2><b>Address</b></h2>
+        <div class="col-md-12"> <h3><b>Address</b></h3>
           <div class="billing-address col-sm-4 padding0  ">
-            <h2 class="heading8"><b>Billing Address</b></h2>
+            <h3>Billing Address</h3>
             <div class="billing-address-innertxt word-wrap" style="overflow:hidden"></div>
 
           </div>
           <div class="service-address col-sm-4 padding0">
-            <h2 class="heading8"><b>Shipping Address</b></h2>
+            <h4>Shipping Address</h4>
             <div class="shipping-address-innertxt word-wrap" style="overflow:hidden"></div>
           </div>
           <div class="service-address col-sm-4 padding0  ">
-            <h2 class="heading8"><b>Service Address</b></h2>
+            <h4>Service Address</h4>
             <div class="service-address-innertxt word-wrap" style="overflow:hidden"></div>
           </div>
         </div>

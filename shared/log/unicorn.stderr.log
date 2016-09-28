@@ -307,3 +307,114 @@ I, [2016-09-27T11:12:33.059070 #4856]  INFO -- : worker=1 ready
 I, [2016-09-27T11:12:35.049348 #4841]  INFO -- : reaped #<Process::Status: pid 4853 exit 0> worker=0
 I, [2016-09-27T11:12:35.049570 #4841]  INFO -- : reaped #<Process::Status: pid 4856 exit 0> worker=1
 I, [2016-09-27T11:12:35.050186 #4841]  INFO -- : master complete
+I, [2016-09-28T11:09:51.402898 #3585]  INFO -- : Refreshing Gem list
+I, [2016-09-28T11:09:57.024797 #3585]  INFO -- : unlinking existing socket=/home/sonal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock
+I, [2016-09-28T11:09:57.041336 #3585]  INFO -- : listening on addr=/home/sonal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock fd=15
+I, [2016-09-28T11:09:57.041571 #3585]  INFO -- : worker=0 spawning...
+I, [2016-09-28T11:09:57.045456 #3585]  INFO -- : worker=1 spawning...
+I, [2016-09-28T11:09:57.046426 #3589]  INFO -- : worker=0 spawned pid=3589
+I, [2016-09-28T11:09:57.046760 #3589]  INFO -- : worker=0 ready
+I, [2016-09-28T11:09:57.050953 #3585]  INFO -- : master process ready
+I, [2016-09-28T11:09:57.056711 #3592]  INFO -- : worker=1 spawned pid=3592
+I, [2016-09-28T11:09:57.057213 #3592]  INFO -- : worker=1 ready
+127.0.0.1 - - [28/Sep/2016:11:10:07 +0530] "GET / HTTP/1.0" 302 - 0.4226
+127.0.0.1 - - [28/Sep/2016:11:10:15 +0530] "GET /users/sign_in HTTP/1.0" 200 18290 7.9929
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /_settings.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1 HTTP/1.0" 200 - 0.0502
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /header.self-080bbec6f1147056dcd74e4e22532d485947dd1b6600b5a6ca1d6d346517553d.css?body=1 HTTP/1.0" 200 1674 0.0329
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /pagination.self-50c9a826816f3b00a0e1cb90606480f849219d26cb73114864b0e755f4aa9355.css?body=1 HTTP/1.0" 200 1189 0.0289
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /jquery-ui.self-a8bc60f80273f1f87bb05bcc67171ff3d70363eba32cc61a5ac27a1f4e6b65c3.css?body=1 HTTP/1.0" 200 35059 0.0281
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /font-awesome.self-f89cc11fa7d540726a5498ff183cd9a58d933394afe019316df9ccb0e3e3a32e.css?body=1 HTTP/1.0" 200 35475 0.0289
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /chosen-compass.self-7f72f188659fe1fdac4cf9e2945a6dec2bc31f2f28a990649c6be8e34ecaf8c7.css?body=1 HTTP/1.0" 200 26298 0.0432
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /owl.carousel.self-8bdce040286fb9b851d53a7af378ae135e1ef93e85f6d1082630d6729cf59337.css?body=1 HTTP/1.0" 200 1477 0.0339
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /owl.theme.self-99f17f686c3688674da27273015b38595e327678fc04f0ae0740f12c1fda0e53.css?body=1 HTTP/1.0" 200 1667 0.0283
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /application.self-87634e1cd4bc8743b28de056fa07bbf48432756a62d8497ffec51615fd21c73b.css?body=1 HTTP/1.0" 200 2382 0.0327
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1 HTTP/1.0" 200 294200 0.0381
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1 HTTP/1.0" 200 21648 0.0297
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.core.self-364829e0b975bcc15083d3e3e8a6032e1891525681f5a2797b88225aeb254d04.js?body=1 HTTP/1.0" 200 13843 0.0469
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.abide.self-433e642defac6b495106bcaa7f2a33c07efc1dad4c3970721631af8a2b52affc.js?body=1 HTTP/1.0" 200 21285 0.0267
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.accordion.self-867199f11bb3e04e7f526c2a7066f6f6fb63a7b7463c9e0aa46a1fd17f50dcf4.js?body=1 HTTP/1.0" 200 8278 0.0253
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.accordionMenu.self-ddc1b5fe2518e8e010d7421f274eeee2595dbd92ad8f989fdd35e5e99df22901.js?body=1 HTTP/1.0" 200 10128 0.0302
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.drilldown.self-5ad50f2159e6111481142f7cded35f7a01ccc0296df9fd47bbec8a833d3ac528.js?body=1 HTTP/1.0" 200 13839 0.0397
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.dropdown.self-0aaea1546348d69068be7d4056c123bd7c6fc32c5e353beae2f813ec7e7bcdaa.js?body=1 HTTP/1.0" 200 15405 0.0712
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.dropdownMenu.self-543ec74fdf728d2a5206aaf11e24517fabc449d24cfebf6aa8bd16f22d1ec59a.js?body=1 HTTP/1.0" 200 15330 0.0352
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.equalizer.self-d9f4d3851420fe7a3a790710a037ab7cce15f2ac5bfee75083dc4562504a829d.js?body=1 HTTP/1.0" 200 11259 0.0361
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.interchange.self-4d7fb26f42361b56dd6a00c17c945d63e28778f8b557855efeacf1909d9736de.js?body=1 HTTP/1.0" 200 6780 0.0438
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.magellan.self-5a035e151d949969cb0c71f1648ae0de21ac923b509717e453992319019433f9.js?body=1 HTTP/1.0" 200 7956 0.0405
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.offcanvas.self-67c65421577bbda4a4ba9d1dd176f94137847a33f9391ef4e8d7c2db8979bc15.js?body=1 HTTP/1.0" 200 13806 0.0376
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.orbit.self-3790b70d486b6233de7bf36256a99b4470bbf5bab8d5cdba23038a96bed7c426.js?body=1 HTTP/1.0" 200 15531 0.0317
+127.0.0.1 - - [28/Sep/2016:11:10:16 +0530] "GET /foundation.responsiveMenu.self-04daa3af5d3c617fa7d588b45b56abd62539f5fde28756c7b4705de2aa10c4fd.js?body=1 HTTP/1.0" 200 5507 0.0305
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.responsiveToggle.self-15d27e3276f2100adb158282147ff40f7fc86c37419100d6101c600d2e4df01d.js?body=1 HTTP/1.0" 200 4278 0.0362
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.reveal.self-0300c0cf163642ecc7cfe13acc5d804220d7ff167ce44476387158ef00f8b81d.js?body=1 HTTP/1.0" 200 19225 0.0359
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.slider.self-ba8900795763ed1b094472775ecf0336b5618290cad8846aad2cf9a8a8f8fa30.js?body=1 HTTP/1.0" 200 23450 0.0350
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.sticky.self-7b2670d47ccb7e4585bc83165984a6771205e271683d98f95c3477a26378a53c.js?body=1 HTTP/1.0" 200 15905 0.0342
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.tabs.self-2e641c12d280fc8c560d070d5caf1e97560e035f955335b1244fa0ee0bb7291c.js?body=1 HTTP/1.0" 200 10254 0.0359
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.toggler.self-e503f9a635124ad4578a03dc24e47ac4cdb922a60bac8c9c99d024da00b0bd52.js?body=1 HTTP/1.0" 200 5162 0.0516
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.tooltip.self-f4a5241b4357a5343808a23760798cf20b489cbbcf5e74a062e4a1b060602253.js?body=1 HTTP/1.0" 200 15661 0.0458
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.box.self-a69a940a339cc126ec64c84a6acf527f82f6682290524ab62cfe66ce11f962fd.js?body=1 HTTP/1.0" 200 7040 0.0447
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.keyboard.self-9ddfc95ccf73ddc51ead522151b53198b30c6a400e9f3f0be725d55c30f01912.js?body=1 HTTP/1.0" 200 4075 0.0440
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation_and_overrides.self-761309889cff5d1b88b55ad07da2db5e454ace549339893418fbe4c650659089.css?body=1 HTTP/1.0" 200 184439 1.2865
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.motion.self-13d4248460aba53c0fd52e1ec0d5cb41c317b1c4d974bc5d905c9976dc9ef218.js?body=1 HTTP/1.0" 200 2628 0.0502
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.mediaQuery.self-d522742ee87b4a54a842faef77135e013604d6d9abf9e3656534c69b399bd188.js?body=1 HTTP/1.0" 200 6162 0.0905
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.nest.self-c9876586f80b068aea0d01390583424a28fa305c450e12a49bb301dcc686d1a0.js?body=1 HTTP/1.0" 200 2348 0.0502
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.touch.self-95e098450fe69653246bdfa7f1e7fe7dba15348524771d7b2c54c7c4298fccb5.js?body=1 HTTP/1.0" 200 10199 0.0261
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.timerAndImageLoader.self-68c67c1b0b4f2e2cb7f2af57124f38f54b749efed9f1bebc44677dc27abf7864.js?body=1 HTTP/1.0" 200 2206 0.0729
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.util.triggers.self-71a2360cfe56c89eb46e0776c3d04601a8cce01d9e1098b808375eecc4b2418c.js?body=1 HTTP/1.0" 200 7822 0.0353
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /turbolinks.self-c5acd7a204f5f25ce7a1d8a0e4d92e28d34c9e2df2c7371cd7af88e147e4ad82.js?body=1 HTTP/1.0" 200 34719 0.0338
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /owl.carousel.self-aed126d4aa315202147b9de700e302c5b7f1b68cc8c44a68b116efb60671cd80.js?body=1 HTTP/1.0" 200 52897 0.0287
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /api/v1/device_tracker.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1 HTTP/1.0" 200 31 0.0280
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /foundation.self-5ecf2f4d83e6260dabd6ec48e76d8ddebccf956563f34072221bf960d3b8c255.js?body=1 HTTP/1.0" 200 13 0.1301
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /bootstrap-slider.self-9390c48e6d47317c2f3709726ef029f8a972bf20df1e944dfdb23460dc0fdcc7.js?body=1 HTTP/1.0" 200 54019 0.0323
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /deals.self-3459e57b18d5a1aa4a87df1e247d6e79661ece4c5393a0eaefe33c7aa2bbd4f7.js?body=1 HTTP/1.0" 200 548 0.0274
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /chosen-select.self-2c4b8dd32e3d933b95041970bc9d741ee249513e1db843e112a3bff1d5164619.js?body=1 HTTP/1.0" 200 201 0.0520
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /jquery-1.9.1.self-0128b1b2e361e2e64b7e48ba8dba94546c02fbbde5e1628f60dc899465a90dae.js?body=1 HTTP/1.0" 200 268382 0.0507
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /jquiry.sticky.self-b86b7764f95ade63b993172e54a3350f0b6b0595c9ce4ceeb79b7dc1a5bb5aaa.js?body=1 HTTP/1.0" 200 9987 0.0486
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /plugins.self-c6129bd3aeb079f5c310d2a9618478ba0d621992c1a5e5ef320917937dc2dbb7.js?body=1 HTTP/1.0" 200 760 0.0436
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/bootstrap-slider.self-9390c48e6d47317c2f3709726ef029f8a972bf20df1e944dfdb23460dc0fdcc7.js?body=1 HTTP/1.0" 200 54019 0.0338
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/bootstrap.min.self-f2d64b74536a49f843b022431e37325973468a71c9b362343deb0b6c582e5ba0.js?body=1 HTTP/1.0" 200 35603 0.0360
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/bootstrap.self-aa035a144857819aa990a2630f4c251b0bfb37d227f16a2c6ac1b7efd656baac.js?body=1 HTTP/1.0" 200 67156 0.0386
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/html5-3.6-respond-1.4.2.min.self-a724a946a6093ad715fc3207c6b42c679c4d9062cd07b69cf6b32bf304a148d1.js?body=1 HTTP/1.0" 200 6867 0.0387
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/jquery-1.11.2.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1 HTTP/1.0" 200 284185 0.0459
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/jquery.sticky.self-b86b7764f95ade63b993172e54a3350f0b6b0595c9ce4ceeb79b7dc1a5bb5aaa.js?body=1 HTTP/1.0" 200 9987 0.0233
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/jquery-ui.self-67b5fa0afa59da3c7fb25a0c809d970b06f47288da5c1b80b4a7c268e6b8151a.js?body=1 HTTP/1.0" 200 436123 0.0844
+127.0.0.1 - - [28/Sep/2016:11:10:17 +0530] "GET /website/main.self-a6d931107034c2935bb867d90aab1c9e2d7b5d1145a19c299bd74c8b05c6c8a5.js?body=1 HTTP/1.0" 200 1016 0.0545
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /website/owl.carousel.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1 HTTP/1.0" 200 - 0.0298
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /website/plugins.self-0f4d618524b36338b1d40d577db834fd2ebcc20e15aa91d44bf0c080b38bf79f.js?body=1 HTTP/1.0" 200 24465 0.0223
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /website/npm.self-f66d504f2cd5bddaaade9c854b02828e5e46d225517ab9feebe1af2615566b1e.js?body=1 HTTP/1.0" 200 485 0.0667
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /website/starrating.self-ab3ef0c1893701aa949d4c2b1ec7bcc0dba0cbc98d64be5bfdf89b23cc33b75b.js?body=1 HTTP/1.0" 200 23704 0.0230
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /lib/select-parser.self-5d5368d17f7cdcd87e6de78a152edb0e8bb03d0d645563f4076921a10855fd67.js?body=1 HTTP/1.0" 200 3128 0.0229
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /chosen.jquery.self-3aaa15fd02d5c184ee4b452355a27e803b18c23746f58ca039b150931da32494.js?body=1 HTTP/1.0" 200 27005 0.0258
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /lib/abstract-chosen.self-0c1e039093e5defc07dae18bf8166ea4197fe6504b11230e032a0f0426e94dd1.js?body=1 HTTP/1.0" 200 15872 0.0872
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /chosen-jquery.self-6a3cf5192354f71615ac51034b3e97c20eda99643fcaf5bbe6d41ad59bd12167.js?body=1 HTTP/1.0" 200 3 0.0332
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /application.self-0aaf6fe745994aff0d9c0839109070cd022948ac09273f236b43f5388ac7c323.js?body=1 HTTP/1.0" 200 12287 0.0545
+127.0.0.1 - - [28/Sep/2016:11:10:18 +0530] "GET /images/logo1.png HTTP/1.0" 404 221942 0.8171
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website HTTP/1.0" 200 92379 1.9632
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/bootstrap.min.self-7de1458a6c40a8d379d0e44d1a7c1d33d948464ffd14d76548e10acd75c00687.css?body=1 HTTP/1.0" 200 113500 0.0329
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/main.self-32bb682df019a71b58d14bdc28ca3acf1c0cebc4b8d3509091b10c0f15a8929b.css?body=1 HTTP/1.0" 200 124395 0.0349
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/developer.self-8d5c83ce67dd33c70eec162505ff1b23040dbe70f76711bf550f3c493eff9a05.css?body=1 HTTP/1.0" 200 2876 0.0223
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/media.self-cf595d8eaece6b54a390b465550f5370780d046827f20ba241f9e4f8a21cd9d0.css?body=1 HTTP/1.0" 200 10627 0.0243
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/font-awesome.min.self-1c0b61ecdfe075d59cd7b11f2bb38bb4011af6dce356abcc798d176961f06c43.css?body=1 HTTP/1.0" 200 81741 0.0251
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/logo1-e60201672557921c0ad8d7e7653e6f78299a96bf4d7b31eafc7db656f51259b0.png HTTP/1.0" 200 9786 0.0499
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/map-pointer-db498b8c79371e3452ed390df7a54cf70d89a1adb94a011d7c27a86db7e6a92f.png HTTP/1.0" 200 6522 0.0677
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/banner2-9b7303e11fd13afef30cc2b75adfbe5e4fa94f4cda30e68a494ad45aa7c5c373.png HTTP/1.0" 200 501850 0.1775
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/banner1-c9b226d127077b03c0c5232fdcbaedfac53fd21b8cdd31f9d60fb6e4f838803d.png HTTP/1.0" 200 610904 0.2013
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/trending_deal HTTP/1.0" 200 2337 0.0581
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/bundel-3c384c7929f46181c6488d883095875057b8870ab2a84fe66acefc530fc2cfa2.png HTTP/1.0" 200 2176 0.0503
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/wifi-cd3d5fbf04b9d401b455fc5f76ea00b14cbcda3b54398224715ffb147ca7ff7f.png HTTP/1.0" 200 2052 0.0756
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/tv-b922ab262e772d471d45c627fa17dd00f85d06c7970b0a68e24a0e98b4ea2fee.png HTTP/1.0" 200 1704 0.0420
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/phone-6bd7ef4bab8e17476bd9b2cf477a40d2a40c8359370ac8cf996c129668fc039b.png HTTP/1.0" 200 2134 0.0392
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /fonts/opensans-light-webfont.woff HTTP/1.0" 200 24192 0.0510
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/cellphone-5c6f0f49754ce7877f9aa87be578f27eab83605eeca91c50b06d3a7a50d2223e.png HTTP/1.0" 200 1904 0.0333
+127.0.0.1 - - [28/Sep/2016:11:10:29 +0530] "GET /website/welcome1.png HTTP/1.0" 200 39104 0.0816
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/user-motivational.png HTTP/1.0" 200 41489 0.0780
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/wow.png HTTP/1.0" 200 3080 0.0437
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/1-cb73301ac678346c81b8218bc25559eac423020f3fd692575ac92e78b48ec777.png HTTP/1.0" 200 18249 0.1166
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/2-65ac43cbc816d953da952a7c92f45af1c95518e18afbea8c75c631bcb7b29b3d.png HTTP/1.0" 200 14218 0.1071
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/3-4fda7c53434eed5098134f814c3f7c023b5e0f4687f2c7d08d83fab7f4ef1c2c.png HTTP/1.0" 200 5729 0.0494
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/4-afcc1e5823653691cc07541eba9724056e84e90c976ab36ab660e7c466630db8.png HTTP/1.0" 200 6372 0.0521
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/5-407d82b60ef609bb8e03903dacaa216bcf805accdc3c6b3b71093524ebffb7f9.png HTTP/1.0" 200 16577 0.0552
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/8-3c0da392e6978ec7032dbcb731274747b2e35da91aa3a6e4bd60365febb9e63e.png HTTP/1.0" 200 6454 0.0490
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /fonts/opensans-regular-webfont.woff HTTP/1.0" 200 24784 0.0808
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /fonts/glyphicons-halflings-regular.woff HTTP/1.0" 200 23320 0.0903
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /fonts/opensans-semibold-webfont.woff HTTP/1.0" 200 24960 0.0824
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/client-logo/9-7b963b0549452133df8627dc79e8480f770f533209df213003da31fecbf341af.png HTTP/1.0" 200 9561 0.0727
+127.0.0.1 - - [28/Sep/2016:11:10:30 +0530] "GET /website/favicon-50d92fbcdf62ebafdfbf958a8ffca5ad8c229dc3a15332bb3a981091f284cc07.ico HTTP/1.0" 200 1150 0.0666

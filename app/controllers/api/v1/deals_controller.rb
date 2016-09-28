@@ -74,10 +74,10 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def cellphone_equipments
-		app_user = AppUser.find_by_id(params[:app_user_id]) 
+		app_user = AppUser.find_by_id(params[:app_user_id])
 		deal = Deal.find_by_id(params[:deal_id])
 		if app_user.present? && deal.present? && deal.service_category_id == Deal::CELLPHONE_CATEGORY
-      if deal.cellphone_equipments.present? 
+      if deal.cellphone_equipments.present?
         equipments =deal.cellphone_equipments.select('id,model, price')
        	render :json => { :success => true, equipments: equipments.as_json(:except=>[:id])}
       else
@@ -89,9 +89,8 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def customisable_deals
-		deals = Deal.where('is_customisable =?', true)
-		render :json => { :success => true, deals: deals}
-
+		deals = Deal.where('is_customisable =? ', true)
+		render :json => { :success => true, deals: deals.as_json(:methods => [:service_category_name, :service_provider_name])}
 	end
 
 	def channel_customisable_deals

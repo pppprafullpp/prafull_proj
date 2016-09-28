@@ -1,0 +1,63 @@
+  <div class="container sd-deal-dashboard ">
+    <div class="col-md-12 sd-box-con">
+      <h1><%= deal_data[:service_category_name]%></h1>
+      <div class="three_deal_carousel" >
+      <div class="col-md-12">
+        <div class="sd-deal-block">
+          <div class="sd-dealblock-img">
+           <img src="<%= best_deal['deal_image_url'] %>" alt=""> 
+          </div>
+          <div class="sd-dealblock-info">
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
+            <p><%=best_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+            <%= render :partial => "rating_form" ,locals: {deal: best_deal}%>
+            <div class="sd-dealprices">
+              <div class="sd-effective-price">Effective Price <span>$<%= best_deal['effective_price']%></span></div>
+              <div class="sd-best-price">Best Price <span>$<%= best_deal['deal_price'] %></span></div>
+            </div>
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>" class="sd-more-details">+ More Details</a>
+             </div><div class="col-md-12 sd-deal-saving text-center">
+            You save <span> $<%= deal_data[:you_save_text] %>/ mo</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="sd-deal-block">
+          <div class="sd-dealblock-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt=""> </div>
+          <div class="sd-dealblock-info">
+            <div class="sd-dealblock-trendingdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+            <p><%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+            <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
+            <div class="sd-dealprices">
+              <div class="sd-effective-price">Effective Price <span>$<%= trending_deal['effective_price']%></span></div>
+              <div class="sd-best-price">Best Price <span>$<%= trending_deal['deal_price']%></span></div>
+            </div>
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id']) %>" class="sd-more-details">+ More Details</a> </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="sd-deal-block">
+          <div class="sd-dealblock-img"> <img src="<%= order_deal['deal_image_url'] %>" alt=""> </div>
+          <div class="sd-dealblock-info">
+            <div class="sd-dealblock-orderdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
+            <p><%=order_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+            <%= render :partial => "rating_form" ,locals: {deal: order_deal}%>
+            <div class="sd-dealprices">
+              <div class="sd-effective-price">Effective Price <span>$<%= order_deal['effective_price']%></span></div>
+              <div class="sd-best-price">Best Price <span>$<%= order_deal['deal_price']%></span></div>
+            </div>
+            <a href="<%= order_detail_website_app_users_path(order_id: order_deal['order_id'])%>" class="sd-more-details">+ Order Details</a> </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+<script>
+ $('.three_deal_carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    responsiveClass:true,
+   items:3,
+  });
+</script>

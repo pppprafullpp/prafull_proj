@@ -19,6 +19,10 @@
       <%= select_tag :channel_ids,options_for_select(Channel.where(:service_provider_id=>service_provider_id).pluck(:channel_name,:id)),:class => 'chosen-select', :style=>"width: 100%;",:multiple => true,:name => 'deal_attributes[channel_ids][]' %>
     </div>
 
+    <div><strong>Price:</strong><br />
+      <%= text_field_tag :amount,@deal_attribute.try(:amount),:placeholder => 'Input price',:name => 'deal_attributes[amount]' %>
+    </div>
+
      <div><strong>Description:</strong><br />
       <%= text_field_tag :description,@deal_attribute.try(:description),:placeholder => 'Input description',:name => 'deal_attributes[description]' %>
     </div>

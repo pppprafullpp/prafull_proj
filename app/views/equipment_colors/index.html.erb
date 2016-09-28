@@ -13,6 +13,8 @@
           <tr>
             <th><strong>ID</strong></th>
             <th><strong>Color Name</strong></th>
+            <th><strong>Color Code</strong></th>
+            <th><strong>Color Image</strong></th>
             <th><strong>Status</strong></th>
             <th><strong>Action</strong></th>
           </tr>
@@ -23,6 +25,8 @@
                   <tr>
                     <td><%= equipment_color.id %></td>
                     <td><%= equipment_color.color_name %></td>
+                    <td><%= equipment_color.color_code %></td>
+                    <td><%= image_tag(equipment_color.image.url,size: "50x50") %></td>
                     <td><%= equipment_color.status %></td>
                     <td><%= (link_to 'Edit', edit_equipment_color_path(equipment_color)) if can? :manage, equipment_color %> | <%= (link_to "Delete", equipment_color, method: :delete, data: { confirm: "You sure?" }) if can? :manage, equipment_color %></td>
                   </tr>

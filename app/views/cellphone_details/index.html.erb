@@ -14,6 +14,7 @@
             <th><strong>ID</strong></th>
             <th><strong>Cellphone Name</strong></th>
             <th><strong>Brand</strong></th>
+            <th><strong>Image</strong></th>
             <th><strong>Description</strong></th>
             <th><strong>Status</strong></th>
             <th><strong>Action</strong></th>
@@ -26,6 +27,7 @@
                     <td><%= cellphone_detail.id %></td>
                     <td><%= cellphone_detail.cellphone_name %></td>
                     <td><%= cellphone_detail.brand %></td>
+                    <td><%= image_tag(cellphone_detail.image.url,size: "200x200") %></td>
                     <td><%= cellphone_detail.description %></td>
                     <td><%= cellphone_detail.status %></td>
                     <td><%= (link_to 'Edit', edit_cellphone_detail_path(cellphone_detail)) if can? :manage, cellphone_detail %> | <%= (link_to "Delete", cellphone_detail, method: :delete, data: { confirm: "You sure?" }) if can? :manage, cellphone_detail %></td>

@@ -1,4 +1,3 @@
-
 <%
 if @app_user.primary_id_number.present?
   primary_id_number = @app_user.primary_id_number.split('===').last
@@ -155,6 +154,11 @@ end
           <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
           <%= hidden_field_tag :equipment_id,'',{:name=> 'order_equipments[equipment_id]'}%>
           <%= hidden_field_tag :equipment_price,'',{:name=> 'order_equipments[equipment_price]'}%>
+          <%= hidden_field_tag '','',{:name=> 'order_attributes', :id=> 'order_attributes'}%>
+          <%= hidden_field_tag '','',{:name=> 'order_extra_services', :id=> 'order_extra_services'}%>
+          <%= hidden_field_tag '','',{:name=> 'order_equipments', :id=> 'order_equipments'}%>
+
+          <%#= hidden_field_tag '','',{:name=> 'order_attributes', :id=> 'prafull'}%>
           <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
         </div>
       </div>
@@ -181,6 +185,27 @@ end
 
 <!--Order-form-->
 <script>
+
+var dealAttributeObject = localStorage.getItem('deal_attributes');
+var dealExtraServiceObject = localStorage.getItem('deal_extra_services');
+var dealEquipmentObject = localStorage.getItem('deal_equipments');
+var effectivePriceObject = localStorage.getItem('effective_price');
+var cableEquipmentObject = localStorage.getItem("cable_deal_equipments");
+
+$('#order_attributes').val(dealAttributeObject);
+$('#order_extra_services').val(dealExtraServiceObject);
+if(dealEquipmentObject == "[]"){
+  $('#order_equipments').val(dealEquipmentObject);
+}
+else{
+  $('#order_equipments').val(cableEquipmentObject);
+  
+}
+$('#update_effective_price').html("$" + parseFloat(effectivePriceObject));
+$('#effective_price').val( parseFloat(effectivePriceObject));
+
+
+
 var errormsg="";
 $(document).ready(function(e) {
 

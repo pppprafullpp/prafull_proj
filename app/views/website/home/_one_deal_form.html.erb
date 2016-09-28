@@ -1,0 +1,32 @@
+
+  <div class="container sd-deal-dashboard">
+      <div class="col-md-12 sd-box-con">
+        <h1><%= deal_data[:service_category_name]%></h1>
+        <div class="col-md-4 sd-dealinfo-left">
+          <div class="sd-deal-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> </div>
+          <ul class="sd-deal-price">
+            <li>Effective Price:<span>$<%=trending_deal['effective_price']%>/mo</span></li>
+            <li>Contract:<span><%= trending_deal['contract_period'] %> months</span></li>
+            <li>Best Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>
+          </ul>
+        </div>
+        <div class="col-md-8 sd-deal-info">
+          <div class="no-login-tdeal"><img src="/assets/website/trendinding-deal-icon.png" ></div>
+          <h2><%= trending_deal['title'] %></h2>
+          <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
+           
+            <p>
+          <%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+          <a href="javascript:void(0)" id="seemore_<%=trending_deal['id']%>" onclick="javascript:$('#moredeal-info_<%=trending_deal['id']%>').slideToggle()">See more</a>
+          <div id="moredeal-info_<%=trending_deal['id']%>"> 
+            <!-- <b>Includes:</b><br/> -->
+            <p>
+            <%=trending_deal['detail_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+          </div>
+          <%#= render :partial => "#{deal_data[:service_category_name].downcase}_deal_form" %>
+       
+        </div>
+      </div>
+  </div>
+
+ 

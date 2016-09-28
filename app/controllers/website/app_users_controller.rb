@@ -165,6 +165,7 @@ class Website::AppUsersController < ApplicationController
 
 
   def create_order
+
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
@@ -175,10 +176,16 @@ class Website::AppUsersController < ApplicationController
         params[:app_user][:last_name]=encode_api_data(params[:app_user][:last_name])
         params[:app_user][:mobile]=encode_api_data(params[:app_user][:mobile])
         if order.save
-          order_equipment_hash = {:order_equipments => [params[:order_equipments]]}
-          order_equipment = OrderEquipment.create_order_equipments(order_equipment_hash,order.id)
           order_item_hash = {:order_items => [params[:order_items]] }
           order_items = OrderItem.create_order_items(order_item_hash,order.id)
+        if  order_items.first.deal.is_customisable == true
+          order_equipment_hash = {:order_equipments => eval(params[:order_equipments])}
+          order_attribute_hash = {:order_attributes => eval(params[:order_attributes])}
+          order_extra_service_hash = {:order_extra_services => eval(params[:order_extra_services])}
+          order_equipment = OrderAttribute.create_order_attributes(order_attribute_hash,order.id)
+          order_equipment = OrderEquipment.create_order_equipments(order_equipment_hash,order.id)
+          order_extra_services = OrderExtraService.create_order_extra_services(order_extra_service_hash,order.id)
+        end
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
           if user_type == AppUser::BUSINESS
@@ -277,7 +284,7 @@ class Website::AppUsersController < ApplicationController
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
           @effective_price = params[:effective_price]
-          if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY
+          if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY &&@deal.is_customisable != true
             @equipments =@deal.cellphone_equipments
           end
       else

@@ -1,0 +1,71 @@
+
+  <div class="container sd-deal-dashboard">
+    <div class="col-md-12 sd-box-con">
+      <h1><%=deal_data[:service_category_name] %></h1>
+      <div class="col-md-6">
+        <div class="sd-two-deal-block">
+
+          <div class="sd-dealblock-two-img col-md-5"> 
+
+            <div class="sddeal-imgbox"><img src="<%= deal_1['deal_image_url'] %>" alt=""></div>
+            <%if key == "trending-best"%> 
+              <p class="sd-deal-saving text-center">
+           You save <span> $<%= deal_data[:you_save_text] %>/ mo</span>
+          </p>
+          <% end %>
+
+           </div>
+          <div class="sd-dealtwoblock-info col-md-7">
+            <%if key == "trending-best"%> 
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
+            <% else %>
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+            <% end %>
+            <p><%=deal_1['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+           <%= render :partial => "rating_form" ,locals: {deal: deal_1}%>
+            <div class="sd-dealprices">
+              <div class="sd-effective-price">Effective Price <span>$<%= deal_1['effective_price']%></span></div>
+              <div class="sd-best-price">Best Price <span>$<%= deal_1['deal_price']%></span></div>
+            </div>
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id']) %>" class="sd-more-details">+ More Details</a> </div>
+             
+         <!--  <div class="col-md-12 sd-deal-saving text-center">
+            <p> You save <span> $<%#= deal_data[:you_save] %>/ mo</span></p>
+          </div> -->
+      
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="sd-two-deal-block">
+          <div class="sd-dealblock-two-img col-md-5">
+<div class="sddeal-imgbox"><img src="<%= deal_2['deal_image_url'] %>" alt=""> </div>
+
+
+           </div>
+          <div class="sd-dealtwoblock-info col-md-7">
+            <%if key == "trending-best"%> 
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+            <% else %>
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
+            <% end %>
+            <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+           <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
+            <div class="sd-dealprices">
+              <div class="sd-effective-price">Effective Price <span>$<%= deal_2['effective_price']%></span></div>
+              <div class="sd-best-price">Best Price <span>$<%= deal_2['effective_price']%></span></div>
+            </div>
+             <%if key == "trending-best"%> 
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
+            <% else %>
+            <a href="<%= order_detail_website_app_users_path(order_id: deal_2['order_id'])%>" class="sd-more-details">+ Order Details</a>
+            <% end %>
+             </div>
+         <!--  <div class="col-md-12 sd-deal-saving text-center">
+            <p> You save <span> $70.01/ mo</span></p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    
+  
+  </div>

@@ -48,7 +48,7 @@ class CellphoneDetailsController < ApplicationController
 
 	private
   def cellphone_details_params
-   params.require(:cellphone_detail).permit(:cellphone_name, :brand, :description, :status)
+   params.require(:cellphone_detail).permit(:cellphone_name, :brand, :description, :status,:image)
   end
 end
  

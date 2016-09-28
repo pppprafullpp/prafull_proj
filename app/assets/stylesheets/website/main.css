@@ -1,3 +1,22 @@
+/* ==========================================================================
+	Author's custom styles
+	========================================================================== */
+	/*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+* or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any styles
+* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+* file per style scope.
+*
+
+//= require owl.carousel
+*= require owl.theme
+*/
 @font-face {
 	font-family: 'open_sanslight';
 	src: url('../fonts/opensans-light-webfont.eot');
@@ -440,22 +459,22 @@ color:#fff;
 	height: 306px;
 }
 .cable h3 {
-	color: #fff;/*font-family: 'open_sanssemibold';
+	color: #fff;font-family: 'open_sanssemibold';
 	font-size: 50px;
-	padding-top: 80px;*/
+	padding-top: 80px;
 }
 .cable p {
-	color: #fff;/*font-size: 20px;*/
-	/*padding-top: 20px;*/
+	color: #fff;font-size: 20px;
+	padding-top: 20px;
 }
 .internet h3 {
-	color: #fff;/*font-family: 'open_sanssemibold';
+	color: #fff;font-family: 'open_sanssemibold';
 	font-size: 50px;
-	padding-top: 80px;*/
+	padding-top: 80px;
 }
 .internet p {
-	color: #fff;/*font-size: 20px;
-	padding-top: 20px;*/
+	color: #fff;font-size: 20px;
+	padding-top: 20px;
 }
 .bundle {
 	background: url(../website/bundle-banner.jpg) no-repeat;
@@ -464,13 +483,13 @@ color:#fff;
 	height: 306px;
 }
 .bundle h3 {
-	color: #fff;/*	font-family: 'open_sanssemibold';
+	color: #fff;	font-family: 'open_sanssemibold';
 	font-size: 50px;
-	padding-top: 80px;*/
+	padding-top: 80px;
 }
 .bundle p {
-	color: #fff;/*font-size: 20px;
-	padding-top: 20px;*/
+	color: #fff;font-size: 20px;
+	padding-top: 20px;
 }
 .telephone {
 	background: url(../website/telephone-banner.jpg) no-repeat;
@@ -479,13 +498,13 @@ color:#fff;
 	height: 306px;
 }
 .telephone h3 {
-	color: #fff;/*font-family: 'open_sanssemibold';
+	color: #fff;font-family: 'open_sanssemibold';
 	font-size: 50px;
-	padding-top: 80px;*/
+	padding-top: 80px;
 }
 .telephone p {
-	color: #fff;/*font-size: 20px;
-	padding-top: 20px;*/
+	color: #fff;font-size: 20px;
+	padding-top: 20px;
 }
 .cellphone {
 	background: url(../website/cellphone-banner.jpg) no-repeat;
@@ -494,13 +513,13 @@ color:#fff;
 	height: 306px;
 }
 .cellphone h3 {
-	color: #fff;/*font-family: 'open_sanssemibold';
+	color: #fff;font-family: 'open_sanssemibold';
 	font-size: 50px;
-	padding-top: 80px;*/
+	padding-top: 80px;
 }
 .cellphone p {
-	color: #fff;/*font-size: 20px;
-	padding-top: 20px;*/
+	color: #fff;font-size: 20px;
+	padding-top: 20px;
 }
 /*  deal page */
 
@@ -2226,6 +2245,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
     margin-bottom: 0px;  border-right: 1px solid #bcbaba;
 }
 .order-form .nav-tabs li.active { margin-bottom: -1px;}
+.order-form .nav-tabs li.active a { background:#fff !important;}
 .order-form .nav-tabs > li.active > a, .order-form .nav-tabs > li.active > a:hover, .order-form .nav-tabs > li.active > a:focus {
 
     border: none;
@@ -2253,19 +2273,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	padding-top: 15px;
 }
 .order-form .tab-content .control-label {
-/*<<<<<<< HEAD*/
+
 	color: #000;
 	font-family: "open_sansregular";
 	font-size: 14px;
 	font-weight: normal;
 	margin-bottom: 5px;
-/*=======
-  color: #949494;
-      font-family: "open_sansregular";
-      font-size: 14px;
-      font-weight: normal;
-      margin-bottom: 5px;
->>>>>>> 8530c74cb2283e98deb552742af47759e9beee37*/
+
 }
 
 .order-form .details-zip {
@@ -2936,7 +2950,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	color: #aaa;
 }
 
-/*..select-style {
+.bandwidth-calc .select-style {
 	padding: 0;
 	margin: 0;
 	border: 1px solid #ccc;
@@ -2944,20 +2958,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	border-radius: 3px;
 	overflow: hidden;
 	background-color: #fff;
-	background: #fff url(../img/arrowdown.gif)no-repeat 97% 50%;
-=======
-select-style {
-padding: 0;
-margin: 0;
-border: 1px solid #ccc;
-width: 40%;
-border-radius: 3px;
-overflow: hidden;
-background-color: #fff;
-background: #fff url(../img/arrowdown.gif)no-repeat 97% 50%;
->>>>>>> e50e6b3350c72b82fb79b057c95c9582f4c93734
+	background: #fff url(../website/arrowdown.gif)no-repeat 97% 50%;
+
 }
-.select-style select {
+.bandwidth-calc .select-style select {
 	padding: 5px 8px;
 	width: 100%;
 	border: none;
@@ -2968,14 +2972,9 @@ background: #fff url(../img/arrowdown.gif)no-repeat 97% 50%;
 	-moz-appearance: none;
 	appearance: none;
 }
-.select-style select:focus {
-<<<<<<< HEAD
+.bandwidth-calc .select-style select:focus {
 	outline: none;
 }
-=======
-outline: none;
-}*/
-
 .usage-type {
 	margin-top: 40px;
 }
@@ -6190,6 +6189,14 @@ select::-ms-expand {
 	margin-top: 20px;
 }
 
+.sd-best-price {
+	color: #ee3408;
+	font-family: 'open_sanssemibold';
+}
+.sd-best-price span {
+	color: #646464;
+	margin-left: 15px;
+}
 
 .sd-more-details {
 	color: #07545b;
@@ -6249,9 +6256,13 @@ select::-ms-expand {
 .sd-dealblock-orderdeal { position:absolute; right:45px;}
 .sd-dealprices { font-size:18px; margin-top:20px;}
 
+
 .sd-effective-price { color:#00b551;   font-family: 'open_sanssemibold'; font-size: 14px;}
 .sd-effective-price span{ color:#000; margin-left:10px;font-size: 16px;}
 .sd-best-price { color:#ee3408;   font-family: 'open_sanssemibold'; font-size: 14px;}
 .sd-best-price span { color:#646464; margin-left:10px; font-size: 16px;}
+
+.sd-best-price { color:#ee3408; font-family: 'open_sanssemibold';}.sd-best-price  span{color:#646464; margin-left:15px; }
+
 .sd-more-details { color:#07545b; font-size:16px; text-decoration:underline; margin-top:20px; display:inline-block;}
 .sd-deal-block .sd-deal-saving { position: static; border-radius: 0 0 5px 5px;}

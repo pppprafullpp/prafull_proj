@@ -93,21 +93,22 @@
 
 <% unless session[:user_id].present?%>
 <section class="sd-deal-nologin">
+    <div class="container sd-deal-dashboard ">
   <% @trending_deal_data.each do |trending_deal_data|%>
     <% trending_deal = trending_deal_data[:trending_deal]%>
     <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
   <% end %>
+</div>
   <section>
 
 
 <% else %>
 <section class="sd-deal-threeblock">
-
+  <div class="container sd-deal-dashboard ">
   <% @best_deal_data.each do |deal_data|%>
     <% trending_deal = deal_data[:trending_deal]
        best_deal = deal_data[:best_deal]
        order_deal = deal_data[:order_deal] %>
-
     <% if trending_deal.present? && best_deal.present? && order_deal.present? %>
       <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: order_deal}%>
 
@@ -122,6 +123,7 @@
     <% end %>
   <% end %>
 <% end %>
+</div>
 </section>
 
 
@@ -305,3 +307,4 @@
     </script>
 
 <%=javascript_include_tag "https://code.jquery.com/ui/1.12.0/jquery-ui.js"%>
+

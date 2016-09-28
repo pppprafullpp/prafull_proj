@@ -21,6 +21,7 @@
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
             <% end %>
+            <h2><%= deal_1['title'] %></h2>
             <p><%=deal_1['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
            <%= render :partial => "rating_form" ,locals: {deal: deal_1}%>
             <div class="sd-dealprices">
@@ -48,6 +49,7 @@
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
             <% end %>
+            <h2><%= deal_2['title'] %></h2>
             <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
            <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
             <div class="sd-dealprices">

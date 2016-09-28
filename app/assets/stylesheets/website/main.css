@@ -5740,6 +5740,7 @@ box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);}
 	margin-bottom:15px;
 	float: left;
 	min-height: 471px;
+	width: 100%;
 }
 .sd-dealblock-img {
 	text-align: center;
@@ -5749,6 +5750,7 @@ box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);}
 	height: auto;
 	max-width: 70%;
 	padding: 0 5%;
+	height: 183px;
 }
 .sd-dealblock-info {
 	padding: 20px 30px;
@@ -5758,6 +5760,7 @@ box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);}
 	font-size: 13px;
 	overflow: hidden;
 	height: 40px;
+	width: 201px;
 }
 .sd-dealblock-bestdeal { position:absolute; right:35px;} 
 .sd-dealblock-trendingdeal { position:absolute; right:45px;}

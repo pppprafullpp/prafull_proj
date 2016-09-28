@@ -93,21 +93,23 @@
 
 <% unless session[:user_id].present?%>
 <section class="sd-deal-nologin">
+    <div class="container sd-deal-dashboard ">
   <% @trending_deal_data.each do |trending_deal_data|%>
     <% trending_deal = trending_deal_data[:trending_deal]%>
     <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
   <% end %>
-</section>
+
+</div>
+  <section>
 
 
 <% else %>
 <section class="sd-deal-threeblock">
-
+  <div class="container sd-deal-dashboard ">
   <% @best_deal_data.each do |deal_data|%>
     <% trending_deal = deal_data[:trending_deal]
        best_deal = deal_data[:best_deal]
        order_deal = deal_data[:order_deal] %>
-
     <% if trending_deal.present? && best_deal.present? && order_deal.present? %>
       <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: order_deal}%>
 
@@ -119,10 +121,14 @@
 
     <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? %>
       <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
+
+
     <% end %>
   <% end %>
-<% end %>
+  </div>
 </section>
+<% end %>
+
 
 
 <div class="modal fade" id="comparePopup" role="dialog"  data-backdrop="static" data-keyboard="false">

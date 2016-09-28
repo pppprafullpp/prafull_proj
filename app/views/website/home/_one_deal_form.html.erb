@@ -1,13 +1,18 @@
 
-  <div class="container sd-deal-dashboard">
       <div class="col-md-12 sd-box-con">
         <h1><%= deal_data[:service_category_name]%></h1>
         <div class="col-md-4 sd-dealinfo-left">
           <div class="sd-deal-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> </div>
           <ul class="sd-deal-price">
-            <li>Effective Price:<span>$<%=trending_deal['effective_price']%>/mo</span></li>
-            <li>Contract:<span><%= trending_deal['contract_period'] %> months</span></li>
-            <li>Best Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>
+            <li class="sd-dealprice-single">Deal Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>
+            <li class="sd-effective-price-single">Effective Price:<span>$<%=trending_deal['effective_price']%>/mo</span></li>
+            <% if trending_deal['contract_period'] == 0 %>
+            <li>Contract:<span>None</span></li>
+            <% else %>
+            <li>Contract:<span><%= trending_deal['contract_period'] %>months</span></li>
+
+            <% end %>
+            
           </ul>
         </div>
         <div class="col-md-8 sd-deal-info">
@@ -17,7 +22,7 @@
            
             <p>
           <%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
-          <a href="javascript:void(0)" id="seemore_<%=trending_deal['id']%>" onclick="javascript:$('#moredeal-info_<%=trending_deal['id']%>').slideToggle()">See more</a>
+          <a href="javascript:void(0)" id="seemore_<%=trending_deal['id']%>" onclick="show_more_button(<%=trending_deal['id']%>)">See Less</a>
           <div id="moredeal-info_<%=trending_deal['id']%>"> 
             <!-- <b>Includes:</b><br/> -->
             <p>
@@ -27,6 +32,18 @@
        
         </div>
       </div>
-  </div>
+<script>
+function show_more_button(id) {
+  if($('#moredeal-info_'+id).is(":visible") == true) {
+     $('#moredeal-info_'+id).slideToggle();
+     $('#seemore_'+id).text("See More")
+  }
+  else
+  {
+   $('#moredeal-info_'+id).slideToggle();
+     $('#seemore_'+id).text("See Less") 
+  }
+}
+</script>
 
  

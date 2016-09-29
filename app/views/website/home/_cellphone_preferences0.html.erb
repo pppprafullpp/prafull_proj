@@ -37,7 +37,7 @@
       </select>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-6  mg_bttom20">
     <%= number_field_tag("cellphone_price",price,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
 
@@ -50,7 +50,7 @@
     </div>
 
     <div class="col-md-6"><%= text_field_tag(:cellphone_start_date,end_date,:class=>"form-control", :placeholder =>"Start Date")%>  </div>
-    <div class="col-md-6"><%= text_field_tag(:cellphone_end_date,end_date,:class=>"form-control", :placeholder =>"End Date")%>  </div>
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag(:cellphone_end_date,end_date,:class=>"form-control", :placeholder =>"End Date")%>  </div>
 
       <div class="col-md-12">
       <p class="set-call">Domestic calls</p>
@@ -87,7 +87,7 @@
           <%= options_for_select(@list, :prompt=>"Select", :value=>@list) %>
         </select>
          </div>
-      <div class="col-md-6">
+      <div class="col-md-6  mg_bttom20">
         <select class="form-control" id="cellphone_no_of_lines" name="no_of_lines">
           <%(1..4).each do |n|%>
           <option value="<%=n%>"><%=n%></option>
@@ -107,7 +107,7 @@
   <script>
   function show_bundle() {
       $("#cellphone_pref").hide();
-      $("#bundle_pref").show().css("height","571px");
+      $("#bundle_pref").show();
   }
    $(document).ready(function(){
      $("#cellphone_start_date").datepicker();
@@ -220,7 +220,7 @@
         success: function(data){
           if (data["success"] == true) {
             $("#cellphone_pref").hide();
-            $("#bundle_pref").show().css("height","540px");
+            $("#bundle_pref").show();
           }
         }
       });

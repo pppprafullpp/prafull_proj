@@ -834,6 +834,7 @@ color:#fff;
 .box_down {
 	width: 100%;
 	float: left;
+	text-align: center;
 }
 .btn_2 {
 	font-family: "open_sanssemibold";
@@ -2204,8 +2205,8 @@ border-top: 1px solid #d8d8d8;
 
 .order-btn {
 	font-family: "open_sanssemibold";
-	background: #e50005;
-	display:inline-bock;
+	background: #62bc04;
+	display:inline-block;
 	padding: 10px;
 	text-align: center;
 	color: #ffffff;
@@ -2215,8 +2216,7 @@ border-top: 1px solid #d8d8d8;
 	-moz-border-radius: 5px;
 	text-transform: uppercase;
 	margin: 15px 0;
-	float: left;
-	width: 100%;
+	width: 70%;
 
 
 }
@@ -2950,7 +2950,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	color: #aaa;
 }
 
-.bandwidth-calc .select-style {
+.bandwidth-calc .select-style, .compare-popsty .select-style {
 	padding: 0;
 	margin: 0;
 	border: 1px solid #ccc;
@@ -2961,7 +2961,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	background: #fff url(../website/arrowdown.gif)no-repeat 97% 50%;
 
 }
-.bandwidth-calc .select-style select {
+.bandwidth-calc .select-style select, .compare-popsty .select-style select {
 	padding: 5px 8px;
 	width: 100%;
 	border: none;
@@ -2972,7 +2972,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	-moz-appearance: none;
 	appearance: none;
 }
-.bandwidth-calc .select-style select:focus {
+.bandwidth-calc .select-style select:focus,  .compare-popsty .select-style select:focus{
 	outline: none;
 }
 .usage-type {
@@ -3349,19 +3349,21 @@ color: #555 !important;
 .no-contract-sty {
 	float: left;
 	margin-left: 0;
-	margin-top: 20px;
+	margin-top: 0;
 	width: 100%;
 }
 .no-contract-sty span {
 	float: left;
-	font-size: 16px;
+	font-size: 14px;
+
 }
 .contract-margin-sty {
 	float: left;
 	font-size: 18px;
-	margin-top: 20px;
+	margin-top: 0;
 	padding-bottom: 0;
-	width: 47%;
+	width: 100%;	font-family: 'open_sanssemibold';
+	margin-bottom: 0;
 }
 .preference-btn {
 	width: 200px;
@@ -3403,7 +3405,7 @@ color: #555 !important;
 }
 .set-call {
 	font-size: 18px;
-	margin-top: 20px;
+	/*margin-top: 20px;*/
 	font-family: "open_sanssemibold";
 }
 .address-box {
@@ -3428,8 +3430,10 @@ color: #555 !important;
 	width: 600px;
 }
 .compare-popsty {
-	padding: 15px 20px 0px;/*height: 400px;*//*overflow-y: scroll;*/
+	padding: 15px 20px 20px;/*height: 400px;*//*overflow-y: scroll;*/
+	float: left;
 }
+.compare-popsty p { font-size:14px;}
 .info_listing {
 	padding: 0 10px;
 }
@@ -3781,9 +3785,9 @@ transition: all 0.5s ease-in 0s;
 }
 #comparePopup h4 {
 	color: #0f60bb;
-	/*font-family: "open_sanssemibold";
-	font-size: 24px;
-	margin: 4px 0 30px 14px;*/
+	font-family: "open_sanssemibold";
+
+    margin: 15px 0 25px 0;
 	text-align: center;
 }
 #cable-pref {
@@ -3883,7 +3887,7 @@ transition: all 0.5s ease-in 0s;
 .skip-button:hover {
 	color: #fff
 }
-.save-button:hover {
+.save-button:hover, .save-button:focus {
 	color: #fff
 }
 .unlimited-call .no-contract-sty {
@@ -3898,13 +3902,13 @@ transition: all 0.5s ease-in 0s;
 	padding-bottom: 10px;
 }
 .info_listing p {
-/*width: 94%;
-	float: right;*/
-	/*font-family: "open_sanssemibold";
-	margin-bottom: 0px;*/
+width: 94%;
+	float: right;
+
 }
 #welcome-popup {
-	font-family: "open_sansregular"
+	font-family: "open_sansregular";
+    padding: 15px 0;
 }
 .mg-bt25 {
 	margin-bottom: 20px;
@@ -5754,13 +5758,14 @@ ul.caption-dealdet li::before {
 /*dropdown*/
 
 .dropbtn {
-    background-color: #393a39;
-    color: white;
+
+    color: #fff !important;
     padding: 11px;
     font-size: 16px;
     border: none;
     cursor: pointer;
 }
+.dropbtn b {	font-family: 'open_sanssemibold';}
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -6278,3 +6283,4 @@ select::-ms-expand {
 .sd-effective-price-single{color: #00b551 !important;}
 .sd-effective-price-single span{color: #000 !important;
    }
+.modal { z-index:999999 !important;}

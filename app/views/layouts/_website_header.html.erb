@@ -22,7 +22,7 @@
           <% unless session[:user_id].present? %>
           <button class="dropbtn">Dropdown</button>
           <% else %>
-          <a class="dropbtn" href="<%= profile_website_app_users_path %>">Welcome <%= headername %></a>
+          <a class="dropbtn" href="javascript:void(0)"><b>Welcome </b> &nbsp;<%= headername %></a>
           <% end %>
           <div class="dropdown-content">
             <!-- <a href="<%#= profile_website_app_users_path %>">Welcome <%= headername %></a> | -->
@@ -38,7 +38,7 @@
             <%else%>
             <a id="zipcode_header" href="#" class="text-center serviceRow" data-toggle="modal" data-target="#zipcode-modal">ZIP : <%=  session[:zip_code] %></a>
             <%end%>
- 
+
         <% else %>
 
             <% if controller.controller_name=="app_users" and controller.action_name=="checkout" %>

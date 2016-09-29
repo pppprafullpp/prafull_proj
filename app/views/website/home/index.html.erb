@@ -148,23 +148,23 @@
             <li><span>2</span><p>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</p></li>
             <li><span>3</span><p>Review potential saving and switch</p></li>
           </ul>
-          <div class="mg-bt25 text-center">
+          <div class="text-center">
             <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
           </div>
       </div>
       <div id="internet_pref" style="display:none">
         <%=render :partial => "internet_preferences0.html.erb"%>
       </div>
-      <div id="telephone_pref" style="display:none;height:469px">
+      <div id="telephone_pref" style="display:none;">
         <%=render :partial => "telephone_preferences0.html.erb"%>
       </div>
-      <div id="cable_pref" style="display:none;height:351px">
+      <div id="cable_pref" style="display:none;">
         <%=render :partial => "cable_preferences0.html.erb"%>
       </div>
-      <div id="cellphone_pref" style="display:none;height:546px">
+      <div id="cellphone_pref" style="display:none;">
         <%=render :partial => "cellphone_preferences0.html.erb"%>
       </div>
-      <div id="bundle_pref" style="display:none;height:560px">
+      <div id="bundle_pref" style="display:none;">
         <%=render :partial => "bundle_preferences0.html.erb"%>
       </div>
       <div id="onwait" style="background-color: #000;    height: 586px; position: absolute;    top: 1px;    width: 100%;    opacity: 0.3;">
@@ -207,7 +207,7 @@
 
   function move_next() {
     $("#welcome-popup").hide();
-    $("#internet_pref").show().css("height","370px");
+    $("#internet_pref").show();
   }
 
  <%if session[:user_id].present?%>
@@ -222,10 +222,10 @@
         console.log(data);
         $("#wowPopup").modal("show");
         if (data["you_save"] !="" && data["you_save"]!=null){
-          $("#you_save_value").html("You save: $"+data["you_save"]+" per annum")
+          $("#you_save_value").html("$"+data["you_save"]+" per annum")
         }
         else {
-          $("#you_save_value").html("You save: $"+0)
+          $("#you_save_value").html("$"+0)
         }
       }
     });

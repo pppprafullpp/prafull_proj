@@ -3426,13 +3426,14 @@ color: #555 !important;
 .filter-focus {
 	border-bottom: 2px solid;
 }
-#comparePopup .modal-dialog {
+#comparePopup .modal-dialog , .services-popup .modal-dialog{
 	width: 600px;
 }
 .compare-popsty {
 	padding: 15px 20px 20px;/*height: 400px;*//*overflow-y: scroll;*/
 	float: left;
 }
+.compare-popsty .modal-body { padding: 0;}
 .compare-popsty p { font-size:14px;}
 .info_listing {
 	padding: 0 10px;
@@ -3777,13 +3778,14 @@ transition: all 0.5s ease-in 0s;
 	padding-bottom: 20px;
 	width: 120px !important;
 }
-#comparePopup {
+#comparePopup, .modal-dialog {
 	z-index: 999999;
 }
-#comparePopup .modal-dialog {
+
+#comparePopup .modal-dialog, .services-popup .modal-dialog{
 	margin-top: 100px;
 }
-#comparePopup h4 {
+#comparePopup h4, .services-popup h4 {
 	color: #0f60bb;
 	font-family: "open_sanssemibold";
 
@@ -6284,3 +6286,4 @@ select::-ms-expand {
 .sd-effective-price-single span{color: #000 !important;
    }
 .modal { z-index:999999 !important;}
+#zipcode_header { display:none;}

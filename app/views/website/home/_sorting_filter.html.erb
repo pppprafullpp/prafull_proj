@@ -41,21 +41,13 @@
 
   </div>
 </div>
-<div class="modal fade text-left" id="myModal" role="dialog">
+<div class="modal fade text-left services-popup" id="myModal" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
-    <div class="modal-content">
-
-        <div class="modal-header">
-
-          <h3>Current <%=ServiceCategory.get_category_name_by_id(params[:category_id])%> Service</h3>
-
-        </div>
-
+    <div class="modal-content compare-popsty">
+          <h4>Current <%=ServiceCategory.get_category_name_by_id(params[:category_id])%> Service</h4>
         <div class="modal-body">
-          <div class="row">
-             <div class="col-md-12">
               <%if params[:category_id].to_i == 1%>
                <%=render :partial=>"internet_preferences.html.erb" %>
               <%end%>
@@ -71,8 +63,6 @@
               <%if params[:category_id].to_i == 5%>
                <%=render :partial=>"bundle_preferences.html.erb" %>
               <%end%>
-            </div>
-           </div>
         </div>
     </div>
   </div>

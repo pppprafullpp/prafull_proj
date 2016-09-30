@@ -2030,7 +2030,7 @@ color: #999;
 }
 .more-details .table-bordered tbody tr td {
 	font-family: 'open_sansregular';
-	font-size: 14px;
+	font-size: 12px;
 	color: #686868;
 }
 .more-details .table-bordered tbody tr td a {
@@ -6231,6 +6231,22 @@ select::-ms-expand {
 .modal { z-index:999999 !important;}
 #zipcode_header { display:none;}
 .rating-sm { font-size: 18px !impotrant;}
-.sd-more-details-page h4 {color:#000;  font-family: 'open_sanssemibold';}
-.sd-more-details-page p{ font-size:14px;}
-.sd-more-details-page h5 { padding-top:10px; 	font-family: 'open_sansregular'; padding-top: 30px;}
+.sd-more-details-page h4 {color:#000;  font-family: 'open_sanssemibold';     width: 50%;
+    float: left;}
+.sd-more-details-page p{  font-family: 'open_sansregular';
+font-size: 12px;}
+.sd-more-details-page h5 { padding-top:10px; 	font-family: 'open_sansregular'; padding-top: 30px; margin-bottom: 10px !important;}
+.sd-more-details-page .table-bordered tbody tr td:first-child{ color:#000;}
+#reviews-header {width: 50%; float: right; text-align:right; font-family: 'open_sansregular'; margin-top: 0; padding:0; color: #0091ff ;}
+.rating-container .rating { margin:10px 0 ; display:block !important;}
+.rating-container .clear-rating { padding-right: 0 !important;}
+.submit-btn { background:#e50005; color:#fff; border:0; padding: 10px 20px;  font-family: 'open_sanssemibold';  font-size:16px; border-radius: 5px; cursor: pointer;}
+.submit-btn:hover  , .submit-btn:focus { color:#fff; }
+#reviews-inner-area { border:none;
+    background: #fafafa;
+    border-radius: 5px;
+    padding: 0px 20px;
+    font-size: 12px;     margin-bottom: 10px;}
+		#reviews-inner-area p { font-size:12px;}
+#reviews-inner-area h5{ text-align: left; font-family: 'open_sansregular'; padding-top: 20px;}
+.rating-container {    margin-top: 20px;}

@@ -48,10 +48,16 @@
               Price
               <span>$<%= best_deal['deal_price'] %>/mo</span>
             </div>
+
              <div class="sd-effective-price">
               Effective price
-              <span>$<%= best_deal['effective_price'] %>/mo</span>
-            </div>
+              <span>$<%="%.2f" % best_deal['effective_price']  if best_deal['effective_price'].present? %>/mo</span>
+</div>
+           <!--  <div class="sd-effective-price">
+              <p>Effective price</p>
+              <h2>$<%#= "%.2f" % best_deal['effective_price']  if best_deal['effective_price'].present?%> <span class="light">/</span><span class="regular">mo</span></h2> -->
+<!-- >>>>>>> prafull_05082016_new_branch -->
+            <!-- </div> -->
             <div style="float:left; width:100%">
               <%if data["you_save"].to_i > 0%>
               <b>You save:</b> <span style="color:#e0b03c"><i> $ <%= data[:you_save_text] %></i></span>
@@ -121,9 +127,15 @@
               Price
               <span>$<%= best_deal['deal_price'] %>/mo</span>
           </div>
+
           <div class="sd-effective-price">
           Effective price
-            <span>$<%= best_deal['effective_price'] %>mo</span>
+            <span>$<%= "%.2f" % best_deal['effective_price'] if best_deal['effective_price'].present?%>mo</span>
+
+          <!-- <div class="sd-effective-price">
+            <p>Effective price</p>
+            <h2>$<%#= "%.2f" % best_deal['effective_price'] if best_deal['effective_price'].present? %> <span class="light">/</span><span class="regular">mo</span></h2> -->
+<!-- >>>>>>> prafull_05082016_new_branch -->
           </div>
         </div>
         <%if @current_user.present?%>

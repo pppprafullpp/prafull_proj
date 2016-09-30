@@ -1,11 +1,14 @@
 
       <div class="col-md-12 sd-box-con">
+          <a style="float:right;" href="<%= deal_details_website_home_index_path %>?category_id=<%= deal_data[:service_category_id]%>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">All <%= deal_data[:service_category_name]%> Deals</a>
+
         <h1><%= deal_data[:service_category_name]%></h1>
+
         <div class="col-md-4 sd-dealinfo-left">
           <div class="sd-deal-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> </div>
           <ul class="sd-deal-price">
             <li class="sd-dealprice-single">Deal Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>
-            <li class="sd-effective-price-single">Effective Price:<span>$<%=trending_deal['effective_price']%>/mo</span></li>
+            <li class="sd-effective-price-single">Effective Price:<span>$<%="%.2f" %  trending_deal['effective_price'] if trending_deal['effective_price'].present?%>/mo</span></li>
             <% if trending_deal['contract_period'] == 0 %>
             <li>Contract:<span>None</span></li>
             <% else %>
@@ -22,28 +25,29 @@
            
             <p>
           <%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
-          <a href="javascript:void(0)" id="seemore_<%=trending_deal['id']%>" onclick="show_more_button(<%=trending_deal['id']%>)">See Less</a>
+          <!-- <a href="javascript:void(0)" id="seemore_<%#=trending_deal['id']%>" onclick="show_more_button(<%#=trending_deal['id']%>)">See Less</a> -->
           <div id="moredeal-info_<%=trending_deal['id']%>"> 
             <!-- <b>Includes:</b><br/> -->
             <p>
             <%=trending_deal['detail_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
           </div>
+           <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id']) %>" class="sd-more-details">+ More Details</a>
           <%#= render :partial => "#{deal_data[:service_category_name].downcase}_deal_form" %>
        
         </div>
       </div>
 <script>
-function show_more_button(id) {
-  if($('#moredeal-info_'+id).is(":visible") == true) {
-     $('#moredeal-info_'+id).slideToggle();
-     $('#seemore_'+id).text("See More")
-  }
-  else
-  {
-   $('#moredeal-info_'+id).slideToggle();
-     $('#seemore_'+id).text("See Less") 
-  }
-}
+// function show_more_button(id) {
+//   if($('#moredeal-info_'+id).is(":visible") == true) {
+//      $('#moredeal-info_'+id).slideToggle();
+//      $('#seemore_'+id).text("See More")
+//   }
+//   else
+//   {
+//    $('#moredeal-info_'+id).slideToggle();
+//      $('#seemore_'+id).text("See Less") 
+//   }
+// }
 </script>
 
  

@@ -35,7 +35,7 @@
               </tr>
               <tr>
                 <td width="20%">Price</td>
-                <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
+                <td width="80%" colspan="2">$<%=  "%.2f" % deal_equipment.try(:price) %></td>
               </tr>
               </tbody>
             </table>

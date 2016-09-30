@@ -164,171 +164,145 @@
 </section>
 
 <script type="text/javascript">
-
-function titleize_text(object) {
-  value=$("#"+object.id).val();
-  rest=value.substr(1);
-  object.value=value[0].toUpperCase()+""+rest
-}
+  function titleize_text(object) {
+    value=$("#"+object.id).val();
+    rest=value.substr(1);
+    object.value=value[0].toUpperCase()+""+rest
+  }
   $( document ).ready(function() {
       $("#app_user_user_type").addClass("form-control");
       $("#app_user_user_type option[value='Select User type']").prop("selected","selected")
-       $('#app_user_password').keyup(function() {
-      $('#result').html(checkStrength($('#app_user_password').val()));
-
-  })
-  $("#app_user_user_type").change(function(){
-  if (  $("#app_user_user_type option:selected").val() == "business") {
-    $("#business_name_div").removeClass("hidden");
-    // $(".height_popup").css("height", "700px")
-  }
-  else {
-    $("#business_name_div").addClass("hidden");
-  }
-  });
-
-  function checkStrength(password) {
-    var strength = 0
-    if (password.length < 8) {
-      $('#result').removeClass()
-      $('#result').addClass('short')
-      return '8 characters or longer.<br/> Atleast one number, one alphabet and one symbol (like @#$%*).'
-
-    }
-    $( document ).ready(function() {
-        $("#app_user_user_type").addClass("form-control");
-        $("#app_user_user_type option[value='Select User type']").prop("selected","selected")
-        $('#app_user_password').keyup(function() {
-            $('#result').html(checkStrength($('#app_user_password').val()));
-
-        })
-        $("#app_user_user_type").change(function(){
-            if (  $("#app_user_user_type option:selected").val() == "business") {
-                $("#business_name_div").removeClass("hidden");
-                $(".height_popup").css("height", "700px")
-            }
-            else {
-                $("#business_name_div").addClass("hidden");
-            }
-        });
-
-        function checkStrength(password) {
-            var strength = 0
-            if (password.length < 8) {
-                $('#result').removeClass()
-                $('#result').addClass('short')
-                return '8 characters or longer.<br/> Atleast one number, one alphabet and one symbol (like @#$%*).'
-            }
-            if (password.length > 7) strength += 1
-            // If password contains both lower and uppercase characters, increase strength value.
-            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
-            // If it has numbers and characters, increase strength value.
-            if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
-            // If it has one special character, increase strength value.
-            if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-            // If it has two special characters, increase strength value.
-            if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-            // Calculated strength value, we can return messages
-            // If value is less than 2
-            if (strength < 2) {
-                $('#result').removeClass()
-                $('#result').addClass('short')
-                return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
-            } else if (strength == 2) {
-                $('#result').removeClass()
-                $('#result').addClass('short')
-                return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
-            } else {
-                $('#result').removeClass()
-                $('#result').addClass('strong')
-                return ''
-            }
+      $('#app_user_password').keyup(function() {
+        $('#result').html(checkStrength($('#app_user_password').val()));
+      });
+      
+      $("#app_user_user_type").change(function(){
+        if (  $("#app_user_user_type option:selected").val() == "business") {
+          $("#business_name_div").removeClass("hidden");
+          // $(".height_popup").css("height", "700px")
         }
+        else {
+          $("#business_name_div").addClass("hidden");
+        }
+      });
 
-        $("#create_user").click(function(){
-            var check = true;
-            var a = $('#app_user_email').val().trim();
-            if (a == null || a == "") {
-                $('#app_user_email').addClass('custom-input-error')
-                check = false
-            }else{
-                $('#app_user_email').removeClass('custom-input-error')
-            }
-            var a = $('#app_user_password').val().trim();
-            var b = $('#app_user_password_confirmation').val().trim();
-            if (a == null || a == "" || b == null || b == "" || (a != b)  ) {
-                $('#app_user_password').addClass('custom-input-error')
-                $('#app_user_password_confirmation').addClass('custom-input-error')
-                check = false
-            }else{
-                $('#app_user_password').removeClass('custom-input-error')
-                $('#app_user_password_confirmation').removeClass('custom-input-error')
-            }
-            var a = $('#result').text();
-            if (a == "Weak" || a == "Too short" ){
-                $('#result').addClass('custom-input-error')
-                check = false
-            }
-            else{
-                $('#result').removeClass('custom-input-error')
-            }
+      function checkStrength(password) {
+          var strength = 0
+          if (password.length < 8) {
+              $('#result').removeClass()
+              $('#result').addClass('short')
+              return '8 characters or longer.<br/> Atleast one number, one alphabet and one symbol (like @#$%*).'
+          }
+          if (password.length > 7) strength += 1
+          // If password contains both lower and uppercase characters, increase strength value.
+          if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+          // If it has numbers and characters, increase strength value.
+          if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+          // If it has one special character, increase strength value.
+          if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+          // If it has two special characters, increase strength value.
+          if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+          // Calculated strength value, we can return messages
+          // If value is less than 2
+          if (strength < 2) {
+              $('#result').removeClass()
+              $('#result').addClass('short')
+              return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
+          } else if (strength == 2) {
+              $('#result').removeClass()
+              $('#result').addClass('short')
+              return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
+          } else {
+              $('#result').removeClass()
+              $('#result').addClass('strong')
+              return ''
+          }
+      }
 
-            if ($("#app_user_first_name").val()!=""){
-                $('#app_user_first_name').removeClass('custom-input-error')
-            }
-            else{
-                $('#app_user_first_name').addClass('custom-input-error')
-                check = false
-            }
+      $("#create_user").click(function(){
+          var check = true;
+          var a = $('#app_user_email').val().trim();
+          if (a == null || a == "") {
+              $('#app_user_email').addClass('custom-input-error')
+              check = false
+          }else{
+              $('#app_user_email').removeClass('custom-input-error')
+          }
+          var a = $('#app_user_password').val().trim();
+          var b = $('#app_user_password_confirmation').val().trim();
+          if (a == null || a == "" || b == null || b == "" || (a != b)  ) {
+              $('#app_user_password').addClass('custom-input-error')
+              $('#app_user_password_confirmation').addClass('custom-input-error')
+              check = false
+          }else{
+              $('#app_user_password').removeClass('custom-input-error')
+              $('#app_user_password_confirmation').removeClass('custom-input-error')
+          }
+          var a = $('#result').text();
+          if (a == "Weak" || a == "Too short" ){
+              $('#result').addClass('custom-input-error')
+              check = false
+          }
+          else{
+              $('#result').removeClass('custom-input-error')
+          }
 
-            if ($("#app_user_last_name").val()!=""){
-                $('#app_user_last_name').removeClass('custom-input-error')
-            }
-            else{
-                $('#app_user_last_name').addClass('custom-input-error')
-                check = false
-            }
+          if ($("#app_user_first_name").val()!=""){
+              $('#app_user_first_name').removeClass('custom-input-error')
+          }
+          else{
+              $('#app_user_first_name').addClass('custom-input-error')
+              check = false
+          }
 
-            if ($("#app_user_user_type").val()!="Select User type"){
-                $('#app_user_user_type').removeClass('custom-input-error')
-            }
-            else{
-                $('#app_user_user_type').addClass('custom-input-error')
-                check = false
-            }
+          if ($("#app_user_last_name").val()!=""){
+              $('#app_user_last_name').removeClass('custom-input-error')
+          }
+          else{
+              $('#app_user_last_name').addClass('custom-input-error')
+              check = false
+          }
 
-            if(check) {
-                if($("#app_user_user_type option:selected").val()=="business" && $("#business_name").val()!="" && $("#business_type").val()!="0") {
-                    console.log("oK");
-                    $("#new_app_user").submit();
-                }
-                else {
-                    if($("#app_user_user_type option:selected").val()=="residence" && check) {
-                        console.log("residence user OK");
-                        $("#new_app_user").submit();
-                    }
-                    else {
-                        alert("Please enter all fields")
-                        event.preventDefault();
-                    }
+          if ($("#app_user_user_type").val()!="Select User type"){
+              $('#app_user_user_type').removeClass('custom-input-error')
+          }
+          else{
+              $('#app_user_user_type').addClass('custom-input-error')
+              check = false
+          }
 
-                }
+          if(check) {
+              if($("#app_user_user_type option:selected").val()=="business" && $("#business_name").val()!="" && $("#business_type").val()!="0") {
+                  console.log("oK");
+                  $("#new_app_user").submit();
+              }
+              else {
+                  if($("#app_user_user_type option:selected").val()=="residence" && check) {
+                      console.log("residence user OK");
+                      $("#new_app_user").submit();
+                  }
+                  else {
+                      alert("Please enter all fields")
+                      event.preventDefault();
+                  }
 
-            }
-            else{
-                return false
-            }
-        });
+              }
 
-        $("#forgot_password").click(function(){
-            var user_email = $('#user_email').val();
-            if(user_email != ''){
-                location.href = "<%= forget_password_website_app_users_path %>?email=" + user_email
-                alert("You will recieve an email for password");
-            }else{
-                alert('Please enter your email address')
-            }
-        });
+          }
+          else{
+              return false
+          }
+      });
+
+      $("#forgot_password").click(function(){
+          var user_email = $('#user_email').val();
+          if(user_email != ''){
+              location.href = "<%= forget_password_website_app_users_path %>?email=" + user_email
+              alert("You will recieve an email for password");
+          }else{
+              alert('Please enter your email address')
+          }
+      });
 
     });
 
@@ -440,8 +414,8 @@ function titleize_text(object) {
             });
         }
     }
-  }
-});
+  // }
+// });
 </script>
 <script>
     $(window).load(function(){

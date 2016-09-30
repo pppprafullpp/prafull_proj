@@ -8,7 +8,7 @@
           <div class="sd-deal-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> </div>
           <ul class="sd-deal-price">
             <li class="sd-dealprice-single">Deal Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>
-            <li class="sd-effective-price-single">Effective Price:<span>$<%=trending_deal['effective_price']%>/mo</span></li>
+            <li class="sd-effective-price-single">Effective Price:<span>$<%="%.2f" %  trending_deal['effective_price'] if trending_deal['effective_price'].present?%>/mo</span></li>
             <% if trending_deal['contract_period'] == 0 %>
             <li>Contract:<span>None</span></li>
             <% else %>

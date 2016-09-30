@@ -30,7 +30,7 @@ class AppUser < ActiveRecord::Base
   BUSINESS = 'business'
 
   PRIMARY_ID = ["Driving License" , "Passport","State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD" ]
-  SECONDARY_ID = ["Major credit card" , "Driving License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth certificate" ]
+  SECONDARY_ID = ["Major Credit Card" , "Driving License","Passport"," State ID Card", "US Military Card", "US Military Department ID Card", "US Coast Guard Merchant Mariner Card", "EAD", "Birth Certificate" ]
   USER_TYPES = [RESIDENCE,BUSINESS]
   # STATES = Statelist.all.pluck(:state).uniq
   STATES =Statelist.all.order('state ASC').pluck(:state).uniq

@@ -47,7 +47,7 @@
             </div>
             <div style="float:right; display:inline-block">
               <p>Effective price</p>
-              <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+              <h2>$<%= "%.2f" % best_deal['effective_price']  if best_deal['effective_price'].present?%> <span class="light">/</span><span class="regular">mo</span></h2>
             </div>
             <div style="float:left; width:100%">
               <%if data["you_save"].to_i > 0%>
@@ -115,7 +115,7 @@
           </div>
           <div style="float:right; display:inline-block">
             <p>Effective price</p>
-            <h2>$<%= best_deal['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>
+            <h2>$<%= "%.2f" % best_deal['effective_price'] if best_deal['effective_price'].present? %> <span class="light">/</span><span class="regular">mo</span></h2>
           </div>
         </div>
         <%if @current_user.present?%>

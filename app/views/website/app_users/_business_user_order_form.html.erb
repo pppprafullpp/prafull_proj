@@ -59,7 +59,7 @@
 
     <div class="col-sm-6  padding15right">
       <label for="Name" class="control-label">Manager Name<span id="mandat">*</span></label>
-      <%= text_field_tag('business[manager_name]',manager_name,:class=>'form-control input-md',:placeholder=>'Manager Name',:maxlength=>'30') %>
+      <%= text_field_tag('business[manager_name]',manager_name,:class=>'form-control input-md',:placeholder=>'Manager Name',:maxlength=>'30',:onblur=>"capitalise_first(this)") %>
     </div>
 
     <div class="col-sm-6">
@@ -84,24 +84,24 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="col-md-12">
-        <h2>Billing Address</h2>
+        <h3>Billing Address</h3>
       </div>
       <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
-        <%= text_field_tag('business_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "billing_address_name") %>
+        <%= text_field_tag('business_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "billing_address_name",:onblur=>"capitalise_first(this)") %>
       </div>
       <div class="col-md-6 ">
         <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
-        <%= text_field_tag('business_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1") %>
+        <%= text_field_tag('business_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id => "billing_address_1",:onblur=>"capitalise_first(this)") %>
         <%= hidden_field_tag 'business_addresses[address_type]',2,:name => "business_addresses[address_type]" %>
       </div>
       <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address 2</label>
-        <%= text_field_tag('business_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2',:id => "billing_address_2") %>
+        <%= text_field_tag('business_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2',:id => "billing_address_2",:onblur=>"capitalise_first(this)") %>
       </div>
       <div class="col-md-6">
         <label for="Name" class="control-label">Town/City<span id="mandat">*</span></label>
-         <%= text_field_tag('business_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "billing_city") %>
+         <%= text_field_tag('business_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "billing_city"),:onblur=>"capitalise_first(this)"%>
       </div>
        <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
@@ -120,7 +120,7 @@
 
       <div id="additional_data">
       <div class="col-md-12 address-sty">
-        <h2 class="padding-bott">Shipping Address</h2>
+        <h3>Shipping Address</h3>
         <div id="sameasbilling-1" class="checkbox checkbox-info">
           <input id="checkbox8a" type="checkbox" onclick="SetShipping(this.checked);">
           <label for="checkbox8a">Same as Billing Address </label>
@@ -130,20 +130,20 @@
       <div id="business_service_address">
         <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
-        <%= text_field_tag('business_shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "shipping_address_name") %>
+        <%= text_field_tag('business_shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "shipping_address_name",:onblur=>"capitalise_first(this)" %>
       </div>
         <div class="col-md-6">
           <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
-          <%= text_field_tag('business_shipping_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1") %>
+          <%= text_field_tag('business_shipping_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id => "shipping_address_1",:onblur=>"capitalise_first(this)") %>
           <%= hidden_field_tag 'business_shipping_addresses[address_type]',1,:name => "business_shipping_addresses[address_type]" %>
         </div>
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Address 2</label>
-          <%= text_field_tag('business_shipping_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2") %>
+          <%= text_field_tag('business_shipping_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2', :id => "shipping_address_2",:onblur=>"capitalise_first(this)") %>
         </div>
         <div class="col-md-6">
           <label for="Name" class="control-label">Town/City<span id="mandat">*</span></label>
-           <%= text_field_tag('business_shipping_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "shipping_city") %>
+           <%= text_field_tag('business_shipping_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "shipping_city",:onblur=>"capitalise_first(this)" )%>
         </div>
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
@@ -162,7 +162,7 @@
       </div>
 
       <div class="col-md-12 address-sty">
-        <h2 class="padding-bott">Service Address</h2>
+        <h3>Service Address</h3>
         <div class="checkbox checkbox-info">
           <input id="checkbox8b" type="checkbox" onclick="SetService(this.checked);">
           <label for="checkbox8b">Same as Billing Address </label>
@@ -171,20 +171,20 @@
       <div id="business_shipping_address" %>
         <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
-        <%= text_field_tag('business_service_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "service_address_name") %>
+        <%= text_field_tag('business_service_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "service_address_name",:onblur=>"capitalise_first(this)") %>
       </div>
         <div class="col-md-6 ">
           <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>
-          <%= text_field_tag('business_service_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1") %>
+          <%= text_field_tag('business_service_addresses[address1]',"",:class => 'form-control input-md',:placeholder => 'Address1', :id=> "service_address_1",:onblur=>"capitalise_first(this)") %>
           <%= hidden_field_tag 'business_service_addresses[address_type]',0,:name => "business_service_addresses[address_type]" %>
         </div>
         <div class="col-md-6 padding15right">
           <label for="Name" class="control-label">Address 2</label>
-          <%= text_field_tag('business_service_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2', :id=> "service_address_2") %>
+          <%= text_field_tag('business_service_addresses[address2]',"",:class => 'form-control input-md',:placeholder => 'Address2', :id=> "service_address_2",:onblur=>"capitalise_first(this)") %>
         </div>
         <div class="col-md-6 ">
           <label for="Name" class="control-label">Town/City<span id="mandat">*</span></label>
-           <%= text_field_tag('business_service_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "service_city") %>
+           <%= text_field_tag('business_service_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "service_city",:onblur=>"capitalise_first(this)") %>
         </div>
         <div class="col-md-6 ">
           <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
@@ -244,4 +244,10 @@ val=obj.value;
 formatted_str=val.substr(0,2)+"-"+val.substr(3,3)+"-"+val.substr(7)
 $("#"+obj.id).val(formatted_str);
 }
+
+function capitalise_first(object) {
+        value=$("#"+object.id).val();
+        rest=value.substr(1);
+        object.value=value[0].toUpperCase()+""+rest
+    }
 </script>

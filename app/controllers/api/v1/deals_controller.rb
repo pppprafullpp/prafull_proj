@@ -74,10 +74,10 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def cellphone_equipments
-		app_user = AppUser.find_by_id(params[:app_user_id]) 
+		app_user = AppUser.find_by_id(params[:app_user_id])
 		deal = Deal.find_by_id(params[:deal_id])
 		if app_user.present? && deal.present? && deal.service_category_id == Deal::CELLPHONE_CATEGORY
-      if deal.cellphone_equipments.present? 
+      if deal.cellphone_equipments.present?
         equipments =deal.cellphone_equipments.select('id,model, price')
        	render :json => { :success => true, equipments: equipments.as_json(:except=>[:id])}
       else
@@ -104,11 +104,13 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def customisable_deal_deatail
+
 if params[:deal_id].present?
 			deal = Deal.find(params[:deal_id])
 			if deal.service_category_id == Deal::CABLE_CATEGORY
 				render :json => { :success => true, deals: deal.as_json(:include =>{:channel_packages => {:methods=>[:channel_name]},:deal_attributes => {:methods => [:channel_name]},:deal_extra_services => {:methods => [:service_name,:service_description]}},:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])}
 			elsif deal.service_category_id == Deal::CELLPHONE_CATEGORY
+
 			 render :json => { :success => true, deals: deal.as_json(:include =>{:deal_equipments =>{:except=>[:available_colors],:methods => [:available_color,:cellphone_name,:brand,:description]},:deal_extra_services => {:methods => [:service_name,:service_description]} },:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_attributes])}
 			else
 				render :json => { :success => false}

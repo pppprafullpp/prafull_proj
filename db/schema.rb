@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921063837) do
+ActiveRecord::Schema.define(version: 20160922061830) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -281,6 +281,7 @@ ActiveRecord::Schema.define(version: 20160921063837) do
     t.datetime "created_at",                                                                   null: false
     t.datetime "updated_at",                                                                   null: false
     t.integer  "deal_id",                 limit: 4
+    t.text     "description",             limit: 65535
   end
 
   create_table "cable_service_preferences", force: :cascade do |t|
@@ -332,6 +333,7 @@ ActiveRecord::Schema.define(version: 20160921063837) do
     t.boolean  "status"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.string   "image",          limit: 255
   end
 
   create_table "cellphone_equipments", force: :cascade do |t|
@@ -520,6 +522,8 @@ ActiveRecord::Schema.define(version: 20160921063837) do
     t.boolean  "status"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "color_code", limit: 255
+    t.string   "image",      limit: 255
   end
 
   create_table "extra_services", force: :cascade do |t|

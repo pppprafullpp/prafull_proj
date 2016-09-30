@@ -13,7 +13,7 @@
          </tr>
          <tr>
            <td width="20%">Price per Line</td>
-           <td width="80%" colspan="2">$<%= @deal_attributes.try(:price_per_line) %></td>
+           <td width="80%" colspan="2">$<%= "%.2f" % @deal_attributes.try(:price_per_line) %></td>
          </tr>
          <tr>
          <td width="20%">Data Plan</td>
@@ -21,7 +21,7 @@
        </tr>
        <tr>
          <td width="20%">Data Plan Price</td>
-         <td width="80%" colspan="2">$<%= @deal_attributes.try(:data_plan_price) %></td>
+         <td width="80%" colspan="2">$<%= "%.2f" % @deal_attributes.try(:data_plan_price) %></td>
        </tr>
        <tr>
          <td width="20%">Additional Data</td>
@@ -29,7 +29,7 @@
        </tr>
        <tr>
         <td width="20%">Additional Data Price</td>
-         <td width="80%" colspan="2">$<%= @deal_attributes.try(:additional_data_price) %></td>
+         <td width="80%" colspan="2">$<%= "%.2f" % @deal_attributes.try(:additional_data_price) %></td>
        </tr>
       </tbody>
     </table>
@@ -51,11 +51,11 @@
       </tr>
       <tr>
         <td width="20%">Memory</td>
-        <td width="80%" colspan="2">$<%= deal_equipment.try(:memory) %></td>
+        <td width="80%" colspan="2"><%= deal_equipment.try(:memory) %></td>
       </tr>
       <tr>
         <td width="20%">Price</td>
-        <td width="80%" colspan="2">$<%= deal_equipment.try(:price) %></td>
+        <td width="80%" colspan="2">$<%= "%.2f" % deal_equipment.try(:price) %></td>
       </tr>
     </tbody>
   </table>

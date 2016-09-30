@@ -29,7 +29,7 @@
       <select class="form-control" id="cable_service_provider_id" name="service_provider_id">
         <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
       </select> </div>
-        <div class="col-md-6">
+        <div class="col-md-6  mg_bttom20">
     <%= number_field_tag("cable_price",price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
   <Div class="col-md-6">
@@ -59,7 +59,7 @@
   <script>
   function show_cellphone(){
       $("#cable_pref").hide();
-      $("#cellphone_pref").show().css("height","574px");
+      $("#cellphone_pref").show();
   }
   $(document).ready(function(){
     $("#cable_start_date").datepicker();

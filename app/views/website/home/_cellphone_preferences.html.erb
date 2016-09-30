@@ -38,7 +38,7 @@
       </select>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-6 mg_bttom20">
     <%= number_field_tag(:price,price.present? ? "%.2f" % price : 120.00,:class=>"form-control", :placeholder=>"Enter price")%>
   </div>
 
@@ -54,10 +54,10 @@
 
 
     <div class="col-md-6"><%= text_field_tag(:start_date,end_date,:class=>"form-control", :placeholder =>"Start Date")%>  </div>
-    <div class="col-md-6"><%= text_field_tag(:end_date,end_date,:class=>"form-control", :placeholder =>"End Date")%>  </div>
+    <div class="col-md-6 mg_bttom20"><%= text_field_tag(:end_date,end_date,:class=>"form-control", :placeholder =>"End Date")%>  </div>
 
-    <div class="col-md-12">
-    <h4>Calls</h4>
+
+
 
     <div class="col-md-12">
     <p class="set-call">Domestic calls</p>
@@ -72,10 +72,10 @@
     <div class="col-md-6">
     <%=number_field_tag(:domestic_call_minutes,domestic_call_minutes.present? ? domestic_call_minutes : 500, :class=>"form-control", :placeholder=>"Minutes", :name=>"domestic_call_minutes")%><br />
     </div>
-    </div>
+
 
     <div class="col-md-12">
-        <p class="contract-margin-sty">International calls</p>
+        <p class="set-call">International calls</p>
     </div>
 
     <div class="col-md-6  unlimited-call ">
@@ -89,10 +89,9 @@
       <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :300, :class=>"form-control", :placeholder=>"Minutes")%><br />
     </div>
 
-    <div class="row">
-      <div class="col-md-6 text-left" style="padding-left:6%">Data Plan</div>
-      <div class="col-md-6 text-left" style="padding-left:6%">No. of lines</div>
-    </div>
+
+
+
 
     <div class="col-md-6">
     <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq%>
@@ -111,15 +110,15 @@
       </select>
     </div>
 
-    <div class="col-md-12 text-center">
-    <div class="col-md-6">
+    <div class="col-md-12 text-center btn-group-sty">
+
     <%= submit_tag("Save", :class=>"btn save-button")%>
-    </div>
-    <div class="col-md-6">
+
+
     <%if @service_preferences_data.present?%>
     <%= button_tag("Unsubscribe", :class=>"btn skip-button", :onclick=>"Unsubscribe()")%>
     <%end%>
-    </div>
+
     </div>
 </div>
     <%end%>

@@ -12,7 +12,7 @@
                <li>Base Monthly Price $<%= "%.2f" % @deal.price %></li>
                <li>Base Installation $0.00</li>
                <li>Contract : <%= @deal.contract_period %> months</li>
-                <li>Effective Price : $<span id= "effective_price">0.00</span></li>
+                <li>Effective Price : $<span id= "effective_price"><%= @deal.effective_price%></span></li>
              </ul>
            </div>
            <%if  @current_user.present? %>

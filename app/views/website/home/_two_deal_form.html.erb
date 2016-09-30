@@ -1,4 +1,5 @@
     <div class="col-md-12 sd-box-con">
+        <a style="float:right;" href="<%= deal_details_website_home_index_path %>?category_id=<%= deal_data[:service_category_id]%>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">All <%= deal_data[:service_category_name]%> Deals</a>
       <h1><%=deal_data[:service_category_name] %></h1>
       <div class="col-md-6">
         <div class="sd-two-deal-block">
@@ -81,6 +82,7 @@
                   <div class="sd-best-price">Deal Price <span>$<%= customized_deal['deal_price']%></span></div>
                   <div class="sd-effective-price">Effective Price <span>$<%= customized_deal['effective_price']%></span></div>
                 </div>
+                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
                
               </div>
             </div>
@@ -106,7 +108,7 @@
                   <div class="sd-best-price">Deal Price <span>$<%= customized_deal['deal_price']%></span></div>
                   <div class="sd-effective-price">Effective Price <span>$<%= customized_deal['effective_price']%></span></div>
                 </div>
-               
+               <a href="<%= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
               </div>
             </div>
           </div>

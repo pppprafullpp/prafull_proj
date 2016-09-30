@@ -191,6 +191,7 @@ end
 
 <!--Order-form-->
 <script>
+<% if @deal.is_customisable == true %>
 
 var dealAttributeObject = localStorage.getItem('deal_attributes');
 var dealExtraServiceObject = localStorage.getItem('deal_extra_services');
@@ -209,7 +210,7 @@ else{
 }
 $('#update_effective_price').html("$" + parseFloat(effectivePriceObject));
 $('#effective_price').val( parseFloat(effectivePriceObject));
-
+<% end %>
 
 
 var errormsg="";

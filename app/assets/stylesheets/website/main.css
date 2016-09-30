@@ -3268,12 +3268,12 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef', en
 }
 .channel-list li {
 	display: inline-block;
-	margin-Right: 20PX;
-	border: 1px solid #eee;
+	margin-right: 20PX;
 	padding: 5px;
 	border-radius: 5px;
 	margin-top: 10px;
-	font-size: 15px;
+	font-size: 12px;font-family: 'open_sansregular';
+	width:45%;
 }
 /*.signin-page .form-control::-moz-placeholder {
  color:#000 !important;
@@ -3387,7 +3387,7 @@ color: #555 !important;
 .filter-focus {
 	border-bottom: 2px solid;
 }
-#comparePopup .modal-dialog , .services-popup .modal-dialog{
+#comparePopup .modal-dialog , .services-popup .modal-dialog, .sd-channel-popup .modal-dialog {
 	width: 600px;
 }
 .compare-popsty {
@@ -3750,10 +3750,10 @@ transition: all 0.5s ease-in 0s;
 	z-index: 999999;
 }
 
-#comparePopup .modal-dialog, .services-popup .modal-dialog{
+#comparePopup .modal-dialog, .services-popup .modal-dialog, .sd-channel-popup .modal-dialog {
 	margin-top: 100px;
 }
-#comparePopup h4, .services-popup h4 {
+#comparePopup h4, .services-popup h4, .sd-channel-popup h4 {
 	color: #0f60bb;
 	font-family: "open_sanssemibold";
 
@@ -6250,3 +6250,12 @@ font-size: 12px;}
 		#reviews-inner-area p { font-size:12px;}
 #reviews-inner-area h5{ text-align: left; font-family: 'open_sansregular'; padding-top: 20px;}
 .rating-container {    margin-top: 20px;}
+.sd-deal-detailscon .order-btn{ width: 47%; margin-right: 2%;}
+.sd-deal-detailscon .chanel-list-btn {
+	text-align:right;
+    margin: 15px 0;
+    width: 47%;}
+.channel-list h5 {
+
+	    font-family: 'open_sanssemibold'; font-size: 14px;     color: #292929; padding: 14px 0px 0;
+}

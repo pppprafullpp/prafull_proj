@@ -2,7 +2,7 @@
 <%= render :partial => 'website/home/internet_banner',  locals: { :category_name => @category_name.capitalize }%>
 
 <!--More Details section-->
-<section class="more-details">
+<section class="more-details sd-deal-detailscon">
   <div class="container">
     <div class="row">
          <div class="col-sm-4 right-offer">
@@ -25,7 +25,7 @@
              <a  onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
            <%end%>
            <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>
-            <a class="order-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
+            <a class="chanel-list-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
             <% end %>
 
          </div>
@@ -119,8 +119,8 @@
 <!--End of More Details section-->
 
 
-<div class="modal fade text-left" id="myModal2" role="dialog">
-  <div class="modal-dialog">
+<div class="modal fade text-left sd-channel-popup" id="myModal2" role="dialog">
+  <div class="modal-dialog ">
   <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-body channel_popup">
@@ -128,7 +128,7 @@
           <div class="scroller">
             <table class="table table-bordered">
               <div class="channel_heading">
-                <h1>Channel List</h1>
+                <h4>Channel List</h4>
               </div>
               <div class="col-md-12" id="ajaxdata">
               </div>
@@ -166,7 +166,7 @@
           for (i=0; i<length; i++){
             var category_name = data['channels'][i]['category_name'];
             var div_id="data_"+parseInt((Math.random()*100)+Date.now());
-            $("#ajaxdata").append("<ul class='row channel-list' id='"+div_id+"'>"+"<h3>"+category_name+"</h3>"+"</ul>");
+            $("#ajaxdata").append("<ul class='row channel-list' id='"+div_id+"'>"+"<h5>"+category_name+"</h5>"+"</ul>");
             for(j=0; j<data['channels'][i]['channel'].length;j++){
               $("#"+div_id).append("<li>"+data['channels'][i]['channel'][j]['channel_name']+"</li>");
             }

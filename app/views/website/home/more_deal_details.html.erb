@@ -31,8 +31,8 @@
          </div>
 
         <div class="col-sm-8 about-offer">
-           <div class="about-offer-details ">
-        <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;Share on Facebook</i></a>
+           <div class="about-offer-details sd-more-details-page">
+        <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;</i>Share on Facebook</a>
         <h4><%= @deal.title %></h4>
         <h5>About the offer</h5>
 
@@ -44,7 +44,7 @@
          <%= render :partial => "#{@category_name}_deal_form" %>
          <%end%>
           <% if @deal.try(:additional_offers).present? %>
-            <h5 class="margin_bot20">Additional Offer</h5>
+            <h5 class="">Additional Offer</h5>
             <% @deal.try(:additional_offers).each do |additional_offer| %>
                 <table class="table table-bordered">
                   <thead>
@@ -65,8 +65,8 @@
           <h3 id="reviews-header" style="width: 100%; float: left"></h3>
             <div class="add-reviews-div" style="padding-bottom: 11px;height:340px">
               <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
-              <p>Select rating point</p>
-              <input id="comment_rating_rating_point" class="rating rating-loading" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
+            <h4>Rate this deal!</h4>
+              <input id="comment_rating_rating_point" value="1" data-min="0" data-max="5" data-step="0.5" data-size="sm"><hr/>
               <%=f.text_field:comment_title, :class => "form-control", :placeholder => "Add Comment title", :required => true%><br />
               <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />
               <%=f.hidden_field:deal_id, :value=>params[:deal_id]%>
@@ -82,6 +82,10 @@
     </div>
    </div> </div>
   <script>
+
+
+  $("#comment_rating_rating_point").rating('create',{coloron:'green',onClick:function(){ alert('rating is ' + this.attr('data-rating')); }});
+
   function add_comments(){
     event.preventDefault();
     if($("#comment_rating_app_user_id").val()!=""){
@@ -203,14 +207,14 @@ Array.prototype.unique = function() {
             arr.push(this[i]);
         }
     }
-    return arr; 
+    return arr;
 }
 });
 
 function check_for_options(){
    // event.preventDefault();
     deal_equipments =[];
-    $("input[type='radio']:checked").each(function(){ 
+    $("input[type='radio']:checked").each(function(){
     value=this.value;
     console.log("value");
     if(value!="option1" ) {
@@ -315,7 +319,7 @@ $(document).ready(function() {
       if($(this).prop('checked') == true){
         effective_price = parseFloat($('#effective_price').text());
         chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price + parseFloat(chkId); 
+        effective_value = effective_price + parseFloat(chkId);
         $('#effective_price').text(effective_value);
       }
       else{
@@ -327,14 +331,14 @@ $(document).ready(function() {
       localStorage["effective_price"] = JSON.stringify(effective_value);
     });
   });
-    
+
   var ids=new Array();
 
   $('input[type=radio]').on('change', function() {
     var price = [];
     var eff_price =parseFloat($("#effective_price").text());
     var sum=0;
-  
+
      id=this.value.split("_")[0];
      console.log(id);
      if (ids.contains(id) == false){
@@ -346,7 +350,6 @@ $(document).ready(function() {
 });
 
 
-   
+
 
 </script>
-

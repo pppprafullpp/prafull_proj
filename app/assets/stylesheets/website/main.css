@@ -17,6 +17,7 @@
 //= require owl.carousel
 *= require owl.theme
 */
+
 @font-face {
 	font-family: 'open_sanslight';
 	src: url('../fonts/opensans-light-webfont.eot');
@@ -810,8 +811,7 @@ color:#fff;
 	background: rgba(183, 185, 187, 0.43);
 	display: block;
 	height: 1px;
-	margin: 25px -20px 20px;
-	margin-top: 25px;
+	margin: 0 -20px 20px;
 }
 .box-sec p {
 /*font-size: 16px;
@@ -834,7 +834,7 @@ color:#fff;
 .box_down {
 	width: 100%;
 	float: left;
-	text-align: center;
+	text-align: left;
 }
 .btn_2 {
 	font-family: "open_sanssemibold";
@@ -1967,38 +1967,11 @@ color: #999;
 }
 .more-details h3 {
 	color: #000;
-	/*font-family: "open_sanslight";
-	font-size: 30px;
-	margin-bottom: 30px;*/
 	position: relative;
 	text-align: center;
 }
-/*.more-details h3:before {
-content: "";
-position: absolute;
-top: 24px;
-left: 15px;
-right: 810px;
-border-top: 1px solid #d8d8d8;
-}*/
-/*.more-details h3:after {
-content: "";
-position: absolute;
-top: 24px;
-left: 810px;
-right: 15px;
-border-top: 1px solid #d8d8d8;
-}*/
-.more-details h5 {
-	/*font-family: "open_sanssemibold";
-	color: #000;
-	font-size: 18px;*/
-	text-align: left;/*margin-bottom: 20px;*/
-}
+
 .more-details p {
-	/*	font-family: 'open_sansregular';
-	font-size: 14px;
-	color: #686868;*/
 	margin-top: 10px;
 }
 .heading-3 {
@@ -2048,17 +2021,8 @@ border-top: 1px solid #d8d8d8;
 	-webkit-border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;*/
 }
-.about-offer h4 {
-/*font-size: 20px;
-	position: relative;
-	margin-bottom: 20px;
-	font-family: 'open_sanssemibold';*/
-}
-.about-offer h5 {
-	/*	font-size: 20px;*/
-	position: relative;/*	margin-bottom: 20px;
-	font-family: 'open_sansregular';*/
-}
+
+
 .more-details .table-bordered thead tr th, .more-details .table-bordered tbody tr th {
 	font-family: 'open_sanssemibold';
 	font-size: 14px;
@@ -2073,9 +2037,6 @@ border-top: 1px solid #d8d8d8;
 	font-family: 'open_sansregular';
 	font-size: 14px;
 	color: #e50005;
-}
-.more-details .col-lg-12 h5:first-child {
-	margin-top: 20px;
 }
 .channel_popup {
 	padding: 0px;
@@ -2230,7 +2191,7 @@ border-top: 1px solid #d8d8d8;
 	width: 100%;
 }
 
-.order-form .nav-tabs {    border-bottom: 1px solid #ddd;//* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fbf9fa+0,efefef+100 */
+.order-form .nav-tabs {  height: 46px;  border-bottom: 1px solid #ddd;//* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fbf9fa+0,efefef+100 */
 background: #fbf9fa; /* Old browsers */
 background: -moz-linear-gradient(top,  #fbf9fa 0%, #efefef 100%); /* FF3.6-15 */
 background: -webkit-linear-gradient(top,  #fbf9fa 0%,#efefef 100%); /* Chrome10-25,Safari5.1-6 */
@@ -2891,10 +2852,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	height: 43px;
 }
 .auto-height {
-	min-height: 528px;
+	min-height: 482px
 }
 .reset-height .auto-height {
-	min-height: 552px !important;
+	min-height: 518px !important;
 }
 .description-height {
 	height: 40px;
@@ -3553,8 +3514,8 @@ color: #555 !important;
 .shareon-fb {
 	background: #3b5999;
 	color: #fff;
-	padding: 5px;
-	font-size: 14px;
+	padding: 5px 12px;
+	font-size: 14px;font-family: 'open_sansregular'; cursor: pointer;
 }
 .shareon-fb i {
 	margin-right: 10px;
@@ -3600,18 +3561,25 @@ color: #555 !important;
 	margin-top: 17px;
 }
 .bundle-det .bx-img {
-	padding: 20px !important;
+	padding:0 !important;
 	float: left;
 	text-align: center;
 	width: 100%;
 }
 .bundle-det .bx-img img {
-	width: 140px !important;
-	display: inline !important;
+width:70%;
+padding: 0 5%;
+display: inline-block;
 }
 .bundle-det .caption-price strong {
 	color: #009904
 }
+.bundle-det .sd-best-price {margin: 5px 0;
+    float: left;
+    width: 100%;
+    text-align: center;}
+
+.bundle-det	.sd-best-price  span{ margin-left:2px; }
 .bundle-det .caption-title {
 	font-family: 'open_sanssemibold';
 }
@@ -3803,8 +3771,9 @@ transition: all 0.5s ease-in 0s;
 	text-align: center;
 	width: 100%;
 }
+ .bundle-det .caption-des { padding:5px 0;}
 .bundle-det .caption-title {
-	color: #494949;
+	color: #000;
 	font-size: 14px;
 	font-weight: normal;
 }
@@ -3837,7 +3806,7 @@ transition: all 0.5s ease-in 0s;
 	margin-top: 30px !important;
 }
 .bundled-data-header {
-	color: #12b5bb;
+	color: #0066CC;
 	float: left;
 	margin-top: 17px;
 	text-align: center;
@@ -5672,11 +5641,13 @@ ul.caption-dealdet li::before {
 	width: 100%;
 	margin-bottom: 20px;
 }
+
 .about-offer-details p {
 	/*	font-family: 'open_sansregular';
 	font-size: 14px;*/
 	color: #686868;/*margin-top: 10px;*/
 }
+
 .equipments-details {
 	padding: 0;
 	margin-top: 20px;
@@ -5841,10 +5812,9 @@ ul.caption-dealdet li::before {
     color: #4c4c4c;
 		border-top: 4px solid #FBF9FA;
   }
-	.order-form .nav-tabs li a:hover{ background: none;}
+	.order-form .nav-tabs li a:hover{ background: none; }
 
-.sd-rating{ font-size: 18px; color:#f0bc1d;}
-.sd-more-details { color:#07545b; display: inline-block; font-size:16px; margin-top:20px; text-decoration: underline ;}
+
 .sddeals-imgcon {	line-height: 100px;
 	text-align: center;
 }
@@ -5859,8 +5829,6 @@ ul.caption-dealdet li::before {
     width: 215px;
     height: 130px;
 	}
-
-.sd-dealprices { font-size:14px; margin-top: 20px;}
 
 
 .sd-order-con .border-radius-bg{ padding: 0; margin-bottom: 20px;}
@@ -5878,20 +5846,7 @@ ul.caption-dealdet li::before {
   .potential-saving {font-family: "open_sanssemibold";  color:#000; font-size:20px; font-weight:bold; margin-top:20px;}
   .potential-saving span { display:block; color:#209fce;}
 
-.about-offer-details {
-    border: 1px solid #dedede;
-    border-radius: 5px;
-    padding: 20px;
-    float: left;
-    width: 100%;
-    margin-bottom: 20px;
-}
-.about-offer-details p {
-    font-family: 'open_sansregular';
-    font-size: 14px;
-    color: #686868;
-    margin-top: 10px;
-}
+
 .equipments-details {
     padding: 0;
     margin-top:20px;
@@ -5968,14 +5923,7 @@ ul.caption-dealdet li::before {
 
 .equip-price span{ font-size:18px;     font-family: "open_sanssemibold"; color:#000; background:#fff; display:inline-block; border-radius:6px; padding:5px 10px; border:1px solid #e7e7e7;}
 
-.about-offer-details {
-  border: 1px solid #DEDEDE;
-  border-radius: 5px;
-  float: left;
-  margin-bottom: 20px;
-  padding: 20px;
-  width: 100%;
-}
+
 .sd-deal-sty {
     background: #f4f4f4;
     padding: 10px;
@@ -6113,28 +6061,30 @@ select::-ms-expand {
 	margin-top: 30px;
 }
 .sd-deal-price li {
-	background: url(../website/left-arrow.png) no-repeat 0 9px;
+	background: url(../website/left-arrow.png) no-repeat 0 6px;
 	padding-left: 25px;
-	font-size: 16px;
+	font-size: 14px;
 	color: #8b9089;
 	font-family: 'open_sanssemibold';
 }
 .sd-deal-price li span {
 	color: #494949;
-	font-size: 18px;
+	font-size: 16px;
 	padding-left: 10px;
 }
 #moredeal-info {
 	display: none;
 }
 .sd-rating {
-	font-size: 18px;
+	font-size: 14px;
 	color: #f0bc1d;
-	margin-top: 15px;
+	margin-top: 0;
 }
+
+.sd-deals-details .sd-rating{ 	margin:3px 0 15px  !important;}
 .sd-deal-info p {
 	color: #595959;
-	font-size: 15px;
+	font-size: 14px;
 	font-family: 'open_sansregular';
 	margin-top: 20px;
 }
@@ -6176,7 +6126,7 @@ select::-ms-expand {
 }
 .sd-dealblock-two-img {
 	border-right: 1px solid #dddddd;
-	min-height: 260px;
+	min-height: 213px;
 	padding: 0;
 }
 .sd-dealtwoblock-info {
@@ -6193,10 +6143,7 @@ select::-ms-expand {
 	position: absolute;
 	right: 35px;
 }
-.sd-dealprices {
-	font-size: 18px;
-	margin-top: 20px;
-}
+
 
 .sd-best-price {
 	color: #ee3408;
@@ -6207,13 +6154,7 @@ select::-ms-expand {
 	margin-left: 15px;
 }
 
-.sd-more-details {
-	color: #07545b;
-	font-size: 16px;
-	text-decoration: underline;
-	margin-top: 20px;
-	display: inline-block;
-}
+
 .sd-deal-saving {
 	background: #f5f6f3;
 	background: #f5f6f3;
@@ -6266,7 +6207,7 @@ select::-ms-expand {
 .sd-dealblock-bestdeal { position:absolute; right:35px;}
 .sd-dealblock-trendingdeal { position:absolute; right:45px;}
 .sd-dealblock-orderdeal { position:absolute; right:45px;}
-.sd-dealprices { font-size:18px; margin-top:20px;}
+.sd-dealprices { font-size:18px; margin-top:5px;}
 
 
 .sd-effective-price { color:#00b551;   font-family: 'open_sanssemibold'; font-size: 14px;}
@@ -6276,7 +6217,9 @@ select::-ms-expand {
 
 .sd-best-price { color:#ee3408; font-family: 'open_sanssemibold';}.sd-best-price  span{color:#646464; margin-left:15px; }
 
-.sd-more-details { color:#07545b; font-size:16px; text-decoration:underline; margin-top:20px; display:inline-block;}
+.sd-more-details { color:#07545b; font-size:12px; text-decoration:underline; margin-top:8px; display:inline-block;}
+
+.sd-deals-details .sd-more-details{ margin-top:0 !important; font-size:12px !important;}
 .sd-deal-block .sd-deal-saving { position: static; border-radius: 0 0 5px 5px;}
 
 .sd-dealprice-single {    color: #ee3408 !important; }
@@ -6287,3 +6230,7 @@ select::-ms-expand {
    }
 .modal { z-index:999999 !important;}
 #zipcode_header { display:none;}
+.rating-sm { font-size: 18px !impotrant;}
+.sd-more-details-page h4 {color:#000;  font-family: 'open_sanssemibold';}
+.sd-more-details-page p{ font-size:14px;}
+.sd-more-details-page h5 { padding-top:10px; 	font-family: 'open_sansregular'; padding-top: 30px;}

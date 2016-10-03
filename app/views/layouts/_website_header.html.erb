@@ -12,6 +12,7 @@
         <% if session[:user_id].present? %>
 
 
+
         <% session[:business].present? ? headername = session[:business].titleize : headername = Base64.decode64(AppUser.find(session[:user_id]).first_name).titleize %>
 
 

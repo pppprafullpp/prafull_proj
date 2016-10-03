@@ -1,10 +1,9 @@
 <div class="form-area">
-  <%
+  <%#
   if session[:user_id].present? and ServicePreference.where(:app_user_id=>@app_user.id, :service_category_id=>5).present?
     @service_preferences_data=ServicePreference.where(:app_user_id=>@app_user.id, :service_category_id=>5)
    service_provider_name=@service_preferences_data[0].service_provider_name
    service_provider_id=@service_preferences_data[0].service_provider_id
-
    price=@service_preferences_data[0].price
    is_contract=@service_preferences_data[0].is_contract
    start_date=@service_preferences_data[0].start_date
@@ -37,7 +36,7 @@
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> </div>
       <div class="col-md-6 mg_bttom20">
-    <%= number_field_tag(:bundle_price,price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag(:bundle_price,"",:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
   <div class="col-md-6 ">
     <p class="contract-margin-sty">Contract Date</p>
@@ -78,10 +77,10 @@
 
       <div class="row">
         <div class="col-md-6 mg_bttom20">
-          <%=text_field_tag "bundle_free_channels",free_channels,:class=>"form-control", :placeholder=>"free Channels"%>
+          <%=text_field_tag "bundle_free_channels","",:class=>"form-control", :placeholder=>"free Channels"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "bundle_premium_channels",premium_channels,:class=>"form-control", :placeholder=>"premium Channels"%>
+        <%=text_field_tag "bundle_premium_channels","",:class=>"form-control", :placeholder=>"premium Channels"%>
         </div>
       </div>
     </div>
@@ -91,10 +90,10 @@
 
       <div class="row">
         <div class="col-md-6 mg_bttom20">
-          <%=text_field_tag "bundle_download_speed",download_speed,:class=>"form-control", :placeholder=>"Download (Mbps)"%>
+          <%=text_field_tag "bundle_download_speed","",:class=>"form-control", :placeholder=>"Download (Mbps)"%>
         </div>
         <div class="col-md-6">
-        <%=text_field_tag "bundle_upload_speed",upload_speed,:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
+        <%=text_field_tag "bundle_upload_speed","",:class=>"form-control", :placeholder=>"Upload (Mbps)"%>
         </div>
       </div>
     </div>
@@ -109,7 +108,7 @@
          </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:bundle_domestic_call_minutes, domestic_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:bundle_domestic_call_minutes, "", :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
       </div>
       <div class="row">
@@ -120,7 +119,7 @@
                </div>
         </div>
         <div class="col-md-6">
-          <%=number_field_tag(:bundle_international_call_minutes,international_call_minutes, :class=>"form-control", :placeholder=>"minutes")%><br />
+          <%=number_field_tag(:bundle_international_call_minutes,"", :class=>"form-control", :placeholder=>"minutes")%><br />
         </div>
       </div>
     </div>
@@ -158,41 +157,30 @@
         $("#bundle_is_contract").val(true);
       }
     });
-    <%if session[:user_id].present?%>
-    $.ajax({
-      url :"/api/v1/get_preferences?device_id=43764fb0b6599065&token=89c91edd30&app_user_id="+<%=session[:user_id]%>+"&category=5",
-      type: "GET",
-      success: function(data){
-         $("#bundle_price").val(data["service_preference"]["price"]);
-        if(data["service_preference"]["is_contract"] == true) {
-          $("#bundle_start_date").attr("disabled",true);
-          $("#bundle_end_date").attr("disabled",true);
-          $("#bundle_is_contract").prop("checked","checked");
-        }
-        $("#bundle_domestic_call_minutes").val(data["service_preference"]["domestic_call_minutes"]);
-        $("#bundle_international_call_minutes").val(data["service_preference"]["international_call_minutes"]);
-        $("#bundle_price").val(data["service_preference"]["price"]);
-        $("#bundle_cable-cb").prop("checked","checked");
-        $("#bundle_internet-cb").prop("checked","checked")
-        $("#bundle_cable-div").removeClass("hidden");
-        $("#bundle_internet-div").removeClass("hidden");
-        $("#bundle_download_speed").val("3");
-        $("#bundle_upload_speed").val("1");
-        $("#bundle_free_channels").val("20");
-        $("#bundle_premium_channels").val("5");
-        $("#bundle_combo").val("Internet and Cable")
-      }
-    });
+
+    <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
+    $("#bundle_price").val("50");
+    $("#bundle_free_channels").val("60");
+    $("#bundle_download_speed").val("30");
+    $("#bundle_domestic_call_unlimited").prop("checked","checked");
+    $("#bundle_domestic_call_minutes").attr("disabled",true);
+    $("#bundle_internet-cb").prop("checked","checked");
+    $("#bundle_internet-div").removeClass("hidden");
+    $("#bundle_telephone-cb").prop("checked","checked");
+    $("#bundle_telephone-div").removeClass("hidden");
+    $("#bundle_cable-cb").prop("checked","checked");
+    $("#bundle_cable-div").removeClass("hidden");
     <%end%>
 
-
-    <%if service_provider_id.present?%>
-    set_service_provider("<%=service_provider_id%>");
-    function set_service_provider(id) {
-      if (id!=null && id!=""){
-      $("#service_provider_id option[value="+id+"]").attr('selected','selected');
-    }
-    }
+    <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "business" %>
+    $("#bundle_price").val("100");
+    $("#bundle_download_speed").val("50");
+    $("#bundle_domestic_call_unlimited").prop("checked","checked");
+    $("#bundle_domestic_call_minutes").attr("disabled",true);
+    $("#bundle_internet-cb").prop("checked","checked");
+    $("#bundle_internet-div").removeClass("hidden");
+    $("#bundle_telephone-cb").prop("checked","checked");
+    $("#bundle_telephone-div").removeClass("hidden");
     <%end%>
   })
 
@@ -294,13 +282,13 @@
      else {
        status+=1;
      }
-     if ($("#bundle_cable-cb").prop("checked")==true && ($("#bundle_free_channels").val()=="" || $("#bundle_premium_channels").val()=="")) {
+     if ($("#bundle_cable-cb").prop("checked")==true && ($("#bundle_free_channels").val()=="" )) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
        status+=1;
      }
-     if ($("#ibundle_nternet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="" || $("#bundle_upload_speed").val()=="")) {
+     if ($("#ibundle_nternet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
@@ -347,7 +335,7 @@
                 price:$("#bundle_price").val(),
                 download_speed:$("#bundle_download_speed").val(),
                 upload_speed:$("#bundle_upload_speed").val(),
-                // bundle_combo:$("#bundle_combo").val(),
+                bundle_combo:$("#bundle_combo").val(),
                 is_contract:is_contract,
                 service_provider_id:$("#bundle_service_provider_id option:selected").val(),
                 free_channels:$("#bundle_free_channels").val(),

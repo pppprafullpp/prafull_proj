@@ -111,7 +111,7 @@
          </div>
       </div>
       <div class="col-md-6">
-        <%=number_field_tag(:domestic_call_minutes, domestic_call_minutes.present? ? domestic_call_minutes : 500, :class=>"form-control", :placeholder=>"minutes")%><br />
+        <%=number_field_tag(:domestic_call_minutes, domestic_call_minutes.present? ? domestic_call_minutes :  " ", :class=>"form-control", :placeholder=>"minutes")%><br />
       </div>
       </div>
       <div class="row">
@@ -122,7 +122,7 @@
                </div>
         </div>
         <div class="col-md-6">
-          <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes :300, :class=>"form-control", :placeholder=>"minutes")%><br />
+          <%=number_field_tag(:international_call_minutes,international_call_minutes.present? ? international_call_minutes : " ", :class=>"form-control", :placeholder=>"minutes")%><br />
         </div>
       </div>
     </div>
@@ -137,7 +137,7 @@
       <%if @service_preferences_data.present?%>
       <%= button_tag("Unsubscribe", :class=>"btn skip-button", :onclick=>"Unsubscribe()")%>
       <%end%>
-  
+
     </div>
 
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>

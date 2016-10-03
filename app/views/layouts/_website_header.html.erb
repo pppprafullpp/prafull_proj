@@ -10,7 +10,8 @@
       <div class="col-md-6 pull-right text-right login-tab">
 
         <% if session[:user_id].present? %>
-         <% session[:business].present? ? headername = session[:business].titleize : headername = Base64.decode64(AppUser.find(session[:user_id]).first_name).titleize %>
+        <% session[:business].present? ? headername = session[:business].titleize : headername = Base64.decode64(AppUser.find(session[:user_id]).first_name).titleize %>
+
         <%# if AppUser.find(session[:user_id]).first_name.present? %>
         <%#headername= Base64.decode64(AppUser.find(session[:user_id]).first_name)%>
         <%#else%>
@@ -25,6 +26,7 @@
           <% end %>
           <div class="dropdown-content">
             <!-- <a href="<%#= profile_website_app_users_path %>">Welcome <%= headername %></a> | -->
+            <a href="<%= profile_website_app_users_path %>">Profile</a>
             <a href="/website/app_users/profile?status=true">My Orders</a>
             <a href="<%= signout_website_app_users_path %>">SignOut</a>
           </div>
@@ -53,7 +55,7 @@
                 <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
                 <div class="modal-content height_popup">
                   <div class="popup_left">
-                    <h4>Welcome to service dealz</h4>
+                    <h4>Welcome to Service Dealz</h4>
                     <p>Save Hundred’s Of $ Month On Month &amp; Pick The Best Deals</p>
                     <ul>
                       <li>Unlimited internet plans</li>

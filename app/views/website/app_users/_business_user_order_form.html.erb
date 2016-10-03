@@ -101,7 +101,7 @@
       </div>
       <div class="col-md-6">
         <label for="Name" class="control-label">Town/City<span id="mandat">*</span></label>
-         <%= text_field_tag('business_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "billing_city"),:onblur=>"capitalise_first(this)"%>
+         <%= text_field_tag('business_addresses[city]',"",:class => 'form-control input-md',:placeholder => "Town/City",:id => "billing_city",:onblur=>"capitalise_first(this)")%>
       </div>
        <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Select State<span id="mandat">*</span></label>
@@ -130,7 +130,7 @@
       <div id="business_service_address">
         <div class="col-md-6 padding15right">
         <label for="Name" class="control-label">Address Name<span id="mandat">*</span></label>
-        <%= text_field_tag('business_shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "shipping_address_name",:onblur=>"capitalise_first(this)" %>
+        <%= text_field_tag('business_shipping_addresses[address_name]',"",:class => 'form-control input-md',:placeholder => 'Address Name', :id => "shipping_address_name",:onblur=>"capitalise_first(this)") %>
       </div>
         <div class="col-md-6">
           <label for="Name" class="control-label">Address 1<span id="mandat">*</span></label>

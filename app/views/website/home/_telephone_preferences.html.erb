@@ -27,14 +27,14 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
 
-      <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
-      </select>  </div>
+  <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
+  <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
+  </select>  </div>
   <div class = "col-md-6  mg_bttom20" >  <%= number_field_tag(:price,price.present? ? "%.2f" % price : 35.00,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
 
-    <div class="col-md-6">
-            <p class="contract-margin-sty">Contract Date</p>
-          </div>
+  <div class="col-md-6">
+    <p class="contract-margin-sty">Contract Date</p>
+  </div>
 
 
 
@@ -115,19 +115,19 @@
   }
   <%end%>
    $(document).ready(function(){
-    // $("#is_contract").prop("checked",false);
-    // $("#domestic_call_unlimited").prop("checked",false);
-    // $("#international_call_unlimited").prop("checked",false);
-    // $("#is_contract").on("change",function(){
-    //   if($("#is_contract").prop("checked")==true){
-    //     $("#start_date").attr("disabled",true);
-    //     $("#end_date").attr("disabled",true);
-    //   }
-    //   else {
-    //     $("#start_date").attr("disabled",false);
-    //     $("#end_date").attr("disabled",false);
-    //   }
-    // });
+    $("#is_contract").prop("checked",false);
+    $("#domestic_call_unlimited").prop("checked",false);
+    $("#international_call_unlimited").prop("checked",false);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+      }
+      else {
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
+      }
+    });
 
     $("#domestic_call_unlimited").on("change",function(){
       if($("#domestic_call_unlimited").prop("checked")==true){

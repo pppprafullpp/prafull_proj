@@ -7,7 +7,7 @@
         <div class="col-md-12">
           <div class="sd-deal-block">
             <div class="sd-dealblock-img">
-             <img src="<%= best_deal['deal_image_url'] %>" alt=""> 
+             <img src="<%= best_deal['deal_image_url'] %>" alt="">
             </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
@@ -17,7 +17,7 @@
               <div class="sd-dealprices">
                 <div class="sd-best-price">Deal Price <span>$<%= best_deal['deal_price'] %></span></div>
                 <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  best_deal['effective_price'] if best_deal['effective_price'].present? %></span></div>
-                
+
               </div>
               <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>" class="sd-more-details">+ More Details</a>
                </div><div class="col-md-12 sd-deal-saving text-center">
@@ -74,7 +74,7 @@
                   <div class="sd-dealprices">
                     <div class="sd-best-price">Deal Price <span>$<%= customized_deal['deal_price']%></span></div>
                     <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" % customized_deal['effective_price'] if customized_deal['effective_price'].present?%></span></div>
-                    
+
                   </div>
                    <a href="<%= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
                 </div>
@@ -96,7 +96,7 @@
                   <div class="sd-dealprices">
                     <div class="sd-best-price">Deal Price <span>$<%= customized_deal['deal_price']%></span></div>
                     <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" % customized_deal['effective_price'] if customized_deal['effective_price'].present?%></span></div>
-                    
+
                   </div>
                    <a href="<%= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
                 </div>
@@ -112,5 +112,13 @@
     margin:10,
     responsiveClass:true,
    items:3,
+   itemsCustom : false,
+   itemsDesktop : [1199,3],
+   itemsDesktopSmall : [1000,2],
+   itemsTablet: [768,1],
+   itemsTabletSmall: false,
+   itemsMobile : [479,1],
+   singleItem : false,
+   itemsScaleUp : false,
   });
 </script>

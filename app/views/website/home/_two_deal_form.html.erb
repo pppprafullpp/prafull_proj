@@ -1,13 +1,13 @@
     <div class="col-md-12 sd-box-con">
         <a style="float:right;" href="<%= deal_details_website_home_index_path %>?category_id=<%= deal_data[:service_category_id]%>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">All <%= deal_data[:service_category_name]%> Deals</a>
       <h1><%=deal_data[:service_category_name] %></h1>
-      <div class="col-md-6">
+      <div class="col-md-6 col-sm-6">
         <div class="sd-two-deal-block">
 
-          <div class="sd-dealblock-two-img col-md-5"> 
+          <div class="sd-dealblock-two-img col-md-5">
 
             <div class="sddeal-imgbox"><img src="<%= deal_1['deal_image_url'] %>" alt=""></div>
-            <%if key == "trending-best"%> 
+            <%if key == "trending-best"%>
               <p class="sd-deal-saving text-center">
            You save <span> $<%= deal_data[:you_save_text] %>/ mo</span>
           </p>
@@ -15,7 +15,7 @@
 
            </div>
           <div class="sd-dealtwoblock-info col-md-7">
-            <%if key == "trending-best"%> 
+            <%if key == "trending-best"%>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
@@ -26,24 +26,24 @@
             <div class="sd-dealprices">
               <div class="sd-best-price">Deal Price <span>$<%= deal_1['deal_price']%></span></div>
               <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_1['effective_price'] if deal_1['effective_price'].present?%></span></div>
-              
+
             </div>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id']) %>" class="sd-more-details">+ More Details</a> </div>
-             
+
          <!--  <div class="col-md-12 sd-deal-saving text-center">
             <p> You save <span> $<%#= deal_data[:you_save] %>/ mo</span></p>
           </div> -->
-      
+
         </div>
       </div>
     <% if deal_2.present? %>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
           <div class="sd-two-deal-block">
             <div class="sd-dealblock-two-img col-md-5">
               <div class="sddeal-imgbox"><img src="<%= deal_2['deal_image_url'] %>" alt=""> </div>
             </div>
             <div class="sd-dealtwoblock-info col-md-7">
-              <%if key == "trending-best"%> 
+              <%if key == "trending-best"%>
                 <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
               <% else %>
                 <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
@@ -55,7 +55,7 @@
                 <div class="sd-best-price">Deal Price <span>$<%= deal_2['deal_price']%></span></div>
                 <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_2['effective_price'] if deal_2['effective_price'].present?%></span></div>
               </div>
-              <%if key == "trending-best"%> 
+              <%if key == "trending-best"%>
                 <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
               <% else %>
                 <a href="<%= order_detail_website_app_users_path(order_id: deal_2['order_id'])%>" class="sd-more-details">+ Order Details</a>
@@ -68,13 +68,13 @@
 
    <% if deal_data[:service_category_id] == Deal::CABLE_CATEGORY &&  @cable_customized_deals.present?%>
           <%  @cable_customized_deals.each do |customized_deal| %>
-          <div class="col-md-6">
+          <div class="col-md-6 col-sm-6">
             <div class="sd-two-deal-block">
               <div class="sd-dealblock-two-img col-md-5">
                 <div class="sddeal-imgbox"><img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
               </div>
               <div class="sd-dealtwoblock-info col-md-7">
-               
+
                 <h4><%= customized_deal['title'].truncate(18) %></h4>
                 <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
                 <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
@@ -83,7 +83,7 @@
                   <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" % customized_deal['effective_price'] if customized_deal['effective_price'].present?%></span></div>
                 </div>
                 <a href="<%= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
-               
+
               </div>
             </div>
           </div>
@@ -94,13 +94,13 @@
 
    <% if deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY && @cellphone_customized_deals.present?%>
           <% @cellphone_customized_deals.each do |customized_deal| %>
-          <div class="col-md-6">
+          <div class="col-md-6 col-sm-6">
             <div class="sd-two-deal-block">
               <div class="sd-dealblock-two-img col-md-5">
                 <div class="sddeal-imgbox"><img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
               </div>
               <div class="sd-dealtwoblock-info col-md-7">
-               
+
                 <h4><%= customized_deal['title'].truncate(18) %></h4>
                 <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
                 <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
@@ -114,7 +114,5 @@
           </div>
         <% end %>
       <% end %>
-     
+
     </div>
-    
-  

@@ -15,25 +15,25 @@
             <li>Contract:<span><%= trending_deal['contract_period'] %>months</span></li>
 
             <% end %>
-            
+
           </ul>
         </div>
         <div class="col-md-8 sd-deal-info">
           <div class="no-login-tdeal"><img src="/assets/website/trendinding-deal-icon.png" ></div>
-          <h2><%= trending_deal['title'] %></h2>
+          <h4><%= trending_deal['title'] %></h4>
           <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
-           
+
             <p>
           <%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
           <!-- <a href="javascript:void(0)" id="seemore_<%#=trending_deal['id']%>" onclick="show_more_button(<%#=trending_deal['id']%>)">See Less</a> -->
-          <div id="moredeal-info_<%=trending_deal['id']%>"> 
+          <div id="moredeal-info_<%=trending_deal['id']%>">
             <!-- <b>Includes:</b><br/> -->
             <p>
             <%=trending_deal['detail_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
           </div>
            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id']) %>" class="sd-more-details">+ More Details</a>
           <%#= render :partial => "#{deal_data[:service_category_name].downcase}_deal_form" %>
-       
+
         </div>
       </div>
 <script>
@@ -45,9 +45,7 @@
 //   else
 //   {
 //    $('#moredeal-info_'+id).slideToggle();
-//      $('#seemore_'+id).text("See Less") 
+//      $('#seemore_'+id).text("See Less")
 //   }
 // }
 </script>
-
- 

@@ -2852,11 +2852,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', end
 	height: 43px;
 }
 .auto-height {
+
 	min-height: 482px
 }
 .reset-height .auto-height {
 	min-height: 518px !important;
-}
+ }
 .description-height {
 	height: 40px;
  margin-top: 10px;
@@ -5961,6 +5962,8 @@ box-shadow: 0px 3px 3px -1px rgba(0,0,0,0.25);}
     font-size: 14px;}
     .customaized-deal h6 {font-size: 18px;
     color: #000; font-family: 'open_sanssemibold';}
+<<<<<<< HEAD
+=======
 
 
     /* wesite */
@@ -6250,3 +6253,4 @@ font-size: 12px;}
 		#reviews-inner-area p { font-size:12px;}
 #reviews-inner-area h5{ text-align: left; font-family: 'open_sansregular'; padding-top: 20px;}
 .rating-container {    margin-top: 20px;}
+>>>>>>> 92e4f7004b826531b60cf68851361e3f6eaab201

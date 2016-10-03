@@ -11,7 +11,10 @@
 
         <% if session[:user_id].present? %>
 
+
         <% session[:business].present? ? headername = session[:business].titleize : headername = Base64.decode64(AppUser.find(session[:user_id]).first_name).titleize %>
+
+
         <%# if AppUser.find(session[:user_id]).first_name.present? %>
         <%#headername= Base64.decode64(AppUser.find(session[:user_id]).first_name)%>
         <%#else%>
@@ -197,7 +200,7 @@
       $('#app_user_password').keyup(function() {
         $('#result').html(checkStrength($('#app_user_password').val()));
       });
-      
+
       $("#app_user_user_type").change(function(){
         if (  $("#app_user_user_type option:selected").val() == "business") {
           $("#business_name_div").removeClass("hidden");

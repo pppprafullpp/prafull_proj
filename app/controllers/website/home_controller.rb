@@ -10,7 +10,7 @@ class Website::HomeController < ApplicationController
       @best_deal_data = get_dashboard_deals(session[:user_id],nil,nil)
       @app_user=AppUser.find(session[:user_id])
       # raise @best_deal_data[:best_deal].to_yaml
-     
+
     end
     if session[:zip_code].present? && session[:user_type].present?
       @trending_deal_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])
@@ -74,9 +74,9 @@ class Website::HomeController < ApplicationController
   def more_deal_details
     @deal = Deal.find_by_id(params[:deal_id])
      @category_name = ServiceCategory.find(@deal.service_category_id).name.downcase
-    if @deal.is_customisable == true && @deal.service_category_id == Deal::CELLPHONE_CATEGORY 
+    if @deal.is_customisable == true && @deal.service_category_id == Deal::CELLPHONE_CATEGORY
      @customized_deals = @deal.as_json(:include =>{:deal_equipments =>{:except=>[:available_colors],:methods => [:available_color,:cellphone_name,:brand,:description]},:deal_extra_services => {:methods => [:service_name,:service_description]} },:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_attributes])
-    elsif  @deal.is_customisable == true && @deal.service_category_id == Deal::CABLE_CATEGORY 
+    elsif  @deal.is_customisable == true && @deal.service_category_id == Deal::CABLE_CATEGORY
         @customized_deals =  @deal.as_json(:include =>{:channel_packages => {:methods=>[:channel_name]},:deal_attributes => {:methods => [:channel_name]},:deal_extra_services => {:methods => [:service_name,:service_description]}},:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
     else
       @deal_attributes = eval("@deal.#{@category_name}_deal_attributes.first")

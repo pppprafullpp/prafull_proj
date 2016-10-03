@@ -129,7 +129,7 @@
 
     <br />
     <div class="col-md-12 text-center btn-group-sty">
-      <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"check()")%>
+      <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"check();return false")%>
     </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
@@ -280,8 +280,10 @@
        }
     }
  function check(){
-   event.preventDefault();
-   var status=0;
+
+            if (!window.XMLHttpRequest) {
+              console.log("ff")
+            }   var status=0;
    if(($("#bundle_internet-cb").prop("checked")==true && $("#bundle_cable-cb").prop("checked")==true)  ||
       ($("#bundle_internet-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true) ||
       ($("#bundle_cable-cb").prop("checked")==true && $("#bundle_telephone-cb").prop("checked")==true) )
@@ -325,6 +327,10 @@
             is_contract=true
           }
           if($("#bundle_price").val()!="") {
+            if (!window.XMLHttpRequest) {
+              event.preventDefault();
+            }
+            else {
             $.ajax({
               url:"/edit_or_change_service_preferences",
               type: "POST",
@@ -354,6 +360,7 @@
                 }
               }
             });
+          }
           }
           else {
             alert("Enter Price")

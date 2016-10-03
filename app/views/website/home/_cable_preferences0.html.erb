@@ -48,9 +48,9 @@
     <div class="col-md-6 mgt20 mg_bttom20">  <%= number_field_tag("cable_premium_channels",premium_channels, :class=>"form-control", :placeholder=>"Premium channels", :required=>true)%></div>
     <%=hidden_field_tag("plan_name","none")%>
     <div class="col-md-12 text-center btn-group-sty">
-     <%= submit_tag("Save", :class=>"btn save-button", :onclick =>"cable_submit()")%>
+     <%= submit_tag("Save", :class=>"btn save-button", :onclick =>"cable_submit();return false")%>
      <%if params[:new_user]%>
-   <%= button_tag("Skip", :class=>"btn skip-button", :onclick=>"show_cellphone()")%>
+   <%= button_tag("Skip", :class=>"btn skip-button", :onclick=>"show_cellphone();")%>
      <%end%>
    </div>
 
@@ -102,14 +102,20 @@
     <%end%>
   });
   function cable_submit(){
-    event.preventDefault();
-     if($("#cable_start_date").prop("disabled") == true && $("#cable_end_date").prop("disabled") == true) {
+    if (!window.XMLHttpRequest) {
+         event.preventDefault();
+    }
+    if($("#cable_start_date").prop("disabled") == true && $("#cable_end_date").prop("disabled") == true) {
       is_contract = false
     }
     else {
       is_contract=true
     }
     if($("#cable_price").val()!= "") {
+      if (!window.XMLHttpRequest) {
+        event.preventDefault();
+      }
+      else {
       $.ajax({
         url:"/edit_or_change_service_preferences",
         type: "POST",
@@ -131,6 +137,7 @@
           }
         }
       });
+    }
     }
     else
     {

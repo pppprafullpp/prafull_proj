@@ -5,6 +5,7 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
+    reset_session
   #  raise params.to_yaml
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
@@ -298,6 +299,7 @@ class Website::AppUsersController < ApplicationController
   end
 
   def signin
+    reset_session
     if request.method.eql? 'POST'
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?

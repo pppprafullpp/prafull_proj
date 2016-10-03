@@ -1,27 +1,27 @@
-<% deal_attributes =  customized_deals['deal_attributes'] 
-deal_equipments = customized_deals['deal_equipments'] 
-deal_extra_services = customized_deals['deal_extra_services'] 
+<% deal_attributes =  customized_deals['deal_attributes']
+deal_equipments = customized_deals['deal_equipments']
+deal_extra_services = customized_deals['deal_extra_services']
  %>
 
 
 
 <section>
-<div class='equipments-details col-md-12'>	
+<div class='equipments-details col-md-12'>
 	<h5>Deals Attributes</h5>
 		<div id="deal_attributes" class="owl-carousel">
 			<% deal_attributes.each do |deal_attribute| %>
-				<div class="text-center">
+				<div class="text-left">
 				<div class="sd-deal-sty">
-				<h6><%= deal_attribute["description"]%></h6>	
-				<p>Data Plan Price: $<%=deal_attribute["data_plan_price"]%></p>	
-				<p>Domestic minutes <%= deal_attribute["domestic_call_minutes"]%></p>	
-				<p>International minutes <%= deal_attribute["international_call_minutes"]%></p>	
+				<h6><%= deal_attribute["description"]%></h6>
+				<p>Data Plan Price: $<%=deal_attribute["data_plan_price"]%></p>
+				<p>Domestic minutes <%= deal_attribute["domestic_call_minutes"]%></p>
+				<p>International minutes <%= deal_attribute["international_call_minutes"]%></p>
 				<div class="text-left">
 					<!-- "order_attributes":[{"ref_id":"139", "ref_type":"35.0", "price":"75.0"}] -->
 
-			<!-- 	<input type="checkbox" id="deal_attribute_<%#=deal_attribute['id']%>" name="deal_attributes" 
+			<!-- 	<input type="checkbox" id="deal_attribute_<%#=deal_attribute['id']%>" name="deal_attributes"
 				val="<%#=deal_attribute['id']%>_<%#=customized_deals["service_category_name"]%>_<%#=deal_attribute['data_plan_price'].to_f%>" /> -->
-				
+
 
 
 
@@ -29,7 +29,7 @@ deal_extra_services = customized_deals['deal_extra_services']
             <!--<input id="" type="checkbox" class="provider_checkbox">
             -->
 
-           <input type="checkbox" id="deal_attribute_<%=deal_attribute['id']%>" name="deal_attributes" 
+           <input type="checkbox" id="deal_attribute_<%=deal_attribute['id']%>" name="deal_attributes"
 				val="<%=deal_attribute['id']%>_<%=deal_attribute['data_plan_price'].to_f%>_<%=customized_deals["service_category_name"]%>" />
             <label for="deal_attribute_<%=deal_attribute['id']%>" >Select</label>
           </div>
@@ -53,7 +53,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 				<!-- <h4>iPhone® 6s</h4> -->
 				<%#deal_equipment["available_color"].each_with_index do |av,index|%>
 					<!-- <div class="color-wrapper text-center"> -->
-					<!-- <input type="radio" name="deviceColors_<%#=deal_equipment['id']%>" id="color_<%#=deal_equipment['id']%>_<%#=index%>" 
+					<!-- <input type="radio" name="deviceColors_<%#=deal_equipment['id']%>" id="color_<%#=deal_equipment['id']%>_<%#=index%>"
 					value="<%#=deal_equipment['id']%>_<%#=deal_equipment['price']%>_<%#=av['id']%>_<%#=av['color_name']%>" class="colorSelector" /> -->
 					<!-- <label for="color_<%#=deal_equipment['id']%>_<%#=index%>" title="<%#=index%>" class="colorSelector_label colorSelector_checkShadow" style="background-color: #c1b1a9" />
 					</div> -->
@@ -65,7 +65,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 </div>
 </div>
  -->
-	<div class='equipments-details col-md-12'>	
+	<div class='equipments-details col-md-12'>
 		<h5>Equipments</h5>
 		<div id="deal_equipments" class="owl-carousel">
 			<% deal_equipments.each do |deal_equipment| %>
@@ -73,7 +73,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 					<div class="sd-deal-sty">
 						<h6><%=deal_equipment["brand"]%></h6>
 						<p id="description_<%=deal_equipment['id']%>" class="hidden"><%=deal_equipment["brand"]%></p>
-						<h4><%= deal_equipment['cellphone_name']%></h4>
+						<h6><%= deal_equipment['cellphone_name']%></h6>
 						<%deal_equipment["available_color"].each_with_index do |av,index|%>
 							<div class="color-wrapper text-center">
 								<input type="radio" checked="checked" name="deviceColors_<%=deal_equipment['id']%>" id="color_<%=deal_equipment['id']%>_<%=av['id']%>" class="colorSelector" />
@@ -83,7 +83,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 						<div class="equip-price"> <span>$<%=deal_equipment["price"]%> </span> </div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
-	        			<input type="checkbox" id="deal_equipment_<%=deal_equipment['id']%>" name="deal_equipments" 
+	        			<input type="checkbox" id="deal_equipment_<%=deal_equipment['id']%>" name="deal_equipments"
 								val="<%=deal_equipment['id']%>_<%=deal_equipment['price']%>" />
 	          		<label for="deal_equipment_<%=deal_equipment['id']%>" >Select</label>
 	        		</div>
@@ -97,9 +97,9 @@ deal_extra_services = customized_deals['deal_extra_services']
 
 
 
-		<div class='equipments-details col-md-12'>	
+		<div class='equipments-details col-md-12'>
 			<h5>Deals Extra Services</h5>
-			
+
 				<div id="deal_extra_services" class="owl-carousel">
 			<% deal_extra_services.each do |deal_extra_service| %>
 			<div class="text-center">
@@ -108,28 +108,28 @@ deal_extra_services = customized_deals['deal_extra_services']
 			<p style="line-height:20px; height:100px; overflow-y:auto;"> <%=deal_extra_service["service_description"]%></p>
 			<div class="equip-price"> <span>$ <%="%.2f" % deal_extra_service["price"]%></span> </div>
 			<div class="text-left">
-				<!-- <input name="deal_extra_service" type="checkbox" id="deal_extra_services_<%#=deal_extra_service['id']%>" 
+				<!-- <input name="deal_extra_service" type="checkbox" id="deal_extra_services_<%#=deal_extra_service['id']%>"
 				val="<%#=deal_extra_service['service_name']%>_<%#=deal_extra_service['price']%>_<%#=deal_extra_service['id']%>" /> -->
 				<div class="checkbox checkbox-info">
             <!--<input id="" type="checkbox" class="provider_checkbox">
             -->
 
-         <input name="deal_extra_services" type="checkbox" id="deal_extra_service_<%=deal_extra_service['id']%>" 
+         <input name="deal_extra_services" type="checkbox" id="deal_extra_service_<%=deal_extra_service['id']%>"
 				val="<%=deal_extra_service['id']%>_<%=deal_extra_service['price']%>" />
-         	
+
 				<label for="deal_extra_service_<%=deal_extra_service['id']%>" >Select</label>
           </div>
 
-			
+
 		  </div>
 			</div>
 			</div>
 			<% end %>
 			</div>
-		
+
 	</div>
 </section>
-	
+
 
 <script>
  $('#deal_equipments,#deal_attributes,#deal_extra_services').owlCarousel({
@@ -139,4 +139,3 @@ deal_extra_services = customized_deals['deal_extra_services']
    items:3,
   });
 </script>
-	

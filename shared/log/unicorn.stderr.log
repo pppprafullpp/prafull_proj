@@ -5131,3 +5131,41 @@ I, [2016-09-30T11:34:51.952724 #3799]  INFO -- : worker=1 ready
 127.0.0.1 - - [30/Sep/2016:12:46:53 +0530] "GET /website/bootstrap-slider.self-9390c48e6d47317c2f3709726ef029f8a972bf20df1e944dfdb23460dc0fdcc7.js?body=1 HTTP/1.0" 304 - 0.0493
 127.0.0.1 - - [30/Sep/2016:12:46:54 +0530] "GET /fonts/glyphicons-halflings-regular.woff HTTP/1.0" 304 - 0.0477
 127.0.0.1 - - [30/Sep/2016:12:46:54 +0530] "GET /api/v1/comment_ratings?deal_id=145&request_type=site HTTP/1.0" 304 - 0.0501
+I, [2016-10-03T11:37:01.341750 #3484]  INFO -- : Refreshing Gem list
+I, [2016-10-03T11:37:07.428424 #3484]  INFO -- : unlinking existing socket=/home/sonal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock
+I, [2016-10-03T11:37:07.428739 #3484]  INFO -- : listening on addr=/home/sonal/Desktop/Service-Deals-Rails/shared/sockets/unicorn.sock fd=15
+I, [2016-10-03T11:37:07.428952 #3484]  INFO -- : worker=0 spawning...
+I, [2016-10-03T11:37:07.433171 #3484]  INFO -- : worker=1 spawning...
+I, [2016-10-03T11:37:07.434167 #3491]  INFO -- : worker=0 spawned pid=3491
+I, [2016-10-03T11:37:07.434492 #3491]  INFO -- : worker=0 ready
+I, [2016-10-03T11:37:07.439066 #3484]  INFO -- : master process ready
+I, [2016-10-03T11:37:07.440945 #3494]  INFO -- : worker=1 spawned pid=3494
+I, [2016-10-03T11:37:07.441674 #3494]  INFO -- : worker=1 ready
+127.0.0.1 - - [03/Oct/2016:11:37:16 +0530] "GET / HTTP/1.0" 302 - 0.5519
+E, [2016-10-03T11:37:47.478662 #3484] ERROR -- : worker=1 PID:3494 timeout (31s > 30s), killing
+E, [2016-10-03T11:37:47.509280 #3484] ERROR -- : reaped #<Process::Status: pid 3494 SIGKILL (signal 9)> worker=1
+I, [2016-10-03T11:37:47.510065 #3484]  INFO -- : worker=1 spawning...
+I, [2016-10-03T11:37:47.517127 #3510]  INFO -- : worker=1 spawned pid=3510
+I, [2016-10-03T11:37:47.517627 #3510]  INFO -- : worker=1 ready
+127.0.0.1 - - [03/Oct/2016:11:38:20 +0530] "GET / HTTP/1.0" 302 - 0.4949
+127.0.0.1 - - [03/Oct/2016:11:38:21 +0530] "GET / HTTP/1.0" 302 - 0.5793
+127.0.0.1 - - [03/Oct/2016:11:38:26 +0530] "GET /users/sign_in HTTP/1.0" 200 - 6.2271
+127.0.0.1 - - [03/Oct/2016:11:38:26 +0530] "GET /users/sign_in HTTP/1.0" 200 18284 5.2424
+127.0.0.1 - - [03/Oct/2016:11:38:27 +0530] "GET /website/star.self-e48a75925bd4123ff56fe31aa799430901b3737e91c9cd6314638e6c74fa2354.js?body=1 HTTP/1.0" 200 2511 0.0341
+127.0.0.1 - - [03/Oct/2016:11:38:27 +0530] "GET /website/plugins.self-4da1009d14a723369260402194588bcb51b2c88f7fed57dff63eb6bda442a766.js?body=1 HTTP/1.0" 200 24390 0.0512
+127.0.0.1 - - [03/Oct/2016:11:38:30 +0530] "GET /images/logo1.png HTTP/1.0" 404 222176 0.6584
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website HTTP/1.0" 200 95122 2.1364
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/main.self-25f93ec344e97be6c4530ba7ab5d81949661b5eac7bf2734d16c89c93d2723b2.css?body=1 HTTP/1.0" 200 134733 0.0921
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/logo1-e60201672557921c0ad8d7e7653e6f78299a96bf4d7b31eafc7db656f51259b0.png HTTP/1.0" 200 9786 0.0430
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/map-pointer-db498b8c79371e3452ed390df7a54cf70d89a1adb94a011d7c27a86db7e6a92f.png HTTP/1.0" 200 6522 0.0429
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/trending-dealblock.png HTTP/1.0" 304 - 0.0453
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/trendinding-deal-icon.png HTTP/1.0" 304 - 0.0616
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/welcome1.png HTTP/1.0" 304 - 0.0434
+127.0.0.1 - - [03/Oct/2016:11:38:47 +0530] "GET /website/user-motivational.png HTTP/1.0" 304 - 0.0480
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /fonts/opensans-light-webfont.woff2 HTTP/1.0" 304 - 0.0574
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /website/wow.png HTTP/1.0" 304 - 0.0804
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /fonts/opensans-regular-webfont.woff2 HTTP/1.0" 304 - 0.0460
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /fonts/glyphicons-halflings-regular.woff HTTP/1.0" 304 - 0.0790
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /website/down-arrow.png HTTP/1.0" 304 - 0.0538
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /website/left-arrow.png HTTP/1.0" 304 - 0.0651
+127.0.0.1 - - [03/Oct/2016:11:38:48 +0530] "GET /fonts/opensans-semibold-webfont.woff2 HTTP/1.0" 304 - 0.0476

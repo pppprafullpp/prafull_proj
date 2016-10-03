@@ -18,9 +18,9 @@
             <li>Contract:<span><%= @deal.contract_period %>months</span></li>
 
             <% end %>
-            
+
           </ul>
-             
+
            </div>
            <%if  @current_user.present? %>
              <%if @current_user.email_verified%>
@@ -240,7 +240,7 @@ Array.prototype.unique = function() {
 // function check_for_options(){
 //    // event.preventDefault();
 //     deal_equipments =[];
-//     $("input[type='radio']:checked").each(function(){ 
+//     $("input[type='radio']:checked").each(function(){
 //     value=this.value;
 //     console.log("value");
 //     if(value!="option1" ) {
@@ -330,7 +330,7 @@ function check_for_options(){
     deal_extra_services.push(jsonObj2)
     });
 
-    
+
     localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
     localStorage["deal_extra_services"] = JSON.stringify(deal_extra_services);
     // localStorage["deal_equipments"] = JSON.stringify(deal_equipments);
@@ -344,7 +344,7 @@ function check_for_options(){
 
         console.log(id);
 
-        $("input[type='radio']:checked").each(function(){ 
+        $("input[type='radio']:checked").each(function(){
             value=this.id;
             console.log("value");
             if(value!="option1" && this.id.split("_")[1] == id ) {
@@ -357,7 +357,7 @@ function check_for_options(){
     // jsonObj3["ref_type"]=value.split("_")[1];
     deal_equipments.push(jsonObj3)
     });
-   
+
 
 
 }
@@ -416,7 +416,7 @@ $(document).ready(function() {
 //         effective_value = effective_price + parseFloat(chkId);
 //         $('#effective_price').text(effective_value);
 // =======
-        effective_value = effective_price + parseFloat(chkId); 
+        effective_value = effective_price + parseFloat(chkId);
         $('#effective_price').text(effective_value.toFixed(2));
 // >>>>>>> prafull_05082016_new_branch
       }
@@ -447,14 +447,14 @@ $(document).ready(function() {
 //   //    console.log(ids)
 //   // });
 // =======
-    
+
   // var ids=new Array();
 
   // $('input[type=radio]').on('change', function() {
   //   var price = [];
   //   var eff_price =parseFloat($("#effective_price").text());
   //   var sum=0;
-  
+
   //    id=this.value.split("_")[0];
   //    console.log(id);
   //    if (ids.contains(id) == false){

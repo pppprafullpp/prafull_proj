@@ -5648,15 +5648,6 @@ ul.caption-dealdet li::before {
 	color: #686868;/*margin-top: 10px;*/
 }
 
-.equipments-details {
-	padding: 0;
-	margin-top: 20px;
-}
-.equipments-details h5 {
-	color: #e50005;/*font-size: 20px;
-	font-family: "open_sanssemibold";
-	padding: 10px 0;*/
-}
 .sd-eq-sty {
 	background: #f4f4f4;
 	padding: 10px;
@@ -5675,12 +5666,6 @@ ul.caption-dealdet li::before {
 	background: #f4f4f4;
 	padding: 10px;
 }
-.sd-deal-sty h6 {
-	display: block;/*color: #cd040b;
-	font-size: 20px;
-	font-family: "open_sanssemibold";
-	line-height: 28px;*/
-}
 .sd-deal-sty p {
 	/*font-size: 16px;*/
 	color: #000;
@@ -5690,11 +5675,11 @@ ul.caption-dealdet li::before {
 	display: inline-block;
 }
 .color-wrapper .colorSelector_label {
-	height: 36px;
-	width: 36px;
+	height: 30px;
+	width: 30px;
 	display: inline-block;
 	cursor: pointer;
-	margin: 0 6px 6px 0;
+	margin: 0 2px 6px 0;
 	text-indent: -3000px;
 	border: none;
 	border-radius: 50px;
@@ -5858,6 +5843,7 @@ ul.caption-dealdet li::before {
     padding: 20px 0 5px;
     border-top: 1px solid #eee;}
 }
+
 .sd-eq-sty {
     background: #f4f4f4;
     padding: 10px;
@@ -5878,8 +5864,8 @@ ul.caption-dealdet li::before {
 
 .sd-deal-sty h6 {
    display: block;
-    color: #cd040b;
-    font-size: 20px;
+    color: #000;
+    font-size: 16px;
     font-family: "open_sanssemibold";
     line-height: 28px;
 }
@@ -5891,31 +5877,7 @@ ul.caption-dealdet li::before {
     margin: 10px 0;
     display:inline-block;
 }
-.color-wrapper .colorSelector_label {
-    height: 36px;
-    width: 36px;
-    display: inline-block;
-    cursor: pointer;
-    margin: 0 6px 6px 0;
-    text-indent: -3000px;
-    border:none;
-    border-radius: 50px;
-}
-.color-wrapper .colorSelector {
-    position: absolute;
-    z-index: -1000;
-    left: -1000px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-}
-.colorSelector:checked+.colorSelector_label.colorSelector_checkShadow {
-    background-position: 5px 4px;
-}
+
 .colorSelector:checked+.colorSelector_label {
     background:url(../website/tick-check.png) no-repeat;
 
@@ -6233,8 +6195,7 @@ select::-ms-expand {
 .rating-sm { font-size: 18px !impotrant;}
 .sd-more-details-page h4 {color:#000;  font-family: 'open_sanssemibold';     width: 50%;
     float: left;}
-.sd-more-details-page p{  font-family: 'open_sansregular';
-font-size: 12px;}
+.sd-more-details-page p{  font-family: 'open_sansregular'; font-size: 12px; }
 .sd-more-details-page h5 { padding-top:10px; 	font-family: 'open_sansregular'; padding-top: 30px; margin-bottom: 10px !important;}
 .sd-more-details-page .table-bordered tbody tr td:first-child{ color:#000;}
 #reviews-header {width: 50%; float: right; text-align:right; font-family: 'open_sansregular'; margin-top: 0; padding:0; color: #0091ff ;}
@@ -6258,4 +6219,7 @@ font-size: 12px;}
 .channel-list h5 {
 
 	    font-family: 'open_sanssemibold'; font-size: 14px;     color: #292929; padding: 14px 0px 0;
+}
+#deal_equipments .sd-more-details-page .sd-deal-sty h4{
+	width:100%;
 }

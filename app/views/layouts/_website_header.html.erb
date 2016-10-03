@@ -10,7 +10,11 @@
       <div class="col-md-6 pull-right text-right login-tab">
 
         <% if session[:user_id].present? %>
+
+
+
         <% session[:business].present? ? headername = session[:business].titleize : headername = Base64.decode64(AppUser.find(session[:user_id]).first_name).titleize %>
+
 
         <%# if AppUser.find(session[:user_id]).first_name.present? %>
         <%#headername= Base64.decode64(AppUser.find(session[:user_id]).first_name)%>

@@ -21,7 +21,7 @@
               </div>
               <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>" class="sd-more-details">+ More Details</a>
                </div><div class="col-md-12 sd-deal-saving text-center">
-              You save <span> $<%= deal_data[:you_save_text] %>/ mo</span>
+              You Save <span> $<%= deal_data[:you_save_text] %>/annum</span>
             </div>
 
           </div>
@@ -67,7 +67,7 @@
               <div class="sd-deal-block">
                 <div class="sd-dealblock-img"> <img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
                 <div class="sd-dealblock-info">
-                  <div class="sd-dealblock-orderdeal"><img src="" alt="CD"></div>
+                  <div class="sd-dealblock-orderdeal"><img src="/assets/website/custom_deal.png" alt=""></div>
                   <h4><%= customized_deal['title'].truncate(20) %></h4>
                   <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
                   <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
@@ -89,7 +89,7 @@
               <div class="sd-deal-block">
                 <div class="sd-dealblock-img"> <img src="<%= customized_deal['deal_image_url'] %>" alt=""> </div>
                 <div class="sd-dealblock-info">
-                  <div class="sd-dealblock-orderdeal"><img src="" alt="CD"></div>
+                  <div class="sd-dealblock-orderdeal"><img src="/assets/website/custom_deal.png" alt=""></div>
                   <h4><%= customized_deal['title'].truncate(20) %></h4>
                   <p><%=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
                   <%= render :partial => "rating_form" ,locals: {deal: customized_deal}%>

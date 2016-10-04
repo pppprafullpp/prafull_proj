@@ -6386,6 +6386,7 @@ margin-top: 30px;
     display: inline-block;
     border-radius: 6px;
     padding: 3px 10px;
+/*<<<<<<< HEAD
     border: 1px solid #e7e7e7;
 }
 .customaized-deal a .caption-des {
@@ -6398,6 +6399,17 @@ margin-top: 30px;
     font-family: 'open_sanssemibold';
 }
 /* wesite */
+/*=======*/*/
+    border: 1px solid #e7e7e7;}
+   .customaized-deal a .caption-des {color: #000;
+    font-size: 14px;}
+    .customaized-deal h6 {font-size: 18px;
+    color: #000; font-family: 'open_sanssemibold';}
+
+
+
+    /* wesite */
+/*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/
 
 .carousel-caption h1 {
     font-family: 'open_sansregular';
@@ -6811,6 +6823,7 @@ select::-ms-expand {
     background: #fafafa;
     border-radius: 5px;
     padding: 0px 20px;
+/*<<<<<<< HEAD*/
     font-size: 12px;
     margin-bottom: 10px;
 }
@@ -6845,3 +6858,11 @@ select::-ms-expand {
 #deal_equipments .sd-more-details-page .sd-deal-sty h4 {
     width:100%;
 }
+/*=======*/
+    font-size: 12px;     margin-bottom: 10px;}
+		#reviews-inner-area p { font-size:12px;}
+#reviews-inner-area h5{ text-align: left; font-family: 'open_sansregular'; padding-top: 20px;}
+.rating-container {    margin-top: 20px;}
+
+.btn_3 {    background: #cbcbcb none repeat scroll 0 0;    cursor: default;}
+/*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/

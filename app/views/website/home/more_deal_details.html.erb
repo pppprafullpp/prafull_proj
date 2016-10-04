@@ -11,7 +11,7 @@
 
             <ul class="sd-deal-price">
             <li class="sd-dealprice-single">Deal Price:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
-            <li class="sd-effective-price-single">Effective Price:<span>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
+            <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
             <% if @deal.contract_period == 0 %>
             <li>Contract:<span>None</span></li>
             <% else %>

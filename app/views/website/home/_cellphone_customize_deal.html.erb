@@ -10,13 +10,13 @@ deal_extra_services = customized_deals['deal_extra_services']
 	<h5>Deals Attributes</h5>
 		<div id="deal_attributes" class="owl-carousel">
 			<% deal_attributes.each do |deal_attribute| %>
-				<div class="text-left">
+				<div class="pull-left">
 				<div class="sd-deal-sty">
 				<h6><%= deal_attribute["description"]%></h6>
 				<p>Data Plan Price: $<%=deal_attribute["data_plan_price"]%></p>
 				<p>Domestic minutes <%= deal_attribute["domestic_call_minutes"]%></p>
 				<p>International minutes <%= deal_attribute["international_call_minutes"]%></p>
-				<div class="text-left">
+				<div class="pull-left">
 					<!-- "order_attributes":[{"ref_id":"139", "ref_type":"35.0", "price":"75.0"}] -->
 
 			<!-- 	<input type="checkbox" id="deal_attribute_<%#=deal_attribute['id']%>" name="deal_attributes"
@@ -104,7 +104,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 			<% deal_extra_services.each do |deal_extra_service| %>
 			<div class="text-center">
 			<div class="sd-deal-sty">
-			<h6><%=deal_extra_service["service_name"]%></h6>
+			<h6><%=deal_extra_service["service_name"].truncate(12)%></h6>
 			<p style="line-height:20px; height:100px; overflow-y:auto;"> <%=deal_extra_service["service_description"]%></p>
 			<div class="equip-price"> <span>$ <%="%.2f" % deal_extra_service["price"]%></span> </div>
 			<div class="text-left">

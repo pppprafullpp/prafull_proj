@@ -14,26 +14,38 @@ end
 <section class="order-form">
   <div class="container">
     <div class="row sd-order-con">
-      <div class="col-lg-4">
-        <div class="order-info text-center">
-          <div class="thumb"><img src="<%= @deal.image.present? ? @deal.image.url : '' %>" alt="<%= @deal.title %>" height="70" width="155"></div>
-          <h2 class="text-center"><%= @deal.title %></h2>
+      <div class="col-sm-4 right-offer">
+        <div class="border-radius-bg">
+          <img class= "img-responsive" src="<%= @deal.image.present? ? @deal.image.url : '' %>" alt="<%= @deal.title %>">
+        <!--  <h2 class="text-center"><%= @deal.title %></h2>
           <div class="text-center">
             <small><%= @deal.short_description %></small><br />
-            <small> Contract <%= @deal.contract_period %> months</small>
+            <small> Contract <%= @deal.contract_period %> months</small>-->
+
+
+
+            <ul class="sd-deal-price">
+              <li class="sd-dealprice-single">Deal Price:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
+              <li class="sd-effective-price-single">Effective Price:<span>$<%= @effective_price.present? ? "%.2f" % @effective_price : "%.2f" % @deal.effective_price %>/mo</span></li>
+              <li>Contract:<span><%= @deal.contract_period %></span></li>
+
+            </ul>
           </div>
-          <div class="gen-info">
+      <!--       <div class="gen-info">
             <table class="table table-condensed">
               <tr>
-                <td align="right" width="50%">Price</td>
-                <td align="left"  width="50%" class="bold">$<%= "%.2f" % @deal.price %></td>
+                <td align="right" width="50%">Deal Price</td>
+                <td align="left"  width="50%" class="bold"></td>
               </tr>
               <tr>
                 <td  align="right" class="bold effective-color">Effective Price</td>
                 <td  align="left" class="bold" id="update_effective_price">$<%= @effective_price.present? ? "%.2f" % @effective_price : "%.2f" % @deal.effective_price %></td>
               </tr>
             </table>
-          </div>
+          </div>-->
+
+
+
 
         </div>
         <% if @equipments.present? %>
@@ -43,7 +55,7 @@ end
               ["#{p.model}($#{p.price})", p.id] }),:class => 'form-control',:id => "drop_equipment_id") %>
           </div>
         <% end %>
-      </div>
+
 
       <div class="col-lg-8 border-radius-bg">
         <div class="tabber">
@@ -61,9 +73,9 @@ end
             <div class="tab-content formContainer">
               <!-- About -->
               <div id="personal-info" class="tab-pane active">
-                <div class="row">
+
                   <div class="col-lg-12">
-                    <div class="col-md-6 padding15right">
+                    <div class="col-md-6">
                       <label for="Name" class="control-label">First Name<span id="mandat">*</span></label></label>
                       <%= text_field_tag('app_user[first_name]',Base64.decode64(@app_user.first_name).titleize,:onkeyup=>"capitalise_first(this)",:class => 'form-control input-md',:placeholder => 'First Name', :id=> 'first_name',maxlength: 20) %>
                     </div>
@@ -71,7 +83,7 @@ end
                       <label for="Name" class="control-label">Last Name<span id="mandat">*</span></label></label>
                       <%= text_field_tag('app_user[last_name]',Base64.decode64(@app_user.last_name).titleize,:onkeyup=>"capitalise_first(this)",:class => 'form-control input-md',:placeholder => 'Last Name', :id=> 'last_name', maxlength: 20) %>
                     </div>
-                    <div class="col-md-6 padding15right">
+                    <div class="col-md-6">
                       <label for="Name" class="control-label">Contact Number<span id="mandat">*</span></label></label>
                       <%= phone_field_tag('app_user[mobile]',@app_user.mobile.present? ? Base64.decode64(@app_user.mobile): @app_user.mobile,:class => 'form-control input-md',:placeholder => 'Mobile Number', :id=> "mobile", :maxlength=>10)%>
                     </div>
@@ -80,15 +92,17 @@ end
                       <%= email_field_tag('app_user[email]',@app_user.email,:class => 'form-control input-md',:placeholder => 'Your Email Address',:disabled => true) %>
                     </div>
                     <%= render :partial=>"user_primary_information", :locals => {primary_id_number: primary_id_number, primary_state: primary_state,secondary_id_number: secondary_id_number, secondary_state: secondary_state} %>
+                    <div class="btn-group btnBox mg_bottom15 ">
+                                      <div class="col-sm-12">
+                                    <button class="btn save-btn" type="button" id="personal_information_tab">
+                                        Next
+                                      </button>
+                                    </div></div>
+
                   </div>
 
                 <!-- Button group -->
-<div class="btn-group btnBox">
-                  <div class="col-sm-12">
-                <button class="btn save-btn" type="button" id="personal_information_tab">
-                    Next
-                  </button>
-                </div></div></div>
+
 
             </div>
 
@@ -106,14 +120,14 @@ end
   <div id="order-review" class="tab-pane">
     <div class="row">
       <div class="col-lg-12">
-        <div class="col-md-6"><h4>Personal details</h4>
-          <span class="style3">Name:</span> <span id="review-name" class="style5"></span><br />
+        <div class="col-md-6"><h3>Personal details</h3>
+          <span class="style3">Name &nbsp;:</span> <span id="review-name" class="style5"></span><br />
           <!-- <span class="style3">Last Name:</span> <span id="review-last-name" class="style5"></span><br /> -->
-          <span class="style3">Mobile:</span> <span id="review-mobile" class="style5"></span><br />
-          <span class="style3">Primary Id:</span> <span id="review-primary-id" class="style5"></span><br/>
-           <span class="style3">Primary Id Number:</span> <span id="review-primary" class="style5"></span><br/>
-          <span class="style3">Secondary Id:</span> <span id="review-secondary-id" class="style5"></span>
-          <span class="style3">Secondary Id Number:</span> <span id="review-secondary" class="style5"></span>
+          <span class="style3">Mobile &nbsp;:</span> <span id="review-mobile" class="style5"></span><br />
+          <span class="style3">Primary Id &nbsp;:</span> <span id="review-primary-id" class="style5"></span><br/>
+           <span class="style3">Primary Id Number &nbsp;:</span> <span id="review-primary" class="style5"></span><br/>
+          <span class="style3">Secondary Id &nbsp;:</span> <span id="review-secondary-id" class="style5"></span>
+          <span class="style3">Secondary Id Number &nbsp;:</span> <span id="review-secondary" class="style5"></span>
         </div>
 
         <% if (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
@@ -170,7 +184,7 @@ end
 <% end %>
 </div>
 </div>
-</div>
+</div></div>
 </div>
 </div>
 <input type="hidden" id="getnamevalue">
@@ -204,9 +218,9 @@ if(dealEquipmentObject == "[]"){
 }
 else{
   $('#order_equipments').val(cableEquipmentObject);
-  
+
 }
-var effective_price = effectivePriceObject 
+var effective_price = effectivePriceObject
 alert(effective_price);
 $('#update_effective_price').html("$" + parseFloat(effectivePriceObject).toFixed(2));
 alert(parseFloat(effectivePriceObject).toFixed(2));

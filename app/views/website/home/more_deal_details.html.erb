@@ -68,6 +68,7 @@
                 </table>
             <% end %>
         <% end %>
+        <% if @deal.is_customisable != true %>
         <div id="reviews-section" class="">
 
             <div class="add-reviews-div" style="padding-bottom: 11px;">
@@ -83,12 +84,14 @@
                 <%=f.submit("Submit", :class=>"btn submit-btn",:onclick=>"add_comments()")%>
               <%end%>
             </div>
-            <div></div>
+            <div>
+            </div>
 
         </div>
 
       </div>
       <div id="reviews-area"></div>
+      <% end %>
     </div>
    </div> </div>
   <script>

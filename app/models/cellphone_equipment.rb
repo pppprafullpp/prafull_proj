@@ -17,7 +17,7 @@ class CellphoneEquipment < ActiveRecord::Base
 	end
 
 	def available_color
-		EquipmentColor.select('id,color_name').where(id: eval(self.available_colors))
+		EquipmentColor.select('id,color_name,color_code,image').where(id: eval(self.available_colors))
 		# EquipmentColor.where(id: eval(self.available_colors)).pluck(:color_name,:id)
 	end
 
@@ -34,6 +34,10 @@ class CellphoneEquipment < ActiveRecord::Base
 		self.cellphone_detail.description
 	end
 
+
+	def image
+		self.cellphone_detail.image.url
+	end
 
 
 end

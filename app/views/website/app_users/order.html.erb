@@ -26,7 +26,7 @@ end
 
             <ul class="sd-deal-price">
               <li class="sd-dealprice-single">Deal Price:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
-              <li class="sd-effective-price-single">Effective Price:<span>$<%= @effective_price.present? ? "%.2f" % @effective_price : "%.2f" % @deal.effective_price %>/mo</span></li>
+              <li class="sd-effective-price-single">Effective Price:<span id="update_effective_price">$<%= @effective_price.present? ? "%.2f" % @effective_price : "%.2f" % @deal.effective_price %>/mo</span></li>
               <li>Contract:<span><%= @deal.contract_period %></span></li>
 
             </ul>
@@ -221,9 +221,9 @@ else{
 
 }
 var effective_price = effectivePriceObject
-alert(effective_price);
+// alert(effective_price);
 $('#update_effective_price').html("$" + parseFloat(effectivePriceObject).toFixed(2));
-alert(parseFloat(effectivePriceObject).toFixed(2));
+// alert(parseFloat(effectivePriceObject).toFixed(2));
 $('#effective_price').val( parseFloat(effectivePriceObject).toFixed(2));
 
 

@@ -5,8 +5,9 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
-    reset_session
-  #  raise params.to_yaml
+    if  request.referrer.split('/').last.match('checkout') == nil
+      reset_session
+    end
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
@@ -299,7 +300,9 @@ class Website::AppUsersController < ApplicationController
   end
 
   def signin
-    reset_session
+    if  request.referrer.split('/').last.match('checkout') == nil
+      reset_session
+    end
     if request.method.eql? 'POST'
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?

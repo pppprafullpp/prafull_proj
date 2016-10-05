@@ -34,6 +34,10 @@
     <%= number_field_tag("price",price.present? ? "%.2f" % price : 75,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
     </div>
 
+    <div class="col-md-6 ">
+    <p class="contract-margin-sty">Contract Date</p>
+    </div>
+
     <div class="col-md-6">
     <div class="checkbox checkbox-info no-contract-sty">
     <%= check_box_tag "is_contract", false, :class=>"form-control"%>
@@ -41,9 +45,7 @@
     </div>
     </div>
 
-    <div class="col-md-6 mg_bttom20">
-    <p class="contract-margin-sty">Contract Date</p>
-    </div>
+    
 
     <div class="col-md-6 mg_bttom20"><%= text_field_tag("start_date",start_date, :class=>"form-control", :placeholder=>"Start Date")%></div>
     <div class="col-md-6 mg_bttom20"><%= text_field_tag("end_date", end_date, :class=>"form-control", :placeholder=>"End Date")%></div>
@@ -97,6 +99,25 @@
         $("#end_date").attr("disabled",false);
       }
     });
+
+
+     <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
+    $("#price").val("50.00");
+    $('#free_channels').val('100.00');
+   
+    <%end%>
+
+    <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "business" %>
+     $("#price").val("75.00");
+     $('#free_channels').val('150');
+    <%end%>
+
+
+     <% if !is_contract %>
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+        $("#is_contract").prop("checked","checked");
+      <% end%>
     <%if service_provider_id.present?%>
       set_service_provider("<%=service_provider_id%>")
       function set_service_provider(id) {

@@ -98,6 +98,8 @@
       if($("#telephone_is_contract").prop("checked")==true){
         $("#telephone_start_date").attr("disabled",true);
         $("#telephone_end_date").attr("disabled",true);
+        $("#telephone_start_date").val('');
+        $("#telephone_end_date").val('');
       }
       else {
         $("#telephone_start_date").attr("disabled",false);
@@ -183,7 +185,9 @@
          data_plan:$("#telephone_data_plan").val(),
          price:$("#telephone_price").val(),
          is_contract:is_contract,
-         service_provider_id:$("#telephone_service_provider_id option:selected").val()
+         service_provider_id:$("#telephone_service_provider_id option:selected").val(),
+         domestic_call_unlimited: $("#bundle_domestic_call_unlimited").val(),
+         international_call_unlimited: $('#bundle_international_call_unlimited').val(),
        },
        success: function(data){
          if (data["success"] == true) {

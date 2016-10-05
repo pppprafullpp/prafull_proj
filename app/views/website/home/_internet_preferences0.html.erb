@@ -79,16 +79,18 @@
       $("#internet_contract").prop("checked","true");
       $("#internet_start_date").attr("disabled",true);
       $("#internet_end_date").attr("disabled",true);
-    // $("#internet_contract").on("change",function(){
-    //   if($("#internet_contract").prop("checked")==true){
-    //     $("#internet_start_date").attr("disabled",true);
-    //     $("#internet_end_date").attr("disabled",true);
-    //   }
-    //   else {
-    //     $("#internet_start_date").attr("disabled",false);
-    //     $("#internet_end_date").attr("disabled",false);
-    //   }
-    // });
+    $("#internet_contract").on("change",function(){
+      if($("#internet_contract").prop("checked")==true){
+        $("#internet_start_date").attr("disabled",true);
+        $("#internet_end_date").attr("disabled",true);
+        $("#internet_start_date").val('');
+        $("#internet_end_date").val('');
+      }
+      else {
+        $("#internet_start_date").attr("disabled",false);
+        $("#internet_end_date").attr("disabled",false);
+      }
+    });
       <%
       if service_provider_id.present?%>
         set_service_provider("<%=service_provider_id%>")

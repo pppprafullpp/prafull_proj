@@ -416,27 +416,27 @@ function postLike(){
 </script>
 <script>
 $(document).ready(function() {
-  var effective_price = parseFloat($('#effective_price').text());
+  var effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
   var chkId = 0;
   $('input[type=checkbox]').on('change', function() {
     $(this).each ( function() {
-      effective_price = parseFloat($('#effective_price').text());
+      effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
       if($(this).prop('checked') == true){
-        effective_price = parseFloat($('#effective_price').text());
+        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
         chkId =$(this).attr("val").split("_")[1];
 // <<<<<<< HEAD
 //         effective_value = effective_price + parseFloat(chkId);
 //         $('#effective_price').text(effective_value);
 // =======
         effective_value = effective_price + parseFloat(chkId);
-        $('#effective_price').text(effective_value.toFixed(2));
+        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
 // >>>>>>> prafull_05082016_new_branch
       }
       else{
-        effective_price = parseFloat($('#effective_price').text());
+        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
         chkId =$(this).attr("val").split("_")[1];
         effective_value = effective_price - parseFloat(chkId);
-        $('#effective_price').text(effective_value.toFixed(2) );
+        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
       }
       localStorage["effective_price"] = JSON.stringify(effective_value);
     });

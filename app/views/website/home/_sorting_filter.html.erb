@@ -46,7 +46,7 @@
     <!-- Modal content-->
     <button type="button" class="close log-pop-btn" data-dismiss="modal">×</button>
     <div class="modal-content compare-popsty">
-          <h4>Current <%=ServiceCategory.get_category_name_by_id(params[:category_id])%> Service</h4>
+          <h4>Current <%=ServiceCategory.get_category_name_by_id(params[:category_id]).capitalize%> Service</h4>
         <div class="modal-body">
               <%if params[:category_id].to_i == 1%>
                <%=render :partial=>"internet_preferences.html.erb" %>

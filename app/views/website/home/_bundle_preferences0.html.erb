@@ -103,7 +103,7 @@
       <div class="row">
         <div class="col-md-6">
          <div class="checkbox checkbox-info no-contract-sty">
-           <%= check_box_tag "bundle_domestic_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+           <%= check_box_tag "bundle_domestic_call_unlimited", "", :class=>"form-control"%>
            <label for="bundle_domestic_call_unlimited"> <span>Unlimited </span> </label>
          </div>
       </div>
@@ -114,7 +114,7 @@
       <div class="row">
         <div class="col-md-6">
              <div class="checkbox checkbox-info no-contract-sty">
-               <%= check_box_tag "bundle_international_call_unlimited", "", :class=>"form-control", :onchange=>"resetcontractdate()"%>
+               <%= check_box_tag "bundle_international_call_unlimited", "", :class=>"form-control"%>
                <label for="bundle_international_call_unlimited"> <span>Unlimited </span> </label>
                </div>
         </div>
@@ -142,6 +142,7 @@
     $("#bundle_end_date").datepicker();
     $("#bundle_international_call_unlimited").prop("checked",false);
     $("#bundle_domestic_call_unlimited").prop("checked",false);
+    $("#bundle_domestic_call_unlimited").val("true");
     $("#bunlde_is_contract").prop("checked","true");
     $("#bundle_start_date").attr("disabled",true);
     $("#bundle_end_date").attr("disabled",true);
@@ -187,7 +188,8 @@
   $("#bundle_domestic_call_unlimited").on("change",function(){
     if($("#bundle_domestic_call_unlimited").prop("checked")==true){
       $("#bundle_domestic_call_minutes").attr("disabled",true);
-      $("bundle_#domestic_call_unlimited").val("true");
+      $("#bundle_domestic_call_minutes").val(0);
+      $("#bundle_domestic_call_unlimited").val("true");
     }
     else {
       $("#bundle_domestic_call_minutes").attr("disabled",false);
@@ -198,6 +200,7 @@
   $("#bundle_international_call_unlimited").on("change",function(){
     if($("#bundle_international_call_unlimited").prop("checked")==true){
       $("#bundle_international_call_minutes").attr("disabled",true);
+      $("#bundle_international_call_minutes").val(0);
       $("#bundle_domestic_call_unlimited").val("true");
     }
     else {
@@ -219,11 +222,11 @@
   }
   function resetdomestic(){
     console.log("Sss");
-      if( $("#bundle_ul-domestic").prop("checked")==true){
-        $("#domestic_minutes").attr("disabled",true);
+      if( $("#bundle_domestic_call_unlimited").prop("checked")==true){
+        $("#bundle_domestic_call_unlimited").attr("checked",true);
       }
       else {
-        $("#bundle_domestic_minutes").attr("disabled",false);
+        $("#bundle_domestic_call_unlimited").attr("disabled",false);
       }
   }
   function resetinternat(){
@@ -288,7 +291,7 @@
      else {
        status+=1;
      }
-     if ($("#ibundle_nternet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="")) {
+     if ($("#bundle_internet-cb").prop("checked")==true && ($("#bundle_download_speed").val()=="")) {
         $("#msg").text("Please Fill in all fields").removeClass("hidden");
      }
      else {
@@ -340,6 +343,8 @@
                 service_provider_id:$("#bundle_service_provider_id option:selected").val(),
                 free_channels:$("#bundle_free_channels").val(),
                 premium_channels:$("#bundle_premium_channels").val(),
+                domestic_call_unlimited: $("#bundle_domestic_call_unlimited").val(),
+                international_call_unlimited: $('#bundle_international_call_unlimited').val(),
               },
               success: function(data){
                 if (data["success"] == true) {

@@ -30,7 +30,7 @@
   <div class = "col-md-6" ><select class="form-control"  id="service_provider_id" name="service_provider_id">
   <%= options_for_select(@providers, :prompt=>"Select" ,:value=>@providers) %>
   </select>  </div>
-  <div class = "col-md-6  mg_bttom20" >  <%= number_field_tag(:price,price.present? ? "%.2f" % price : 35.00,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
+  <div class = "col-md-6  mg_bttom20" >  <%= number_field_tag(:price,price.present? ? "%.2f" % price : '',:class=>"form-control", :placeholder=>"Enter price", :required=>true)%> </div>
 
   <div class="col-md-6">
     <p class="contract-margin-sty">Contract Date</p>
@@ -115,9 +115,49 @@
   }
   <%end%>
    $(document).ready(function(){
-    $("#is_contract").prop("checked",false);
-    $("#domestic_call_unlimited").prop("checked",false);
+
+    <% if @service_preferences_data.blank? %>
+
     $("#international_call_unlimited").prop("checked",false);
+    $("#domestic_call_unlimited").prop("checked",false);
+    $("#domestic_call_unlimited").val("true");
+    $("#is_contract").prop("checked","true");
+    $("#start_date").attr("disabled",true);
+    $("#end_date").attr("disabled",true);
+    $("#is_contract").on("change",function(){
+      if($("#is_contract").prop("checked")==true){
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+        $("#is_contract").val(false);
+      }
+      else {
+        $("#start_date").attr("disabled",false);
+        $("#end_date").attr("disabled",false);
+        $("#is_contract").val(true);
+      }
+    });
+
+
+ <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
+    $("#price").val("40.00");
+    $("#domestic_call_unlimited").prop("checked","checked");
+    $("#domestic_call_minutes").attr("disabled",true);
+   
+    <%end%>
+
+    <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "business" %>
+     $("#price").val("35.00");
+     $("#domestic_call_unlimited").prop("checked","checked");
+    $("#domestic_call_minutes").attr("disabled",true);
+    <%end%>
+<% else %>
+
+
+    $("#is_contract").prop("checked",false);
+    
+     $("#international_call_unlimited").prop("checked",false);
+    $("#domestic_call_unlimited").prop("checked",false);
+    $("#domestic_call_unlimited").val("true");
     $("#is_contract").on("change",function(){
       if($("#is_contract").prop("checked")==true){
         $("#start_date").attr("disabled",true);
@@ -128,6 +168,36 @@
         $("#end_date").attr("disabled",false);
       }
     });
+
+
+
+    
+    <% if domestic_call_unlimited.present? %>
+        var domestic_call_unlimited = <%= raw domestic_call_unlimited.to_json %>
+        if (domestic_call_unlimited == true){
+          $("#domestic_call_unlimited").prop("checked","checked");
+          $("#domestic_call_minutes").attr("disabled",true);
+          $("#domestic_call_unlimited").val("true");
+        }
+      
+      <% else %>
+        $("#domestic_call_unlimited").prop("checked",false);
+      <% end %>
+
+
+
+
+      <% if !is_contract %>
+        $("#start_date").attr("disabled",true);
+        $("#end_date").attr("disabled",true);
+        $("#is_contract").prop("checked","checked");
+      <% end%>
+
+       <%if service_provider_id.present?%>
+      set_service_provider("<%=service_provider_id.present? ? service_provider_id : 2%>")
+      <%end%>
+      <% end %>
+  });
 
     $("#domestic_call_unlimited").on("change",function(){
       if($("#domestic_call_unlimited").prop("checked")==true){
@@ -154,10 +224,7 @@
         $("#international_call_minutes").attr("readonly",false);
       }
     });
-    <%if service_provider_id.present?%>
-      set_service_provider("<%=service_provider_id.present? ? service_provider_id : 2%>")
-      <%end%>
-  })
+   
   function set_service_provider(id) {
     $("#service_provider_id option[value="+id+"]").attr('selected','selected');
   }

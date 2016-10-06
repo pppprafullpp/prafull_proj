@@ -127,7 +127,7 @@ seect option {
     border: 1px solid #e3e3e3 !important;
     box-shadow: none;
     font-size: 12px;
-    height: 38px;
+    height: 40px;
     border-radius: 0;
 }
 .form-control::-moz-placeholder {
@@ -1268,11 +1268,10 @@ color:#555 !important;
 /*profile radio button*/
 
 .profile-tab .form-horizontal .control-label {
-    color: #949494;
-    font-family: "open_sansregular";
-    font-size: 14px;
-    font-weight: normal;
-    margin-bottom: 5px;
+  font-family: "open_sansregular";
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 5px;
 }
 /*.profile_section .form-control {
  height: 42px;
@@ -1575,8 +1574,12 @@ margin-top: 15px;
     position: fixed;
     top: 14px;
     z-index: 99999;
-    width: 847px;
+    width: auto;
 }
+.compare-dealbtn {display:inline-block; margin-top: 10px;padding:8px 20px; cursor:pointer; background: #e50005; color: #fff; border-radius: 5px; margin-bottom: 10px; font-family: 'open_sansregular'; font-size: 14px;}
+.compare-dealbtn:hover { color:#fff;}
+#compare-box-deal-1 { background:#fff; float:left; width: auto; position: relative; padding:10px 10px 0;     border: 1px dotted #ccc; margin:10px;}
+#compare-box-deal-2 {  background:#fff;  float:left; width: auto; position: relative;  padding: 10px 10px 0;     border: 1px dotted #ccc;margin:10px;}
 .close2 {
     position: absolute;
     color: #383838;
@@ -2325,19 +2328,17 @@ color: #999;
 /*Edited by sonal*/
 
 .order-btn {
-    font-family: "open_sanssemibold";
-    background: #62bc04;
-    display: inline-block;
-    padding: 10px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 14px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    text-transform: uppercase;
-    margin: 15px 0;
-    width: 70%;
+  background: #62bc04 none repeat scroll 0 0;
+  border-radius: 5px;
+  color: #ffffff;
+  display: inline-block;
+  font-family: "open_sanssemibold";
+  font-size: 14px;
+  margin: 15px 0;
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 70%;
 }
 .order-btn:hover,
 .order-btn:focus {
@@ -2367,9 +2368,9 @@ color: #999;
     /* IE6-9 */
 }
 .order-form .nav-tabs li {
-    float: left;
-    margin-bottom: 0px;
-    border-right: 1px solid #bcbaba;
+  border-right: 1px solid #ddd;
+  float: left;
+
 }
 .order-form .nav-tabs li.active {
     margin-bottom: -1px;
@@ -2465,6 +2466,10 @@ color: #999;
     padding: 5px 25px;
     margin-top: 5px;
 }
+.accepted-btn:hover {
+    background: #e48620 none repeat scroll 0 0;
+    color: #fff;
+}
 .recontracted-btn {
     background: #fff;
     color: #00aeef;
@@ -2476,31 +2481,34 @@ color: #999;
     border: 1px solid #dedede;
 }
 .order-no-dt {
-    font-size: 16px;
-    color: #939393
+    color: #939393;
+    font-size: 14px;
 }
 .order-no-dt span {
     color: #000;
 }
 .order-service-dt {
-    padding-top: 30px;
-    float: left;
-    width: 100%;
+  border-bottom: 1px solid #dedede;
+  float: left;
+  padding-bottom: 20px;
+  padding-top: 30px;
+  width: 100%;
 }
+
 .servicelogo-sty {
-    float: left;
-    width: 20%;
-    text-align: center;
-    padding: 2%;
     border: 1px solid #dedede;
+    float: left;
+    padding: 2%;
+    text-align: center;
+    width: 25%;
 }
 .servicedt-text {
     color: #000;
-    font-size: 14px;
-    font-family: 'open_sansregular';
-    margin-left: 15px;
     float: left;
-    width: 75%;
+    font-family: "open_sansregular";
+    font-size: 14px;
+    margin-left: 15px;
+    width: 70%;
 }
 .in-progress-btn {
     color: #fff;
@@ -2574,17 +2582,21 @@ color: #999;
     margin-top: 12px;
 }
 .applicant-telcome ul li .col1 {
-    color: #828282;
-    float: left;
-    font-size: 14px;
-    font-weight: 400;
-    margin-right: 10px;
-    text-align: right;
+  color: #000;
+  float: left;
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 10px;
+  text-align: left;
+  width: 103px;
 }
+
 .applicant-telcome ul li {
-    float: left;
-    width: 100%;
+  float: left;
+  line-height: 24px;
+  width: 100%;
 }
+
 .applicant-telcome ul li .col2 {
     color: #000;
     float: left;
@@ -3495,15 +3507,17 @@ color: #999;
 }*/
 
 .reset-btn {
-    background: #44b758 none repeat scroll 0 0;
-    width: 100px;
-    float: left;
+  background: #f5942b none repeat scroll 0 0;
+  float: left;
+  padding: 8px;
+  width: 100px;
 }
 .search-btn {
-    background: #2890b7 none repeat scroll 0 0;
-    width: 100px;
-    margin-right: 10px;
-    float: left;
+  background: #2890b7 none repeat scroll 0 0;
+  float: left;
+  margin-right: 10px;
+  padding: 8px;
+  width: 100px;
 }
 .prefrence-popup {
     float: right;
@@ -6107,7 +6121,8 @@ ul.caption-dealdet li::before {
     cursor: pointer;
 }
 .dropbtn b {
-    font-family: 'open_sanssemibold';
+    font-family: "open_sanssemibold";
+    font-weight: normal;
 }
 /* The container <div> - needed to position the dropdown content */
 
@@ -6198,7 +6213,8 @@ ul.caption-dealdet li::before {
     border-top: 4px solid #FBF9FA;
 }
 .order-form .nav-tabs li a:hover {
-    background: none;
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border-bottom: none;
 }
 .sddeals-imgcon {
     line-height: 100px;
@@ -6223,27 +6239,25 @@ ul.caption-dealdet li::before {
 .sd-order-con .right-offer .border-radius-bg {
     padding: 30px 20px;
 }
-.sd-order-con .tab-content {
+.sd-order-con .tab-content #personal-info, .sd-order-con .tab-content #address-info, .sd-order-con .tab-content #business-info{
     padding: 20px 0;
 }
 .sd-order-con .tab-content h3 {
     color: #0066CC;
 }
-.sd-order-con .tab-content #order-review span {   font-family: 'open_sansregular'; font-size: 14px; line-height:25px;}
-.sd-order-con .tab-content #order-review span.style3 {width:200px; float: left; text-align: right; margin-right:10px;   font-family: 'open_sanssemibold';}
-.sd-order-con .tab-content  #order-review  h3 {}
+.sd-order-con .tab-content #order-review span {      font-family: 'open_sanslight'; font-size: 14px; line-height:25px;}
+.sd-order-con .tab-content #order-review span.style3 { float: left; text-align: right; margin-right:10px;  font-family: 'open_sansregular';  padding-left: 16px;}
+.billing-address, .service-address, .shipping-address { font-size: 14px; float: left; line-height: 24px;}
+.billing-address {border-right: 1px solid #eee;}
+.service-address{}
+.shipping-address{border-right: 1px solid #eee;}
+.sd-order-con .tab-content  #order-review  h3 {  padding: 20px 0;}
+.sd-order-con .tab-content  #order-review  h5 {font-family: 'open_sanssemibold';    margin-bottom: 15px;}
 .sd-order-con .form-control {margin-bottom: 15px;}
 #order-review {
     font-size: 12px;
 }
-.order-form .nav-tabs li a {
-    background: none !important
-}
-color: #000;
-float: left;
-width: 100%;
-margin-top: 30px;
-}
+
 .user-motivation {
     width:450px;
 }
@@ -6418,6 +6432,7 @@ margin-top: 30px;
     float: left;
     width: 100%;
     background: #fff;
+    border-bottom: 1px solid #eee;
 }
 .sd-services-opt {
     display: inline-block;
@@ -6488,7 +6503,7 @@ select::-ms-expand {
     float: left;
     width: 100%;
 }
-.sd-deal-dashboard h1 {
+.sd-deal-dashboard h2 {
     color: #e50005;
     font-family: 'open_sanssemibold';
     border-bottom: 1px solid #e2e1e1;
@@ -6498,7 +6513,7 @@ select::-ms-expand {
     padding-left: 0;
 }
 .sd-deal-img {
-    width: 300px;
+    /*width: 300px;*/
     background: #f9f9f9;
     border: 1px solid #ebebeb;
     text-align: center;
@@ -6627,14 +6642,13 @@ select::-ms-expand {
 }
 .sd-deal-saving {
     background: #f5f6f3;
-    background: #f5f6f3;
     padding: 0;
     margin: 0;
     position: absolute;
     bottom: 0;
     width: 100%;
     font-family: 'open_sanssemibold';
-    font-size: 16px;
+    font-size: 14px;
     padding: 5px;
     border-radius: 0 0 0 5px;
 }
@@ -6644,13 +6658,13 @@ select::-ms-expand {
 }
 .sd-deal-saving p {
     color: #000;
-    font-size: 18px;
+    font-size: 14px;
     font-family: 'open_sansregular';
     margin: 0;
     padding: 10px 0
 }
 .sd-deal-saving span {
-    font-size:18px;
+    font-size:14px;
 }
 .sd-deal-block {
     border: 1px solid #dddddd;
@@ -6658,7 +6672,7 @@ select::-ms-expand {
     padding: 20px 0 0;
     margin-bottom:15px;
     float: left;
-    min-height: 454px;
+    min-height: 449px;
     width: 100%;
 }
 .sd-dealblock-img {

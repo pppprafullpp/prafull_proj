@@ -120,7 +120,7 @@ end
   <div id="order-review" class="tab-pane">
     <div class="row">
       <div class="col-lg-12">
-        <div class="col-md-6"><h3>Personal details</h3>
+        <div class="col-md-6"><div class="col-md-12"><h3>Personal details</div></h3>
           <span class="style3">Name &nbsp;:</span> <span id="review-name" class="style5"></span><br />
           <!-- <span class="style3">Last Name:</span> <span id="review-last-name" class="style5"></span><br /> -->
           <span class="style3">Mobile &nbsp;:</span> <span id="review-mobile" class="style5"></span><br />
@@ -132,7 +132,7 @@ end
 
         <% if (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
 
-        <div class="col-md-6"> <h4>Registered</h4>
+        <div class="col-md-6"> <div class="col-md-12"><h3>Registered</h3></div>
           <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
           <span class="style3">Federal Tax ID:</span> <span id="review-federal" class="style5"></span><br />
           <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
@@ -140,44 +140,47 @@ end
         <% elsif (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::SOLE_PROPRIETOR) %>
         <div class="col-md-6"> <h4>SOLE PROPRIETOR</h4>
           <span class="style3">Business Name:</span> <span id="review-business" class="style5"></span><br />
-          <span class="style3">SSN:</span> <span id="review-ssn" class="style5"></span><br />
+          <span class="style3 ">SSN:</span> <span id="review-ssn" class="style5"></span><br />
           <!-- <span class="style3">Dan & Bradsheet Number:</span> <span id="review-db" class="style5" ></span> -->
         </div>
         <% end %>
-        <div class="col-md-12"> <h3><b>Address</b></h3>
+        <div class="col-md-12"><div class="col-md-12"> <h3>Address</h3></div>
           <div class="billing-address col-sm-4 padding0  ">
-            <h3>Billing Address</h3>
+            <h5>Billing Address</h5>
             <div class="billing-address-innertxt word-wrap" style="overflow:hidden"></div>
 
           </div>
-          <div class="service-address col-sm-4 padding0">
-            <h4>Shipping Address</h4>
+          <div class="shipping-address col-sm-4 padding0">
+            <h5>Shipping Address</h5>
             <div class="shipping-address-innertxt word-wrap" style="overflow:hidden"></div>
           </div>
           <div class="service-address col-sm-4 padding0  ">
-            <h4>Service Address</h4>
+            <h5>Service Address</h5>
             <div class="service-address-innertxt word-wrap" style="overflow:hidden"></div>
           </div>
         </div>
-      </div>
+        <div class="col-sm-12 btn-con">
+        <div class="btn-group btnBox mg_bottom15">
+          <div class="col-sm-12 text-right">
+            <%= hidden_field_tag :deal_id,@deal.id,{:name=> 'order_items[deal_id]'}%>
+            <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
+            <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
+            <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
+            <%= hidden_field_tag :equipment_id,'',{:name=> 'order_equipments[equipment_id]'}%>
+            <%= hidden_field_tag :equipment_price,'',{:name=> 'order_equipments[equipment_price]'}%>
+            <%= hidden_field_tag '','',{:name=> 'order_attributes', :id=> 'order_attributes'}%>
+            <%= hidden_field_tag '','',{:name=> 'order_extra_services', :id=> 'order_extra_services'}%>
+            <%= hidden_field_tag '','',{:name=> 'order_equipments', :id=> 'order_equipments'}%>
 
-
-      <div class="btn-group btnBox">
-        <div class="col-sm-12 text-right">
-          <%= hidden_field_tag :deal_id,@deal.id,{:name=> 'order_items[deal_id]'}%>
-          <%= hidden_field_tag :status,'new_order',{:name=> 'order_items[status]'}%>
-          <%= hidden_field_tag :deal_price,@deal.price,{:name=> 'order_items[deal_price]'}%>
-          <%= hidden_field_tag :effective_price,@effective_price,{:name=> 'order_items[effective_price]'}%>
-          <%= hidden_field_tag :equipment_id,'',{:name=> 'order_equipments[equipment_id]'}%>
-          <%= hidden_field_tag :equipment_price,'',{:name=> 'order_equipments[equipment_price]'}%>
-          <%= hidden_field_tag '','',{:name=> 'order_attributes', :id=> 'order_attributes'}%>
-          <%= hidden_field_tag '','',{:name=> 'order_extra_services', :id=> 'order_extra_services'}%>
-          <%= hidden_field_tag '','',{:name=> 'order_equipments', :id=> 'order_equipments'}%>
-
-          <%#= hidden_field_tag '','',{:name=> 'order_attributes', :id=> 'prafull'}%>
-          <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
+            <%#= hidden_field_tag '','',{:name=> 'order_attributes', :id=> 'prafull'}%>
+            <%= submit_tag('Submit',:class => 'btn save-btn',:id => 'order_submit_button') %>
+          </div>
+        </div>
         </div>
       </div>
+
+
+
     </div>
   </div>
 </div>
@@ -341,7 +344,6 @@ $(document).ready(function(e) {
       //     console.log(data["status"]);
       //   }
 
-      // }
     }
   });
   <%else%>

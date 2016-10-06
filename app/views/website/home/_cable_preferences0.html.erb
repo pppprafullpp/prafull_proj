@@ -1,4 +1,4 @@
-<div class="form-area">
+  <div class="form-area">
   <%
 
   if @current_user.present? and ServicePreference.where(:app_user_id=>@current_user.id, :service_category_id=>3).present?
@@ -60,6 +60,7 @@
   function show_cellphone(){
       $("#cable_pref").hide();
       $("#cellphone_pref").show();
+      
   }
   $(document).ready(function(){
     $("#cable_start_date").datepicker();

@@ -1,7 +1,7 @@
 
     <div class="col-md-12 sd-box-con">
          <a style="float:right;" href="<%= deal_details_website_home_index_path %>?category_id=<%= deal_data[:service_category_id]%>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">All <%= deal_data[:service_category_name]%> Deals</a>
-      <h1><%= deal_data[:service_category_name]%></h1>
+      <h2><%= deal_data[:service_category_name]%></h2>
       <div class="three_deal_carousel_<%=deal_data[:service_category_name]%>" >
         <% if best_deal.present? %>
         <div class="col-md-12">

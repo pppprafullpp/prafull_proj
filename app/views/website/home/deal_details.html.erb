@@ -13,12 +13,13 @@
 
           <div class="col-sm-12 ">
             <div id="compare_box" class="compare_box border-radius-bg affix" >
-             <p><i onclick="resetcomparebox()"class="fa fa-times-circle close2" aria-hidden="true"></i></p>
+
               <div class="row">
-                  <div id="compare-box-deal-1" class="col-md-3 hidden"></div>
-                  <div id="compare-box-deal-2" class="col-md-3 hidden"></div>
-                 <div class="col-md-3 text-right" style="position: absolute;right: 34px;">
-                   <a id="compare-deal" style="margin: 2px auto;padding: 14px;height:50px;cursor:pointer;margin-top:9px;float:right;width:200px;"class="btn_2" onclick="comparedeals()">COMPARE</a>
+                  <div id="compare-box-deal-1" class=" hidden"></div>
+                  <div id="compare-box-deal-2" class=" hidden"></div>
+                 <div  style="text-align:center;">
+                   <a href="#" id="compare-deal" class="compare-dealbtn" onclick="comparedeals()">COMPARE</a>
+                  <!-- <p class="pull-right"><strong onclick="resetcomparebox()" aria-hidden="true">Remove</strong></p> -->
                  </div>
                </div>
             </div>
@@ -201,21 +202,21 @@ function showcomparebox(deal_id) {
       console.log(1);
       $("#compare-box-deal-1").removeClass("hidden");
      logo_url=$("#checkbox"+deal_id).attr("logo_url");
-          $("#compare-box-deal-1").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+          $("#compare-box-deal-1").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='120' width='120'><i class='fa fa-times' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:4px;right:4px;'></i></div>");
           $("#compare-box-deal-1").removeClass("hidden");
           $("#compare_box").show();
      }
      else if($("#compare_box").is(":visible")==true && $("#compare-box-deal-1").is(":visible")==true){
        console.log(2);
        logo_url=$("#checkbox"+deal_id).attr("logo_url");
-            $("#compare-box-deal-2").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+            $("#compare-box-deal-2").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='120' width='120'><i class='fa fa-times' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:4px;right:4px;'></i></div>");
             $("#compare-box-deal-2").removeClass("hidden");
             $("#compare-box-deal-2").show();
      }
      else if($("#compare_box").is(":visible")==true && $("#compare-box-deal-1").is(":visible")==false){
        console.log(3);
        logo_url=$("#checkbox"+deal_id).attr("logo_url");
-            $("#compare-box-deal-1").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='70' width='155'><i class='fa fa-times-circle' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:-4px;right:30px'></i></div>");
+            $("#compare-box-deal-1").html("<div id=compare-"+deal_id+"><img src="+logo_url+" height='120' width='120'><i class='fa fa-times-circle' onclick='hideandreset("+deal_id+")' deal_id="+deal_id+" style='position:absolute;cursor:pointer;top:4px;right:4px;'></i></div>");
             $("#compare-box-deal-1").removeClass("hidden");
             $("#compare-box-deal-1").show();
      }

@@ -2,9 +2,9 @@
       <div class="col-md-12 sd-box-con">
           <a style="float:right;" href="<%= deal_details_website_home_index_path %>?category_id=<%= deal_data[:service_category_id]%>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">All <%= deal_data[:service_category_name]%> Deals</a>
 
-        <h1><%= deal_data[:service_category_name]%></h1>
+        <h2><%= deal_data[:service_category_name]%></h2>
 
-        <div class="col-md-4 sd-dealinfo-left">
+        <div class="col-md-4 col-sm-4 sd-dealinfo-left">
           <div class="sd-deal-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> </div>
           <ul class="sd-deal-price">
             <li class="sd-dealprice-single">Deal Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>
@@ -18,7 +18,7 @@
 
           </ul>
         </div>
-        <div class="col-md-8 sd-deal-info">
+        <div class="col-md-8 col-sm-8  sd-deal-info">
           <div class="no-login-tdeal"><img src="/assets/website/trendinding-deal-icon.png" ></div>
           <h4><%= trending_deal['title'] %></h4>
           <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>

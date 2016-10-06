@@ -1,9 +1,9 @@
 <div id="business-info" class="tab-pane">
-  <div class="row">
+
     <div class="col-lg-12">
     <% business = @app_user.business_app_users.last.business %>
     <% disable_flag = business.present? ? true : false  %>
-    <div class="btn-group col-sm-6 padding15right">
+  <div class="col-md-6">
 
       <label for="Name" class="control-label">User type</label>
 
@@ -20,12 +20,12 @@
     business_name=Base64.decode64(business_name) if business_name.present?
     %>
 
-    <div class="btn-group col-sm-6" id="business_name_div">
+    <div class=" col-md-6" id="business_name_div">
       <label for="Name" class="control-label"> Business Name </label>
       <%= text_field_tag :business_name, business_name.titleize,:name => "business[business_name]",:class => 'form-control',:placeholder => 'Please enter your Business Name',:readonly => disable_flag %>
     </div>
 
-    <div class="btn-group col-sm-6 padding15right"  id="business_type_div">
+  <div class="col-md-6" id="business_type_div">
       <label for="Name" class="control-label">Business Type</label>
       <% if business.present? %>
       <%= text_field_tag :business_type,Business::BUSINESS_TYPES.key(business.business_type),:id =>'ddd',:class => 'form-control',:placeholder => 'Please enter your Business Type',:disabled => disable_flag %>
@@ -36,7 +36,7 @@
     </div>
 
     <%if Business::BUSINESS_TYPES.key(business.business_type)=="Sole Proprietor"%>
-    <div class="btn-group col-sm-6" id="ssn_div">
+    <div class="col-md-6" id="ssn_div">
       <label for="Name" class="control-label">SSN<span id="mandat">*</span></label>
       <%if ssn.present?%>
       <%= text_field_tag :ssn,Base64.decode64(ssn),:name => "business[ssn]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your SSN',:readonly => disable_flag %>
@@ -46,7 +46,7 @@
       <%end%>
     </div>
     <%elsif Business::BUSINESS_TYPES.key(business.business_type)=="Registered" %>
-    <div class="btn-group col-sm-6" id="federal_number_div">
+  <div class="col-md-6" id="federal_number_div">
       <label for="Name" class="control-label">Federal Number<span id="mandat">*</span></label>
       <%if federal_number.present?%>
       <%= text_field_tag :federal_number,Base64.decode64(federal_number),:name => "business[federal_number]",:class => 'form-control',:maxlength => 18,:placeholder => 'Please enter your Federal Number',:readonly => disable_flag %>
@@ -57,31 +57,32 @@
     </div>
     <%end%>
 
-    <div class="col-sm-6  padding15right">
+  <div class="col-md-6">
       <label for="Name" class="control-label">Manager Name<span id="mandat">*</span></label>
       <%= text_field_tag('business[manager_name]',manager_name,:class=>'form-control input-md',:placeholder=>'Manager Name',:maxlength=>'30',:onblur=>"capitalise_first(this)") %>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-md-6">
       <label for="Name" class="control-label">Main Telephone Number<span id="mandat">*</span></label>
       <%= phone_field_tag('business[manager_contact]',manager_contact,:class => 'form-control input-md',:placeholder => 'Telephone', :maxlength => 11) %>
     </div>
 
+<div class="btn-group btnBox  mg_bottom15">
+      <div class="col-sm-12 btn-con">
+      <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
+      <button class="btn save-btn" type="button" id="business_information_tab">Next</button>
+    </div>
+    </div>
 
   </div>
-</div>
+
 <!-- Button group -->
-<div class="btn-group btnBox">
-  <div class="col-sm-12 btn-con">
-  <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
-  <button class="btn save-btn" type="button" id="business_information_tab">Next</button>
-</div>
-</div>
+
 </div>
 
 <!--Address input area-->
 <div id="address-info" class="tab-pane">
-  <div class="row">
+
     <div class="col-lg-12">
       <div class="col-md-12">
         <h3>Billing Address</h3>
@@ -202,15 +203,17 @@
       </select> -->
       </div>
     </div>
-  </div>
-  </div>
 
-  <div class="btn-group btnBox">
-    <div class="col-sm-12 btn-con">
-      <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
-      <button class="btn save-btn" type="button" id="business_address_information_tab">Next</button>
+    <div class="btn-group btnBox mg_bottom15">
+      <div class="col-sm-12 btn-con">
+        <button class="btn cancel-btn btnPrevious" type="button">Previous</button>
+        <button class="btn save-btn" type="button" id="business_address_information_tab">Next</button>
+      </div>
     </div>
   </div>
+
+
+
 </div>
 <script>
 // $(document).ready(function(){

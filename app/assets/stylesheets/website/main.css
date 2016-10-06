@@ -6880,3 +6880,6 @@ select::-ms-expand {
 
 .btn_3 {    background: #cbcbcb none repeat scroll 0 0;    cursor: default;}
 /*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/
+.rating { 
+  float: left;
+}

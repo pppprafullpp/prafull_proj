@@ -5,8 +5,9 @@ class Website::AppUsersController < ApplicationController
   end
 
   def create
-    reset_session
-  #  raise params.to_yaml
+    if  request.referrer.split('/').last.match('checkout') == nil
+      reset_session
+    end
     @app_user = AppUser.find_by_email(params[:app_user][:email]) if params[:app_user][:email].present?
     if @app_user.present?
       redirect_to website_home_index_path
@@ -166,7 +167,6 @@ class Website::AppUsersController < ApplicationController
 
 
   def create_order
-
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
@@ -284,7 +284,7 @@ class Website::AppUsersController < ApplicationController
         # else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
-          @effective_price = params[:effective_price]
+          @effective_price = params[:effective_price].present? ? params[:effective_price] : @deal.effective_price
           if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY &&@deal.is_customisable != true
             @equipments =@deal.cellphone_equipments
           end
@@ -299,7 +299,9 @@ class Website::AppUsersController < ApplicationController
   end
 
   def signin
-    reset_session
+    if  request.referrer.split('/').last.match('checkout') == nil
+      reset_session
+    end
     if request.method.eql? 'POST'
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?

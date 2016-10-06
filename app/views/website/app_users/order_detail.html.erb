@@ -42,8 +42,8 @@ end
               </div>
             </div>
             <div class="order-product-right col-md-4">
-              <div class="order-price">Price <span>$<%= deal.price %></span> </div>
-              <div class="order-efprice"> <span>Effective Price</span> $<%= @order.order_items.first.effective_price  %> </div>
+              <div class="sd-best-price">Price <span>$<%= deal.price %></span> </div>
+              <div class="sd-effective-price"> Effective Price <span><%= @order.order_items.first.effective_price  %> </span> </div>
             </div>
           </div>
           <% if deal_equipment.present? %>
@@ -93,9 +93,10 @@ end
               </tbody>
             </table>
             <% end %>
-            <% end %>
+
             <!-- <span class="saveurdollar">You Save   $40.29</span>  -->
           </div>
+          <% end %>
           <div class="address-det">
             <div class="applicant-telcome col-md-6 border-ones">
               <h4>Applicant</h4>
@@ -191,7 +192,7 @@ end
               </ul>
             </div>
           </div>
-        </div>
+        </div></div>
         <% if app_user.user_type == AppUser::BUSINESS %>
         <div class="col-md-4">
           <div class="right-order-dt">
@@ -237,7 +238,7 @@ end
           </div>
         </div>
         <% else %>
-        <div class="col-lg-4 right-offer">
+        <div class="col-md-4 right-offer">
               <div class="border-radius-bg">
               <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
               <!--  <h2 class="text-center"><%= deal.title %></h2>

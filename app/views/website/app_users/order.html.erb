@@ -44,17 +44,17 @@ end
             </table>
           </div>-->
 
-
+          <% if @equipments.present? %>
+            </br>
+            <div>
+              <%= select_tag(:equipment_id, options_for_select(@equipments.collect { |p|
+                ["#{p.model}($#{p.price})", p.id] }),:class => 'form-control',:id => "drop_equipment_id") %>
+            </div>
+          <% end %>
 
 
         </div>
-        <% if @equipments.present? %>
-          </br>
-          <div>
-            <%= select_tag(:equipment_id, options_for_select(@equipments.collect { |p|
-              ["#{p.model}($#{p.price})", p.id] }),:class => 'form-control',:id => "drop_equipment_id") %>
-          </div>
-        <% end %>
+
 
 
       <div class="col-lg-8 border-radius-bg">

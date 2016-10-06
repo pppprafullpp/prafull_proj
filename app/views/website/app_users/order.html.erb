@@ -124,10 +124,10 @@ end
           <span class="style3">Name &nbsp;:</span> <span id="review-name" class="style5"></span><br />
           <!-- <span class="style3">Last Name:</span> <span id="review-last-name" class="style5"></span><br /> -->
           <span class="style3">Mobile &nbsp;:</span> <span id="review-mobile" class="style5"></span><br />
-          <span class="style3">Primary Id &nbsp;:</span> <span id="review-primary-id" class="style5"></span><br/>
-           <span class="style3">Primary Id Number &nbsp;:</span> <span id="review-primary" class="style5"></span><br/>
-          <span class="style3">Secondary Id &nbsp;:</span> <span id="review-secondary-id" class="style5"></span>
-          <span class="style3">Secondary Id Number &nbsp;:</span> <span id="review-secondary" class="style5"></span>
+          <span class="style3">Primary Id &nbsp;:</span> <span id="review-primary-id" class="style5"></span> - <span id="review-primary" class="style5"></span><br/>
+           <!-- <span class="style3">Primary Id Number &nbsp;:</span> <span id="review-primary" class="style5"></span><br/> -->
+          <span class="style3">Secondary Id &nbsp;:</span> <span id="review-secondary-id" class="style5"></span> - <span id="review-secondary" class="style5">
+          <!-- <span class="style3">Secondary Id Number &nbsp;:</span> <span id="review-secondary" class="style5"></span> -->
         </div>
 
         <% if (@app_user.user_type == AppUser::BUSINESS) && (@app_user.business_app_users.first.business.business_type ==  Business::REGISTERED) %>
@@ -515,18 +515,18 @@ $("#order_information_menu_tab").click(function(event){
   var app_user_service_city = $('#app_user_service_city').val();
 
   if ($('#user_type').val() == "business"){
-    billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/>State:"+$("#billing_state option:selected").val()+"<br/>"+billing_zip;
-      service_address=service_address_1+"<br/>"+service_address_2+"<br/>State:"+$("#service_state option:selected").val()+"<br/>"+service_zip;
-      shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/>State:"+$("#shipping_state option:selected").val()+"<br/>"+shipping_zip;
+    billing_address=billing_address_1+"<br/>"+billing_address_2+"<br/>"+billing_city+", "+$("#billing_state option:selected").val()+"<br/>"+billing_zip;
+      service_address=service_address_1+"<br/>"+service_address_2+"<br/>"+service_city+", "+$("#service_state option:selected").val()+"<br/>"+service_zip;
+      shipping_address=shipping_address_1+"<br/>"+shipping_address_2+"<br/>"+shipping_city+", "+$("#shipping_state option:selected").val()+"<br/>"+shipping_zip;
       $(".service-address-innertxt").html(service_address);
       $(".shipping-address-innertxt").html(shipping_address);
       $(".billing-address-innertxt").html(billing_address);
     }
     else{
       console.log($("#billing_state option:selected").val());
-      app_user_billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/><b>State"+$("#billing_state option:selected").val()+"<br/>"+app_user_billing_zip;
-      app_user_service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/><b>State"+$("#app_user_service_state option:selected").val()+"<br/>"+app_user_service_zip;
-      app_user_shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/><b>State"+$("#app_user_shipping_state option:selected").val()+"<br/>"+app_user_shipping_zip;
+      app_user_billing_address=app_user_billing_address_1+"<br/>"+app_user_billing_address_2+"<br/>"+app_user_billing_city+", "+$("#billing_state option:selected").val()+"<br/>"+app_user_billing_zip;
+      app_user_service_address=app_user_service_address_1+"<br/>"+app_user_service_address_2+"<br/>"+app_user_service_city+", " +$("#app_user_service_state option:selected").val()+"<br/>"+app_user_service_zip;
+      app_user_shipping_address=app_user_shipping_address_1+"<br/>"+app_user_shipping_address_2+"<br/>"+app_user_shipping_city+", "+$("#app_user_shipping_state option:selected").val()+"<br/>"+app_user_shipping_zip;
       $(".service-address-innertxt").html(app_user_billing_address);
       $(".shipping-address-innertxt").html(app_user_service_address);
       $(".billing-address-innertxt").html(app_user_shipping_address);

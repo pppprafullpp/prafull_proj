@@ -151,9 +151,11 @@ end
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= billing_address.try(:address1) %></div>
                 </li>
+                <% if billing_address.address2.present? %>
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= billing_address.try(:address2) %></div>
                 </li>
+                <% end %>
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= billing_address.try(:zip) %></div>
                 </li>
@@ -168,9 +170,11 @@ end
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= shipping_address.try(:address1) %></div>
                 </li>
+                <% if shipping_address.address2.present? %>
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= shipping_address.try(:address2) %></div>
                 </li>
+                <% end %>
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= shipping_address.try(:zip) %></div>
                 </li>
@@ -185,9 +189,11 @@ end
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= service_address.try(:address1) %></div>
                 </li>
+                <% if service_address.address2.present? %>
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= service_address.try(:address2) %></div>
                 </li>
+                <% end %>
                 <li>
                   <div class="col1 coll2 word-wrap no-float" style="overflow-x: hidden;"><%= service_address.try(:zip) %></div>
                 </li>

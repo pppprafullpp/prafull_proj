@@ -40,7 +40,7 @@
         <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
       </select> </div>
       <div class="col-md-6 mg_bttom20">
-    <%= number_field_tag(:price,price.present? ? "%.2f" % price : 100,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag(:price,price.present? ? "%.2f" % price : '',:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>
   <div class="col-md-6 ">
   <p class="contract-margin-sty">Contract Date</p>
@@ -192,7 +192,7 @@
     });
 
       <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
-    $("#price").val("50");
+    $("#price").val("60");
     $("#free_channels").val("60");
     $("#download_speed").val("30");
     $("#domestic_call_unlimited").prop("checked","checked");

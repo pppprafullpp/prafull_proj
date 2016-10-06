@@ -167,7 +167,6 @@ class Website::AppUsersController < ApplicationController
 
 
   def create_order
-
     if session[:user_id].present?
       @app_user = AppUser.find(session[:user_id])
       user_type = @app_user.user_type.present? ? @app_user.user_type : nil
@@ -285,7 +284,7 @@ class Website::AppUsersController < ApplicationController
         # else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
-          @effective_price = params[:effective_price]
+          @effective_price = params[:effective_price].present? ? params[:effective_price] : @deal.effective_price
           if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY &&@deal.is_customisable != true
             @equipments =@deal.cellphone_equipments
           end

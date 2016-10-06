@@ -145,6 +145,7 @@
             }
             self.starClicked = false;
             pos = self._getTouchPosition(e);
+            pos = pos -(0.*pos);
             out = self.calculate(pos);
             self._toggleHover(out);
             self.$element.trigger('rating.hover', [out.val, out.caption, 'stars']);
@@ -217,7 +218,7 @@
                 out = self.calculate(pos);
                 caption = out.val <= self.clearValue ? self.fetchCaption(self.clearValue) : out.caption;
                 w = self.getWidthFromValue(self.clearValue);
-                width = out.val <= self.clearValue ? w + '%' : out.width;
+                width = out.val <= self.clearValue ? w + '%' : out.width-10;
                 self._setCaption(caption);
                 self.$filledStars.css('width', width);
             }
@@ -294,7 +295,7 @@
             $container.append($el);
             if (self.rtl) {
                 w = Math.max(self.$emptyStars.outerWidth(), self.$filledStars.outerWidth());
-                self.$emptyStars.width(w);
+                self.$emptyStars.width(parseInt(w-1));
             }
         },
         _getCaption: function () {
@@ -352,6 +353,8 @@
             }
             if (self.hoverChangeStars) {
                 w = self.getWidthFromValue(self.clearValue);
+                 var new_val= ((out.width).toString()).split("%")[0];
+                 new_val=new_val-(0.9);
                 width = out.val <= self.clearValue ? w + '%' : out.width;
                 self.$filledStars.css('width', width);
             }
@@ -372,7 +375,7 @@
                 self.rtl = true;
                 $el.attr('dir', 'rtl');
             }
-            self.starClicked = false;
+            self.starClicked = true;
             self.clearClicked = false;
             self._initSlider(options);
             self._checkDisabled();
@@ -412,6 +415,8 @@
         _setStars: function (pos) {
             var self = this, out = arguments.length ? self.calculate(pos) : self.calculate(), $el = self.$element;
             $el.val(out.val);
+            var new_val= ((out.width).toString()).split("%")[0];
+            new_val=new_val-(0.95);
             self.$filledStars.css('width', out.width);
             self._setCaption(out.caption);
             self.cache = out;

@@ -47,7 +47,7 @@
         <% else %>
 
             <% if controller.controller_name=="app_users" and controller.action_name=="checkout" %>
-                <a href="#" class="hidden" data-toggle="modal" data-target="#myModal">Signin / SignUp</a> |
+                <a href="#" style="display:none" data-toggle="modal" data-target="#myModal">Signin / SignUp</a> |
             <%else%>
                 <a href="#" data-toggle="modal" data-target="#myModal">Signin / SignUp</a> |
             <%end%>
@@ -142,7 +142,7 @@
                                     <option value="residence">Residence</option>
                                     <option value="business">business</option>
                                   </select> -->
-                                  <%=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]], :class=>"form-control"%>
+                                  <%=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]], :class=>"form-control", id: "app_user_user_type"%>
                                 </div>
 
                                 <div id="business_name_div" class="form-group hidden">

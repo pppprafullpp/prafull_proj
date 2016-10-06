@@ -41,34 +41,42 @@
             <div class="col-md-12 inner-signdt">
               <h4> Signup</h4>
               <div class="form-group col-md-6">
-                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",required: true %>
+                <%= f.text_field :first_name,:class => "form-control",:placeholder => "First name",required: true , id: "checkout_app_user_first_name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)"%>
               </div>
               <div class="form-group col-md-6">
-                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name" , required: true%>
+                <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last name" , required: true, id: "checkout_app_user_last_name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)"%>
               </div>
               <div class="form-group col-md-6">
                 <%= f.text_field :email,:class => "form-control",:placeholder => "Email", :id => "checkout_signup_user_email" %>
               </div>
               <div class="form-group col-md-6">
                 <%= f.password_field :password,:class => "form-control",:placeholder => "Password", :id => "checkout_signup_user_password" %>
+                <span id="result1"></span>
               </div>
               <div class="form-group col-md-6">
-                <%=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]],:id=> "app_user_1"%>
+                <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" , :id => "checkout_signup_user_cpassword"%>
               </div>
               <div class="form-group col-md-6">
-              <div id="business_name_div" class="form-group">
+                <select class="form-control" name="app_user[user_type]" id="app_user_user_1" required>
+                  <option value="0">Select User type</option>
+                  <option value="residence">Residence</option>
+                  <option value="business">Business</option>
+
+                </select>
+                <%#=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]], :class=>"form-control"%>
+              </div>
+              <div class="form-group col-md-6">
+              <div id="business_name_div_1" class="form-group">
                 <%= text_field_tag(:business_name,"",:class => "form-control",:placeholder => "Business name", :name=>"business[business_name]",:onkeyup=>"titleize_text(this)") %>
                 <br />
-                <select id="business_type" name="business[business_type]" class="form-control">
+                <select id="checkout_business_type" name="business[business_type]" class="form-control">
                   <option value="0">Select Business type</option>
                   <option value="SOLE_PROPRIETOR">Sole Proprietor</option>
                   <option value="REGISTERED">Registered</option>
                 </select>
               </div>
               </div>
-              <div class="form-group col-md-6">
-                <%= f.password_field :password_confirmation,:class => "form-control",:placeholder => "Confirm Password" , :id => "checkout_signup_user_cpassword"%>
-              </div>
+              
 
               <div class="form-group col-md-12">
                 <!-- <button type="button" class="btn  btn-login">Signup to continue</button> -->
@@ -97,17 +105,62 @@
   </section>
 <% end %>
 <script type="text/javascript">
+ function titleize_text(object) {
+    value=$("#"+object.id).val();
+    rest=value.substr(1);
+    object.value=value[0].toUpperCase()+""+rest
+  }
   $( document ).ready(function() {
-    $("#app_user_1").addClass("form-control");
-    $("#app_user_1").change(function(){
-      if ($("#app_user_1 option:selected").val() == "business") {
-        $("#business_name_div").removeClass("hidden");
-        // $(".height_popup").css("height", "700px")
+    $('#checkout_signup_user_password').keyup(function() {
+        $('#result1').html(checkStrength($('#checkout_signup_user_password').val()));
+      });
+
+     function checkStrength(password) {
+          var strength = 0
+          if (password.length < 8) {
+              $('#result1').removeClass()
+              $('#result1').addClass('short')
+              return '8 characters or longer.<br/> Atleast one number, one alphabet and one symbol (like @#$%*).'
+          }
+          if (password.length > 7) strength += 1
+          // If password contains both lower and uppercase characters, increase strength value.
+          if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+          // If it has numbers and characters, increase strength value.
+          if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+          // If it has one special character, increase strength value.
+          if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+          // If it has two special characters, increase strength value.
+          if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+          // Calculated strength value, we can return messages
+          // If value is less than 2
+          if (strength < 2) {
+              $('#result1').removeClass()
+              $('#result1').addClass('short')
+              return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
+          } else if (strength == 2) {
+              $('#result1').removeClass()
+              $('#result1').addClass('short')
+              return '8 characters or longer.Atleast one number and one symbol (like @#$%*)'
+          } else {
+              $('#result1').removeClass()
+              $('#result1').addClass('strong')
+              return ''
+          }
       }
-      else {
-        $("#business_name_div").addClass("hidden");
-      }
-    });
+    
+       $("#app_user_user_1 option[value='Select User type']").prop("selected","selected")
+        $("#business_name_div_1").hide();
+
+      $("#app_user_user_1").change(function(){
+        if (  $("#app_user_user_1 option:selected").val() == "business") {
+          $("#business_name_div_1").show();
+          // $(".height_popup").css("height", "700px")
+        }
+        else {
+          $("#business_name_div_1").hide();
+        }
+      });
+
     $("#sign_up_checkout").hide();
       $("#checkout_create_user").click(function(){
           var check = true;
@@ -131,8 +184,45 @@
               $('#checkout_signup_user_cpassword').removeClass('custom-input-error')
           }
 
+          if ($("#checkout_app_user_first_name").val()!=""){
+            $('#checkout_app_user_first_name').removeClass('custom-input-error')
+          }
+          else{
+            $('#checkout_app_user_first_name').addClass('custom-input-error')
+            check = false
+          }
+
+          if ($("#checkout_app_user_last_name").val()!=""){
+            $('#checkout_app_user_last_name').removeClass('custom-input-error')
+          }
+          else{
+            $('#checkout_app_user_last_name').addClass('custom-input-error')
+            check = false
+          }
+
+           if ($("#app_user_user_1").val()!="0"){
+              $('#app_user_user_1').removeClass('custom-input-error')
+          }
+          else{
+              $('#app_user_user_1').addClass('custom-input-error')
+              check = false
+          }
+
           if(check) {
-              $('#new_app_user').submit()
+               if($("#app_user_user_1 option:selected").val()=="business" && $("#checkout_business_name").val()!="" && $("#checkout_business_type").val()!="0") {
+                  $("#new_app_user").submit();
+              }
+              else {
+                  if($("#app_user_user_1 option:selected").val()=="residence" && check) {
+                      $("#new_app_user").submit();
+                  }
+                  else {
+                      alert("Please enter all fields")
+                      event.preventDefault();
+                  }
+
+              }
+
           }else{
               return false
           }

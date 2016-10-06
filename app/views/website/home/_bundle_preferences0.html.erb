@@ -160,7 +160,7 @@
     });
 
     <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
-    $("#bundle_price").val("50");
+    $("#bundle_price").val("60");
     $("#bundle_free_channels").val("60");
     $("#bundle_download_speed").val("30");
     $("#bundle_domestic_call_unlimited").prop("checked","checked");

@@ -26,16 +26,16 @@
       <%=form_tag("/website/home/deal_details", method: :get, :id=>"firstpageform") do%>
         <h3>Please enter valid ZIP Code & Choose Category and Type.</h3>
         <div class="col-md-12">
-          <div class="col-md-5 col-xs-offset-1">
+          <div class="col-md-5 col-sm-5 col-xs-offset-1">
             <%=text_field(:zip_code,nil, :class=>"form-control", :placeholder=>"Enter Zip*",:id=>"zip-code", maxlength: 6)%>
             <span class="pos-rel error-msg" id="zip-error">Please enter zipcode.</span>
           </div>
-          <div class="col-md-5 select-style ">
+          <div class="col-md-5 col-md-5 select-style ">
             <%= select_tag(:category_id,options_for_select(get_service_categories.first(5)),:class => 'form-control',:prompt => 'Select Service', :id=>"service-type") %>
             <span class="pos-rel error-msg" id="category-type-error">Please choose a category from the list.</span>
           </div>
         </div>
-        <div class="col-md-12 ">
+        <div class="col-md-12 col-sm-12">
 
           <div class="col-md-10 col-xs-offset-1 select-style ">
             <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type', :id=>"user-type") %>

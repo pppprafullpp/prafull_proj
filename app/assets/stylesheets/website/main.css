@@ -2415,7 +2415,7 @@ color: #999;
     border-radius: 5px;
 }
 .order-info .thumb {
-    padding: 30px;
+    padding: 0;
 }
 .order-info h2 {
     color: #e50005;
@@ -2684,7 +2684,8 @@ color: #999;
     font-size: 20px;
 }
 .side-deal {
-    padding: 20px;
+    padding: 20px 20px 0;
+    height: 375px;
 }
 .contact-us-banner {
     background-position: center center;
@@ -3205,6 +3206,7 @@ color: #999;
     border-radius: 5px;
     float: left;
     padding: 25px 0 18px 20px;
+    width: 100%;
 }
 .calculate-bandwidth {
     margin-top: 40px;
@@ -3860,10 +3862,10 @@ color: #555 !important;
     margin: 60px 0;
 }
 .login-container h4 {
-    color: #272727;
-    /*font-size: 20px;
+    color: #272727;font-family: 'open_sanssemibold';
+
 	margin-bottom: 20px;
-	padding-bottom: 5px;*/
+	padding-bottom: 5px;
 
     text-transform: uppercase;
 }
@@ -3964,6 +3966,7 @@ span.seperator {
     float: left;
     padding: 20px;
     width: 100%;
+    min-height: 375px;
 }
 .bundle-det > a {
     margin-right: 10px !important;
@@ -6880,6 +6883,6 @@ select::-ms-expand {
 
 .btn_3 {    background: #cbcbcb none repeat scroll 0 0;    cursor: default;}
 /*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/
-.rating { 
+.rating {
   float: left;
 }

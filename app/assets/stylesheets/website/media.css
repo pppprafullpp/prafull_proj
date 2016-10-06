@@ -25,7 +25,7 @@
     margin-bottom: 15px;
     }
     .separator_2 {
-    margin: 20px -38px;
+    margin: 20px -11px;
     }
     .pagination_sec ul li a {
     font-size: 13px;
@@ -553,5 +553,23 @@ footer .col-xs-6 ul {
 @media (min-width:768px) and (max-width:991px){
 
 .navService li {padding-top: 15px;    padding-bottom: 15px;}
-
+#carousel-example-generic .col-xs-offset-1 { margin-left: 0 !important; }
+.carousel-inner h1 { font-size: 20px;}
+.formcontainer h3 { font-size: 16px; margin-bottom: 0!important;}
+.formcontainer {
+    top: 10%;
+}
+.details .border-radius-bg {padding: 30px 11px;}
+.sddeals-imgcon { width: auto; height: auto;}
+.pagination_sec {margin-top: 0 !important;}
+.pagin-sty { padding: 10px !important;}
+.sd-best-price span {font-size: 14px;}
+.sd-best-price { font-size: 13px;}
+.sd-effective-price {font-size: 13px;}
+.sd-effective-price span{font-size: 14px;}
+.sd-deal-price li {}
+small, .small { width: 100%; }
+.inner-logindt {border-right:0;}
+span.seperator {  top: 107%; left: 50%;}
+.sd-more-details-page table { width:100%; float: left;}
 }

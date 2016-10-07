@@ -1,7 +1,6 @@
 class Website::AppUsersController < ApplicationController
   layout 'website_layout'
   def new
-
   end
 
   def create

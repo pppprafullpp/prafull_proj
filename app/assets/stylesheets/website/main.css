@@ -2351,7 +2351,8 @@ color: #999;
 }
 .order-form .nav-tabs {
     height: 46px;
-    border-bottom: 1px solid #ddd; //* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fbf9fa+0,efefef+100 */
+    border-bottom: 1px solid #ddd; 
+    /*/ Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fbf9fa+0,efefef+100 */
     background: #fbf9fa;
     /* Old browsers */
 

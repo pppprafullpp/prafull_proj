@@ -87,9 +87,9 @@
         </div>
 
       </div>
-      <div id="reviews-area"></div>
+      <div id="reviews-area" style="height: 750px"></div>
         
-      <div id="onwait" style="background-color: #000;height: 282px;    position: absolute;    top: 236px;    width: 100%;
+      <div id="onwait" style="background-color: #000;height: 586px;    position: absolute;    top: 1px;    width: 587px;
     opacity: 0.3;">
        <i id="wait-spinner" style="position: absolute;top: 50%;left: 43%;color: #fafafa;" class="fa fa-spinner fa-pulse fa-4x fa-fw fa-spin"></i>
       </div>
@@ -106,7 +106,7 @@
   function add_comments(){
     event.preventDefault();
     if($("#comment_rating_app_user_id").val()!="" ){
-      if($("#comment_rating_comment_title").val()!="" && $("#comment_rating_comment_text").val()!=""){
+      if($("#comment_rating_rating_point").val()!="0"){
       $.ajax({
         url:"/api/v1/comment_ratings",
         type:"post",
@@ -123,7 +123,7 @@
       });
     }
     else{
-    alert("Please fill the fields");
+    alert("Please select rating.");
   }
   }
 

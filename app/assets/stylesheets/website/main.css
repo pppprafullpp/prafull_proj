@@ -1392,7 +1392,7 @@ margin-top: 15px;
     font-size: 20px;
 }
 .compare-table th {
-    background: #efefef;
+    background: #f9f9f9;
     color: #000;
     font-family: 'open_sanssemibold';
     font-size: 14px;
@@ -6886,3 +6886,5 @@ select::-ms-expand {
 .rating {
   float: left;
 }
+.compare-sty { padding:20px !important;}
+.compare-sty a{color:#000; text-align: left; }

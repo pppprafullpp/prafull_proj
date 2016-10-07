@@ -1,19 +1,21 @@
 <%# if  session[:user_id].present? %>
   <section class="compare-design">
     <div class="container">
-      <h3>Compare <%= @category.capitalize %> Deals</h3>
+      <!-- <h3>Compare <%= @category.capitalize %> Deals</h3> -->
       <div data-example-id="bordered-table" class="compare-table">
         <table class="table table-bordered">
           <tbody>
             <tr>
-            <td scope="row" class="nobdr"></td>
+            <td scope="row" class="nobdr" style="font-size:24px;"> Compare <br> <span style="font-size:16px;">2 Items</span></td>
 
-            <td align="center" class="col-spacing"><a href="#"><%= @deal_first.try(:short_description)%></a><br>
-              <%= image_tag("#{@deal_first.try(:image)}", :size => "100x100") %>  <br>
+            <td align="center" class="col-spacing compare-sty">
+              <%= image_tag("#{@deal_first.try(:image)}", :size => "200x200") %>  <br>
+              <a href="#"><%= @deal_first.try(:short_description)%></a><br>
               <span class="price-com">$ <b><%= @deal_first.try(:price) %> / month</b></span></td>
 
-              <td align="center" class="col-spacing"><a href="#"><%= @deal_second.try(:short_description)%></a> <br>
-              <%= image_tag("#{@deal_second.try(:image)}", :size => "100x100") %> <br>
+              <td align="center" class="col-spacing compare-sty">
+                <%= image_tag("#{@deal_second.try(:image)}", :size => "200x200") %> <br>
+              <a href="#"><%= @deal_second.try(:short_description)%></a> <br>
               <span class="price-com">$ <b><%= @deal_second.try(:price) %> / month</b></span></td>
 
            </tr>

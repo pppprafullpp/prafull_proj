@@ -278,7 +278,8 @@ class Api::V1::OrdersController < ApplicationController
 
 	private
 	def order_params
-		params.require(:order).permit(:id,:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same,:primary_id_number,:secondary_id_number)
+		# raise params[:order].to_yaml
+		params.require(:order).permit(:id,:order_id,:deal_id,:app_user_id,:status,:deal_price,:effective_price,:activation_date,:order_type,:primary_id,:secondary_id,:is_shipping_address_same,:primary_id_number,:secondary_id_number,:free_text)
 	end
 
 end

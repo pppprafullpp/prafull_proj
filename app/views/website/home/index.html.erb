@@ -24,25 +24,25 @@
     </a>
     <div class="formcontainer">
       <%=form_tag("/website/home/deal_details", method: :get, :id=>"firstpageform") do%>
-        <h3>Please enter valid ZIP Code & Choose Category and Type.</h3>
-        <div class="col-md-12">
-          <div class="col-md-5 col-sm-5 col-xs-offset-1">
-            <%=text_field(:zip_code,nil, :class=>"form-control", :placeholder=>"Enter Zip*",:id=>"zip-code", maxlength: 6)%>
-            <span class="pos-rel error-msg" id="zip-error">Please enter zipcode.</span>
+          <h3>Please enter valid ZIP Code & Choose Category and Type.</h3>
+          <div class="col-md-12">
+            <div class="col-md-5 col-sm-5 col-xs-offset-1">
+              <%=text_field(:zip_code,nil, :class=>"form-control", :placeholder=>"Enter Zip*",:id=>"zip-code", maxlength: 6)%>
+              <span class="pos-rel error-msg" id="zip-error">Please enter zipcode.</span>
+            </div>
+            <div class="col-md-5 col-md-5 select-style ">
+              <%= select_tag(:category_id,options_for_select(get_service_categories.first(5)),:class => 'form-control',:prompt => 'Select Service', :id=>"service-type") %>
+              <span class="pos-rel error-msg" id="category-type-error">Please choose a category from the list.</span>
+            </div>
           </div>
-          <div class="col-md-5 col-md-5 select-style ">
-            <%= select_tag(:category_id,options_for_select(get_service_categories.first(5)),:class => 'form-control',:prompt => 'Select Service', :id=>"service-type") %>
-            <span class="pos-rel error-msg" id="category-type-error">Please choose a category from the list.</span>
-          </div>
-        </div>
-        <div class="col-md-12 col-sm-12">
+          <div class="col-md-12 col-sm-12">
 
-          <div class="col-md-10 col-xs-offset-1 select-style ">
-            <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type', :id=>"user-type") %>
-            <span class="pos-rel error-msg" id="deal-type-error">Please choose User Type from the list.</span>
-        </div>
-      </div><br />
-        <button type="submit" class="btn btn-default btn-blue">Enter Now</button>
+            <div class="col-md-10 col-xs-offset-1 select-style ">
+              <%= select_tag(:deal_type,options_for_select((AppUser::USER_TYPES.collect{|m| [m.titleize, m]}),nil),:class => 'form-control',:prompt => 'Select your User Type', :id=>"user-type") %>
+              <span class="pos-rel error-msg" id="deal-type-error">Please choose User Type from the list.</span>
+            </div>
+          </div><br />
+          <button type="submit" class="btn btn-default btn-blue">Enter Now</button>
       <%end%>
     </div>
   </div>
@@ -92,87 +92,87 @@
 
 
 <% unless session[:user_id].present?%>
-<section class="sd-deal-nologin">
-    <div class="container sd-deal-dashboard ">
-  <% @trending_deal_data.each do |trending_deal_data|%>
+    <section class="sd-deal-nologin">
+      <div class="container sd-deal-dashboard ">
+        <% @trending_deal_data.each do |trending_deal_data|%>
 
-    <% trending_deal = trending_deal_data[:trending_deal]%>
-    <% if trending_deal.present? && @cable_customized_deals.present? && @cellphone_customized_deals.present? && trending_deal_data[:service_category_id] != Deal::CABLE_CATEGORY && trending_deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
-      <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
+            <% trending_deal = trending_deal_data[:trending_deal]%>
+            <% if trending_deal.present? && @cable_customized_deals.present? && @cellphone_customized_deals.present? && trending_deal_data[:service_category_id] != Deal::CABLE_CATEGORY && trending_deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
+                <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
 
-    <% elsif trending_deal.present? && @cable_customized_deals.blank? && @cellphone_customized_deals.blank? && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY && trending_deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
-      <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
+            <% elsif trending_deal.present? && @cable_customized_deals.blank? && @cellphone_customized_deals.blank? && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY && trending_deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
+                <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
 
-    <% elsif trending_deal.present? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count == 1 && trending_deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY%>
-    <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: trending_deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cable-custom"}%>
+            <% elsif trending_deal.present? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count == 1 && trending_deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY%>
+                <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: trending_deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cable-custom"}%>
 
-    <% elsif trending_deal.present? && @cable_customized_deals.present? && @cable_customized_deals.count == 1 && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY%>
-    <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: trending_deal_data, deal_1: trending_deal,deal_2: '', key: "trending-cable-custom"}%>
+            <% elsif trending_deal.present? && @cable_customized_deals.present? && @cable_customized_deals.count == 1 && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY%>
+                <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: trending_deal_data, deal_1: trending_deal,deal_2: '', key: "trending-cable-custom"}%>
 
-     <% elsif  trending_deal.present? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count > 1 && trending_deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
-       <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: trending_deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
+            <% elsif  trending_deal.present? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count > 1 && trending_deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
+                <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: trending_deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
 
 
-    <% elsif trending_deal.present?  && @cable_customized_deals.present? && @cable_customized_deals.count == 1 && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
-       <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: trending_deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
+            <% elsif trending_deal.present?  && @cable_customized_deals.present? && @cable_customized_deals.count == 1 && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
+                <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: trending_deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
 
-    <% end %>
-  <% end %>
+            <% end %>
+        <% end %>
 
-</div>
-  </section>
+      </div>
+    </section>
 
 
 <% else %>
-<section class="sd-deal-threeblock">
-  <div class="container sd-deal-dashboard ">
-  <% @best_deal_data.each do |deal_data|%>
-    <% trending_deal = deal_data[:trending_deal]
-       best_deal = deal_data[:best_deal]
-       order_deal = deal_data[:order_deal] %>
-    <% if trending_deal.present? && best_deal.present? && order_deal.present? %>
-      <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: order_deal}%>
+    <section class="sd-deal-threeblock">
+      <div class="container sd-deal-dashboard ">
+        <% @best_deal_data.each do |deal_data|%>
+            <% trending_deal = deal_data[:trending_deal]
+               best_deal = deal_data[:best_deal]
+               order_deal = deal_data[:order_deal] %>
+            <% if trending_deal.present? && best_deal.present? && order_deal.present? %>
+                <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: order_deal}%>
 
-    <% elsif  trending_deal.present? && best_deal.present? && order_deal.blank? && deal_data[:service_category_id] != Deal::CABLE_CATEGORY && deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
-      <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: best_deal, deal_2: trending_deal, key: "trending-best"}%>
+            <% elsif  trending_deal.present? && best_deal.present? && order_deal.blank? && deal_data[:service_category_id] != Deal::CABLE_CATEGORY && deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
+                <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: best_deal, deal_2: trending_deal, key: "trending-best"}%>
 
-    <% elsif trending_deal.present? && order_deal.present? && best_deal.blank? && deal_data[:service_category_id] != Deal::CABLE_CATEGORY && deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
-      <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal, deal_2: order_deal, key: "trending-order"}%>
-<!-- <<<<<<< HEAD -->
+            <% elsif trending_deal.present? && order_deal.present? && best_deal.blank? && deal_data[:service_category_id] != Deal::CABLE_CATEGORY && deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
+                <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal, deal_2: order_deal, key: "trending-order"}%>
+                <!-- <<<<<<< HEAD -->
 
-    <%# elsif trending_deal.present? && best_deal.blank? && order_deal.blank? %>
-      <%#=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
-
-
-<!-- ======= -->
-
-    <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank?  && @cable_customized_deals.blank? && @cellphone_customized_deals.blank?%>
-      <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
-
-    <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank?  && @cable_customized_deals.present? && @cellphone_customized_deals.present? && deal_data[:service_category_id] != Deal::CABLE_CATEGORY && deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
-
-      <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
-
-   <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cable_customized_deals.present? && @cable_customized_deals.count == 1 && deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
-      <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cable-custom"}%>
-
-    <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count == 1 && deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
-      <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cellphone-custom"}%>
+                <%# elsif trending_deal.present? && best_deal.blank? && order_deal.blank? %>
+                <%#=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
 
 
+                <!-- ======= -->
+
+            <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank?  && @cable_customized_deals.blank? && @cellphone_customized_deals.blank?%>
+                <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
+
+            <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank?  && @cable_customized_deals.present? && @cellphone_customized_deals.present? && deal_data[:service_category_id] != Deal::CABLE_CATEGORY && deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
+
+                <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: deal_data , trending_deal: trending_deal}%>
+
+            <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cable_customized_deals.present? && @cable_customized_deals.count == 1 && deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
+                <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cable-custom"}%>
+
+            <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count == 1 && deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
+                <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cellphone-custom"}%>
 
 
-    <% elsif  trending_deal.present? && best_deal.present? && order_deal.blank? %>
-       <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: ''}%>
 
 
-    <% elsif trending_deal.present? && order_deal.present? && best_deal.blank?%>
-       <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: '', trending_deal: trending_deal, order_deal: order_deal}%>
-<!-- >>>>>>> prafull_05082016_new_branch -->
-    <% end %>
-  <% end %>
-  </div>
-</section>
+            <% elsif  trending_deal.present? && best_deal.present? && order_deal.blank? %>
+                <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: ''}%>
+
+
+            <% elsif trending_deal.present? && order_deal.present? && best_deal.blank?%>
+                <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: '', trending_deal: trending_deal, order_deal: order_deal}%>
+                <!-- >>>>>>> prafull_05082016_new_branch -->
+            <% end %>
+        <% end %>
+      </div>
+    </section>
 <% end %>
 
 
@@ -181,22 +181,22 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="calculate_you_save()">×</button>
-      <div class="modal-content compare-popsty">
-        <div id="welcome-popup">
+    <div class="modal-content compare-popsty">
+      <div id="welcome-popup">
         <div class="text-center mg-bt25">
-        <img src="/assets/website/welcome1.png" alt="" width="150">
+          <img src="/assets/website/welcome1.png" alt="" width="150">
         </div>
         <p class="mg-bt25 text-center">Most of our users <span style="color:#2c9d12; font-weight:400;">$ave </span>$1,000 - $2,000 when they switch <span style="color:#e50005; font-weight:600;">Internet, Telephone, TV,</span> and <span  style="color:#e50005; font-weight:600;">Mobile Phone</span>
-        services using ServiceDeals. </p>
-          <p class="mg-bt25 text-center">We can start to find out how much you can <span style="color:#2c9d12; font-weight:400;">$ave </span> by comparing your current services with the best deals in your area. Just give us 5 min and we will show you $1000s of saving:</p>
-          <ul class="info_listing">
-            <li><span>1</span><p>Enter your Internet, Telephone, TV, and Mobile service information</p></li>
-            <li><span>2</span><p>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</p></li>
-            <li><span>3</span><p>Review potential saving and switch</p></li>
-          </ul>
-          <div class="text-center">
-            <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
-          </div>
+          services using ServiceDeals. </p>
+        <p class="mg-bt25 text-center">We can start to find out how much you can <span style="color:#2c9d12; font-weight:400;">$ave </span> by comparing your current services with the best deals in your area. Just give us 5 min and we will show you $1000s of saving:</p>
+        <ul class="info_listing">
+          <li><span>1</span><p>Enter your Internet, Telephone, TV, and Mobile service information</p></li>
+          <li><span>2</span><p>Review potential saving calculated by ServiceDeals will compare your service and prices with the best deal in your area</p></li>
+          <li><span>3</span><p>Review potential saving and switch</p></li>
+        </ul>
+        <div class="text-center">
+          <button type="button" onclick="move_next()" class="btn compare-btn">Compare</button>
+        </div>
       </div>
       <div id="internet_pref" style="display:none">
         <%=render :partial => "internet_preferences0.html.erb"%>
@@ -214,77 +214,77 @@
         <%=render :partial => "bundle_preferences0.html.erb"%>
       </div>
       <div id="onwait" style="background-color: #000;    height: 586px; position: absolute;    top: 1px;    width: 100%;    opacity: 0.3;">
-       <i id="wait-spinner" style="position: absolute;top: 50%;left: 43%;color: #fafafa;" class="fa fa-spinner fa-pulse fa-4x fa-fw fa-spin"></i>
+        <i id="wait-spinner" style="position: absolute;top: 50%;left: 43%;color: #fafafa;" class="fa fa-spinner fa-pulse fa-4x fa-fw fa-spin"></i>
       </div>
     </div>
   </div>
 </div>
 
 
-      <div class="modal fade" id="wowPopup" role="dialog"  data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog  user-motivation">
-      <!-- Modal content-->
-      <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="refresh()">×</button>
-      <div class="modal-content">
+<div class="modal fade" id="wowPopup" role="dialog"  data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog  user-motivation">
+    <!-- Modal content-->
+    <button type="button" class="close log-pop-btn" data-dismiss="modal" onclick="refresh()">×</button>
+    <div class="modal-content">
       <div id="welcome-popup">
-      <div class="text-center mg-bt25">
-      <div><img src="/assets/website/user-motivational.png" alt=""></div>
-      <div> <img src="/assets/website/wow.png" alt=""></div>
-      <div class="potential-saving">Your Potential $aving are
-      <span id="you_save_value">$900 - $1,200</span></div>
+        <div class="text-center mg-bt25">
+          <div><img src="/assets/website/user-motivational.png" alt=""></div>
+          <div> <img src="/assets/website/wow.png" alt=""></div>
+          <div class="potential-saving">Your Potential $aving are
+            <span id="you_save_value">$900 - $1,200</span></div>
+        </div>
+        <div class="mg-bt25 text-center">
+          <button type="button" onclick = "refresh()" value="Save and switch"  class="btn compare-btn">Review Deals & Switch</button>
+        </div>
       </div>
-      <div class="mg-bt25 text-center">
-      <button type="button" onclick = "refresh()" value="Save and switch"  class="btn compare-btn">Review Deals & Switch</button>
-      </div>
-      </div>
-      </div>
-      </div>
-      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Internet, Telephone, cable, Cellphone, Bundle. -->
 <script type="text/javascript">
- $('#dashboad-sm-deals').owlCarousel({
-    loop:true,
-    margin:10,
-    responsiveClass:true,
-   items:4,
-  });
-
-  function move_next() {
-    $("#welcome-popup").hide();
-    $("#internet_pref").show();
-  }
-
- <%if session[:user_id].present?%>
-  function calculate_you_save(){
-    $.ajax({
-      url:"/api/v1/you_save",
-      type: "GET",
-      data: {
-       id:<%=session[:user_id]%>
-      },
-      success: function(data){
-        console.log(data);
-        $("#wowPopup").modal("show");
-        if (data["you_save"] !="" && data["you_save"]!=null){
-          $("#you_save_value").html("$"+data["you_save"]+" per annum")
-        }
-        else {
-          $("#you_save_value").html("$"+0)
-        }
-      }
+    $('#dashboad-sm-deals').owlCarousel({
+        loop:true,
+        margin:10,
+        responsiveClass:true,
+        items:4,
     });
-  }
-<%end%>
 
-  function refresh() {
-    window.open("/website/home","_self");
-  }
+    function move_next() {
+        $("#welcome-popup").hide();
+        $("#internet_pref").show();
+    }
 
-  <%if params[:new_user] == "true"%>
+    <%if session[:user_id].present?%>
+    function calculate_you_save(){
+        $.ajax({
+            url:"/api/v1/you_save",
+            type: "GET",
+            data: {
+                id:<%=session[:user_id]%>
+            },
+            success: function(data){
+                console.log(data);
+                $("#wowPopup").modal("show");
+                if (data["you_save"] !="" && data["you_save"]!=null){
+                    $("#you_save_value").html("$"+data["you_save"]+" per annum")
+                }
+                else {
+                    $("#you_save_value").html("$"+0)
+                }
+            }
+        });
+    }
+    <%end%>
+
+    function refresh() {
+        window.open("/website/home","_self");
+    }
+
+    <%if params[:new_user] == "true"%>
     $("#comparePopup").modal("show");
-  <%end%>
+    <%end%>
 </script>
 
 
@@ -292,62 +292,62 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
-      <% if !session[:user_id].present?%>
-      $('#zipcode-modal').modal("show");
-      <% end %>
-      $("#sticky-top").sticky({ topSpacing: 0 });
+        <% if !session[:user_id].present?%>
+        $('#zipcode-modal').modal("show");
+        <% end %>
+        $("#sticky-top").sticky({ topSpacing: 0 });
 
         // $("#onwait").hide();
         // $("#wait-spinner").hide();
         $(document).ajaxStart(function() {
-          $("#onwait").show();
-          $("#wait-spinner").show();
+            $("#onwait").show();
+            $("#wait-spinner").show();
         });
         $(document).ajaxStop(function() {
-          $("#onwait").hide();
-          $("#wait-spinner").hide();
+            $("#onwait").hide();
+            $("#wait-spinner").hide();
         });
         $("#business_name").css("text-transform","capitalize");
     });
 
     $("#firstpageform").submit(function(e){
 
-      var zip=$("#zip-code").val();
-      var service_type=$("#service-type option:selected").text();
-      var user_type=$("#user-type option:selected").text();
-      if(parseInt(zip.length)<5 && service_type=="Select Service" && user_type=="Select your User Type"){
-        $("#zip-error").css("display","block");
-        $("#category-type-error").css("display","block");
-        $("#deal-type-error").css("display","block");
-          e.preventDefault();
-      }
-      else if(zip==""){
-          $("#zip-error").css("display","block");
-          $("#category-type-error").css("display","none");
-          $("#deal-type-error").css("display","none");  e.preventDefault();
-      }
-        else if(parseInt(zip.length)<5){
-          $("#zip-error").html("zip should be of 5 digits");
-          $("#zip-error").css("display","block");
-          $("#category-type-error").css("display","none");
-          $("#deal-type-error").css("display","none");  e.preventDefault();
+        var zip=$("#zip-code").val();
+        var service_type=$("#service-type option:selected").text();
+        var user_type=$("#user-type option:selected").text();
+        if(parseInt(zip.length)<5 && service_type=="Select Service" && user_type=="Select your User Type"){
+            $("#zip-error").css("display","block");
+            $("#category-type-error").css("display","block");
+            $("#deal-type-error").css("display","block");
+            e.preventDefault();
         }
-      else if(service_type=="Select Service"){
-        $("#category-type-error").css("display","block");
-        $("#zip-error").css("display","none");
-        $("#deal-type-error").css("display","none");
-        e.preventDefault();
-      }
-      else if(user_type=="Select your User Type"){
-        $("#deal-type-error").css("display","block");
-        $("#category-type-error").css("display","none");
-        $("#zip-error").css("display","none");
-        e.preventDefault();
-      }
-      else {
-        $("#firstpageform").submit();
-      }
-      console.log(zip.length+" "+service_type+" "+user_type);
+        else if(zip==""){
+            $("#zip-error").css("display","block");
+            $("#category-type-error").css("display","none");
+            $("#deal-type-error").css("display","none");  e.preventDefault();
+        }
+        else if(parseInt(zip.length)<5){
+            $("#zip-error").html("zip should be of 5 digits");
+            $("#zip-error").css("display","block");
+            $("#category-type-error").css("display","none");
+            $("#deal-type-error").css("display","none");  e.preventDefault();
+        }
+        else if(service_type=="Select Service"){
+            $("#category-type-error").css("display","block");
+            $("#zip-error").css("display","none");
+            $("#deal-type-error").css("display","none");
+            e.preventDefault();
+        }
+        else if(user_type=="Select your User Type"){
+            $("#deal-type-error").css("display","block");
+            $("#category-type-error").css("display","none");
+            $("#zip-error").css("display","none");
+            e.preventDefault();
+        }
+        else {
+            $("#firstpageform").submit();
+        }
+        console.log(zip.length+" "+service_type+" "+user_type);
     });
 
     // var dialogOpen = false, lastFocus, dialog, pagebackground;

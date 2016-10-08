@@ -168,7 +168,7 @@
 
     <% elsif trending_deal.present? && order_deal.present? && best_deal.blank?%>
        <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: '', trending_deal: trending_deal, order_deal: order_deal}%>
->>>>>>> prafull_05082016_new_branch
+<!-- >>>>>>> prafull_05082016_new_branch -->
     <% end %>
   <% end %>
   </div>
@@ -292,6 +292,9 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
+      <% if !session[:user_id].present?%>
+      $('#zipcode-modal').modal("show");
+      <% end %>
       $("#sticky-top").sticky({ topSpacing: 0 });
 
         // $("#onwait").hide();

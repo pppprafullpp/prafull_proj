@@ -83,6 +83,8 @@
                           <div class="login-signup col-lg-12 col-xs-12">
 
                             <form class="form-horizontal" id="login_app_user" action="/website/app_users/signin" accept-charset="UTF-8" method="post">
+                              <!-- <input type = "hidden" name="data['id']" id="data_id"> -->
+                              <!-- <input type = "hidden" name="data['effective_price']" id="data_effective_price" > -->
 
                                 <span style="font-size: 12px;color: red;margin-left: -14px;display: none;" id="user_not_found">Incorrect Username or Password!</span>
                               <div class="form-group">
@@ -102,7 +104,10 @@
 
                                 <label class="checkbox-inline" >
                                   <input type="checkbox" value="" id="" name="" >
+                                  <!-- <input type="checkbox" value="on" id="" name="user[remember_me]" > -->
                                   Remember Me</label>
+
+
                                 <br>
                                 </span> <span class="pull-right"><a class="help-block" href="javascript:void(0)" id="forgot_password">Forgot Your Password?</a></span> </div>
                               </div>
@@ -120,7 +125,8 @@
                           <div class="login-signup col-lg-12 col-xs-12">
                             <% @user = AppUser.new() %>
                             <%= form_for(@user, :url => website_app_users_path,:html => {:class => "form-horizontal"}) do |f| %>
-
+                            <!-- <input type = "hidden" name="data['id']" id="data_id_1"> -->
+                              <!-- <input type = "hidden" name="data['effective_price']" id="data_effective_price_1"> -->
                             <div class="form-group">
                               <div class="col-md-6" style="padding-left:0px">
                                 <%= f.text_field :first_name,:class => "form-control",:placeholder => "First Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
@@ -196,6 +202,9 @@
     object.value=value[0].toUpperCase()+""+rest
   }
   $( document ).ready(function() {
+    <% if !session[:user_id].present?  %>
+    $('#zipcode_header').show();
+    <% end %>
       $("#app_user_user_type").addClass("form-control");
       $("#app_user_user_type option[value='Select User type']").prop("selected","selected")
       $('#app_user_password').keyup(function() {

@@ -15,7 +15,7 @@
             <div class="col-xs-2">
               <span class="img_border"><%= image_tag("#{Deal.find_by_id(order.order_items.first.deal_id).image}", :alt => "logo") %></span>
               <!-- <img src="img/AT&amp;T_logo_2005.png" alt="logo"> -->
-              <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
+              <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).title %></p>
             </div>
                 <div class="col-xs-2"> <p><%=order.created_at.strftime("%m/%d/%y")%></div>
                 <div class="col-xs-2"> <p><span class="panding"><%= order.status %></span></p> </div>

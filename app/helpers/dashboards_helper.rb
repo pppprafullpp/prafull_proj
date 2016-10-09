@@ -472,7 +472,7 @@ module DashboardsHelper
 			deal_type=app_user.user_type
 			restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 			deal_validation_conditions="#{filter_by_provider} deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "
- 			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
+			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
 			matched_deal = []
 			if category_id == Deal::INTERNET_CATEGORY
 				if user_preference.present?
@@ -484,7 +484,7 @@ module DashboardsHelper
 				else
 					deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+ " AND deals.id not in (?)",restricted_deals).order(sort_by).group('deals.id')
 					if deals.present?
- 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 					if json.present?
 						matched_deal = json
@@ -506,7 +506,7 @@ module DashboardsHelper
 						if best_deals.present?
 							greater_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 							smaller_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND telephone_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-					  end
+						end
 					end
 				else
 					deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
@@ -553,10 +553,10 @@ module DashboardsHelper
 						current_call_minutes = user_preference.cellphone_service_preference.domestic_call_minutes
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
 						if best_deals.present?
-						greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-						smaller_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							smaller_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						end
 					end
-				end
 				else
 					deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
 
@@ -572,30 +572,30 @@ module DashboardsHelper
 				if user_preference.present?
 					app_user_bundle_combo = user_preference.bundle_service_preference.bundle_combo
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true)
-						if best_deals.present?
-							if app_user_bundle_combo=="Internet,Telephone and Cable"
-								app_user_download_speed = user_preference.bundle_service_preference.download_speed
-								app_user_call_minutes = user_preference.bundle_service_preference.domestic_call_minutes
-								app_user_free_channels = user_preference.bundle_service_preference.free_channels
-								greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.domestic_call_minutes > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-								smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.domestic_call_minutes < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-							elsif app_user_bundle_combo=="Internet and Telephone"
-								app_user_download_speed = user_preference.bundle_service_preference.download_speed
-								app_user_call_minutes = user_preference.bundle_service_preference.domestic_call_minutes
-								greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-								smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-							elsif app_user_bundle_combo=="Internet and Cable"
-								app_user_download_speed = user_preference.bundle_service_preference.download_speed
-								app_user_free_channels = user_preference.bundle_service_preference.free_channels
-								# raise user_preference.bundle_service_preference.to_yaml
-								greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-								smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-							elsif app_user_bundle_combo=="Telephone and Cable"
-								app_user_call_minutes = user_preference.bundle_service_preference.domestic_call_minutes
-								app_user_free_channels = user_preference.bundle_service_preference.free_channels
-								greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.domestic_call_minutes > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-								greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.domestic_call_minutes < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
-							end
+					if best_deals.present?
+						if app_user_bundle_combo=="Internet,Telephone and Cable"
+							app_user_download_speed = user_preference.bundle_service_preference.download_speed
+							app_user_call_minutes = user_preference.bundle_service_preference.domestic_call_minutes
+							app_user_free_channels = user_preference.bundle_service_preference.free_channels
+							greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.domestic_call_minutes > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.domestic_call_minutes < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						elsif app_user_bundle_combo=="Internet and Telephone"
+							app_user_download_speed = user_preference.bundle_service_preference.download_speed
+							app_user_call_minutes = user_preference.bundle_service_preference.domestic_call_minutes
+							greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						elsif app_user_bundle_combo=="Internet and Cable"
+							app_user_download_speed = user_preference.bundle_service_preference.download_speed
+							app_user_free_channels = user_preference.bundle_service_preference.free_channels
+							# raise user_preference.bundle_service_preference.to_yaml
+							greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							smaller_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.download < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_download_speed,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						elsif app_user_bundle_combo=="Telephone and Cable"
+							app_user_call_minutes = user_preference.bundle_service_preference.domestic_call_minutes
+							app_user_free_channels = user_preference.bundle_service_preference.free_channels
+							greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.domestic_call_minutes > ? AND bundle_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+							greater_deals = Deal.joins(:bundle_deal_attributes).where(deal_validation_conditions+" AND bundle_deal_attributes.bundle_combo = ? AND bundle_deal_attributes.domestic_call_minutes < ? AND bundle_deal_attributes.free_channels < ? AND deals.id not in (?) AND deals.id not in (?)", app_user_bundle_combo,app_user_call_minutes,app_user_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
+						end
 					end
 				else
 					deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order(sort_by).group('deals.id')
@@ -659,4 +659,5 @@ module DashboardsHelper
 
 		return matched_deal
 	end
+
 end

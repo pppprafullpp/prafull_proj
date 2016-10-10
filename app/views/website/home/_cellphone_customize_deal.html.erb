@@ -12,12 +12,12 @@ deal_extra_services = customized_deals['deal_extra_services']
 			<% deal_attributes.each do |deal_attribute| %>
 				<div class="pull-left">
 					<div class="sd-deal-sty">
-						<!-- <div onclick="show_modal(<%=deal_attribute.to_json%>,'attribute')"> -->
-						<h6 ><%= deal_attribute["description"]%></h6>
+						<div class="custom_cursor" onclick="show_modal(<%=deal_attribute.to_json%>,'attribute')">
+						<h6 ><%= deal_attribute["title"]%></h6>
 						<p>Data Plan Price: $<%=deal_attribute["data_plan_price"]%></p>
 						<p>Domestic minutes <%= deal_attribute["domestic_call_minutes"]%></p>
 						<p>International minutes <%= deal_attribute["international_call_minutes"]%></p>
-					<!-- </div> -->
+					</div>
 						<div class="pull-left">
 							<div class="checkbox checkbox-info">
 	         			<input type="checkbox" id="deal_attribute_<%=deal_attribute['id']%>" name="deal_attributes" val="<%=deal_attribute['id']%>_<%=deal_attribute['data_plan_price'].to_f%>_<%=customized_deals["service_category_name"]%>" />
@@ -37,11 +37,11 @@ deal_extra_services = customized_deals['deal_extra_services']
 			<% deal_equipments.each do |deal_equipment| %>
 				<div class="text-center">
 					<div class="sd-deal-sty">
-						<!-- <div onclick="show_modal(<%=deal_equipment.to_json%>,'equipment')"> -->
+						<div class="custom_cursor" onclick="show_modal(<%=deal_equipment.to_json%>,'equipment')">
 						<h6 ><%=deal_equipment["brand"]%></h6>
 						<p id="description_<%=deal_equipment['id']%>" class="hidden"><%=deal_equipment["brand"]%></p>
 						<h6><%= deal_equipment['cellphone_name']%></h6>
-					<!-- </div> -->
+					</div>
 						<%deal_equipment["available_color"].each_with_index do |av,index|%>
 							<div class="color-wrapper text-center">
 								<input type="radio" checked="checked" name="deviceColors_<%=deal_equipment['id']%>" id="color_<%=deal_equipment['id']%>_<%=av['id']%>" class="colorSelector" />
@@ -68,11 +68,11 @@ deal_extra_services = customized_deals['deal_extra_services']
 			<% deal_extra_services.each do |deal_extra_service| %>
 				<div class="text-center">
 					<div class="sd-deal-sty">
-						<!-- <div onclick="show_modal(<%=deal_extra_service.to_json%>,'extra_services')"> -->
+						<div class="custom_cursor"  onclick="show_modal(<%=deal_extra_service.to_json%>,'extra_services')">
 							<h6><%=deal_extra_service["service_name"].truncate(12)%></h6>
 							<p style="line-height:20px; height:100px; overflow-y:auto;"> <%=deal_extra_service["service_description"]%></p>
 							<div class="equip-price"> <span>$ <%="%.2f" % deal_extra_service["price"]%></span> </div>
-						<!-- </div> -->
+						</div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
        					<input name="deal_extra_services" type="checkbox" id="deal_extra_service_<%=deal_extra_service['id']%>" val="<%=deal_extra_service['id']%>_<%=deal_extra_service['price']%>" />
@@ -86,32 +86,37 @@ deal_extra_services = customized_deals['deal_extra_services']
 	</div>
 
 
-  <div class="modal fade text-left" id="optionsModal" role="dialog" aria-hidden="true"  >
+	<div id="customdeal" class="modal fade" role="dialog">
   <div class="modal-dialog">
+  	<button type="button" class="close log-pop-btn" data-dismiss="modal">&times;</button>
+    <div id="custom_services" class="modal-content pull-left">
+      <div id="attribute_div" class="modal-body col-md-12">
+      	<h4 id="attribute_title"></h4>
+      	<strong id="attribute_data_plan_price" class="pop-price"><span>Price</span> ""</strong>
+      	<p id="attribute_description"></p>
+   		</div>
 
-    <!-- Modal content-->
+   		<div id="equipment_div" class="modal-body col-md-12">
+      	<div class="col-md-4">
+      		<img src="/assets/website/iphone6s.png" alt="" />
+      	</div>
+      	<div class="col-md-8"><h4 id="equipment_brand"></h4>
+      		<strong id="equipment_price" class="pop-price"><span>Price</span>''</strong>
+      		<p id="equipment_description">''</p>
+				</div>
+   		</div>
 
-    <div id="custom_services" class="modal-content" style="height: 100px;">
+   		<div id="extra_services_div" class="modal-body col-md-12">
+      	<h4 id="extra_services_title"></h4>
+      	<strong id="extra_services_price" class="pop-price"><span>Price</span> ""</strong>
+      	<p id="extra_services_desc"></p>
+   		</div>
+    </div>
+  </div>
+</div>
 
-    	<div id="attribute_div">
-    		<div id="attribute_data_plan_price"></div>
-    	</div>
 
-    	<div id="equipment_div">
-    		<div id="equipment_price">
-    			<div class></div>
-    		</div>
-    	</div>
 
-    	<div id="extra_services_div">
-    		<div id="extra_services_price">
-    			<div class></div>
-    		</div>
-    	</div>
-      
-      </div>	
-      </div>	
-      </div>	
 </section>
 
 
@@ -131,20 +136,31 @@ deal_extra_services = customized_deals['deal_extra_services']
 		if (type == 'attribute') {
 			$("#"+type+"_div").removeClass('hidden');
 			// $("#"+type+"_div").css("display","block");
-			$("#"+type+'_data_plan_price').html("Price"+data["data_plan_price"]);
+			$("#"+type+'_data_plan_price').html("Price" + " " + "$" +data["data_plan_price"]);
+			$("#"+type+'_description').html(data["description"]);
+			$("#"+type+'_title').html(data["title"]);
 		}
 		if (type == 'equipment') {
 			$("#"+type+"_div").removeClass('hidden');
 			// $('#attribute_div').addClass('hidden');
 
 			// $("#"+type+"_div").css("display","block");
-			$("#"+type+'_price').html("Price"+data["price"]);
+			$("#"+type+'_price').html("Price" + " " + "$"+data["price"]);
+			$("#"+type+'_description').html(data["description"]);
+			$("#"+type+'_brand').html(data["brand"] + ' '  + data["cellphone_name"]);
 		}
 		if (type == 'extra_services') {
 			$("#"+type+"_div").removeClass('hidden');
 			// $("#"+type+"_div").css("display","block");
-			$("#"+type+'_price').html("Name"+data["service_name"]);
+			$("#"+type+'_title').html(data["service_name"]);
+			$("#"+type+'_price').html("Price" + " " + "$" +data["price"]);
+			$("#"+type+'_desc').html(data["service_description"]);
+
+
 		}
-   		$("#optionsModal").modal("show");
+   		$("#customdeal").modal("show");
 	}
 </script>
+
+
+

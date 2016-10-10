@@ -11,11 +11,13 @@ deal_channel_packages = customized_deals['channel_packages']
 			<% deal_attributes.each do |deal_attribute| %>
 				<div class="text-center">
 					<div class="sd-deal-sty">
+						<div class="custom_cursor" onclick="show_modal(<%=deal_attribute.to_json%>,'cable_attribute')">
 						<h6><%= deal_attribute["title"]%></h6>	
 						<p><%=deal_attribute["channel_count"]%>+ Channels</p>	
 						<p><%= deal_attribute["hd_channels"]%>+ HD</p>	
 						<p><%= deal_attribute["description"]%></p>	
 						<p>Price $<%= deal_attribute["amount"]%>/mo</p>	
+					</div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
 								<input type="checkbox" id="deal_attribute_<%=deal_attribute['id']%>" name="deal_attributes" val="<%=deal_attribute['id']%>_<%= deal_attribute["amount"]%>" />
@@ -33,11 +35,13 @@ deal_channel_packages = customized_deals['channel_packages']
 	 	<div id="channel_package" class="owl-carousel">
 			<% deal_channel_packages.each do |deal_channel_package| %>
 				<div class="text-center">
-					<div class="sd-deal-sty " style="height:250px">
+					<div class="sd-deal-sty " >
+						<div class="custom_cursor" onclick="show_modal(<%=deal_channel_package.to_json%>,'channel_package')">
 						<h6><%= deal_channel_package["package_name"]%></h6>	
 						<p><%=deal_channel_package["channel_count"]%>+Channels</p>	
 						<p>Domestic minutes <%= deal_channel_package["description"]%></p>	
 						<p>Price $<%= deal_channel_package["price"]%>/mo</p>	
+					</div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
 								<input type="checkbox" id="deal_channel_package_<%=deal_channel_package['id']%>" name="deal_channel_packages" val="<%=deal_channel_package['id']%>_<%= deal_channel_package["price"]%>" />
@@ -54,11 +58,13 @@ deal_channel_packages = customized_deals['channel_packages']
 		<div id="cable_deal_equipments" class="owl-carousel">
 			<% deal_equipments.each do |deal_equipment| %>
 				<div class="text-center">
-					<div class="sd-deal-sty" style="height: 200px;">
+					<div class="sd-deal-sty" >
+						<div class="custom_cursor" onclick="show_modal(<%=deal_equipment.to_json%>,'cable_equipment')">
 						<h6><%= deal_equipment["name"]%></h6>	
 						<!-- <p>Data Plan Price: $<%#=deal_equipment["data_plan_price"]%></p>	 -->
 						<!-- <p>Domestic minutes <%#= deal_equipment["domestic_call_minutes"]%></p>	 -->
 						<p>Price $<%= deal_equipment["price"]%>/mo</p>	
+					</div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
 								<input type="checkbox" id="cable_deal_equipment_<%=deal_equipment['id']%>" name="cable_deal_equipments" val="<%=deal_equipment['id']%>_<%=deal_equipment['price'].to_f%>" />
@@ -70,6 +76,37 @@ deal_channel_packages = customized_deals['channel_packages']
 			<% end %>
 		</div>
 	</div>
+
+
+
+		<div id="customdeal" class="modal fade" role="dialog">
+  <div class="modal-dialog ">
+  	<button type="button" class="close log-pop-btn" data-dismiss="modal">&times;</button>
+    <div id="custom_services" class="modal-content pull-left ">
+      <div id="cable_attribute_div" class="modal-body col-md-12 ">
+      	<h4 id="cable_attribute_title"></h4>
+      	<strong id="cable_attribute_price" class="pop-price"><span>Price</span> ""</strong>
+      	<p id="cable_attribute_description"></p>
+      	<ul class="row channel-list" id="cable_attribute_channel_list"></ul>
+
+   		</div>
+
+   		<div id="channel_package_div" class="modal-body col-md-12">
+      <h4 id="channel_package_title"></h4>
+      	<strong id="channel_package_price" class="pop-price"><span>Price</span> ""</strong>
+      	<p id="channel_package_description"></p>
+      	<ul class="row channel-list" id="channel_package_channel_list"></ul>
+   		</div>
+
+   		<div id="cable_equipment_div" class="modal-body col-md-12">
+      	<h4 id="cable_equipment_title"></h4>
+      	<strong id="cable_equipment_price" class="pop-price"><span>Price</span> ""</strong>
+      	<p id="cable_equipment_desc"></p>
+   		</div>
+    </div>
+  </div>
+</div>
+
 </section>
 
 <script>
@@ -80,27 +117,42 @@ deal_channel_packages = customized_deals['channel_packages']
    items:3,
   });
 
- 
-function show_modal(data,type) {
-		if (type == 'attribute') {
-			$("#"+type+"_div").removeClass("hidden");
-			$("#"+type+'_data_plan_price').html("Price"+data["data_plan_price"]);
-			console.log($("#"+type+'_data_plan_price'));
-			console.log(data);
+ function show_modal(data,type) {
+ 		$('#custom_services').children().addClass('hidden');
+		if (type == 'cable_attribute') {
+			$("#"+type+"_div").removeClass('hidden');
+			$("#"+type+'_price').html("Price" + " " + "$" +data["amount"]);
+			$("#"+type+'_description').html(data["description"]);
+			$("#"+type+'_title').html(data["title"]);
+			// $("#"+type+'channel_list').html("<ul>");
+			for(i=0;i<data['channel_name'].length;i++) {
+				$("#"+type+'_channel_list').append("<li>"+data['channel_name'][i]['channel_name']+"</li>");
+			}
+			// $("#"+type+'channel_list').html("</ul>");
 		}
-		if (type == 'equipment') {
-			$("#"+type+"_div").removeClass("hidden");
-			$("#"+type+'_data_plan_price').html("Price"+data["data_plan_price"]);
-			console.log($("#"+type+'_data_plan_price'));
-			console.log(data);
+		if (type == 'channel_package') {
+			$("#"+type+"_div").removeClass('hidden');
+			$("#"+type+'_price').html("Price" + " " + "$"+data["price"]);
+			$("#"+type+'_description').html(data["description"]);
+			$("#"+type+'_title').html(data["package_name"]);
+			// $("#"+type+'channel_list').html("<ul>");
+			for(i=0;i<data['channel_name'].length;i++) {
+				console.log(data['channel_name'][i]['channel_name']);
+				$("#"+type+'_channel_list').append("<li>"+data['channel_name'][i]['channel_name']+"</li>");
+			}
+			// $("#"+type+'channel_list').html("</ul>");
 		}
-		if (type == 'extra_services') {
-			$("#"+type+"_div").removeClass("hidden");
-			$("#"+type+'_data_plan_price').html("Price"+data["data_plan_price"]);
-			console.log($("#"+type+'_data_plan_price'));
-			console.log(data);
+		if (type == 'cable_equipment') {
+			$("#"+type+"_div").removeClass('hidden');
+			$("#"+type+'_title').html(data["name"]);
+			$("#"+type+'_price').html("Price" + " " + "$" +data["price"]);
+			$("#"+type+'_desc').html(data["description"]);
+
+
+
 		}
-   		$("#optionsModal").modal("show");
+   		$("#customdeal").modal("show");
 	}
+
 </script>
 	

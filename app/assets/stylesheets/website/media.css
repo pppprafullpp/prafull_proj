@@ -117,12 +117,12 @@
     .compare-design .scroller_order {
     overflow-x: hidden;
     }
-    .login-tab .modal-dialog {
+   /* .login-tab .modal-dialog {
     width: 675px;
-    }
-    #zipcode .modal-dialog {
+    }*/
+   /* #zipcode .modal-dialog {
     width: 600px;
-    }
+    }*/
     .zipcode-body {
         padding: 30px 20px;
     }
@@ -255,16 +255,16 @@ footer .col-xs-6 ul {
 .height_popup {
     height: auto;
 }
-.login-tab .modal-dialog {
+/*.login-tab .modal-dialog {
     width: 480px;
     margin: auto;
     margin-top: 130px;
-}
-#zipcode .modal-dialog {
+}*/
+/*#zipcode .modal-dialog {
     width: 500px;
     margin: auto;
     margin-top: 100px;
-}
+}*/
  .compare_box .btn_2 {
      display: inline-block;
 }
@@ -422,18 +422,18 @@ footer .col-xs-6 ul {
     height: auto;
     line-height: normal;
     }
-    .login-tab .modal-dialog {
+   /* .login-tab .modal-dialog {
     width: 330px;
-    }
+    }*/
     .height_popup .pull-right {
         float: left !important;
     }
     .login-tab .popup_right a.help-block {
     margin-top: 17px;
     }
-    #zipcode .modal-dialog {
+   /* #zipcode .modal-dialog {
     width: 400px;
-    }
+    }*/
     .zipcode-body {
     background-size: 100% 100%;
     }
@@ -495,9 +495,9 @@ footer .col-xs-6 ul {
 .pagination_sec ul li a {
     font-size: 12px;
 }
-    #zipcode .modal-dialog {
+    /*#zipcode .modal-dialog {
     width: 330px;
-    }
+    }*/
     .zipcode-body {
     background-size: 100% 100%;
     }
@@ -516,9 +516,9 @@ footer .col-xs-6 ul {
 .box-sec .col-xs-6 {
     width: 100%;
 }
-.login-tab .modal-dialog {
+/*.login-tab .modal-dialog {
     width: 250px;
-}
+}*/
 .popup_right {
     height: auto;
     padding: 5px;
@@ -529,9 +529,9 @@ footer .col-xs-6 ul {
 .popup_right .btn-login {
     width: 100%;
 }
-#zipcode .modal-dialog {
+/*#zipcode .modal-dialog {
     width: 248px;
-}
+}*/
 .zipcode-body h4 {
     font-size: 22px;
 }
@@ -587,3 +587,4 @@ span.seperator {  top: 107%; left: 50%;}
 
 
 }
+#custom_services { float: left; width: 100%;}

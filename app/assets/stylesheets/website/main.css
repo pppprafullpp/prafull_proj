@@ -1848,7 +1848,7 @@ a {
 .popup_right .login-signup .form-horizontal {
     padding: 0 0px;
 }
-.modal-dialog {
+.login-popupwd .modal-dialog {
     margin-top: 130px;
     width: 777px;
 }
@@ -3623,11 +3623,11 @@ color: #555 !important;
 .filter-focus {
     border-bottom: 2px solid;
 }
-#comparePopup .modal-dialog,
+/*#comparePopup .modal-dialog,
 .services-popup .modal-dialog,
 .sd-channel-popup .modal-dialog {
     width: 600px;
-}
+}*/
 .compare-popsty {
     padding: 15px 20px 20px;
     /*height: 400px;*/
@@ -6879,3 +6879,12 @@ select::-ms-expand {
 .sd-alldeal  i   {display: inline-block;
     font-size: 18px;
     margin-left: 7px;}
+/*#customdeal .modal-dialog { width:600px;}*/
+#customdeal h4{color: #0f60bb;font-family: "open_sanssemibold";margin:0;text-align: left; width: 100%;}
+#customdeal p { font-size:14px; margin-top:10px;}
+.pop-price { margin-top:10px; display:inline-block; font-size:24px;    font-family: "open_sanssemibold";  font-weight:normal; float: left;}
+#customdeal .modal-body{  padding: 25px;}
+.custom_cursor {
+    cursor: pointer;;
+    display: inline-block; width: 100%;
+}

@@ -106,6 +106,7 @@ class Website::HomeController < ApplicationController
 
   def set_zipcode_and_usertype
     session[:zip_code] = params[:zip_code]
+    cookies[:zip_code] = params[:zip_code]
     session[:user_type] = (params[:user_type] == 'option1') ? AppUser::RESIDENCE : AppUser::BUSINESS
     redirect_to service_deals_path
   end

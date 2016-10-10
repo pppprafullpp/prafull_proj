@@ -292,7 +292,7 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
-        <% if !session[:user_id].present?%>
+        <% if !session[:user_id].present? && !cookies[:zip_code].present?%>
         $('#zipcode-modal').modal("show");
         <% end %>
         $("#sticky-top").sticky({ topSpacing: 0 });

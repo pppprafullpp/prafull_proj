@@ -1,3 +1,5 @@
+
+
 @charset "utf-8";
 /* CSS Document */
 
@@ -158,18 +160,20 @@
         position: static;
         padding-top: 50px;
         padding-bottom: 50px;
-        text-align: left;
+        text-align: center;
+        padding: 10px 0;
     }
     .carousel-inner .carousel-control {
         display: none;
     }
     .formcontainer h2 {
-        font-size: 24px;
+
         margin-bottom: 15px;
         margin-top: 0px;
         margin-left: 30px;
         margin-right: 30px;
     }
+    .formcontainer h3  { font-size: 100%; text-align: center;}
     .formcontainer .btn-red {
         margin-left: 30px;
     }
@@ -190,11 +194,6 @@
     color: #2586d4;
     background-color: #ffffff;
     border-color: #e8e8e8;
-}
-.carousel-inner .formcontainer .btn-default:hover, .carousel-inner .formcontainer .btn-default:focus, .carousel-inner .formcontainer .btn-default.focus, .carousel-inner .formcontainer .btn-default:active, .carousel-inner .formcontainer .btn-default.active, .carousel-inner .formcontainer .open>.dropdown-toggle.btn-default {
-    background: #eaeaea;
-    color: #2586d4;
-    border-bottom: 5px solid #d4d4d4;
 }
 .copyright {
     text-align: left;
@@ -290,12 +289,7 @@ footer .col-xs-6 ul {
 /*End of vishal responsive form 768 show*/
 
 
-h1 {
-    font-size: 20px;
-}
-h2 {
-    font-size: 15px;
-}
+
 .carousel-inner img {
     width: auto;
 }
@@ -314,10 +308,11 @@ h2 {
     border-top: 1px solid #eceaea;
 }
 .navService li:hover {
-    background: #e50005;
+    background:none;
 }
+
 .navService li:hover a {
-    color: #fff;
+    color: #e50005;
 }
 .navbar .container {
     padding: 0;
@@ -343,9 +338,16 @@ h2 {
     .zipcode-body {
     background-size: 100% 100%;
     }
+
+    .formcontainer .col-sm-6, .formcontainer .col-md-10{ margin:0 10%; padding:0;}
+      .formcontainer .col-sm-12{ margin-top:20px; }
+         h2, h3,h4,h5, h6, button, .sd-services-col p { font-size: 100% !important;}
+      .formcontainer .btn-blue { margin-top: 0;}
+      h1 { font-size: 120% !important;}
+
 }
 
-/*Vishal css*/
+
 @media (max-width: 560px) {
 
 .best_deals .container.serviceCon1 .row .col-xs-6 {
@@ -434,6 +436,12 @@ h2 {
     }
     .zipcode-body {
     background-size: 100% 100%;
+    }
+    .sd-services-opt {
+        display: inline-block;
+        float: left;
+        padding: 2% 0;
+        width: 50% !important;
     }
 }
 
@@ -572,4 +580,10 @@ small, .small { width: 100%; }
 .inner-logindt {border-right:0;}
 span.seperator {  top: 107%; left: 50%;}
 .sd-more-details-page table { width:100%; float: left;}
+.carousel-inner {
+    height: auto;
+}
+#navbar { float: left !important}
+
+
 }

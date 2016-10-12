@@ -309,6 +309,9 @@ class Website::AppUsersController < ApplicationController
         session[:user_name] = @app_user.first_name.present? ?  Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
         session[:zip_code] = @app_user.zip
         session[:user_type] = @app_user.user_type
+        if params[:remember_me]
+          cookies.permanent[:auth_token] =@app_user.id.to_s + SecureRandom.hex(6)
+        end
         if session[:user_type] == AppUser::BUSINESS
           session[:business] = Base64.decode64(@app_user.business_app_users.last.business.business_name)
         end
@@ -329,6 +332,7 @@ class Website::AppUsersController < ApplicationController
 
   def signout
     reset_session
+    cookies.delete(:auth_token)
     redirect_to website_home_index_path and return
   end
 

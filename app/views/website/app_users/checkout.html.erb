@@ -30,11 +30,12 @@
                     Remember Me</label> -->
                   <!-- </div> -->
 
-
-                    <div class="checkbox checkbox-info" id="deal-checkbox">
-                            <input type="checkbox" value="" name="" id="checkbox15">
-                          <label for="checkbox15">   Remember Me</label>
-                        </div>
+                    <!-- <div class="checkbox checkbox-info" id="deal-checkbox"> -->
+                      <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+                      <label for="checkbox15">   Remember Me</label>
+                            <!-- <input type="checkbox" value="" name="" id="checkbox15"> -->
+                       <!--    
+                        </div> -->
                   <!--  </span> <span class="pull-right"><a class="help-block" href="javascript:void(0)" id="checkout_forgot_password">Forgot Your Password?</a></span>  -->
                   <a href="javascript:void(0)" id="checkout_forgot_password" class="forgot-pasw">Forgot password?</a>
                 </div>

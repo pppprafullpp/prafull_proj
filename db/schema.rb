@@ -588,29 +588,6 @@ ActiveRecord::Schema.define(version: 20161007052128) do
 
   add_index "internet_service_preferences", ["service_preference_id"], name: "index_internet_service_preferences_on_service_preference_id", using: :btree
 
-  create_table "leads", force: :cascade do |t|
-    t.text     "lead_type",             limit: 65535
-    t.integer  "service_category_id",   limit: 4
-    t.integer  "deal_id",               limit: 4
-    t.text     "lead_name",             limit: 65535
-    t.text     "lead_description",      limit: 65535
-    t.text     "lead_email",            limit: 65535
-    t.text     "lead_contact_number",   limit: 65535
-    t.text     "lead_location",         limit: 65535
-    t.text     "lead_address",          limit: 65535
-    t.text     "lead_spoc_name",        limit: 65535
-    t.text     "lead_spoc_email",       limit: 65535
-    t.text     "lead_spoc_number",      limit: 65535
-    t.text     "lead_spoc_designation", limit: 65535
-    t.text     "lead_response",         limit: 65535
-    t.text     "user_id",               limit: 65535
-    t.text     "status",                limit: 65535
-    t.datetime "demo_time"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.text     "business_name",         limit: 65535
-  end
-
   create_table "login_details", force: :cascade do |t|
     t.string   "partnerable_type", limit: 255
     t.integer  "partnerable_id",   limit: 4
@@ -756,25 +733,6 @@ ActiveRecord::Schema.define(version: 20161007052128) do
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "sales_executives", force: :cascade do |t|
-    t.string   "name",                 limit: 255
-    t.string   "email",                limit: 255
-    t.string   "role",                 limit: 255
-    t.string   "encrypted_password",   limit: 255
-    t.string   "reset_password_token", limit: 255
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",        limit: 4
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",   limit: 255
-    t.string   "last_sign_in_ip",      limit: 255
-    t.boolean  "enabled"
-    t.integer  "failed_count",         limit: 4
-    t.datetime "password_updated_at"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
   end
 
   create_table "sequences", force: :cascade do |t|

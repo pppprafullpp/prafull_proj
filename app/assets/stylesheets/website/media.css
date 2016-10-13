@@ -54,6 +54,7 @@
     .compare_box_border p {
     font-size: 10px;
     }
+
 }
 @media (max-width: 992px) {
     .carousel-caption {
@@ -117,6 +118,7 @@
     .compare-design .scroller_order {
     overflow-x: hidden;
     }
+    .side-deal { height: auto !important;}
    /* .login-tab .modal-dialog {
     width: 675px;
     }*/
@@ -129,11 +131,7 @@
     #zipcode .modal-dialog {
         margin-top: 100px;
     }
-    .details .bor_sec_left {
-    width: 100%;
-    margin: auto;
-    float: none;
-    }
+
     .bor_sec_left .checkbox {
     padding-left: 35px;
     }
@@ -143,6 +141,14 @@
     #compare_box.affix {
     width: 720px;
     }
+      .sd-deals-block { margin-top: 25px;}
+      .pagin-sty {margin-top: 25px;}
+
+      .auto-height {
+      min-height: 496px !important;
+  }
+
+  .reset-height .auto-height {  min-height: 530px !important;}
 }
 
 
@@ -255,16 +261,7 @@ footer .col-xs-6 ul {
 .height_popup {
     height: auto;
 }
-/*.login-tab .modal-dialog {
-    width: 480px;
-    margin: auto;
-    margin-top: 130px;
-}*/
-/*#zipcode .modal-dialog {
-    width: 500px;
-    margin: auto;
-    margin-top: 100px;
-}*/
+
  .compare_box .btn_2 {
      display: inline-block;
 }
@@ -286,9 +283,6 @@ footer .col-xs-6 ul {
 .compare_box .col-sm-2 {
     float: left;
 }
-/*End of vishal responsive form 768 show*/
-
-
 
 .carousel-inner img {
     width: auto;
@@ -332,18 +326,26 @@ footer .col-xs-6 ul {
 .account-page .custom-select::after {
     top: 28px;
 }
-    .compare-design .scroller_order {
+.compare-design .scroller_order {
     overflow-x: scroll;
-    }
-    .zipcode-body {
+}
+.zipcode-body {
     background-size: 100% 100%;
-    }
+}
 
-    .formcontainer .col-sm-6, .formcontainer .col-md-10{ margin:0 10%; padding:0;}
-      .formcontainer .col-sm-12{ margin-top:20px; }
-         h2, h3,h4,h5, h6, button, .sd-services-col p { font-size: 100% !important;}
-      .formcontainer .btn-blue { margin-top: 0;}
-      h1 { font-size: 120% !important;}
+.formcontainer .col-sm-6, .formcontainer .col-md-10{ margin:0 10%; padding:0;}
+.formcontainer .col-sm-12{ margin-top:20px; }
+h2, h3,h4,h5, h6, button, .sd-services-col p { font-size: 100% !important;}
+.formcontainer .btn-blue { margin-top: 0;}
+h1 { font-size: 120% !important;}
+
+.scroller{
+  height:auto;
+}
+.border-radius-bg { width: 100%; display:inline-block;}
+.pagination_sec {
+    margin-top: 0 !important;
+}
 
 }
 
@@ -372,12 +374,6 @@ footer .col-xs-6 ul {
 .trending_deals .serviceCon1 h1::before, .trending_deals .serviceCon1 h1::after {
     width: 17%;
 }
-.box-sec .col-xs-6 {
-    width: 360px;
-    margin-left: auto;
-    margin-right: auto;
-    float: none;
-}
 .heading-2 {
     margin-right: 10px;
     padding-right: 10px;
@@ -386,9 +382,7 @@ footer .col-xs-6 ul {
     margin-right: 10px;
     padding-right: 10px;
 }
-.separator_2 {
-    margin: 20px -49px;
-}
+
     .heading-2 {
         border-right: 0px;
         display: block;
@@ -511,14 +505,6 @@ footer .col-xs-6 ul {
 
 @media (max-width: 400px) {
 
-.details .bor_sec_left ,
-.pagination_sec .col-sm-12 ,
-.box-sec .col-xs-6 {
-    width: 100%;
-}
-/*.login-tab .modal-dialog {
-    width: 250px;
-}*/
 .popup_right {
     height: auto;
     padding: 5px;
@@ -567,8 +553,7 @@ footer .col-xs-6 ul {
 .formcontainer {
     top: 10%;
 }
-.details .border-radius-bg {padding: 30px 11px;}
-.sddeals-imgcon { width: auto; height: auto;}
+
 .pagination_sec {margin-top: 0 !important;}
 .pagin-sty { padding: 10px !important;}
 .sd-best-price span {font-size: 14px;}
@@ -584,7 +569,29 @@ span.seperator {  top: 107%; left: 50%;}
     height: auto;
 }
 #navbar { float: left !important}
-
+#custom_services { float: left; width: 100%;}
 
 }
-#custom_services { float: left; width: 100%;}
+
+@media (min-width: 992px) and (max-width: 1200px){
+
+  .auto-height {
+      min-height: 496px !important
+  }
+  .sddeals-imgcon { width:auto; height:auto;}
+  .reset-height .auto-height {
+      min-height: 530px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  .sd-deals-block {
+    display: inline-block;
+    margin-top: 25px;
+
+  }
+  .order-btn {padding:8px 30px}
+  .bor_sec_left .border-radius-bg.pull-left{ width: 100%;}
+  .col-md-9 { float: left;}
+  .scroller { height: auto;}
+}

@@ -740,6 +740,7 @@ color:#fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     padding: 30px 20px;
+
 }
 .details h5 {
     /*font-family: 'OpenSans Bold';
@@ -1078,7 +1079,7 @@ label:focus {
     width: 100%;
     background-size: 100%;
 }
-.zipcode-body h4 {
+.zipcode-body h3{
     /*font-size: 25px;*/
 
     font-family: 'open_sanssemibold';
@@ -1087,7 +1088,7 @@ label:focus {
 }
 .details-zip .radio {
     margin: 0;
-    padding: 20px 0 0
+    padding: 0;
 }
 .details-zip {
     padding-top: 20px;
@@ -2334,10 +2335,10 @@ color: #999;
   font-family: "open_sanssemibold";
   font-size: 14px;
   margin: 15px 0;
-  padding: 8px;
+  padding:8px 15px ;
   text-align: center;
   text-transform: uppercase;
-  width: 70%;
+
 }
 .order-btn:hover,
 .order-btn:focus {
@@ -3625,7 +3626,7 @@ color: #555 !important;
 }
 /*#comparePopup .modal-dialog,
 .services-popup .modal-dialog,
-.sd-channel-popup .modal-dialog {
+.sd-channel-popup .modal-dialog , .zipcode-modal, .modal-dialog{
     width: 600px;
 }*/
 .compare-popsty {
@@ -6841,10 +6842,6 @@ select::-ms-expand {
 .rating-container {
     margin-top: 20px;
 }
-.sd-deal-detailscon .order-btn {
-    width: 47%;
-    margin-right: 2%;
-}
 .sd-deal-detailscon .chanel-list-btn {
     text-align:right;
     margin: 15px 0;
@@ -6860,7 +6857,7 @@ select::-ms-expand {
     width:100%;
 }
 /*=======*/
-		#reviews-inner-area p { font-size:12px;}
+#reviews-inner-area p { font-size:12px;}
 #reviews-inner-area h5{ text-align: left; font-family: 'open_sansregular'; padding-top: 20px;}
 .rating-container {    margin-top: 20px;}
 
@@ -6894,3 +6891,7 @@ select::-ms-expand {
     height: 200px;
     overflow-y: auto;
 }
+.sticky-wrapper.is-sticky {
+height: auto !important;
+}
+  .sd-deals-block { margin-top: 25px;}

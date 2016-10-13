@@ -7,10 +7,10 @@
       <div class="zipcode-body">
         <form method="get" action="<%= set_zipcode_and_usertype_website_home_index_path %>">
           <div class="text-center"> <%= image_tag('website/map-pointer.png',:alt => 'map-pointer') %>
-            <h4>Enter Your Zip Code</h4>
+            <h3>Enter Your Zip Code</h3>
           </div>
           <div class="details-zip">
-            <div class="col-md-11 col-md-offset-1">
+            <div class="col-md-12 col-sm-12 col-xs-12">
               <%
                  if session[:user_type] == AppUser::BUSINESS
                    checked_business = "checked=''"
@@ -20,19 +20,19 @@
                    checked_business = ''
                  end
               %>
-              <h5>User Type</h5>
-              <div class="radio col-md-5">
+              <h4>User Type</h4>
+              <div class="radio col-md-5 col-sm-5 col-xs-5">
                 <label>
                   <input type="radio" name="user_type" id="residence" value="option1" <%= checked_residential %>>
                   Residence </label>
               </div>
-              <div class="radio col-md-5">
+              <div class="radio col-md-5 col-sm-5 col-xs-5">
                 <label>
                   <input type="radio" name="user_type" id="business" value="option2" <%= checked_business %>>
                   Business </label>
               </div>
             </div>
-            <div class="col-md-11 col-md-offset-1">
+            <div class="col-md-12 col-sm-12 col-xs-12">
 
               <div class="form-group residence-opt-off">
                 <label>Zipcode &nbsp;</label>

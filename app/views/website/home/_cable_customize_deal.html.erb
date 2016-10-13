@@ -87,7 +87,7 @@ deal_channel_packages = customized_deals['channel_packages']
       	<h4 id="cable_attribute_title"></h4>
       	<strong id="cable_attribute_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="cable_attribute_description"></p>
-      	<ul class="row channel-list" id="cable_attribute_channel_list"></ul>
+      	<ul class="channel_scroller row channel-list" id="cable_attribute_channel_list"></ul>
 
    		</div>
 
@@ -95,7 +95,7 @@ deal_channel_packages = customized_deals['channel_packages']
       <h4 id="channel_package_title"></h4>
       	<strong id="channel_package_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="channel_package_description"></p>
-      	<ul class="row channel-list" id="channel_package_channel_list"></ul>
+      	<ul class="channel_scroller row channel-list" id="channel_package_channel_list"></ul>
    		</div>
 
    		<div id="cable_equipment_div" class="modal-body col-md-12">
@@ -153,6 +153,37 @@ deal_channel_packages = customized_deals['channel_packages']
 		}
    		$("#customdeal").modal("show");
 	}
+
+	$(document).ready(function() {
+  // $("input[name='deal_attributes']:first").prop("checked","checked");
+  // $("input[name='deal_extra_services']:first").prop("checked","checked");
+  effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  var chkId = 0;
+  $('input[type=checkbox]').on('change', function() {
+    $(this).each ( function() {
+      effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+      if($(this).prop('checked') == true){
+        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+        chkId =$(this).attr("val").split("_")[1];
+        effective_value = effective_price + parseFloat(chkId);
+        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
+      }
+      else if($(this).prop('checked') == false){
+        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+        chkId =$(this).attr("val").split("_")[1];
+        effective_value = effective_price - parseFloat(chkId);
+        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+      }
+      else{
+        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+        effective_value = effective_value = effective_price 
+        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+      }
+      localStorage["effective_price"] = JSON.stringify(effective_value);
+    });
+  });
+ 
+});
 
 </script>
 	

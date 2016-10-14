@@ -95,17 +95,17 @@
 
                               </div>
                               <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password" name="user[password]" required id="user_password" maxlength="10" >
+                                <input type="password" class="form-control" placeholder="Password" autocomplete="off" name="user[password]" required id="user_password" maxlength="10" >
                               </div>
 
-                              
+
                               <div class="form-group">
                                 <div class="col-md-12">
                                   <span class="pull-left">
                                       <%= check_box_tag :remember_me, 1, params[:remember_me] %>
                                      <label for="checkbox15">   Remember Me</label>
                              <!--    <label class="checkbox-inline" >
-                                  <input type="checkbox" value="" id="" name="" > --> 
+                                  <input type="checkbox" value="" id="" name="" > -->
                                   <!-- <input type="checkbox" value="on" id="" name="user[remember_me]" > -->
                                   <!-- Remember Me</label> -->
 
@@ -131,14 +131,14 @@
                                 <!-- <input type = "hidden" name="data['id']" id="data_id_1"> -->
                                 <!-- <input type = "hidden" name="data['effective_price']" id="data_effective_price_1"> -->
                                 <div class="form-group">
-                                  <div class="col-md-6" style="padding-left:0px">
+
                                     <%= f.text_field :first_name,:class => "form-control",:placeholder => "First Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
                                     <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-fname-valid">Email Already Exists.</span>
                                   </div>
-                                  <div class="col-md-6" style="padding-left:0px; padding-right:0;">
+                                  <div class="form-group">
                                     <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last Name",:onblur =>"titleize_text(this)",:onkeyup=>"titleize_text(this)" %>
                                     <span style="font-size: 12px;color: red;margin-left: 5px;display: none;" id="is-signup-lname-valid">Email Already Exists.</span>
-                                  </div>
+
                                 </div>
                                 <div class="form-group">
                                   <%= f.text_field :email,:class => "form-control",:placeholder => "Email" %>

@@ -47,7 +47,7 @@
        </div>
 
     <%elsif AppUser.find(session[:user_id]).user_type == "business"%>
-      <p>Business user</p>
+      <p class="mgt20">Business user</p>
       <%addresses=AppUser.find(session[:user_id]).business_app_users.last.business.business_addresses rescue nil%>
 <% if addresses.present? %>
       <%addresses.each do |address|%>

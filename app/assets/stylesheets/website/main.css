@@ -129,6 +129,7 @@ seect option {
     font-size: 12px;
     height: 40px;
     border-radius: 0;
+		box-shadow: none !important;
 }
 .form-control::-moz-placeholder {
     color: #666666;
@@ -1086,7 +1087,7 @@ label:focus {
 }
 .details-zip .radio {
     margin: 0;
-    padding: 0;
+    padding: 0 15px;
 }
 .details-zip {
     padding-top: 20px;
@@ -1117,6 +1118,14 @@ label:focus {
     padding: 10px 40px;
     margin-top: 20px;
 }
+.zipcode-body .btn-red:hover{
+  background: #E50005;
+  color: #fff;
+
+
+
+
+}
 .mgt20 {
     margin-top: 20px;
 }
@@ -1136,7 +1145,9 @@ label:focus {
     background: #ffffff;
 }
 .prefrence-tab h4 {
-    color: #0f60bb;
+  color: #0F60BB;
+  padding: 20px 0;
+  position: relative;
     /*font-family: "open_sansregular";
 	font-size: 22px;
 	margin-bottom: 10px;
@@ -1284,15 +1295,10 @@ border-radius: 0px;
 -moz-border-radius: 0px;
 }*/
 
-.profile-tab h5 {
-    /*font-size: 22px;
-	font-family: 'open_sansregular';*/
-
-    color: #0f60bb;
-    /*	margin-bottom: 10px;
-	margin-top: 0;*/
-
-    position: relative;
+.profile-tab h4 {
+  color: #0f60bb;
+  position: relative;
+  padding: 30px 0 15px;
 }
 .profile-tab .form-horizontal .margin_top0 h5::before {
     left: 160px;
@@ -1470,12 +1476,7 @@ margin-top: 15px;
     /*margin-left: 9px;*/
 }
 .desc_cont p {
-    /*font-family: 'open_sanssemibold';
-	display: inline-block;
-	vertical-align: top;
-	color: #b2b2b2;
-	font-size: 13px;
-	margin-top: 5px;*/
+  font-size: 14px;
 }
 .desc_cont span.panding {
     color: #db8203;
@@ -1485,7 +1486,7 @@ margin-top: 15px;
 }
 /*--------------------------End of Order section------------------*/
 /*--------------------------prefrence-tab ------------------*/
-
+.prefrence-tab  { padding: 30px 20px; }
 .prefrence-tab .fa-2x {
     font-size: 20px;
 }
@@ -1948,7 +1949,7 @@ a {
 .login-tab .popup_right a.help-block {
     font-family: 'open_sansregular';
     font-size: 14px;
-    margin-top: 7px;
+    margin-top: 0;
 }
 .popup_right .login-signup .form-horizontal .col-md-12 {
     padding: 0px;
@@ -2403,6 +2404,7 @@ color: #999;
 .order-form .nav-tabs li.active a {
     background: #fff !important;
 }
+.order-form .nav-tabs > li.active > a { height:46px;}
 .order-form .nav-tabs > li.active > a,
 .order-form .nav-tabs > li.active > a:hover,
 .order-form .nav-tabs > li.active > a:focus {
@@ -3011,7 +3013,7 @@ color: #999;
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', endColorstr='#efefef', GradientType=0);
   /* IE6-9 */
 }
-.account-page .tabber .nav.tab1 {border-radius: 5px; }
+.account-page .tabber .nav.tab1 {border-radius: 5px 5px 0 0; }
 .tab1 li {
   border-right: 1px solid #DDDDDD;
   float: left;
@@ -6195,6 +6197,7 @@ ul.caption-dealdet li::before {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     top: 32px;
     text-align: left;
+    right: 0;
 }
 /* Links inside the dropdown */
 
@@ -6223,11 +6226,9 @@ ul.caption-dealdet li::before {
 .refer-earning-tab h4,
 .address-tab h4 {
     color: #0f60bb;
-    font-family: "open_sansregular";
-    font-size: 22px;
-    margin-bottom: 10px;
-    margin: 30px 0;
-    position: relative;
+
+
+
 }
 .set-default-btn {
     background: #44b758;
@@ -6243,6 +6244,7 @@ ul.caption-dealdet li::before {
 .address-tab .form-control {
     background: none;
 }
+.address-tab { padding: 20px;}
 #deal-form .img-responsive {
     display: inline-block;
     max-width: 70%;
@@ -7014,3 +7016,8 @@ select::-ms-expand {
 .tabber-profie { border: 1px solid #EEEEEE;
     float: left;
     width: 100%;}
+
+#remember_me + label { font-size: 14px;}
+#new_app_user .col-md-6 {padding:0}
+#slider  + .separator {margin: 16px 0;}
+.billing-det h4 {color:#0066CC;}

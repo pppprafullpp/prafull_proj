@@ -22,15 +22,20 @@
           </ul>
 
            </div>
-           <%if  @current_user.present? %>
-             <%if @current_user.email_verified%>
-               <a onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
-             <%else%>
-                  <a class="order-btn" href="javascript:void(0)">Verify email</a>
-             <%end%>
-           <%else%>
-             <a  onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
-           <%end%>
+           <%#if  @current_user.present? %>
+             <%#if @current_user.email_verified%>
+             <!--   <a onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%#=@deal.id%>">Order</a> -->
+             <%#else%>
+                  <!-- <a class="order-btn" href="javascript:void(0)">Verify email</a> -->
+             <%#end%>
+           <%#else%>
+            <!--  <a  onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%#=@deal.id%>">Order</a> -->
+           <%#end%>
+           <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order<a>
+          <% if  @customized_deals.present? && @category_name == "cellphone"%>
+          <a id="total-calculate-btn" onclick="calculate_total_price_for_cellphone()" class="order-btn" href="javascript:void(0)">Calculate Total price<a>
+            <%end %>
+
            <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>
             <a class="chanel-list-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
             <% end %>
@@ -378,31 +383,31 @@ function postLike(){
 </script>
 <script>
 $(document).ready(function() {
-  var effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-  var chkId = 0;
-  $('input[type=checkbox]').on('change', function() {
-    $(this).each ( function() {
-      effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-      if($(this).prop('checked') == true){
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price + parseFloat(chkId);
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
-      }
-      else if($(this).prop('checked') == false){
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price - parseFloat(chkId);
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
-      }
-      else{
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        effective_value = effective_value = effective_price
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
-      }
-      localStorage["effective_price"] = JSON.stringify(effective_value);
-    });
-  });
+  // var effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  // var chkId = 0;
+  // $('input[type=checkbox]').on('change', function() {
+  //   $(this).each ( function() {
+  //     effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //     if($(this).prop('checked') == true){
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       chkId =$(this).attr("val").split("_")[1];
+  //       effective_value = effective_price + parseFloat(chkId);
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
+  //     }
+  //     else if($(this).prop('checked') == false){
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       chkId =$(this).attr("val").split("_")[1];
+  //       effective_value = effective_price - parseFloat(chkId);
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+  //     }
+  //     else{
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       effective_value = effective_value = effective_price
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+  //     }
+  //     localStorage["effective_price"] = JSON.stringify(effective_value);
+  //   });
+  // });
 
 
 

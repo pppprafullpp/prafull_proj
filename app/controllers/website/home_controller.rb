@@ -15,8 +15,8 @@ class Website::HomeController < ApplicationController
     if session[:zip_code].present? && session[:user_type].present?
       @trending_deal_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])
     end
-    @cable_customized_deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CABLE_CATEGORY).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
-    @cellphone_customized_deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CELLPHONE_CATEGORY).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
+    @cable_customized_deals = Deal.where('is_customisable =? AND service_category_id=? AND deal_type =?', true,Deal::CABLE_CATEGORY,session[:user_type]).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
+    @cellphone_customized_deals = Deal.where('is_customisable =? AND service_category_id=? AND deal_type =?', true,Deal::CELLPHONE_CATEGORY,session[:user_type]).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
   end
 
   ## we are not using this function in website as this gives mixed deals of all categories

@@ -162,8 +162,12 @@
             <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count == 1 && deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
                 <%=render :partial => "two_deal_form.html.erb", locals: {deal_data: deal_data , deal_1: trending_deal,deal_2: '', key: "trending-cellphone-custom"}%>
 
+            <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cable_customized_deals.present? && @cable_customized_deals.count > 1 && deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
+               <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
 
 
+             <% elsif trending_deal.present? && best_deal.blank? && order_deal.blank? && @cellphone_customized_deals.present? && @cellphone_customized_deals.count > 1 && deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
+               <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
 
             <% elsif  trending_deal.present? && best_deal.present? && order_deal.blank? %>
                 <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: deal_data , best_deal: best_deal, trending_deal: trending_deal, order_deal: ''}%>

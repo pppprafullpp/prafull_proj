@@ -149,6 +149,12 @@
   }
 
   .reset-height .auto-height {  min-height: 530px !important;}
+  .sd-img-box { float: left; width: 50%;}
+    .order-form .sd-deal-price { float: right; width: 50%}
+    .order-form .sd-order-con .border-radius-bg { float: left; width: 100%;}
+  .no-paddingR { padding-left: 0; padding-right:0;}
+.login-popupwd .modal-dialog { width: 85%;}
+.scroller .checkbox.checkbox-info { display: inline-block;}
 }
 
 
@@ -301,6 +307,7 @@ footer .col-xs-6 ul {
 #navbar {
     border-top: 1px solid #eceaea;
 }
+
 .navService li:hover {
     background:none;
 }
@@ -346,6 +353,15 @@ h1 { font-size: 120% !important;}
 .pagination_sec {
     margin-top: 0 !important;
 }
+.order-form .nav-tabs li { width:100%; float: left;}
+.sd-order-con .tab-content #personal-info, .sd-order-con .tab-content #address-info, .sd-order-con .tab-content #business-info { float: left; width: 100%;}
+.sd-order-con .right-offer .border-radius-bg { float: left; width: 100%;}
+.order-form .nav-tabs li a:hover {border-top: 2px solid #FBF9FA !important;}
+.no-paddingR { padding-left: 0; padding-right:0;}
+.order-form .nav-tabs li.active a:hover { margin: 0; border-top:4px solid #E10409 !important; }
+.sd-img-box { float: left; width: 50%;}
+  .order-form .sd-deal-price { float: right; width: 50%}
+.scroller .checkbox.checkbox-info { display: inline-block;}
 
 }
 
@@ -437,6 +453,7 @@ h1 { font-size: 120% !important;}
         padding: 2% 0;
         width: 50% !important;
     }
+
 }
 
 @media (max-width: 500px) {
@@ -594,4 +611,11 @@ span.seperator {  top: 107%; left: 50%;}
   .bor_sec_left .border-radius-bg.pull-left{ width: 100%;}
   .col-md-9 { float: left;}
   .scroller { height: auto;}
+}
+
+@media (max-width:606px){
+
+  .tab1 li {width: 100%; }
+
+
 }

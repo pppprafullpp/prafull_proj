@@ -102,8 +102,8 @@
                               <div class="form-group">
                                 <div class="col-md-12">
                                   <span class="pull-left">
-                                      <%= check_box_tag :remember_me, 1, params[:remember_me] %>
-                                     <label for="checkbox15">   Remember Me</label>
+                                      <%= check_box_tag :remember_me, 1, params[:remember_me], :onchange=>"register_cookie(this)" %>
+                                     <label for="remember_me">   Remember Me</label>
                              <!--    <label class="checkbox-inline" >
                                   <input type="checkbox" value="" id="" name="" > -->
                                   <!-- <input type="checkbox" value="on" id="" name="user[remember_me]" > -->
@@ -205,6 +205,10 @@
         object.value=value[0].toUpperCase()+""+rest
     }
     $( document ).ready(function() {
+      if(Cookies.get("email")!="" && Cookies.get("password")!="") {
+        $("#user_email").val(Cookies.get("email"));
+        $("#user_password").val(Cookies.get("password"));
+      }
         <% if !session[:user_id].present?  %>
         $('#zipcode_header').show();
         <% end %>
@@ -217,7 +221,6 @@
         $("#app_user_user_type").change(function(){
             if (  $("#app_user_user_type option:selected").val() == "business") {
                 $("#business_name_div").removeClass("hidden");
-                // $(".height_popup").css("height", "700px")
             }
             else {
                 $("#business_name_div").addClass("hidden");
@@ -355,28 +358,30 @@
         $('#user_not_found').hide();
     });
 
-    $("#login_user").click(function(){
-        var check = true;
-        var a = $('#user_email').val().trim();
-        if (a == null || a == "") {
-            $('#user_email').addClass('custom-input-error')
-            check = false
-        }else{
-            $('#user_email').removeClass('custom-input-error')
-        }
-        var a = $('#user_password').val().trim();
-        if (a == null || a == "") {
-            $('#user_password').addClass('custom-input-error')
-            check = false
-        }else{
-            $('#user_password').removeClass('custom-input-error')
-        }
-        if(check) {
-            $('#login_app_user').submit()
-        }else{
-            return false
-        }
-    });
+    // $("#login_user").click(function(){
+    //     var check = true;
+    //
+    //     var a = $('#user_email').val().trim();
+    //     if (a == null || a == "") {
+    //         $('#user_email').addClass('custom-input-error')
+    //         check = false
+    //     }else{
+    //         $('#user_email').removeClass('custom-input-error')
+    //     }
+    //     var a = $('#user_password').val().trim();
+    //     if (a == null || a == "") {
+    //         $('#user_password').addClass('custom-input-error')
+    //         check = false
+    //     }else{
+    //         $('#user_password').removeClass('custom-input-error')
+    //     }
+    //     if(check) {
+    //
+    //       $('#login_app_user').submit()
+    //     }else{
+    //         return false
+    //     }
+    // });
 
     function checkcredentials(){
         var s=0;
@@ -392,6 +397,7 @@
                 },
                 success: function (data) {
                     if (data["status"] == true)  {
+                        register_cookie();
                         allow_submit();
                     }
                     else {
@@ -447,17 +453,28 @@
                     }
                 },
                 error: function (data) {
-                    //alert(data)
                 }
             });
         }
     }
-    // }
-    // });
 </script>
 <script>
     $(window).load(function(){
         $("#sticky-top").sticky({ topSpacing: 0 });
     });
-    //$('#zipcode_header').prop('disabled', true);
+    function register_cookie(obj){
+      email = $("#user_email").val();
+      pwd= $("#user_password").val();
+      if($("#remember_me").is(":checked") == true) {
+        Cookies.set('email', email, { expires: 7, path: '' });
+        Cookies.set('password', pwd, { expires: 7, path: '' });
+        if(email!="" && pwd!=""){
+        }
+        else {
+          alert("please enter both fields to remember");
+        }
+      }
+    }
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js"></script>

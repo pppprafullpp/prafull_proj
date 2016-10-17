@@ -102,7 +102,7 @@
             <% if trending_deal.present? && @cable_customized_deals.present? && @cellphone_customized_deals.present? && trending_deal_data[:service_category_id] != Deal::CABLE_CATEGORY && trending_deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
                 <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
              <% elsif trending_deal.present? && trending_deal_data[:service_category_id] != Deal::CABLE_CATEGORY && trending_deal_data[:service_category_id] != Deal::CELLPHONE_CATEGORY %>
-                <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%> 
+                <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
 
                 <% elsif  trending_deal.present? && @cable_customized_deals.blank? && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
                  <%=render :partial => "one_deal_form.html.erb", locals: {deal_data: trending_deal_data , trending_deal: trending_deal}%>
@@ -122,7 +122,7 @@
 
             <% elsif trending_deal.present?  && @cable_customized_deals.present? && @cable_customized_deals.count > 1 && trending_deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
                 <%=render :partial => "three_deal_form.html.erb", locals: {deal_data: trending_deal_data , best_deal: '', trending_deal: trending_deal, order_deal: ''}%>
-           
+
 
 
             <% end %>
@@ -362,10 +362,11 @@
         }
         else {
             $("#firstpageform").submit();
+
         }
         console.log(zip.length+" "+service_type+" "+user_type);
     });
-
+  
     // var dialogOpen = false, lastFocus, dialog, pagebackground;
 </script>
 

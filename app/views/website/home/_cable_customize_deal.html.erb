@@ -20,7 +20,7 @@ deal_channel_packages = customized_deals['channel_packages']
 					</div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
-								<input type="checkbox" id="deal_attribute_<%=deal_attribute['id']%>" name="deal_attributes" val="<%=deal_attribute['id']%>_<%= deal_attribute["amount"]%>" />
+								<input type="checkbox" id="deal_attribute_<%=deal_attribute['id']%>" name="deal_attributes" val="<%=deal_attribute['id']%>_<%= deal_attribute["amount"]%>_cable" />
 								<%#=deal_attribute['data_plan_price'].to_f %>
 								<label for="deal_attribute_<%=deal_attribute['id']%>" >Select</label>
 			  			</div>
@@ -44,7 +44,7 @@ deal_channel_packages = customized_deals['channel_packages']
 					</div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
-								<input type="checkbox" id="deal_channel_package_<%=deal_channel_package['id']%>" name="deal_channel_packages" val="<%=deal_channel_package['id']%>_<%= deal_channel_package["price"]%>" />
+								<input type="checkbox" id="deal_channel_package_<%=deal_channel_package['id']%>" name="deal_channel_packages" val="<%=deal_channel_package['id']%>_<%= deal_channel_package["price"]%>_channel_packeage" />
 								<label for="deal_channel_package_<%=deal_channel_package['id']%>" >Select</label>
 							</div>
 		  			</div>

@@ -135,11 +135,14 @@ deal_extra_services = customized_deals['deal_extra_services']
 
 <script>
 var effective_price;
+var color_data;
 	$(document).ready(function(){
+
+		color_data=new Array();
 		 $("#order-btn").hide();
 		 $("input[name='deal_attributes']:first").prop("checked","checked");
-  $("input[name='deal_extra_services']:first").prop("checked","checked");
-  effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+	     $("input[name='deal_extra_services']:first").prop("checked","checked");
+	 	 effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
  		$('#equipments_p').hide();
  		$('#equipments_selected').hide();
  		$('#continue').hide();
@@ -148,6 +151,7 @@ var effective_price;
 			$('#equipments_p').show();
 			$('#add_a_device').hide();
 		});
+
 		var count = 0
 		$('#continue').click(function(){
  			$('#continue').hide();
@@ -161,11 +165,16 @@ var effective_price;
         	var color=this.id;
         	if(color!="option1" && this.id.split("_")[1] == id ) {
         		var equip = "equip" + count++;
+        		equip +=color.split('_#')[0];
+        		color_data.push(this.id.split("_")[1]+"_"+this.id.split("_")[2]);
          	$('#equipments_selected').append('<div id='+ equip +'><div class="text-center"><div class="sd-deal-sty"><div class="custom_cursor" onclick=""><h6 id="equipment_brand" >'+ value.split("_")[2] +'</h6><p id="equipment_description"></p><h6 id="equipment_name">'+ value.split("_")[3] +'</h6></div><div class="color-wrapper text-center"><label class="colorSelector_label colorSelector_checkShadow" style="background-color: '+color.split('_')[3]+'" /></div><div id="equipment_price" class="equip-price"> <span id="selected_equipment_price" value='+value.split("_")[1]+'>Price $ '+ value.split("_")[1]+ '</span> </div><a class="" href="javascript:void(0)" id="remove'+ equip+'" onclick="remove_options('+equip+')">Remove</a></div></div></div>');
         	}
 	      });
     	});
 		});
+
+		$("input[name='deal_equipments']:first").prop("checked","checked");
+		$("#continue").click();
 	});
 
 	$("input[name='deal_equipments']").click(function(){
@@ -179,11 +188,9 @@ var effective_price;
 
 	function remove_options(value){
 		$("#remove"+value.id).parent().parent().remove(); 
-	// console.log("#remove"+value.id);
-		// $('#' + value)
+		var index = color_data.indexOf(value.id.split('color_')[1]);
+		color_data.splice(index, 1);
 	}
-
-
 
  $('#deal_equipments,#deal_attributes,#deal_extra_services').owlCarousel({
     loop:true,
@@ -196,9 +203,7 @@ var effective_price;
 
  function show_modal(data,type) {
  		// $("#"+type+"_div").css("display","none");
- 		console.log(type);
  		$('#custom_services').children().addClass('hidden');
- 		console.log($("#"+type+"_div"));
 		if (type == 'attribute') {
 			$("#"+type+"_div").removeClass('hidden');
 			// $("#"+type+"_div").css("display","block");
@@ -256,7 +261,6 @@ function calculate_total_price_for_cellphone() {
   equipment_sum = parseFloat(equipment_sum);
   total_price = attribute_price+equipment_sum+extra_services_price+effective_price;
   $("#effective_price").text('$' + total_price.toFixed(2) + '/mo');
-  console.log(total_price);
   $("#order-btn").show();
   $("#total-calculate-btn").hide();
   $("input[type='checkbox']").attr("disabled",true);

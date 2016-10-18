@@ -284,6 +284,7 @@ class Website::AppUsersController < ApplicationController
         # else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
+          @deal_detail = @deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [ :deal_price,:service_category_name, :service_provider_name,:deal_equipments,:deal_attributes,:additional_offers])
           @effective_price = params[:effective_price].present? ? params[:effective_price] : @deal.effective_price
           if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY &&@deal.is_customisable != true
             @equipments =@deal.cellphone_equipments
@@ -347,6 +348,52 @@ class Website::AppUsersController < ApplicationController
       format.html {render :nothing => true }
       format.js { render :json => { :data => user, :layout => false}.to_json}
     end
+  end
+
+  def order_attributes
+    type = params[:type]
+    attribute_data = eval(type.titleize+"DealAttribute").find(params[:id])
+    render :json => {
+      :success =>true,
+      :data => attribute_data
+    }
+  end
+  
+  def order_extra_services
+    price = DealExtraService.find(params[:id]).price
+    name = DealExtraService.find(params[:id]).extra_service.service_name
+    render :json => {
+      :success =>true,
+      :price => price,
+      :name => name
+    }
+  end  
+
+  def order_equipment_data
+    color_txt = []
+    price = []
+    name = []
+    brand = []
+    image = []
+      params[:data].each do |a|
+      id= a.split('_')[0]
+      color_id = a.split('_')[1]
+      cellphone_equipment = CellphoneEquipment.find(id)
+      price << cellphone_equipment.price
+      name << cellphone_equipment.cellphone_detail.cellphone_name
+      brand << cellphone_equipment.cellphone_detail.brand
+      image << cellphone_equipment.cellphone_detail.image.url
+      color_txt << EquipmentColor.find(color_id).color_name
+      end
+    # raise params[:data].to_yaml
+    render :json => {
+      :price => price,
+      :color => color_txt,
+      :name  => name,
+      :brand => brand,
+      :image => image
+    }
+
   end
 
   def check_user_credential

@@ -4,6 +4,8 @@ class Order < ActiveRecord::Base
 	has_many :order_items, :dependent => :destroy
 	has_many :order_addresses, :dependent => :destroy
 	has_many :order_equipments, :dependent => :destroy
+	has_many :order_extra_services, :dependent => :destroy
+	has_many :order_attributes, :dependent => :destroy
 	validates_uniqueness_of :order_id
 
 	has_many :user_gifts,:dependent => :destroy

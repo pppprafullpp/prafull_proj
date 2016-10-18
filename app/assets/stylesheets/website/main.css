@@ -7021,3 +7021,68 @@ select::-ms-expand {
 #new_app_user .col-md-6 {padding:0}
 #slider  + .separator {margin: 16px 0;}
 .billing-det h4 {color:#0066CC;}
+
+#deal_attributes {
+    display: inline-block;
+    width: 100%;
+}
+.deal-attributes-added, .deal-equipments-added {
+    float: left;
+    width: 100%;
+}
+.deal-attributes-added h5, .deal-equipments-added h5 {
+    border-bottom: 1px solid #bfc1c3;
+    padding: 18px 2px 5px;
+}
+.deal-attributes-added p {
+    padding-top: 10px;
+    font-family: 'open_sanssemibold';
+    font-size: 15px;
+    display: inline-block;
+}
+.deal-attributes-added span {
+    float: right;
+    font-size: 14px;
+    padding-top: 11px
+}
+.equipmenr-img {
+    padding: 20px 0 0;
+    float: left;
+    width: 22%;
+}
+.equipmenr-img img {
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+.equipmenr-details {
+    float: right;
+    width: 78%;
+    padding: 20px 0;
+}
+.equipmenr-details strong {
+    font-family: 'open_sanssemibold';
+    font-weight: normal;
+    font-size: 14px;
+    display: block;
+    padding-top: 2px;
+}
+.equipmenr-details span {
+    font-size: 12px;
+    padding-top: 5px;
+}
+.deal-equipments-added h6 {
+    display: inline-block;
+}
+.equipment-readingprice span {
+    float: right;
+}
+.selectedequipments-box {
+    float: left;
+    width: 100%;
+}
+.sd-order-con .border-radius-bg {
+    overflow-y: auto;
+    height: 482px;
+}
+.order-review-right .border-radius-bg { float:right; width:100%; overflow-y:auto; height:620px;}

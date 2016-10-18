@@ -59,7 +59,7 @@ Rails.application.routes.draw do
       match 'get_estimated_bandwidth' => 'deals#get_estimated_bandwidth', :via => :post
       match 'verify_user'=>"app_users#verify_user", :via => :get
       match 'deal_details'=>"deals#fetch_deal_details", :via => :get
-
+      match 'dynamic_label_for_service_provider'=>"dashboards#dynamic_label_for_service_provider", :via => :get
       resources :orders do
         collection do
           post :fetch_user_and_deal_details
@@ -175,6 +175,9 @@ Rails.application.routes.draw do
         post :create_order
         post :contact_us
         get :forget_password
+        get :order_attributes
+        get :order_extra_services
+        get :order_equipment_data
       end
     end
   end

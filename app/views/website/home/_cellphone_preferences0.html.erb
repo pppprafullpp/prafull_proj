@@ -94,6 +94,10 @@
           <%end%>
         </select>
       </div>
+      <div class="col-md-12">
+        <%list=options_for_select(CellphoneDetail.pluck(:cellphone_name,:id))%>
+        <%= select_tag :cellphone_detail_id,list,:class => 'form-control', :style=>"width: 100%;",:name =>'cellphone_detail_id' %>
+      </div>
 
     <div class="col-md-12 text-center btn-group-sty">
      <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_cellphone();return false")%>
@@ -278,6 +282,7 @@
           no_of_lines:$("#cellphone_no_of_lines").val(),
           price:$("#cellphone_price").val(),
           is_contract:is_contract,
+          cellphone_detail_id: $('#cellphone_detail_id').val(),
           service_provider_id:$("#cellphone_service_provider_id option:selected").val(),
           domestic_call_unlimited: $("#checkbox_domestic_call_unlimited").val(),
           international_call_unlimited: $('#checkbox_international_call_unlimited').val(),

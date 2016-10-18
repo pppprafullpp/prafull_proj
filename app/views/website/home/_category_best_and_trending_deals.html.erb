@@ -14,9 +14,9 @@
             <li><%= best_deal['short_description'].truncate(30) %></li>
             <li><%= best_deal['detail_description'].truncate(30) %></li>
           </ul>
-          <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
-            <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
-          <% end %>
+          <%# if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+            <!-- <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b> -->
+          <%# end %>
           <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
 
           <%if rating.present?%>
@@ -92,9 +92,9 @@
           <li><%= best_deal['short_description'].truncate(30) %></li>
           <li><%= best_deal['detail_description'].truncate(30) %></li>
         </ul>
-        <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
-          <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
-        <% end %>
+        <%# if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+          <!-- <b class="cellphone-lines">Lines:<%#=data['no_of_lines'] %></b> -->
+        <%# end %>
         <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
         <%if rating.present?%>
          <p id="rating"  class="sd-rating">

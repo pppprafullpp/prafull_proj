@@ -50,12 +50,14 @@ deal_extra_services = customized_deals['deal_extra_services']
 						<p id="description_<%=deal_equipment['id']%>" class="hidden"><%=deal_equipment["brand"]%></p>
 						<h6><%= deal_equipment['cellphone_name']%></h6>
 					</div>
+					<% if deal_equipment["available_color"].present? %>
 						<%deal_equipment["available_color"].each_with_index do |av,index|%>
 							<div class="color-wrapper text-center">
 								<input type="radio" checked="checked" name="deviceColors_<%=deal_equipment['id']%>" id="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>" class="colorSelector" />
 								<label for="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>" title="<%=index%>" class="colorSelector_label colorSelector_checkShadow" style="background-color: <%=av['color_code']%>" />
 							</div>
 						<%end%>
+					<% end %>
 						<div class="equip-price"> <span>$<%=deal_equipment["price"]%> </span> </div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">

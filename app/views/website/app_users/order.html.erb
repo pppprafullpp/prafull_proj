@@ -62,7 +62,20 @@ end
               <h5>Additional Deals Services</h5>
               
             </div>
-            <% end %>
+            <% elsif @deal.is_customisable == true && @deal.service_category_id == Deal::CABLE_CATEGORY %>
+            <div class="deal-attributes-added">
+              <h5>Additional Deals Attribute</h5>
+              
+            </div>
+            <div class="deal-packages-added">
+              <h5>Additional Deals Package</h5>
+              
+            </div>
+            <div class="deal-cable-equipments-added">
+              <h5>Additional Deals Equipment</h5>
+              
+            </div>
+             <% end %>
 
           </div>
       <!--       <div class="gen-info">
@@ -247,22 +260,27 @@ var dealExtraServiceObject = localStorage.getItem('deal_extra_services');
 var dealEquipmentObject = localStorage.getItem('deal_equipments');
 var effectivePriceObject = localStorage.getItem('effective_price');
 var cableEquipmentObject = localStorage.getItem("cable_deal_equipments");
+var cableDealAttributeObject = localStorage.getItem("cable_deal_attributes");
+var dealChannelsObject = localStorage.getItem("deal_channel_packages");
 var colorDataObject = localStorage.getItem("color_data");
 
-$('#order_attributes').val(dealAttributeObject);
+
 // console.log(dealAttributeObject);
  
 
 
-$('#deal_attributes').html("Hello");
-$('#order_extra_services').val(dealExtraServiceObject);
-if(dealEquipmentObject == "[]"){
-  $('#order_equipments').val(dealEquipmentObject);
-}
-else{
-  $('#order_equipments').val(dealEquipmentObject);
+// $('#deal_attributes').html("Hello");
 
-}
+<%if( @deal.service_category_id == Deal::CELLPHONE_CATEGORY) %>
+  $('#order_equipments').val(dealEquipmentObject);
+  $('#order_attributes').val(dealAttributeObject);
+  $('#order_extra_services').val(dealExtraServiceObject);
+
+<%elsif(@deal.service_category_id == Deal::CABLE_CATEGORY)%>
+  $('#order_equipments').val(cableEquipmentObject);
+  $('#order_attributes').val(cableDealAttributeObject);
+<% end %>
+
 var effective_price = effectivePriceObject
 // alert(effective_price);
 $('#update_effective_price').html("$" + parseFloat(effectivePriceObject).toFixed(2));
@@ -283,17 +301,25 @@ $('#effective_price').val( parseFloat(effectivePriceObject).toFixed(2));
 var errormsg="";
 $(document).ready(function(e) {
 
-  <%if @deal.is_customisable == true && @deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
+  <%if @deal.is_customisable == true && (@deal.service_category_id == Deal::CELLPHONE_CATEGORY || @deal.service_category_id == Deal::CABLE_CATEGORY) %>
   $.ajax({
     url:"/website/app_users/order_attributes",
     type: "GET",
-    data:{ id: JSON.parse(localStorage.getItem('deal_attributes'))[0]["ref_id"], type:JSON.parse(localStorage.getItem('deal_attributes'))[0]["ref_type"]},
+    // JSON.parse(localStorage.getItem('deal_attributes')).length;
+     data:{ id: JSON.parse(localStorage.getItem('deal_attributes'))[0]["ref_id"], type:JSON.parse(localStorage.getItem('deal_attributes'))[0]["ref_type"]},
       success: function(data){
       console.log(data);
      // $("#deal_attributes").html(data["data"]["title"]+": $"+parseFloat(data["data"]["data_plan_price"]).toFixed(2));
+      <%if @deal.service_category_id == Deal::CELLPHONE_CATEGORY  %>
      $('.deal-attributes-added').append('<div> <p>'+data["data"]["title"]+' </p>  <span>$'+data["data"]["data_plan_price"]+'</span></div>');
+     <%elsif @deal.service_category_id == Deal::CABLE_CATEGORY %> 
+     $('.deal-attributes-added').append('<div> <p>'+data["data"]["description"]+' </p>  <span>$'+data["data"]["amount"]+'</span></div>');
+     <% end %>
     }
   });
+  <% end %>
+
+  <%if @deal.is_customisable == true && @deal.service_category_id == Deal::CELLPHONE_CATEGORY  %>
 
     $.ajax({
     url:"/website/app_users/order_extra_services",
@@ -317,6 +343,25 @@ $(document).ready(function(e) {
         $(".deal-equipments-added").append('<div class="selectedequipments-box"><div class="equipmenr-img"><img src='+data['image']+' style="height:100px; width:50px" alt="equipments"></div><div class="equipmenr-details"><div class="equipment-readingprice"><h6>'+data['brand'][i]+'</h6> <span>$'+ data['price'][i]+'</span></div> <strong>'+data['name'][i]+'</strong><span>'+data['color'][i]+'</span></div></div>')
       }
      // $("#deal_extra_services").html(data["name"]+": $"+parseFloat(data["price"]).toFixed(2));
+    }
+  });
+  
+  <%elsif @deal.is_customisable == true && @deal.service_category_id == Deal::CABLE_CATEGORY  %>
+   $.ajax({
+    url:"/website/app_users/order_channel_packages",
+    type: "GET",
+    data:{ id: JSON.parse(localStorage.getItem('deal_channel_packages'))[0]["ref_id"]},
+      success: function(data){
+     $('.deal-packages-added').append('<div> <p>'+data["data"]["package_name"]+' </p>  <span>$'+data["data"]["price"]+'</span></div>');
+    }
+  });
+
+    $.ajax({
+    url:"/website/app_users/order_cable_equipments",
+    type: "GET",
+    data:{ id: JSON.parse(localStorage.getItem('cable_deal_equipments'))[0]["equipment_id"]},
+      success: function(data){
+     $('.deal-cable-equipments-added').append('<div> <p>'+data["data"]["name"]+' </p>  <span>$'+data["data"]["price"]+'</span></div>');
     }
   });
 <% end %>

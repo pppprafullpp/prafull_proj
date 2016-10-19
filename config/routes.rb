@@ -178,6 +178,8 @@ Rails.application.routes.draw do
         get :order_attributes
         get :order_extra_services
         get :order_equipment_data
+        get :order_channel_packages
+        get :order_cable_equipments
       end
     end
   end

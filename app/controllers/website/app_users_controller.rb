@@ -358,6 +358,22 @@ class Website::AppUsersController < ApplicationController
       :data => attribute_data
     }
   end
+
+  def order_channel_packages
+    package_data = ChannelPackage.find(params[:id])
+    render :json => {
+      :success =>true,
+      :data => package_data
+    }
+  end
+
+  def order_cable_equipments
+    equipment_data = CableEquipment.find(params[:id])
+    render :json => {
+      :success =>true,
+      :data => equipment_data
+    }
+  end
   
   def order_extra_services
     price = DealExtraService.find(params[:id]).price

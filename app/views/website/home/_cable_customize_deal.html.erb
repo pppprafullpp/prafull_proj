@@ -110,6 +110,9 @@ deal_channel_packages = customized_deals['channel_packages']
 </section>
 
 <script>
+var effective_price;
+ effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+
  $('#cable_deal_equipments,#deal_attributes,#channel_package').owlCarousel({
     loop:true,
     margin:10,
@@ -155,35 +158,80 @@ deal_channel_packages = customized_deals['channel_packages']
 	}
 
 	$(document).ready(function() {
-  // $("input[name='deal_attributes']:first").prop("checked","checked");
-  // $("input[name='deal_extra_services']:first").prop("checked","checked");
-  effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-  var chkId = 0;
-  $('input[type=checkbox]').on('change', function() {
-    $(this).each ( function() {
-      effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-      if($(this).prop('checked') == true){
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price + parseFloat(chkId);
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
-      }
-      else if($(this).prop('checked') == false){
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price - parseFloat(chkId);
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
-      }
-      else{
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        effective_value = effective_value = effective_price 
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
-      }
-      localStorage["effective_price"] = JSON.stringify(effective_value);
-    });
-  });
+		 $("input[name='deal_attributes']:first").prop("checked","checked");
+	     $("input[name='cable_deal_equipments']:first").prop("checked","checked");
+	     $("input[name='deal_channel_packages']:first").prop("checked","checked");
+  // // $("input[name='deal_attributes']:first").prop("checked","checked");
+  // // $("input[name='deal_extra_services']:first").prop("checked","checked");
+  // effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  // var chkId = 0;
+  // $('input[type=checkbox]').on('change', function() {
+  //   $(this).each ( function() {
+  //     effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //     if($(this).prop('checked') == true){
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       chkId =$(this).attr("val").split("_")[1];
+  //       effective_value = effective_price + parseFloat(chkId);
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
+  //     }
+  //     else if($(this).prop('checked') == false){
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       chkId =$(this).attr("val").split("_")[1];
+  //       effective_value = effective_price - parseFloat(chkId);
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+  //     }
+  //     else{
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       effective_value = effective_value = effective_price 
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+  //     }
+  //     localStorage["effective_price"] = JSON.stringify(effective_value);
+  //   });
+  // });
  
 });
+
+
+$("input[name='cable_deal_equipments']").on('change', function() {
+   $("input[name='cable_deal_equipments']").not(this).prop('checked', false);
+});
+
+
+$("input[name='deal_attributes']").on('change', function() {
+  
+   $("input[name='deal_attributes']").not(this).prop('checked', false);
+});
+
+$("input[name='deal_channel_packages']").on('change', function() {
+   $("input[name='deal_channel_packages']").not(this).prop('checked', false);
+});
+
+
+function calculate_total_price_for_cable() {
+  attribute_price = parseFloat($("input[name='deal_attributes']:checked").attr("val").split("_")[1]);
+  channel_package_price = parseFloat($("input[name='deal_channel_packages']:checked").attr("val").split("_")[1]);
+  cable_deal_equipments_price = parseFloat($("input[name='cable_deal_equipments']:checked").attr("val").split("_")[1]);
+  console.log('ap' + attribute_price);
+  // console.log('ap' +  extra_services_price);
+  console.log('ap' +  cable_deal_equipments_price);
+
+  // equipment_sum = 0;
+  
+  // $("[id*=selected_equipment_price]").each(function() {
+  //   equipment_sum = equipment_sum+parseFloat($(this).attr("value"));
+  // });
+
+
+  // equipment_sum = parseFloat(equipment_sum);
+  total_price = attribute_price+ channel_package_price+cable_deal_equipments_price+effective_price;
+  $("#effective_price").text('$' + total_price.toFixed(2) + '/mo');
+  $("#order-btn").show();
+  $("#total-calculate-btn").hide();
+  $("input[type='checkbox']").attr("disabled",true);
+  // $("[id*=removeequip]").hide();
+  localStorage["effective_price"] = JSON.stringify(total_price);
+} 
+
 
 </script>
 	

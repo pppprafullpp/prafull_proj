@@ -269,7 +269,7 @@ end
               <li>Contract:<span><%= deal.contract_period %></span></li>
             </ul>
             <% if deal.is_customisable == true && deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
-              <div class="deal-attributes-added">
+              <div id='deal-attributes-added' class="deal-attributes-added">
                 <h5>Additional Deals Attributes</h5>
                 <% attribute = CellphoneDealAttribute.find(@order.order_attributes.first.ref_id) %>
                 <div> <p><%= attribute.title%></p>  <span>$<%=attribute.data_plan_price %></span></div>
@@ -288,24 +288,24 @@ end
                   </div>
                 <% end %>
               </div>
-              <div class="deal-services-added">
+              <div class='deal-attributes-added' id="deal-services-added">
                 <h5>Additional Deal Services</h5>
                 <% extra_service = DealExtraService.find(@order.order_extra_services.first.deal_extra_service_id)%>
                 <div> <p><%= extra_service.extra_service.service_name%></p>  <span>$<%=extra_service.price %></span></div>
               </div>
 
               <% elsif deal.is_customisable == true && deal.service_category_id == Deal::CABLE_CATEGORY %>
-               <div class="deal-attributes-added">
+               <div id='deal-attributes-added' class="deal-attributes-added">
                 <h5>Additional Deals Attribute</h5>
                 <% attribute = CableDealAttribute.find(attributes.first.ref_id) %>
                 <div> <p><%= attribute.description%></p>  <span>$<%=attribute.amount %></span></div>
               </div>
-              <div class="deal-packages-added">
+              <div class='deal-attributes-added' id="deal-packages-added">
                 <h5>Additional Deals Package</h5>
                 <% attribute = ChannelPackage.find(order_packages.first.ref_id) %>
                 <div> <p><%= attribute.package_name%></p>  <span>$<%=attribute.price %></span></div>
               </div>
-              <div class="deal-equipments-added">
+              <div class='deal-attributes-added' id="deal-equipments-added">
                 <h5>Additional Equipment</h5>
                 <% order_equipments.each do |order_equipment| %>
                   <% equipment = CableEquipment.find(order_equipment.equipment_id) %>
@@ -330,7 +330,7 @@ end
               <li>Contract:<span><%= deal.contract_period %></span></li>
             </ul>
             <% if deal.is_customisable == true && deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
-              <div class="deal-attributes-added">
+              <div id='deal-attributes-added' class="deal-attributes-added">
                 <h5>Additional Deals Attributes</h5>
                 <% attribute = CellphoneDealAttribute.find(@order.order_attributes.first.ref_id) %>
                 <div> <p><%= attribute.title%></p>  <span>$<%=attribute.data_plan_price %></span></div>
@@ -349,24 +349,24 @@ end
                   </div>
                 <% end %>
               </div>
-              <div class="deal-services-added">
+              <div class='deal-attributes-added' id="deal-services-added">
                 <h5>Additional Deal Services</h5>
                 <% extra_service = DealExtraService.find(@order.order_extra_services.first.deal_extra_service_id)%>
                 <div> <p><%= extra_service.extra_service.service_name%></p>  <span>$<%=extra_service.price %></span></div>
               </div>
 
                <% elsif deal.is_customisable == true && deal.service_category_id == Deal::CABLE_CATEGORY %>
-               <div class="deal-attributes-added">
+               <div id='deal-attributes-added' class="deal-attributes-added">
                 <h5>Additional Deals Attribute</h5>
                  <% attribute = CableDealAttribute.find(attributes.first.ref_id) %>
                 <div> <p><%= attribute.description%></p>  <span>$<%=attribute.amount %></span></div>
               </div>
-              <div class="deal-packages-added">
+              <div class='deal-attributes-added' id="deal-packages-added">
                 <h5>Additional Deals Package</h5>
                 <% attribute = ChannelPackage.find(order_packages.first.ref_id) %>
                 <div> <p><%= attribute.package_name%></p>  <span>$<%=attribute.price %></span></div>
               </div>
-              <div class="deal-equipments-added">
+              <div  class='deal-attributes-added' id="deal-equipments-added">
                 <h5>Additional Equipment</h5>
                 <% order_equipments.each do |order_equipment| %>
                   <% equipment = CableEquipment.find(order_equipment.equipment_id) %>

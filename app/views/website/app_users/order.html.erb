@@ -50,7 +50,7 @@ end
             </ul>
             <% if @deal.is_customisable == true && @deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
 
-            <div class="deal-attributes-added">
+            <div id="deal-attributes-added" class="deal-attributes-added">
               <h5>Additional Deals Attributes</h5>
               
             </div>
@@ -58,20 +58,20 @@ end
               <h5>Additional Equipments</h5>
               
             </div>
-            <div class="deal-services-added">
+            <div id="deal-services-added" class="deal-attributes-added">
               <h5>Additional Deals Services</h5>
               
             </div>
             <% elsif @deal.is_customisable == true && @deal.service_category_id == Deal::CABLE_CATEGORY %>
-            <div class="deal-attributes-added">
+            <div id="deal-attributes-added" class="deal-attributes-added">
               <h5>Additional Deals Attribute</h5>
               
             </div>
-            <div class="deal-packages-added">
+            <div id="deal-packages-added" class="deal-attributes-added">
               <h5>Additional Deals Package</h5>
               
             </div>
-            <div class="deal-cable-equipments-added">
+            <div id="deal-cable-equipments-added" class="deal-attributes-added">
               <h5>Additional Deals Equipment</h5>
               
             </div>
@@ -311,9 +311,9 @@ $(document).ready(function(e) {
       console.log(data);
      // $("#deal_attributes").html(data["data"]["title"]+": $"+parseFloat(data["data"]["data_plan_price"]).toFixed(2));
       <%if @deal.service_category_id == Deal::CELLPHONE_CATEGORY  %>
-     $('.deal-attributes-added').append('<div> <p>'+data["data"]["title"]+' </p>  <span>$'+data["data"]["data_plan_price"]+'</span></div>');
+     $('#deal-attributes-added').append('<div> <p>'+data["data"]["title"]+' </p>  <span>$'+data["data"]["data_plan_price"]+'</span></div>');
      <%elsif @deal.service_category_id == Deal::CABLE_CATEGORY %> 
-     $('.deal-attributes-added').append('<div> <p>'+data["data"]["description"]+' </p>  <span>$'+data["data"]["amount"]+'</span></div>');
+     $('#deal-attributes-added').append('<div> <p>'+data["data"]["description"]+' </p>  <span>$'+data["data"]["amount"]+'</span></div>');
      <% end %>
     }
   });
@@ -326,7 +326,7 @@ $(document).ready(function(e) {
     type: "GET",
     data:{ id:JSON.parse(localStorage.getItem('deal_extra_services'))[0]['deal_extra_service_id']},
       success: function(data){
-      $('.deal-services-added').append('<div> <p>'+data["name"]+' </p>  <span>$'+data["price"]+'</span></div>');
+      $('#deal-services-added').append('<div> <p>'+data["name"]+' </p>  <span>$'+data["price"]+'</span></div>');
     }
   });
 
@@ -352,7 +352,7 @@ $(document).ready(function(e) {
     type: "GET",
     data:{ id: JSON.parse(localStorage.getItem('deal_channel_packages'))[0]["ref_id"]},
       success: function(data){
-     $('.deal-packages-added').append('<div> <p>'+data["data"]["package_name"]+' </p>  <span>$'+data["data"]["price"]+'</span></div>');
+     $('#deal-packages-added').append('<div> <p>'+data["data"]["package_name"]+' </p>  <span>$'+data["data"]["price"]+'</span></div>');
     }
   });
 
@@ -361,7 +361,7 @@ $(document).ready(function(e) {
     type: "GET",
     data:{ id: JSON.parse(localStorage.getItem('cable_deal_equipments'))[0]["equipment_id"]},
       success: function(data){
-     $('.deal-cable-equipments-added').append('<div> <p>'+data["data"]["name"]+' </p>  <span>$'+data["data"]["price"]+'</span></div>');
+     $('#deal-cable-equipments-added').append('<div> <p>'+data["data"]["name"]+' </p>  <span>$'+data["data"]["price"]+'</span></div>');
     }
   });
 <% end %>

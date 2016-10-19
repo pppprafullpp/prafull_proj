@@ -4,6 +4,8 @@ deal_extra_services = customized_deals['deal_extra_services']
  %>
 
 
+ 
+
 
 <section>
 	<div class='equipments-details col-md-12'>
@@ -30,12 +32,12 @@ deal_extra_services = customized_deals['deal_extra_services']
 		</div>
 	</div>
 
-	<div id="equipments_selected" class='equipments-details col-md-12 '>
+	<!-- <div id="equipments_selected" class='equipments-details col-md-12 '>
 		<h5>Equipments Selected</h5>
 		
-	</div>
+	</div> -->
 
-	<button id="add_a_device" class="equipments-details col-md-12">Add a Line</button>
+	<button id="add_a_device" class="equipments-details ad-linebtn col-md-12">Add a Line</button>
 
 	
 
@@ -169,7 +171,11 @@ var color_data;
         		var equip = "equip" + count++;
         		equip +=color.split('_#')[0];
         		color_data.push(this.id.split("_")[1]+"_"+this.id.split("_")[2]);
-         	$('#equipments_selected').append('<div id='+ equip +'><div class="text-center"><div class="sd-deal-sty"><div class="custom_cursor" onclick=""><h6 id="equipment_brand" >'+ value.split("_")[2] +'</h6><p id="equipment_description"></p><h6 id="equipment_name">'+ value.split("_")[3] +'</h6></div><div class="color-wrapper text-center"><label class="colorSelector_label colorSelector_checkShadow" style="background-color: '+color.split('_')[3]+'" /></div><div id="equipment_price" class="equip-price"> <span id="selected_equipment_price" value='+value.split("_")[1]+'>Price $ '+ value.split("_")[1]+ '</span> </div><a class="" href="javascript:void(0)" id="remove'+ equip+'" onclick="remove_options('+equip+')">Remove</a></div></div></div>');
+         	// $('#equipments_selected').append('<div id='+ equip +'><div class="text-center"><div class="sd-deal-sty"><div class="custom_cursor" onclick=""><h6 id="equipment_brand" >'+ value.split("_")[2] +'</h6><p id="equipment_description"></p><h6 id="equipment_name">'+ value.split("_")[3] +'</h6></div><div class="color-wrapper text-center"><label class="colorSelector_label colorSelector_checkShadow" style="background-color: '+color.split('_')[3]+'" /></div><div id="equipment_price" class="equip-price"> <span id="selected_equipment_price" value='+value.split("_")[1]+'>Price $ '+ value.split("_")[1]+ '</span> </div><a class="" href="javascript:void(0)" id="remove'+ equip+'" onclick="remove_options('+equip+')">Remove</a></div></div></div>');
+
+
+
+         		$('#equipments_selected').append('<div id='+ equip +' class="selectedequipments-box"><div class="equipmenr-img"><img src="/assets/website/iphone_6ssmall.png" alt="equipments"></div><div class="equipmenr-details"><div class="equipment-readingprice"><h6 id="equipment_brand">'+ value.split("_")[2] +'</h6> <span id="selected_equipment_price" value='+value.split("_")[1]+'>$'+ value.split("_")[1]+ '</span></div> <div class="equipment-remove"><strong id="equipment_name">'+ value.split("_")[3] +'</strong><a class="" href="javascript:void(0)" id="remove'+ equip+'" onclick="remove_options('+equip+')">Remove</a></div><span>Black</span></div></div>')
         	}
 	      });
     	});
@@ -189,7 +195,8 @@ var color_data;
 	});
 
 	function remove_options(value){
-		$("#remove"+value.id).parent().parent().remove(); 
+		console.log(value.id)
+	  $("#"+value.id).remove(); 
 		var index = color_data.indexOf(value.id.split('color_')[1]);
 		color_data.splice(index, 1);
 	}

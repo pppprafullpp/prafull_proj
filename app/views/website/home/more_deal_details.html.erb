@@ -21,6 +21,10 @@
 
           </ul>
 
+
+
+
+
            </div>
            <%#if  @current_user.present? %>
              <%#if @current_user.email_verified%>
@@ -41,6 +45,17 @@
            <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>
             <a class="chanel-list-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
             <% end %>
+
+
+            <!-- <div id="equipments_selected"  class=""> -->
+             <% if  @customized_deals.present? && @category_name == "cellphone"%>
+        <div id="equipments_selected" class="deal-equipments-added">
+      <h5>Equipments Selected</h5>
+       
+          </div>
+          <% end %>
+         <!-- </div> -->
+
 
          </div>
 

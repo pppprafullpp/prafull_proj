@@ -185,7 +185,9 @@ class Website::AppUsersController < ApplicationController
           order_extra_service_hash = {:order_extra_services => eval(params[:order_extra_services])}
           order_equipment = OrderAttribute.create_order_attributes(order_attribute_hash,order.id)
           order_equipment = OrderEquipment.create_order_equipments(order_equipment_hash,order.id)
-          order_extra_services = OrderExtraService.create_order_extra_services(order_extra_service_hash,order.id)
+          if order_items.first.deal.service_category_id == Deal::CELLPHONE_CATEGORY
+            order_extra_services = OrderExtraService.create_order_extra_services(order_extra_service_hash,order.id)
+          end
         end
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)

@@ -34,6 +34,8 @@
            <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order<a>
           <% if  @customized_deals.present? && @category_name == "cellphone"%>
           <a id="total-calculate-btn" onclick="calculate_total_price_for_cellphone()" class="order-btn" href="javascript:void(0)">Calculate Total price<a>
+            <% elsif  @customized_deals.present? && @category_name == "cable" %>
+              <a id="total-calculate-btn" onclick="calculate_total_price_for_cable()" class="order-btn" href="javascript:void(0)">Calculate Total price<a>
             <%end %>
 
            <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>
@@ -236,8 +238,15 @@
 
 function check_for_options(){
 
-
-  deal_attributes=[];
+    cable_deal_equipments=[];
+    $("input[name='cable_deal_equipments']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj5 ={};
+    jsonObj5["equipment_id"]=value.split("_")[0];
+    cable_deal_equipments.push(jsonObj5)
+    });
+    localStorage["cable_deal_equipments"] = JSON.stringify(cable_deal_equipments);
+    deal_attributes=[];
     $("input[name='deal_attributes']:checked").each(function(){
     value=$(this).attr("val");
     jsonObj3 ={};
@@ -246,16 +255,39 @@ function check_for_options(){
     jsonObj3["ref_type"]=value.split("_")[2];
     deal_attributes.push(jsonObj3)
     });
-     $("input[name='deal_channel_packages']:checked").each(function(){
+
+    cable_deal_attributes=[];
+    $("input[name='deal_attributes']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj3 ={};
+    jsonObj3["ref_id"]=value.split("_")[0];
+    jsonObj3["price"]=value.split("_")[1];
+    jsonObj3["ref_type"]=value.split("_")[2];
+    cable_deal_attributes.push(jsonObj3)
+    });
+
+    $("input[name='deal_channel_packages']:checked").each(function(){
     value=$(this).attr("val");
     jsonObj4 ={};
     jsonObj4["ref_id"]=value.split("_")[0];
     jsonObj4["price"]=value.split("_")[1];
     jsonObj4["ref_type"]=value.split("_")[2];
-    deal_attributes.push(jsonObj4)
+    cable_deal_attributes.push(jsonObj4)
     });
 
+    deal_channel_packages=[];
+    $("input[name='deal_channel_packages']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj4 ={};
+    jsonObj4["ref_id"]=value.split("_")[0];
+    jsonObj4["price"]=value.split("_")[1];
+    jsonObj4["ref_type"]=value.split("_")[2];
+    deal_channel_packages.push(jsonObj4)
+  });
+
      localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
+     localStorage["deal_channel_packages"] = JSON.stringify(deal_channel_packages);
+     localStorage["cable_deal_attributes"] = JSON.stringify(cable_deal_attributes);
   
   if($("input[type='checkbox']").is(':checked') == false)
   {
@@ -276,33 +308,9 @@ function check_for_options(){
   }
     localStorage["deal_equipments"] = JSON.stringify(cellphone_deal_equipments);
   <% end %>
-  //  jsonObj6 = []
-  // for(var i=0; i<color_data.length;i++){
-  //   jsonObj6['equipment_id'] = color_data[i].split('_')[0];
-  //   jsonObj6['color_text'] = color_data[i].split('_')[1];
-  //   cellphone_deal_equipments.push(jsonObj6)
-  // }
-   
+ 
 
 
-
-
-    // $("input[name='deal_channel_packages']:checked").each(function(){
-    // value=$(this).attr("val");
-    // jsonObj4 ={};
-    // jsonObj4["equipment_id"]=value.split("_")[0];
-    // jsonObj3["ref_type"]=value.split("_")[1];
-    // deal_attributes.push(jsonObj3)
-    // });
-
-    cable_deal_equipments=[];
-    $("input[name='cable_deal_equipments']:checked").each(function(){
-    value=$(this).attr("val");
-    jsonObj4 ={};
-    jsonObj4["equipment_id"]=value.split("_")[0];
-    // jsonObj3["ref_type"]=value.split("_")[1];
-    cable_deal_equipments.push(jsonObj4)
-    });
 
     deal_extra_services=[];
     $("input[name='deal_extra_services']:checked").each(function(){
@@ -313,32 +321,10 @@ function check_for_options(){
     });
 
 
-    // localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
+    
     localStorage["deal_extra_services"] = JSON.stringify(deal_extra_services);
-    // localStorage["deal_equipments"] = JSON.stringify(deal_equipments);
     localStorage["cable_deal_equipments"] = JSON.stringify(cable_deal_equipments);
 
-
-    // deal_equipments=[];
-    // $("input[name='deal_equipments']:checked").each(function(){
-    // value=$(this).attr("val");
-    // var id = value.split("_")[0];
-
-    //     console.log(id);
-
-    //     // $("input[type='radio']:checked").each(function(){
-    //     //     value=this.id;
-    //     //     console.log("value");
-    //     //     if(value!="option1" && this.id.split("_")[1] == id ) {
-    //     //        console.log("color id="+this.id.split("_")[2])
-    //     //     }
-    //     //   });
-
-    // jsonObj3 ={};
-    // // jsonObj3["ref_id"]=value.split("_")[0];
-    // // jsonObj3["ref_type"]=value.split("_")[1];
-    // deal_equipments.push(jsonObj3)
-    // });
 }
 
   function get_comments(){

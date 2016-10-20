@@ -17,26 +17,28 @@ class CellphoneEquipment < ActiveRecord::Base
 	end
 
 	def available_color
+		if self.available_colors.present?
 		EquipmentColor.select('id,color_name,color_code,image').where(id: eval(self.available_colors))
+	end
 		# EquipmentColor.where(id: eval(self.available_colors)).pluck(:color_name,:id)
 	end
 
 
 	def cellphone_name
-		self.cellphone_detail.cellphone_name
+		self.cellphone_detail.cellphone_name rescue nil
 	end
 
 	def brand
-		self.cellphone_detail.brand
+		self.cellphone_detail.brand rescue nil
 	end
 
 	def description
-		self.cellphone_detail.description
+		self.cellphone_detail.description rescue nil
 	end
 
 
 	def image
-		self.cellphone_detail.image.url
+		self.cellphone_detail.image.url rescue nil
 	end
 
 

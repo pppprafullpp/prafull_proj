@@ -32,12 +32,12 @@ deal_extra_services = customized_deals['deal_extra_services']
 
 	<div id="equipments_selected" class='equipments-details col-md-12 '>
 		<h5>Equipments Selected</h5>
-		
+
 	</div>
 
 	<button id="add_a_device" class="equipments-details col-md-12">Add a Line</button>
 
-	
+
 
 	<div id="equipments_p" class='equipments-details col-md-12 '>
 		<h5>Equipments</h5>
@@ -50,12 +50,14 @@ deal_extra_services = customized_deals['deal_extra_services']
 						<p id="description_<%=deal_equipment['id']%>" class="hidden"><%=deal_equipment["brand"]%></p>
 						<h6><%= deal_equipment['cellphone_name']%></h6>
 					</div>
+          <% if deal_equipment['available_color'].present? %>
 						<%deal_equipment["available_color"].each_with_index do |av,index|%>
 							<div class="color-wrapper text-center">
 								<input type="radio" checked="checked" name="deviceColors_<%=deal_equipment['id']%>" id="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>" class="colorSelector" />
 								<label for="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>" title="<%=index%>" class="colorSelector_label colorSelector_checkShadow" style="background-color: <%=av['color_code']%>" />
 							</div>
 						<%end%>
+            <% end %>
 						<div class="equip-price"> <span>$<%=deal_equipment["price"]%> </span> </div>
 						<div class="text-left">
 							<div class="checkbox checkbox-info">
@@ -68,7 +70,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 				</div>
 			<%end%>
 		</div>
-		
+
 	</div>
 	<div class='equipments-details col-md-12'>
 	<a class="order-btn" href="javascript:void(0)" id="continue">Continue</a>
@@ -187,7 +189,7 @@ var color_data;
 	});
 
 	function remove_options(value){
-		$("#remove"+value.id).parent().parent().remove(); 
+		$("#remove"+value.id).parent().parent().remove();
 		var index = color_data.indexOf(value.id.split('color_')[1]);
 		color_data.splice(index, 1);
 	}
@@ -240,7 +242,7 @@ $("input[name='deal_equipments']").on('change', function() {
 
 
 $("input[name='deal_attributes']").on('change', function() {
-  
+
    $("input[name='deal_attributes']").not(this).prop('checked', false);
 });
 
@@ -252,7 +254,7 @@ function calculate_total_price_for_cellphone() {
   attribute_price = parseFloat($("input[name='deal_attributes']:checked").attr("val").split("_")[1]);
   extra_services_price = parseFloat($("input[name='deal_extra_services']:checked").attr("val").split("_")[1]);
   equipment_sum = 0;
-  
+
   $("[id*=selected_equipment_price]").each(function() {
     equipment_sum = equipment_sum+parseFloat($(this).attr("value"));
   });
@@ -266,9 +268,6 @@ function calculate_total_price_for_cellphone() {
   $("input[type='checkbox']").attr("disabled",true);
   $("[id*=removeequip]").hide();
   localStorage["effective_price"] = JSON.stringify(total_price);
-} 
+}
 
 </script>
-
-
-

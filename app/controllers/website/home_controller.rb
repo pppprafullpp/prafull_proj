@@ -68,10 +68,11 @@ class Website::HomeController < ApplicationController
     if session[:user_id].present?
     @current_user=AppUser.find(session[:user_id])
     end
-
+    
   end
 
   def more_deal_details
+
     @deal = Deal.find_by_id(params[:deal_id])
      @category_name = ServiceCategory.find(@deal.service_category_id).name.downcase
     if @deal.is_customisable == true && @deal.service_category_id == Deal::CELLPHONE_CATEGORY
@@ -80,7 +81,7 @@ class Website::HomeController < ApplicationController
         @customized_deals =  @deal.as_json(:include =>{:channel_packages => {:methods=>[:channel_name]},:deal_attributes => {:methods => [:channel_name]},:deal_extra_services => {:methods => [:service_name,:service_description]}},:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
     else
       @deal_attributes = eval("@deal.#{@category_name}_deal_attributes.first")
-      @deal_equipments = eval("@deal_attributes.#{@category_name}_equipments")
+      @deal_equipments = eval("@deal.#{@category_name}_equipments")
       if session[:user_id].present?
        @current_user=AppUser.find(session[:user_id])
       end

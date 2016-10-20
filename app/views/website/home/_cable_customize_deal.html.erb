@@ -7,7 +7,7 @@ deal_channel_packages = customized_deals['channel_packages']
 <section>
 	<div class='equipments-details col-md-12'>	
 		<h5>Choose Your Custom TV Plan</h5>
-		<div id="deal_attributes" class="owl-carousel">
+		<div id="deal_attributes" class="owl-carousel" style='float: left;'>
 			<% deal_attributes.each do |deal_attribute| %>
 				<div class="text-center">
 					<div class="sd-deal-sty">
@@ -32,7 +32,7 @@ deal_channel_packages = customized_deals['channel_packages']
 	</div>
 	<div class='equipments-details col-md-12'>	
 		<h5>Get More With Premium Channels</h5>
-	 	<div id="channel_package" class="owl-carousel">
+	 	<div id="channel_package" class="owl-carousel" style='float: left;'>
 			<% deal_channel_packages.each do |deal_channel_package| %>
 				<div class="text-center">
 					<div class="sd-deal-sty " >
@@ -55,7 +55,7 @@ deal_channel_packages = customized_deals['channel_packages']
 	</div>
 	<div class='equipments-details col-md-12'>	
 		<h5>Cable Equipments</h5>
-		<div id="cable_deal_equipments" class="owl-carousel">
+		<div id="cable_deal_equipments" class="owl-carousel" style='float: left;'>
 			<% deal_equipments.each do |deal_equipment| %>
 				<div class="text-center">
 					<div class="sd-deal-sty" >
@@ -82,23 +82,23 @@ deal_channel_packages = customized_deals['channel_packages']
 		<div id="customdeal" class="modal fade" role="dialog">
   <div class="modal-dialog ">
   	<button type="button" class="close log-pop-btn" data-dismiss="modal">&times;</button>
-    <div id="custom_services" class="modal-content pull-left ">
-      <div id="cable_attribute_div" class="modal-body col-md-12 ">
+    <div id="custom_services" class="modal-content">
+      <div id="cable_attribute_div" class="modal-body  ">
       	<h4 id="cable_attribute_title"></h4>
       	<strong id="cable_attribute_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="cable_attribute_description"></p>
-      	<ul class="channel_scroller row channel-list" id="cable_attribute_channel_list"></ul>
+      	<ul class="channel_scroller row channel-list  channel-new-sty" id="cable_attribute_channel_list"></ul>
 
    		</div>
 
-   		<div id="channel_package_div" class="modal-body col-md-12">
+   		<div id="channel_package_div" class="modal-body">
       <h4 id="channel_package_title"></h4>
       	<strong id="channel_package_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="channel_package_description"></p>
-      	<ul class="channel_scroller row channel-list" id="channel_package_channel_list"></ul>
+      	<ul class="channel_scroller row channel-list channel-new-sty" id="channel_package_channel_list"></ul>
    		</div>
 
-   		<div id="cable_equipment_div" class="modal-body col-md-12">
+   		<div id="cable_equipment_div" class="modal-body">
       	<h4 id="cable_equipment_title"></h4>
       	<strong id="cable_equipment_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="cable_equipment_desc"></p>

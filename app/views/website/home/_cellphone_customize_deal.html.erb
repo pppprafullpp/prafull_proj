@@ -10,7 +10,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 <section>
 	<div class='equipments-details col-md-12'>
 		<h5>Deals Attributes</h5>
-		<div id="deal_attributes" class="owl-carousel">
+		<div id="deal_attributes" class="owl-carousel" style='float: left;'>
 			<% deal_attributes.each do |deal_attribute| %>
 				<div class="pull-left">
 					<div class="sd-deal-sty">
@@ -43,7 +43,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 
 	<div id="equipments_p" class='equipments-details col-md-12 '>
 		<h5>Equipments</h5>
-		<div id="deal_equipments" class="owl-carousel">
+		<div id="deal_equipments" class="owl-carousel" style='float: left;'>
 			<% deal_equipments.each do |deal_equipment| %>
 				<div class="text-center">
 					<div class="sd-deal-sty">
@@ -81,12 +81,12 @@ deal_extra_services = customized_deals['deal_extra_services']
 
 	<div class='equipments-details col-md-12'>
 		<h5>Deals Extra Services</h5>
-		<div id="deal_extra_services" class="owl-carousel">
+		<div id="deal_extra_services" class="owl-carousel" style='float: left;'>
 			<% deal_extra_services.each do |deal_extra_service| %>
 				<div class="text-center">
 					<div class="sd-deal-sty">
 						<div class="custom_cursor" onclick="show_modal(<%=deal_extra_service.to_json%>,'extra_services')">
-							<h6><%=deal_extra_service["service_name"].truncate(12)%></h6>
+							<h6><%=deal_extra_service["service_name"]%></h6>
 							<p style="line-height:20px; height:100px; overflow-y:auto;"> <%=deal_extra_service["service_description"]%></p>
 							<div class="equip-price"> <span>$ <%="%.2f" % deal_extra_service["price"]%></span> </div>
 						</div>
@@ -106,24 +106,24 @@ deal_extra_services = customized_deals['deal_extra_services']
 	<div id="customdeal" class="modal fade" role="dialog">
   <div class="modal-dialog">
   	<button type="button" class="close log-pop-btn" data-dismiss="modal">&times;</button>
-    <div id="custom_services" class="modal-content pull-left">
-      <div id="attribute_div" class="modal-body col-md-12">
+    <div id="custom_services" class="modal-content">
+      <div id="attribute_div" class="modal-body">
       	<h4 id="attribute_title"></h4>
       	<strong id="attribute_data_plan_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="attribute_description"></p>
    		</div>
 
-   		<div id="equipment_div" class="modal-body col-md-12">
-      	<div class="col-md-4">
+   		<div id="equipment_div" class="modal-body">
+      	<div class="left-equipment-img">
       		<img src="/assets/website/iphone6s.png" alt="" />
       	</div>
-      	<div class="col-md-8"><h4 id="equipment_brand"></h4>
+      	<div class="right-equipment-img"><h4 id="equipment_brand"></h4>
       		<strong id="equipment_price" class="pop-price"><span>Price</span>''</strong>
       		<p id="equipment_description">''</p>
 				</div>
    		</div>
 
-   		<div id="extra_services_div" class="modal-body col-md-12">
+   		<div id="extra_services_div" class="modal-body ">
       	<h4 id="extra_services_title"></h4>
       	<strong id="extra_services_price" class="pop-price"><span>Price</span> ""</strong>
       	<p id="extra_services_desc"></p>

@@ -2178,7 +2178,7 @@ color: #999;
     font-family: 'open_sanssemibold';
     font-size: 14px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 0;
 }
 /*.right-offer ul li:before {
 	content: "";
@@ -7089,3 +7089,12 @@ select::-ms-expand {
 .equipment-remove strong{ display:inline-block;}
 .equipment-remove a { display:inline-block; float:right; font-size:14px;}
 .ad-linebtn{background: #e50005 none repeat scroll 0 0;    border: medium none;    color: #fff;    display: none;    font-size: 16px;    padding: 10px;    width: 100%;}
+#custom_services p , #custom_services strong{ float: none !important;}
+.left-equipment-img {    display: inline-block;
+    width: 29%;
+}
+.right-equipment-img {    width: 69%;
+    display: inherit;
+    float: right;}
+
+    .channel-new-sty { float: none; padding-left: 11px;} 

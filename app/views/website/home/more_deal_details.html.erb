@@ -7,8 +7,11 @@
     <div class="row">
          <div class="col-sm-4 right-offer">
            <div class="border-radius-bg">
-             <img src="<%= @deal.image.url %>" class="img-responsive">
-
+            <%if display_logo_permission(@deal.service_provider_id,@deal.deal_type)%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+              <img src="<%= @deal.image.url %>" class="img-responsive">
+            <% end %>
             <ul class="sd-deal-price">
             <li class="sd-dealprice-single"><%= get_label_name(@deal.service_provider_id,'Deal Price') %>:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
@@ -35,11 +38,11 @@
            <%#else%>
             <!--  <a  onclick="check_for_options()" class="order-btn" href="<%#=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%#=@deal.id%>">Order</a> -->
            <%#end%>
-           <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order<a>
+           <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
           <% if  @customized_deals.present? && @category_name == "cellphone"%>
-          <a id="total-calculate-btn" onclick="calculate_total_price_for_cellphone()" class="order-btn" href="javascript:void(0)">Calculate Total price<a>
+          <a id="total-calculate-btn" onclick="calculate_total_price_for_cellphone()" class="order-btn" href="javascript:void(0)">Calculate Total price</a>
             <% elsif  @customized_deals.present? && @category_name == "cable" %>
-              <a id="total-calculate-btn" onclick="calculate_total_price_for_cable()" class="order-btn" href="javascript:void(0)">Calculate Total price<a>
+              <a id="total-calculate-btn" onclick="calculate_total_price_for_cable()" class="order-btn" href="javascript:void(0)">Calculate Total price</a>
             <%end %>
 
            <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>

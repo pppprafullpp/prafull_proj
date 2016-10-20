@@ -5,7 +5,15 @@
         <h2><%= deal_data[:service_category_name]%></h2>
 
         <div class="col-md-3 col-sm-3 col-xs-3  sd-dealinfo-left">
-          <div class="sd-deal-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> </div>
+           
+          <div class="sd-deal-img"> 
+            <%if display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+             <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> 
+            <% end %>
+            
+          </div>
 
         </div>
         <div class="col-md-9 col-sm-9 col-xs-9  sd-deal-info">

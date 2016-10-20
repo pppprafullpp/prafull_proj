@@ -7,7 +7,12 @@
         <div class="col-md-12">
           <div class="sd-deal-block">
             <div class="sd-dealblock-img">
-             <img src="<%= best_deal['deal_image_url'] %>" alt="">
+              <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
+                <img src="/assets/website/default_logo.png" alt="">
+              <%else%>
+                 <img src="<%= best_deal['deal_image_url'] %>" alt="">
+              <% end %>
+            
             </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
@@ -30,9 +35,18 @@
         <% if trending_deal.present? %>
         <div class="col-md-12">
           <div class="sd-deal-block">
-            <div class="sd-dealblock-img"> <img src="<%= trending_deal['deal_image_url'] %>" alt=""> </div>
+            <div class="sd-dealblock-img"> 
+              <%if display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>
+                <img src="/assets/website/default_logo.png" alt="">
+              <%else%>
+                  <img src="<%= trending_deal['deal_image_url'] %>" alt=""> 
+              <% end %>
+             
+            </div>
             <div class="sd-dealblock-info">
-              <div class="sd-dealblock-trendingdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+              <div class="sd-dealblock-trendingdeal">
+                <img src="/assets/website/trending-dealblock.png" alt="">
+              </div>
               <h4><%= trending_deal['title'].truncate(20) %></h4>
               <p><%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
@@ -47,7 +61,14 @@
         <% if order_deal.present? %>
         <div class="col-md-12">
           <div class="sd-deal-block">
-            <div class="sd-dealblock-img"> <img src="<%= order_deal['deal_image_url'] %>" alt=""> </div>
+            <div class="sd-dealblock-img">
+              <%if display_logo_permission(order_deal['service_provider_id'],order_deal['deal_type'])%>
+                <img src="/assets/website/default_logo.png" alt="">
+              <%else%>
+                  <img src="<%= order_deal['deal_image_url'] %>" alt=""> 
+              <% end %>
+             
+           </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-orderdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
               <h4><%= order_deal['title'].truncate(20) %></h4>

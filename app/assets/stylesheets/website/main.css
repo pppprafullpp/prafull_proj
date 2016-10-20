@@ -1030,11 +1030,11 @@ label:focus {
 }
 /*<<<<<<< HEAD*/
 .zipcode-body h4 {
-/*=======*/
-/*.zipcode-body h3 {
-    font-size: 25px;
+/*=======
+.zipcode-body h3 {*/
+    /*font-size: 25px;*/
 
->>>>>>> prafull_05082016_new_branch*/
+/*>>>>>>> prafull_05082016_new_branch*/
     font-family: 'open_sanssemibold';
     margin-top: 20px;
     color: #000;
@@ -1092,13 +1092,13 @@ label:focus {
 /*=======*/
  /* color: #0F60BB;
   padding: 20px 0;
-  position: relative;*/
-    /*font-family: "open_sansregular";
+  position: relative;
+    font-family: "open_sansregular";
 	font-size: 22px;
 	margin-bottom: 10px;
-	margin: 30px 0;*/
+	margin: 30px 0;
 
-/*>>>>>>> prafull_05082016_new_branch*/
+>>>>>>> prafull_05082016_new_branch*/
     position: relative;
 }
 .prefrence-tab .radio {
@@ -1229,12 +1229,12 @@ label:focus {
 .profile-tab h5 {
     color: #0f60bb;
     position: relative;
-/*=======*/
-/*.profile-tab h4 {
+/*=======
+.profile-tab h4 {
   color: #0f60bb;
   position: relative;
-  padding: 30px 0 15px;
->>>>>>> prafull_05082016_new_branch*/
+  padding: 30px 0 15px;*/
+/*>>>>>>> prafull_05082016_new_branch*/
 }
 .profile-tab .form-horizontal .margin_top0 h5::before {
     left: 160px;
@@ -1387,16 +1387,16 @@ label:focus {
 .desc_cont .img_border img {
     width: 100%;
 }
-/*<<<<<<< HEAD*/
+/*<<<<<<< HEAD
 
-/*=======
-.desc_heading .col-md-5:first-child h5 {*/
+=======*/
+/*.desc_heading .col-md-5:first-child h5 {*/
     /*margin-left: 9px;*/
-/*}
-.desc_cont p {
+/*}*/
+/*.desc_cont p {
   font-size: 14px;
-}
->>>>>>> prafull_05082016_new_branch*/
+}*/
+/*>>>>>>> prafull_05082016_new_branch*/
 .desc_cont span.panding {
     color: #db8203;
 }
@@ -1492,8 +1492,8 @@ label:focus {
 .compare-dealbtn:hover { color:#fff;}
 #compare-box-deal-1 { background:#fff; float:left; width: auto; position: relative; padding:10px 10px 0;     border: 1px dotted #ccc; margin:10px;}
 #compare-box-deal-2 {  background:#fff;  float:left; width: auto; position: relative;  padding: 10px 10px 0;     border: 1px dotted #ccc;margin:10px;}
-/*=======*/
-/*.compare-dealbtn {
+/*=======
+.compare-dealbtn {
     display: inline-block;
     margin-top: 10px;
     padding: 8px 20px;
@@ -2239,10 +2239,13 @@ a {
     /* IE6-9 */
 }
 .order-form .nav-tabs li {
-
+/*<<<<<<< HEAD*/
   border-right: 1px solid #ddd;
   float: left;
-
+/*=======*/
+   /* border-right: 1px solid #ddd;
+    float: left;
+>>>>>>> prafull_05082016_new_branch*/
 }
 .order-form .nav-tabs li.active {
     margin-bottom: -1px;
@@ -2262,7 +2265,10 @@ a {
     background: #fff;
     margin: 0;
 }
+/*<<<<<<< HEAD
 
+=======
+>>>>>>> prafull_05082016_new_branch*/
 .order-form .tabber .tab-wrapper {
     border-radius: 5px;
     overflow: hidden;
@@ -3668,9 +3674,16 @@ a {
     margin: 60px 0;
 }
 .login-container h4 {
+/*<<<<<<< HEAD*/
     color: #272727;font-family: 'open_sanssemibold';
   	margin-bottom: 20px;
 	  padding-bottom: 5px;
+/*=======*/
+   /* color: #272727;
+    font-family: 'open_sanssemibold';
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+>>>>>>> prafull_05082016_new_branch*/
     text-transform: uppercase;
 }
 .inner-logindt {
@@ -6097,7 +6110,10 @@ ul.caption-dealdet li::before {
     padding: 20px 0 5px;
     border-top: 1px solid #eee;
 }
+/*<<<<<<< HEAD
 
+=======
+>>>>>>> prafull_05082016_new_branch*/
 .sd-eq-sty {
     background: #f4f4f4;
     padding: 10px;
@@ -6228,8 +6244,9 @@ ul.caption-dealdet li::before {
 /* wesite */
     /*=======*/
 
-    */ border: 1px solid #e7e7e7;
-}
+     
+    /*border: 1px solid #e7e7e7;*/
+/*}
 .customaized-deal a .caption-des {
     color: #000;
     font-size: 14px;
@@ -6238,11 +6255,11 @@ ul.caption-dealdet li::before {
     font-size: 18px;
     color: #000;
     font-family: 'open_sanssemibold';
-}
+}*/
 /* wesite */
 /*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/
 
->>>>>>> prafull_05082016_new_branch
+/*>>>>>>> prafull_05082016_new_branch*/
 .carousel-caption h1 {
     font-family: 'open_sansregular';
 }
@@ -6329,7 +6346,11 @@ select::-ms-expand {
     padding-left: 0;
 }
 .sd-deal-img {
+/*<<<<<<< HEAD
+=======*/
+    /*width: 300px;*/
 
+/*>>>>>>> prafull_05082016_new_branch*/
     background: #f9f9f9;
     border: 1px solid #ebebeb;
     text-align: center;
@@ -6400,9 +6421,13 @@ select::-ms-expand {
     font-size: 15px;
 }
 .sd-equip-info span {
+/*<<<<<<< HEAD*/
     width:100px;
     display:inline-block;
-
+/*=======*/
+  /*  width: 100px;
+    display: inline-block
+>>>>>>> prafull_05082016_new_branch*/
 }
 .no-login-tdeal {
     position: absolute;
@@ -6635,7 +6660,11 @@ select::-ms-expand {
     background: #fafafa;
     border-radius: 5px;
     padding: 0px 20px;
+/*<<<<<<< HEAD
+=======*/
+    /*<<<<<<< HEAD*/
 
+/*>>>>>>> prafull_05082016_new_branch*/
     font-size: 12px;
     margin-bottom: 10px;
 }
@@ -6675,9 +6704,9 @@ select::-ms-expand {
 .rating-container {    margin-top: 20px;}
 
 .btn_3 {    background: #cbcbcb none repeat scroll 0 0;    cursor: default;}
-/*=======*/
+/*=======
 
-/*#reviews-inner-area p {
+#reviews-inner-area p {
     font-size: 12px;
 }
 #reviews-inner-area h5 {
@@ -6691,7 +6720,7 @@ select::-ms-expand {
 .btn_3 {
     background: #cbcbcb none repeat scroll 0 0;
     cursor: default;
-}*/
+}
 /*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/
 
 /*>>>>>>> prafull_05082016_new_branch*/

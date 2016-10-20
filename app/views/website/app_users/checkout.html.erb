@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <div class="col-md-8 col-sm-8">
+          <div class="col-md-8 col-sm-12  col-xs-12 col-md-offset-2">
             <!-- <form class="checkout-login"> -->
             <form class="checkout-login" id="order_login_app_user" action="/website/app_users/signin" accept-charset="UTF-8" method="post">
               <div id="sign_in_checkout" class="col-md-7 inner-logindt">
@@ -17,7 +17,7 @@
                   <input type="password" class="form-control" placeholder="Password" name="user[password]" id="checkout_user_password" >
                 </div>
                 <div class="form-group">
-                  <input type="submit" name="commit" value="Login to continue" class="btn  btn-login" id="checkout_login_user">
+                  <input type="submit" name="commit" value="Login" class="btn  btn-login" id="checkout_login_user">
                   <!-- <button type="button" class="btn  btn-login" id="checkout_login_user">Login to continue</button> -->
                   <a href ="#" id="sign_up_btn" class="sign-up-btn">Sign up?</a>
                 </div>
@@ -30,11 +30,12 @@
                     Remember Me</label> -->
                   <!-- </div> -->
 
-
-                    <div class="checkbox checkbox-info" id="deal-checkbox">
-                            <input type="checkbox" value="" name="" id="checkbox15">
-                          <label for="checkbox15">   Remember Me</label>
-                        </div>
+                    <!-- <div class="checkbox checkbox-info" id="deal-checkbox"> -->
+                      <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+                      <label for="checkbox15">   Remember Me</label>
+                            <!-- <input type="checkbox" value="" name="" id="checkbox15"> -->
+                       <!--
+                        </div> -->
                   <!--  </span> <span class="pull-right"><a class="help-block" href="javascript:void(0)" id="checkout_forgot_password">Forgot Your Password?</a></span>  -->
                   <a href="javascript:void(0)" id="checkout_forgot_password" class="forgot-pasw">Forgot password?</a>
                 </div>
@@ -86,25 +87,13 @@
 
               <div class="form-group col-md-12">
                 <!-- <button type="button" class="btn  btn-login">Signup to continue</button> -->
-                <%= f.submit "Signup to continue", :class => "btn  btn-login",:id => 'checkout_create_user' %>
+                <%= f.submit "Signup", :class => "btn  btn-login",:id => 'checkout_create_user' %>
                 <a href ="#" id="login_btn" class="sign-up-btn">Already a User?</a>
               </div>
               <% end %>
             </div>
           </div>
-          <div class="col-md-4 col-sm-4 right-offer">
-            <%d=@deal_details%>
-             <div class="order-info text-center  side-deal">
-              <div class="thumb"><img alt="" src="<%=d.image_url%>" class="img-responsive"> </div>
-              <strong>$ <%=d.effective_price%></strong>
-              <h5 class="text-center"><%=d.title%></h5>
-              <div class="text-center"> <small><%=d.short_description.truncate(20)%></small><br>
-                <small>  </small>
-              </div>
-              <a class="btn_2" href="#">Place Order</a>
-            </div>
-
-          </div>
+          
         </div>
       </div>
     </div>

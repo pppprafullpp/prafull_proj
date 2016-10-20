@@ -2,11 +2,16 @@
   <%if data[:service_category_id] == params[:category_id].to_i %>
     <% if data[:best_deal].present? %>
       <% best_deal = data[:best_deal] %>
-      <div class="col-xs-6 col-sm-6 col-md-4">
+      <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
         <div class="border-radius-bg auto-height">
           <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
           <div class="sddeals-imgcon" style="overflow: hidden;width:215px">
-          <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt="">
+            <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt="">
+            <%end%>
+          
         </div>
         <div class="main-external-div1">
           <h5><%= best_deal['title'].truncate(25) %></h5>
@@ -14,9 +19,9 @@
             <li><%= best_deal['short_description'].truncate(30) %></li>
             <li><%= best_deal['detail_description'].truncate(30) %></li>
           </ul>
-          <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
-            <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
-          <% end %>
+          <%# if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+            <!-- <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b> -->
+          <%# end %>
           <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
 
           <%if rating.present?%>
@@ -80,11 +85,15 @@
   <%end %>
   <% if data[:trending_deal].present? %>
     <% best_deal = data[:trending_deal] %>
-    <div class="col-xs-6 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
       <div class="border-radius-bg auto-height">
         <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt=""></div>
         <div class="sddeals-imgcon">
-          <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive">
+           <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive">
+            <%end%>
         </div>
         <div class="main-external-div1">
         <h5><%= best_deal['title'].truncate(25) %></h5>
@@ -92,9 +101,9 @@
           <li><%= best_deal['short_description'].truncate(30) %></li>
           <li><%= best_deal['detail_description'].truncate(30) %></li>
         </ul>
-        <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
-          <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
-        <% end %>
+        <%# if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+          <!-- <b class="cellphone-lines">Lines:<%#=data['no_of_lines'] %></b> -->
+        <%# end %>
         <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
         <%if rating.present?%>
          <p id="rating"  class="sd-rating">

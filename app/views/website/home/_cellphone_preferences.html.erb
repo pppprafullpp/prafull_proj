@@ -18,6 +18,7 @@
      no_of_lines=@cellphone_preferences[0].no_of_lines
      domestic_call_unlimited=@cellphone_preferences[0].domestic_call_unlimited
      international_call_unlimited=@cellphone_preferences[0].international_call_unlimited
+     cellphone_detail_id = @cellphone_preferences[0].cellphone_detail_id
    end
  else
 
@@ -48,7 +49,7 @@
     <div class="col-md-6">
       <div class="checkbox checkbox-info no-contract-sty">
       <%= check_box_tag "is_contract", false, :class=>"form-control", :onchange=>"resetcontractdate()"%>
-      <label for="is_contract"> <span>Is Contract</span> </label>
+      <label for="is_contract"> <span>No Contract</span> </label>
       </div>
     </div>
 
@@ -93,7 +94,7 @@
 
 
 
-    <div class="col-md-6">
+    <div class="col-md-6 mg_bttom20">
     <%@list=CellphoneDealAttribute.where("data_plan is NOT NULL").order("data_plan ASC").pluck(:data_plan).uniq%>
     <select class="form-control" id="data_plan"  name="data_plan">
     <%@list.each_with_index do |l,index|%>
@@ -109,6 +110,11 @@
         <%end%>
       </select>
     </div>
+
+     <div class="col-md-12">
+        <%= select_tag :cellphone_detail_id,options_for_select(CellphoneDetail.pluck(:cellphone_name,:id),cellphone_detail_id),:class => 'form-control', :style=>"width: 100%;",:name =>'cellphone_detail_id' %>
+      </div>
+
 
     <div class="col-md-12 text-center btn-group-sty">
 

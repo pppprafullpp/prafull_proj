@@ -4,6 +4,8 @@ class Order < ActiveRecord::Base
 	has_many :order_items, :dependent => :destroy
 	has_many :order_addresses, :dependent => :destroy
 	has_many :order_equipments, :dependent => :destroy
+	has_many :order_extra_services, :dependent => :destroy
+	has_many :order_attributes, :dependent => :destroy
 	validates_uniqueness_of :order_id
 
 	has_many :user_gifts,:dependent => :destroy
@@ -45,6 +47,41 @@ class Order < ActiveRecord::Base
 		#rand(1_00_000..10_00_000-1).to_s
 	end
 
+	def self.attributes(order_id)
+		order = self.find(order_id)
+		order_attribute = order.order_attributes.first
+		attribute = {}
+		attribute[:price]= order_attribute.price
+		attribute[:title] = CellphoneDealAttribute.find(order.order_attributes.first.ref_id).title
+		attribute
+  	end
+
+  	def self.extra_services(order_id)
+		order = self.find(order_id)
+		order_extra_service = order.order_extra_services.first
+		extra_service = {}
+		deal_extra_service = DealExtraService.find(order.order_extra_services.first.deal_extra_service_id)
+		extra_service [:price]= deal_extra_service.price
+		extra_service [:title] = deal_extra_service.extra_service.service_name
+		extra_service
+  	end
+
+  	def self.equipments(order_id)
+		order = self.find(order_id)
+		order_equipments = order.order_equipments
+		equipments = []
+		order_equipments.each do |equipment|
+			order_equipment= {}
+			order_equipment[:color_name] = EquipmentColor.find(equipment.color).color_name
+			cellphone_detail = CellphoneEquipment.find(equipment.equipment_id).cellphone_detail
+			order_equipment[:brand] = cellphone_detail.brand
+			order_equipment[:name] = cellphone_detail.cellphone_name
+			order_equipment[:image] = cellphone_detail.image.url
+			equipments << order_equipment
+		end
+		equipments
+  	end
+
 	private
 
 	## sequence table is used to manage incremental order or invoice or other number by sequence type
@@ -53,5 +90,8 @@ class Order < ActiveRecord::Base
 		seq_number = seq.seq_number.present? ? seq.seq_number : 0
 		seq.update_attributes(:seq_number => seq_number + 1)
 	end
+
+
+
 
 end

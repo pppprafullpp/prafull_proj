@@ -5,7 +5,7 @@
 
       <%= render :partial=> 'website/home/left_filter' %>
 
-      <div class="col-xs-12 col-sm-8 col-md-9">
+      <div class="col-xs-12 col-sm-12 col-md-9">
 
         <div class="row">
 
@@ -37,7 +37,11 @@
                     <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
                       <p class="bundled-data-header "><%=bd.bundle_combo%></p>
                       <div class="bx-img text-center">
-                        <img src="<%=bd.image%>" alt="" class="img-responsive">
+                        <%if display_logo_permission(bd.service_provider_id,bd.deal_type)%>
+                          <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                          <%else%>
+                          <img src="<%=bd.image%>" alt="" class="img-responsive">
+                        <%end%>
                       </div>
                       <p class="caption-title"><%=bd.title.truncate(20)%></p>
 
@@ -62,8 +66,7 @@
               <%= render :partial => "website/home/category_best_and_trending_deals" if session[:user_id].present?%>
 
               <% @dashboard_data.each do |data| %>
-
-              <div class="col-xs-6 col-sm-6 col-md-4 ">
+              <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
                     <div class="border-radius-bg auto-height">
                       <% if data['is_customisable'] == true %>
 
@@ -71,7 +74,11 @@
                       <% end %>
                       <div class="sddeals-imgcon">
 
-                        <img src="<%= data['deal_image_url'] %>" alt="" class="img-responsive">
+                        <%if display_logo_permission(data['service_provider_id'],data['deal_type'])%>
+                          <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                          <%else%>
+                          <img src="<%= data['deal_image_url'] %>" alt="" class="img-responsive">
+                        <%end%>
                       </div>
 
                       <div class="main-external-div1">
@@ -80,9 +87,9 @@
                           <li><%= data['short_description'].truncate(50) %></li>
                         </ul>
 
-                        <% if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
-                          <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b>
-                          <% end %>
+                        <%# if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
+                          <!-- <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b> -->
+                          <%# end %>
                          <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
                          <%if rating.present?%>
                           <p id="rating" class="sd-rating">

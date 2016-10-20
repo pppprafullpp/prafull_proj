@@ -13,9 +13,17 @@
       <% @order_history.each do |order| %>
           <div class="row desc_cont">
             <div class="col-xs-2">
-              <span class="img_border"><%= image_tag("#{Deal.find_by_id(order.order_items.first.deal_id).image}", :alt => "logo") %></span>
+              <span class="img_border">
+                <% deal = Deal.find_by_id(order.order_items.first.deal_id) %>
+
+                <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
+                  <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                <%else%>
+                  <%= image_tag("#{deal.image}", :alt => "logo") %>
+                <% end %>
+                </span>
               <!-- <img src="img/AT&amp;T_logo_2005.png" alt="logo"> -->
-              <p class="para_3"><%= Deal.find_by_id(order.order_items.first.deal_id).short_description %></p>
+              <p class="para_3"><%= deal.title %></p>
             </div>
                 <div class="col-xs-2"> <p><%=order.created_at.strftime("%m/%d/%y")%></div>
                 <div class="col-xs-2"> <p><span class="panding"><%= order.status %></span></p> </div>

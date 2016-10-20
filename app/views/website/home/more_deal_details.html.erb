@@ -7,10 +7,13 @@
     <div class="row">
          <div class="col-sm-4 right-offer">
            <div class="border-radius-bg">
-             <img src="<%= @deal.image.url %>" class="img-responsive">
-
+            <%if display_logo_permission(@deal.service_provider_id,@deal.deal_type)%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+              <img src="<%= @deal.image.url %>" class="img-responsive">
+            <% end %>
             <ul class="sd-deal-price">
-            <li class="sd-dealprice-single">Deal Price:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
+            <li class="sd-dealprice-single"><%= get_label_name(@deal.service_provider_id,'Deal Price') %>:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
             <% if @deal.contract_period == 0 %>
             <li>Contract:<span>None</span></li>
@@ -21,19 +24,41 @@
 
           </ul>
 
+
+
+
+
            </div>
-           <%if  @current_user.present? %>
-             <%if @current_user.email_verified%>
-               <a onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
-             <%else%>
-                  <a class="order-btn" href="javascript:void(0)">Verify email</a>
-             <%end%>
-           <%else%>
-             <a  onclick="check_for_options()" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
-           <%end%>
+           <%#if  @current_user.present? %>
+             <%#if @current_user.email_verified%>
+             <!--   <a onclick="check_for_options()" class="order-btn" href="<%#=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%#=@deal.id%>">Order</a> -->
+             <%#else%>
+                  <!-- <a class="order-btn" href="javascript:void(0)">Verify email</a> -->
+             <%#end%>
+           <%#else%>
+            <!--  <a  onclick="check_for_options()" class="order-btn" href="<%#=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%#=@deal.id%>">Order</a> -->
+           <%#end%>
+           <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
+          <% if  @customized_deals.present? && @category_name == "cellphone"%>
+          <a id="total-calculate-btn" onclick="calculate_total_price_for_cellphone()" class="order-btn" href="javascript:void(0)">Calculate Total price</a>
+            <% elsif  @customized_deals.present? && @category_name == "cable" %>
+              <a id="total-calculate-btn" onclick="calculate_total_price_for_cable()" class="order-btn" href="javascript:void(0)">Calculate Total price</a>
+            <%end %>
+
            <%if @category_name == "cable" && @deal.cable_deal_attributes.last.channel_ids.present? && @deal.is_customisable != true%>
             <a class="chanel-list-btn" href="#" data-toggle="modal" data-target="#myModal2">Channel List</a> </td>
             <% end %>
+
+
+            <!-- <div id="equipments_selected"  class=""> -->
+             <% if  @customized_deals.present? && @category_name == "cellphone"%>
+        <div id="equipments_selected" class="deal-equipments-added">
+      <h5>Equipments Selected</h5>
+       
+          </div>
+          <% end %>
+         <!-- </div> -->
+
 
          </div>
 
@@ -61,8 +86,8 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td width="20%">Price</td>
-                    <td width="80%" colspan="2">$<%= "%.2f" % additional_offer.try(:price) %></td>
+                    <td width="20%">Offer</td>
+                    <td width="80%" colspan="2"><%=additional_offer.try(:description) %></td>
                   </tr>
                   </tbody>
                 </table>
@@ -88,7 +113,7 @@
 
       </div>
       <div id="reviews-area" style="height: 750px"></div>
-        
+
       <div id="onwait" style="background-color: #000;height: 586px;    position: absolute;    top: 1px;    width: 587px;
     opacity: 0.3;">
        <i id="wait-spinner" style="position: absolute;top: 50%;left: 43%;color: #fafafa;" class="fa fa-spinner fa-pulse fa-4x fa-fw fa-spin"></i>
@@ -96,7 +121,7 @@
 
       <% end %>
     </div>
-   </div> 
+   </div>
  </div>
   <script>
 
@@ -230,37 +255,80 @@
 
 
 function check_for_options(){
+
+    cable_deal_equipments=[];
+    $("input[name='cable_deal_equipments']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj5 ={};
+    jsonObj5["equipment_id"]=value.split("_")[0];
+    cable_deal_equipments.push(jsonObj5)
+    });
+    localStorage["cable_deal_equipments"] = JSON.stringify(cable_deal_equipments);
+    deal_attributes=[];
+    $("input[name='deal_attributes']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj3 ={};
+    jsonObj3["ref_id"]=value.split("_")[0];
+    jsonObj3["price"]=value.split("_")[1];
+    jsonObj3["ref_type"]=value.split("_")[2];
+    deal_attributes.push(jsonObj3)
+    });
+
+    cable_deal_attributes=[];
+    $("input[name='deal_attributes']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj3 ={};
+    jsonObj3["ref_id"]=value.split("_")[0];
+    jsonObj3["price"]=value.split("_")[1];
+    jsonObj3["ref_type"]=value.split("_")[2];
+    cable_deal_attributes.push(jsonObj3)
+    });
+
+    $("input[name='deal_channel_packages']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj4 ={};
+    jsonObj4["ref_id"]=value.split("_")[0];
+    jsonObj4["price"]=value.split("_")[1];
+    jsonObj4["ref_type"]=value.split("_")[2];
+    cable_deal_attributes.push(jsonObj4)
+    });
+
+    deal_channel_packages=[];
+    $("input[name='deal_channel_packages']:checked").each(function(){
+    value=$(this).attr("val");
+    jsonObj4 ={};
+    jsonObj4["ref_id"]=value.split("_")[0];
+    jsonObj4["price"]=value.split("_")[1];
+    jsonObj4["ref_type"]=value.split("_")[2];
+    deal_channel_packages.push(jsonObj4)
+  });
+
+     localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
+     localStorage["deal_channel_packages"] = JSON.stringify(deal_channel_packages);
+     localStorage["cable_deal_attributes"] = JSON.stringify(cable_deal_attributes);
+  
   if($("input[type='checkbox']").is(':checked') == false)
   {
     effective_value = <%=@deal.effective_price%>;
     console.log(effective_value);
     localStorage["effective_price"] = JSON.stringify(effective_value);
   }
+  cellphone_deal_equipments = []
+  value = color_data
+  <%if @category_name == "cellphone" %>
+  localStorage["color_data"] = JSON.stringify(color_data);
 
-   deal_attributes=[];
-    $("input[name='deal_attributes']:checked").each(function(){
-    value=$(this).attr("val");
-    jsonObj3 ={};
-    jsonObj3["ref_id"]=value.split("_")[0];
-    jsonObj3["ref_type"]=value.split("_")[1];
-    deal_attributes.push(jsonObj3)
-    });
-    $("input[name='deal_channel_packages']:checked").each(function(){
-    value=$(this).attr("val");
-    jsonObj4 ={};
-    jsonObj4["equipment_id"]=value.split("_")[0];
-    jsonObj3["ref_type"]=value.split("_")[1];
-    deal_attributes.push(jsonObj3)
-    });
+  jsonObj6 = {}
+  for(var i=0; i<value.length;i++){
+    jsonObj6['equipment_id'] = value[i].split('_')[0];
+    jsonObj6['color'] = value[i].split('_')[1];
+    cellphone_deal_equipments.push(jsonObj6)
+  }
+    localStorage["deal_equipments"] = JSON.stringify(cellphone_deal_equipments);
+  <% end %>
+ 
 
-    cable_deal_equipments=[];
-    $("input[name='cable_deal_equipments']:checked").each(function(){
-    value=$(this).attr("val");
-    jsonObj3 ={};
-    jsonObj3["equipment_id"]=value.split("_")[0];
-    // jsonObj3["ref_type"]=value.split("_")[1];
-    cable_deal_equipments.push(jsonObj3)
-    });
+
 
     deal_extra_services=[];
     $("input[name='deal_extra_services']:checked").each(function(){
@@ -271,34 +339,12 @@ function check_for_options(){
     });
 
 
-    localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
+    
     localStorage["deal_extra_services"] = JSON.stringify(deal_extra_services);
-    // localStorage["deal_equipments"] = JSON.stringify(deal_equipments);
     localStorage["cable_deal_equipments"] = JSON.stringify(cable_deal_equipments);
 
-
-    deal_equipments=[];
-    $("input[name='deal_equipments']:checked").each(function(){
-    value=$(this).attr("val");
-    var id = value.split("_")[0];
-
-        console.log(id);
-
-        $("input[type='radio']:checked").each(function(){
-            value=this.id;
-            console.log("value");
-            if(value!="option1" && this.id.split("_")[1] == id ) {
-               console.log("color id="+this.id.split("_")[2])
-            }
-          });
-
-    jsonObj3 ={};
-    // jsonObj3["ref_id"]=value.split("_")[0];
-    // jsonObj3["ref_type"]=value.split("_")[1];
-    deal_equipments.push(jsonObj3)
-    });
 }
-  
+
   function get_comments(){
     var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
      $("#reviews-area").html("");
@@ -378,32 +424,32 @@ function postLike(){
 </script>
 <script>
 $(document).ready(function() {
-  var effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-  var chkId = 0;
-  $('input[type=checkbox]').on('change', function() {
-    $(this).each ( function() {
-      effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-      if($(this).prop('checked') == true){
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price + parseFloat(chkId);
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
-      }
-      else if($(this).prop('checked') == false){
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        chkId =$(this).attr("val").split("_")[1];
-        effective_value = effective_price - parseFloat(chkId);
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
-      }
-      else{
-        effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
-        effective_value = effective_value = effective_price 
-        $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
-      }
-      localStorage["effective_price"] = JSON.stringify(effective_value);
-    });
-  });
-  
+  // var effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  // var chkId = 0;
+  // $('input[type=checkbox]').on('change', function() {
+  //   $(this).each ( function() {
+  //     effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //     if($(this).prop('checked') == true){
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       chkId =$(this).attr("val").split("_")[1];
+  //       effective_value = effective_price + parseFloat(chkId);
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo');
+  //     }
+  //     else if($(this).prop('checked') == false){
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       chkId =$(this).attr("val").split("_")[1];
+  //       effective_value = effective_price - parseFloat(chkId);
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+  //     }
+  //     else{
+  //       effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
+  //       effective_value = effective_value = effective_price
+  //       $('#effective_price').text('$' + effective_value.toFixed(2) + '/mo' );
+  //     }
+  //     localStorage["effective_price"] = JSON.stringify(effective_value);
+  //   });
+  // });
+
 
 
 

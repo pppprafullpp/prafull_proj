@@ -31,4 +31,14 @@ module ApplicationHelper
       session[:zip_code]
     end
   end
+
+  def get_label_name(service_provider_id,label_key)
+    if service_provider_id.present?
+      label = DynamicLabel.where(:label_key => label_key,:service_provider_id =>  service_provider_id).first
+      label_value = label.present? ? label.label_value.capitalize : label_key
+      label_value
+    else
+      label_key
+    end
+  end
 end

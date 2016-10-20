@@ -15,8 +15,8 @@ class Website::HomeController < ApplicationController
     if session[:zip_code].present? && session[:user_type].present?
       @trending_deal_data = get_dashboard_deals(nil,session[:zip_code],session[:user_type])
     end
-    @cable_customized_deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CABLE_CATEGORY).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
-    @cellphone_customized_deals = Deal.where('is_customisable =? AND service_category_id=?', true,Deal::CELLPHONE_CATEGORY).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
+    @cable_customized_deals = Deal.where('is_customisable =? AND service_category_id=? AND deal_type =?', true,Deal::CABLE_CATEGORY,session[:user_type]).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
+    @cellphone_customized_deals = Deal.where('is_customisable =? AND service_category_id=? AND deal_type =?', true,Deal::CELLPHONE_CATEGORY,session[:user_type]).as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name])
   end
 
   ## we are not using this function in website as this gives mixed deals of all categories
@@ -95,8 +95,8 @@ class Website::HomeController < ApplicationController
       @deal_first = Deal.find(deal_ids.first)
       @deal_second = Deal.find(deal_ids.last)
       @category = ServiceCategory.find(@deal_first.service_category_id).name.downcase
-      # @current_deal = @app_user.service_preferences.where(:service_category_name => @category.capitalize).first
-      @current_deal_preferences = eval("@current_deal.#{@category}_service_preferences").first rescue nil
+      # @current_deal = @app_user.service_preferences.where(:service_category_id => @deal_first.service_category_id).last
+      # @current_deal_preferences = eval("@current_deal.#{@category}_service_preferences").first rescue nil
       @deal_attributes_first = eval("@deal_first.#{@category}_deal_attributes").first
       @deal_attributes_second = eval("@deal_second.#{@category}_deal_attributes").first
       @deal_equipment_first = eval("@deal_attributes_first.#{@category}_equipments").first
@@ -106,6 +106,7 @@ class Website::HomeController < ApplicationController
 
   def set_zipcode_and_usertype
     session[:zip_code] = params[:zip_code]
+    cookies[:zip_code] = params[:zip_code]
     session[:user_type] = (params[:user_type] == 'option1') ? AppUser::RESIDENCE : AppUser::BUSINESS
     redirect_to service_deals_path
   end

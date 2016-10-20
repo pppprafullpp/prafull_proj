@@ -184,7 +184,9 @@ class Website::AppUsersController < ApplicationController
           order_extra_service_hash = {:order_extra_services => eval(params[:order_extra_services])}
           order_equipment = OrderAttribute.create_order_attributes(order_attribute_hash,order.id)
           order_equipment = OrderEquipment.create_order_equipments(order_equipment_hash,order.id)
-          order_extra_services = OrderExtraService.create_order_extra_services(order_extra_service_hash,order.id)
+          if order_items.first.deal.service_category_id == Deal::CELLPHONE_CATEGORY
+            order_extra_services = OrderExtraService.create_order_extra_services(order_extra_service_hash,order.id)
+          end
         end
           app_user_hash = {:app_user => params[:app_user] }
           @app_user_update = AppUser.update_app_user(app_user_hash,order.app_user_id,order)
@@ -283,6 +285,7 @@ class Website::AppUsersController < ApplicationController
         # else
           @app_user = AppUser.find(session[:user_id])
           @deal = Deal.find_by_id(params[:deal_id])
+          @deal_detail = @deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [ :deal_price,:service_category_name, :service_provider_name,:deal_equipments,:deal_attributes,:additional_offers])
           @effective_price = params[:effective_price].present? ? params[:effective_price] : @deal.effective_price
           if @deal.cellphone_equipments.present? && @deal.service_category_id == Deal::CELLPHONE_CATEGORY &&@deal.is_customisable != true
             @equipments =@deal.cellphone_equipments
@@ -302,12 +305,18 @@ class Website::AppUsersController < ApplicationController
       reset_session
     end
     if request.method.eql? 'POST'
+   
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ?  Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]
         session[:zip_code] = @app_user.zip
         session[:user_type] = @app_user.user_type
+        # if params[:remember_me]
+        #   cookies.signed[:user_id] = { value: @app_user.id, expires: 2.weeks.from_now }
+        # else
+        #  cookies.signed[:user_id] = @app_user.id
+        # end
         if session[:user_type] == AppUser::BUSINESS
           session[:business] = Base64.decode64(@app_user.business_app_users.last.business.business_name)
         end
@@ -328,6 +337,7 @@ class Website::AppUsersController < ApplicationController
 
   def signout
     reset_session
+    # cookies.delete(:auth_token)
     redirect_to website_home_index_path and return
   end
 
@@ -339,6 +349,68 @@ class Website::AppUsersController < ApplicationController
       format.html {render :nothing => true }
       format.js { render :json => { :data => user, :layout => false}.to_json}
     end
+  end
+
+  def order_attributes
+    type = params[:type]
+    attribute_data = eval(type.titleize+"DealAttribute").find(params[:id])
+    render :json => {
+      :success =>true,
+      :data => attribute_data
+    }
+  end
+
+  def order_channel_packages
+    package_data = ChannelPackage.find(params[:id])
+    render :json => {
+      :success =>true,
+      :data => package_data
+    }
+  end
+
+  def order_cable_equipments
+    equipment_data = CableEquipment.find(params[:id])
+    render :json => {
+      :success =>true,
+      :data => equipment_data
+    }
+  end
+  
+  def order_extra_services
+    price = DealExtraService.find(params[:id]).price
+    name = DealExtraService.find(params[:id]).extra_service.service_name
+    render :json => {
+      :success =>true,
+      :price => price,
+      :name => name
+    }
+  end  
+
+  def order_equipment_data
+    color_txt = []
+    price = []
+    name = []
+    brand = []
+    image = []
+      params[:data].each do |a|
+      id= a.split('_')[0]
+      color_id = a.split('_')[1]
+      cellphone_equipment = CellphoneEquipment.find(id)
+      price << cellphone_equipment.price
+      name << cellphone_equipment.cellphone_detail.cellphone_name
+      brand << cellphone_equipment.cellphone_detail.brand
+      image << cellphone_equipment.cellphone_detail.image.url
+      color_txt << EquipmentColor.find(color_id).color_name
+      end
+    # raise params[:data].to_yaml
+    render :json => {
+      :price => price,
+      :color => color_txt,
+      :name  => name,
+      :brand => brand,
+      :image => image
+    }
+
   end
 
   def check_user_credential

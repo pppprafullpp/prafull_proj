@@ -2,6 +2,7 @@
 
 class Api::V1::DashboardsController < ApplicationController
 	include DashboardsHelper
+	include ApplicationHelper
 	before_action :verify_token
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
@@ -76,6 +77,15 @@ class Api::V1::DashboardsController < ApplicationController
 			end
 		else
 			render :json => { :success => false,:message => 'Insufficient Parameters' }
+		end
+	end
+
+	def dynamic_label_for_service_provider
+		if params[:service_provider_id].present? && params[:label_key].present?
+			label_key = get_label_name(params[:service_provider_id],params[:label_key])
+			render :json => {label_key: label_key, :success => true }
+		else 
+			render :json => { :success => false}
 		end
 	end
 end

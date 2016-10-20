@@ -1,4 +1,3 @@
-<%#raise @zipcodes.to_yaml%>
 <fieldset id="additional-offer">
    <h4>Additional Offer for zip areas</h4>
    <table class="form-data">
@@ -21,7 +20,7 @@
         <br/>
         <div><%= f.check_box :is_nationwide,:class=>'additional-offer-nationwide', :checked=>'checked' %> Is Nationwide? </div>
         <%= f.label 'Select Allowed Zipcodes:' %>
-        <%= f.select :zipcode_ids, options_for_select(@zipcodes),{},{id: "deal-include-zipcode",multiple: true,size: 10 } %>
+        <%= f.select :zipcode_ids, "",{id: "deal-include-zipcode",multiple: true,size: 10 } %>
       </td>
     </tr>
     <tr>
@@ -35,6 +34,10 @@
       </td>
     </tr>
     <tr>
+      <td>
+        <%= f.label :contract_period %>
+        <%= f.select :contract_period , options_for_select([3,6,9,12])%>
+      </td>
       <td>
         <div><%= f.check_box :is_active %> Is Active? </div>
       </td>

@@ -17,6 +17,7 @@
 //= require owl.carousel
 //= require_tree .
 //= require chosen-jquery
+
 $(document).on("page:load ready", function(){
     $("input.datepicker").datepicker();
 });

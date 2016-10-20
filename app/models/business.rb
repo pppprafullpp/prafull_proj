@@ -31,9 +31,11 @@ class Business < ActiveRecord::Base
       business_type = params[:business][:business_type].present? ? params[:business][:business_type].to_i : nil
       if business_type.present?
         if business_type == SOLE_PROPRIETOR
-          business = self.where("ssn = ? OR business_name = ? ",params[:business][:ssn], params[:business][:business_name]).first if params[:business][:ssn].present? or params[:business][:business_name].present?
+          #business = self.where("ssn = ? OR business_name = ? ",params[:business][:ssn], params[:business][:business_name]).first if params[:business][:ssn].present? or params[:business][:business_name].present?
+          business = self.where("business_name = ? and business_type = ?",params[:business][:business_name],business_type).first if params[:business][:business_name].present?
         elsif business_type == REGISTERED
-          business = self.where("federal_number = ? OR business_name = ? ",params[:business][:federal_number], params[:business][:business_name]).first if params[:business][:federal_number].present? or params[:business][:business_name].present?
+          #business = self.where("federal_number = ? OR business_name = ? ",params[:business][:federal_number], params[:business][:business_name]).first if params[:business][:federal_number].present? or params[:business][:business_name].present?
+          business = self.where("business_name = ?  and business_type = ?",params[:business][:business_name],business_type).first if params[:business][:business_name].present?
         end
         business = self.where(:id => params[:business][:id]).first if params[:business][:id].present? and !business.present?
         unless business.present?

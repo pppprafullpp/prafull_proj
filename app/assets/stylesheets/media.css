@@ -70,7 +70,7 @@
 	.serviceCon .row .serviceRow {
     width: 32.9%;
 	}
-	
+
 	.serviceCon1 h1::before,
 	.serviceCon1 h1::after {
     width: 30%;
@@ -436,6 +436,7 @@ h2 {
 	.zipcode-body {
     background-size: 100% 100%;
 	}
+	.login-tab  a { font-size: 11px;}
 }
 
 @media (max-width: 500px) {

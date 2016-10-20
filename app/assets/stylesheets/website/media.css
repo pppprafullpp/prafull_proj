@@ -1,3 +1,5 @@
+
+
 @charset "utf-8";
 /* CSS Document */
 
@@ -52,6 +54,7 @@
     .compare_box_border p {
     font-size: 10px;
     }
+
 }
 @media (max-width: 992px) {
     .carousel-caption {
@@ -115,23 +118,20 @@
     .compare-design .scroller_order {
     overflow-x: hidden;
     }
-    .login-tab .modal-dialog {
+    .side-deal { height: auto !important;}
+   /* .login-tab .modal-dialog {
     width: 675px;
-    }
-    #zipcode .modal-dialog {
+    }*/
+   /* #zipcode .modal-dialog {
     width: 600px;
-    }
+    }*/
     .zipcode-body {
         padding: 30px 20px;
     }
     #zipcode .modal-dialog {
         margin-top: 100px;
     }
-    .details .bor_sec_left {
-    width: 100%;
-    margin: auto;
-    float: none;
-    }
+
     .bor_sec_left .checkbox {
     padding-left: 35px;
     }
@@ -141,6 +141,20 @@
     #compare_box.affix {
     width: 720px;
     }
+      .sd-deals-block { margin-top: 25px;}
+      .pagin-sty {margin-top: 25px;}
+
+      .auto-height {
+      min-height: 496px !important;
+  }
+
+  .reset-height .auto-height {  min-height: 530px !important;}
+  .sd-img-box { float: left; width: 50%;}
+    .order-form .sd-deal-price { float: right; width: 50%}
+    .order-form .sd-order-con .border-radius-bg { float: left; width: 100%;}
+  .no-paddingR { padding-left: 0; padding-right:0;}
+.login-popupwd .modal-dialog { width: 85%;}
+.scroller .checkbox.checkbox-info { display: inline-block;}
 }
 
 
@@ -158,18 +172,20 @@
         position: static;
         padding-top: 50px;
         padding-bottom: 50px;
-        text-align: left;
+        text-align: center;
+        padding: 10px 0;
     }
     .carousel-inner .carousel-control {
         display: none;
     }
     .formcontainer h2 {
-        font-size: 24px;
+
         margin-bottom: 15px;
         margin-top: 0px;
         margin-left: 30px;
         margin-right: 30px;
     }
+    .formcontainer h3  { font-size: 100%; text-align: center;}
     .formcontainer .btn-red {
         margin-left: 30px;
     }
@@ -190,11 +206,6 @@
     color: #2586d4;
     background-color: #ffffff;
     border-color: #e8e8e8;
-}
-.carousel-inner .formcontainer .btn-default:hover, .carousel-inner .formcontainer .btn-default:focus, .carousel-inner .formcontainer .btn-default.focus, .carousel-inner .formcontainer .btn-default:active, .carousel-inner .formcontainer .btn-default.active, .carousel-inner .formcontainer .open>.dropdown-toggle.btn-default {
-    background: #eaeaea;
-    color: #2586d4;
-    border-bottom: 5px solid #d4d4d4;
 }
 .copyright {
     text-align: left;
@@ -256,16 +267,7 @@ footer .col-xs-6 ul {
 .height_popup {
     height: auto;
 }
-.login-tab .modal-dialog {
-    width: 480px;
-    margin: auto;
-    margin-top: 130px;
-}
-#zipcode .modal-dialog {
-    width: 500px;
-    margin: auto;
-    margin-top: 100px;
-}
+
  .compare_box .btn_2 {
      display: inline-block;
 }
@@ -287,15 +289,7 @@ footer .col-xs-6 ul {
 .compare_box .col-sm-2 {
     float: left;
 }
-/*End of vishal responsive form 768 show*/
 
-
-h1 {
-    font-size: 20px;
-}
-h2 {
-    font-size: 15px;
-}
 .carousel-inner img {
     width: auto;
 }
@@ -313,11 +307,13 @@ h2 {
 #navbar {
     border-top: 1px solid #eceaea;
 }
+
 .navService li:hover {
-    background: #e50005;
+    background:none;
 }
+
 .navService li:hover a {
-    color: #fff;
+    color: #e50005;
 }
 .navbar .container {
     padding: 0;
@@ -337,15 +333,39 @@ h2 {
 .account-page .custom-select::after {
     top: 28px;
 }
-    .compare-design .scroller_order {
+.compare-design .scroller_order {
     overflow-x: scroll;
-    }
-    .zipcode-body {
+}
+.zipcode-body {
     background-size: 100% 100%;
-    }
 }
 
-/*Vishal css*/
+.formcontainer .col-sm-6, .formcontainer .col-md-10{ margin:0 10%; padding:0;}
+.formcontainer .col-sm-12{ margin-top:20px; }
+h2, h3,h4,h5, h6, button, .sd-services-col p { font-size: 100% !important;}
+.formcontainer .btn-blue { margin-top: 0;}
+h1 { font-size: 120% !important;}
+
+.scroller{
+  height:auto;
+}
+.border-radius-bg { width: 100%; display:inline-block;}
+.pagination_sec {
+    margin-top: 0 !important;
+}
+.order-form .nav-tabs li { width:100%; float: left;}
+.sd-order-con .tab-content #personal-info, .sd-order-con .tab-content #address-info, .sd-order-con .tab-content #business-info { float: left; width: 100%;}
+.sd-order-con .right-offer .border-radius-bg { float: left; width: 100%;}
+.order-form .nav-tabs li a:hover {border-top: 2px solid #FBF9FA !important;}
+.no-paddingR { padding-left: 0; padding-right:0;}
+.order-form .nav-tabs li.active a:hover { margin: 0; border-top:4px solid #E10409 !important; }
+.sd-img-box { float: left; width: 50%;}
+  .order-form .sd-deal-price { float: right; width: 50%}
+.scroller .checkbox.checkbox-info { display: inline-block;}
+
+}
+
+
 @media (max-width: 560px) {
 
 .best_deals .container.serviceCon1 .row .col-xs-6 {
@@ -370,12 +390,6 @@ h2 {
 .trending_deals .serviceCon1 h1::before, .trending_deals .serviceCon1 h1::after {
     width: 17%;
 }
-.box-sec .col-xs-6 {
-    width: 360px;
-    margin-left: auto;
-    margin-right: auto;
-    float: none;
-}
 .heading-2 {
     margin-right: 10px;
     padding-right: 10px;
@@ -384,9 +398,7 @@ h2 {
     margin-right: 10px;
     padding-right: 10px;
 }
-.separator_2 {
-    margin: 20px -49px;
-}
+
     .heading-2 {
         border-right: 0px;
         display: block;
@@ -420,21 +432,28 @@ h2 {
     height: auto;
     line-height: normal;
     }
-    .login-tab .modal-dialog {
+   /* .login-tab .modal-dialog {
     width: 330px;
-    }
+    }*/
     .height_popup .pull-right {
         float: left !important;
     }
     .login-tab .popup_right a.help-block {
     margin-top: 17px;
     }
-    #zipcode .modal-dialog {
+   /* #zipcode .modal-dialog {
     width: 400px;
-    }
+    }*/
     .zipcode-body {
     background-size: 100% 100%;
     }
+    .sd-services-opt {
+        display: inline-block;
+        float: left;
+        padding: 2% 0;
+        width: 50% !important;
+    }
+
 }
 
 @media (max-width: 500px) {
@@ -487,9 +506,9 @@ footer .col-xs-6 ul {
 .pagination_sec ul li a {
     font-size: 12px;
 }
-    #zipcode .modal-dialog {
+    /*#zipcode .modal-dialog {
     width: 330px;
-    }
+    }*/
     .zipcode-body {
     background-size: 100% 100%;
     }
@@ -503,14 +522,6 @@ footer .col-xs-6 ul {
 
 @media (max-width: 400px) {
 
-.details .bor_sec_left ,
-.pagination_sec .col-sm-12 ,
-.box-sec .col-xs-6 {
-    width: 100%;
-}
-.login-tab .modal-dialog {
-    width: 250px;
-}
 .popup_right {
     height: auto;
     padding: 5px;
@@ -521,9 +532,9 @@ footer .col-xs-6 ul {
 .popup_right .btn-login {
     width: 100%;
 }
-#zipcode .modal-dialog {
+/*#zipcode .modal-dialog {
     width: 248px;
-}
+}*/
 .zipcode-body h4 {
     font-size: 22px;
 }
@@ -559,8 +570,7 @@ footer .col-xs-6 ul {
 .formcontainer {
     top: 10%;
 }
-.details .border-radius-bg {padding: 30px 11px;}
-.sddeals-imgcon { width: auto; height: auto;}
+
 .pagination_sec {margin-top: 0 !important;}
 .pagin-sty { padding: 10px !important;}
 .sd-best-price span {font-size: 14px;}
@@ -572,4 +582,40 @@ small, .small { width: 100%; }
 .inner-logindt {border-right:0;}
 span.seperator {  top: 107%; left: 50%;}
 .sd-more-details-page table { width:100%; float: left;}
+.carousel-inner {
+    height: auto;
+}
+#navbar { float: left !important}
+#custom_services { float: left; width: 100%;}
+
+}
+
+@media (min-width: 992px) and (max-width: 1200px){
+
+  .auto-height {
+      min-height: 496px !important
+  }
+  .sddeals-imgcon { width:auto; height:auto;}
+  .reset-height .auto-height {
+      min-height: 530px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  .sd-deals-block {
+    display: inline-block;
+    margin-top: 25px;
+
+  }
+  .order-btn {padding:8px 30px}
+  .bor_sec_left .border-radius-bg.pull-left{ width: 100%;}
+  .col-md-9 { float: left;}
+  .scroller { height: auto;}
+}
+
+@media (max-width:606px){
+
+  .tab1 li {width: 100%; }
+
+
 }

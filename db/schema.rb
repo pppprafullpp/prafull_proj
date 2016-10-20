@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007052128) do
+ActiveRecord::Schema.define(version: 20161018091609) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -364,6 +364,7 @@ ActiveRecord::Schema.define(version: 20161007052128) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.integer  "no_of_lines",                  limit: 4
+    t.integer  "cellphone_detail_id",          limit: 4
   end
 
   add_index "cellphone_service_preferences", ["service_preference_id"], name: "index_cellphone_service_preferences_on_service_preference_id", using: :btree
@@ -515,6 +516,16 @@ ActiveRecord::Schema.define(version: 20161007052128) do
     t.text     "provider_type",      limit: 65535
     t.boolean  "roaming"
     t.integer  "device_register_id", limit: 4
+  end
+
+  create_table "dynamic_labels", force: :cascade do |t|
+    t.string   "label_key",           limit: 255
+    t.string   "label_value",         limit: 255
+    t.string   "label_description",   limit: 255
+    t.integer  "service_provider_id", limit: 4
+    t.integer  "status",              limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "equipment_colors", force: :cascade do |t|
@@ -770,11 +781,11 @@ ActiveRecord::Schema.define(version: 20161007052128) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",   limit: 255
     t.string   "last_sign_in_ip",      limit: 255
-    t.boolean  "enabled"
     t.integer  "failed_count",         limit: 4
     t.datetime "password_updated_at"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "status",               limit: 4
   end
 
   create_table "sequences", force: :cascade do |t|

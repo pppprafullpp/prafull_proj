@@ -156,11 +156,17 @@ class Api::V1::OrdersController < ApplicationController
 		if params[:order_id].present? and params[:app_user_id].present?
 			order = Order.where(:id => params[:order_id]).first
 			if order.present?
+				if order.order_items.first.deal.service_category == Deal::CELLPHONE_CATEGORY
+					order_attributes = Order.attributes(order.id)
+					order_extra_services = Order.extra_services(order.id)
+					order_equipments = Order.equipments(order.id)
+				end
 				#order_items = order.order_items
 				app_user = AppUser.where(:id => params[:app_user_id]).first
 				#category = ServiceCategory.select(" distinct name").joins(:deals).where("deals.id = ?",order_items.first.deal_id).first.name.downcase
 				if app_user.present? and app_user.user_type == AppUser::BUSINESS
 					business = Business.get_business_by_user(app_user.id)
+
 					render :status => 200,
 								 :json => {
 										 :success => true,
@@ -169,7 +175,10 @@ class Api::V1::OrdersController < ApplicationController
 										 #:order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url,:include => ["#{category}_deal_attributes".to_sym => {:include => ["#{category}_equipments".to_sym]}]}},:methods => :order_place_time),
 										 :order_items => Deal.build_custom_json(order.id).as_json,
 										 :app_user => app_user,
-										 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {}
+										 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {},
+										 :order_attributes => order_attributes.present? ? order_attributes : {},
+										 :order_extra_services => order_extra_services.present? ? order_extra_services : {},
+										 :order_equipments => order_equipments.present? ? order_equipments : []
 								 }
 				else
 					render :status => 200,
@@ -179,7 +188,11 @@ class Api::V1::OrdersController < ApplicationController
 										 :order_addresses => order.order_addresses.as_json(:except => [:created_at, :updated_at]),
 										 #:order_items => order_items.as_json(:include => {:deal => {:methods => :deal_image_url,:include => ["#{category}_deal_attributes".to_sym => {:include => ["#{category}_equipments".to_sym]}]}},:methods => :order_place_time),
 										 :order_items => Deal.build_custom_json(order.id).as_json,
-										 :app_user => app_user
+										 :app_user => app_user,
+										 :order_attributes => order_attributes.present? ? order_attributes : {},
+										 :order_extra_services => order_extra_services.present? ? order_extra_services : {},
+										 :order_equipments => order_equipments.present? ? order_equipments : []
+
 								 }
 				end
 

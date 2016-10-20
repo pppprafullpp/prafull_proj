@@ -251,11 +251,8 @@ module DashboardsHelper
 		# raise options.to_s
 		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''
-
 		deal_validation_conditions=filter_by_provider+"deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+sp.service_category_id.to_s+" "
-
 		sort_by = options['sort_by'].present? ? options['sort_by'] : 'price ASC'
-
 
 		if return_attributes==true
 			select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"

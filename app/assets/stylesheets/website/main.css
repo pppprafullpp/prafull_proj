@@ -2239,13 +2239,10 @@ a {
     /* IE6-9 */
 }
 .order-form .nav-tabs li {
-<<<<<<< HEAD
+
   border-right: 1px solid #ddd;
   float: left;
-=======
-    border-right: 1px solid #ddd;
-    float: left;
->>>>>>> prafull_05082016_new_branch
+
 }
 .order-form .nav-tabs li.active {
     margin-bottom: -1px;
@@ -2265,10 +2262,7 @@ a {
     background: #fff;
     margin: 0;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> prafull_05082016_new_branch
 .order-form .tabber .tab-wrapper {
     border-radius: 5px;
     overflow: hidden;
@@ -3674,16 +3668,9 @@ a {
     margin: 60px 0;
 }
 .login-container h4 {
-<<<<<<< HEAD
     color: #272727;font-family: 'open_sanssemibold';
   	margin-bottom: 20px;
 	  padding-bottom: 5px;
-=======
-    color: #272727;
-    font-family: 'open_sanssemibold';
-    margin-bottom: 20px;
-    padding-bottom: 5px;
->>>>>>> prafull_05082016_new_branch
     text-transform: uppercase;
 }
 .inner-logindt {
@@ -6110,10 +6097,7 @@ ul.caption-dealdet li::before {
     padding: 20px 0 5px;
     border-top: 1px solid #eee;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> prafull_05082016_new_branch
 .sd-eq-sty {
     background: #f4f4f4;
     padding: 10px;
@@ -6221,14 +6205,14 @@ ul.caption-dealdet li::before {
     display: inline-block;
     border-radius: 6px;
     padding: 3px 10px;
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
     border: 1px solid #e7e7e7;}
    .customaized-deal a .caption-des {color: #000;
     font-size: 14px;}
     .customaized-deal h6 {font-size: 18px;
     color: #000; font-family: 'open_sanssemibold';
   }
-=======
+/*=======*/
     /*<<<<<<< HEAD
     border: 1px solid #e7e7e7;
 }
@@ -6345,11 +6329,7 @@ select::-ms-expand {
     padding-left: 0;
 }
 .sd-deal-img {
-<<<<<<< HEAD
-=======
-    /*width: 300px;*/
 
->>>>>>> prafull_05082016_new_branch
     background: #f9f9f9;
     border: 1px solid #ebebeb;
     text-align: center;
@@ -6420,13 +6400,9 @@ select::-ms-expand {
     font-size: 15px;
 }
 .sd-equip-info span {
-<<<<<<< HEAD
     width:100px;
     display:inline-block;
-=======
-    width: 100px;
-    display: inline-block
->>>>>>> prafull_05082016_new_branch
+
 }
 .no-login-tdeal {
     position: absolute;
@@ -6659,11 +6635,7 @@ select::-ms-expand {
     background: #fafafa;
     border-radius: 5px;
     padding: 0px 20px;
-<<<<<<< HEAD
-=======
-    /*<<<<<<< HEAD*/
 
->>>>>>> prafull_05082016_new_branch
     font-size: 12px;
     margin-bottom: 10px;
 }
@@ -6696,16 +6668,16 @@ select::-ms-expand {
     width: 100%;
 }
 /*=======*/
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
     /*font-size: 12px;     margin-bottom: 10px;}*/
 		#reviews-inner-area p { font-size:12px;}
 #reviews-inner-area h5{ text-align: left; font-family: 'open_sansregular'; padding-top: 20px;}
 .rating-container {    margin-top: 20px;}
 
 .btn_3 {    background: #cbcbcb none repeat scroll 0 0;    cursor: default;}
-=======
+/*=======*/
 
-#reviews-inner-area p {
+/*#reviews-inner-area p {
     font-size: 12px;
 }
 #reviews-inner-area h5 {
@@ -6719,10 +6691,10 @@ select::-ms-expand {
 .btn_3 {
     background: #cbcbcb none repeat scroll 0 0;
     cursor: default;
-}
+}*/
 /*>>>>>>> 5cf2a40548d283cbff63ed6d9774967945895be4*/
 
->>>>>>> prafull_05082016_new_branch
+/*>>>>>>> prafull_05082016_new_branch*/
 .rating {
     float: left;
 }

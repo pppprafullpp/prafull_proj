@@ -2805,7 +2805,7 @@ a {
   background: linear-gradient(to bottom, #fbf9fa 0%, #efefef 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', endColorstr='#efefef', GradientType=0);
+  /*filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fbf9fa', endColorstr='#efefef', GradientType=0);*/
   /* IE6-9 */
 }
 .account-page .tabber .nav.tab1 {border-radius: 5px 5px 0 0; }

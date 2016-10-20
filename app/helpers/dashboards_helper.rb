@@ -248,15 +248,15 @@ module DashboardsHelper
 	end
 
 	def category_best_deal(deal_type,sp,zip_code,return_count,return_attributes,options = {})
-
 		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
-		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''
-
 		deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+sp.service_category_id.to_s+" "
 
 		sort_by = options['sort_by'].present? ? options['sort_by'] : 'price ASC'
 
 		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''
+
+
+
 		if return_attributes==true
 			select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
 			select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
@@ -273,7 +273,7 @@ module DashboardsHelper
 
 		if sp.service_category.name == 'Internet'
 			app_user_download_speed = sp.internet_service_preference.download_speed
-			best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND price < ? AND deals.id not in (?)", app_user_download_speed,sp.price,restricted_deals).where(filter_by_provider).order(sort_by)
+			best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND price < ? AND deals.id not in (?)", app_user_download_speed,sp.price,restricted_deals).order(sort_by)
 			if best_deals.blank?
 				best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download = ? AND price < ? AND deals.id not in (?)", app_user_download_speed,sp.price,restricted_deals).order(sort_by)
 			end
@@ -337,7 +337,7 @@ module DashboardsHelper
 				best_deals=Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
 			end
 		elsif sp.service_category.name == 'Cellphone'
-			best_deals = CellphoneServicePreference.cellphone_best_deal(sp,select_fields_cellphone,deal_validation_conditions,restricted_deals,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
+			best_deals = CellphoneServicePreference.cellphone_best_deal(sp,select_fields_cellphone,deal_validation_conditions,restricted_deals,options)
 =begin
 				if sp.cellphone_service_preference.domestic_call_unlimited == true
 				best_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.price < ? AND deals.id not in (?)", sp.price,restricted_deals).order("price ASC")
@@ -448,7 +448,7 @@ module DashboardsHelper
 				end
 			end
 		else
-			best_deals = Deal.where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("price ASC")
+			best_deals = Deal.where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order(sort_by)
 		end
 
 		if best_deals.present?
@@ -464,7 +464,6 @@ module DashboardsHelper
 	end
 
 	def get_category_deals(app_user_id,category_id,zip_code,deal_type,options = {})
-
 		category_id = category_id.present? ? category_id.to_i : 1
 		select_fields_internet="deals.*,internet_deal_attributes.download as download_speed,internet_deal_attributes.upload as upload_speed"
 		select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
@@ -485,7 +484,7 @@ module DashboardsHelper
 			if category_id == Deal::INTERNET_CATEGORY
 				if user_preference.present?
 					current_download_speed = user_preference.internet_service_preference.download_speed
-					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
+					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
 					greater_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 					smaller_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download < ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 				else

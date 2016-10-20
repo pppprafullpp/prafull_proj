@@ -54,7 +54,7 @@ class Website::HomeController < ApplicationController
   def deal_details
 
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
-      @best_deal_data =  get_dashboard_deals(session[:user_id],nil,nil)
+      @best_deal_data =  get_dashboard_deals(session[:user_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
 
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?
@@ -68,7 +68,7 @@ class Website::HomeController < ApplicationController
     if session[:user_id].present?
     @current_user=AppUser.find(session[:user_id])
     end
-    
+
   end
 
   def more_deal_details

@@ -6,7 +6,12 @@
         <div class="border-radius-bg auto-height">
           <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
           <div class="sddeals-imgcon" style="overflow: hidden;width:215px">
-          <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt="">
+            <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt="">
+            <%end%>
+          
         </div>
         <div class="main-external-div1">
           <h5><%= best_deal['title'].truncate(25) %></h5>
@@ -84,7 +89,11 @@
       <div class="border-radius-bg auto-height">
         <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt=""></div>
         <div class="sddeals-imgcon">
-          <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive">
+           <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
+              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+            <%else%>
+              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive">
+            <%end%>
         </div>
         <div class="main-external-div1">
         <h5><%= best_deal['title'].truncate(25) %></h5>

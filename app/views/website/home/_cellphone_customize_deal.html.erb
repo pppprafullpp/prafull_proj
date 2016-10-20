@@ -86,7 +86,7 @@ deal_extra_services = customized_deals['deal_extra_services']
 				<div class="text-center">
 					<div class="sd-deal-sty">
 						<div class="custom_cursor" onclick="show_modal(<%=deal_extra_service.to_json%>,'extra_services')">
-							<h6><%=deal_extra_service["service_name"]%></h6>
+							<h6><%=deal_extra_service["service_name"].truncate(12)%></h6>
 							<p style="line-height:20px; height:100px; overflow-y:auto;"> <%=deal_extra_service["service_description"]%></p>
 							<div class="equip-price"> <span>$ <%="%.2f" % deal_extra_service["price"]%></span> </div>
 						</div>

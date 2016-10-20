@@ -1,4 +1,3 @@
-
 <% deal = @order.order_items.first.deal
   category_name = deal.service_category.name.downcase
   deal_equipment = eval("deal.try(:#{category_name}_deal_attributes).first.try(:#{@category_name}_equipments)")
@@ -50,7 +49,13 @@ end
           </div>
           <div class="order-service-dt">
             <div class="order-service-left col-md-8">
-              <div class="servicelogo-sty"><img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" /> </div>
+              <div class="servicelogo-sty">
+                <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
+                  <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                <%else%>
+                   <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" />
+                <% end %>
+               </div>
               <div class="servicedt-text"><%=deal.short_description  %></br>
                 <span class="in-progress-btn"><%= @order.status %> </span>
               </div>
@@ -261,7 +266,11 @@ end
            <div class="col-sm-12 col-md-4 right-offer order-review-right">
           <div class="border-radius-bg">
             <div class="sd-img-box">
-              <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
+               <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
+                  <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                <%else%>
+                  <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
+                <% end %>
             </div>
             <ul class="sd-deal-price">
               <li class="sd-dealprice-single">Deal Price:<span>$<%= deal.price %>/mo</span></li>
@@ -322,7 +331,11 @@ end
         <div class="col-sm-12 col-md-4 right-offer order-review-right">
           <div class="border-radius-bg">
             <div class="sd-img-box">
-              <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
+               <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
+                  <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                <%else%>
+                   <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
+                <% end %>
             </div>
             <ul class="sd-deal-price">
               <li class="sd-dealprice-single">Deal Price:<span>$<%= deal.price %>/mo</span></li>

@@ -37,7 +37,11 @@
                     <a href="/website/home/more_deal_details?deal_id=<%=bd.id%>" style="width: 30%;margin-top: 3%;">
                       <p class="bundled-data-header "><%=bd.bundle_combo%></p>
                       <div class="bx-img text-center">
-                        <img src="<%=bd.image%>" alt="" class="img-responsive">
+                        <%if display_logo_permission(bd.service_provider_id,bd.deal_type)%>
+                          <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                          <%else%>
+                          <img src="<%=bd.image%>" alt="" class="img-responsive">
+                        <%end%>
                       </div>
                       <p class="caption-title"><%=bd.title.truncate(20)%></p>
 
@@ -62,7 +66,6 @@
               <%= render :partial => "website/home/category_best_and_trending_deals" if session[:user_id].present?%>
 
               <% @dashboard_data.each do |data| %>
-
               <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
                     <div class="border-radius-bg auto-height">
                       <% if data['is_customisable'] == true %>
@@ -70,6 +73,7 @@
                       <div class="best-trending-sty"><img src="/assets/website/custom_deal.png" style="width:33px;" alt=""></div>
                       <% end %>
                       <div class="sddeals-imgcon">
+
                         <%if display_logo_permission(data['service_provider_id'],data['deal_type'])%>
                           <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
                           <%else%>

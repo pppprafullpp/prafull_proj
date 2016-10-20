@@ -1028,13 +1028,13 @@ label:focus {
     width: 100%;
     background-size: 100%;
 }
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
 .zipcode-body h4 {
-=======
-.zipcode-body h3 {
-    /*font-size: 25px;*/
+/*=======*/
+/*.zipcode-body h3 {
+    font-size: 25px;
 
->>>>>>> prafull_05082016_new_branch
+>>>>>>> prafull_05082016_new_branch*/
     font-family: 'open_sanssemibold';
     margin-top: 20px;
     color: #000;
@@ -1087,18 +1087,18 @@ label:focus {
     background: #ffffff;
 }
 .prefrence-tab h4 {
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
     color: #0f60bb;
-=======
-  color: #0F60BB;
+/*=======*/
+ /* color: #0F60BB;
   padding: 20px 0;
-  position: relative;
+  position: relative;*/
     /*font-family: "open_sansregular";
 	font-size: 22px;
 	margin-bottom: 10px;
 	margin: 30px 0;*/
 
->>>>>>> prafull_05082016_new_branch
+/*>>>>>>> prafull_05082016_new_branch*/
     position: relative;
 }
 .prefrence-tab .radio {
@@ -1224,17 +1224,17 @@ label:focus {
     margin-bottom: 5px;
 }
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
 
 .profile-tab h5 {
     color: #0f60bb;
     position: relative;
-=======
-.profile-tab h4 {
+/*=======*/
+/*.profile-tab h4 {
   color: #0f60bb;
   position: relative;
   padding: 30px 0 15px;
->>>>>>> prafull_05082016_new_branch
+>>>>>>> prafull_05082016_new_branch*/
 }
 .profile-tab .form-horizontal .margin_top0 h5::before {
     left: 160px;
@@ -1387,16 +1387,16 @@ label:focus {
 .desc_cont .img_border img {
     width: 100%;
 }
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
 
-=======
-.desc_heading .col-md-5:first-child h5 {
+/*=======
+.desc_heading .col-md-5:first-child h5 {*/
     /*margin-left: 9px;*/
-}
+/*}
 .desc_cont p {
   font-size: 14px;
 }
->>>>>>> prafull_05082016_new_branch
+>>>>>>> prafull_05082016_new_branch*/
 .desc_cont span.panding {
     color: #db8203;
 }
@@ -1487,13 +1487,13 @@ label:focus {
     z-index: 99999;
     width: auto;
 }
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
 .compare-dealbtn {display:inline-block; margin-top: 10px;padding: 8px 20px; cursor:pointer; background: #e50005; color: #fff; border-radius: 5px; margin-bottom: 10px; font-family: 'open_sansregular'; font-size: 14px;}
 .compare-dealbtn:hover { color:#fff;}
 #compare-box-deal-1 { background:#fff; float:left; width: auto; position: relative; padding:10px 10px 0;     border: 1px dotted #ccc; margin:10px;}
 #compare-box-deal-2 {  background:#fff;  float:left; width: auto; position: relative;  padding: 10px 10px 0;     border: 1px dotted #ccc;margin:10px;}
-=======
-.compare-dealbtn {
+/*=======*/
+/*.compare-dealbtn {
     display: inline-block;
     margin-top: 10px;
     padding: 8px 20px;
@@ -1526,7 +1526,7 @@ label:focus {
     border: 1px dotted #ccc;
     margin: 10px;
 }
->>>>>>> prafull_05082016_new_branch
+>>>>>>> prafull_05082016_new_branch*/
 .close2 {
     position: absolute;
     color: #383838;

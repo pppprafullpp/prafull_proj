@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
 
-	helper_method :display_logo_permission,:decode_api_data,:get_providers_by_category, :get_zipcodes, :get_deal_rating, :get_category_name_by_category_id
+	helper_method :calculate_offer_price,:display_logo_permission,:decode_api_data,:get_providers_by_category, :get_zipcodes, :get_deal_rating, :get_category_name_by_category_id
 
 	before_filter do
 		resource = controller_name.singularize.to_sym
@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
 
 	def encode_api_data(data)
 		return Base64.encode64(data)
+	end
+
+	def calculate_offer_price(price_monthly,contract_period)
+		offer_price = ( "%.2f" %  (price_monthly * contract_period)).to_s 
 	end
 
 	def display_logo_permission(provider_id,deal_type)

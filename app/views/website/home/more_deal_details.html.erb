@@ -86,8 +86,8 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td width="20%">Price</td>
-                    <td width="80%" colspan="2">$<%= "%.2f" % additional_offer.try(:price) %></td>
+                    <td width="20%">Offer</td>
+                    <td width="80%" colspan="2">$<%=calculate_offer_price(additional_offer.try(:price),additional_offer.try(:contract_period).to_i) %></td>
                   </tr>
                   </tbody>
                 </table>

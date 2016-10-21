@@ -94,7 +94,12 @@ def order_status
 end
 
 def deal_image_url
-  image.url
+
+  if url =ApplicationController.new.display_logo_permission(self.service_provider_id,self.deal_type)
+    url
+  else
+     image.url
+  end
 end
 
 def channel_packages
@@ -295,7 +300,12 @@ def self.build_custom_json(order_id)
     order_items_hash['deal']['is_nationwide'] = deal.is_nationwide
     order_items_hash['deal']['deal_type'] = deal.deal_type
     order_items_hash['deal']['is_active'] = deal.is_active
-    order_items_hash['deal']['deal_image_url'] = deal.image.url
+    if url =ApplicationController.new.display_logo_permission(deal.service_provider_id,deal.deal_type)
+      order_items_hash['deal']['deal_image_url']  =url
+    else
+      order_items_hash['deal']['deal_image_url'] = deal.image.url
+    end
+    
 
 
     deal_equipments = eval("#{category.camelize}DealAttribute").select("#{category}_equipments.*").joins("#{category}_equipments".to_sym).where(:deal_id => deal.id)

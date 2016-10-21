@@ -8,7 +8,7 @@
           <div class="sd-deal-block">
             <div class="sd-dealblock-img">
               <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
-                <img src="/assets/website/default_logo.png" alt="">
+                <img src="<%=display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="">
               <%else%>
                  <img src="<%= best_deal['deal_image_url'] %>" alt="">
               <% end %>
@@ -37,7 +37,7 @@
           <div class="sd-deal-block">
             <div class="sd-dealblock-img"> 
               <%if display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>
-                <img src="/assets/website/default_logo.png" alt="">
+                <img src="<%=display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>" alt="">
               <%else%>
                   <img src="<%= trending_deal['deal_image_url'] %>" alt=""> 
               <% end %>
@@ -63,7 +63,7 @@
           <div class="sd-deal-block">
             <div class="sd-dealblock-img">
               <%if display_logo_permission(order_deal['service_provider_id'],order_deal['deal_type'])%>
-                <img src="/assets/website/default_logo.png" alt="">
+                <img src="<%=display_logo_permission(order_deal['service_provider_id'],order_deal['deal_type'])%>" alt="">
               <%else%>
                   <img src="<%= order_deal['deal_image_url'] %>" alt=""> 
               <% end %>

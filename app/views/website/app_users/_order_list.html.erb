@@ -17,7 +17,7 @@
                 <% deal = Deal.find_by_id(order.order_items.first.deal_id) %>
 
                 <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
-                  <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                  <img src="<%= display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="" class="img-responsive">
                 <%else%>
                   <%= image_tag("#{deal.image}", :alt => "logo") %>
                 <% end %>

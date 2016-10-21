@@ -156,7 +156,7 @@ class Api::V1::OrdersController < ApplicationController
 		if params[:order_id].present? and params[:app_user_id].present?
 			order = Order.where(:id => params[:order_id]).first
 			if order.present?
-				if order.order_items.first.deal.service_category == Deal::CELLPHONE_CATEGORY
+				if order.order_items.first.deal.service_category_id == Deal::CELLPHONE_CATEGORY
 					order_attributes = Order.attributes(order.id)
 					order_extra_services = Order.extra_services(order.id)
 					order_equipments = Order.equipments(order.id)

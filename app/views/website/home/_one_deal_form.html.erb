@@ -8,7 +8,7 @@
            
           <div class="sd-deal-img"> 
             <%if display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>
-              <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+              <img src="<%=display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>" alt="" class="img-responsive">
             <%else%>
              <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> 
             <% end %>

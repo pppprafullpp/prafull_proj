@@ -157,6 +157,7 @@ Rails.application.routes.draw do
         get :contact_us
         get :about_us
         get :our_providers
+        get :coming_soon
       end
     end
 

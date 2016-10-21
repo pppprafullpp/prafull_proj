@@ -94,7 +94,11 @@ def order_status
 end
 
 def deal_image_url
-  image.url
+  if ApplicationController.new.display_logo_permission(self.service_provider_id,self.deal_type)
+    image.url
+  else
+    "http://res.cloudinary.com/servicedealz/image/upload/v1477033178/default_logo_rgecei.png"
+  end
 end
 
 def channel_packages

@@ -299,7 +299,7 @@ def self.build_custom_json(order_id)
     order_items_hash['deal']['is_nationwide'] = deal.is_nationwide
     order_items_hash['deal']['deal_type'] = deal.deal_type
     order_items_hash['deal']['is_active'] = deal.is_active
-    if ApplicationController.new.display_logo_permission(self.service_provider_id,self.deal_type)
+    if ApplicationController.new.display_logo_permission(deal.service_provider_id,deal.deal_type)
       order_items_hash['deal']['deal_image_url']  ="http://res.cloudinary.com/servicedealz/image/upload/v1477033178/default_logo_rgecei.png"
     else
       order_items_hash['deal']['deal_image_url'] = deal.image.url

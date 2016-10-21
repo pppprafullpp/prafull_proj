@@ -7101,3 +7101,30 @@ select::-ms-expand {
 .mg-top25{
     margin-top: 25px;
 }
+.coming-soon {
+    background-color: #fff;
+    border-color: #eee;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 1px 5px;
+    margin: 60px auto;
+    padding: 50px 30px 58px;
+    text-align: center;
+}
+.coming-soon strong {
+    color: #e3e3e3;
+    display: block;
+    font-size: 80px;
+    font-weight: normal;
+    line-height: 100px;
+    margin-bottom: 10px;
+}
+.coming-soon b {
+    color: #e50005;
+    display: block;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 50px;
+    margin: 0;
+}
+.coming-soon p { margin:20px 0;}

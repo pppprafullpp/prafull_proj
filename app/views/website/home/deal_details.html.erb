@@ -38,7 +38,7 @@
                       <p class="bundled-data-header "><%=bd.bundle_combo%></p>
                       <div class="bx-img text-center">
                         <%if display_logo_permission(bd.service_provider_id,bd.deal_type)%>
-                          <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                          <img src="<%=display_logo_permission(bd.service_provider_id,bd.deal_type)%>" alt="" class="img-responsive">
                           <%else%>
                           <img src="<%=bd.image%>" alt="" class="img-responsive">
                         <%end%>
@@ -75,7 +75,7 @@
                       <div class="sddeals-imgcon">
 
                         <%if display_logo_permission(data['service_provider_id'],data['deal_type'])%>
-                          <img src="/assets/website/default_logo.png" alt="" class="img-responsive">
+                          <img src="<%= display_logo_permission(data['service_provider_id'],data['deal_type'])%>" alt="" class="img-responsive">
                           <%else%>
                           <img src="<%= data['deal_image_url'] %>" alt="" class="img-responsive">
                         <%end%>

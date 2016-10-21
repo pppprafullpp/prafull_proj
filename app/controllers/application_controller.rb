@@ -52,7 +52,9 @@ class ApplicationController < ActionController::Base
 
 	def display_logo_permission(provider_id,deal_type)
 		if ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
-			true
+			url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
+		elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+			url ="http://res.cloudinary.com/servicedealz/image/upload/v1477049217/att_v_z4ulpm.png"
 		else
 			false
 		end

@@ -6,9 +6,9 @@
 
           <div class="sd-dealblock-two-img col-md-5 col-xs-4">
 
-            <div class="sddeal-imgbox">
+            <div class="sddeal-imgbox mg-top25">
                <%if display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>
-              <img src="/assets/website/default_logo.png" alt="">
+              <img src="<%=display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>" alt="">
             <%else%>
               <img src="<%= deal_1['deal_image_url'] %>" alt="">
             <% end %>
@@ -46,9 +46,9 @@
         <div class="col-md-6 col-sm-6 co-xs-6">
           <div class="sd-two-deal-block">
             <div class="sd-dealblock-two-img col-md-5 col-xs-4 col-xs-4">
-              <div class="sddeal-imgbox">
+              <div class="sddeal-imgbox mg-top25">
                  <%if display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>
-              <img src="/assets/website/default_logo.png" alt="">
+              <img src="<%= display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>" alt="">
             <%else%>
               <img src="<%= deal_2['deal_image_url'] %>" alt="">
             <% end %>

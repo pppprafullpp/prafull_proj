@@ -15,7 +15,7 @@
           <div class="pull-left">
             <div class="sd-deal-sty">
               <div class="custom_cursor" onclick="show_modal(<%=deal_attribute.to_json%>,'attribute')">
-                <h6 ><%= deal_attribute["title"]%></h6>
+                <h6 >Data Plan : <%= deal_attribute["data_plan"]%> GB</h6>
                 <p>Data Plan Price: $<%=deal_attribute["data_plan_price"]%></p>
                 <p>Domestic minutes <%= deal_attribute["domestic_call_minutes"]%></p>
                 <p>International minutes <%= deal_attribute["international_call_minutes"]%></p>

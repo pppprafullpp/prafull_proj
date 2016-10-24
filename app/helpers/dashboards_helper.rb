@@ -41,7 +41,7 @@ module DashboardsHelper
 							you_save = 12*(app_user_current_plan - allowed_best_deal.price)
 						end
 					else
-						you_save = ""
+						you_save = "" 
 					end
 
 					if allowed_best_deal.present? && allowed_order_deal.present? && allowed_best_deal.id==allowed_order_deal.id

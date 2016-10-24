@@ -109,7 +109,7 @@
                           </p>
                              <%end%>
                              <br />
-                          <a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id']) %>"> +More Details</a>
+                          <a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>"> +More Details</a>
                       </div>
 
                       <div class="box_down">
@@ -125,15 +125,31 @@
                             </div>
                         </div>
 
-
                           <%if @current_user.present?%>
-                        <%if @current_user.email_verified%>
+
+                        <%if @current_user.email_verified 
+%>
+<% if data['is_customisable'] == true%>
+
+ 
+ <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'],:effective_price=> data['effective_price']) %>" id=<%=data['id']%>>Order</a>
+
+
+
+<% else %>
                              <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'],:effective_price=> data['effective_price'])%>"  id=<%=data['id']%>>Order</a>
+                             <% end %>
+
                              <%else%>
                              <a class="order-btn" href="javascript:void(0)">Verify email</a>
                         <%end%>
                         <%else%>
+                        <% if data['is_customisable'] == true%>
+                        <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'],:effective_price=> data['effective_price']) %>" id=<%=data['id']%>>Order</a>
+
+                        <% else %>
                         <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> data['id'],:effective_price=> data['effective_price'])%>"  id=<%=data['id']%>>Order</a>
+                        <% end %>
                         <%end%>
 
                         <div class="checkbox checkbox-info" id="deal-checkbox">

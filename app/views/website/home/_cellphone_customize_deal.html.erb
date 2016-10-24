@@ -55,8 +55,8 @@
               <% if deal_equipment["available_color"].present? %>
                   <%deal_equipment["available_color"].each_with_index do |av,index|%>
                       <div class="color-wrapper text-center">
-                        <input type="radio" checked="checked" name="deviceColors_<%=deal_equipment['id']%>" id="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>" class="colorSelector" />
-                        <label for="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>" title="<%=index%>" class="colorSelector_label colorSelector_checkShadow" style="background-color: <%=av['color_code']%>" />
+                        <input type="radio" checked="checked" name="deviceColors_<%=deal_equipment['id']%>" id="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>_<%= av['color_name']%>" class="colorSelector" />
+                        <label for="color_<%=deal_equipment['id']%>_<%=av['id']%>_<%=av['color_code']%>_<%= av['color_name']%>" title="<%=index%>" class="colorSelector_label colorSelector_checkShadow" style="background-color: <%=av['color_code']%>" />
                       </div>
                   <%end%>
               <% end %>
@@ -144,6 +144,7 @@
 
         color_data=new Array();
         $("#order-btn").hide();
+        $("#reset_order").hide();
         $("input[name='deal_attributes']:first").prop("checked","checked");
         $("input[name='deal_extra_services']:first").prop("checked","checked");
         effective_price = parseFloat($('#effective_price').text().split('$')[1].split('/')[0]);
@@ -175,7 +176,7 @@
 
 
 
-                        $('#equipments_selected').append('<div id='+ equip +' class="selectedequipments-box"><div class="equipmenr-img"><img src="/assets/website/iphone_6ssmall.png" alt="equipments"></div><div class="equipmenr-details"><div class="equipment-readingprice"><h6 id="equipment_brand">'+ value.split("_")[2] +'</h6> <span id="selected_equipment_price" value='+value.split("_")[1]+'>$'+ value.split("_")[1]+ '</span></div> <div class="equipment-remove"><strong id="equipment_name">'+ value.split("_")[3] +'</strong><a class="" href="javascript:void(0)" id="remove'+ equip+'" onclick="remove_options('+equip+')">Remove</a></div><span>Black</span></div></div>')
+                        $('#equipments_selected').append('<div id='+ equip +' class="selectedequipments-box"><div class="equipmenr-img"><img src="/assets/website/iphone_6ssmall.png" alt="equipments"></div><div class="equipmenr-details"><div class="equipment-readingprice"><h6 id="equipment_brand">'+ value.split("_")[2] +'</h6> <span id="selected_equipment_price" value='+value.split("_")[1]+'>$'+ value.split("_")[1]+ '</span></div> <div class="equipment-remove"><strong id="equipment_name">'+ value.split("_")[3] +'</strong><a class="" href="javascript:void(0)" id="remove'+ equip+'" onclick="remove_options('+equip+')">Remove</a></div><span>'+color.split('_')[4]+'</span></div></div>')
                     }
                 });
             });
@@ -276,6 +277,7 @@
         total_price = attribute_price+equipment_sum+extra_services_price+effective_price;
         $("#effective_price").text('$' + total_price.toFixed(2) + '/mo');
         $("#order-btn").show();
+        $("#reset_order").show();
         $("#total-calculate-btn").hide();
         $("input[type='checkbox']").attr("disabled",true);
         $("[id*=removeequip]").hide();

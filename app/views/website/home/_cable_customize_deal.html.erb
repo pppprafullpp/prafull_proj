@@ -159,6 +159,7 @@ var effective_price;
 
 	$(document).ready(function() {
 		$("#order-btn").hide();
+		$("#reset_order").hide();
 		 $("input[name='deal_attributes']:first").prop("checked","checked");
 	     $("input[name='cable_deal_equipments']:first").prop("checked","checked");
 	     $("input[name='deal_channel_packages']:first").prop("checked","checked");
@@ -227,6 +228,7 @@ function calculate_total_price_for_cable() {
   total_price = attribute_price+ channel_package_price+cable_deal_equipments_price+effective_price;
   $("#effective_price").text('$' + total_price.toFixed(2) + '/mo');
   $("#order-btn").show();
+  $("#reset_order").show();
   $("#total-calculate-btn").hide();
   $("input[type='checkbox']").attr("disabled",true);
   // $("[id*=removeequip]").hide();

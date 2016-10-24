@@ -40,7 +40,7 @@
             <% end %>
 
           </ul>
-           <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id']) %>" class="sd-more-details">+ More Details</a>
+           <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id'],:effective_price => trending_deal['effective_price']) %>" class="sd-more-details">+ More Details</a>
           <%#= render :partial => "#{deal_data[:service_category_name].downcase}_deal_form" %>
 
         </div>

@@ -24,7 +24,7 @@
                 <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  best_deal['effective_price'] if best_deal['effective_price'].present? %></span></div>
 
               </div>
-              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>" class="sd-more-details">+ More Details</a>
+              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price']) %>" class="sd-more-details">+ More Details</a>
                </div><div class="col-md-12 sd-deal-saving text-center">
               You Save <span> $<%= deal_data[:you_save_text] %>/annum</span>
             </div>
@@ -54,7 +54,7 @@
                 <div class="sd-best-price">Deal Price <span>$<%= trending_deal['deal_price']%></span></div>
                 <div class="sd-effective-price">Effective Price <span>$ <%= "%.2f" %  trending_deal['effective_price'] if trending_deal['effective_price'].present? %></span></div>
               </div>
-              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id']) %>" class="sd-more-details">+ More Details</a> </div>
+              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id'],:effective_price=> trending_deal['effective_price']) %>" class="sd-more-details">+ More Details</a> </div>
           </div>
         </div>
         <% end %>

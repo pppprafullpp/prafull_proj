@@ -34,7 +34,7 @@
               <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_1['effective_price'] if deal_1['effective_price'].present?%></span></div>
 
             </div>
-            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id']) %>" class="sd-more-details">+ More Details</a> </div>
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>" class="sd-more-details">+ More Details</a> </div>
 
          <!--  <div class="col-md-12 sd-deal-saving text-center">
             <p> You save <span> $<%#= deal_data[:you_save] %>/ mo</span></p>
@@ -68,7 +68,7 @@
                 <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_2['effective_price'] if deal_2['effective_price'].present?%></span></div>
               </div>
               <%if key == "trending-best"%>
-                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
+                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>" class="sd-more-details">+ More Details</a>
               <% else %>
                 <a href="<%= order_detail_website_app_users_path(order_id: deal_2['order_id'])%>" class="sd-more-details">+ Order Details</a>
               <% end %>

@@ -72,7 +72,7 @@ class Order < ActiveRecord::Base
 		equipments = []
 		order_equipments.each do |equipment|
 			order_equipment= {}
-			order_equipment[:color_name] = EquipmentColor.find(equipment.color).color_name
+			order_equipment[:color_name] = equipment.color
 			cellphone_detail = CellphoneEquipment.find(equipment.equipment_id).cellphone_detail
 			order_equipment[:brand] = cellphone_detail.brand
 			order_equipment[:name] = cellphone_detail.cellphone_name

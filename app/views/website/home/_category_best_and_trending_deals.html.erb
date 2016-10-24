@@ -162,10 +162,12 @@
         </div>
         <%if @current_user.present?%>
           <%if @current_user.email_verified%>
-           <% if  best_deal['is_customisable'] == true%>
+           <% if  best_deal['is_customisable'] == true && best_deal['is_order_available'] != false%>
 
  
  <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=>  best_deal['id'],:effective_price=>  best_deal['effective_price']) %>" id=<%= best_deal['id']%>>Order</a>
+  <% elsif ((best_deal['is_customisable'] == true && best_deal['is_order_available'] == false) || (best_deal['is_order_available'] == false)) %>
+    <a id="order-btn" class="order-btn btn_3" >Not Available</a>
  <%else%>
             <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
             <% end %>
@@ -173,8 +175,10 @@
             <a class="order-btn" href="javascript:void(0)">Verify email</a>
           <%end%>
         <%else%>
-        <% if  best_deal['is_customisable'] == true%>
+        <% if  best_deal['is_customisable'] == true && best_deal['is_order_available'] != false%>
                         <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=>  best_deal['id'],:effective_price=>  best_deal['effective_price']) %>" id=<%=data['id']%>>Order</a>
+                        <% elsif ((best_deal['is_customisable'] == true && best_deal['is_order_available'] == false) || (best_deal['is_order_available'] == false)) %>
+    <a id="order-btn" class="order-btn btn_3" >Not Available</a>
                         <% else %>
           <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
           <% end %>

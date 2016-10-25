@@ -11,8 +11,10 @@ class Api::V1::OrdersController < ApplicationController
 				order_items = OrderItem.create_order_items(params,order.id)
 				if  order_items.first.deal.is_customisable == true
 					order_equipment = OrderAttribute.create_order_attributes(params,order.id)
+					if order_items.first.deal.service_category_id == Deal::CELLPHONE_CATEGORY
+						order_extra_services = OrderExtraService.create_order_extra_services(params,order.id)
+					end
 					order_equipment = OrderEquipment.create_order_equipments(params,order.id)
-          order_extra_services = OrderExtraService.create_order_extra_services(params,order.id)
         end
 				app_user = AppUser.update_app_user(params,order.app_user_id,order)
 				order_addresses = OrderAddress.create_order_addresses(params,order.id)
@@ -156,9 +158,13 @@ class Api::V1::OrdersController < ApplicationController
 		if params[:order_id].present? and params[:app_user_id].present?
 			order = Order.where(:id => params[:order_id]).first
 			if order.present?
-				if order.order_items.first.deal.service_category_id == Deal::CELLPHONE_CATEGORY
+				if order.order_items.first.deal.is_customisable == true
 					order_attributes = Order.attributes(order.id)
-					order_extra_services = Order.extra_services(order.id)
+					if order.order_items.first.deal.service_category_id == Deal::CELLPHONE_CATEGORY 
+						order_extra_services = Order.extra_services(order.id)
+					elsif order.order_items.first.deal.service_category_id == Deal::CABLE_CATEGORY
+						order_extra_services = Order.channel_packages(order.id,type="channel")
+					end
 					order_equipments = Order.equipments(order.id)
 				end
 				#order_items = order.order_items

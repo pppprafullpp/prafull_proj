@@ -252,7 +252,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""
 					service_preference_hash['no_of_lines'] = 1
-
+					service_preference_hash['cellphone_detail_id'] = 1
 				elsif params[:category] == '5'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0
@@ -338,7 +338,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					service_preference_hash['domestic_call_unlimited'] = true
 					service_preference_hash['international_call_unlimited'] = ""
 					service_preference_hash['no_of_lines'] = 1
-
+					service_preference_hash['cellphone_detail_id'] = 1
 				elsif params[:category] == '5'
 					service_preference_hash = {}
 					service_preference_hash['id'] = 0

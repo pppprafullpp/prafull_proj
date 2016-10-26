@@ -15,23 +15,23 @@ class CellphoneServicePreference < ActiveRecord::Base
     #no_of_lines_condition = " AND cellphone_deal_attributes.no_of_lines = #{existing_no_of_lines}"
     no_of_lines_condition= ''
     sort_by = options['sort_by'].present? ? options['sort_by'] : 'price ASC'
-    best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan > ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,service_preference.price,restricted_deals).order(sort_by)
+    best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan > ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,service_preference.price,restricted_deals)
     if best_deals.blank?
-      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan > ? AND cellphone_deal_attributes.domestic_call_minutes!='Unlimited' AND cellphone_deal_attributes.domestic_call_minutes > ? AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,existing_domestic_call_minutes,service_preference.price,restricted_deals).order(sort_by)
+      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan > ? AND cellphone_deal_attributes.domestic_call_minutes!='Unlimited' AND cellphone_deal_attributes.domestic_call_minutes > ? AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,existing_domestic_call_minutes,service_preference.price,restricted_deals)
     end
     if best_deals.blank?
-      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan = ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,service_preference.price,restricted_deals).order(sort_by)
+      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan = ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,service_preference.price,restricted_deals)
     end
     if best_deals.blank?
-      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan = ? AND cellphone_deal_attributes.domestic_call_minutes!='Unlimited' AND cellphone_deal_attributes.domestic_call_minutes > ? AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,existing_domestic_call_minutes,service_preference.price,restricted_deals).order(sort_by)
+      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan = ? AND cellphone_deal_attributes.domestic_call_minutes!='Unlimited' AND cellphone_deal_attributes.domestic_call_minutes > ? AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,existing_domestic_call_minutes,service_preference.price,restricted_deals)
     end
     if best_deals.blank?
-      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan > ? AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,service_preference.price,restricted_deals).order(sort_by)
+      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.data_plan > ? AND cellphone_deal_attributes.effective_price <= ? AND deals.id not in (?) #{no_of_lines_condition}", existing_data_plan,service_preference.price,restricted_deals)
     end
     if best_deals.blank?
-      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price < ? AND deals.id not in (?) #{no_of_lines_condition}",service_preference.price,restricted_deals).order(sort_by)
+      best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price < ? AND deals.id not in (?) #{no_of_lines_condition}",service_preference.price,restricted_deals)
     end
-    best_deals
+    best_deals = best_deals.order_by(sort_by)
   end
 
 end

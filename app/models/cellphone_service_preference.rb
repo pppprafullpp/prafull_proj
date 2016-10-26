@@ -31,7 +31,7 @@ class CellphoneServicePreference < ActiveRecord::Base
     if best_deals.blank?
       best_deals = Deal.joins(:cellphone_deal_attributes).select(select_data).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND cellphone_deal_attributes.effective_price < ? AND deals.id not in (?) #{no_of_lines_condition}",service_preference.price,restricted_deals)
     end
-    best_deals = best_deals.order_by(sort_by)
+    best_deals = best_deals.order(sort_by)
   end
 
 end

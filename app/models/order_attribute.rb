@@ -3,6 +3,7 @@ class OrderAttribute < ActiveRecord::Base
 
   def self.create_order_attributes(params,order_id)
     order_attributes = []
+	if params[:order_attributes].present?
     params[:order_attributes].each do |attribute|
       order_attribute = self.new
       order_attribute.order_id = order_id
@@ -13,6 +14,7 @@ class OrderAttribute < ActiveRecord::Base
         order_attributes << order_attribute
       end
     end
+end
     order_attributes
   end
 end

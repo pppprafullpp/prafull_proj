@@ -54,12 +54,18 @@ class Order < ActiveRecord::Base
 	if order.order_attributes.present?
 		if service_category_id == Deal::CELLPHONE_CATEGORY
 			order_attribute = order.order_attributes.where(ref_type: "cellphone").first
+attribute[:price]= order_attribute.price
+
 			attribute[:title] = CellphoneDealAttribute.find(order_attribute.ref_id).title
 		elsif service_category_id == Deal::CABLE_CATEGORY
+		if order.order_attributes.where(ref_type: "cable").present?
 			order_attribute = order.order_attributes.where(ref_type: "cable").first
 			attribute[:title] = CableDealAttribute.find(order_attribute.ref_id).description
+			attribute[:price]= order_attribute.price
+
 		end
-		attribute[:price]= order_attribute.price
+end
+
 end
 		attribute
   	end

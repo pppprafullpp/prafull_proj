@@ -34,7 +34,7 @@
                             <img src="<%=bd.image%>" alt="" class="img-responsive">
                           <%end%>
                         </div>
-                        <p class="caption-title"><%=bd.title.truncate(20)%></p>
+                        <p class="caption-title"><%= display_deal_name_permission(bd.service_provider_id,bd.deal_type,bd.title).truncate(20) rescue nil%></p>
                         <div class="sd-best-price">Price  <span>$ <%=bd.price%></span>  </div>
                         <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
                       </a>
@@ -65,7 +65,8 @@
                     <%end%>
                   </div>
                   <div class="main-external-div1">
-                    <h5><%= data['title'].truncate(20) %></h5>
+                    <h5><%= display_deal_name_permission(data['service_provider_id'],data['deal_type'],data['title']).truncate(20) rescue nil %></h5>
+                    <!-- data['title'].truncate(20) -->
                     <ul class="description-height">
                       <li><%= data['short_description'].truncate(50) %></li>
                     </ul>

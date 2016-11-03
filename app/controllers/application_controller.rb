@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
 
-	helper_method :calculate_offer_price,:display_logo_permission,:decode_api_data,:get_providers_by_category, :get_zipcodes, :get_deal_rating, :get_category_name_by_category_id
+	helper_method :calculate_offer_price,:display_logo_permission,:decode_api_data,:get_providers_by_category, :get_zipcodes, :get_deal_rating, :get_category_name_by_category_id, :display_deal_name_permission
 
 	before_filter do
 		resource = controller_name.singularize.to_sym
@@ -84,6 +84,22 @@ class ApplicationController < ActionController::Base
 			# 	url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
 			else
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
+			end
+		end
+	end
+
+	def display_deal_name_permission(provider_id,deal_type,title)
+		if ServiceDealConfig.first.show_deal_name == ServiceDealConfig::SHOW_DEAL_NAME
+			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+				name = title
+			else
+				name =''
+			end
+		else 
+			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+				name = title
+			else 
+				name = ''
 			end
 		end
 	end

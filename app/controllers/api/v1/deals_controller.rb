@@ -19,6 +19,11 @@ class Api::V1::DealsController < ApplicationController
 		end
 	end
 
+	def service_deal_config
+		key = ServiceDealConfig.first.show_deal_name
+		render :status => 200,:json => { :success => true, show_deal_name: key }
+	end
+
 	def get_deal_channels
 		deal_id = params[:deal_id]
 		cable_deal_attribute = CableDealAttribute.where(:deal_id => deal_id).last

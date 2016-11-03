@@ -2,6 +2,7 @@ class Api::V1::DealsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
+
 	def index
 		if params[:zip_code].present? && params[:category].blank?
 			@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).order("price DESC")

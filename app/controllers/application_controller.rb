@@ -51,12 +51,40 @@ class ApplicationController < ActionController::Base
 	end
 
 	def display_logo_permission(provider_id,deal_type)
-		if ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
-			url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
-		elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
-			url ="http://res.cloudinary.com/servicedealz/image/upload/v1477049217/att_v_z4ulpm.png"
+		if ServiceDealConfig.first.show_deals_logo == ServiceDealConfig::SHOW_DEAL_LOGO
+			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+				url ="http://res.cloudinary.com/servicedealz/image/upload/v1477049217/att_v_z4ulpm.png"
+			else
+				false
+			end
 		else
-			false
+			if ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
+				# url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
+			elsif [2, 5, 15, 43].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
+			elsif [4,41,18, 39, 50, 90].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159475/coming-soonv2_fhbxin.png"
+			elsif [7, 24, 48, 107,10, 47, 61, 112, 113,34,109, 110, 111].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159497/coming-soonv6_s9bnmj.png" 
+			elsif [11].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159491/coming-soonv5_cklj4p.png" 
+			elsif [17].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159479/coming-soonv3_moopcw.png"
+
+			elsif [28, 55].include? provider_id
+				url ="http://res.cloudinary.com/servicedealz/image/upload/v1478159526/coming-soonv11_stfc0n.png"
+			elsif [29, 49, 54].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159487/coming-soonv4_ac3qrs.png"
+			elsif [19,21,20,45,22,23,51,91,25,52,26,27,31,32,33,35,37,38,40,42,95,44,85,53,63,82,88,89,101,102, 103, 104, 105, 106,108,114].include? provider_id
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
+			elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+				url ="http://res.cloudinary.com/servicedealz/image/upload/v1477049217/att_v_z4ulpm.png"
+			# elsif (![1,3,6,12,30].include? provider_id) && (deal_type == "business")
+			# 	url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
+			else
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
+			end
 		end
 	end
 

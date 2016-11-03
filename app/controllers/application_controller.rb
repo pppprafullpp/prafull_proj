@@ -90,11 +90,11 @@ class ApplicationController < ActionController::Base
 
 	def display_deal_name_permission(provider_id,deal_type,title)
 		if ServiceDealConfig.first.show_deal_name == ServiceDealConfig::SHOW_DEAL_NAME
-			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+			# if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title
-			else
-				name =''
-			end
+			# else
+			# 	name =''
+			# end
 		else 
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title

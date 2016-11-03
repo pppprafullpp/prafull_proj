@@ -16,7 +16,15 @@
             </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
-              <h4><%= display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title']).truncate(20) rescue nil%></h4>
+               <%title =display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=best_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(20)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(20)  rescue nil %></h4>
+          <% end %>
+
+<!-- 
+              <h4><%#= display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title']).truncate(20) rescue nil%></h4> -->
               <p><%=best_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: best_deal}%>
               <div class="sd-dealprices">
@@ -47,7 +55,16 @@
               <div class="sd-dealblock-trendingdeal">
                 <img src="/assets/website/trending-dealblock.png" alt="">
               </div>
-              <h4><%= display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title']).truncate(20) rescue nil%></h4>
+
+               <%title =display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=trending_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(20)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(20)  rescue nil %></h4>
+          <% end %>
+
+
+             <!--  <h4><%#= display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title']).truncate(20) rescue nil%></h4> -->
               <p><%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
               <div class="sd-dealprices">
@@ -71,7 +88,17 @@
            </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-orderdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
-              <h4><%= display_deal_name_permission(order_deal['service_provider_id'],order_deal['deal_type'],order_deal['title']).truncate(20) rescue nil %></h4>
+
+
+               <%title =display_deal_name_permission(order_deal['service_provider_id'],order_deal['deal_type'],order_deal['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=order_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(20)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(20)  rescue nil %></h4>
+          <% end %>
+
+
+              <!-- <h4><%#= display_deal_name_permission(order_deal['service_provider_id'],order_deal['deal_type'],order_deal['title']).truncate(20) rescue nil %></h4> -->
               <p><%=order_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: order_deal}%>
               <div class="sd-dealprices">

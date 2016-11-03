@@ -2,6 +2,7 @@ class Api::V1::DealsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
+
 	def index
 		if params[:zip_code].present? && params[:category].blank?
 			@deals = Deal.where("is_active = ?", true).where(zip: params[:zip_code]).order("price DESC")
@@ -17,6 +18,11 @@ class Api::V1::DealsController < ApplicationController
 		else
 			render :status => 401,:json => { :success => false }
 		end
+	end
+
+	def service_deal_config
+		key = ServiceDealConfig.first.show_deal_name
+		render :status => 200,:json => { :success => true, show_deal_name: key }
 	end
 
 	def get_deal_channels

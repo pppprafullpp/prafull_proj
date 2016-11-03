@@ -3,6 +3,11 @@
  */
 //= require owl.carousel
 
+
+$(document).on("ready page:change", function() {
+  $('.tooltip_p').tooltip();
+});
+
 $( document ).ready(function() {
     $(".btn1").click(function() {
         $("#box1").hide();

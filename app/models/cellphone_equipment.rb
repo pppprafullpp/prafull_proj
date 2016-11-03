@@ -17,7 +17,7 @@ class CellphoneEquipment < ActiveRecord::Base
 	end
 
 	def available_color
-		if self.available_colors.present? 
+		if self.available_colors.present?
 			EquipmentColor.select('id,color_name,color_code,image').where(id: eval(self.available_colors))
 		end
 		# EquipmentColor.where(id: eval(self.available_colors)).pluck(:color_name,:id)

@@ -49,10 +49,24 @@ class Order < ActiveRecord::Base
 
 	def self.attributes(order_id)
 		order = self.find(order_id)
-		order_attribute = order.order_attributes.first
+		service_category_id = self.find(order_id).order_items.first.deal.service_category_id
 		attribute = {}
-		attribute[:price]= order_attribute.price
-		attribute[:title] = CellphoneDealAttribute.find(order.order_attributes.first.ref_id).title
+	if order.order_attributes.present?
+		if service_category_id == Deal::CELLPHONE_CATEGORY
+			order_attribute = order.order_attributes.where(ref_type: "cellphone").first
+attribute[:price]= order_attribute.price
+
+			attribute[:title] = CellphoneDealAttribute.find(order_attribute.ref_id).title
+		elsif service_category_id == Deal::CABLE_CATEGORY
+		if order.order_attributes.where(ref_type: "cable").present?
+			order_attribute = order.order_attributes.where(ref_type: "cable").first
+			attribute[:title] = CableDealAttribute.find(order_attribute.ref_id).description
+			attribute[:price]= order_attribute.price
+
+		end
+end
+
+end
 		attribute
   	end
 
@@ -60,26 +74,53 @@ class Order < ActiveRecord::Base
 		order = self.find(order_id)
 		order_extra_service = order.order_extra_services.first
 		extra_service = {}
+	if order.order_extra_services.present?
 		deal_extra_service = DealExtraService.find(order.order_extra_services.first.deal_extra_service_id)
 		extra_service [:price]= deal_extra_service.price
 		extra_service [:title] = deal_extra_service.extra_service.service_name
+end
 		extra_service
   	end
 
   	def self.equipments(order_id)
 		order = self.find(order_id)
-		order_equipments = order.order_equipments
-		equipments = []
-		order_equipments.each do |equipment|
+equipments =[]
+if order.order_equipments.present?		
+order_equipments = order.order_equipments
+		
+		if self.find(order_id).order_items.first.deal.service_category_id  == Deal::CELLPHONE_CATEGORY
+			order_equipments.each do |equipment|
+				order_equipment= {}
+				order_equipment[:color_name] = equipment.color
+				cellphone_detail = CellphoneEquipment.find(equipment.equipment_id).cellphone_detail
+				order_equipment[:brand] = cellphone_detail.brand
+				order_equipment[:name] = cellphone_detail.cellphone_name
+				order_equipment[:price] = CellphoneEquipment.find(equipment.equipment_id).price
+				order_equipment[:image] = cellphone_detail.image.url
+				equipments << order_equipment
+			end
+		elsif self.find(order_id).order_items.first.deal.service_category_id  == Deal::CABLE_CATEGORY
 			order_equipment= {}
-			order_equipment[:color_name] = EquipmentColor.find(equipment.color).color_name
-			cellphone_detail = CellphoneEquipment.find(equipment.equipment_id).cellphone_detail
-			order_equipment[:brand] = cellphone_detail.brand
-			order_equipment[:name] = cellphone_detail.cellphone_name
-			order_equipment[:image] = cellphone_detail.image.url
+			cable_equipment = CableEquipment.find(order.order_equipments.first.equipment_id)
+			order_equipment[:name] = cable_equipment.name 
+			order_equipment[:price] = cable_equipment.price
 			equipments << order_equipment
 		end
+end
 		equipments
+  	end
+
+  	def self.channel_packages(order_id,type)
+  		order = self.find(order_id)
+if order.order_attributes.where(ref_type: type).first.present?
+  		order_attribute = order.order_attributes.where(ref_type: type).first
+  		channel_package = ChannelPackage.find(order_attribute.ref_id)
+			extra_service = {}
+			extra_service [:title]= channel_package.package_name
+			extra_service [:price]= channel_package.price
+end
+
+			extra_service
   	end
 
 	private

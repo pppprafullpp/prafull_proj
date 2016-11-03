@@ -13,8 +13,17 @@
             <%end%>
           
         </div>
-        <div class="main-external-div1">
-          <h5><%= best_deal['title'].truncate(25) %></h5>
+       
+      
+          
+          <div class="main-external-div1">
+             <%title =display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title'])%>
+            <% if title.present? %>
+          <h5 class="tooltip_p" title='<%=best_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
+          <% else %>
+          <h5 ><%= title.truncate(25) rescue nil %></h5>
+          <% end %>
+         
           <ul class="description-height">
             <li><%= best_deal['short_description'].truncate(30) %></li>
             <li><%= best_deal['detail_description'].truncate(30) %></li>
@@ -43,7 +52,7 @@
 
 
 
-          <%end%><br /><a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> +More Details</a>
+          <%end%><br /><a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>"> +More Details</a>
 
       </div>
         <div class="box_down">
@@ -72,12 +81,30 @@
 
           <%if @current_user.present?%>
             <%if @current_user.email_verified%>
+            <% if  best_deal['is_customisable'] == true && best_deal['is_order_available'] != false%>
+
+ 
+ <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=>  best_deal['id'],:effective_price=>  best_deal['effective_price']) %>" id=<%= best_deal['id']%>>Order</a>
+
+ <% elsif ((best_deal['is_customisable'] == true && best_deal['is_order_available'] == false) || (best_deal['is_order_available'] == false)) %>
+    <a id="order-btn" class="order-btn btn_3" >Not Available</a>
+ <% else %>
+
               <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+              <% end %>
             <%else%>
+
               <a class="order-btn" href="javascript:void(0)">Verify email</a>
             <%end%>
           <%else%>
+           <% if  best_deal['is_customisable'] == true && best_deal['is_order_available'] != false%>
+                        <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=>  best_deal['id'],:effective_price=>  best_deal['effective_price']) %>" id=<%= best_deal['id']%>>Order</a>
+                         <% elsif ((best_deal['is_customisable'] == true && best_deal['is_order_available'] == false) || (best_deal['is_order_available'] == false)) %>
+    <a id="order-btn" class="order-btn btn_3" >Not Available</a>
+
+                      <% else %>
             <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+            <% end %>
           <%end%>
         </div>
       </div>
@@ -95,8 +122,13 @@
               <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive">
             <%end%>
         </div>
-        <div class="main-external-div1">
-        <h5><%= best_deal['title'].truncate(25) %></h5>
+          <div class="main-external-div1">
+            <%title =display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title'])%>
+            <% if title.present? %>
+          <h5 class="tooltip_p" title='<%=best_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
+          <% else %>
+          <h5 ><%= title.truncate(25) rescue nil %></h5>
+          <% end %>
         <ul class="description-height">
           <li><%= best_deal['short_description'].truncate(30) %></li>
           <li><%= best_deal['detail_description'].truncate(30) %></li>
@@ -127,7 +159,7 @@
 
       </p>
        <%end%><br />
-        <a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id']) %>"> +More Details</a>
+        <a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>"> +More Details</a>
       </div>
         <div class="box_down">
           <span class="separator_2"></span>
@@ -149,12 +181,26 @@
         </div>
         <%if @current_user.present?%>
           <%if @current_user.email_verified%>
+           <% if  best_deal['is_customisable'] == true && best_deal['is_order_available'] != false%>
+
+ 
+ <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=>  best_deal['id'],:effective_price=>  best_deal['effective_price']) %>" id=<%= best_deal['id']%>>Order</a>
+  <% elsif ((best_deal['is_customisable'] == true && best_deal['is_order_available'] == false) || (best_deal['is_order_available'] == false)) %>
+    <a id="order-btn" class="order-btn btn_3" >Not Available</a>
+ <%else%>
             <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+            <% end %>
           <%else%>
             <a class="order-btn" href="javascript:void(0)">Verify email</a>
           <%end%>
         <%else%>
+        <% if  best_deal['is_customisable'] == true && best_deal['is_order_available'] != false%>
+                        <a class="order-btn" href="<%= more_deal_details_website_home_index_path(:deal_id=>  best_deal['id'],:effective_price=>  best_deal['effective_price']) %>" id=<%=data['id']%>>Order</a>
+                        <% elsif ((best_deal['is_customisable'] == true && best_deal['is_order_available'] == false) || (best_deal['is_order_available'] == false)) %>
+    <a id="order-btn" class="order-btn btn_3" >Not Available</a>
+                        <% else %>
           <a class="order-btn" href="<%= order_website_app_users_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price'])%>"  id=<%=best_deal['id']%>>Order</a>
+          <% end %>
         <%end%>
       </div>
     </div>

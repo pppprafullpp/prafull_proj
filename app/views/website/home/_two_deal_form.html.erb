@@ -26,7 +26,15 @@
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
             <% end %>
-            <h4><%= deal_1['title'].truncate(18) %></h4>
+              <%title =display_deal_name_permission(deal_1['service_provider_id'],deal_1['deal_type'],deal_1['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=deal_1['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(18)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(18)  rescue nil %></h4>
+          <% end %>
+
+
+            <!-- <h4><%#= display_deal_name_permission(deal_1['service_provider_id'],deal_1['deal_type'],deal_1['title']).truncate(18) rescue nil%></h4> -->
             <p><%=deal_1['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
            <%= render :partial => "rating_form" ,locals: {deal: deal_1}%>
             <div class="sd-dealprices">
@@ -34,7 +42,7 @@
               <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_1['effective_price'] if deal_1['effective_price'].present?%></span></div>
 
             </div>
-            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id']) %>" class="sd-more-details">+ More Details</a> </div>
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>" class="sd-more-details">+ More Details</a> </div>
 
          <!--  <div class="col-md-12 sd-deal-saving text-center">
             <p> You save <span> $<%#= deal_data[:you_save] %>/ mo</span></p>
@@ -60,7 +68,15 @@
               <% else %>
                 <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
               <% end %>
-              <h4><%= deal_2['title'].truncate(18) %></h4>
+
+               <%title =display_deal_name_permission(deal_2['service_provider_id'],deal_2['deal_type'],deal_2['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=deal_2['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(18)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(18)  rescue nil %></h4>
+          <% end %>
+
+             <!--  <h4><%#= display_deal_name_permission(deal_2['service_provider_id'],deal_2['deal_type'],deal_2['title']).truncate(18) rescue nil %></h4> -->
               <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
               <div class="sd-dealprices">
@@ -68,7 +84,7 @@
                 <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_2['effective_price'] if deal_2['effective_price'].present?%></span></div>
               </div>
               <%if key == "trending-best"%>
-                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id']) %>" class="sd-more-details">+ More Details</a>
+                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>" class="sd-more-details">+ More Details</a>
               <% else %>
                 <a href="<%= order_detail_website_app_users_path(order_id: deal_2['order_id'])%>" class="sd-more-details">+ Order Details</a>
               <% end %>

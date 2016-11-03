@@ -153,7 +153,7 @@ end
 def get_effective_price
   if self.internet_deal_attributes.present?
     internet=self.internet_deal_attributes.first
-    equipment=internet.internet_equipments.first
+    equipment=self.internet_equipments.first
     effective_price=self.deal_price.to_f
     if equipment.present?
       effective_price+=equipment.price

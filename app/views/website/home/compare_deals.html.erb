@@ -9,12 +9,15 @@
             <td scope="row" class="nobdr" style="font-size:24px;"> Compare <br> <span style="font-size:16px;">2 Items</span></td>
 
             <td align="center" class="col-spacing compare-sty">
-              <%= image_tag("#{@deal_first.try(:image)}", :size => "200x200") %>  <br>
+
+              <% url1 = display_logo_permission(@deal_first.service_provider_id,@deal_first.deal_type)%>
+              <%= image_tag("#{url1}", :size => "200x200") %>  <br>
               <a href="#"><%= @deal_first.try(:short_description)%></a><br>
               <span class="price-com">$ <b><%= @deal_first.try(:price) %> / month</b></span></td>
 
               <td align="center" class="col-spacing compare-sty">
-                <%= image_tag("#{@deal_second.try(:image)}", :size => "200x200") %> <br>
+                <% url2 = display_logo_permission(@deal_second.service_provider_id,@deal_second.deal_type)%>
+                <%= image_tag("#{url2}", :size => "200x200") %> <br>
               <a href="#"><%= @deal_second.try(:short_description)%></a> <br>
               <span class="price-com">$ <b><%= @deal_second.try(:price) %> / month</b></span></td>
 

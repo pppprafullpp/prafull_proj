@@ -160,6 +160,7 @@ Rails.application.routes.draw do
         get :about_us
         get :our_providers
         get :coming_soon
+        get :tnc
       end
     end
 

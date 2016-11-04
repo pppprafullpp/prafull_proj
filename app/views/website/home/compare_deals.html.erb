@@ -9,7 +9,6 @@
             <td scope="row" class="nobdr" style="font-size:24px;"> Compare <br> <span style="font-size:16px;">2 Items</span></td>
 
             <td align="center" class="col-spacing compare-sty">
-
               <% url1 = display_logo_permission(@deal_first.service_provider_id,@deal_first.deal_type)%>
               <%= image_tag("#{url1}", :size => "200x200") %>  <br>
               <a href="#"><%= @deal_first.try(:short_description)%></a><br>
@@ -25,9 +24,16 @@
 
           <tr>
             <th width="20%" scope="row">Plan</th>
-
-            <th width="30%"><%=@deal_first.service_provider.name%></th>
+            <% if (@deal_first.deal_type == AppUser::BUSINESS) && (@deal_first.service_provider.name == "AT&T") %>
+            <th width="30%"><%=@deal_first.service_provider.name %></th>
+            <% else %>
+            <th width="30%"></th>
+            <% end %>
+            <% if (@deal_second.deal_type == AppUser::BUSINESS) && (@deal_second.service_provider.name == "AT&T") %>
             <th width="30%"><%=@deal_second.service_provider.name%></th>
+            <% else %>
+            <th width="30%"></th>
+            <% end %>
           </tr>
           <tr>
             <td scope="row">Saving</td>

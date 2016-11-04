@@ -1,7 +1,7 @@
 require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
-  root to: "home#index"
+  # root to: "home#index"
 
   namespace :api do
     namespace :v1 do
@@ -86,7 +86,7 @@ Rails.application.routes.draw do
   # if Socket.gethostname=="servicedlz-Virtual-Machine"
   # root to: "home#index"
   # else
-  # root to: "website/home#index"
+  root to: "website/home#index"
   # end
 
   devise_for :users

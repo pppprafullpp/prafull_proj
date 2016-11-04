@@ -1,3 +1,4 @@
+
 /* ==========================================================================
 	Author's custom styles
 	========================================================================== */
@@ -321,39 +322,19 @@ div.modal-open {
     float: left;
     width: 11%;
 }
-footer {
-    background: #272525;
-    float: left;
-    width: 100%;
-    padding: 50px 0;
-}
-footer ul {
-    display: inline-block;
-    margin-right: 5%
-}
-footer li.heading {
-    font-family: 'open_sanssemibold';
-    color: #fff;
-    margin-bottom: 8px;
-}
-footer li a {
-    color: #8c8b8b;
-    font-size: 12px;
-}
+footer { background: #272525; float: left; width: 100%; padding: 15px;}
+
+footer li.heading { font-family: 'open_sanssemibold'; color: #fff; margin-bottom: 8px; display:inline-block;}
+footer li a {    color: #fff;    display: inline-block;    margin-top: 18px;    padding-right: 34px;}
 footer li a:hover {
     color: #fff;
 }
 footer p {
-    color: #fff;
-    font-size: 12px;
+  color: #fff;    
+  font-size: 12px; 
+  margin-bottom: 0;
 }
-.copyright {
-    text-align: right;
-    border-left: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: -1px 0px 0px #000;
-    padding: 1%;
-    padding-bottom: 0px;
-}
+.copyright { text-align: right; padding: 0; margin-top: 10px;}
 .copyright span {
     font-size: 12px;
     color: #8c8b8b;
@@ -6921,4 +6902,11 @@ select::-ms-expand {
     margin: 0;
 }
 .coming-soon p { margin:20px 0;}
-/*>>>>>>> prafull_05082016_new_branch*/
+
+
+.abt-us p, .terms p{color:#656565; font-size:14px; }
+.terms-condition {margin: 30px 0;}
+.terms-listing {color:#999; font-size:14px; margin-bottom:10px;}
+.abt-list p {  color: #656565;  font-size: 15px;  line-height: 24px;  margin-top: 16px;  padding: 2px 0;}
+.terms-listing li { color: #656565; font-size: 14px; padding: 2px 0;}
+.terms-listing i { margin-right: 8px;}

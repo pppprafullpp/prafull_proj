@@ -102,6 +102,18 @@ def deal_image_url
   end
 end
 
+def deal_title(deal)
+  name = ApplicationController.new.display_deal_name_permission(self.service_provider_id,self.deal_type,self.title)
+  return name
+end
+
+def as_json(options = {})
+    json = super(options)
+    json['title'] = deal_title(options[:title])
+    json
+  end
+
+
 def channel_packages
   channel_packages = ChannelPackage.where(service_provider_id: self.service_provider_id)
   return channel_packages

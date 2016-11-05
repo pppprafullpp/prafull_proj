@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
   # root to: "home#index"
 
+
   namespace :api do
     namespace :v1 do
       devise_scope :app_user do
@@ -81,6 +82,10 @@ Rails.application.routes.draw do
   match "/set_default_address" => "website/app_users#set_default_address", :via => [:post]
   match "/delete_address" => "website/app_users#delete_address", :via => [:post]
   match "/edit_or_change_service_preferences" => "api/v1/service_preferences#create", :via => :post
+  get "/tnc" =>"website/home#tnc"
+  get "/contact_us" =>"website/home#contact_us"
+  get "/about_us" =>"website/home#about_us"
+  get "/privacy_policy" =>"website/home#privacy_policy"
 
   #
   # if Socket.gethostname=="servicedlz-Virtual-Machine"

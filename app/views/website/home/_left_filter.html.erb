@@ -1,4 +1,4 @@
-<% if false %>
+<% if ServiceDealConfig::where(config_key: "show_website_filter").first.config_value== ServiceDealConfig::SHOW_WEBSITE_FILTER%>
     <div class="col-xs-12 col-sm-12 col-md-3 bor_sec_left">
       <div class="border-radius-bg pull-left">
 

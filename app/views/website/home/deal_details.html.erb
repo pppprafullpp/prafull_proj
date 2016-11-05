@@ -59,9 +59,11 @@
                   <% end %>
                   <div class="sddeals-imgcon">
                     <%if display_logo_permission(data['service_provider_id'],data['deal_type'])%>
-                      <img src="<%= display_logo_permission(data['service_provider_id'],data['deal_type'])%>" alt="" class="img-responsive">
+                     <a href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>">
+                      <img src="<%= display_logo_permission(data['service_provider_id'],data['deal_type'])%>" alt="" class="img-responsive"></a>
                     <%else%>
-                      <img src="<%= data['deal_image_url'] %>" alt="" class="img-responsive">
+                    <a href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>">
+                      <img src="<%= data['deal_image_url'] %>" alt="" class="img-responsive"></a>
                     <%end%>
                   </div>
                   

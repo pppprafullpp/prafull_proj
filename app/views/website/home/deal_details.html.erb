@@ -34,7 +34,7 @@
                             <img src="<%=bd.image%>" alt="" class="img-responsive">
                           <%end%>
                         </div>
-                        <p class="caption-title"><%=bd.title.truncate(20)%></p>
+                        <p class="caption-title tooltip_p" title='<%=bd.title%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= display_deal_name_permission(bd.service_provider_id,bd.deal_type,bd.title).truncate(20) rescue nil%></p>
                         <div class="sd-best-price">Price  <span>$ <%=bd.price%></span>  </div>
                         <p class="caption-des text-left"><%=bd.short_description.truncate(20)%></p>
                       </a>
@@ -64,8 +64,19 @@
                       <img src="<%= data['deal_image_url'] %>" alt="" class="img-responsive">
                     <%end%>
                   </div>
+                  
                   <div class="main-external-div1">
-                    <h5><%= data['title'].truncate(20) %></h5>
+                    
+
+
+
+            <%title =display_deal_name_permission(data['service_provider_id'],data['deal_type'],data['title'])%>
+            <% if title.present? %>
+          <h5 class="tooltip_p" title='<%=data['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
+          <% else %>
+          <h5 ><%= title.truncate(25) rescue nil %></h5>
+          <% end %>
+                    <!-- data['title'].truncate(20) -->
                     <ul class="description-height">
                       <li><%= data['short_description'].truncate(50) %></li>
                     </ul>
@@ -139,6 +150,9 @@
 </div>
 </section>
 <script>
+
+
+
   $('.owl-carousel').owlCarousel({
      loop:true,
      margin:10,

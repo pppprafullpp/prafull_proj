@@ -16,7 +16,7 @@
             <% if params[:effective_price].present? %>
             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  params[:effective_price]%>/mo</span></li>
             <% else %>
-             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price%>/mo</span></li>
+             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
             <% end %>
             <% if @deal.contract_period == 0 %>
                 <li>Contract:<span>None</span></li>
@@ -75,7 +75,7 @@
       <div class="col-sm-8 about-offer">
         <div class="about-offer-details sd-more-details-page">
           <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;</i>Share on Facebook</a>
-          <h4><%= @deal.title %></h4>
+          <h4><%= display_deal_name_permission(@deal.service_provider_id,@deal.deal_type,@deal.title) %></h4>
           <h5>About the offer</h5>
 
           <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>

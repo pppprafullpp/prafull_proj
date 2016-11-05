@@ -1,5 +1,6 @@
 class DealsController < ApplicationController
 
+
 	def index
 		@deals = Deal.paginate(:page => params[:page], :per_page => 20).order("created_at DESC")
     respond_to do |format|

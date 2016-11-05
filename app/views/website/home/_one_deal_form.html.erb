@@ -18,7 +18,16 @@
         </div>
         <div class="col-md-9 col-sm-9 col-xs-9  sd-deal-info">
           <div class="no-login-tdeal"><img src="/assets/website/trending-dealblock.png" ></div>
-          <h4><%= trending_deal['title'] %></h4>
+            <%title =display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=trending_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title rescue nil%></h4>
+          <% else %>
+          <h4><%= title rescue nil %></h4>
+          <% end %>
+
+
+
+          <!-- <h4><%#= display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title']) %></h4> -->
           <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
 
           <!--  <p>

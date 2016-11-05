@@ -3,6 +3,7 @@ class OrderExtraService < ActiveRecord::Base
 
   def self.create_order_extra_services(params,order_id)
     order_extra_services = []
+if params[:order_extra_services].present?
     params[:order_extra_services].each do |extra_service|
       order_extra_service = self.new
       order_extra_service.order_id = order_id
@@ -13,6 +14,7 @@ class OrderExtraService < ActiveRecord::Base
         order_extra_services << order_extra_service
       end
     end
+end
     order_extra_services
   end
 end

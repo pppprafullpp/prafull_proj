@@ -1,7 +1,7 @@
 require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
-  root to: "home#index"
+  # root to: "home#index"
 
   namespace :api do
     namespace :v1 do
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       match 'customisable_deal_deatail' => "deals#customisable_deal_deatail", :via => :get
       match 'channel_customisable_deals' => "deals#channel_customisable_deals", :via => :get
       match 'cellphone_details' => "deals#cellphone_details", :via => :get
+      match 'service_deal_config' => "deals#service_deal_config", :via => :get
 
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
@@ -85,7 +86,7 @@ Rails.application.routes.draw do
   # if Socket.gethostname=="servicedlz-Virtual-Machine"
   # root to: "home#index"
   # else
-  # root to: "website/home#index"
+  root to: "website/home#index"
   # end
 
   devise_for :users
@@ -159,6 +160,7 @@ Rails.application.routes.draw do
         get :about_us
         get :our_providers
         get :coming_soon
+        get :tnc
       end
     end
 

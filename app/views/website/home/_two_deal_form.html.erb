@@ -26,7 +26,15 @@
             <% else %>
             <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
             <% end %>
-            <h4><%= deal_1['title'].truncate(18) %></h4>
+              <%title =display_deal_name_permission(deal_1['service_provider_id'],deal_1['deal_type'],deal_1['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=deal_1['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(18)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(18)  rescue nil %></h4>
+          <% end %>
+
+
+            <!-- <h4><%#= display_deal_name_permission(deal_1['service_provider_id'],deal_1['deal_type'],deal_1['title']).truncate(18) rescue nil%></h4> -->
             <p><%=deal_1['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
            <%= render :partial => "rating_form" ,locals: {deal: deal_1}%>
             <div class="sd-dealprices">
@@ -60,7 +68,15 @@
               <% else %>
                 <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
               <% end %>
-              <h4><%= deal_2['title'].truncate(18) %></h4>
+
+               <%title =display_deal_name_permission(deal_2['service_provider_id'],deal_2['deal_type'],deal_2['title'])%>
+            <% if title.present? %>
+          <h4 class="tooltip_p" title='<%=deal_2['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(18)  rescue nil%></h4>
+          <% else %>
+          <h4><%= title.truncate(18)  rescue nil %></h4>
+          <% end %>
+
+             <!--  <h4><%#= display_deal_name_permission(deal_2['service_provider_id'],deal_2['deal_type'],deal_2['title']).truncate(18) rescue nil %></h4> -->
               <p><%=deal_2['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
               <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
               <div class="sd-dealprices">

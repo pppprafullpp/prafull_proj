@@ -54,7 +54,6 @@ class Api::V1::DashboardsController < ApplicationController
 			allowed_deals=get_category_deals(nil,params[:service_category_id],params[:zip_code],params[:deal_type])
 			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id])
 		end
-
 		render :json => {:deal => allowed_deals,:bundle_deals => bundle_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:bundle_combo])}
 	end
 
@@ -84,7 +83,7 @@ class Api::V1::DashboardsController < ApplicationController
 		if params[:service_provider_id].present? && params[:label_key].present?
 			label_key = get_label_name(params[:service_provider_id],params[:label_key])
 			render :json => {label_key: label_key, :success => true }
-		else 
+		else
 			render :json => { :success => false}
 		end
 	end

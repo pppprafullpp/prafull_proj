@@ -3,6 +3,7 @@ class OrderEquipment < ActiveRecord::Base
 
   def self.create_order_equipments(params,order_id)
     order_equipments = []
+ if params[:order_equipments].present?
     params[:order_equipments].each do |equipment|
       order_equipment = self.new
       order_equipment.order_id = order_id
@@ -13,6 +14,7 @@ class OrderEquipment < ActiveRecord::Base
         order_equipments << order_equipment
       end
     end
+end
     order_equipments
   end
 end

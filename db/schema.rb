@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018091609) do
+ActiveRecord::Schema.define(version: 20161105063458) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -30,16 +30,17 @@ ActiveRecord::Schema.define(version: 20161018091609) do
   end
 
   create_table "additional_offers", force: :cascade do |t|
-    t.integer  "deal_id",       limit: 4
-    t.string   "title",         limit: 255
-    t.text     "description",   limit: 65535
-    t.float    "price",         limit: 24,    default: 0.0,   null: false
+    t.integer  "deal_id",         limit: 4
+    t.string   "title",           limit: 255
+    t.text     "description",     limit: 65535
+    t.float    "price",           limit: 24,    default: 0.0,   null: false
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_nationwide",               default: false
-    t.boolean  "is_active",                   default: true
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.boolean  "is_nationwide",                 default: false
+    t.boolean  "is_active",                     default: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "contract_period", limit: 255
   end
 
   add_index "additional_offers", ["deal_id"], name: "index_additional_offers_on_deal_id", using: :btree
@@ -450,21 +451,22 @@ ActiveRecord::Schema.define(version: 20161018091609) do
     t.string   "title",               limit: 255
     t.text     "short_description",   limit: 65535
     t.text     "detail_description",  limit: 65535
-    t.float    "price",               limit: 24,                            default: 0.0,         null: false
-    t.boolean  "is_contract",                                               default: false,       null: false
-    t.integer  "contract_period",     limit: 4,                             default: 0,           null: false
+    t.float    "price",               limit: 24,                             default: 0.0,         null: false
+    t.boolean  "is_contract",                                                default: false,       null: false
+    t.integer  "contract_period",     limit: 4,                              default: 0,           null: false
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_nationwide",                                             default: false
-    t.string   "deal_type",           limit: 100,                           default: "residence", null: false
-    t.boolean  "is_active",                                                 default: true
-    t.datetime "created_at",                                                                      null: false
-    t.datetime "updated_at",                                                                      null: false
-    t.boolean  "is_sponsored",                                              default: false
-    t.decimal  "effective_price",                   precision: 5, scale: 2
-    t.boolean  "is_customisable",                                           default: false
+    t.boolean  "is_nationwide",                                              default: false
+    t.string   "deal_type",           limit: 100,                            default: "residence", null: false
+    t.boolean  "is_active",                                                  default: true
+    t.datetime "created_at",                                                                       null: false
+    t.datetime "updated_at",                                                                       null: false
+    t.boolean  "is_sponsored",                                               default: false
+    t.boolean  "is_customisable",                                            default: false
+    t.boolean  "is_order_available",                                         default: true
+    t.decimal  "effective_price",                   precision: 10, scale: 2
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -798,6 +800,13 @@ ActiveRecord::Schema.define(version: 20161018091609) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "service_deal_configs", force: :cascade do |t|
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "config_key",   limit: 255
+    t.string   "config_value", limit: 255
   end
 
   create_table "service_preferences", force: :cascade do |t|

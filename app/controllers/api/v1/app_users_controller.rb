@@ -235,7 +235,7 @@ AppUserMailer.delay.send_verification_mail(@app_user.id,code)
   end
 
   def verify_user
-
+	if params[:id].present?
     data=AppUser.find(params[:id])
     if data.email_verified
       render :json=>{
@@ -243,9 +243,13 @@ AppUserMailer.delay.send_verification_mail(@app_user.id,code)
       }
     else
       render :json=>{
-        verified:false
+        verified:true
       }
     end
+else 
+render :json=>{
+        verified:true
+end
   end
 
   def primary_information

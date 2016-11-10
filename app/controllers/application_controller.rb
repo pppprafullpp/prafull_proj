@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				url ="http://res.cloudinary.com/servicedealz/image/upload/v1477049217/att_v_z4ulpm.png"
 			elsif [2, 5, 15, 43].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478692406/twc_vertical_1_hhi24f.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478776688/twc_vertical_2_vlpnro.png"
 			elsif [7, 24, 48, 107].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696136/charter-spectrum_shxjjz.png"
 			elsif [10, 47, 61, 112, 113].include? provider_id
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
 				# url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
 			elsif [2, 5, 15, 43].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478692406/twc_vertical_1_hhi24f.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478776688/twc_vertical_2_vlpnro.png"
 			elsif [4,41,18, 39, 50, 90].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159475/coming-soonv2_fhbxin.png"
 			elsif [7, 24, 48, 107].include? provider_id

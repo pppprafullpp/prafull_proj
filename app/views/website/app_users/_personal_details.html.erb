@@ -18,7 +18,14 @@
    end
    ## if user is new and no address is entered then zip code is displayed as blank in profile though he has entered zip while signup
    ## so we will show zip from app_user till he enters his address
-   zip = zip.present? ? zip : session[:zip_code]
+#   zip = zip.present? ? zip :session[:zip_code]
+if zip.present?
+    zip = zip
+  elsif @app_user.zip.present?
+    zip = decode_api_data(@app_user.zip)
+  else
+    zip = session[:zip_code]
+  end
 
    if @app_user.primary_id_number.present?
      primary_id_number = @app_user.primary_id_number.split('===').last

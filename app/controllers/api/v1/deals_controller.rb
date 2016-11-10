@@ -25,6 +25,15 @@ class Api::V1::DealsController < ApplicationController
 		render :status => 200,:json => { :success => true, show_deal_name: key }
 	end
 
+	def password_complicated_setting
+		key = ServiceDealConfig::where(config_key: "password_complicated").first.config_value
+		if key.present?
+		render :status => 200,:json => { :success => true, key: key }
+		else
+			render :status => 401,:json => { :success => false }
+		end
+	end
+
 	def get_deal_channels
 		deal_id = params[:deal_id]
 		cable_deal_attribute = CableDealAttribute.where(:deal_id => deal_id).last

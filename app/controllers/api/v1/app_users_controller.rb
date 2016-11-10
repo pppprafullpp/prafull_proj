@@ -249,6 +249,7 @@ AppUserMailer.delay.send_verification_mail(@app_user.id,code)
 else 
 render :json=>{
         verified:true
+      }
 end
   end
 

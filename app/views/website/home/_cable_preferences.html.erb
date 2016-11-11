@@ -25,9 +25,11 @@
   <%=hidden_field_tag("from_site","true")%>
 
     <div class="col-md-6 mg_bttom20">
-    <select class="form-control" id="service_provider_id" name="service_provider_id">
-    <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
-    </select>
+    <!-- <select class="form-control" id="service_provider_id" name="service_provider_id"> -->
+    <%#= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
+    <!-- </select> -->
+
+     <%= select_tag('',options_for_select(@providers,''),:class => 'form-control',:prompt => 'Select Vendor', :id=>"service_provider_id", :name=>"service_provider_id") %>
     </div>
 
     <div class="col-md-6 mg_bttom20">

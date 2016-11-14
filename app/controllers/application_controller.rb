@@ -114,11 +114,11 @@ class ApplicationController < ActionController::Base
 		else 
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title
-			elsif [2, 5, 15, 43].include? provider_id && (deal_type == "residence")
+			elsif ([2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
 				name = title
-			elsif [7, 24, 48, 107].include? provider_id && (deal_type == "residence")
+			elsif ([7, 24, 48, 107].include? provider_id) && (deal_type == "residence")
 				name = title
-			elsif [10, 47, 61, 112, 113].include? provider_id && (deal_type == "residence")
+			elsif ([10, 47, 61, 112, 113].include? provider_id) && (deal_type == "residence")
 				name = title
 			else 
 				name = ''

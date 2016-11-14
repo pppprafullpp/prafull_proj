@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 			elsif [2, 5, 15, 43].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478776688/twc_vertical_2_vlpnro.png"
 			elsif [7, 24, 48, 107].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696136/charter-spectrum_shxjjz.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478871235/Spectrum_jmjx5j.png"
 			elsif [10, 47, 61, 112, 113].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696145/cox_w01xck.png"
 			else
@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
 			elsif [4,41,18, 39, 50, 90].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159475/coming-soonv2_fhbxin.png"
 			elsif [7, 24, 48, 107].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696136/charter-spectrum_shxjjz.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478871235/Spectrum_jmjx5j.png"
 			elsif [10, 47, 61, 112, 113].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696145/cox_w01xck.png"
 			elsif [34,109, 110, 111].include? provider_id

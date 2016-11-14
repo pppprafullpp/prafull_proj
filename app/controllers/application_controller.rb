@@ -68,18 +68,18 @@ class ApplicationController < ActionController::Base
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
 				# url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
-			elsif [2, 5, 15, 43].include? provider_id && (deal_type == "residence")
+			elsif ([2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
 				url ="http://res.cloudinary.com/servicedealz/image/upload/v1478776688/twc_vertical_2_vlpnro.png"
-			elsif [2, 5, 15, 43].include? provider_id && (deal_type == "business")
+			elsif ([2, 5, 15, 43].include? provider_id) && (deal_type == "business")
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
 			elsif [4,41,18, 39, 50, 90].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159475/coming-soonv2_fhbxin.png"
-			elsif [7, 24, 48, 107].include? provider_id && (deal_type == "residence")
+			elsif ([7, 24, 48, 107].include? provider_id) && (deal_type == "residence")
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478871235/Spectrum_jmjx5j.png"
-			elsif [7, 24, 48, 107,10, 47, 61, 112, 113].include? provider_id && (deal_type == "business")
+			elsif ([7, 24, 48, 107,10, 47, 61, 112, 113].include? provider_id) && (deal_type == "business")
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159497/coming-soonv6_s9bnmj.png"
 
-			elsif [10, 47, 61, 112, 113].include? provider_id  && (deal_type == "residence")
+			elsif ([10, 47, 61, 112, 113].include? provider_id)  && (deal_type == "residence")
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696145/cox_w01xck.png"
 			elsif [34,109, 110, 111].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159497/coming-soonv6_s9bnmj.png" 

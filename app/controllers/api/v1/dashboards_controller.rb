@@ -30,16 +30,16 @@ class Api::V1::DashboardsController < ApplicationController
 		elsif params[:app_user_id].blank? && params[:zip_code].present? && params[:deal_type].present? && params[:category].present? && params[:sorting_flag].present?
 
 			allowed_deals=filtered_deals(nil,params[:category],params[:zip_code],params[:deal_type],params[:sorting_flag])
-			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category])
+			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category],params[:deal_type])
 			render :json => {:deal => allowed_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments]),
 											 :bundle_deals => bundle_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:bundle_combo])}
 
 		elsif params[:app_user_id].present? && params[:zip_code].present? && params[:deal_type].blank? && params[:category].present? && params[:sorting_flag].present?
-
+			deal_type = AppUser.find(params[:app_user_id]).user_type
 			allowed_deals=filtered_deals(params[:app_user_id],params[:category],nil,nil,params[:sorting_flag])
  			sponsored_deals = allowed_deals.where(is_sponsored: true)
 			all_deals = sponsored_deals + (allowed_deals - sponsored_deals)
-			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category])
+			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category],deal_type)
 			render :json => {:deal => all_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments]),
 											 :bundle_deals => bundle_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:bundle_combo])}
 
@@ -48,11 +48,12 @@ class Api::V1::DashboardsController < ApplicationController
 
 	def category_deals
 		if params[:app_user_id].present? && params[:service_category_id].present? && params[:zip_code].present?
+			deal_type = AppUser.find(params[:app_user_id]).user_type
 			allowed_deals=get_category_deals(params[:app_user_id],params[:service_category_id],nil,nil)
-			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id])
+			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id],deal_type)
 		elsif params[:app_user_id].blank? && params[:service_category_id].present? && params[:zip_code].present? && params[:deal_type].present?
 			allowed_deals=get_category_deals(nil,params[:service_category_id],params[:zip_code],params[:deal_type])
-			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id])
+			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id],params[:deal_type])
 		end
 		render :json => {:deal => allowed_deals,:bundle_deals => bundle_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:bundle_combo])}
 	end

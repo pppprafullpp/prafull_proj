@@ -16,10 +16,13 @@ class BundleDealAttribute < ActiveRecord::Base
 	def self.get_linked_bundle_deal(category_id,deal_type)
 		#bundle_category_id = ServiceCategory.get_id_by_name(ServiceCategory::BUNDLE_CATEGORY)
 		category_name = ServiceCategory.get_category_name_by_id(category_id)
-		bundle_deals = Deal.find_by_sql("select deals.* from deals
-															inner join bundle_deal_attributes bda on bda.deal_id = deals.id
-															where bundle_combo like '%#{category_name}%'  AND deals.deal_type = deal_type
-															order by effective_price asc limit 5")
+		# bundle_deals = Deal.find_by_sql("select deals.* from deals
+		# 													inner join bundle_deal_attributes bda on bda.deal_id = deals.id
+		# 													where bundle_combo like '%#{category_name}%'  AND deals.deal_type = deal_type
+		# 													order by effective_price asc limit 5")
+		 bundle_deals = Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%'  order by effective_price asc limit 5")
+
+
 		bundle_deals
 	end
 

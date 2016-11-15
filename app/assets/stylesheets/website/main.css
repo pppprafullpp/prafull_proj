@@ -6929,3 +6929,8 @@ margin: 0 0 175px;
 .right-bottom-review .border-radius-bg{
     height: auto !important;
 }
+.reset-password {margin: 0;
+    padding: 0;
+}
+.reset-password .usage-type{ margin-top: 20px;}
+.account_page_height{min-height: 600px;}

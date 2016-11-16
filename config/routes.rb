@@ -186,6 +186,8 @@ Rails.application.routes.draw do
         post :create_order
         post :contact_us
         get :forget_password
+        get :edit_password
+        post :update_password
         get :order_attributes
         get :order_extra_services
         get :order_equipment_data

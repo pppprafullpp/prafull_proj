@@ -305,7 +305,6 @@ class Website::AppUsersController < ApplicationController
       reset_session
     end
     if request.method.eql? 'POST'
-   
       @app_user = AppUser.authenticate(params[:user][:email], params[:user][:password])
       if @app_user.present?
         session[:user_id] = @app_user.id
@@ -443,13 +442,34 @@ class Website::AppUsersController < ApplicationController
     @app_user = AppUser.find_by_email(params[:email])
     if @app_user.present?
       @email = @app_user.email
-      AppUserMailer.recover_password_email(@app_user).deliver_now
+      @app_user.send_password_reset 
+      # AppUserMailer.recover_password_email(@app_user).deliver_now
       flash[:notice] = 'You will receive your password soon in email.'
       redirect_to request.referrer and return
     else
       flash[:warning] = 'This Email is not registered with us.'
       redirect_to request.referrer and return
     end
+  end
+
+  def edit_password
+    @app_user = AppUser.find_by_password_reset_token!(params[:id])
+  end
+
+  def update_password
+     @app_user = AppUser.find_by_password_reset_token!(params[:id])
+  # if @app_user.password_reset_sent_at < 3.days.ago
+  #   redirect_to website_home_index_path, :alert => "Password &crarr; 
+  #     reset has expired."
+  # elsif 
+  encrypted_password =  BCrypt::Password.create(params[:app_user][:password])
+  @app_user.update_attributes(:encrypted_password=>encrypted_password, :unhashed_password => params[:app_user][:password])
+  flash[:success] = "Password Changed"
+  # @app_user.encrypted_password = Digest::SHA1.hexdigest("#{params[:app_user][:password]}")
+  redirect_to root_url, :notice => "Password has been reset."
+  # else
+  #   render :edit
+  # end
   end
 
   def contact_us

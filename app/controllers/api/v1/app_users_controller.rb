@@ -1,3 +1,5 @@
+
+
 class Api::V1::AppUsersController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
@@ -131,7 +133,8 @@ AppUserMailer.delay.send_verification_mail(@app_user.id,code)
     @app_user = AppUser.find_by_email(params[:email])
     if @app_user.present?
       @email = @app_user.email
-      AppUserMailer.recover_password_email(@app_user).deliver_now
+      @app_user.send_password_reset 
+      # AppUserMailer.recover_password_email(@app_user).deliver_now
       render  :json => { :success => true }
     else
       render  :status => 404,

@@ -8,7 +8,7 @@
   business = app_user.try(:business_app_users).last.try(:business)
   primary_id = app_user.try(:primary_id)
   secondary_id = app_user.try(:secondary_id)
-
+  provider_name =deal.service_provider.name
   if @order.primary_id_number.present?
   primary_id_number = @order.primary_id_number.split('===').last
   primary_state = @order.primary_id_number.split('===').first
@@ -42,9 +42,9 @@ end
               <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>
             </span>
             </div>
-            <div class="order-no-dt pull-right"> AT&T Order No:<span>114568026973</span><br/>
-              <button type="button" class=" btn accepted-btn">Accepted</button>
-              <button type="button" class=" btn recontracted-btn">Accepted</button>
+            <div class="order-no-dt pull-right"><%= provider_name%> Order No:<span>114568026973</span><br/>
+             <%=provider_name%> Status:<button type="button" class=" btn accepted-btn"><%= @order.provider_status %></button>
+              <!-- <button type="button" class=" btn recontracted-btn"><%#= @order.provider_status %></button> -->
             </div>
           </div>
           <div class="order-service-dt">

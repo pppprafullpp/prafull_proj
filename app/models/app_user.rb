@@ -23,7 +23,7 @@ class AppUser < ActiveRecord::Base
   # before_save :encode_data
   ##before_save :encrypt_data
   validates :email, :presence => true, :uniqueness => true
-  validates :password, :presence => true, :confirmation => true, :on => :create
+  # validates :password, :presence => true, :confirmation => true, :on => :create
 
   ## user type
   RESIDENCE = 'residence'

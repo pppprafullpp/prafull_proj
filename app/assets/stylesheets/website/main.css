@@ -6298,7 +6298,7 @@ ul.caption-dealdet li::before {
     overflow: hidden;
     background: #fff url(../website/down-arrow.png) no-repeat 100% 50%;
 }
-select::-ms-expand {mysql -u username -p databasename tableName < path/example.sql
+select::-ms-expand {
     display: none;
 }
 .select-style select {

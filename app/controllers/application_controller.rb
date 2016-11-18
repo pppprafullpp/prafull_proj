@@ -65,8 +65,6 @@ class ApplicationController < ActionController::Base
 				false
 			end
 		else
-			
-
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
 				# url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"

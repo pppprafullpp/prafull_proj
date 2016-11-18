@@ -78,7 +78,7 @@ if zip.present?
         <% if session[:user_type] == AppUser::BUSINESS %>
             <div class="col-lg-12 margin-top0"><h4>Business Details</h4></div>
             <div class="col-sm-6">
-              <label class="control-label">User type<span id="mandat">*</span></label>
+              <label class="control-label">User Type<span id="mandat">*</span></label>
               <%= select_tag(:user_type,options_for_select([[AppUser::USER_TYPES.first.titleize, AppUser::USER_TYPES.first], [AppUser::USER_TYPES.last.titleize, AppUser::USER_TYPES.last]],@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
             </div>
 

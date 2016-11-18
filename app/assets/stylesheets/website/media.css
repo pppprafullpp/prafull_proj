@@ -57,6 +57,9 @@
 
 }
 @media (max-width: 992px) {
+    .sd-order-con .border-radius-bg{
+        height: auto !important;
+    }
     .carousel-caption {
     top: 25px;
     }
@@ -457,6 +460,7 @@ h1 { font-size: 120% !important;}
 }
 
 @media (max-width: 500px) {
+    .social-icon a {    border-radius: 20px;    color: #9b9b9b;    display: inline-block;    font-size: 14px;    height: 24px;    padding-top: 2px;    text-align: center;    width: 16px;}
 .serviceCon .row .serviceRow {
     width: 100%;
 }

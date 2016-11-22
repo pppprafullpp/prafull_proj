@@ -79,9 +79,9 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			end
       if @service_preference.update(service_preference_params)
       	if params[:is_contract] == "true"
-        	send_notification_no_contract
+#        	send_notification_no_contract
         elsif params[:is_contract] == "false"
-        		send_notification_is_contract
+ #       		send_notification_is_contract
 	   	end
 				if params[:from_site].present?
 					redirect_to :back
@@ -132,10 +132,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
        if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
         	if params[:is_contract] == "true"
 						@app_user=AppUser.find(id)
-        		send_notification_no_contract
+  #      		send_notification_no_contract
         	elsif params[:is_contract] == "false"
 						@app_user=AppUser.find(id)
-        		send_notification_is_contract
+   #     		send_notification_is_contract
 					end
 					if params[:from_site].present?
 						redirect_to :back
@@ -458,7 +458,7 @@ service_preference_hash['data_plan']=2.0
 
 		best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
 		if best_deal.present?
-			DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
+#			DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]

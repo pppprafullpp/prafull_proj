@@ -42,7 +42,7 @@ end
               <%= @order.created_at.strftime("%d  %b %Y") %>  &nbsp; <%= @order.created_at.strftime("%I.%M %p ") %>
             </span>
             </div>
-            <div class="order-no-dt pull-right"><%= provider_name%> Order No:<span>114568026973</span><br/>
+            <div class="order-no-dt pull-right"><%= provider_name%> Order No:<span></span><br/>
              <%=provider_name%> Status:<button type="button" class=" btn accepted-btn"><%= @order.provider_status %></button>
               <!-- <button type="button" class=" btn recontracted-btn"><%#= @order.provider_status %></button> -->
             </div>

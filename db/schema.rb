@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018091609) do
+ActiveRecord::Schema.define(version: 20161117080017) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -30,16 +30,17 @@ ActiveRecord::Schema.define(version: 20161018091609) do
   end
 
   create_table "additional_offers", force: :cascade do |t|
-    t.integer  "deal_id",       limit: 4
-    t.string   "title",         limit: 255
-    t.text     "description",   limit: 65535
-    t.float    "price",         limit: 24,    default: 0.0,   null: false
+    t.integer  "deal_id",         limit: 4
+    t.string   "title",           limit: 255
+    t.text     "description",     limit: 65535
+    t.float    "price",           limit: 24,    default: 0.0,   null: false
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_nationwide",               default: false
-    t.boolean  "is_active",                   default: true
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.boolean  "is_nationwide",                 default: false
+    t.boolean  "is_active",                     default: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "contract_period", limit: 255
   end
 
   add_index "additional_offers", ["deal_id"], name: "index_additional_offers_on_deal_id", using: :btree
@@ -129,6 +130,8 @@ ActiveRecord::Schema.define(version: 20161018091609) do
     t.string   "secondary_id_number",      limit: 255
     t.string   "email_verification_token", limit: 255
     t.boolean  "email_verified"
+    t.string   "password_reset_token",     limit: 255
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -450,21 +453,22 @@ ActiveRecord::Schema.define(version: 20161018091609) do
     t.string   "title",               limit: 255
     t.text     "short_description",   limit: 65535
     t.text     "detail_description",  limit: 65535
-    t.float    "price",               limit: 24,                            default: 0.0,         null: false
-    t.boolean  "is_contract",                                               default: false,       null: false
-    t.integer  "contract_period",     limit: 4,                             default: 0,           null: false
+    t.float    "price",               limit: 24,                             default: 0.0,         null: false
+    t.boolean  "is_contract",                                                default: false,       null: false
+    t.integer  "contract_period",     limit: 4,                              default: 0,           null: false
     t.string   "url",                 limit: 255
     t.string   "image",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_nationwide",                                             default: false
-    t.string   "deal_type",           limit: 100,                           default: "residence", null: false
-    t.boolean  "is_active",                                                 default: true
-    t.datetime "created_at",                                                                      null: false
-    t.datetime "updated_at",                                                                      null: false
-    t.boolean  "is_sponsored",                                              default: false
-    t.decimal  "effective_price",                   precision: 5, scale: 2
-    t.boolean  "is_customisable",                                           default: false
+    t.boolean  "is_nationwide",                                              default: false
+    t.string   "deal_type",           limit: 100,                            default: "residence", null: false
+    t.boolean  "is_active",                                                  default: true
+    t.datetime "created_at",                                                                       null: false
+    t.datetime "updated_at",                                                                       null: false
+    t.boolean  "is_sponsored",                                               default: false
+    t.boolean  "is_customisable",                                            default: false
+    t.boolean  "is_order_available",                                         default: true
+    t.decimal  "effective_price",                   precision: 10, scale: 2
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -629,6 +633,16 @@ ActiveRecord::Schema.define(version: 20161018091609) do
     t.datetime "updated_at",                   null: false
   end
 
+  create_table "news_letters", force: :cascade do |t|
+    t.datetime "sending_date"
+    t.text     "subject",         limit: 65535
+    t.text     "content",         limit: 65535
+    t.text     "user_ids",        limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.text     "attachment_link", limit: 65535
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "app_user_id",                   limit: 4
     t.boolean  "recieve_notification"
@@ -705,23 +719,25 @@ ActiveRecord::Schema.define(version: 20161018091609) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string   "order_id",            limit: 255,   default: "",            null: false
-    t.integer  "deal_id",             limit: 4
-    t.integer  "app_user_id",         limit: 4
-    t.string   "status",              limit: 255,   default: "In-progress", null: false
-    t.float    "deal_price",          limit: 24
-    t.float    "effective_price",     limit: 24
+    t.string   "order_id",              limit: 255,   default: "",            null: false
+    t.integer  "deal_id",               limit: 4
+    t.integer  "app_user_id",           limit: 4
+    t.string   "status",                limit: 255,   default: "In-progress", null: false
+    t.float    "deal_price",            limit: 24
+    t.float    "effective_price",       limit: 24
     t.datetime "activation_date"
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "order_number",        limit: 255
-    t.integer  "order_type",          limit: 4
-    t.integer  "security_deposit",    limit: 4
-    t.string   "primary_id",          limit: 255
-    t.string   "secondary_id",        limit: 255
-    t.string   "primary_id_number",   limit: 255
-    t.string   "secondary_id_number", limit: 255
-    t.text     "free_text",           limit: 65535
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+    t.string   "order_number",          limit: 255
+    t.integer  "order_type",            limit: 4
+    t.integer  "security_deposit",      limit: 4
+    t.string   "primary_id",            limit: 255
+    t.string   "secondary_id",          limit: 255
+    t.string   "primary_id_number",     limit: 255
+    t.string   "secondary_id_number",   limit: 255
+    t.text     "free_text",             limit: 65535
+    t.string   "provider_status",       limit: 255,   default: "In-progress"
+    t.string   "provider_order_number", limit: 255
   end
 
   create_table "pending_actions", force: :cascade do |t|
@@ -798,6 +814,13 @@ ActiveRecord::Schema.define(version: 20161018091609) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "service_deal_configs", force: :cascade do |t|
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "config_key",   limit: 255
+    t.string   "config_value", limit: 255
   end
 
   create_table "service_preferences", force: :cascade do |t|

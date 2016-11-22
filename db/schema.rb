@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105063458) do
+ActiveRecord::Schema.define(version: 20161117080017) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20161105063458) do
     t.string   "secondary_id_number",      limit: 255
     t.string   "email_verification_token", limit: 255
     t.boolean  "email_verified"
+    t.string   "password_reset_token",     limit: 255
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
@@ -631,6 +633,16 @@ ActiveRecord::Schema.define(version: 20161105063458) do
     t.datetime "updated_at",                   null: false
   end
 
+  create_table "news_letters", force: :cascade do |t|
+    t.datetime "sending_date"
+    t.text     "subject",         limit: 65535
+    t.text     "content",         limit: 65535
+    t.text     "user_ids",        limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.text     "attachment_link", limit: 65535
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "app_user_id",                   limit: 4
     t.boolean  "recieve_notification"
@@ -707,23 +719,25 @@ ActiveRecord::Schema.define(version: 20161105063458) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string   "order_id",            limit: 255,   default: "",            null: false
-    t.integer  "deal_id",             limit: 4
-    t.integer  "app_user_id",         limit: 4
-    t.string   "status",              limit: 255,   default: "In-progress", null: false
-    t.float    "deal_price",          limit: 24
-    t.float    "effective_price",     limit: 24
+    t.string   "order_id",              limit: 255,   default: "",            null: false
+    t.integer  "deal_id",               limit: 4
+    t.integer  "app_user_id",           limit: 4
+    t.string   "status",                limit: 255,   default: "In-progress", null: false
+    t.float    "deal_price",            limit: 24
+    t.float    "effective_price",       limit: 24
     t.datetime "activation_date"
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "order_number",        limit: 255
-    t.integer  "order_type",          limit: 4
-    t.integer  "security_deposit",    limit: 4
-    t.string   "primary_id",          limit: 255
-    t.string   "secondary_id",        limit: 255
-    t.string   "primary_id_number",   limit: 255
-    t.string   "secondary_id_number", limit: 255
-    t.text     "free_text",           limit: 65535
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+    t.string   "order_number",          limit: 255
+    t.integer  "order_type",            limit: 4
+    t.integer  "security_deposit",      limit: 4
+    t.string   "primary_id",            limit: 255
+    t.string   "secondary_id",          limit: 255
+    t.string   "primary_id_number",     limit: 255
+    t.string   "secondary_id_number",   limit: 255
+    t.text     "free_text",             limit: 65535
+    t.string   "provider_status",       limit: 255,   default: "In-progress"
+    t.string   "provider_order_number", limit: 255
   end
 
   create_table "pending_actions", force: :cascade do |t|

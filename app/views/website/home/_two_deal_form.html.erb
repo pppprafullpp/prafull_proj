@@ -8,9 +8,13 @@
 
             <div class="sddeal-imgbox mg-top25">
                <%if display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>
+                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>">
               <img src="<%=display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>" alt="">
+            </a>
             <%else%>
+            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>">
               <img src="<%= deal_1['deal_image_url'] %>" alt="">
+            </a>
             <% end %>
             </div>
             <%if key == "trending-best"%>
@@ -56,9 +60,13 @@
             <div class="sd-dealblock-two-img col-md-5 col-xs-4 col-xs-4">
               <div class="sddeal-imgbox mg-top25">
                  <%if display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>
+                   <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>">
               <img src="<%= display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>" alt="">
+            </a>
             <%else%>
+             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>">
               <img src="<%= deal_2['deal_image_url'] %>" alt="">
+            </a>
             <% end %>
               </div>
             </div>

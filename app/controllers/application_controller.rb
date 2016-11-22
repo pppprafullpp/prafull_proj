@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
 	# Prevent CSRF attacks by raising an exception.
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :null_session
@@ -51,7 +52,7 @@ class ApplicationController < ActionController::Base
 	end
 
 	def display_logo_permission(provider_id,deal_type)
-		if ServiceDealConfig.first.show_deals_logo == ServiceDealConfig::SHOW_DEAL_LOGO
+		if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				url ="http://res.cloudinary.com/servicedealz/image/upload/v1477049217/att_v_z4ulpm.png"
 			else
@@ -89,7 +90,7 @@ class ApplicationController < ActionController::Base
 	end
 
 	def display_deal_name_permission(provider_id,deal_type,title)
-		if ServiceDealConfig.first.show_deal_name == ServiceDealConfig::SHOW_DEAL_NAME
+		if ServiceDealConfig::where(config_key: "show_deals_name").first.config_value== ServiceDealConfig::SHOW_DEAL_NAME
 			# if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title
 			# else

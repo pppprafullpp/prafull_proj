@@ -3,7 +3,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
-
+	before_filter :cors_set_access_control_headers
 	def index
  		@service_preferences = ServicePreference.all
  	end

@@ -222,7 +222,7 @@ class Api::V1::OrdersController < ApplicationController
 									 :app_users => app_user.as_json(:except => [:created_at, :updated_at]),
 									 :business => business.present? ? business.as_json(:except => [:created_at, :updated_at]) : {},
 									 :business_addresses => business.present? ? business.business_addresses.as_json(:except => [:created_at, :updated_at]) : [],
-									 :deals => deals.as_json(:except => [:created_at, :updated_at],:methods => [:average_rating])
+									 :deals => deals.as_json(:except => [:created_at, :updated_at],:methods => [:deal_image_url,:average_rating])
 							 }
 			else
 				render :status => 200,
@@ -230,7 +230,7 @@ class Api::V1::OrdersController < ApplicationController
 									 :success => true,
 									 :app_users => app_user.as_json(:except => [:created_at, :updated_at]),
 									 :app_user_addresses => app_user.app_user_addresses.as_json(:except => [:created_at, :updated_at]),
-									 :deals => deals.as_json(:except => [:created_at, :updated_at],:methods => [:average_rating])
+									 :deals => deals.as_json(:except => [:created_at, :updated_at],:methods => [:deal_image_url,:average_rating])
 							 }
 			end
 		else

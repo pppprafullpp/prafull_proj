@@ -23,7 +23,7 @@ class AppUser < ActiveRecord::Base
   # before_save :encode_data
   ##before_save :encrypt_data
   validates :email, :presence => true, :uniqueness => true
-  validates :password, :presence => true, :confirmation => true, :on => :create
+  # validates :password, :presence => true, :confirmation => true, :on => :create
 
   ## user type
   RESIDENCE = 'residence'
@@ -34,6 +34,20 @@ class AppUser < ActiveRecord::Base
   USER_TYPES = [RESIDENCE,BUSINESS]
   # STATES = Statelist.all.pluck(:state).uniq
   STATES =Statelist.all.order('state ASC').pluck(:state).uniq
+
+
+   def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while AppUser.exists?(column => self[column])
+  end
+
+  def send_password_reset
+  generate_token(:password_reset_token)
+  self.password_reset_sent_at = Time.zone.now
+  save!
+  AppUserMailer.recover_password_email(self).deliver
+end
 
 
   def encrypt_data

@@ -1123,6 +1123,7 @@ label:focus {
 
 .profile-tab {
     float: left;
+    padding: 20px 0;
 }
 .profile-tab label.btn span,
 .prefrence-tab label.btn span,
@@ -1207,7 +1208,7 @@ label:focus {
 
 /*<<<<<<< HEAD*/
 
-.profile-tab h5 {
+.profile-tab h4 {
     color: #0f60bb;
     position: relative;
 /*=======
@@ -1624,7 +1625,7 @@ a {
 }
 .prefrence-tab {
     font-family: 'open_sansregular';
-    padding-top: 10px;
+    padding: 20px 0;
 }
 
 .prefrence-tab .form-group label {
@@ -2219,6 +2220,7 @@ a {
     padding-top: 50px;
     float: left;
     width: 100%;
+    margin-bottom: 100px;
 }
 .order-form .nav-tabs {
     height: 46px;
@@ -2280,6 +2282,7 @@ a {
     font-weight: normal;
     margin-bottom: 5px;
 }
+
 .order-form .details-zip {
     padding-top: 0;
     margin: 0
@@ -2330,10 +2333,7 @@ a {
     width: 100%;
 }
 .accepted-btn {
-    background: #f5942b;
-    color: #fff;
-    padding: 5px 25px;
-    margin-top: 5px;
+     background: #f5942b none repeat scroll 0 0;    color: #fff;    float: right;    margin-top: 5px;    padding: 0 12px;
 }
 .accepted-btn:hover {
     background: #e48620 none repeat scroll 0 0;
@@ -3005,10 +3005,7 @@ a {
 .web-access span,
 .video-calling span,
 .upload-downlaod span {
-    color: #000;
-    font-weight: bold;
-    font-size: 14px;
-    color: #505050;
+    color: #505050;    font-size: 14px;    font-weight: bold;    margin-left: 15px;
 }
 .usage-type strong {
     color: #3e83d1;
@@ -3629,10 +3626,12 @@ a {
     padding: 0 !important;
     float: left;
     text-align: center;
-    width: 100%;
+    width: 256px;
+    height: 130px;
+    display: inline-block;
 }
 .bundle-det .bx-img img {
-    width: 70%;
+    width: 56%;
     padding: 0 5%;
     display: inline-block;
 }
@@ -3850,6 +3849,7 @@ span.seperator {
     color: #000;
     font-size: 14px;
     font-weight: normal;
+    height: 20px;
 }
 .bundle-deal {
     background: #fff;
@@ -6298,7 +6298,7 @@ ul.caption-dealdet li::before {
     overflow: hidden;
     background: #fff url(../website/down-arrow.png) no-repeat 100% 50%;
 }
-select::-ms-expand {
+select::-ms-expand {mysql -u username -p databasename tableName < path/example.sql
     display: none;
 }
 .select-style select {
@@ -6917,3 +6917,19 @@ width: 440px;
 .filter_img{
         padding: 10px 0;
 }
+
+.top-footer{
+    margin-bottom: 100px;
+}
+.top-footer-1{
+margin: 0 0 175px;
+}
+
+.right-bottom-review .border-radius-bg{
+    height: auto !important;
+}
+.reset-password {margin: 0;
+    padding: 0;
+}
+.reset-password .usage-type{ margin-top: 20px;}
+.account_page_height{min-height: 600px;}

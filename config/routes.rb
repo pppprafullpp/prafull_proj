@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       match 'channel_customisable_deals' => "deals#channel_customisable_deals", :via => :get
       match 'cellphone_details' => "deals#cellphone_details", :via => :get
       match 'service_deal_config' => "deals#service_deal_config", :via => :get
+      match 'password_complicated_setting' => "deals#password_complicated_setting", :via => :get
+
 
       resources :dashboards do
         post 'dashboards' => 'dashboards#index'
@@ -184,6 +186,8 @@ Rails.application.routes.draw do
         post :create_order
         post :contact_us
         get :forget_password
+        get :edit_password
+        post :update_password
         get :order_attributes
         get :order_extra_services
         get :order_equipment_data

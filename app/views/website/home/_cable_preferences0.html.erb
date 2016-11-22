@@ -26,9 +26,11 @@
   <%=hidden_field_tag("app_user_id",session[:user_id])%>
   <%=hidden_field_tag("from_site","true")%>
   <div class="col-md-6">
-      <select class="form-control" id="cable_service_provider_id" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
-      </select> </div>
+      <!-- <select class="form-control" id="cable_service_provider_id" name="service_provider_id"> -->
+        <%#= options_for_select(@providers, :prompt=>"Select", :value=> @providers) %>
+      <!-- </select>  -->
+       <%= select_tag('',options_for_select(@providers,''),:class => 'form-control',:prompt => 'Select Vendor', :id=>"cable_service_provider_id", :name=>"service_provider_id") %>
+    </div>
         <div class="col-md-6  mg_bttom20">
     <%= number_field_tag("cable_price",price,:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>

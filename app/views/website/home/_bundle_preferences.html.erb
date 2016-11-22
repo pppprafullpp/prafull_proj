@@ -36,9 +36,12 @@
   <%=hidden_field_tag("bundle_combo","")%>
     <% @providers=ServiceProvider.where(:service_category_id=>params[:category_id]).pluck(:name,:id)%>
     <div class="col-md-6">
-      <select class="form-control" id="service_provider_id" name="service_provider_id">
-        <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-      </select> </div>
+      <!-- <select class="form-control" id="service_provider_id" name="service_provider_id">
+        <%#= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+      </select> -->
+
+      <%= select_tag('',options_for_select(@providers,''),:class => 'form-control',:prompt => 'Select Vendor', :id=>"service_provider_id", :name=>"service_provider_id") %>
+       </div>
       <div class="col-md-6 mg_bttom20">
     <%= number_field_tag(:price,price.present? ? "%.2f" % price : '',:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
   </div>

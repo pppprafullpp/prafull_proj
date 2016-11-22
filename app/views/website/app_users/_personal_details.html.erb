@@ -18,7 +18,14 @@
    end
    ## if user is new and no address is entered then zip code is displayed as blank in profile though he has entered zip while signup
    ## so we will show zip from app_user till he enters his address
-   zip = zip.present? ? zip : session[:zip_code]
+#   zip = zip.present? ? zip :session[:zip_code]
+if zip.present?
+    zip = zip
+  elsif @app_user.zip.present?
+    zip = decode_api_data(@app_user.zip)
+  else
+    zip = session[:zip_code]
+  end
 
    if @app_user.primary_id_number.present?
      primary_id_number = @app_user.primary_id_number.split('===').last
@@ -71,7 +78,7 @@
         <% if session[:user_type] == AppUser::BUSINESS %>
             <div class="col-lg-12 margin-top0"><h4>Business Details</h4></div>
             <div class="col-sm-6">
-              <label class="control-label">User type<span id="mandat">*</span></label>
+              <label class="control-label">User Type<span id="mandat">*</span></label>
               <%= select_tag(:user_type,options_for_select([[AppUser::USER_TYPES.first.titleize, AppUser::USER_TYPES.first], [AppUser::USER_TYPES.last.titleize, AppUser::USER_TYPES.last]],@app_user.user_type),:class => 'form-control',:prompt => 'Select your User Type',:disabled => disable_flag) %>
             </div>
 

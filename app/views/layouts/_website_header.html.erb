@@ -166,7 +166,9 @@
 
                                 <div class="form-group">
                                   <%= f.password_field :password,:class => "form-control",:placeholder => "Password"%>
+                                  <% if ServiceDealConfig::where(config_key: 'password_complicated').first.config_value == ServiceDealConfig::PASSWORD_COMPLICATED %>
                                   <span id="result"></span>
+                                  <% end %>
                                 </div>
 
                                 <div class="form-group">
@@ -279,8 +281,9 @@
                 $('#app_user_password').removeClass('custom-input-error')
                 $('#app_user_password_confirmation').removeClass('custom-input-error')
             }
+
             var a = $('#result').text();
-            if (a == "Weak" || a == "Too short" ){
+            if (a=="8 characters or longer. Atleast one number, one alphabet and one symbol (like @#$%*)."  || a == "Weak" || a == "Too short" ){
                 $('#result').addClass('custom-input-error')
                 check = false
             }

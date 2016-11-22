@@ -33,9 +33,12 @@
 
     <div class="col-md-6">
     <% @providers=ServiceProvider.where(:service_category_id=>1).pluck(:name,:id)%>
-    <select class="form-control" id="internet_service_provider_id" name="service_provider_id">
-    <%= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
-    </select>
+    <%# byebug%>
+    <!-- <select class="form-control" id="internet_service_provider_id" name="service_provider_id"> -->
+    <%#= options_for_select(@providers, :prompt=>"Select", :value=>@providers) %>
+    <!-- </select> -->
+
+     <%= select_tag('',options_for_select(@providers,''),:class => 'form-control',:prompt => 'Select Vendor', :id=>"internet_service_provider_id", :name=>"service_provider_id") %>
     </div>
 
     <div class="col-md-6 mg_bttom20">

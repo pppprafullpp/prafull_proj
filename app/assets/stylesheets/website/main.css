@@ -330,8 +330,8 @@ footer li a:hover {
     color: #fff;
 }
 footer p {
-  color: #fff;    
-  font-size: 12px; 
+  color: #fff;
+  font-size: 12px;
   margin-bottom: 0;
 }
 .copyright { text-align: right; padding: 0; margin-top: 10px;}
@@ -2042,14 +2042,15 @@ a {
 }
 .more-details .table-bordered thead tr th,
 .more-details .table-bordered tbody tr th {
-    font-family: 'open_sanssemibold';
     font-size: 14px;
     color: #000;
+    font-size: 15px;
+    color: #525252;
 }
 .more-details .table-bordered tbody tr td {
     font-family: 'open_sansregular';
-    font-size: 12px;
-    color: #686868;
+    font-size: 13px;
+    color: #605f5f;
 }
 .more-details .table-bordered tbody tr td a {
     font-family: 'open_sansregular';
@@ -6241,7 +6242,7 @@ ul.caption-dealdet li::before {
 /* wesite */
     /*=======*/
 
-     
+
     /*border: 1px solid #e7e7e7;*/
 /*}
 .customaized-deal a .caption-des {
@@ -6595,32 +6596,42 @@ select::-ms-expand {mysql -u username -p databasename tableName < path/example.s
 .rating-sm {
     font-size: 18px !important;
 }
-.sd-more-details-page h4 {
-    color: #000;
+.sd-more-details-page h3 {
+    color: #e50005;
     font-family: 'open_sanssemibold';
-    width: 50%;
+    /*width: 50%;*/
     float: left;
 }
 .sd-more-details-page p {
     font-family: 'open_sansregular';
-    font-size: 12px;
+    font-size: 14px;
     float: left;
     width: 100%;
-    line-height: 20px;
+    line-height: 24px;
     padding: 0;
     margin: 0;
-    color: #999
+    color: #605f5f;
 }
-.sd-more-details-page h5 {
-    padding-top: 10px;
-    font-family: 'open_sansregular';
-    padding-top: 30px;
+.sd-more-details-page h4 {
+    padding-top: 22px;
+    font-family: 'open_sanssemibold';
     margin-bottom: 10px !important;
     float: left;
     width: 100%;
 }
+.sd-more-details-page h5 {
+    padding-top: 22px;
+    font-family: 'open_sanssemibold';
+    margin-bottom: 10px !important;
+    float: left;
+    width: 100%;
+    color:#605f5f;
+}
 .sd-more-details-page .table-bordered tbody tr td:first-child {
-    color: #000;
+    /*color: #000;*/
+}
+.more-details.sd-deal-detailscon .table-bordered {
+  margin-bottom: 0;
 }
 #reviews-header {
     width: 50%;
@@ -6869,7 +6880,7 @@ select::-ms-expand {mysql -u username -p databasename tableName < path/example.s
     display: inherit;
     float: right;}
 
-    .channel-new-sty { float: none; padding-left: 11px;} 
+    .channel-new-sty { float: none; padding-left: 11px;}
 /*<<<<<<< HEAD
 =======*/
 .mg-top25{

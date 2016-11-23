@@ -19,17 +19,13 @@
              <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
             <% end %>
             <% if @deal.contract_period == 0 %>
-                <li>Contract:<span>None</span></li>
+                <li>Contract: <span>None</span></li>
             <% else %>
-                <li>Contract:<span><%= @deal.contract_period %>months</span></li>
+                <li>Contract: <span><%= @deal.contract_period %> months</span></li>
 
             <% end %>
 
           </ul>
-
-
-
-
 
         </div>
         <%#if  @current_user.present? %>
@@ -75,8 +71,8 @@
       <div class="col-sm-8 about-offer">
         <div class="about-offer-details sd-more-details-page">
           <a class="shareon-fb pull-right" onclick="postLike()"><i class="fa fa-facebook">&nbsp;</i>Share on Facebook</a>
-          <h4><%= display_deal_name_permission(@deal.service_provider_id,@deal.deal_type,@deal.title) %></h4>
-          <h5>Details</h5>
+          <h3><%= display_deal_name_permission(@deal.service_provider_id,@deal.deal_type,@deal.title) %></h3>
+          <h4>Details</h4>
 
           <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>
           <p></i><%=@deal.detail_description.to_s.gsub(/\n/,"<br>").html_safe%></p>
@@ -109,8 +105,7 @@
                 <div class="add-reviews-div" style="padding-bottom: 11px;">
 
                   <%=form_for CommentRating.new, :url => "/api/v1/comment_ratings", :method => "post" do |f|%>
-                      <h5 id="reviews-header" ></h5>
-                      <h4>Rate this deal!</h4>
+                      <h5>Rate this deal! <span id="reviews-header" ></span></h5>
                       <input id="comment_rating_rating_point" value="0" data-min="0" data-max="5" data-step="0.5" data-size="sm">
                       <%=f.text_field:comment_title, :class => "form-control", :placeholder => "Add Comment title", :required => true%><br />
                       <%=f.text_area:comment_text, :class => "form-control", :placeholder => "Add Comment", :required => true%><br />

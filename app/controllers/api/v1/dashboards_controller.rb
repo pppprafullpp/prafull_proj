@@ -51,7 +51,7 @@ class Api::V1::DashboardsController < ApplicationController
 		if params[:app_user_id].present? && params[:service_category_id].present? && params[:zip_code].present?
 			deal_type = AppUser.find(params[:app_user_id]).user_type
 			allowed_deals=get_category_deals(params[:app_user_id],params[:service_category_id],nil,nil)
-			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id],deal_type)
+			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id],deal_type,params[:app_user_id])
 		elsif params[:app_user_id].blank? && params[:service_category_id].present? && params[:zip_code].present? && params[:deal_type].present?
 			allowed_deals=get_category_deals(nil,params[:service_category_id],params[:zip_code],params[:deal_type])
 			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:service_category_id],params[:deal_type])

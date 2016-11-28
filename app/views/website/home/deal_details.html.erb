@@ -17,7 +17,7 @@
               </div>
             </div>
           </div>
-          <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id],params[:deal_type])%>
+          <%bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category_id],params[:deal_type],session[:user_id])%>
           <%if bundle_deals.present? and bundle_deals.count > 0 %>
             <div class="col-sm-12 bundle-deals-details" style="overflow: hidden">
               <div class="border-radius-bg">

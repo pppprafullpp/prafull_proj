@@ -23,16 +23,25 @@ class BundleDealAttribute < ActiveRecord::Base
 		if app_user_id == nil
 			bundle_deals = Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%'  order by effective_price asc limit 5")
 		else
-			current_service = ServicePreference.find_by_sql("select #{category_name}.* from servicedeals.service_preferences sp
-																											inner join servicedeals.#{category_name}_service_preferences csp on csp.service_preference_id = sp.id
-																											where app_user_id = ?",app_user_id)
+			# current_service = ServicePreference.find_by_sql("select #{category_name}.* from servicedeals.service_preferences sp
+			# 																								inner join servicedeals.#{category_name}_service_preferences csp on csp.service_preference_id = sp.id
+			# 																								where app_user_id = ?",app_user_id)
+			current_service = ServicePreference.find_by_sql("select * from servicedeals.service_preferences sp inner join servicedeals.#{category_name}_service_preferences csp on csp.service_preference_id = sp.id where sp.app_user_id=#{app_user_id}")
 			current_service = current_service.present? ? current_service.first : nil
-			## TODO add logic to match the bundle deals on the current service criteria
-			## like for cellphone check data plan/no of minutes etc in bundle and offer that bundle only.
-			if category_id.to_i == Deal::CELLPHONE_CATEGORY
-				## LOGIC HERE
-			elsif category_id.to_i == Deal::INTERNET_CATEGORY
-				## LOGIC HERE
+			if category_id.to_i == Deal::CABLE_CATEGORY && current_service != nil
+					app_user_free_channels = current_service.free_channels
+						app_user_price = current_service.price
+				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='business' AND bundle_combo like '%#{category_name}%' AND bda.free_channels >= #{app_user_free_channels} order by effective_price asc limit 5")
+			elsif category_id.to_i == Deal::INTERNET_CATEGORY && current_service != nil
+				app_user_download_speed = current_service.download_speed
+				app_user_price = current_service.price
+				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='business' AND bundle_combo like '%#{category_name}%' AND bda.download >= #{app_user_download_speed} order by effective_price asc limit 5 ")
+			elsif category_id.to_i == Deal::TELEPHONE_CATEGORY && current_service != nil
+				app_user_call_minutes = current_service.domestic_call_minutes
+				app_user_price = current_service.price
+				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='business' AND bundle_combo like '%#{category_name}%' order by effective_price asc limit 5 ")
+			else
+				bundle_deals = Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%'  order by effective_price asc limit 5")
 			end
 		end
 

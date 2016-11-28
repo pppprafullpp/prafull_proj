@@ -40,7 +40,7 @@ class Api::V1::DashboardsController < ApplicationController
 			allowed_deals=filtered_deals(params[:app_user_id],params[:category],nil,nil,params[:sorting_flag])
  			sponsored_deals = allowed_deals.where(is_sponsored: true)
 			all_deals = sponsored_deals + (allowed_deals - sponsored_deals)
-			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category],deal_type)
+			bundle_deals = BundleDealAttribute.get_linked_bundle_deal(params[:category],deal_type,params[:app_user_id])
 			render :json => {:deal => all_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments]),
 											 :bundle_deals => bundle_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:bundle_combo])}
 

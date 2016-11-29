@@ -1,0 +1,27 @@
+
+<% if controller.controller_name=="home" and controller.action_name=="index" %>
+
+   <meta name="title" content="Amazing Bundle Deals for Cable, Mobile, Telephone and Internet Plans">
+    <meta name="description" content="Servicedealz.com is the best solution for all Telecom Servers and Utilities services.Choose from a variety of bundle deals for telephones, cell phones, internet and cable.">
+
+ <% elsif controller.controller_name=="home" and controller.action_name=="deal_details" and params[:category_id].to_i == Deal::CABLE_CATEGORY%>
+    <meta name="title" content="Best Deals for Cable & Internet Bundles | Internet & Cable Providers">
+    <meta name="description" content="Get the best offers for cable & internet bundles only at servicedealz.com. Compare the bundle packages of cable internet deals and get the best internet & cable providers.">
+<% elsif controller.controller_name=="home" and controller.action_name=="deal_details" and params[:category_id].to_i == Deal::INTERNET_CATEGORY%>
+     <meta name="title" content="Best High Speed Internet Plans | Internet Service Deals Providers">
+    <meta name="description" content="Compare the best and cheap internet plans and service providers in your area and get the best deals on interne. Find the high speed internet service at servicedealz.com.">
+<% elsif controller.controller_name=="home" and controller.action_name=="deal_details" and params[:category_id].to_i == Deal::TELEPHONE_CATEGORY%>
+    <meta name="title" content="Phone Internet Bundle Plans | Compare Telephone & Internet Packages">
+    <meta name="description" content="If you need to buy the best yet cheap telephone internet bundle plans, visit servicedealz.com. Here you will find the perfect deals for home phone internet bundles.">
+
+<% elsif controller.controller_name=="home" and controller.action_name=="deal_details" and params[:category_id].to_i == Deal::CELLPHONE_CATEGORY%>
+    <meta name="title" content="Unlimited Data Plans for Cell Phones | Best & Cheap Mobile Internet">
+    <meta name="description" content="Choose Servicedealz.com to get the best, cheap and unlimited data and internet plans for your cell phones. Find the best cell phone talk and text plans with best data offers.">
+
+<% elsif controller.controller_name=="home" and controller.action_name=="calculate_bandwidth" %>
+    
+
+     <meta name="title" content="Online Bandwidth Calculator | Bandwidth Usage Online Calculator">
+    <meta name="description" content="Measure your data usage with the online bandwidth usage calculator at servicedealz.com. This website bandwidth calculator helps you find the total hosting bandwidth requirement.">
+
+    <% end %>

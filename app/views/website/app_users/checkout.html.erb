@@ -73,16 +73,22 @@
                 <%#=f.select :user_type,["Select User type", ["Residence","residence"], ["Business","business"]], :class=>"form-control"%>
               </div>
               <div class="form-group col-md-6">
-              <div id="business_name_div_1" class="form-group">
+               <%= f.text_field :zip,:class => "form-control",:placeholder => "Enter Zip", :id => "checkout_signup_user_zip", :maxlength=> 6 %>
+             </div>
+              <!-- <div class="form-group col-md-6"> -->
+                <div id="business_name_div_1" class="form-group col-md-6">
                 <%= text_field_tag(:business_name,"",:class => "form-control",:placeholder => "Business name", :name=>"business[business_name]",:onkeyup=>"titleize_text(this)") %>
-                <br />
-                <select id="checkout_business_type" name="business[business_type]" class="form-control">
+              <!-- </div> -->
+
+              </div>
+              <div class="form-group col-md-6">
+                <select id="checkout_business_type" name="business[business_type]" class="form-control col-md-6">
                   <option value="0">Select Business type</option>
                   <option value="SOLE_PROPRIETOR">Sole Proprietor</option>
                   <option value="REGISTERED">Registered</option>
                 </select>
               </div>
-              </div>
+
 
 
               <div class="form-group col-md-12">
@@ -145,14 +151,19 @@
 
        $("#app_user_user_1 option[value='Select User type']").prop("selected","selected")
         $("#business_name_div_1").hide();
+        $("#checkout_business_type").hide();
 
       $("#app_user_user_1").change(function(){
         if (  $("#app_user_user_1 option:selected").val() == "business") {
           $("#business_name_div_1").show();
+        $("#checkout_business_type").show();
+
           // $(".height_popup").css("height", "700px")
         }
         else {
           $("#business_name_div_1").hide();
+        $("#checkout_business_type").hide();
+
         }
       });
 
@@ -192,6 +203,14 @@
           }
           else{
             $('#checkout_app_user_last_name').addClass('custom-input-error')
+            check = false
+          }
+
+          if ($("#checkout_signup_user_zip").val()!=""){
+            $('#checkout_signup_user_zip').removeClass('custom-input-error')
+          }
+          else{
+            $('#checkout_signup_user_zip').addClass('custom-input-error')
             check = false
           }
 

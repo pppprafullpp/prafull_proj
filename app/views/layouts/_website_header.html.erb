@@ -163,7 +163,9 @@
                                     <option value="REGISTERED">Registered</option>
                                   </select>
                                 </div>
-
+                                <div class="form-group">
+                                <%= f.text_field :zip,:class => "form-control",:placeholder => "Enter Zip", :maxlength=> 6%>
+                              </div>
                                 <div class="form-group">
                                   <%= f.password_field :password,:class => "form-control",:placeholder => "Password"%>
                                   <% if ServiceDealConfig::where(config_key: 'password_complicated').first.config_value == ServiceDealConfig::PASSWORD_COMPLICATED %>
@@ -296,6 +298,14 @@
             }
             else{
                 $('#app_user_first_name').addClass('custom-input-error')
+                check = false
+            }
+
+            if ($("#app_user_zip").val()!=""){
+                $('#app_user_zip').removeClass('custom-input-error')
+            }
+            else{
+                $('#app_user_zip').addClass('custom-input-error')
                 check = false
             }
 

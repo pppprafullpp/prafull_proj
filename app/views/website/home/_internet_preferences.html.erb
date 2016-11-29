@@ -16,7 +16,6 @@
    end
    end
   %>
-
   <%=form_for(:service_preferences, :url=>"/edit_or_change_service_preferences", :method=>"post") do %>
 
   <%=hidden_field_tag("service_category_name",ServiceCategory.get_category_name_by_id(params[:category_id]))%>
@@ -34,7 +33,7 @@
     </div>
 
     <div class="col-md-6 mg_bttom20">
-    <%= number_field_tag("price",price.present? ? price : '',:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
+    <%= number_field_tag(:price,price.present? ? "%.2f" % price : '',:class=>"form-control", :placeholder=>"Enter price", :required=>true)%>
     </div>
        <div class="col-md-6 ">
     <p class="contract-margin-sty">Contract Date</p>
@@ -109,7 +108,7 @@
       }
     });
 
-
+<%if @service_preferences_data.blank?%>
      <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
     $("#price").val("70.00");
     $('#download_speed').val('30.00');
@@ -120,7 +119,7 @@
      $("#price").val("120.00");
     $('#download_speed').val('20.00');
     <%end%>
-
+<% end %>
 
       <%
       if service_provider_id.present?%>

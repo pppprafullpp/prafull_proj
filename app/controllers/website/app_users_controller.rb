@@ -17,7 +17,7 @@ class Website::AppUsersController < ApplicationController
       @app_user = AppUser.new(app_user_params)
       @app_user.unhashed_password = params[:app_user][:password]
       @app_user.referral_code = rand(36**4).to_s(36).upcase
-      @app_user.zip = params[:app_user][:zip_code].present? ? encode_api_data(params[:app_user][:zip_code]) : encode_api_data("75024")
+      @app_user.zip = params[:app_user][:zip].present? ? encode_api_data(params[:app_user][:zip]) : encode_api_data("75024")
       if @app_user.save!
         session[:user_id] = @app_user.id
         session[:user_name] = @app_user.first_name.present? ? Base64.decode64(@app_user.first_name) : @app_user.email.split('@')[0]

@@ -102,7 +102,7 @@
       }
     });
 
-
+<%if @service_preferences_data.blank?%>
      <%if session[:user_id].present? and AppUser.find(session[:user_id]).user_type == "residence" %>
     $("#price").val("50.00");
     $('#free_channels').val('100.00');
@@ -113,7 +113,7 @@
      $("#price").val("75.00");
      $('#free_channels').val('150');
     <%end%>
-
+<% end %>
 
      <% if !is_contract %>
         $("#start_date").attr("disabled",true);

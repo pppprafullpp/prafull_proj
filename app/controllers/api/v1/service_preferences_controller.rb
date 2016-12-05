@@ -15,7 +15,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			if app_user.device_flag=="iphone"
 				pusher = Grocer.pusher(
 		        	certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
-		        	passphrase:  "1234",                       																	# optional
+		        	passphrase:  "abc123",                       																	# optional
 		        	gateway:     "gateway.sandbox.push.apple.com",                      		# optional; See note below.
 		        	port:        2195,                       																		# optional
 		        	retries:     3                           																		# optional
@@ -429,7 +429,7 @@ service_preference_hash['data_plan']=2.0
 		      		elsif @app_user_device == "iphone"
 		      			pusher = Grocer.pusher(
 		        			certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
-		        			passphrase:  "1234",                       																	# optional
+		        			passphrase:  "abc123",                       																	# optional
 		        			gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
 		        			port:        2195,                       																		# optional
 		        			retries:     3                           																		# optional
@@ -466,7 +466,7 @@ service_preference_hash['data_plan']=2.0
 			elsif @app_user_device == "iphone"
 				pusher = Grocer.pusher(
 		        	certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      	# required
-		        	passphrase:  "1234",                       																	# optional
+		        	passphrase:  "abc123",                       																	# optional
 		        	gateway:     "gateway.sandbox.push.apple.com",                      		# optional; See note below.
 		        	port:        2195,                       																		# optional
 		        	retries:     3                           																		# optional

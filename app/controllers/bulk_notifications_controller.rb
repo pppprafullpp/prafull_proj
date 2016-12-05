@@ -26,7 +26,7 @@ class BulkNotificationsController < ApplicationController
       elsif app_user.device_flag == "iphone"
         pusher = Grocer.pusher(
           certificate: "#{Rails.root}/public/certificates/dev_certificate.pem",      # required
-          passphrase:  "1234",                       # optional
+          passphrase:  "abc123",                       # optional
           gateway:     "gateway.sandbox.push.apple.com",                      # optional; See note below.
           port:        2195,                       # optional
           retries:     3                           # optional

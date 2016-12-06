@@ -24,6 +24,7 @@ module ServiceDealsRails
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.raise_in_transactional_callbacks = true
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.active_job.queue_adapter = :delayed_job

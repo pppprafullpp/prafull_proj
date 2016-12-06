@@ -31,15 +31,15 @@ class BundleDealAttribute < ActiveRecord::Base
 			if category_id.to_i == Deal::CABLE_CATEGORY && current_service != nil
 					app_user_free_channels = current_service.free_channels
 						app_user_price = current_service.price
-				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='business' AND bundle_combo like '%#{category_name}%' AND bda.free_channels >= #{app_user_free_channels} order by effective_price asc limit 5")
+				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%' AND bda.free_channels >= #{app_user_free_channels} order by effective_price asc limit 5")
 			elsif category_id.to_i == Deal::INTERNET_CATEGORY && current_service != nil
 				app_user_download_speed = current_service.download_speed
 				app_user_price = current_service.price
-				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='business' AND bundle_combo like '%#{category_name}%' AND bda.download >= #{app_user_download_speed} order by effective_price asc limit 5 ")
+				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%' AND bda.download >= #{app_user_download_speed} order by effective_price asc limit 5 ")
 			elsif category_id.to_i == Deal::TELEPHONE_CATEGORY && current_service != nil
 				app_user_call_minutes = current_service.domestic_call_minutes
 				app_user_price = current_service.price
-				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='business' AND bundle_combo like '%#{category_name}%' order by effective_price asc limit 5 ")
+				bundle_deals =Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%' order by effective_price asc limit 5 ")
 			else
 				bundle_deals = Deal.find_by_sql("select deals.* from deals inner join bundle_deal_attributes bda on bda.deal_id = deals.id where deals.deal_type='#{deal_type}' AND bundle_combo like '%#{category_name}%'  order by effective_price asc limit 5")
 			end

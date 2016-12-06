@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       match 'verify_user'=>"app_users#verify_user", :via => :get
       match 'deal_details'=>"deals#fetch_deal_details", :via => :get
       match 'dynamic_label_for_service_provider'=>"dashboards#dynamic_label_for_service_provider", :via => :get
+      match 'get_rewards' => 'gifts#get_rewards', :via => :get
       resources :orders do
         collection do
           post :fetch_user_and_deal_details

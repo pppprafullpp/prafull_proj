@@ -32,6 +32,23 @@ class Api::V1::GiftsController < ApplicationController
 	def my_gifts
 	end
 
+	def get_rewards
+		if params[:device_platform].present? && params[:reward_display_on].present?
+			rewards = Reward.where(["device_platform = ? and reward_display_on = ?", params[:device_platform], params[:reward_display_on]])
+			if rewards.present?
+				render 	:status => 200,
+		        		:json => {
+		                     	:success => true,
+		                      :rewards => rewards                      
+		                     }
+		  else
+		    render :json => { :success => false }
+		  end 	
+		else
+			render :json => { :success => false }
+		end
+	end
+
 	private
 	def order_params
 		params.permit(:name, :description, :amount, :is_active, :activation_count_condition)

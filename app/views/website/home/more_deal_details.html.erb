@@ -1,3 +1,18 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <%= render :partial => 'website/home/internet_banner',  locals: { :category_name => @category_name.capitalize }%>
 
 <!--More Details section-->
@@ -82,7 +97,7 @@
               <%= render :partial => "#{@category_name}_deal_form" %>
           <%end%>
           <% if @deal.try(:additional_offers).present? %>
-              <h5 class="">Additional Offer</h5>
+              <h5 class="">Offer</h5>
               <% @deal.try(:additional_offers).each do |additional_offer| %>
                   <table class="table table-bordered">
                     <thead>
@@ -92,7 +107,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                      <td width="20%">Offer</td>
+                      <td width="20%">$<%= ((additional_offer.price) * (additional_offer.contract_period.to_i)).round rescue nil%></td>
                       <td width="80%" colspan="2"><%=additional_offer.try(:description) %></td>
                     </tr>
                     </tbody>

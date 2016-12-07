@@ -3,13 +3,13 @@ class Api::V1::DeviceTrackerController < ApplicationController
     session_token=SecureRandom.hex(5)
     if !DeviceRegister.find_by_device_id(params[:device_id])
       # Device not yet registered
-      save=DeviceRegister.create!(:device_id=>params[:device_id],:imei=>params[:imei], :token=>session_token)
+      save=DeviceRegister.create!(:device_id=>params[:device_id],:imei=>params[:imei], :token=>session_token, :version => params[:version] , device_type: params[:device_type])
       register_or_update(params,1,save.id)
       
     else
       #Device already registered ,so just updating token and registering information
       device=DeviceRegister.find_by_device_id(params[:device_id])
-      device.update_attributes(:token=> session_token)
+      device.update_attributes(:token=> session_token,:version => params[:version] , device_type: params[:device_type])
       register_or_update(params,2,device.id)
     end
     if params[:device_type].present? && params[:version].present?

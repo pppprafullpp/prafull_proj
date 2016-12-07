@@ -34,7 +34,7 @@ class Api::V1::GiftsController < ApplicationController
 
 	def get_rewards
 		if params[:device_platform].present? && params[:reward_display_on].present?
-			rewards = Reward.where(["device_platform = ? and reward_display_on = ?", params[:device_platform], params[:reward_display_on]])
+			rewards = Reward.where(["device_platform = ? and reward_display_on = ?", params[:device_platform], params[:reward_display_on]]).last
 			if rewards.present?
 				render 	:status => 200,
 		        		:json => {

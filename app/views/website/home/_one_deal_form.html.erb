@@ -9,11 +9,11 @@
           <div class="sd-deal-img"> 
             <%if display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>
            <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id'],:effective_price => trending_deal['effective_price']) %>">
-              <img src="<%=display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>" alt="" class="img-responsive">
+              <img src="<%=display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>" alt="Deal Logo" class="img-responsive">
             </a>
             <%else%>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id'],:effective_price => trending_deal['effective_price']) %>">
-             <img src="<%= trending_deal['deal_image_url'] %>" alt="" class="img-responsive"> 
+             <img src="<%= trending_deal['deal_image_url'] %>" alt="Deal Logo" class="img-responsive"> 
            </a>
             <% end %>
             
@@ -21,7 +21,7 @@
 
         </div>
         <div class="col-md-9 col-sm-9 col-xs-9  sd-deal-info">
-          <div class="no-login-tdeal"><img src="/assets/website/trending-dealblock.png" ></div>
+          <div class="no-login-tdeal"><img src="/assets/website/trending-dealblock.png" alt="Trending Deal" ></div>
             <%title =display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title'])%>
             <% if title.present? %>
           <h4 class="tooltip_p" title='<%=trending_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title rescue nil%></h4>

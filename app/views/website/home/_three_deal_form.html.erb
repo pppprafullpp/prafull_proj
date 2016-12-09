@@ -9,17 +9,17 @@
             <div class="sd-dealblock-img">
               <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
                <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price']) %>">
-                <img src="<%=display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="">
+                <img src="<%=display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="Service Provider Logo">
               </a>
               <%else%>
               <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=> best_deal['effective_price']) %>">
-                 <img src="<%= best_deal['deal_image_url'] %>" alt="">
+                 <img src="<%= best_deal['deal_image_url'] %>" alt="Service Provider Logo">
                </a>
               <% end %>
             
             </div>
             <div class="sd-dealblock-info">
-              <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
+              <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt="Best Deal Logo"></div>
                <%title =display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title'])%>
             <% if title.present? %>
           <h4 class="tooltip_p" title='<%=best_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(20)  rescue nil%></h4>
@@ -50,18 +50,18 @@
             <div class="sd-dealblock-img"> 
               <%if display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>
               <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id'],:effective_price=> trending_deal['effective_price']) %>">
-                <img src="<%=display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>" alt="">
+                <img src="<%=display_logo_permission(trending_deal['service_provider_id'],trending_deal['deal_type'])%>" alt="Service Provider Logo">
                 <a>
               <%else%>
               <a href="<%= more_deal_details_website_home_index_path(:deal_id=> trending_deal['id'],:effective_price=> trending_deal['effective_price']) %>">
-                  <img src="<%= trending_deal['deal_image_url'] %>" alt=""> 
+                  <img src="<%= trending_deal['deal_image_url'] %>" alt="Service Provider Logo"> 
                 </a>
               <% end %>
              
             </div>
             <div class="sd-dealblock-info">
               <div class="sd-dealblock-trendingdeal">
-                <img src="/assets/website/trending-dealblock.png" alt="">
+                <img src="/assets/website/trending-dealblock.png" alt="Trending Deal Logo">
               </div>
 
                <%title =display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title'])%>
@@ -89,17 +89,17 @@
             <div class="sd-dealblock-img">
               <%if display_logo_permission(order_deal['service_provider_id'],order_deal['deal_type'])%>
               <a href="<%= order_detail_website_app_users_path(order_id: order_deal['order_id'])%>">
-                <img src="<%=display_logo_permission(order_deal['service_provider_id'],order_deal['deal_type'])%>" alt="">
+                <img src="<%=display_logo_permission(order_deal['service_provider_id'],order_deal['deal_type'])%>" alt="Service Provider Logo">
               </a>
               <%else%>
               <a href="<%= order_detail_website_app_users_path(order_id: order_deal['order_id'])%>">
-                  <img src="<%= order_deal['deal_image_url'] %>" alt=""> 
+                  <img src="<%= order_deal['deal_image_url'] %>" alt="Service Provider Logo"> 
                 </a>
               <% end %>
              
            </div>
             <div class="sd-dealblock-info">
-              <div class="sd-dealblock-orderdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
+              <div class="sd-dealblock-orderdeal"><img src="/assets/website/order-deal-icon.png" alt="Ordered Deal Logo"></div>
 
 
                <%title =display_deal_name_permission(order_deal['service_provider_id'],order_deal['deal_type'],order_deal['title'])%>

@@ -9,11 +9,11 @@
             <div class="sddeal-imgbox mg-top25">
                <%if display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>
                 <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>">
-              <img src="<%=display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>" alt="">
+              <img src="<%=display_logo_permission(deal_1['service_provider_id'],deal_1['deal_type'])%>" alt="Service Provider Logo">
             </a>
             <%else%>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>">
-              <img src="<%= deal_1['deal_image_url'] %>" alt="">
+              <img src="<%= deal_1['deal_image_url'] %>" alt="Service Provider Logo">
             </a>
             <% end %>
             </div>
@@ -26,9 +26,9 @@
            </div>
           <div class="sd-dealtwoblock-info col-md-7 col-xs-8">
             <%if key == "trending-best"%>
-            <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt=""></div>
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/bestdeal-deal-icon.png" alt="Best Deal Logo"></div>
             <% else %>
-            <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+            <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt="Trending Deal Logo"></div>
             <% end %>
               <%title =display_deal_name_permission(deal_1['service_provider_id'],deal_1['deal_type'],deal_1['title'])%>
             <% if title.present? %>
@@ -61,20 +61,20 @@
               <div class="sddeal-imgbox mg-top25">
                  <%if display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>
                    <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>">
-              <img src="<%= display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>" alt="">
+              <img src="<%= display_logo_permission(deal_2['service_provider_id'],deal_2['deal_type'])%>" alt="Service Provider Logo">
             </a>
             <%else%>
              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>">
-              <img src="<%= deal_2['deal_image_url'] %>" alt="">
+              <img src="<%= deal_2['deal_image_url'] %>" alt="Service Provider Logo">
             </a>
             <% end %>
               </div>
             </div>
             <div class="sd-dealtwoblock-info col-md-7 col-xs-8">
               <%if key == "trending-best"%>
-                <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt=""></div>
+                <div class="sd-dealblock-bestdeal"><img src="/assets/website/trending-dealblock.png" alt="Trending Deal Logo"></div>
               <% else %>
-                <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt=""></div>
+                <div class="sd-dealblock-bestdeal"><img src="/assets/website/order-deal-icon.png" alt="Ordered Deal Logo"></div>
               <% end %>
 
                <%title =display_deal_name_permission(deal_2['service_provider_id'],deal_2['deal_type'],deal_2['title'])%>

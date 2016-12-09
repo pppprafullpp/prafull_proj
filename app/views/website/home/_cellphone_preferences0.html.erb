@@ -102,7 +102,7 @@
 
     <div class="col-md-12 text-center btn-group-sty">
      <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"submit_cellphone();return false")%>
-     <%if params[:new_user]%>
+     <%if params[:new_user] &&  session[:user_type] != AppUser::RESIDENCE %>
       <input type="button" class="btn skip-button" value="Skip" onclick="show_bundle();return false" />
      <%end%>
    </div>

@@ -1,43 +1,34 @@
 <% @best_deal_data.each do |data| %>
+
   <%if data[:service_category_id] == params[:category_id].to_i %>
     <% if data[:best_deal].present? %>
       <% best_deal = data[:best_deal] %>
       <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
         <div class="border-radius-bg auto-height">
-          <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt=""></div>
+          <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt="Best Deal"></div>
           <div class="sddeals-imgcon" style="overflow: hidden;width:215px">
-
             <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
-             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>">
-              <img src="<%=display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="" class="img-responsive"></a>
+              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>">
+                <img src="<%=display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="Service Provider Logo" class="img-responsive"></a>
             <%else%>
-             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>">
-              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt=""></a>
+              <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>">
+              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive" alt="Service Provider Logo"></a>
             <%end%>
-          
-        </div>
-       
-      
-          
+          </div>
           <div class="main-external-div1">
              <%title =display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title'])%>
             <% if title.present? %>
-          <h5 class="tooltip_p" title='<%=best_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
-          <% else %>
-          <h5 ><%= title.truncate(25) rescue nil %></h5>
-          <% end %>
-         
-          <ul class="description-height">
-            <li><%= best_deal['short_description'].truncate(30) %></li>
-            <li><%= best_deal['detail_description'].truncate(30) %></li>
-          </ul>
-          <%# if params[:category_id].to_i == Deal::CELLPHONE_CATEGORY %>
-            <!-- <b class="cellphone-lines">Lines:<%=data['no_of_lines'] %></b> -->
-          <%# end %>
-          <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
-
-          <%if rating.present?%>
-           <p id="rating" class="sd-rating">
+              <h5 class="tooltip_p" title='<%=best_deal['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
+            <% else %>
+              <h5 ><%= title.truncate(25) rescue nil %></h5>
+            <% end %>
+            <ul class="description-height">
+              <li><%= best_deal['short_description'].truncate(30) %></li>
+              <li><%= best_deal['detail_description'].truncate(30) %></li>
+            </ul>
+            <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
+            <%if rating.present?%>
+              <p id="rating" class="sd-rating">
 
               <%rating.times do%>
                <i class="fa fa-star"></i>
@@ -117,14 +108,14 @@
     <% best_deal = data[:trending_deal] %>
     <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
       <div class="border-radius-bg auto-height">
-        <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt=""></div>
+        <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt="Trending Deal"></div>
         <div class="sddeals-imgcon">
            <%if display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>">
-              <img src="<%= display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="" class="img-responsive"></a>
+              <img src="<%= display_logo_permission(best_deal['service_provider_id'],best_deal['deal_type'])%>" alt="Service Provider Logo" class="img-responsive"></a>
             <%else%>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> best_deal['id'],:effective_price=>  best_deal['effective_price']) %>">
-              <img src="<%= best_deal['deal_image_url'] %>" class="img-responsive"></a>
+              <img src="<%= best_deal['deal_image_url'] %>" alt="Deal Logo" class="img-responsive"></a>
             <%end%>
         </div>
           <div class="main-external-div1">

@@ -2,7 +2,7 @@ require 'api'
 Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
 # root to: "home#index"
-
+match  'blog' => 'website/home#blog', :via => :get
 
   namespace :api do
     namespace :v1 do

@@ -10,6 +10,7 @@ module DashboardsHelper
 				excluded_categories="'Gas','Electricity','Home Security'"
 				service_preferences = app_user.service_preferences.order("created_at DESC")
 				servicelist = service_preferences.map do |sp|
+					if !((sp.service_category.id == 4) && (deal_type == "residence"))
 
 					app_user_current_plan = sp.price
 
@@ -52,10 +53,11 @@ module DashboardsHelper
 						allowed_order_deal=allowed_order_deal
 					end
 				end
+			end
 
 				service_preferences = app_user.service_preferences.order("created_at DESC")
 				servicelist = service_preferences.map do |sp|
-
+					if !((sp.service_category.id == 4) && (deal_type == "residence"))
 					app_user_current_plan = sp.price
 
 					if sp.service_category.name == 'Internet'
@@ -123,13 +125,14 @@ module DashboardsHelper
 					provider_name = sp.service_provider.present? ? sp.service_provider.name : ''
 					{:best_deal_flag => best_deal_flag,:you_save_text => you_save, :contract_fee => sp.price, :service_provider_name =>  provider_name, :service_category_id => sp.service_category.id, :service_category_name => sp.service_category.name, :advertisement => advertisement.as_json(:except => [:created_at, :updated_at, :image], :methods => [:advertisement_image_url]), :trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]), :best_deal => allowed_best_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price])}
 				end
+			end
 				#raise servicelist.inspect
 				# Show trending deals for unsubscribed services
 				service_categories = ServiceCategory.where("name not in ("+excluded_categories+")")
 				categoryList = service_categories.map do |sc|
 					allowed_trending_deal = category_trending_deal(deal_type,sc.id,zip_code)
 					allowed_order_deal=category_order_deal(app_user_id,sc.id,false)
-
+if !((sc.id == 4) && (deal_type == "residence"))
 
 					if allowed_trending_deal.present?
 						service_provider_name=allowed_trending_deal.service_provider_name
@@ -138,7 +141,7 @@ module DashboardsHelper
 					end
 					{:best_deal_flag => false,:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:advertisement =>nil,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:best_deal =>nil,:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price])}
 				end
-
+end
 				return (servicelist + categoryList)
 			else
 				return false
@@ -146,7 +149,7 @@ module DashboardsHelper
 		else
 			service_categories = ServiceCategory.where("name in ('Internet','Telephone','Cellphone','Cable','Bundle')")
 			categoryList = service_categories.map do |sc|
-
+if !((sc.id == 4) && (deal_type == "residence"))
 				allowed_trending_deal = category_trending_deal(deal_type,sc.id,zip_code)
 				allowed_order_deal=category_order_deal(app_user_id,sc.id,false)
 
@@ -158,6 +161,7 @@ module DashboardsHelper
 
 				{:you_save_text => "", :contract_fee => "", :service_provider_name => service_provider_name, :service_category_id => sc.id, :service_category_name => sc.name,:trending_deal => allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:deal_image_url, :average_rating, :rating_count, :deal_price]),:order_deal => allowed_order_deal.as_json(:except => [:created_at, :updated_at, :price, :image], :methods => [:order_status,:deal_image_url, :average_rating, :rating_count, :deal_price]) }
 			end
+		end
 			return categoryList
 		end
 	end

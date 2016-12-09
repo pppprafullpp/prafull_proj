@@ -51,8 +51,10 @@
     <%=hidden_field_tag("plan_name","none")%>
     <div class="col-md-12 text-center btn-group-sty">
      <%= submit_tag("Save", :class=>"btn save-button", :onclick =>"cable_submit();return false")%>
-     <%if params[:new_user]%>
+     <%if params[:new_user] && session[:user_type] != AppUser::RESIDENCE%>
    <%= button_tag("Skip", :class=>"btn skip-button", :onclick=>"show_cellphone();")%>
+   <%elsif params[:new_user] && session[:user_type] == AppUser::RESIDENCE %>
+   <input type="button" class="btn skip-button" value="Skip" onclick="show_bundle();" />
      <%end%>
    </div>
 
@@ -63,6 +65,10 @@
       $("#cable_pref").hide();
       $("#cellphone_pref").show();
       
+  }
+  function show_bundle() {
+      $("#cable_pref").hide();
+      $("#bundle_pref").show();
   }
   $(document).ready(function(){
     $("#cable_start_date").datepicker();

@@ -3,6 +3,10 @@ class Website::HomeController < ApplicationController
   include DashboardsHelper
   before_action :already_ordered, only: [:deal_details, :more_deal_details]
 
+  def blog
+    redirect_to "http://blog.servicedealz.com"
+  end
+
   def index
     session[:zip_code] = 75024 unless session[:zip_code].present?
     session[:user_type] = AppUser::RESIDENCE unless session[:user_type].present?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205125403) do
+ActiveRecord::Schema.define(version: 20161207114622) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -506,12 +506,13 @@ ActiveRecord::Schema.define(version: 20161205125403) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "device_registers", force: :cascade do |t|
-    t.text     "imei",       limit: 65535
-    t.text     "device_id",  limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.text     "token",      limit: 65535
-    t.string   "version",    limit: 255
+    t.text     "imei",        limit: 65535
+    t.text     "device_id",   limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.text     "token",       limit: 65535
+    t.string   "version",     limit: 255
+    t.string   "device_type", limit: 255
   end
 
   create_table "device_trackers", force: :cascade do |t|
@@ -789,6 +790,18 @@ ActiveRecord::Schema.define(version: 20161205125403) do
     t.integer  "referred_user_coins",      limit: 4
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+  end
+
+  create_table "rewards", force: :cascade do |t|
+    t.string   "reward_name",         limit: 255
+    t.integer  "reward_value",        limit: 4
+    t.string   "image",               limit: 255
+    t.boolean  "is_active",                       default: false
+    t.string   "device_platform",     limit: 255
+    t.string   "reward_display_type", limit: 255
+    t.string   "reward_display_on",   limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   create_table "roles", force: :cascade do |t|

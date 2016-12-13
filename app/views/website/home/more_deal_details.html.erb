@@ -222,7 +222,7 @@
         }
         dealids=[];
 
-        <% if @category_name == "cable" %>
+        <% if @category_name == "cable" && CableDealAttribute.where(:deal_id => 228).last.present? %>
         $.ajax({
             url:"/api/v1/get_deal_channels",
             type: "GET",
@@ -278,7 +278,7 @@
     }
 
     function check_for_options(){
-
+  <% if @category_name == "cable" && CableDealAttribute.where(:deal_id => 228).last.present? %>
         cable_deal_equipments=[];
         $("input[name='cable_deal_equipments']:checked").each(function(){
             value=$(this).attr("val");
@@ -294,8 +294,8 @@
             jsonObj3["ref_id"]=value.split("_")[0];
             jsonObj3["price"]=value.split("_")[1];
             jsonObj3["ref_type"]=value.split("_")[2];
-            deal_attributes.push(jsonObj3)
-        });
+            deal_attributes.push(jsonObj3);
+        })
 
         cable_deal_attributes=[];
         $("input[name='deal_attributes']:checked").each(function(){
@@ -323,8 +323,8 @@
             jsonObj4["ref_id"]=value.split("_")[0];
             jsonObj4["price"]=value.split("_")[1];
             jsonObj4["ref_type"]=value.split("_")[2];
-            deal_channel_packages.push(jsonObj4)
-        });
+            deal_channel_packages.push(jsonObj4);
+        })
 
         localStorage["deal_attributes"] = JSON.stringify(deal_attributes);
         localStorage["deal_channel_packages"] = JSON.stringify(deal_channel_packages);
@@ -365,7 +365,7 @@
 
         localStorage["deal_extra_services"] = JSON.stringify(deal_extra_services);
         localStorage["cable_deal_equipments"] = JSON.stringify(cable_deal_equipments);
-
+        <%end%>
     }
 
     function get_comments(){

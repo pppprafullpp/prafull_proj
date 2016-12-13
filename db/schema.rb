@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117080017) do
+ActiveRecord::Schema.define(version: 20161205125403) do
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -136,6 +136,16 @@ ActiveRecord::Schema.define(version: 20161117080017) do
 
   add_index "app_users", ["email"], name: "index_app_users_on_email", unique: true, using: :btree
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "app_versions", force: :cascade do |t|
+    t.string   "versn_num",         limit: 255
+    t.string   "device_type",       limit: 255
+    t.boolean  "is_force_upgrade",              default: false
+    t.boolean  "is_normal_upgrade",             default: false
+    t.string   "app_url",           limit: 255
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
 
   create_table "bandwidth_calculator_settings", force: :cascade do |t|
     t.integer "email",                 limit: 4
@@ -501,6 +511,7 @@ ActiveRecord::Schema.define(version: 20161117080017) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.text     "token",      limit: 65535
+    t.string   "version",    limit: 255
   end
 
   create_table "device_trackers", force: :cascade do |t|

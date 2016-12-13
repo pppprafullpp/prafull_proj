@@ -22,7 +22,7 @@ end
         <div class="border-radius-bg">
           <div class="sd-img-box">
             <%if display_logo_permission(@deal.service_provider_id,@deal.deal_type)%>
-              <img src="<%=display_logo_permission(@deal.service_provider_id,@deal.deal_type)%>" alt="" class="img-responsive">
+              <img src="<%=display_logo_permission(@deal.service_provider_id,@deal.deal_type)%>" alt="Service Provider Logo" class="img-responsive">
             <%else%>
               <img class= "img-responsive" src="<%= @deal.image.present? ? @deal.image.url : '' %>" alt="<%= @deal.title %>">
             <% end %>

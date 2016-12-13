@@ -9,7 +9,7 @@
       <% @dashboard_data.each do |data| %>
           <div class="col-xs-6 col-md-3">
             <div class="text-center serviceRow1">
-              <div class="img_box" style="overflow: hidden;"><img src="<%= data[:trending_deal]['deal_image_url'] %>" alt=""> </div>
+              <div class="img_box" style="overflow: hidden;"><img src="<%= data[:trending_deal]['deal_image_url'] %>" alt="Service Deal Logo"> </div>
               <p class="para_1"> <%= data[:service_provider_name].present? ? data[:service_provider_name].truncate(25) : ''%> </p>
               <p class="para_2"> starting at </p>
               <h2>$<%= data[:trending_deal]['effective_price'] %> <span class="light">/</span><span class="regular">mo</span></h2>

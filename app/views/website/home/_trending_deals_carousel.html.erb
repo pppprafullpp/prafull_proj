@@ -10,7 +10,7 @@
               <a href="<%= deal_details_website_home_index_path %>?category_id=<%= dashboard_data[:service_category_id] %>&zip_code=<%= get_zipcode_and_user_type %>&deal_type=<%= session[:user_type] %>">
                 <div  class="bundled-data-header "><%= dashboard_data[:service_category_name] %></div>
                 <div class="bx-img">
-                  <img src="<%= trending_deal['deal_image_url']  %>" alt="" height="80px" width="80px">
+                  <img src="<%= trending_deal['deal_image_url']  %>" alt="Service Provider Logo" height="80px" width="80px">
                 </div>
                 <p class="caption-title" title="<%= trending_deal['title'] %>"><%= trending_deal['title'].present? ? trending_deal['title'].truncate(25) : ''  %></p>
                 <p class="caption-price">Deal Price : <span style="color: #105679;font-weight:bold">$ <%= trending_deal['deal_price']  %></span></p>

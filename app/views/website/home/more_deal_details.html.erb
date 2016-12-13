@@ -22,9 +22,9 @@
       <div class="col-sm-4 right-offer">
         <div class="border-radius-bg">
           <%if display_logo_permission(@deal.service_provider_id,@deal.deal_type)%>
-              <img src="<%= display_logo_permission(@deal.service_provider_id,@deal.deal_type) %>" alt="" class="img-responsive">
+              <img src="<%= display_logo_permission(@deal.service_provider_id,@deal.deal_type) %>" alt="Service Deal Logo" class="img-responsive">
           <%else%>
-              <img src="<%= @deal.image.url %>" class="img-responsive">
+              <img src="<%= @deal.image.url %>" alt="Service Provider Logo" class="img-responsive">
           <% end %>
           <ul class="sd-deal-price">
             <li class="sd-dealprice-single"><%= get_label_name(@deal.service_provider_id,'Deal Price') %>:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>

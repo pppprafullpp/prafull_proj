@@ -51,7 +51,7 @@ end
             <div class="order-service-left col-md-8">
               <div class="servicelogo-sty">
                 <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
-                  <img src="<%=display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="" class="img-responsive">
+                  <img src="<%=display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="Service Provider Logo" class="img-responsive">
                 <%else%>
                    <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" />
                 <% end %>
@@ -267,7 +267,7 @@ end
           <div class="border-radius-bg">
             <div class="sd-img-box">
                <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
-                  <img src="<%= display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="" class="img-responsive">
+                  <img src="<%= display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="Service Provider Logo" class="img-responsive">
                 <%else%>
                   <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
                 <% end %>
@@ -332,7 +332,7 @@ end
           <div class="border-radius-bg">
             <div class="sd-img-box">
                <%if display_logo_permission(deal.service_provider_id,deal.deal_type)%>
-                  <img src="<%= display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="" class="img-responsive">
+                  <img src="<%= display_logo_permission(deal.service_provider_id,deal.deal_type)%>" alt="Service Provider Logo" class="img-responsive">
                 <%else%>
                    <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive">
                 <% end %>

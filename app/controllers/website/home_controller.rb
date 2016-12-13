@@ -3,6 +3,10 @@ class Website::HomeController < ApplicationController
   include DashboardsHelper
   before_action :already_ordered, only: [:deal_details, :more_deal_details]
 
+  def blog
+    redirect_to "http://blog.servicedealz.com"
+  end
+
   def index
     session[:zip_code] = 75024 unless session[:zip_code].present?
     session[:user_type] = AppUser::RESIDENCE unless session[:user_type].present?
@@ -54,7 +58,7 @@ class Website::HomeController < ApplicationController
   def deal_details
 
     if session[:user_id].present? and params[:category_id].present? and params[:zip_code].present?
-      @best_deal_data =  get_dashboard_deals(session[:user_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
+      @best_deal_data =  get_dashboard_deals(session[:user_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]}).reject {|c| c.nil?}
       @dashboard_data = get_category_deals(session[:user_id],params[:category_id],nil,nil,{'sort_by' => params[:sort_by],'provider_ids' => params[:provider_ids]})
 
     elsif session[:user_id].blank? and params[:category_id].present? and params[:zip_code].present? and params[:deal_type].present?

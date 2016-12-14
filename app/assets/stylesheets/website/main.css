@@ -6384,7 +6384,7 @@ select::-ms-expand {
     margin-top: 0;
 }
 .sd-deals-details .sd-rating {
-    margin: 3px 0 15px !important;
+    margin: 3px 0 0 !important;
 }
 .sd-deal-info .sd-rating {
     margin: 1% 0 !important;
@@ -6570,6 +6570,7 @@ select::-ms-expand {
 .sd-deals-details .sd-more-details {
     margin-top: 0 !important;
     font-size: 12px !important;
+    margin-bottom: 15px;
 }
 .sd-deal-block .sd-deal-saving {
     position: static;
@@ -6947,3 +6948,8 @@ margin: 0 0 175px;
 .content-sty h4{color: #3e83d1;padding: 16px 0;display: block;}
 .content-sty p {    color: #565759;}
 .content-sty {    margin: 30px 0 0;    background: #f6f6f6;    padding: 30px 0;}
+.short-des-deals ul{    height: 37px; margin-top: 10px; overflow: hidden;}
+.short-des-deals ul li{  height: 17px; overflow: hidden;} 
+.cat-bundle{height: 27px; overflow: hidden;}
+.cat-bundle li{padding: 0 10px;}
+.sd-more-details-page li {    float: left;    font-family: 'open_sansregular';    font-size: 14px !important;    width: 100%;    line-height: 24px !important;    color: #605f5f !important;}

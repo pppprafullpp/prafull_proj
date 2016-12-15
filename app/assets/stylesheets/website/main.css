@@ -6957,6 +6957,7 @@ ul.description-height  li p{    color: #b2b2b2;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
 }
+.sd-more-details-page p{    padding: 0 0 2px 0 !important;}
 ul.description-height  li{    height: 37px;
     overflow: hidden;
 }

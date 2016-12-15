@@ -67,7 +67,7 @@
                     <%end%>
                   </div>
                   
-                  <div class="main-external-div1 short-des-deals">
+                  <div class="main-external-div1">
                     
 
 
@@ -78,8 +78,11 @@
           <% else %>
           <h5 ><%= title.truncate(25) rescue nil %></h5>
           <% end %>
+                    <ul class="description-height">
+                      <li><%=raw(data['short_description'])%></li>
+                    </ul>
                    
-                     <%=raw(data['short_description'])%>
+                     
                   
                  
                     

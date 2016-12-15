@@ -760,19 +760,7 @@ a.gplus {
     border: none;
     margin: 0;
 }
-.box-sec ul li:before {
-    content: "";
-    display: block;
-    width: 8px;
-    height: 8px;
-    background: #ef8508;
-    position: absolute;
-    top: 4px;
-    left: 0px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-}
+
 .btn_more {
     font-family: "open_sanssemibold";
     color: #219fff;
@@ -6953,3 +6941,22 @@ margin: 0 0 175px;
 .cat-bundle{height: 27px; overflow: hidden;}
 .cat-bundle li{padding: 0 10px;}
 .sd-more-details-page li {    float: left;    font-family: 'open_sansregular';    font-size: 14px !important;    width: 100%;    line-height: 24px !important;    color: #605f5f !important;}
+ul.description-height  li p{    color: #b2b2b2;
+    font-size: 12px;
+    line-height: normal; margin-bottom: 2px; position: relative;;}
+.box-sec ul li p:before {
+ content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #ef8508;
+    position: absolute;
+    top: 4px;
+    left: -14px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+}
+ul.description-height  li{    height: 37px;
+    overflow: hidden;
+}

@@ -179,8 +179,10 @@ def get_effective_price
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
-        monthly_price = additional_offer.price/contract_period rescue nil
-        effective_price-= monthly_price
+        if contract_period >0
+          monthly_price = additional_offer.price/contract_period 
+          effective_price-= monthly_price
+        end
       end
     end
   elsif self.telephone_deal_attributes.present?
@@ -192,9 +194,12 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
+        
         contract_period = additional_offer.contract_period.to_i
-        monthly_price = additional_offer.price/contract_period  rescue nil
+        if contract_period >0
+        monthly_price = additional_offer.price/contract_period  
         effective_price-= monthly_price
+      end
       end
     end
   elsif self.cable_deal_attributes.present?
@@ -207,8 +212,10 @@ def get_effective_price
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
-        monthly_price = additional_offer.price/contract_period  rescue nil
+        if contract_period >0
+        monthly_price = additional_offer.price/contract_period  
         effective_price-= monthly_price
+      end
       end
     end
   elsif self.cellphone_deal_attributes.present?
@@ -222,8 +229,10 @@ def get_effective_price
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
-        monthly_price = additional_offer.price/contract_period  rescue nil
+        if contract_period >0
+        monthly_price = additional_offer.price/contract_period 
         effective_price-= monthly_price
+      end
       end
     end
   elsif self.bundle_deal_attributes.present?
@@ -236,8 +245,10 @@ def get_effective_price
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
-        monthly_price = additional_offer.price/contract_period  rescue nil
+        if contract_period >0
+        monthly_price = additional_offer.price/contract_period  
         effective_price-= monthly_price
+      end
       end
     end
   end

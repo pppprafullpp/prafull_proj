@@ -27,7 +27,7 @@
               <img src="<%= @deal.image.url %>" alt="Service Provider Logo" class="img-responsive">
           <% end %>
           <ul class="sd-deal-price">
-            <li class="sd-dealprice-single"><%= get_label_name(@deal.service_provider_id,'Deal Price') %>:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
+            <li class="sd-dealprice-single"><%= get_label_name(@deal.service_provider_id,'Deal Price') %>:<span>$<%= "%.2f" % @deal.price %>/mon</span></li>
             <% if params[:effective_price].present? %>
             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  params[:effective_price]%>/mon</span></li>
             <% else %>

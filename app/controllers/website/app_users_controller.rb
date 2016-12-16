@@ -24,8 +24,9 @@ class Website::AppUsersController < ApplicationController
         session[:user_type] = @app_user.user_type
         session[:new_user] = true
         code=SecureRandom.hex(5)
-        @app_user.update_attributes(:email_verification_token=>code,:email_verified=>true)
-        # AppUserMailer.sign_up_mail(@app_user).deliver!
+        @app_user.update_attributes(:email_verification_token=>code)
+        AppUserMailer.delay.send_verification_mail(@app_user.id,code)
+       AppUserMailer.delay.sign_up_mail(@app_user)
 
         if @app_user.user_type == AppUser::BUSINESS
           params[:business][:business_name]=encode_api_data(params[:business][:business_name])

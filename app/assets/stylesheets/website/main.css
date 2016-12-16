@@ -2322,10 +2322,10 @@ a {
     width: 100%;
 }
 .accepted-btn {
-     background: #f5942b none repeat scroll 0 0;    color: #fff;    float: right;    margin-top: 5px;    padding: 0 12px;
+     background: #f5942b none repeat scroll 0 0;    color: #fff;    float: right;    padding: 0 12px; cursor: default;    margin: 0 10px 0;
 }
 .accepted-btn:hover {
-    background: #e48620 none repeat scroll 0 0;
+    
     color: #fff;
 }
 .recontracted-btn {
@@ -6382,6 +6382,7 @@ select::-ms-expand {
     font-size: 14px;
     font-family: 'open_sansregular';
     margin-top: 0;
+    margin-bottom: 5px;
 }
 #seemore {
     font-size: 14px;
@@ -6453,9 +6454,8 @@ select::-ms-expand {
 .sd-dealtwoblock-info p {
     color: #5b5a5a;
     font-size: 13px;
-    width: 70%;
-    height: 39px;
-    overflow: hidden;
+    margin-bottom: 0;
+  
 }
 .sd-deal-saving {
     background: #f5f6f3;
@@ -6489,8 +6489,9 @@ select::-ms-expand {
     padding: 20px 0 0;
     margin-bottom: 15px;
     float: left;
-    min-height: 449px;
+    min-height: 444px;
     width: 100%;
+    position: relative;
 }
 .sd-dealblock-img {
     text-align: center;
@@ -6508,13 +6509,12 @@ select::-ms-expand {
 .sd-dealblock-info p {
     color: #5b5a5a;
     font-size: 13px;
-    overflow: hidden;
-    height: 40px;
     width: 201px;
+    margin: 0;
 }
 .sd-dealblock-bestdeal {
     position: absolute;
-    right: 8px;
+    right: 34px;
 }
 .sd-dealblock-trendingdeal {
     position: absolute;
@@ -6561,8 +6561,9 @@ select::-ms-expand {
     margin-bottom: 15px;
 }
 .sd-deal-block .sd-deal-saving {
-    position: static;
+    position: absolute !important;
     border-radius: 0 0 5px 5px;
+    bottom: 0px;
 }
 .sd-dealprice-single {
     color: #ee3408 !important;
@@ -6961,3 +6962,22 @@ ul.description-height  li p{    color: #b2b2b2;
 ul.description-height  li{    height: 37px;
     overflow: hidden;
 }
+.two-deal-desc{
+        width: 70%;
+    height: 20px;    overflow: hidden;
+    margin-bottom: 10px;
+}
+.three-deal-desc{
+        height: 37px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.servicedt-text p{
+    color: #000;font-size: 14px; margin-bottom: 0;
+}
+.cat-bundle p{float: left;
+    font-size: 13px;
+    margin: -1px 0 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;}

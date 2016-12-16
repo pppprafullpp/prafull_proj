@@ -9,7 +9,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
  	end
 
 	def send_ios_notification
-		@app_users=AppUser.all
+		@app_users=AppUser.all 
 
 		@app_users.each do |app_user|
 			if app_user.device_flag=="iphone"
@@ -57,7 +57,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					if !params[:international_call_unlimited].present?
 						params[:international_call_unlimited] = false
 				  end
-			 end
+			 	end
 				@service_preference.telephone_service_preference.update(telephone_service_preference_params)
 			elsif params[:service_category_id] == '3'
 				@service_preference.cable_service_preference.update(:free_channels=>params[:free_channels],:premium_channels => params[:premium_channels])
@@ -69,8 +69,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 					if !params[:international_call_unlimited].present?
 						params[:international_call_unlimited] = false
 					end
-			 end
-			#  raise params.to_yaml
+			 	end
 				@service_preference.cellphone_service_preference.update(cellphone_service_preference_params)
 			elsif params[:service_category_id] == '5'
 				@service_preference.bundle_service_preference.update(bundle_service_preference_params)
@@ -79,9 +78,9 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			end
       if @service_preference.update(service_preference_params)
       	if params[:is_contract] == "true"
-#        	send_notification_no_contract
+       	send_notification_no_contract
         elsif params[:is_contract] == "false"
- #       		send_notification_is_contract
+       		send_notification_is_contract
 	   	end
 				if params[:from_site].present?
 					redirect_to :back
@@ -132,10 +131,10 @@ class Api::V1::ServicePreferencesController < ApplicationController
        if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
         	if params[:is_contract] == "true"
 						@app_user=AppUser.find(id)
-  #      		send_notification_no_contract
+       		send_notification_no_contract
         	elsif params[:is_contract] == "false"
 						@app_user=AppUser.find(id)
-   #     		send_notification_is_contract
+       		send_notification_is_contract
 					end
 					if params[:from_site].present?
 						redirect_to :back
@@ -451,6 +450,7 @@ service_preference_hash['data_plan']=2.0
     	end
 	end
 	def send_notification_no_contract
+		# byebug
 		@app_user = AppUser.find_by_id(params[:app_user_id])
 		@deal_type=@app_user.user_type
 		@app_user_device = @app_user.device_flag

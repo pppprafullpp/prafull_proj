@@ -203,6 +203,11 @@
 </section>
 
 <script type="text/javascript">
+<%if params[:from_blog]%>
+$("#zipcode-modal").modal("hide");
+$("#myModal").modal("show");
+$("#zipcode-modal").modal("hide");
+<%end%>
     function titleize_text(object) {
         value=$("#"+object.id).val();
         rest=value.substr(1);

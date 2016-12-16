@@ -29,7 +29,9 @@
 
 <!-- 
               <h4><%#= display_deal_name_permission(best_deal['service_provider_id'],best_deal['deal_type'],best_deal['title']).truncate(20) rescue nil%></h4> -->
-              <p><%=best_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+              <div class="three-deal-desc">
+              <%=raw(best_deal['short_description'])%>
+            </div>
               <%= render :partial => "rating_form" ,locals: {deal: best_deal}%>
               <div class="sd-dealprices">
                 <div class="sd-best-price">Deal Price <span>$<%= best_deal['deal_price'] %></span></div>
@@ -73,7 +75,9 @@
 
 
              <!--  <h4><%#= display_deal_name_permission(trending_deal['service_provider_id'],trending_deal['deal_type'],trending_deal['title']).truncate(20) rescue nil%></h4> -->
-              <p><%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+             <div class="three-deal-desc">
+              <%=raw(trending_deal['short_description'])%>
+            </div>
               <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
               <div class="sd-dealprices">
                 <div class="sd-best-price">Deal Price <span>$<%= trending_deal['deal_price']%></span></div>
@@ -111,7 +115,9 @@
 
 
               <!-- <h4><%#= display_deal_name_permission(order_deal['service_provider_id'],order_deal['deal_type'],order_deal['title']).truncate(20) rescue nil %></h4> -->
-              <p><%=order_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+              <div class="three-deal-desc">
+              <%=raw(order_deal['short_description'])%>
+            </div>
               <%= render :partial => "rating_form" ,locals: {deal: order_deal}%>
               <div class="sd-dealprices">
                  <div class="sd-best-price">Deal Price <span>$<%= order_deal['deal_price']%></span></div>
@@ -121,49 +127,7 @@
           </div>
         </div>
         <% end %>
-        <% #if deal_data[:service_category_id] == Deal::CABLE_CATEGORY %>
-          <%# @cable_customized_deals.each do |customized_deal| %>
-         <!--    <div class="col-md-12">
-              <div class="sd-deal-block">
-                <div class="sd-dealblock-img"> <img src="<%#= customized_deal['deal_image_url'] %>" alt=""> </div>
-                <div class="sd-dealblock-info">
-                  <div class="sd-dealblock-orderdeal"><img src="/assets/website/custom_deal.png" style="width:33px;" alt=""></div> -->
-                <!--   <h4><%#= customized_deal['title'].truncate(20) %></h4>
-                  <p><%#=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p> -->
-                  <%#= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
-                  <!-- <div class="sd-dealprices">
-                    <div class="sd-best-price">Deal Price <span>$<%#= customized_deal['deal_price']%></span></div>
-                    <div class="sd-effective-price">Effective Price <span>$<%#= "%.2f" % customized_deal['effective_price'] if customized_deal['effective_price'].present?%></span></div>
- -->
-                  <!-- </div>
-                   <a href="<%#= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
-                </div>
-              </div>
-            </div> -->
-          <%# end  %>
-        <%# end %>
-
-         <%# if deal_data[:service_category_id] == Deal::CELLPHONE_CATEGORY %>
-          <%# @cellphone_customized_deals.each do |customized_deal| %>
-           <!--  <div class="col-md-12">
-              <div class="sd-deal-block">
-                <div class="sd-dealblock-img"> <img src="<%#= customized_deal['deal_image_url'] %>" alt=""> </div>
-                <div class="sd-dealblock-info">
-                  <div class="sd-dealblock-orderdeal"><img src="/assets/website/custom_deal.png" style="width:33px;" alt=""></div> -->
-                  <!-- <h4><%#= customized_deal['title'].truncate(20) %></h4>
-                  <p><%#=customized_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p> -->
-                  <%#= render :partial => "rating_form" ,locals: {deal: customized_deal}%>
-                 <!--  <div class="sd-dealprices">
-                    <div class="sd-best-price">Deal Price <span>$<%#= customized_deal['deal_price']%></span></div>
-                    <div class="sd-effective-price">Effective Price <span>$<%#= "%.2f" % customized_deal['effective_price'] if customized_deal['effective_price'].present?%></span></div>
-
-                  </div> -->
-                 <!--   <a href="<%#= more_deal_details_website_home_index_path(:deal_id=> customized_deal['id']) %>" class="sd-more-details">+ Add Your Plan</a>
-                </div>
-              </div>
-            </div> -->
-          <%# end  %>
-        <%# end %>
+        
       </div>
     </div>
 <script>

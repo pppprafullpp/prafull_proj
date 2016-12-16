@@ -56,7 +56,7 @@ end
                    <img src="<%= deal.image.present? ? deal.image.url : '' %>" alt="<%= deal.title %>" class="img-responsive" />
                 <% end %>
                </div>
-              <div class="servicedt-text"><%=deal.short_description  %></br>
+              <div class="servicedt-text"><%=raw(deal.short_description)  %></br>
                 <span class="in-progress-btn"><%= @order.status %> </span>
               </div>
             </div>

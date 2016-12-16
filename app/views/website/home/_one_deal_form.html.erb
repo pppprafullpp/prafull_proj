@@ -35,12 +35,11 @@
           <%= render :partial => "rating_form" ,locals: {deal: trending_deal}%>
 
           <!--  <p>
-          <%=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>-->
+          <%#=trending_deal['short_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>-->
           <!-- <a href="javascript:void(0)" id="seemore_<%#=trending_deal['id']%>" onclick="show_more_button(<%#=trending_deal['id']%>)">See Less</a> -->
           <div id="moredeal-info_<%=trending_deal['id']%>">
             <!-- <b>Includes:</b><br/> -->
-            <p>
-            <%=trending_deal['detail_description'].to_s.gsub(/\n/,"<br> ").html_safe%></p>
+       <%=simple_format(trending_deal['detail_description'])%>
           </div>
           <ul class="sd-deal-price">
             <li class="sd-dealprice-single">Deal Price:<span>$<%= trending_deal['deal_price']%>/mo</span></li>

@@ -22,9 +22,12 @@
               <h5 ><%= title.truncate(25) rescue nil %></h5>
             <% end %>
             <ul class="description-height">
-              <li><%= best_deal['short_description'].truncate(30) %></li>
-              <li><%= best_deal['detail_description'].truncate(30) %></li>
+              <li><%=raw(best_deal['short_description'])%></li>
             </ul>
+            <!-- <ul class="description-height"> -->
+              <!-- <li><%#= best_deal['short_description'].truncate(30) %></li> -->
+              <!-- <li><%#= best_deal['detail_description'].truncate(30) %></li> -->
+            <!-- </ul> -->
             <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
             <%if rating.present?%>
               <p id="rating" class="sd-rating">
@@ -106,9 +109,12 @@
             <% else %>
               <h5 ><%= title.truncate(25) rescue nil %></h5>
             <% end %>
+            <!-- <ul class="description-height"> -->
+              <!-- <li><%#= best_deal['short_description'].truncate(30) %></li> -->
+              <!-- <li><%#= best_deal['detail_description'].truncate(30) %></li> -->
+            <!-- </ul> -->
             <ul class="description-height">
-              <li><%= best_deal['short_description'].truncate(30) %></li>
-              <li><%= best_deal['detail_description'].truncate(30) %></li>
+              <li><%=raw(best_deal['short_description'])%></li>
             </ul>
             <%rating=CommentRating.where(:deal_id => best_deal["id"]).average(:rating_point).to_i%>
             <%if rating.present?%>

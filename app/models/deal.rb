@@ -178,7 +178,7 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        contract_period = additional_offer.contract_period
+        contract_period = additional_offer.contract_period.to_i
         monthly_price = additional_offer.price/contract_period
         effective_price-= monthly_price
       end
@@ -192,7 +192,7 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        contract_period = additional_offer.contract_period
+        contract_period = additional_offer.contract_period.to_i
         monthly_price = additional_offer.price/contract_period
         effective_price-= monthly_price
       end
@@ -206,7 +206,7 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        contract_period = additional_offer.contract_period
+        contract_period = additional_offer.contract_period.to_i
         monthly_price = additional_offer.price/contract_period
         effective_price-= monthly_price
       end
@@ -221,7 +221,7 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        contract_period = additional_offer.contract_period
+        contract_period = additional_offer.contract_period.to_i
         monthly_price = additional_offer.price/contract_period
         effective_price-= monthly_price
       end
@@ -235,7 +235,7 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        contract_period = additional_offer.contract_period
+        contract_period = additional_offer.contract_period.to_i
         monthly_price = additional_offer.price/contract_period
         effective_price-= monthly_price
       end

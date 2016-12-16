@@ -24,7 +24,7 @@ class Website::AppUsersController < ApplicationController
         session[:user_type] = @app_user.user_type
         session[:new_user] = true
         code=SecureRandom.hex(5)
-        @app_user.update_attributes(:email_verification_token=>code)
+        @app_user.update_attributes(:email_verification_token=>code,:email_verified=> true)
         AppUserMailer.delay.send_verification_mail(@app_user.id,code)
        AppUserMailer.delay.sign_up_mail(@app_user)
 

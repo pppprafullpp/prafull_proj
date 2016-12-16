@@ -279,9 +279,12 @@ end
             </ul>
             <% if deal.is_customisable == true && deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
               <div id='deal-attributes-added' class="deal-attributes-added">
+                <% if @order.order_attributes.present?%>
                 <h5>Additional Deals Attributes</h5>
+
                 <% attribute = CellphoneDealAttribute.find(@order.order_attributes.first.ref_id) %>
                 <div> <p><%= attribute.title%></p>  <span>$<%=attribute.data_plan_price %></span></div>
+                <% end %>
               </div>
               <div class="deal-equipments-added">
                 <h5>Additional Equipments</h5>
@@ -344,9 +347,12 @@ end
             </ul>
             <% if deal.is_customisable == true && deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
               <div id='deal-attributes-added' class="deal-attributes-added">
+                <%if @order.order_attributes.present? %>
                 <h5>Additional Deals Attributes</h5>
+
                 <% attribute = CellphoneDealAttribute.find(@order.order_attributes.first.ref_id) %>
                 <div> <p><%= attribute.title%></p>  <span>$<%=attribute.data_plan_price %></span></div>
+                <% end %>
               </div>
               <div class="deal-equipments-added">
                 <h5>Additional Equipments</h5>

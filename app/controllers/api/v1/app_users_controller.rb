@@ -51,11 +51,11 @@ class Api::V1::AppUsersController < ApplicationController
       @app_user.referral_code = (decode_api_data(params[:first_name]).split(" ").first + rand(36**4).to_s(36)).upcase
       code=SecureRandom.hex(5)
       @app_user.email_verification_token=code
-      @app_user.email_verified=true
+      # @app_user.email_verified=true
       if @app_user.save
         render :status => 200,
                :json => { :success => true, :app_user_id => @app_user.id }
-AppUserMailer.delay.send_verification_mail(@app_user.id,code)
+        AppUserMailer.delay.send_verification_mail(@app_user.id,code)
         AppUserMailer.delay.sign_up_mail(@app_user)
       else
         render :status => 400,

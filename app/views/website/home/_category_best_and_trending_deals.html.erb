@@ -51,11 +51,11 @@
             <div class="sd-dealprices">
               <div class="sd-best-price">
                 Price
-                <span>$<%= best_deal['deal_price'] %>/mo</span>
+                <span>$<%= best_deal['deal_price'] %>/mon</span>
               </div>
               <div class="sd-effective-price">
                 Effective price
-                <span>$<%="%.2f" % best_deal['effective_price']  if best_deal['effective_price'].present? %>/mo</span>
+                <span>$<%="%.2f" % best_deal['effective_price']  if best_deal['effective_price'].present? %>/mon</span>
               </div>
               <div style="float:left; width:100%">
                 <%if data["you_save"].to_i > 0%>
@@ -141,11 +141,11 @@
           <div class="sd-dealprices">
             <div class="sd-best-price">
               Price
-              <span>$<%= best_deal['deal_price'] %>/mo</span>
+              <span>$<%= best_deal['deal_price'] %>/mon</span>
             </div>
             <div class="sd-effective-price">
               Effective price
-              <span>$<%= "%.2f" % best_deal['effective_price'] if best_deal['effective_price'].present?%>mo</span>
+              <span>$<%= "%.2f" % best_deal['effective_price'] if best_deal['effective_price'].present?%>/mon</span>
             </div>
           </div>
           <%if @current_user.present?%>

@@ -113,11 +113,11 @@
                     <span class="separator_2"></span>
                     <div class="sd-dealprices">
                       <div class="sd-best-price">Price
-                        <span>$<%= data['deal_price'] %>/mo</span>
+                        <span>$<%= data['deal_price'] %>/mon</span>
                       </div>
                       <div class="sd-effective-price">
                         Effective price
-                        <span>$<%= "%.2f" % data['effective_price'] if  data['effective_price'].present? %>/mo</span>
+                        <span>$<%= "%.2f" % data['effective_price'] if  data['effective_price'].present? %>/mon</span>
                       </div>
                     </div>
                     <%if @current_user.present?%>

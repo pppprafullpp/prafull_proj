@@ -29,9 +29,9 @@
           <ul class="sd-deal-price">
             <li class="sd-dealprice-single"><%= get_label_name(@deal.service_provider_id,'Deal Price') %>:<span>$<%= "%.2f" % @deal.price %>/mo</span></li>
             <% if params[:effective_price].present? %>
-            <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  params[:effective_price]%>/mo</span></li>
+            <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  params[:effective_price]%>/mon</span></li>
             <% else %>
-             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mo</span></li>
+             <li class="sd-effective-price-single">Effective Price:<span id='effective_price'>$<%="%.2f" %  @deal.effective_price if @deal.effective_price.present?%>/mon</span></li>
             <% end %>
             <% if @deal.contract_period == 0 %>
                 <li>Contract: <span>None</span></li>

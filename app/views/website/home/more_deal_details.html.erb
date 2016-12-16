@@ -107,7 +107,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                      <td width="20%">$<%= ((additional_offer.price) * (additional_offer.contract_period.to_i)).round rescue nil%></td>
+                      <td width="20%">$<%= (additional_offer.price.to_i )rescue nil%></td>
                       <td width="80%" colspan="2"><%=additional_offer.try(:description) %></td>
                     </tr>
                     </tbody>

@@ -102,6 +102,11 @@ def deal_image_url
   end
 end
 
+# def deal_description(deal)
+#   name =   ActionView::Base.full_sanitizer.sanitize(self.detail_description)
+#   return name
+# end
+
 def deal_title(deal)
   name = ApplicationController.new.display_deal_name_permission(self.service_provider_id,self.deal_type,self.title)
   return name
@@ -163,6 +168,7 @@ def effective_price_bck
 end
 
 def get_effective_price
+
   if self.internet_deal_attributes.present?
     internet=self.internet_deal_attributes.first
     equipment=self.internet_equipments.first
@@ -172,7 +178,9 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        effective_price-=additional_offer.price
+        contract_period = additional_offer.contract_period
+        monthly_price = additional_offer.price/contract_period
+        effective_price-= monthly_price
       end
     end
   elsif self.telephone_deal_attributes.present?
@@ -184,7 +192,9 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        effective_price-=additional_offer.price
+        contract_period = additional_offer.contract_period
+        monthly_price = additional_offer.price/contract_period
+        effective_price-= monthly_price
       end
     end
   elsif self.cable_deal_attributes.present?
@@ -196,7 +206,9 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        effective_price-=additional_offer.price
+        contract_period = additional_offer.contract_period
+        monthly_price = additional_offer.price/contract_period
+        effective_price-= monthly_price
       end
     end
   elsif self.cellphone_deal_attributes.present?
@@ -209,7 +221,9 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        effective_price-=additional_offer.price
+        contract_period = additional_offer.contract_period
+        monthly_price = additional_offer.price/contract_period
+        effective_price-= monthly_price
       end
     end
   elsif self.bundle_deal_attributes.present?
@@ -221,7 +235,9 @@ def get_effective_price
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
-        effective_price-=additional_offer.price
+        contract_period = additional_offer.contract_period
+        monthly_price = additional_offer.price/contract_period
+        effective_price-= monthly_price
       end
     end
   end

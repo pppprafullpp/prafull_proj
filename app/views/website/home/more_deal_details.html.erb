@@ -52,11 +52,16 @@
         <%#else%>
         <!--  <a  onclick="check_for_options()" class="order-btn" href="<%#=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%#=@deal.id%>">Order</a> -->
         <%#end%>
-        <% if @deal.is_order_available != false  %>
-            <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
-        <% else %>
-            <a id="order-btn" class="order-btn btn_3" >Not Available</a>
-        <% end %>
+          <%if @current_user.present? && @current_user.email_verified == nil %>
+          <a class="order-btn" href="javascript:void(0)">Verify email</a>
+          
+          <% elsif @current_user.present? && @current_user.email_verified == true %>
+            <% if @deal.is_order_available != false  %>
+                <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
+            <% else %>
+                <a id="order-btn" class="order-btn btn_3" >Not Available</a>
+            <% end %>
+            <% end %>
 
         <% if  @customized_deals.present? && @category_name == "cellphone"%>
              <a class="reset-order" href="javascript:void(0)" id="reset_order" onclick="reset_order()">RESET </a>

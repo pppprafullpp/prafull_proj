@@ -254,6 +254,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 	def category_best_deal(deal_type,sp,zip_code,return_count,return_attributes,options = {})
 		# raise options.to_s
+
 		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''
 		deal_validation_conditions=filter_by_provider+"deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+sp.service_category_id.to_s+" "
@@ -272,7 +273,6 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			select_fields_cellphone="deals.*,cellphone_deal_attributes.effective_price"
 			select_fields_bundle="deals.*"
 		end
-
 		if sp.service_category.name == 'Internet'
 			app_user_download_speed = sp.internet_service_preference.download_speed
 			best_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND price < ? AND deals.id not in (?)", app_user_download_speed,sp.price,restricted_deals)
@@ -463,7 +463,6 @@ if !((sc.id == 4) && (deal_type == "residence"))
 		else
 			best_deals = nil
 		end
-
 	end
 
 	def get_category_deals(app_user_id,category_id,zip_code,deal_type,options = {})
@@ -483,11 +482,12 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			deal_validation_conditions="#{filter_by_provider} deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id=#{category_id}"+" "
 			user_preference = app_user.service_preferences.where("service_category_id = ?",category_id).first
 			matched_deal = []
-
 			if category_id == Deal::INTERNET_CATEGORY
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::INTERNET_CATEGORY,zip_code)
 				if user_preference.present?
 					current_download_speed = user_preference.internet_service_preference.download_speed
-					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
+					allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
+					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options) 
 					greater_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 					smaller_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download < ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 				else
@@ -495,17 +495,22 @@ if !((sc.id == 4) && (deal_type == "residence"))
 					if deals.present?
 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
-					if json.present?
-						matched_deal = json
+					if json.present? && allowed_trending_deal.present?
+						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json.each {|h| h[:is_deal]="normal"} 
 					end
 
 				end
 
 			elsif category_id == Deal::TELEPHONE_CATEGORY
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::TELEPHONE_CATEGORY,zip_code)
 				if user_preference.present?
 					current_plan_price = user_preference.price
 					current_t_plan = user_preference.telephone_service_preference.domestic_call_unlimited
 					if current_t_plan == true
+						allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
 						greater_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND deals.price > ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)",current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 						smaller_deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions+" AND deals.price < ? AND telephone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)",current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
@@ -524,15 +529,20 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
-					if json.present?
-						matched_deal = json
+					if json.present? && allowed_trending_deal.present?
+						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json.each {|h| h[:is_deal]="normal"} 
 					end
 				end
 			elsif category_id == Deal::CABLE_CATEGORY
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::CABLE_CATEGORY,zip_code)
 				if user_preference.present?
 					current_plan_price = user_preference.price
 					current_free_channels = user_preference.cable_service_preference.free_channels
 					# raise options.to_yaml
+					allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
 					if best_deals.present?
 						greater_deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions+" AND cable_deal_attributes.free_channels > ? AND deals.id not in (?) AND deals.id not in (?)", current_free_channels,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
@@ -545,15 +555,20 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
-					if json.present?
-						matched_deal = json
+					if json.present? && allowed_trending_deal.present?
+						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json.each {|h| h[:is_deal]="normal"} 
 					end
 				end
 			elsif category_id == Deal::CELLPHONE_CATEGORY
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::CELLPHONE_CATEGORY,zip_code)
 				if user_preference.present?
 					current_plan_price = user_preference.price
 					current_t_plan = user_preference.cellphone_service_preference.domestic_call_unlimited
 					if current_t_plan == true
+						allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
 						if best_deals.present?
 							greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND deals.price > ? AND cellphone_deal_attributes.domestic_call_minutes='Unlimited' AND deals.id not in (?) AND deals.id not in (?)", current_plan_price,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
@@ -562,6 +577,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 					else
 						current_call_minutes = user_preference.cellphone_service_preference.domestic_call_minutes
 						best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
+						allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
 						if best_deals.present?
 							greater_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes > ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 							smaller_deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions+" AND cellphone_deal_attributes.domestic_call_minutes < ? AND deals.id not in (?) AND deals.id not in (?)", current_call_minutes,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
@@ -574,13 +590,18 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
-					if json.present?
-						matched_deal = json
+					if json.present? && allowed_trending_deal.present?
+						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json.each {|h| h[:is_deal]="normal"} 
 					end
 				end
 			elsif category_id == Deal::BUNDLE_CATEGORY
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::BUNDLE_CATEGORY,zip_code)
 				if user_preference.present?
 					app_user_bundle_combo = user_preference.bundle_service_preference.bundle_combo
+					allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
 					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
 					if best_deals.present?
 						if app_user_bundle_combo=="Internet,Telephone and Cable"
@@ -614,14 +635,18 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 					end
 
-					if json.present?
-						matched_deal = json
+					if json.present? && allowed_trending_deal.present?
+						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json.each {|h| h[:is_deal]="normal"} 
 					end
 				end
 			end
-
+	
+			
 			if best_deals.present? && greater_deals.present?
-				merged_deals = best_deals + greater_deals
+				merged_deals = best_deals+ greater_deals 
 			elsif best_deals.present? && greater_deals.blank?
 				merged_deals = best_deals
 			elsif best_deals.blank? && greater_deals.present?
@@ -634,12 +659,68 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			if smaller_deals.present?
 				json_2 = smaller_deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 			end
-			if json_1.present? && json_2.present?
-				matched_deal = json_1 + json_2
-			elsif json_1.blank? && json_2.present?
-				matched_deal = json_2
-			elsif json_1.present? && json_2.blank?
-				matched_deal = json_1
+			if allowed_best_deal.present?
+				best_deal = allowed_best_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				json_3 = [best_deal]
+			end
+
+			if allowed_trending_deal.present?
+				trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				json_4 = [trending_deal]
+			end
+
+			# if best_deal.present? && trending_deal.present?
+			# 	if best_deal['id'] == trending_deal['id']
+			# 		json_5 = [best_deal]
+			# 	end
+			# end
+			if !(category_id == Deal::CELLPHONE_CATEGORY)
+				if json_1.present? && json_2.present? && json_3.present? && json_4.present?
+					if best_deal['id'] == trending_deal['id']
+						json_5 = [best_deal]
+						matched_deal = json_5.each {|h| h[:is_deal]="best"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}   + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}  
+					else
+						matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}  + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					end
+				
+				elsif json_1.blank? && json_2.present? && json_4.present?
+					matched_deal =json_4.each{|h| h[:is_deal]= "trending"} + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+				elsif json_1.blank? && json_2.present? && json_4.blank?
+					matched_deal = json_2.each {|h| h[:is_deal]="normal"} 
+				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.present?
+					if best_deal['id'] == trending_deal['id']
+						json_5 = [best_deal]
+						matched_deal = json_5.each {|h| h[:is_deal]="best"}  +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+					matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"} 
+					end 
+				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.blank?
+					matched_deal = json_3.each {|h| h[:is_deal]="best"}  +json_1.reject { |h| [best_deal['id']].include? h['id'] }.each {|h| h[:is_deal]="normal"} 
+				end
+			elsif category_id == Deal::CELLPHONE_CATEGORY
+				if json_1.present? && json_2.present? && json_3.present? && json_4.present?
+					if ((best_deal['id'] == trending_deal['id']) && (best_deal['effective_price'] == trending_deal['effective_price']))
+						json_5 = [best_deal]
+				# matched_deal = json_1.delete_if { |h| h["id"] == best_deal['id'] and h["effective_price"] == best_deal['effective_price']}.each {|h| h[:is_deal]="normal"} + json_3.each {|h| h[:is_deal]="best"} 
+
+						matched_deal = json_5.each {|h| h[:is_deal]="best"}  + json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] and [best_deal['effective_price'],trending_deal['effective_price']].include? h['effective_price']}.each {|h| h[:is_deal]="normal"} + json_2.delete_if { |h| h["id"] == trending_deal['id'] and h["effective_price"] == trending_deal['effective_price']}.each {|h| h[:is_deal]="normal"}
+					else
+						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each {|h| h[:is_deal]="trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] and [best_deal['effective_price'],trending_deal['effective_price']].include? h['effective_price']}.each {|h| h[:is_deal]="normal"} + json_2.delete_if { |h| h["id"] == trending_deal['id'] and h["effective_price"] == trending_deal['effective_price']}.each {|h| h[:is_deal]="normal"}
+					end
+				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.present?
+					if ((best_deal['id'] == trending_deal['id']) && (best_deal['effective_price'] == trending_deal['effective_price']))
+						json_5 = [best_deal]
+						matched_deal = json_5.each {|h| h[:is_deal]="best"} + json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] and [best_deal['effective_price'],trending_deal['effective_price']].include? h['effective_price']}.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each {|h| h[:is_deal]="trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] and [best_deal['effective_price'],trending_deal['effective_price']].include? h['effective_price']}.each {|h| h[:is_deal]="normal"} 
+					end
+				elsif json_1.blank? && json_2.present? && json_4.present?
+					matched_deal = json_4.each {|h| h[:is_deal]="trending"} +json_2.delete_if { |h| h["id"] == trending_deal['id'] and h["effective_price"] == trending_deal['effective_price']}.each {|h| h[:is_deal]="normal"}
+				elsif json_1.blank? && json_2.present? && json_4.blank?
+					matched_deal = json_2.each {|h| h[:is_deal]="normal"}
+				elsif	json_1.present? && json_2.blank? && json_3.present? && json_4.blank?
+					matched_deal = json_3.each {|h| h[:is_deal]="best"} +json_1.delete_if { |h| h["id"] == best_deal['id'] and h["effective_price"] == best_deal['effective_price']}.each {|h| h[:is_deal]="normal"}
+				end
 			end
 
 		else
@@ -648,23 +729,31 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 			if category_id == Deal::INTERNET_CATEGORY
 				deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::INTERNET_CATEGORY,zip_code)
 			elsif category_id == Deal::TELEPHONE_CATEGORY
 				deals = Deal.joins(:telephone_deal_attributes).select(select_fields_telephone).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::TELEPHONE_CATEGORY,zip_code)
 			elsif category_id == Deal::CABLE_CATEGORY
 				deals = Deal.joins(:cable_deal_attributes).select(select_fields_cable).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::CABLE_CATEGORY,zip_code)
 			elsif category_id == Deal::CELLPHONE_CATEGORY
 				deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::CELLPHONE_CATEGORY,zip_code)
 			elsif category_id == Deal::BUNDLE_CATEGORY
 				deals = Deal.joins(:bundle_deal_attributes).select(select_fields_bundle).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order(sort_by).group('deals.id')
+				allowed_trending_deal = category_trending_deal(deal_type,Deal::BUNDLE_CATEGORY,zip_code)
 			end
 
 			if deals.present?
 				json = deals.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
 			end
 
-			if json.present?
-				matched_deal = json
-			end
+			if json.present? && allowed_trending_deal.present?
+						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
+				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"} 
+					else
+						matched_deal = json.each {|h| h[:is_deal]="normal"} 
+					end
 		end
 		return matched_deal
 	end

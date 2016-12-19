@@ -92,9 +92,9 @@ match  'blog' => 'website/home#blog', :via => :get
 
   #
   # if Socket.gethostname=="servicedlz-Virtual-Machine"
-  # root to: "home#index"
+  root to: "home#index"
   # else
-  root to: "website/home#index"
+  # root to: "website/home#index"
   # end
 
   devise_for :users

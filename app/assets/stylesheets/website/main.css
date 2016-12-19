@@ -2325,7 +2325,7 @@ a {
      background: #f5942b none repeat scroll 0 0;    color: #fff;    float: right;    padding: 0 12px; cursor: default;    margin: 0 10px 0;
 }
 .accepted-btn:hover {
-    
+
     color: #fff;
 }
 .recontracted-btn {
@@ -6455,7 +6455,7 @@ select::-ms-expand {
     color: #5b5a5a;
     font-size: 13px;
     margin-bottom: 0;
-  
+
 }
 .sd-deal-saving {
     background: #f5f6f3;
@@ -6938,7 +6938,7 @@ margin: 0 0 175px;
 .content-sty p {    color: #565759;}
 .content-sty {    margin: 30px 0 0;    background: #f6f6f6;    padding: 30px 0;}
 .short-des-deals ul{    height: 37px; margin-top: 10px; overflow: hidden;}
-.short-des-deals ul li{  height: 17px; overflow: hidden;} 
+.short-des-deals ul li{  height: 17px; overflow: hidden;}
 .cat-bundle{height: 27px; overflow: hidden;}
 .cat-bundle li{padding: 0 10px;}
 .sd-more-details-page li {    float: left;    font-family: 'open_sansregular';    font-size: 14px !important;    width: 100%;    line-height: 24px !important;    color: #605f5f !important;}

@@ -208,4 +208,6 @@ match  'blog' => 'website/home#blog', :via => :get
   resources :equipment_colors
   resources :cellphone_details
   resources :extra_services
+get  '*a', :to => 'website/errors#routing'
+
 end

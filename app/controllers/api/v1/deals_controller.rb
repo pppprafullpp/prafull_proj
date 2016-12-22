@@ -20,6 +20,16 @@ class Api::V1::DealsController < ApplicationController
 		end
 	end
 
+	def compare_deals
+		if params[:deal_id_first].present? && params[:deal_id_second].present?
+			deal_1 = Deal.find(params[:deal_id_first])
+			deal_2 = Deal.find(params[:deal_id_second])
+			deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes])
+			deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes])
+			render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }
+		end
+	end
+
 	def service_deal_config
 		key = ServiceDealConfig.first.show_deal_name
 		render :status => 200,:json => { :success => true, show_deal_name: key }

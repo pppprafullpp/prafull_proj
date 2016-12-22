@@ -6,10 +6,6 @@ class ApplicationController < ActionController::Base
 
 	helper_method :calculate_offer_price,:display_logo_permission,:decode_api_data,:get_providers_by_category, :get_zipcodes, :get_deal_rating, :get_category_name_by_category_id, :display_deal_name_permission
 
-	rescue_from(ActionController::RoutingError) {
-	 render :template => 'errors/404'
- }
- 
 	before_filter do
 		resource = controller_name.singularize.to_sym
 		method = "#{resource}_params"
@@ -52,8 +48,11 @@ class ApplicationController < ActionController::Base
 	end
 
 	def calculate_offer_price(price_monthly,contract_period)
-		offer_price = ( "%.2f" %  (price_monthly * contract_period)).to_s
+		offer_price = ( "%.2f" %  (price_monthly * contract_period)).to_s 
 	end
+
+
+
 
 	def display_logo_permission(provider_id,deal_type)
 		if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
@@ -77,9 +76,9 @@ class ApplicationController < ActionController::Base
 			elsif [4,41,18, 39, 50, 90].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159475/coming-soonv2_fhbxin.png"
 			elsif [7, 24, 48, 107,10, 47, 61, 112, 113,34,109, 110, 111].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159497/coming-soonv6_s9bnmj.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159497/coming-soonv6_s9bnmj.png" 
 			elsif [11].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159491/coming-soonv5_cklj4p.png"
+				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159491/coming-soonv5_cklj4p.png" 
 			elsif [17].include? provider_id
 				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159479/coming-soonv3_moopcw.png"
 
@@ -106,7 +105,7 @@ class ApplicationController < ActionController::Base
 			# else
 			# 	name =''
 			# end
-		else
+		else 
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title
 			elsif ([2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
@@ -115,7 +114,7 @@ class ApplicationController < ActionController::Base
 				name = title
 			elsif ([10, 47, 61, 112, 113].include? provider_id) && (deal_type == "residence")
 				name = title
-			else
+			else 
 				name = ''
 			end
 		end
@@ -133,6 +132,6 @@ class ApplicationController < ActionController::Base
 		end
 		return zipcodes
 	end
-
+	
 
 end

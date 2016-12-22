@@ -240,18 +240,18 @@ class Api::V1::AppUsersController < ApplicationController
   def verify_user
 	if params[:id].present?
     data=AppUser.find(params[:id])
-    if data.email_verified
+    if data.email_verified == true
       render :json=>{
         verified:true
       }
     else
       render :json=>{
-        verified:true
+        verified:false
       }
     end
 else 
 render :json=>{
-        verified:true
+        verified:false
       }
 end
   end

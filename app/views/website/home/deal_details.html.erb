@@ -50,45 +50,41 @@
             <%else%>
               <div class="row box-sec  sd-deals-details " id="deal-form">
             <%end%>
-            <%= render :partial => "website/home/category_best_and_trending_deals" if session[:user_id].present?%>
-            <% @dashboard_data.each do |data| %>
-              <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
-                <div class="border-radius-bg auto-height">
-                  <% if data['is_customisable'] == true %>
-                    <div class="best-trending-sty"><img src="/assets/website/custom_deal.png" style="width:33px;" alt="Customize Deal Logo"></div>
-                  <% end %>
-                  <div class="sddeals-imgcon">
-                    <%if display_logo_permission(data['service_provider_id'],data['deal_type'])%>
-                     <a href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>">
-                      <img src="<%= display_logo_permission(data['service_provider_id'],data['deal_type'])%>" alt="Service Provider Logo" class="img-responsive"></a>
-                    <%else%>
-                    <a href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>">
-                      <img src="<%= data['deal_image_url'] %>" alt="Service Provider Logo" class="img-responsive"></a>
-                    <%end%>
-                  </div>
-                  
-                  <div class="main-external-div1">
-                    
-
-
-
-            <%title =display_deal_name_permission(data['service_provider_id'],data['deal_type'],data['title'])%>
-            <% if title.present? %>
-          <h5 class="tooltip_p" title='<%=data['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
-          <% else %>
-          <h5 ><%= title.truncate(25) rescue nil %></h5>
-          <% end %>
-                    <ul class="description-height">
-                      <li><%=raw(data['short_description'])%></li>
-                    </ul>
-                   
-                     
-                  
-                 
-                    
-                  </div>
+            <%#= render :partial => "website/home/category_best_and_trending_deals" if session[:user_id].present?%>
+            <% if @dashboard_data.present? %>
+              <% @dashboard_data.each do |data| %>
+                <div class="col-xs-12 col-sm-6 col-md-4 sd-deals-block">
+                  <div class="border-radius-bg auto-height">
+                    <% if data[:is_deal] == "best" %>
+                     <div class="best-trending-sty"><img src="/assets/website/best_deal.png" alt="Best Deal"></div>
+                     <% elsif data[:is_deal] == "trending"  %>
+                      <div class="best-trending-sty"><img src="/assets/website/trending_deal.png" alt="Trending Deal"></div>
+                     <% end %>
+                    <% if data['is_customisable'] == true %>
+                      <div class="best-trending-sty"><img src="/assets/website/custom_deal.png" style="width:33px;" alt="Customize Deal Logo"></div>
+                    <% end %>
+                    <div class="sddeals-imgcon">
+                      <%if display_logo_permission(data['service_provider_id'],data['deal_type'])%>
+                        <a href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>">
+                        <img src="<%= display_logo_permission(data['service_provider_id'],data['deal_type'])%>" alt="Service Provider Logo" class="img-responsive"></a>
+                      <%else%>
+                        <a href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>">
+                        <img src="<%= data['deal_image_url'] %>" alt="Service Provider Logo" class="img-responsive"></a>
+                      <%end%>
+                    </div>
+                    <div class="main-external-div1">
+                      <%title =display_deal_name_permission(data['service_provider_id'],data['deal_type'],data['title'])%>
+                      <% if title.present? %>
+                        <h5 class="tooltip_p" title='<%=data['title']%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= title.truncate(25) rescue nil%></h5>
+                      <% else %>
+                        <h5 ><%= title.truncate(25) rescue nil %></h5>
+                      <% end %>
+                      <ul class="description-height">
+                        <li><%=raw(data['short_description'])%></li>
+                      </ul>
+                    </div>
                   <div>
-                 <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
+                  <%rating=CommentRating.where(:deal_id => data["id"]).average(:rating_point).to_i%>
                     <%if rating.present?%>
                       <p id="rating" class="sd-rating">
                         <%rating.times do%>
@@ -100,14 +96,12 @@
                         <%end%>
                       </p>
                     <%else%>
-                    <p id="rating" class="sd-rating">
-                      <%5.times do%>
-                        <i class="a fa-star-o"></i>
-                      <%end%>
-                     </p>
+                      <p id="rating" class="sd-rating">
+                        <%5.times do%>
+                          <i class="a fa-star-o"></i>
+                        <%end%>
+                      </p>
                     <%end%>
-
-                   
                     <a class="sd-more-details" href="<%= more_deal_details_website_home_index_path(:deal_id=> data['id'], :effective_price => data['effective_price']) %>"> +More Details</a></div>
                   <div class="box_down">
                     <span class="separator_2"></span>
@@ -148,6 +142,7 @@
                   </div>
                 </div>
               </div>
+            <% end %>
             <% end %>
           </div>
         </div>

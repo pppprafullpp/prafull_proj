@@ -270,7 +270,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			select_fields_telephone="deals.*,telephone_deal_attributes.domestic_call_minutes,telephone_deal_attributes.international_call_minutes,telephone_deal_attributes.countries,telephone_deal_attributes.features"
 			select_fields_cable="deals.*,cable_deal_attributes.free_channels,cable_deal_attributes.premium_channels,cable_deal_attributes.free_channels_list,cable_deal_attributes.premium_channels_list"
 			select_fields_cellphone="deals.*,cellphone_deal_attributes.effective_price"
-			select_fields_bundle="deals.*bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
+			select_fields_bundle="deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
 		end
 		if sp.service_category.name == 'Internet'
 			app_user_download_speed = sp.internet_service_preference.download_speed
@@ -455,6 +455,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 		if best_deals.present?
 			if return_count==1
+				best_deals = best_deals.order("price ASC")
 				return best_deals.first
 			else
 				return best_deals.order(sort_by)
@@ -486,7 +487,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 				if user_preference.present?
 					current_download_speed = user_preference.internet_service_preference.download_speed
 					allowed_best_deal=category_best_deal(deal_type,user_preference,zip_code,1,false,options)
-					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options)
+					best_deals = category_best_deal(deal_type,user_preference,zip_code,nil,true,options).order(sort_by)
 					greater_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download > ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 					smaller_deals = Deal.joins(:internet_deal_attributes).select(select_fields_internet).where(deal_validation_conditions+" AND internet_deal_attributes.download < ? AND deals.id not in (?) AND deals.id not in (?)", current_download_speed,restricted_deals,best_deals.ids).order(sort_by).group('deals.id')
 				else
@@ -680,8 +681,9 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						matched_deal = json_5.each {|h| h[:is_deal]="best"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}   + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
 					else
 						matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}  + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
-					end
-
+						# matched_deal =	matched_deal.sort_by{ |hash| hash['deal_price'] }.reverse
+						# matched_deal =	matched_deal.sort_by{|a| a['deal_price'].to_f}.reverse
+					end 
 				elsif json_1.blank? && json_2.present? && json_4.present?
 					matched_deal =json_4.each{|h| h[:is_deal]= "trending"} + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
 				elsif json_1.blank? && json_2.present? && json_4.blank?

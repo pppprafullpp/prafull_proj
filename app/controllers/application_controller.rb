@@ -55,56 +55,76 @@ class ApplicationController < ActionController::Base
 
 
 	def display_logo_permission(provider_id,deal_type)
-		if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
-			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
-				url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
-			# elsif [2, 5, 15, 43].include? provider_id
-			# 	url = "http://res.cloudinary.com/servicedealz/image/upload/v1479289775/Spectrum_1_mpwznq.png"
-			# elsif [7, 24, 48, 107].include? provider_id
-			# 	url = "http://res.cloudinary.com/servicedealz/image/upload/v1479289775/Spectrum_1_mpwznq.png"
-			# elsif [10, 47, 61, 112, 113].include? provider_id
-			# 	url = "http://res.cloudinary.com/servicedealz/image/upload/v1478696145/cox_w01xck.png"
+		if Socket.gethostname=="servicedlz-Virtual-Machine"
+			if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
+				if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+					url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
+				else
+					false
+				end
 			else
-				false
-			end
+					if ([7, 24, 48, 107].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487589/coming-soon-charter_vy9ubd.png"
+				elsif ([10, 47, 61, 112, 113].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487586/coming-soon-cox_jjm06i.png"
+				elsif ([41].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487582/coming-soon-dish_r3zui8.png"
+				elsif ([109, 110, 111].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487579/coming-soon-mediacom_ncyf1z.png"
+				elsif ([2, 5, 15, 43].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487576/coming-soon-twc_hw5dal.png"
+				elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
+					url ="http://res.cloudinary.com/servicedealz/image/upload/v1482487573/coming-soonv-at_t_lkijzw.png"
+				elsif ([18, 39, 40, 50, 90].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487571/coming-soon-verizon_j67ep2.png"
+				elsif ([17].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487564/coming-soon-vonage_lyi1wo.png"
+				elsif ([29, 49, 54].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487562/coming-soon-xfinity_kx74ld.png"
+				elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+		   		url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
+				else
+		  		url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
+				end
+	    end
 		else
-		if ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
-				# url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
-			elsif [2, 5, 15, 43].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159471/coming-soonv1_faxwxg.png"
-			elsif [4,41,18, 39, 50, 90].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159475/coming-soonv2_fhbxin.png"
-			elsif [7, 24, 48, 107,10, 47, 61, 112, 113,34,109, 110, 111].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159497/coming-soonv6_s9bnmj.png" 
-			elsif [11].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159491/coming-soonv5_cklj4p.png" 
-			elsif [17].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159479/coming-soonv3_moopcw.png"
-
-			elsif [28, 55].include? provider_id
-				url ="http://res.cloudinary.com/servicedealz/image/upload/v1478159526/coming-soonv11_stfc0n.png"
-			elsif [29, 49, 54].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159487/coming-soonv4_ac3qrs.png"
-			elsif [19,21,20,45,22,23,51,91,25,52,26,27,31,32,33,35,37,38,40,42,95,44,85,53,63,82,88,89,101,102, 103, 104, 105, 106,108,114].include? provider_id
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
-			elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
-				url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
-			# elsif (![1,3,6,12,30].include? provider_id) && (deal_type == "business")
-			# 	url = "http://res.cloudinary.com/servicedealz/image/upload/v1477049177/default_logo_uak2tg.png"
+			if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
+				if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+					url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
+				else
+					false
+				end
 			else
-				url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
+				if ([7, 24, 48, 107].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487589/coming-soon-charter_vy9ubd.png"
+				elsif ([10, 47, 61, 112, 113].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487586/coming-soon-cox_jjm06i.png"
+				elsif ([41].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487582/coming-soon-dish_r3zui8.png"
+				elsif ([109, 110, 111].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487579/coming-soon-mediacom_ncyf1z.png"
+				elsif ([2, 5, 15, 43].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487576/coming-soon-twc_hw5dal.png"
+				elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
+					url ="http://res.cloudinary.com/servicedealz/image/upload/v1482487573/coming-soonv-at_t_lkijzw.png"
+				elsif ([18, 39, 40, 50, 90].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487571/coming-soon-verizon_j67ep2.png"
+				elsif ([17].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487564/coming-soon-vonage_lyi1wo.png"
+				elsif ([29, 49, 54].include? provider_id)
+					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487562/coming-soon-xfinity_kx74ld.png"
+				elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+		   		url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
+				else
+		  		url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
+				end
 			end
 		end
 	end
 
 	def display_deal_name_permission(provider_id,deal_type,title)
 		if ServiceDealConfig::where(config_key: "show_deals_name").first.config_value== ServiceDealConfig::SHOW_DEAL_NAME
-			# if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title
-			# else
-			# 	name =''
-			# end
 		else 
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title

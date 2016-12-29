@@ -205,6 +205,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			zip_code = app_user.zip
 			deal_type=app_user.user_type
 		end
+
 		category_name = ServiceCategory.get_category_name_by_id(category_id)
 		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 		deal_validation_conditions="deals.is_active=true AND deals.deal_type='"+deal_type+"' AND deals.service_category_id="+category_id+" "
@@ -216,7 +217,6 @@ if !((sc.id == 4) && (deal_type == "residence"))
 		select_fields_bundle="deals.*,bundle_deal_attributes.free_channels,bundle_deal_attributes.premium_channels,bundle_deal_attributes.free_channels_list,bundle_deal_attributes.premium_channels_list,bundle_deal_attributes.domestic_call_minutes,bundle_deal_attributes.international_call_minutes,bundle_deal_attributes.download as download_speed,bundle_deal_attributes.upload as upload_speed"
 
 		select_data = eval("select_fields_#{category_name}")
-
 		if sorting_key == 'download_speed' #For Internet and bundle
 			if [ServiceCategory::INTERNET_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
 				deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + " AND deals.id not in (?)",restricted_deals).order("#{category_name}_deal_attributes.download DESC,deals.price ASC").group('deals.id')
@@ -675,33 +675,67 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			# 		json_5 = [best_deal]
 			# 	end
 			# end
-			if !(category_id == Deal::CELLPHONE_CATEGORY)
+			if (!(category_id == Deal::CELLPHONE_CATEGORY) && (user_preference.present?))
 				if json_1.present? && json_2.present? && json_3.present? && json_4.present?
 					if best_deal['id'] == trending_deal['id']
 						json_5 = [best_deal]
-						matched_deal = json_5.each {|h| h[:is_deal]="best"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}   + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						combined_json = json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}   + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json_5.each {|h| h[:is_deal]="best"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+						else
+							matched_deal = json_5.each {|h| h[:is_deal]="best"} + combined_json.sort_by{|a| a['deal_price'].to_f}
+						end
 					else
-						matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}  + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
-						# matched_deal =	matched_deal.sort_by{ |hash| hash['deal_price'] }.reverse
-						# matched_deal =	matched_deal.sort_by{|a| a['deal_price'].to_f}.reverse
+						combined_json =json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}  + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse
+						else
+							matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f} 
+						end
 					end 
 				elsif json_1.blank? && json_2.present? && json_4.present?
-					matched_deal =json_4.each{|h| h[:is_deal]= "trending"} + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+					combined_json =  json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+					if sort_by == "price DESC"
+						matched_deal = json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+					else
+						matched_deal = json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}
+					end
 				elsif json_1.blank? && json_2.present? && json_4.blank?
-					matched_deal = json_2.each {|h| h[:is_deal]="normal"}
+					combined_json = json_2.each {|h| h[:is_deal]="normal"}
+					if sort_by == "price DESC"
+						matched_deal = combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+					else
+						matched_deal = combined_json.sort_by{|a| a['deal_price'].to_f}
+					end
 				elsif  json_1.blank? && json_2.blank? && json_3.blank? && json_4.present?
 					matched_deal = json_4.each {|h| h[:is_deal]="trending"}
 				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.present?
 					if best_deal['id'] == trending_deal['id']
 						json_5 = [best_deal]
-						matched_deal = json_5.each {|h| h[:is_deal]="best"}  +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}
+						combined_json = json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json_5.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+						else
+							matched_deal = json_5.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}
+						end
 					else
-					matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} +json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}
+						combined_json = json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+						else
+							matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}
+						end
 					end
+					
 				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.blank?
-					matched_deal = json_3.each {|h| h[:is_deal]="best"}  +json_1.reject { |h| [best_deal['id']].include? h['id'] }.each {|h| h[:is_deal]="normal"}
+					combined_json = json_1.reject { |h| [best_deal['id']].include? h['id'] }.each {|h| h[:is_deal]="normal"}
+					if sort_by == "price DESC"
+						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+					else
+						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}
+					end
 				end
-			elsif category_id == Deal::CELLPHONE_CATEGORY
+			elsif (category_id == Deal::CELLPHONE_CATEGORY) && (user_preference.present?)
 				if json_1.present? && json_2.present? && json_3.present? && json_4.present?
 					if ((best_deal['id'] == trending_deal['id']) && (best_deal['effective_price'] == trending_deal['effective_price']))
 						json_5 = [best_deal]

@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
 					false
 				end
 			else
-				if ([7, 24, 48, 107].include? provider_id)
+				if ([7, 24, 48, 107].include? provider_id) && (deal_type == "business")
 					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487589/coming-soon-charter_vy9ubd.png"
 				elsif ([7, 24, 48, 107,2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
 					url = "http://res.cloudinary.com/servicedealz/image/upload/v1479289775/Spectrum_1_mpwznq.png"
@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
 					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487582/coming-soon-dish_r3zui8.png"
 				elsif ([109, 110, 111].include? provider_id)
 					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487579/coming-soon-mediacom_ncyf1z.png"
-				elsif ([2, 5, 15, 43].include? provider_id)
+				elsif ([2, 5, 15, 43].include? provider_id) && (deal_type == "business")
 					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487576/coming-soon-twc_hw5dal.png"
 				elsif ([1,3,6,12,30].include? provider_id) && (deal_type == "residence")
 					url ="http://res.cloudinary.com/servicedealz/image/upload/v1482487573/coming-soonv-at_t_lkijzw.png"

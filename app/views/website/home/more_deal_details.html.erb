@@ -94,7 +94,7 @@
           <h3><%= display_deal_name_permission(@deal.service_provider_id,@deal.deal_type,@deal.title) %></h3>
           <h4>Details</h4>
 
-          <%=raw(@deal.short_description)%>
+          <%#=raw(@deal.short_description)%>
           <%=raw (@deal.detail_description)%>
           <%if @customized_deals.present?%>
               <%= render :partial => "#{@customized_deals["service_category_name"].downcase}_customize_deal", :locals =>{:customized_deals =>@customized_deals }  %>

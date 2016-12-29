@@ -275,6 +275,12 @@ end
             <ul class="sd-deal-price">
               <li class="sd-dealprice-single">Deal Price:<span>$<%= deal.price %>/mo</span></li>
               <li class="sd-effective-price-single">Effective Price:<span>$<%= @order.order_items.first.effective_price %>/mo</span></li>
+              <% if deal.contract_period == 0 %>
+                <li>Contract: <span>None</span></li>
+              <% else %>
+                <li>Contract: <span><%= deal.contract_period %> months</span></li>
+              <% end %>
+
               <li>Contract:<span><%= deal.contract_period %></span></li>
             </ul>
             <% if deal.is_customisable == true && deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
@@ -343,7 +349,11 @@ end
             <ul class="sd-deal-price">
               <li class="sd-dealprice-single">Deal Price:<span>$<%= deal.price %>/mo</span></li>
               <li class="sd-effective-price-single">Effective Price:<span>$<%= @order.order_items.first.effective_price %>/mo</span></li>
-              <li>Contract:<span><%= deal.contract_period %></span></li>
+              <% if deal.contract_period == 0 %>
+                <li>Contract: <span>None</span></li>
+              <% else %>
+                <li>Contract: <span><%= deal.contract_period %> months</span></li>
+              <% end %>
             </ul>
             <% if deal.is_customisable == true && deal.service_category_id == Deal::CELLPHONE_CATEGORY %>
               <div id='deal-attributes-added' class="deal-attributes-added">

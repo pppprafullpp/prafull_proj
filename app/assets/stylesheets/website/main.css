@@ -3022,8 +3022,7 @@ a {
     background: #f6f6f6 none repeat scroll 0 0;
     border: 1px solid #eee;
     border-radius: 5px;
-    float: left;
-    padding: 25px 0 18px 20px;
+    padding: 25px 0 42px 20px;
     width: 100%;
 }
 .calculate-bandwidth {
@@ -6268,6 +6267,10 @@ ul.caption-dealdet li::before {
     margin-top: 50px;
     margin-bottom: 40px;
 }
+.sd-services-col h2 {
+     margin-top: 30px;
+    margin-bottom: 32px;
+}
 .sd-services-col p {
     color: #e50005;
     font-size: 18px;
@@ -6935,8 +6938,9 @@ margin: 0 0 175px;
 .reset-password .usage-type{ margin-top: 20px;}
 .account_page_height{min-height: 600px;}
 .content-sty h4{color: #3e83d1;padding: 16px 0;display: block;}
-.content-sty p {    color: #565759;}
-.content-sty {    margin: 30px 0 0;    background: #f6f6f6;    padding: 30px 0;}
+.content-sty p {       color: #000;
+    font-size: 14px;}
+.content-sty {     padding: 30px 0;}
 .short-des-deals ul{    height: 37px; margin-top: 10px; overflow: hidden;}
 .short-des-deals ul li{  height: 17px; overflow: hidden;}
 .cat-bundle{height: 27px; overflow: hidden;}
@@ -6981,3 +6985,11 @@ ul.description-height  li{    height: 37px;
     padding: 0;
     text-align: center;
     width: 100%;}
+
+
+.placeh-effect input:focus ~ .floating-label,.placeh-effect input:not(:focus):valid ~ .floating-label,.placeh-effect select:focus ~ .floating-label,.placeh-effect select:not(:focus):valid ~ .floating-label{ top: 1px;bottom: 10px;left:30px;font-size: 12px;opacity: 1; color: #999;}
+.inputText {  font-size: 14px;padding-top: 15px;height: 44px;  }
+.floating-label { position: absolute;  pointer-events: none;  left: 27px;  top: 10px;  font-size:14px;  transition: 0.2s ease all;}
+
+
+

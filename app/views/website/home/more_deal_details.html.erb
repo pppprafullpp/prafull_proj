@@ -94,8 +94,8 @@
           <h3><%= display_deal_name_permission(@deal.service_provider_id,@deal.deal_type,@deal.title) %></h3>
           <h4>Details</h4>
 
-          <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>
-          <p></i><%=@deal.detail_description.to_s.gsub(/\n/,"<br>").html_safe%></p>
+          <%=raw(@deal.short_description)%>
+          <%=raw (@deal.detail_description)%>
           <%if @customized_deals.present?%>
               <%= render :partial => "#{@customized_deals["service_category_name"].downcase}_customize_deal", :locals =>{:customized_deals =>@customized_deals }  %>
           <%else%>

@@ -597,6 +597,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						matched_deal = json.each {|h| h[:is_deal]="normal"}
 					end
 				end
+
 			elsif category_id == Deal::BUNDLE_CATEGORY
 				allowed_trending_deal = category_trending_deal(deal_type,Deal::BUNDLE_CATEGORY,zip_code)
 				if user_preference.present?
@@ -688,6 +689,8 @@ if !((sc.id == 4) && (deal_type == "residence"))
 					matched_deal =json_4.each{|h| h[:is_deal]= "trending"} + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
 				elsif json_1.blank? && json_2.present? && json_4.blank?
 					matched_deal = json_2.each {|h| h[:is_deal]="normal"}
+				elsif  json_1.blank? && json_2.blank? && json_3.blank? && json_4.present?
+					matched_deal = json_4.each {|h| h[:is_deal]="trending"}
 				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.present?
 					if best_deal['id'] == trending_deal['id']
 						json_5 = [best_deal]

@@ -11,13 +11,13 @@
             <td align="center" class="col-spacing compare-sty">
               <% url1 = display_logo_permission(@deal_first.service_provider_id,@deal_first.deal_type)%>
               <%= image_tag("#{url1}", :size => "200x200") %>  <br>
-              <a href="#"><%= @deal_first.try(:short_description)%></a><br>
+              <a href="#"><%= raw(@deal_first.try(:short_description))%></a><br>
               <span class="price-com">$ <b><%= @deal_first.try(:price) %> / month</b></span></td>
 
               <td align="center" class="col-spacing compare-sty">
                 <% url2 = display_logo_permission(@deal_second.service_provider_id,@deal_second.deal_type)%>
                 <%= image_tag("#{url2}", :size => "200x200") %> <br>
-              <a href="#"><%= @deal_second.try(:short_description)%></a> <br>
+              <a href="#"><%= raw(@deal_second.try(:short_description))%></a> <br>
               <span class="price-com">$ <b><%= @deal_second.try(:price) %> / month</b></span></td>
 
            </tr>

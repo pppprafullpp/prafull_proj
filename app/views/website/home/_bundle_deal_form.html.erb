@@ -1,8 +1,7 @@
 
-
 <div class="row">
   <div class="col-lg-12">
-    <% if @deal.try(:bundle_deal_attributes).try(:first).try(:free_channels).present? %>
+    <% if @deal.try(:bundle_deal_attributes).try(:first).try(:free_channels).present? && @deal.try(:bundle_deal_attributes).try(:first).try(:free_channels_list).present? %>
         <h5 class="margin_bot20">More Information</h5>
         <table class="table table-bordered">
           <thead>

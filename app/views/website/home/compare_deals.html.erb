@@ -22,7 +22,7 @@
                 <%= image_tag("#{url1}", :size => "200x200") %> 
              </td>
 
-                <td class="col-spacing " align="center">
+                <td align="center">
                    <% url1 = display_logo_permission(@deal_second.service_provider_id,@deal_second.deal_type)%>
                 <%= image_tag("#{url1}", :size => "200x200") %> 
             </td>
@@ -57,9 +57,9 @@
                 <td class="text-center"><%= @deal_first.try(:contract_period) %> months</td>
               <% end %>
               <% if @deal_second.try(:contract_period) == 0 %>
-                <td class="text-center"><%= @deal_second.try(:contract_period) %> months</td>
-              <% else %>
                 <td class="text-center">None</td>
+              <% else %>
+                <td class="text-center"><%= @deal_second.try(:contract_period) %> months</td>
               <% end %>
             </tr>
              <tr>

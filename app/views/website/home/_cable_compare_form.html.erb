@@ -18,6 +18,9 @@
     <% end %>
   </tr>
   <% end %>
+
+   <%loop_length= [@deal_first.additional_offers.count,@deal_second.additional_offers.count].max%>
+<%if loop_length > 0 %>
 <tr>
    <table>
 
@@ -50,3 +53,4 @@
     </table>
     <% end %>
   </tr>
+  <% end %>

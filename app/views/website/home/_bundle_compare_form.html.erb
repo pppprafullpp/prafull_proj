@@ -9,13 +9,13 @@
       </tr>
       <tr>
         <td width="30%">Download</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:download).present? ? @deal_attributes_first[index].try(:download) : "NA" %></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:download).present? ?  @deal_attributes_second[index].try(:download) : "NA"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:download).present? ? "#{@deal_attributes_first[index].try(:download)} Mbps" : "NA" %></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:download).present? ?  "#{@deal_attributes_second[index].try(:download)} Mbps" : "NA"%></td>
       </tr>
       <tr>
         <td>Upload</td>
-        <td class="text-center"><%= @deal_attributes_first[index].try(:upload).present? ? @deal_attributes_first[index].try(:upload) : "NA"%></td>
-        <td class="text-center"><%=@deal_attributes_second[index].try(:upload).present? ? @deal_attributes_second[index].try(:upload) : "NA"%></td>
+        <td class="text-center"><%= @deal_attributes_first[index].try(:upload).present? ? "#{@deal_attributes_first[index].try(:upload)} Mbps" : "NA"%></td>
+        <td class="text-center"><%=@deal_attributes_second[index].try(:upload).present? ? "#{@deal_attributes_second[index].try(:upload)} Mbps" : "NA"%></td>
       </tr>
 
       <tr>
@@ -39,6 +39,8 @@
     </table>
     <% end %>
   </tr>
+  <%loop_length= [@deal_first.additional_offers.count,@deal_second.additional_offers.count].max%>
+<%if loop_length > 0 %>
 <tr>
    <table>
 
@@ -71,3 +73,4 @@
     </table>
     <% end %>
   </tr>
+  <% end %>

@@ -1,4 +1,8 @@
+<% if session[:user_id].present?%>
+  <% app_user =AppUser.find_by_id(session[:user_id])
+   user_preference_price = app_user.service_preferences.where(service_category_name: @category).first.price rescue 0 %>
 
+<% end %>
 <!--top-->
 <section class="compare-design">
     <div class="container">
@@ -46,8 +50,15 @@
             </tr>
               <tr>
               <td scope="row">Saving</td>
+              <% if  app_user.present? %>
+              <%saving_1 = user_preference_price - @deal_first.try(:effective_price)%>
+              <%saving_2 = user_preference_price - @deal_second.try(:effective_price)%>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_1 > 0 ? "$#{saving_1}/mon" : "NA"%></span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_2 > 0 ? "$#{saving_2}/mon"  : "NA"%></span></td>
+              <% else %>
               <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">NA</span></td>
               <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">NA</span></td>
+              <% end %>
             </tr>
             <tr>
               <td scope="row">Contract</td>

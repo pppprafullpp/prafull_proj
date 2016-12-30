@@ -983,9 +983,9 @@ label:focus {
 /*--------------------------End of Details section------------------*/
 /*Compare design*/
 
-.compare-design {
+/*.compare-design {
     background: #f6f8fa;
-}
+}*/
 #zipcode .modal-content {
     width: 100%;
     float: left;
@@ -6993,5 +6993,20 @@ ul.description-height  li{    height: 37px;
 .inputText {  font-size: 14px;padding-top: 15px;height: 44px;  }
 .floating-label { position: absolute;  pointer-events: none;  left: 27px;  top: 10px;  font-size:14px;  transition: 0.2s ease all;}
 
+.compare-design {
+    background: #fff;
+}
+.row-differ th{    background: none;
+    border: none !important;    padding: 20px 0 !important;
+    font-size: 16px;
 
+}
+
+.table-bordered {
+    border: 1px solid #ddd !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    margin-bottom:0 !important;
+  
+}
 

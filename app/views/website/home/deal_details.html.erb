@@ -35,7 +35,7 @@
                           <%end%>
                         </div>
                         <p class="caption-title tooltip_p" title='<%=bd.title%>', data-toggle = 'tooltip' data-placement = 'bottom'><%= display_deal_name_permission(bd.service_provider_id,bd.deal_type,bd.title).truncate(20) rescue nil%></p>
-                        <div class="sd-best-price">Price  <span>$ <%=bd.price%></span>  </div>
+                        <div class="sd-best-price">Price  <span>$<%="%.2f" % bd.price%>/mon</span>  </div>
                         <div class="caption-des text-left cat-bundle"><%=raw(bd.short_description)%></div>
                       </a>
                     </div>

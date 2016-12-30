@@ -75,8 +75,40 @@
             </tr>
              <tr>
               <td scope="row"></td>
-              <td class="text-center"><a  href="<%=order_website_app_users_path(:deal_id=> @deal_first.id)%>" class="order-btn">Order</a></td>
-              <td  class="text-center"><a href="<%=order_website_app_users_path(:deal_id=> @deal_second.id)%>" class="order-btn">Order</a></td>
+              <% if app_user.present? && app_user.email_verified == true%>
+                <% if @deal_first.is_order_available == true %>
+                    <td class="text-center"><a  href="<%=order_website_app_users_path(:deal_id=> @deal_first.id)%>" class="order-btn">Order</a></td>
+                <% else %>
+                  <td  class="text-center">
+                  <a id="order-btn" class="order-btn btn_3" >Not Available</a></td>
+                <% end %>
+              <% elsif app_user.present? && app_user.email_verified != true %>
+                <td  class="text-center"><a class="order-btn" href="javascript:void(0)">Verify email</a></td>
+              <% else %>
+                <% if @deal_first.is_order_available == true %>
+                   <td class="text-center"><a  href="<%=order_website_app_users_path(:deal_id=> @deal_first.id)%>" class="order-btn">Order</a></td>
+                   <% else %>
+                  <td  class="text-center">
+                   <a id="order-btn" class="order-btn btn_3" >Not Available</a></td>
+                   <% end %>
+              <% end %>
+             <% if app_user.present? && app_user.email_verified == true%>
+                <% if @deal_second.is_order_available == true %>
+                    <td class="text-center"><a  href="<%=order_website_app_users_path(:deal_id=> @deal_second.id)%>" class="order-btn">Order</a></td>
+                <% else %>
+                  <td  class="text-center">
+                  <a id="order-btn" class="order-btn btn_3" >Not Available</a></td>
+                <% end %>
+              <% elsif app_user.present? && app_user.email_verified != true %>
+                <td  class="text-center"><a class="order-btn" href="javascript:void(0)">Verify email</a></td>
+              <% else %>
+                <% if @deal_second.is_order_available == true %>
+                   <td class="text-center"><a  href="<%=order_website_app_users_path(:deal_id=> @deal_second.id)%>" class="order-btn">Order</a></td>
+                   <% else %>
+                  <td  class="text-center">
+                   <a id="order-btn" class="order-btn btn_3" >Not Available</a></td>
+                   <% end %>
+              <% end %>
             </tr>
 
   

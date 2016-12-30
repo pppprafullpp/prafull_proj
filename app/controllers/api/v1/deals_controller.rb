@@ -21,12 +21,28 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def compare_deals
-		if params[:deal_id_first].present? && params[:deal_id_second].present?
-			deal_1 = Deal.find(params[:deal_id_first])
-			deal_2 = Deal.find(params[:deal_id_second])
-			deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes])
-			deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes])
-			render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }
+		if params[:deal_id_first].present? && params[:deal_id_second].present? && params[:effective_price_1].present? && params[:effective_price_2].present?
+			deal_1 = Deal.find_by_id(params[:deal_id_first])
+			deal_2 = Deal.find_by_id(params[:deal_id_second])
+			if deal_1.present? && deal_2.present?
+				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price, :effective_price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:effective_price => params[:effective_price_1])
+				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price, :effective_price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:effective_price => params[:effective_price_2])
+				render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }
+			else
+				render :status => 400,:json => { :success => false, message: 'Please select valid deal.' }
+			end
+		elsif params[:deal_id_first].present? && params[:deal_id_second].present? && params[:effective_price_1].blank? && params[:effective_price_2].blank?
+			deal_1 = Deal.find_by_id(params[:deal_id_first])
+			deal_2 = Deal.find_by_id(params[:deal_id_second])
+			if deal_1.present? && deal_2.present?
+				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes])
+				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes])
+				render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }
+			else
+				render :status => 400,:json => { :success => false, message: 'Please select valid deal.' }
+			end
+		else
+			render :status => 400,:json => { :success => false, message: 'Please select valid deal.' }
 		end
 	end
 

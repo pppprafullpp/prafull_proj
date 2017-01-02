@@ -3,43 +3,51 @@
     <%(0...loop_length).each_with_index do |attribute,index|%>
     <table class="table table-bordered">
       <tr>
-        <th scope="row" >Speed/Call Minutes/Channels</th>
+        <th scope="row" >Speed</th>
         <th></th>
         <th></th>
       </tr>
       <tr>
         <td width="30%">Download</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:download).present? ? "#{@deal_attributes_first[index].try(:download)} Mbps" : "NA" %></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:download).present? ?  "#{@deal_attributes_second[index].try(:download)} Mbps" : "NA"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:download).present? ? "#{@deal_attributes_first[index].try(:download)} Mbps" : "N/A" %></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:download).present? ?  "#{@deal_attributes_second[index].try(:download)} Mbps" : "N/A"%></td>
       </tr>
       <tr>
         <td>Upload</td>
-        <td class="text-center"><%= @deal_attributes_first[index].try(:upload).present? ? "#{@deal_attributes_first[index].try(:upload)} Mbps" : "NA"%></td>
-        <td class="text-center"><%=@deal_attributes_second[index].try(:upload).present? ? "#{@deal_attributes_second[index].try(:upload)} Mbps" : "NA"%></td>
+        <td class="text-center"><%= @deal_attributes_first[index].try(:upload).present? ? "#{@deal_attributes_first[index].try(:upload)} Mbps" : "N/A"%></td>
+        <td class="text-center"><%=@deal_attributes_second[index].try(:upload).present? ? "#{@deal_attributes_second[index].try(:upload)} Mbps" : "N/A"%></td>
       </tr>
-
+      <tr>
+        <th scope="row" >Channels</th>
+        <th></th>
+        <th></th>
+      </tr>
       <tr>
         <td width="30%">Channel Count</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:channel_count).present? ? @deal_attributes_first[index].try(:channel_count) : "NA"%></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:channel_count).present? ? @deal_attributes_second[index].try(:channel_count) : "NA"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:channel_count).present? ? @deal_attributes_first[index].try(:channel_count) : "N/A"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:channel_count).present? ? @deal_attributes_second[index].try(:channel_count) : "N/A"%></td>
       </tr>
-
+       <tr>
+        <th scope="row" >Call Minutes</th>
+        <th></th>
+        <th></th>
+      </tr>
       <tr>
         <td width="30%">Domestic</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:domestic_call_minutes).present? ? @deal_attributes_first[index].try(:domestic_call_minutes) : "NA"%></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:domestic_call_minutes).present? ? @deal_attributes_second[index].try(:domestic_call_minutes) : "NA"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:domestic_call_minutes).present? ? @deal_attributes_first[index].try(:domestic_call_minutes) : "N/A"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:domestic_call_minutes).present? ? @deal_attributes_second[index].try(:domestic_call_minutes) : "N/A"%></td>
       </tr>
       <tr>
         <td width="30%">International</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:international_call_minutes).present? ? @deal_attributes_first[index].try(:international_call_minutes) : "NA" %></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:international_call_minutes).present? ? @deal_attributes_second[index].try(:international_call_minutes) : "NA"%></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:international_call_minutes).present? ? @deal_attributes_first[index].try(:international_call_minutes) : "N/A" %></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:international_call_minutes).present? ? @deal_attributes_second[index].try(:international_call_minutes) : "N/A"%></td>
       </tr>
 
       
     </table>
     <% end %>
   </tr>
-  <%loop_length= [@deal_first.additional_offers.count,@deal_second.additional_offers.count].max%>
+  <%loop_length= [@deal_equipment_first.count,@deal_equipment_second.count].max%>
 <%if loop_length > 0 %>
 <tr>
    <table>
@@ -52,13 +60,13 @@
    </table>
 </tr>
   <tr>
-   <%loop_length= [@deal_attributes_first.count,@deal_attributes_second.count].max%>
+   <%loop_length= [@deal_equipment_first.count,@deal_equipment_second.count].max%>
     <%(0...loop_length).each_with_index do |attribute,index|%>
     <table class="table table-bordered">
       <tr>
         <th width="30%">Name</th>
-        <th width="30%" class="text-center"><%=@deal_equipment_first[index].try(:name).present? ? @deal_equipment_first[index].try(:name) : "NA" %></th>
-        <th width="30%" class="text-center"><%= @deal_equipment_second[index].try(:name).present? ?  @deal_equipment_second[index].try(:name) : "NA" %></th>
+        <th width="30%" class="text-center"><%=@deal_equipment_first[index].try(:name).present? ? @deal_equipment_first[index].try(:name) : "N/A" %></th>
+        <th width="30%" class="text-center"><%= @deal_equipment_second[index].try(:name).present? ?  @deal_equipment_second[index].try(:name) : "N/A" %></th>
       </tr>
        <tr>
         <td>Price</td>
@@ -67,8 +75,8 @@
       </tr>
       <tr>
         <td>Installation Charges</td>
-        <td class="text-center"><%=  @deal_equipment_first[index].try(:installation).present? ? @deal_equipment_first[index].try(:installation) : "NA"%></td>
-        <td class="text-center"><%=@deal_equipment_second[index].try(:installation).present? ? @deal_equipment_second[index].try(:installation) : "NA"%></td>
+        <td class="text-center"><%=  @deal_equipment_first[index].try(:installation).present? ? @deal_equipment_first[index].try(:installation) : "N/A"%></td>
+        <td class="text-center"><%=@deal_equipment_second[index].try(:installation).present? ? @deal_equipment_second[index].try(:installation) : "N/A"%></td>
       </tr>
     </table>
     <% end %>

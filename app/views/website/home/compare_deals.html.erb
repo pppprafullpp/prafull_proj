@@ -15,8 +15,8 @@
 
 
 
-              <th width="30%" class="text-center"><%= display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title).present? ? display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title) : "NA" %></th>
-              <th width="30%" class="text-center"><%= display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title).present? ? display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title) : "NA" %></th>
+              <th width="30%" class="text-center"><%= display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title).present? ? display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title) : "N/A" %></th>
+              <th width="30%" class="text-center"><%= display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title).present? ? display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title) : "N/A" %></th>
             </tr>
               <tr>
               <td scope="row"></td>
@@ -53,11 +53,11 @@
               <% if  app_user.present? %>
               <%saving_1 = user_preference_price - @deal_first.try(:effective_price)%>
               <%saving_2 = user_preference_price - @deal_second.try(:effective_price)%>
-              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_1 > 0 ? "$#{saving_1}/mon" : "NA"%></span></td>
-              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_2 > 0 ? "$#{saving_2}/mon"  : "NA"%></span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_1 > 0 ? "$#{saving_1}/mon" : "$0.00/mon"%></span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_2 > 0 ? "$#{saving_2}/mon"  : "$0.00/mon"%></span></td>
               <% else %>
-              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">NA</span></td>
-              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">NA</span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">"$0.00/mon"</span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">"$0.00/mon"</span></td>
               <% end %>
             </tr>
             <tr>
@@ -138,8 +138,8 @@
     <table class="table table-bordered">
       <tr>
         <th width="30%">Title</th>
-        <th width="30%" class="text-center"><%=@deal_first.additional_offers[index].try(:title).present? ? @deal_first.additional_offers[index].try(:title) : "NA"%></th>
-        <th width="30%" class="text-center"><%=@deal_second.additional_offers[index].try(:title).present? ? @deal_second.additional_offers[index].try(:title) : "NA"%></th>
+        <th width="30%" class="text-center"><%=@deal_first.additional_offers[index].try(:title).present? ? @deal_first.additional_offers[index].try(:title) : "N/A"%></th>
+        <th width="30%" class="text-center"><%=@deal_second.additional_offers[index].try(:title).present? ? @deal_second.additional_offers[index].try(:title) : "N/A"%></th>
       </tr>
       <tr>
         <td>Price</td>

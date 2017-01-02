@@ -53,8 +53,8 @@
               <% if  app_user.present? %>
               <%saving_1 = user_preference_price - @deal_first.try(:effective_price)%>
               <%saving_2 = user_preference_price - @deal_second.try(:effective_price)%>
-              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_1 > 0 ? "$#{saving_1}/mon" : "$0.00/mon"%></span></td>
-              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_2 > 0 ? "$#{saving_2}/mon"  : "$0.00/mon"%></span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_1 > 0 ? "$#{saving_1}/mon" : $0.00/mon%></span></td>
+              <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px "><%= saving_2 > 0 ? "$#{saving_2}/mon"  : $0.00/mon%></span></td>
               <% else %>
               <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">"$0.00/mon"</span></td>
               <td class="text-center"><span style="background:#0C6; color:#fff; display:inline-block; padding:0 10px ">"$0.00/mon"</span></td>

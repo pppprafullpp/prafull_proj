@@ -497,9 +497,17 @@ if !((sc.id == 4) && (deal_type == "residence"))
 					end
 					if json.present? && allowed_trending_deal.present?
 						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
-				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+				 		else
+				 				matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+				 		end
 					else
-						matched_deal = json.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+						else
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+						end
 					end
 
 				end
@@ -531,9 +539,17 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 					if json.present? && allowed_trending_deal.present?
 						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
-				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+				 		else
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+				 		end
 					else
-						matched_deal = json.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+						else 
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+						end
 					end
 				end
 			elsif category_id == Deal::CABLE_CATEGORY
@@ -557,9 +573,17 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 					if json.present? && allowed_trending_deal.present?
 						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
-				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+				 		else
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+				 		end
 					else
-						matched_deal = json.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+						else
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+						end
 					end
 				end
 			elsif category_id == Deal::CELLPHONE_CATEGORY
@@ -638,9 +662,17 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 					if json.present? && allowed_trending_deal.present?
 						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
-				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+				 		else
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+				 		end
 					else
-						matched_deal = json.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+						else
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+						end
 					end
 				end
 			end
@@ -681,31 +713,31 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						json_5 = [best_deal]
 						combined_json = json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}   + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
 						if sort_by == "price DESC"
-							matched_deal = json_5.each {|h| h[:is_deal]="best"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+							matched_deal = json_5.each {|h| h[:is_deal]="best"} + combined_json.sort_by{|a| a['effective_price'].to_f}.reverse 
 						else
-							matched_deal = json_5.each {|h| h[:is_deal]="best"} + combined_json.sort_by{|a| a['deal_price'].to_f}
+							matched_deal = json_5.each {|h| h[:is_deal]="best"} + combined_json.sort_by{|a| a['effective_price'].to_f}
 						end
 					else
 						combined_json =json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}  + json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
 						if sort_by == "price DESC"
-							matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse
+							matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['effective_price'].to_f}.reverse
 						else
-							matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f} 
+							matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['effective_price'].to_f} 
 						end
 					end 
 				elsif json_1.blank? && json_2.present? && json_4.present?
 					combined_json =  json_2.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
 					if sort_by == "price DESC"
-						matched_deal = json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+						matched_deal = json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['effective_price'].to_f}.reverse 
 					else
-						matched_deal = json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}
+						matched_deal = json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['effective_price'].to_f}
 					end
 				elsif json_1.blank? && json_2.present? && json_4.blank?
 					combined_json = json_2.each {|h| h[:is_deal]="normal"}
 					if sort_by == "price DESC"
-						matched_deal = combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+						matched_deal = combined_json.sort_by{|a| a['effective_price'].to_f}.reverse 
 					else
-						matched_deal = combined_json.sort_by{|a| a['deal_price'].to_f}
+						matched_deal = combined_json.sort_by{|a| a['effective_price'].to_f}
 					end
 				elsif  json_1.blank? && json_2.blank? && json_3.blank? && json_4.present?
 					matched_deal = json_4.each {|h| h[:is_deal]="trending"}
@@ -714,25 +746,25 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						json_5 = [best_deal]
 						combined_json = json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}
 						if sort_by == "price DESC"
-							matched_deal = json_5.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+							matched_deal = json_5.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['effective_price'].to_f}.reverse 
 						else
-							matched_deal = json_5.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}
+							matched_deal = json_5.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['effective_price'].to_f}
 						end
 					else
 						combined_json = json_1.reject { |h| [best_deal['id'] ,trending_deal['id'] ].include? h['id'] }.each {|h| h[:is_deal]="normal"}
 						if sort_by == "price DESC"
-							matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+							matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['effective_price'].to_f}.reverse 
 						else
-							matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['deal_price'].to_f}
+							matched_deal = json_3.each {|h| h[:is_deal]="best"}  + json_4.each{|h| h[:is_deal]= "trending"} + combined_json.sort_by{|a| a['effective_price'].to_f}
 						end
 					end
 					
 				elsif json_1.present? && json_2.blank? && json_3.present? && json_4.blank?
 					combined_json = json_1.reject { |h| [best_deal['id']].include? h['id'] }.each {|h| h[:is_deal]="normal"}
 					if sort_by == "price DESC"
-						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}.reverse 
+						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['effective_price'].to_f}.reverse 
 					else
-						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['deal_price'].to_f}
+						matched_deal = json_3.each {|h| h[:is_deal]="best"}  + combined_json.sort_by{|a| a['effective_price'].to_f}
 					end
 				end
 			elsif (category_id == Deal::CELLPHONE_CATEGORY) && (user_preference.present?)
@@ -788,9 +820,18 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 			if json.present? && allowed_trending_deal.present?
 						trending_deal = allowed_trending_deal.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price, :service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments])
-				 		matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse 
+				 		else
+				 			matched_deal = [trending_deal].each {|h| h[:is_deal]="trending"} + json.delete_if { |h| h["id"] == trending_deal['id'] }.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+				 		end
 					else
-						matched_deal = json.each {|h| h[:is_deal]="normal"}
+						if sort_by == "price DESC"
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}.reverse
+						else
+							matched_deal = json.each {|h| h[:is_deal]="normal"}.sort_by{|a| a['effective_price'].to_f}
+						end
+
 					end
 		end
 		return matched_deal

@@ -5,7 +5,7 @@
     <%(0...loop_length).each_with_index do |attribute,index|%>
     <table class="table table-bordered">
       <tr>
-        <th scope="row" >Channels</th>
+        <th scope="row" >Cable</th>
         <th></th>
         <th></th>
       </tr>
@@ -41,9 +41,9 @@
         <th width="30%" class="text-center"><%= @deal_equipment_second[index].try(:name).present? ? @deal_equipment_second[index].try(:name) : "N/A"%></th>
       </tr>
        <tr>
-        <td>Price</td>
-        <td class="text-center"><%= @deal_equipment_first[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_first[index].try(:price)}" : "$0.00"%>/mon</td>
-        <td class="text-center"><%= @deal_equipment_second[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_second[index].try(:price)}" : "$0.00"%>/mon</td>
+        <td>Price /mon</td>
+        <td class="text-center"><%= @deal_equipment_first[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_first[index].try(:price)}" : "$0.00"%></td>
+        <td class="text-center"><%= @deal_equipment_second[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_second[index].try(:price)}" : "$0.00"%></td>
       </tr>
       <tr>
         <td>Installation Charges</td>

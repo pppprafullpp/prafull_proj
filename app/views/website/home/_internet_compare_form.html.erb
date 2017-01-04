@@ -3,19 +3,19 @@
     <%(0...loop_length).each_with_index do |attribute,index|%>
     <table class="table table-bordered">
       <tr>
-        <th scope="row" >Speed</th>
+        <th scope="row" >Internet</th>
         <th></th>
         <th></th>
       </tr>
       <tr>
-        <td width="30%">Download</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:download).present? ? "#{@deal_attributes_first[index].try(:download)} Mbps" : "N/A" %></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:download).present? ? "#{@deal_attributes_second[index].try(:download)} Mbps" : "N/A"%></td>
+        <td width="30%">Download (mbps)</td>
+        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:download).present? ? "#{@deal_attributes_first[index].try(:download)}" : "N/A" %></td>
+        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:download).present? ? "#{@deal_attributes_second[index].try(:download)}" : "N/A"%></td>
       </tr>
       <tr>
-        <td>Upload</td>
-        <td class="text-center"><%= @deal_attributes_first[index].try(:upload).present? ? "#{@deal_attributes_first[index].try(:upload)} Mbps" : "N/A"%></td>
-        <td class="text-center"><%=@deal_attributes_second[index].try(:uploadd).present? ? "#{@deal_attributes_second[index].try(:uploadd)} Mbps" : "N/A"%></td>
+        <td>Upload (mbps)</td>
+        <td class="text-center"><%= @deal_attributes_first[index].try(:upload).present? ? "#{@deal_attributes_first[index].try(:upload)}" : "N/A"%></td>
+        <td class="text-center"><%=@deal_attributes_second[index].try(:uploadd).present? ? "#{@deal_attributes_second[index].try(:uploadd)}" : "N/A"%></td>
       </tr>
     </table>
     <% end %>
@@ -43,9 +43,9 @@
         <th width="30%" class="text-center"><%= @deal_equipment_second[index].try(:name).present? ? @deal_equipment_second[index].try(:name) : "N/A"%></th>
       </tr>
        <tr>
-        <td>Price</td>
-        <td class="text-center"><%= @deal_equipment_first[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_first[index].try(:price)}" : "$0.00"%>/mon</td>
-        <td class="text-center"><%= @deal_equipment_second[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_second[index].try(:price)}" : "$0.00"%>/mon</td>
+        <td>Price /mon</td>
+        <td class="text-center"><%= @deal_equipment_first[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_first[index].try(:price)}" : "$0.00"%></td>
+        <td class="text-center"><%= @deal_equipment_second[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_second[index].try(:price)}" : "$0.00"%></td>
       </tr>
       <tr>
         <td>Installation Charges</td>

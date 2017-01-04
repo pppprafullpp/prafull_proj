@@ -22,7 +22,7 @@ class Api::V1::DealsController < ApplicationController
 
 	def compare_deals
 		if params[:app_user_id].present? && params[:service_category_id].present?
-			# category = ServiceCategory.where(id: params[:service_category_id]).first.name.downcase
+			category = ServiceCategory.where(id: params[:service_category_id]).first.name
 			app_user = AppUser.find_by_id(params[:app_user_id])
 			user_preference_price = app_user.service_preferences.where(service_category_id: params[:service_category_id]).first.price rescue 0
 		end
@@ -39,9 +39,17 @@ class Api::V1::DealsController < ApplicationController
 					saving_1 = "%.2f" % (0.to_f)
 					saving_2 = "%.2f" % (0.to_f)
 				end
-				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price, :effective_price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:effective_price => params[:effective_price_1],:saving => saving_1)
-				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price, :effective_price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:effective_price => params[:effective_price_2], :saving=> saving_2)
-				render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 ,message: 'Please select valid deal.'}
+				if params[:service_category_id].to_i == Deal::BUNDLE_CATEGORY 
+					category_combo_1 = (deal_1.deal_attributes.first.bundle_combo.sub! 'and', ',').delete(' ')
+					category_combo_2 = (deal_2.deal_attributes.first.bundle_combo.sub! 'and', ',').delete(' ')
+				else
+					category_combo_1 = category
+					category_combo_2 = category
+				end
+
+				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price, :effective_price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:effective_price => params[:effective_price_1],:saving => saving_1,category_image_icon: category_combo_1)
+				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price, :effective_price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:effective_price => params[:effective_price_2], :saving=> saving_2,category_image_icon: category_combo_2)
+				render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }
 			else
 				render :status => 400,:json => { :success => false, message: 'Please select valid deal.' }
 			end
@@ -58,8 +66,8 @@ class Api::V1::DealsController < ApplicationController
 					saving_1 = "%.2f" % (0.to_f)
 					saving_2 = "%.2f" % (0.to_f)
 				end
-				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:saving => saving_1)
-				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:saving => saving_2)
+				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:saving => saving_1,category_image_icon: category_combo_1)
+				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:saving => saving_2,category_image_icon: category_combo_2)
 				render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }
 			else
 				render :status => 400,:json => { :success => false, message: 'Please select valid deal.' }

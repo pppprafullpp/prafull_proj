@@ -66,6 +66,14 @@ class Api::V1::DealsController < ApplicationController
 					saving_1 = "%.2f" % (0.to_f)
 					saving_2 = "%.2f" % (0.to_f)
 				end
+				if params[:service_category_id].to_i == Deal::BUNDLE_CATEGORY 
+					category_combo_1 = (deal_1.deal_attributes.first.bundle_combo.sub! 'and', ',').delete(' ')
+					category_combo_2 = (deal_2.deal_attributes.first.bundle_combo.sub! 'and', ',').delete(' ')
+				else
+					category_combo_1 = category
+					category_combo_2 = category
+				end
+
 				deal_1 = deal_1.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:saving => saving_1,category_image_icon: category_combo_1)
 				deal_2 = deal_2.as_json(:except => [:created_at, :updated_at, :image, :price],:methods => [:deal_image_url, :average_rating, :rating_count, :deal_price,:service_category_name, :service_provider_name,:deal_additional_offers,:deal_equipments,:deal_attributes]).merge(:saving => saving_2,category_image_icon: category_combo_2)
 				render :status => 200,:json => { :success => true, deal_1: deal_1, deal_2: deal_2 }

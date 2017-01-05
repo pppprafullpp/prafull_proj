@@ -155,8 +155,8 @@
 
 
 
-              <td width="30%" class="text-center"><%= display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title).present? ? display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title) : "N/A" %></td>
-              <td width="30%" class="text-center"><%= display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title).present? ? display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title) : "N/A" %></td>
+              <td width="30%" class="text-center"><%= display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title).present? ? display_deal_name_permission(@deal_first.service_provider_id,@deal_first.deal_type,@deal_first.title) : "" %></td>
+              <td width="30%" class="text-center"><%= display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title).present? ? display_deal_name_permission(@deal_second.service_provider_id,@deal_second.deal_type,@deal_second.title) : "" %></td>
             </tr>
                
 
@@ -269,8 +269,8 @@
     <table class="table table-bordered">
       <tr>
         <th width="30%">Title</th>
-        <th width="30%" class="text-center"><%=@deal_first.additional_offers[index].try(:title).present? ? @deal_first.additional_offers[index].try(:title) : "N/A"%></th>
-        <th width="30%" class="text-center"><%=@deal_second.additional_offers[index].try(:title).present? ? @deal_second.additional_offers[index].try(:title) : "N/A"%></th>
+        <th width="30%" class="text-center"><%=@deal_first.additional_offers[index].try(:title).present? ? @deal_first.additional_offers[index].try(:title) : "-"%></th>
+        <th width="30%" class="text-center"><%=@deal_second.additional_offers[index].try(:title).present? ? @deal_second.additional_offers[index].try(:title) : "-"%></th>
       </tr>
       <tr>
         <td>Price</td>

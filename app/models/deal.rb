@@ -371,10 +371,10 @@ def self.build_custom_json(order_id)
     else
       order_items_hash['deal']['deal_image_url'] = deal.image.url
     end
-    
 
 
-    deal_equipments = eval("#{category.camelize}DealAttribute").select("#{category}_equipments.*").joins("#{category}_equipments".to_sym).where(:deal_id => deal.id)
+    # deal_equipments = eval("#{category.camelize}DealAttribute").select("#{category}_equipments.*").joins("#{category}_equipments".to_sym).where(:deal_id => deal.id)
+      deal_equipments = eval("#{category.camelize}Equipment").where(:deal_id => deal.id)
     #raise deal_equipments.inspect
     deal_equipments.each do |deal_equipment|
       deal_equipment_hash = {}

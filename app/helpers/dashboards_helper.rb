@@ -673,16 +673,16 @@ if !((sc.id == 4) && (deal_type == "residence"))
 				end
 			end
 
-
-			if best_deals.present? || greater_deals.present? || smaller_deals.present? 
+			if best_deals.present? || greater_deals.present? || smaller_deals.present? || allowed_trending_deal.present?
 				best_deals = best_deals.present? ? best_deals : []
 				greater_deals = greater_deals.present? ? greater_deals : []
 				smaller_deals = smaller_deals.present? ? smaller_deals : []
+				allowed_trending_deal = allowed_trending_deal.present? ? allowed_trending_deal : []
 
 
 
 	
-		combined_deals = (greater_deals + best_deals + smaller_deals)
+		combined_deals = (greater_deals + best_deals + smaller_deals + [allowed_trending_deal])
 		deal_ids = combined_deals.map{ |deal| deal.id}
 	
 		if sort_by =='download_speed'
@@ -728,12 +728,16 @@ if !((sc.id == 4) && (deal_type == "residence"))
 			if (!(category_id == Deal::CELLPHONE_CATEGORY) && (user_preference.present?))
 				if json_1.present? && json_3.present? && json_4.present? 
 						matched_deal =json_3.each {|h| h[:is_deal]="best"} + ( json_1.reject { |h| [best_deal['id']  ].include? h['id'] }.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"}  )
+				elsif json_1.present? && json_3.blank? && json_4.present? 
+						matched_deal = ( json_1.reject { |h| [best_deal['id']  ].include? h['id'] }.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"}  )
 				else 
 					matched_deal = []
 				end
 			elsif (category_id == Deal::CELLPHONE_CATEGORY) && (user_preference.present?)	
 				if json_1.present? && json_3.present? && json_4.present? 
 				 matched_deal = json_3.each {|h| h[:is_deal]="best"} + json_1.delete_if { |h| h["id"] == best_deal['id'] and h["effective_price"] == best_deal['effective_price']}.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"} 
+				 elsif json_1.present? && json_3.blank? && json_4.present? 
+				 matched_deal = json_1.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"} 
 				else
 					matched_deal = []
 				end

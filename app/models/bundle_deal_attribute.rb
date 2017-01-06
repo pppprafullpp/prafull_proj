@@ -48,4 +48,9 @@ class BundleDealAttribute < ActiveRecord::Base
 		bundle_deals
 	end
 
+	private
+	def update_channel_count
+		self.channel_count = eval(self.channel_ids).count if self.channel_ids.present?
+	end
+
 end

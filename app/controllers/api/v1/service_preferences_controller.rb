@@ -420,7 +420,7 @@ service_preference_hash['data_plan']=2.0
 			if best_deal.present?
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
-		      		DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
+		      		# DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]

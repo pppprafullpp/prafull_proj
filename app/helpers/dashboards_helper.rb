@@ -735,7 +735,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 				if json_1.present? && json_3.present? && json_4.present? 
 						matched_deal =json_3.each {|h| h[:is_deal]="best"} + ( json_1.reject { |h| [best_deal['id']  ].include? h['id'] }.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"}  )
 				elsif json_1.present? && json_3.blank? && json_4.present? 
-						matched_deal = ( json_1.reject { |h| [best_deal['id']  ].include? h['id'] }.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"}  )
+						matched_deal = ( json_1.each {|h|   h['id']!=trending_deal['id'] ?  h[:is_deal]="normal" :  h[:is_deal]="trending"}  )
 				else 
 					matched_deal = []
 				end

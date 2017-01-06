@@ -11,8 +11,39 @@
       </tr>
       <tr>
         <td width="30%">Channel Count</td>
-        <td width="30%" class="text-center"><%= @deal_attributes_first[index].try(:channel_count).present? ? @deal_attributes_first[index].try(:channel_count) : "-"%></td>
-        <td width="30%" class="text-center"><%= @deal_attributes_second[index].try(:channel_count).present? ? @deal_attributes_second[index].try(:channel_count) : "-"%></td>
+         
+        <% if @deal_attributes_first[index].try(:channel_count).present? %>
+          <%channel_count_1 =@deal_attributes_first[index].try(:channel_count)%>
+          <% if ((channel_count_1  > 125) && (channel_count_1 < 150)) %>
+            <td width="30%" class="text-center">125+</td>
+          <% elsif ((channel_count_1  > 175) && (channel_count_1 < 200)) %>
+            <td width="30%" class="text-center">175+</td>
+          <% elsif (channel_count_1  > 200) %>
+            <td width="30%" class="text-center">200+</td>
+              <td width="30%" class="text-center">200+</td>
+          <% else%>
+            <td width="30%" class="text-center"><%=@deal_attributes_first[index].try(:channel_count)%></td>
+          <% end %>
+        <% else %>
+          <td width="30%" class="text-center">-</td>
+        <% end %>
+
+         <% if @deal_attributes_second[index].try(:channel_count).present? %>
+          <%channel_count_1 =@deal_attributes_second[index].try(:channel_count)%>
+          <% if ((channel_count_1  > 125) && (channel_count_1 < 150)) %>
+            <td width="30%" class="text-center">125+</td>
+          <% elsif ((channel_count_1  > 175) && (channel_count_1 < 200)) %>
+            <td width="30%" class="text-center">175+</td>
+          <% elsif (channel_count_1  > 200) %>
+            <td width="30%" class="text-center">200+</td>
+          <% else%>
+            <td width="30%" class="text-center"><%=@deal_attributes_second[index].try(:channel_count)%></td>
+          <% end %>
+        <% else %>
+          <td width="30%" class="text-center">-</td>
+        <% end %>
+        
+       
       </tr>
     </table>
     <% end %>

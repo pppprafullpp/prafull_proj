@@ -227,11 +227,17 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 	def category_trending_deal(deal_type,category_id,zip_code)
 
-		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
-		allowed_trending_deal=Deal.joins(:trending_deals).where("deals.id not in (?) AND deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",restricted_deals,true,deal_type,category_id).order("trending_deals.subscription_count DESC").first
+		# restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
+		# allowed_trending_deal=Deal.joins(:trending_deals).where("deals.id not in (?) AND deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",restricted_deals,true,deal_type,category_id).order("trending_deals.subscription_count DESC").first
+		# if not allowed_trending_deal.present?
+		# 	allowed_trending_deal=Deal.where("deals.id not in (?) AND deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",restricted_deals,true,deal_type,category_id).order("price ASC").first
+		# end
+		allowed_trending_deal = Deal.where("deals.is_active = ? AND deals.deal_type = ?  AND deals.service_category_id = ? AND deals.is_best_value =?",true,deal_type,category_id,true).order("price ASC").first
 		if not allowed_trending_deal.present?
-			allowed_trending_deal=Deal.where("deals.id not in (?) AND deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",restricted_deals,true,deal_type,category_id).order("price ASC").first
+			allowed_trending_deal=Deal.where("deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",true,deal_type,category_id).order("price ASC").first
 		end
+
+
 		return allowed_trending_deal
 	end
 

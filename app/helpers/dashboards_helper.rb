@@ -590,11 +590,11 @@ if !((sc.id == 4) && (deal_type == "residence"))
 						end
 					else
 						if sort_by == 'call_minutes' 
-							deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.domestic_call_minutes DESC,deals.price ASC").group('deals.id')
+							deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
 						elsif sort_by == 'price' || sort_by == 'price DESC'
-							deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price DESC").group('deals.id')
+							deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price DESC")
 						else
-							deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price ASC").group('deals.id')
+							deals = Deal.joins(:cellphone_deal_attributes).select(select_fields_cellphone).where(deal_validation_conditions + " AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price ASC")
 						end
 
 					if deals.present?
@@ -678,12 +678,8 @@ if !((sc.id == 4) && (deal_type == "residence"))
 				greater_deals = greater_deals.present? ? greater_deals : []
 				smaller_deals = smaller_deals.present? ? smaller_deals : []
 				allowed_trending_deal = allowed_trending_deal.present? ? allowed_trending_deal : []
-
-
-
-	
-		combined_deals = (greater_deals + best_deals + smaller_deals + [allowed_trending_deal])
-		deal_ids = combined_deals.map{ |deal| deal.id}
+				combined_deals = (greater_deals + best_deals + smaller_deals + [allowed_trending_deal])
+				deal_ids = combined_deals.map{ |deal| deal.id}
 	
 		if sort_by =='download_speed'
 			if [ServiceCategory::INTERNET_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
@@ -702,12 +698,16 @@ if !((sc.id == 4) && (deal_type == "residence"))
 				merged_deals = Deal.where(id: deal_ids).joins("#{category_name}_deal_attributes".to_sym).select(select_data).order("#{category_name}_deal_attributes.free_channels DESC,deals.price ASC").group('deals.id')
 			end
 		elsif sort_by == 'call_minutes' 
-			if [ServiceCategory::CELLPHONE_CATEGORY,ServiceCategory::TELEPHONE_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
+			if [ServiceCategory::CELLPHONE_CATEGORY].include?(category_name)
+				merged_deals = Deal.where(id: deal_ids).joins("#{category_name}_deal_attributes".to_sym).select(select_data).order("#{category_name}_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
+			elsif [ServiceCategory::TELEPHONE_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
 				merged_deals = Deal.where(id: deal_ids).joins("#{category_name}_deal_attributes".to_sym).select(select_data).order("#{category_name}_deal_attributes.domestic_call_minutes DESC,deals.price ASC").group('deals.id')
 			end
 		else
-			if ServiceCategory::CATEGORIES.include?(category_name)
+			if [ServiceCategory::CELLPHONE_CATEGORY].include?(category_name)
 				merged_deals = Deal.where(id: deal_ids).joins("#{category_name}_deal_attributes".to_sym).select(select_data).order("deals.effective_price ASC")
+			else
+				merged_deals = Deal.where(id: deal_ids).joins("#{category_name}_deal_attributes".to_sym).select(select_data).order("deals.effective_price ASC").group('deals.id')
 			end
 		end
 			if merged_deals.present?
@@ -758,7 +758,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 				end
 			elsif sort_by == 'price' || sort_by == 'price DESC'
 					if [ServiceCategory::CELLPHONE_CATEGORY].include?(category_name)
-					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price DESC").group('deals.id')
+					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price DESC")
 				else 
 					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("deals.effective_price DESC").group('deals.id')
 				end
@@ -767,12 +767,14 @@ if !((sc.id == 4) && (deal_type == "residence"))
 					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("#{category_name}_deal_attributes.free_channels DESC,deals.price ASC").group('deals.id')
 				end
 			elsif sort_by == 'call_minutes' 
-				if [ServiceCategory::CELLPHONE_CATEGORY,ServiceCategory::TELEPHONE_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
+				if [ServiceCategory::CELLPHONE_CATEGORY].include?(category_name)
+					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("#{category_name}_deal_attributes.domestic_call_minutes DESC,deals.price ASC")
+				elsif [ServiceCategory::TELEPHONE_CATEGORY,ServiceCategory::BUNDLE_CATEGORY].include?(category_name)
 					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("#{category_name}_deal_attributes.domestic_call_minutes DESC,deals.price ASC").group('deals.id')
 				end
 			else
 				if [ServiceCategory::CELLPHONE_CATEGORY].include?(category_name)
-					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price ASC").group('deals.id')
+					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("cellphone_deal_attributes.effective_price ASC")
 				else 
 					deals = Deal.joins("#{category_name}_deal_attributes".to_sym).select(select_data).where(deal_validation_conditions + "AND deals.id not in (?)", restricted_deals).order("deals.effective_price ASC").group('deals.id')
 				end

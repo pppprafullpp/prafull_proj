@@ -26,16 +26,17 @@ class CellphoneDealAttribute < ActiveRecord::Base
 	end
 
  def  cellphone_effective_price(deal,deal_attribute)
-	 equipment=deal.cellphone_equipments.first
-	 effective_price=(deal_attribute.no_of_lines*deal_attribute.price_per_line)+deal_attribute.data_plan_price+deal_attribute.additional_data_price
-	 if equipment.present?
-		 effective_price+=(deal_attribute.no_of_lines*equipment.price)
-	 end
-	 if deal.additional_offers.present?
-		 deal.additional_offers.each do |additional_offer|
-			 effective_price-=additional_offer.price
-		 end
-	 end
+ 	# effective_price = 0
+	 # equipment=deal.cellphone_equipments.first
+	 # effective_price=(deal_attribute.no_of_lines*deal_attribute.price_per_line)+deal_attribute.data_plan_price+deal_attribute.additional_data_price
+	 # if deal_attribute.present?
+		 effective_price =(deal_attribute.data_plan_price)
+	 # end
+	 # if deal.additional_offers.present?
+		#  deal.additional_offers.each do |additional_offer|
+		# 	 effective_price-=additional_offer.price
+		#  end
+	 # end
 	 effective_price
  end
 

@@ -77,7 +77,7 @@
         <td class="text-center"><%= @deal_equipment_second[index].try(:price).present? ? "$#{"%.2f" % @deal_equipment_second[index].try(:price)}" : "$0.00"%></td>
       </tr>
       <tr>
-        <td>Installation Charges</td>
+        <td>Installation</td>
         <td class="text-center"><%=  @deal_equipment_first[index].try(:installation).present? ? @deal_equipment_first[index].try(:installation) : "-"%></td>
         <td class="text-center"><%=@deal_equipment_second[index].try(:installation).present? ? @deal_equipment_second[index].try(:installation) : "-" %></td>
       </tr>

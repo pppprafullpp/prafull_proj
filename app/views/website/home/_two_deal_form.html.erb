@@ -43,8 +43,8 @@
         </div>
            <%= render :partial => "rating_form" ,locals: {deal: deal_1}%>
             <div class="sd-dealprices">
-              <div class="sd-best-price">Deal Price <span>$<%= deal_1['deal_price']%></span></div>
-              <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_1['effective_price'] if deal_1['effective_price'].present?%></span></div>
+              <div class="sd-best-price">Deal Price <span>$<%= deal_1['deal_price']%>/mon</span></div>
+              <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_1['effective_price'] if deal_1['effective_price'].present?%>/mon</span></div>
 
             </div>
             <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_1['id'],:effective_price=> deal_1['effective_price']) %>" class="sd-more-details">+ More Details</a> </div>
@@ -93,8 +93,8 @@
               </div>
               <%= render :partial => "rating_form" ,locals: {deal: deal_2}%>
               <div class="sd-dealprices">
-                <div class="sd-best-price">Deal Price <span>$<%= deal_2['deal_price']%></span></div>
-                <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_2['effective_price'] if deal_2['effective_price'].present?%></span></div>
+                <div class="sd-best-price">Deal Price <span>$<%= deal_2['deal_price']%>/mon</span></div>
+                <div class="sd-effective-price">Effective Price <span>$<%= "%.2f" %  deal_2['effective_price'] if deal_2['effective_price'].present?%>/mon</span></div>
               </div>
               <%if key == "trending-best"%>
                 <a href="<%= more_deal_details_website_home_index_path(:deal_id=> deal_2['id'],:effective_price => deal_2[:effective_price]) %>" class="sd-more-details">+ More Details</a>

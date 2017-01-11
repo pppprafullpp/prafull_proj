@@ -47,7 +47,13 @@
                 <a id="order-btn" class="order-btn btn_3" >Not Available</a>
             <% end %>
             <% elsif @current_user.blank?%>
-              <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
+               <% if @deal.is_order_available != false  %>
+               <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
+            <% else %>
+                <a id="order-btn" class="order-btn btn_3" >Not Available</a>
+            <% end %>
+
+              
             <% end %>
 
         <% if  @customized_deals.present? && @category_name == "cellphone"%>

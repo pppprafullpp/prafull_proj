@@ -31,6 +31,7 @@ match  'blog' => 'website/home#blog', :via => :get
       match 'cellphone_details' => "deals#cellphone_details", :via => :get
       match 'service_deal_config' => "deals#service_deal_config", :via => :get
       match 'password_complicated_setting' => "deals#password_complicated_setting", :via => :get
+      match 'compare_deals' => "deals#compare_deals", :via => :get
 
 
       resources :dashboards do

@@ -1,8 +1,7 @@
 
-
 <div class="row">
   <div class="col-lg-12">
-    <% if @deal.try(:bundle_deal_attributes).try(:first).try(:free_channels).present? %>
+    <% if @deal.try(:bundle_deal_attributes).try(:first).try(:free_channels).present? && @deal.try(:bundle_deal_attributes).try(:first).try(:free_channels_list).present? %>
         <h5 class="margin_bot20">More Information</h5>
         <table class="table table-bordered">
           <thead>
@@ -20,7 +19,7 @@
         </table>
     <% end %>
     <% if @deal_equipments.present? %>
-        <h5 class="margin_bot20">Equipments & Installation</h5>
+        <h5 class="margin_bot20">Equipment & Installation</h5>
         <% @deal_equipments.each do |deal_equipment| %>
             <table class="table table-bordered">
               <thead>
@@ -30,12 +29,12 @@
               </thead>
               <tbody>
               <tr>
-                <td width="20%">Installation</td>
-                <td width="80%" colspan="2"><%= deal_equipment.try(:installation) %></td>
-              </tr>
-              <tr>
                 <td width="20%">Price</td>
                 <td width="80%" colspan="2">$<%=  "%.2f" % deal_equipment.try(:price) %></td>
+              </tr>
+               <tr>
+                <td width="20%">Installation</td>
+                <td width="80%" colspan="2"><%= deal_equipment.try(:installation) %></td>
               </tr>
               </tbody>
             </table>

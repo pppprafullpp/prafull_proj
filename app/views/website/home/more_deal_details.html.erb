@@ -1,18 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%= render :partial => 'website/home/internet_banner',  locals: { :category_name => @category_name.capitalize }%>
 
 <!--More Details section-->
@@ -61,6 +46,8 @@
             <% else %>
                 <a id="order-btn" class="order-btn btn_3" >Not Available</a>
             <% end %>
+            <% elsif @current_user.blank?%>
+              <a onclick="check_for_options()" id="order-btn" class="order-btn" href="<%=order_website_app_users_path(:deal_id=> @deal.id)%>" id="<%=@deal.id%>">Order</a>
             <% end %>
 
         <% if  @customized_deals.present? && @category_name == "cellphone"%>
@@ -94,8 +81,8 @@
           <h3><%= display_deal_name_permission(@deal.service_provider_id,@deal.deal_type,@deal.title) %></h3>
           <h4>Details</h4>
 
-          <p></i><%=@deal.short_description.to_s.gsub(/\n/,"<br> ").html_safe%></p>
-          <p></i><%=@deal.detail_description.to_s.gsub(/\n/,"<br>").html_safe%></p>
+          <%#=raw(@deal.short_description)%>
+          <%=raw (@deal.detail_description)%>
           <%if @customized_deals.present?%>
               <%= render :partial => "#{@customized_deals["service_category_name"].downcase}_customize_deal", :locals =>{:customized_deals =>@customized_deals }  %>
           <%else%>

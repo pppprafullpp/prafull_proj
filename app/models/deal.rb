@@ -171,26 +171,40 @@ def get_effective_price
 
   if self.internet_deal_attributes.present?
     internet=self.internet_deal_attributes.first
-    equipment=self.internet_equipments.first
+    # equipment=self.internet_equipments.first
     effective_price=self.deal_price.to_f
-    if equipment.present?
-      effective_price+=equipment.price
+
+    if self.internet_equipments.present?
+      self.internet_equipments.each do |equipment|
+        effective_price+=equipment.price
+      end
     end
+
+
+    # if equipment.present?
+    #   effective_price+=equipment.price
+    # end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
         if contract_period >0
           monthly_price = additional_offer.price/contract_period 
-          effective_price-= monthly_price
+          effective_price+= monthly_price
         end
       end
     end
   elsif self.telephone_deal_attributes.present?
     telephone=self.telephone_deal_attributes.first
-    equipment=telephone.telephone_equipments.first
+    # equipment=telephone.telephone_equipments.first
     effective_price=self.deal_price.to_f
-    if equipment.present?
-      effective_price+=equipment.price
+    # if equipment.present?
+    #   effective_price+=equipment.price
+    # end
+
+     if self.telephone_equipments.present?
+      self.telephone_equipments.each do |equipment|
+        effective_price+=equipment.price
+      end
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
@@ -198,23 +212,28 @@ def get_effective_price
         contract_period = additional_offer.contract_period.to_i
         if contract_period >0
         monthly_price = additional_offer.price/contract_period  
-        effective_price-= monthly_price
+        effective_price+= monthly_price
       end
       end
     end
   elsif self.cable_deal_attributes.present?
     cable=self.cable_deal_attributes.first
-    equipment=cable.cable_equipments.first
+    # equipment=cable.cable_equipments.first
     effective_price=self.deal_price.to_f
-    if equipment.present?
-      effective_price+=equipment.price
+    # if equipment.present?
+    #   effective_price+=equipment.price
+    # end
+     if self.cable_equipments.present?
+      self.cable_equipments.each do |equipment|
+        effective_price+=equipment.price
+      end
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
         if contract_period >0
         monthly_price = additional_offer.price/contract_period  
-        effective_price-= monthly_price
+        effective_price+= monthly_price
       end
       end
     end
@@ -231,26 +250,34 @@ def get_effective_price
         contract_period = additional_offer.contract_period.to_i
         if contract_period >0
         monthly_price = additional_offer.price/contract_period 
-        effective_price-= monthly_price
+        effective_price+= monthly_price
       end
       end
     end
   elsif self.bundle_deal_attributes.present?
     bundle=self.bundle_deal_attributes.first
-    equipment=bundle.bundle_equipments.first
+    # equipment=bundle.bundle_equipments.first
     effective_price=self.deal_price.to_f
-    if equipment.present?
-      effective_price+=equipment.price
+    # if equipment.present?
+    #   effective_price+=equipment.price
+    # end
+
+     if self.bundle_equipments.present?
+      self.bundle_equipments.each do |equipment|
+        effective_price+=equipment.price
+      end
     end
     if self.additional_offers.present?
       self.additional_offers.each do |additional_offer|
         contract_period = additional_offer.contract_period.to_i
         if contract_period >0
         monthly_price = additional_offer.price/contract_period  
-        effective_price-= monthly_price
+        effective_price+= monthly_price
       end
       end
     end
+  else
+    effective_price = self.deal_price.to_f
   end
   if effective_price != self.deal_price.to_f
     effective_price
@@ -344,10 +371,10 @@ def self.build_custom_json(order_id)
     else
       order_items_hash['deal']['deal_image_url'] = deal.image.url
     end
-    
 
 
-    deal_equipments = eval("#{category.camelize}DealAttribute").select("#{category}_equipments.*").joins("#{category}_equipments".to_sym).where(:deal_id => deal.id)
+    # deal_equipments = eval("#{category.camelize}DealAttribute").select("#{category}_equipments.*").joins("#{category}_equipments".to_sym).where(:deal_id => deal.id)
+      deal_equipments = eval("#{category.camelize}Equipment").where(:deal_id => deal.id)
     #raise deal_equipments.inspect
     deal_equipments.each do |deal_equipment|
       deal_equipment_hash = {}

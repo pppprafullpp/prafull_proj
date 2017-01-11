@@ -210,6 +210,7 @@ match  'blog' => 'website/home#blog', :via => :get
   resources :cellphone_details
   resources :extra_services
 get  '*a', :to => 'website/errors#routing'
+
 get  '*a.txt', :to => 'website/errors#routing'
 
 end

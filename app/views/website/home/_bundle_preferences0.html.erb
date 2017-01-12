@@ -132,7 +132,7 @@
     <br />
     <div class="col-md-12 text-center btn-group-sty">
       <%= submit_tag("Save", :class=>"btn save-button", :onclick=>"check();return false")%>
-      <input type="button" value="Skip" class="skip-button" onclick="check();return false"/>
+      <input type="button" value="Skip" class="skip-button" onclick="show_welcome_popup();return false"/>
     </div>
     <div class="col-md-12"><p id="msg" class="alert alert-danger hidden"></p></div>
     <%end%>
@@ -140,6 +140,12 @@
   <script>
   function hide_modal() {
     $("#comparePopup").modal("hide");
+  }
+
+
+  function show_welcome_popup(){
+    $("#comparePopup").modal("hide");
+                  calculate_you_save();
   }
   $(document).ready(function(){
     $("#bundle_start_date").datepicker();

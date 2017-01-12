@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :app_users, skip: [:sessions, :passwords, :registrations]
 # root to: "home#index"
 match  'blog' => 'website/home#blog', :via => :get
+  get  '*a.txt', :to => 'website/errors#routing'
+
 
   namespace :api do
     namespace :v1 do
@@ -31,7 +33,6 @@ match  'blog' => 'website/home#blog', :via => :get
       match 'cellphone_details' => "deals#cellphone_details", :via => :get
       match 'service_deal_config' => "deals#service_deal_config", :via => :get
       match 'password_complicated_setting' => "deals#password_complicated_setting", :via => :get
-      match 'compare_deals' => "deals#compare_deals", :via => :get
 
 
       resources :dashboards do
@@ -209,8 +210,6 @@ match  'blog' => 'website/home#blog', :via => :get
   resources :equipment_colors
   resources :cellphone_details
   resources :extra_services
-get  '*a', :to => 'website/errors#routing'
-
-get  '*a.txt', :to => 'website/errors#routing'
+  get  '*a', :to => 'website/errors#routing'
 
 end

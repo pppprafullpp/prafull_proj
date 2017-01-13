@@ -43,7 +43,6 @@ class Api::V1::ServicePreferencesController < ApplicationController
 	end
 
 	def create
-	  # raise params.to_yaml
 		@service_preference = ServicePreference.where("app_user_id = ? AND service_category_id = ?", params[:app_user_id], params[:service_category_id]).take
 		if @service_preference.present?
 			if params[:service_category_id] == '1'
@@ -77,6 +76,12 @@ class Api::V1::ServicePreferencesController < ApplicationController
 				@service_preference.update(service_preference_params)
 			end
       if @service_preference.update(service_preference_params)
+      	@app_user = AppUser.find_by_id(params[:app_user_id])
+				@deal_type=@app_user.user_type
+				best_deal=category_best_deal(@deal_type,@service_preference,@app_user.zip,1,true)
+				if best_deal.present?
+					DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
+				end
       	if params[:is_contract] == "true"
        	send_notification_no_contract
         elsif params[:is_contract] == "false"
@@ -129,6 +134,13 @@ class Api::V1::ServicePreferencesController < ApplicationController
 			end
 
        if @service_preference.save && @internet_service_preference.save #|| (@service_preference.save && @cable_service_preference.save)
+       	@app_user = AppUser.find_by_id(params[:app_user_id])
+				@deal_type=@app_user.user_type
+				@user_preference = @app_user.service_preferences.where("service_category_id = ?",params[:service_category_id]).first
+				best_deal=category_best_deal(@deal_type,@service_preference,@app_user.zip,1,true)
+				if best_deal.present?
+					DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
+				end
         	if params[:is_contract] == "true"
 						@app_user=AppUser.find(id)
        		send_notification_no_contract
@@ -420,7 +432,7 @@ service_preference_hash['data_plan']=2.0
 			if best_deal.present?
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
-		      		DealNotifier.delay.send_best_deal(@app_user,best_deal)
+		      		# DealNotifier.delay.send_best_deal(@app_user,best_deal)
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]
@@ -457,7 +469,7 @@ service_preference_hash['data_plan']=2.0
 
 		best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
 		if best_deal.present?
-			DealNotifier.delay.send_best_deal(@app_user,best_deal)
+			# DealNotifier.delay.send_best_deal(@app_user,best_deal)
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]

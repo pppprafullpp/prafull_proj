@@ -14,7 +14,7 @@ class Api::V1::ServicePreferencesController < ApplicationController
 		@app_users.each do |app_user|
 			if app_user.device_flag=="iphone"
 				pusher = Grocer.pusher(
-		        	certificate: "#{Rails.root}/public/certificates/servicedealz.pem",      	# required
+		        	certificate: "#{Rails.root}/public/certificates/servicedealzProduction.pem",      	# required
 		        	passphrase:  "abc123",                       																	# optional
 		        	gateway:     "gateway.sandbox.push.apple.com",                      		# optional; See note below.
 		        	port:        2195,                       																		# optional
@@ -420,14 +420,14 @@ service_preference_hash['data_plan']=2.0
 			if best_deal.present?
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
-		      		# DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
+		      		DealNotifier.delay.send_best_deal(@app_user,best_deal)
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]
 		      			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}"}})
 		      		elsif @app_user_device == "iphone"
 		      			pusher = Grocer.pusher(
-		        			certificate: "#{Rails.root}/public/certificates/servicedealz.pem",      	# required
+		        			certificate: "#{Rails.root}/public/certificates/servicedealzProduction.pem",      	# required
 		        			passphrase:  "abc123",                       																	# optional
 		        			gateway:     "gateway.sandbox.push.apple.com",                      				# optional; See note below.
 		        			port:        2195,                       																		# optional
@@ -458,14 +458,14 @@ service_preference_hash['data_plan']=2.0
 
 		best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
 		if best_deal.present?
-#			DealNotifier.send_best_deal(@app_user,best_deal).deliver_now
+			DealNotifier.delay.send_best_deal(@app_user,best_deal)
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]
     			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}"}})
 			elsif @app_user_device == "iphone"
 				pusher = Grocer.pusher(
-		        	certificate: "#{Rails.root}/public/certificates/servicedealz.pem",      	# required
+		        	certificate: "#{Rails.root}/public/certificates/servicedealzProduction.pem",      	# required
 		        	passphrase:  "abc123",                       																	# optional
 		        	gateway:     "gateway.sandbox.push.apple.com",                      		# optional; See note below.
 		        	port:        2195,                       																		# optional

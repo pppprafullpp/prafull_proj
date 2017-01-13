@@ -11,7 +11,7 @@ class OrderMailer < ApplicationMailer
     @app_user = app_user
     @order = order
     @order_billing_address=order.order_addresses[1]
-    mail(to: recipient, subject: "Service-Deal Order Confirmation# #{order.order_number}")
+    mail(to: recipient, subject: "ServiceDealz Order Confirmation# #{order.order_number}")
   end
 
 end

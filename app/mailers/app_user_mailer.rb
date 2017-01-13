@@ -13,7 +13,7 @@ class AppUserMailer < ApplicationMailer
     # @secret_p = app_user.unhashed_password
     # app_user.send_password_reset if user
     @name=Base64.decode64(app_user.first_name) + " " + Base64.decode64(app_user.last_name)
-    mail(:to => recipient, :subject => "Service-Deal recover password") rescue nil
+    mail(:to => recipient, :subject => "ServiceDealz recover password") rescue nil
   end
 
   def cashout_email(app_user,cashout)
@@ -41,7 +41,7 @@ class AppUserMailer < ApplicationMailer
   def sign_up_mail(app_user)
     # app_user=AppUser.find_by_email("apoorv@sp-assurance.com")
     @name=Base64.decode64(app_user.first_name) + " " + Base64.decode64(app_user.last_name)
-    mail(:to=>app_user.email,:subject=>"Welcome to ServiceDeals")
+    mail(:to=>app_user.email,:subject=>"Welcome to ServiceDealz")
    end
 
 end

@@ -420,7 +420,7 @@ service_preference_hash['data_plan']=2.0
 			if best_deal.present?
 		      	@remaining_days = (@user_contract_end_date.to_datetime - DateTime.now).to_i
 		      	if @remaining_days < @user_notification_day
-		      		# DealNotifier.delay.send_best_deal(@app_user,best_deal)
+		      		DealNotifier.delay.send_best_deal(@app_user,best_deal)
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]
@@ -450,7 +450,6 @@ service_preference_hash['data_plan']=2.0
     	end
 	end
 	def send_notification_no_contract
-		# byebug
 		@app_user = AppUser.find_by_id(params[:app_user_id])
 		@deal_type=@app_user.user_type
 		@app_user_device = @app_user.device_flag
@@ -458,7 +457,7 @@ service_preference_hash['data_plan']=2.0
 
 		best_deal=category_best_deal(@deal_type,@user_preference,@app_user.zip,1,true)
 		if best_deal.present?
-			# DealNotifier.delay.send_best_deal(@app_user,best_deal)
+			DealNotifier.delay.send_best_deal(@app_user,best_deal)
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]

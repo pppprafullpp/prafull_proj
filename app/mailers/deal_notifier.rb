@@ -1,4 +1,5 @@
 class DealNotifier < ApplicationMailer
+  default from: "servicedeal@spa-systems.com"
   include DashboardsHelper
 
 	def send_trending_deal(app_user)

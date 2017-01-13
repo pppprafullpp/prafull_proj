@@ -21,10 +21,14 @@ class Api::V1::DealsController < ApplicationController
 	end
 
 	def compare_deals
+
 		if params[:app_user_id].present? && params[:service_category_id].present?
 			category = ServiceCategory.where(id: params[:service_category_id]).first.name
 			app_user = AppUser.find_by_id(params[:app_user_id])
 			user_preference_price = app_user.service_preferences.where(service_category_id: params[:service_category_id]).first.price rescue 0
+		end
+		if params[:service_category_id].present?
+			category = ServiceCategory.where(id: params[:service_category_id]).first.name
 		end
 		if params[:deal_id_first].present? && params[:deal_id_second].present? && params[:effective_price_1].present? && params[:effective_price_2].present?
 			deal_1 = Deal.find_by_id(params[:deal_id_first])

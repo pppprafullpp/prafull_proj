@@ -227,14 +227,15 @@ if !((sc.id == 4) && (deal_type == "residence"))
 
 	def category_trending_deal(deal_type,category_id,zip_code)
 
-		# restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
+		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 		# allowed_trending_deal=Deal.joins(:trending_deals).where("deals.id not in (?) AND deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",restricted_deals,true,deal_type,category_id).order("trending_deals.subscription_count DESC").first
 		# if not allowed_trending_deal.present?
 		# 	allowed_trending_deal=Deal.where("deals.id not in (?) AND deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",restricted_deals,true,deal_type,category_id).order("price ASC").first
 		# end
-		allowed_trending_deal = Deal.where("deals.is_active = ? AND deals.deal_type = ?  AND deals.service_category_id = ? AND deals.is_best_value =?",true,deal_type,category_id,true).order("price ASC").first
+		category_name= ServiceCategory.find(category_id).name.downcase
+		allowed_trending_deal = Deal.joins("#{category_name}_deal_attributes".to_sym).where("deals.is_active = ? AND deals.deal_type = ?  AND deals.service_category_id = ? AND deals.is_best_value =? AND deals.id not in (?)",true,deal_type,category_id,true,restricted_deals).order("price ASC").first
 		if not allowed_trending_deal.present?
-			allowed_trending_deal=Deal.where("deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ?",true,deal_type,category_id).order("price ASC").first
+			allowed_trending_deal=Deal.joins("#{category_name}_deal_attributes".to_sym).where("deals.is_active = ? AND deals.deal_type = ? AND deals.service_category_id = ? AND deals.id not in (?)",true,deal_type,category_id,restricted_deals).order("price ASC").first
 		end
 
 
@@ -242,6 +243,7 @@ if !((sc.id == 4) && (deal_type == "residence"))
 	end
 
 	def category_best_deal(deal_type,sp,zip_code,return_count,return_attributes,options = {})
+		# byebug
 		# raise options.to_s
 		restricted_deals=Deal.joins(:deals_zipcodes).joins(:zipcodes).select("deals.id").where("zipcodes.code= ? ",zip_code)
 		filter_by_provider = options['provider_ids'].present? ? "deals.service_provider_id in (#{options['provider_ids']}) AND " : ''

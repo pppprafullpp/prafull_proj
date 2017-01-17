@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207114622) do
+# <<<<<<< Updated upstream
+ActiveRecord::Schema.define(version: 20170116070133) do
+# =======
+# ActiveRecord::Schema.define(version: 20170104192522) do
+# >>>>>>> Stashed changes
 
   create_table "account_referral_amounts", force: :cascade do |t|
     t.integer  "account_referral_id",     limit: 4
@@ -184,6 +188,9 @@ ActiveRecord::Schema.define(version: 20161207114622) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.text     "description",                limit: 65535
+    t.text     "channel_ids",                limit: 65535
+    t.text     "channel_package_ids",        limit: 65535
+    t.integer  "channel_count",              limit: 4
   end
 
   create_table "bundle_equipments", force: :cascade do |t|
@@ -479,6 +486,8 @@ ActiveRecord::Schema.define(version: 20161207114622) do
     t.boolean  "is_customisable",                                            default: false
     t.boolean  "is_order_available",                                         default: true
     t.decimal  "effective_price",                   precision: 10, scale: 2
+    t.boolean  "is_best_value"
+    t.text     "state_lists",         limit: 65535
   end
 
   add_index "deals", ["service_category_id"], name: "index_deals_on_service_category_id", using: :btree
@@ -488,6 +497,9 @@ ActiveRecord::Schema.define(version: 20161207114622) do
     t.integer "deal_id",    limit: 4, null: false
     t.integer "zipcode_id", limit: 4, null: false
   end
+
+  add_index "deals_zipcodes", ["deal_id"], name: "index_deals_zipcodes_on_deal_id", using: :btree
+  add_index "deals_zipcodes", ["zipcode_id"], name: "index_deals_zipcodes_on_zipcode_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -1007,6 +1019,8 @@ ActiveRecord::Schema.define(version: 20161207114622) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "zipcodes", ["code"], name: "index_zipcodes_on_code", using: :btree
 
   add_foreign_key "additional_offers", "deals"
   add_foreign_key "advertisements", "service_categories"

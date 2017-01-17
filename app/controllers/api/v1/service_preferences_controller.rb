@@ -436,7 +436,7 @@ service_preference_hash['data_plan']=2.0
 		      		if @app_user_device == "android"
 		      			gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
 						registration_id = ["#{@app_user.gcm_id}"]
-		      			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}"}})
+		      			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{Rack::Utils.escape_html(best_deal.short_description)}"}})
 		      		elsif @app_user_device == "iphone"
 		      			pusher = Grocer.pusher(
 		        			certificate: "#{Rails.root}/public/certificates/servicedealzProduction.pem",      	# required
@@ -447,7 +447,7 @@ service_preference_hash['data_plan']=2.0
 		      			)
 		      			notification = Grocer::Notification.new(
 		        			device_token:      "#{@app_user.gcm_id}",
-		        			alert:             "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}",
+		        			alert:             "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{Rack::Utils.escape_html(best_deal.short_description)}",
 		        			badge:             42
 		        			#category:          "a category",         																	# optional; used for custom notification actions
 		        			#sound:             "siren.aiff",         																	# optional
@@ -473,7 +473,7 @@ service_preference_hash['data_plan']=2.0
 			if @app_user_device == "android"
 				gcm = GCM.new("AIzaSyASkbVZHnrSGtqjruBalX0o0rQRA1dYU7w")
     			registration_id = ["#{@app_user.gcm_id}"]
-    			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}"}})
+    			gcm.send(registration_id, {data: {message: "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{Rack::Utils.escape_html(best_deal.short_description)}"}})
 			elsif @app_user_device == "iphone"
 				pusher = Grocer.pusher(
 		        	certificate: "#{Rails.root}/public/certificates/servicedealzProduction.pem",      	# required
@@ -484,7 +484,7 @@ service_preference_hash['data_plan']=2.0
 		      	)
 		      	notification = Grocer::Notification.new(
 		        	device_token:      "#{@app_user.gcm_id}",
-		        	alert:             "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{best_deal.short_description}",
+		        	alert:             "Price : "+"#{best_deal.price}" + "\n" + "Short Description : "+"#{Rack::Utils.escape_html(best_deal.short_description)}",
 		        	badge:             42
 		        	#category:          "a category",         																	# optional; used for custom notification actions
 		        	#sound:             "siren.aiff",         																	# optional

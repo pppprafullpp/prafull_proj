@@ -27,18 +27,20 @@ class Api::V1::DealsController < ApplicationController
 			app_user = AppUser.find_by_id(params[:app_user_id])
 			user_preference_price = app_user.service_preferences.where(service_category_id: params[:service_category_id]).first.price rescue 0
 		end
+
 		if params[:service_category_id].present?
 			category = ServiceCategory.where(id: params[:service_category_id]).first.name
 		end
+
 		if params[:deal_id_first].present? && params[:deal_id_second].present? && params[:effective_price_1].present? && params[:effective_price_2].present?
 			deal_1 = Deal.find_by_id(params[:deal_id_first])
 			deal_2 = Deal.find_by_id(params[:deal_id_second])
 			if deal_1.present? && deal_2.present? 
 				if user_preference_price.present?
-					saving_1_value = "%.2f" % (user_preference_price - params[:effective_price_1] rescue 0)
-					saving_2_value = "%.2f" % (user_preference_price - params[:effective_price_2] rescue 0)
-					saving_1 = saving_1_value.to_f > 0 ? saving_1_value : 0.00
-					saving_2 = saving_2_value.to_f > 0 ? saving_2_value : 0.00
+					saving_1_value = "%.2f" % (user_preference_price - params[:effective_price_1].to_f rescue 0)
+					saving_2_value = "%.2f" % (user_preference_price - params[:effective_price_2].to_f rescue 0)
+					saving_1 = saving_1_value.to_f > 0 ? saving_1_value.to_f : 0.00
+					saving_2 = saving_2_value.to_f > 0 ? saving_2_value.to_f : 0.00
 				else
 					saving_1 = "%.2f" % (0.to_f)
 					saving_2 = "%.2f" % (0.to_f)

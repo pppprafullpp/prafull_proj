@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 				else
 					false
 				end
-			else Socket.gethostname=="ip-172-31-0-47"
+			else
 				if ([7, 24, 48, 107].include? provider_id) && (deal_type == "business")
 					url = "http://res.cloudinary.com/servicedealz/image/upload/v1482487589/coming-soon-charter_vy9ubd.png"
 				elsif ([7, 24, 48, 107,2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
@@ -95,8 +95,8 @@ class ApplicationController < ActionController::Base
 		  		url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
 				end
 	    end
-	  elsif 
-	  	if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
+	  elsif Socket.gethostname=="ip-172-31-0-47"
+	    if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
 				if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 					url ="http://res.cloudinary.com/servicedealz/image/upload/v1479289687/at_t_yltr81.png"
 				elsif ([7, 24, 48, 107,2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
@@ -135,7 +135,6 @@ class ApplicationController < ActionController::Base
 		  		url = "http://res.cloudinary.com/servicedealz/image/upload/v1478159445/coming-soon_global_csi91h.png"
 				end
 	    end
-	  	
 		else
 			if ServiceDealConfig::where(config_key: "show_deals_logo").first.config_value == ServiceDealConfig::SHOW_DEAL_LOGO
 				if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")

@@ -2,7 +2,7 @@
 # puma -e production -b unix:/home/ubuntu/servicedeals/shared/tmp/sockets/puma.sock
 # config valid only for Capistrano 3.1
 set :application, 'servicedeals'
-set :repo_url, 'https://ramgarg:Vaishali123@github.com/ramgarg/Service-Deals-Rails.git'
+set :repo_url, 'https://ramgarg:Plano123@github.com/ramgarg/Service-Deals-Rails.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }

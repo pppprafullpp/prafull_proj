@@ -173,6 +173,17 @@ class ApplicationController < ActionController::Base
 	def display_deal_name_permission(provider_id,deal_type,title)
 		if ServiceDealConfig::where(config_key: "show_deals_name").first.config_value== ServiceDealConfig::SHOW_DEAL_NAME
 				name = title
+		elsif Socket.gethostname=="ip-172-31-0-47"
+			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
+				name = title
+			elsif  ([7, 24, 48, 107,2, 5, 15, 43].include? provider_id) && (deal_type == "residence")
+				name = title
+			elsif ([10, 47, 61, 112, 113].include? provider_id) && (deal_type == "residence")
+				name = title
+			else 
+				name = ''
+			end
+	   
 		else 
 			if ([1,3,6,12,30].include? provider_id) && (deal_type == "business")
 				name = title

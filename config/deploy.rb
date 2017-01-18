@@ -11,7 +11,7 @@ set :repo_url, 'https://ramgarg:Vaishali123@github.com/ramgarg/Service-Deals-Rai
 set :deploy_to, '/home/ubuntu/servicedeals'
 
 set :ssh_options, {
-  keys: %w(~/Downloads/spa_service_deal.pem),
+  keys: %w(~/Downloads/Servicedealz_Server_QA.pem),
   forward_agent: false,
   user: 'ubuntu'
 } 
